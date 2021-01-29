@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "displayName": "Dungeons And Dungeons Commmon",
   "description": "Package with common assets and code between Server and Client",
-  "unity": "2020.1",
+  "unity": "2020.2",
   "unityRelease": "0f1",
   "dependencies": {
  },
