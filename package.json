@@ -1,0 +1,19 @@
+{
+  "name": "mineorbit.DungeonsAndDungeonsCommon",
+  "version": "1",
+  "displayName": "Dungeons And Dungeons Commmon",
+  "description": "Package with gommon assets and code between Server and Client",
+  "unity": "2020.0",
+  "unityRelease": "0f1",
+  "dependencies": {
+ },
+ "keywords": [
+    "Assets",
+    "Level",
+    "Net
+  ],
+  "author": {
+    "name": "Mineorbit",
+    "email": "mineorbitbeta@gmail.com"
+  }
+}
