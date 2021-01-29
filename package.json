@@ -1,5 +1,5 @@
 {
-  "name": "mineorbit.DungeonsAndDungeonsCommon",
+  "name": "com.mineorbit.DungeonsAndDungeonsCommon",
   "version": "1",
   "displayName": "Dungeons And Dungeons Commmon",
   "description": "Package with gommon assets and code between Server and Client",
