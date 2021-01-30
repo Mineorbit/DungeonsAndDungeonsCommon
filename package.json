@@ -5,9 +5,7 @@
   "description": "Package with common assets and code between Server and Client",
   "unity": "2020.2",
   "unityRelease": "0f1",
-  "dependencies": {
- },
- "keywords": [
+  "keywords": [
     "Assets",
     "Level",
     "Net"
@@ -15,5 +13,6 @@
   "author": {
     "name": "Mineorbit",
     "email": "mineorbitbeta@gmail.com"
-  }
+  },
+  "hideInEditor": false
 }
