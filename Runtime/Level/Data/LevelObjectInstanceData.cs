@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class LevelMetaData : ScriptableObject
+    public class LevelObjectInstanceData : ScriptableObject
     {
-        public int localLevelId;
-        public long uniqueLevelId;
-        
+        float x;
+        float y;
+        float z;
     }
 }
