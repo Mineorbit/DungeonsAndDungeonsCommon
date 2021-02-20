@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class LevelMetaData : ScriptableObject
+    public class RegionData : ScriptableObject
     {
-        public int localLevelId;
-        public long uniqueLevelId;
-        
+        ChunkData[,] chunkDatas = new ChunkData[4,4];
     }
 }

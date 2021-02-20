@@ -6,16 +6,59 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelManager : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+
+        public static UnityEngine.Object levelPrefab;
+
+        static LevelMetaData currentLevelMetaData;
+        
+        public static Level currentLevel;
+
+
+        public void Start()
+        {
+            New();
+        }
+
+        static void Instantiate()
+        {
+            if (levelPrefab == null) levelPrefab = Resources.Load("Level") as UnityEngine.Object;
+            GameObject level = Instantiate(levelPrefab) as GameObject;
+            level.name = "Level " + currentLevelMetaData.localLevelId;
+            currentLevel = level.GetComponent<Level>();
+        }
+
+        public static void New()
+        {
+            Clear();
+            currentLevelMetaData = LevelDataManager.GetNewLevelMetaData();
+            Instantiate();
+            ChunkManager.GetChunk(new Vector3(0,0,58));
+        }
+
+
+        public static void Load(LevelMetaData levelMetaData)
+        {
+            if (levelMetaData == null) return;
+            currentLevelMetaData = levelMetaData;
+            Instantiate();
+        }
+        public static void Save()
         {
 
         }
-
-        // Update is called once per frame
-        void Update()
+        public static void Reset()
         {
-
+            LevelMetaData lastMetaData = currentLevelMetaData;
+            Clear();
+            Load(lastMetaData);
+        }
+        public static void Clear()
+        {
+            if(currentLevel!=null)
+            {
+                Destroy(currentLevel.gameObject);
+                currentLevelMetaData = null;
+            }
         }
     }
 }

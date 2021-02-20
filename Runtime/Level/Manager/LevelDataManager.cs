@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelDataManager : MonoBehaviour
+namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    // Start is called before the first frame update
-    void Start()
+    public class LevelDataManager : MonoBehaviour
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public static LevelMetaData GetNewLevelMetaData()
+        {
+            LevelMetaData levelMetaData = LevelMetaData.CreateInstance<LevelMetaData>();
+            levelMetaData.localLevelId = GetFreeLocalId();
+            return levelMetaData;
+        }
+
+        static int GetFreeLocalId()
+        {
+            return 1;
+        }
+
     }
 }
