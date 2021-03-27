@@ -53,6 +53,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
         {
             if (levelObjectData == null) return;
+
+
+            Chunk chunk = ChunkManager.GetChunk(position);
+
+            levelObjectData.Create(position, rotation,chunk.transform);
+
         }
 
         //These Objects will be dropped on the next Level reset

@@ -15,11 +15,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         static int count;
 
-
+        static bool ready = false;
+        
         void Start()
         {
-            chunks = new Dictionary<Tuple<int, int>, Chunk>();
-            chunkPrefab = Resources.Load("Chunk");
+            Setup();
+        }
+
+        static void Setup()
+        {
+            if(!ready)
+            {
+                chunkPrefab = Resources.Load("Chunk");
+                chunks = new Dictionary<Tuple<int, int>, Chunk>();
+                ready = true;
+            }
         }
 
         public void Load()
@@ -32,14 +42,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        static void AddChunk(Tuple<int, int> gridPosition)
+        static Chunk AddChunk(Tuple<int, int> gridPosition)
         {
+            Setup();
             count++;
             GameObject chunk = Instantiate(chunkPrefab) as GameObject;
             chunk.name = "Chunk " + count;
             chunk.transform.parent = LevelManager.currentLevel.transform;
             chunk.transform.position = ChunkPositionFromGridPosition(gridPosition);
-            chunks.Add(gridPosition,chunk.GetComponent<Chunk>());
+            var c = chunk.GetComponent<Chunk>();
+            chunks.Add(gridPosition,c);
+            return c;
         }
 
         static Vector3 ChunkPositionFromGridPosition(Tuple<int,int> gridPosition)
@@ -57,9 +70,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return chunkGranularity * (new Vector3(Mathf.Round(position.x/chunkGranularity),0,Mathf.Round(position.z/chunkGranularity))) - chunkGranularity/2*new Vector3(1,0,1);
         }
 
-        public static void GetChunk(Vector3 position)
+        public static Chunk GetChunk(Vector3 position)
         {
-            AddChunk(GetChunkGridPosition(position));
+            var chunkGridPosition = GetChunkGridPosition(position);
+            Chunk result_chunk = null;
+            if(chunks != null)
+            { 
+            if (chunks.TryGetValue(chunkGridPosition,out result_chunk))
+            {
+                // chunk was found here eventually something
+            }else
+            {
+                result_chunk = AddChunk(chunkGridPosition);
+            }
+            }
+            return result_chunk;
         }
     }
 }
