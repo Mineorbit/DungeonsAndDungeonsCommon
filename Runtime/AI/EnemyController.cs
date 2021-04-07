@@ -22,8 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         float distToTarget = float.MaxValue;
 
-        public enum EnemyState { Idle = 1, Track, Attack, PrepareStrike, Strike, Dead };
-        public EnemyState enemyState;
         Vector3 lastPositionOfPlayer;
 
 
@@ -45,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-            enemyState = EnemyState.Idle;
+            me.SetState(Enemy.EnemyState.Idle);
         }
 
         void Update()
@@ -64,11 +62,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateTarget()
         {
-            if (enemyState == EnemyState.Track)
+            var enemyState = me.GetState();
+            if (enemyState == Enemy.EnemyState.Track)
             {
                 navMeshAgent.SetDestination(lastPositionOfPlayer);
             }
-            else if (enemyState == EnemyState.Attack)
+            else if (enemyState == Enemy.EnemyState.Attack)
             {
                 navMeshAgent.SetDestination(transform.position);
                 transform.LookAt(lastPositionOfPlayer);
@@ -94,14 +93,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateState()
         {
-            if (enemyState != EnemyState.Strike || enemyState != EnemyState.PrepareStrike)
+            var enemyState = me.GetState();
+            if (enemyState != Enemy.EnemyState.Strike || enemyState != Enemy.EnemyState.PrepareStrike)
             {
 
                 if (attackDistance <= distToTarget && distToTarget <= viewDistance)
                 {
                     if (seenPlayer != null)
                     {
-                        enemyState = EnemyState.Track;
+                        me.SetState(Enemy.EnemyState.Track);
                         if (strikeTimer != null)
                         {
                             StopCoroutine(strikeTimer);
@@ -113,13 +113,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     if (seenPlayer != null)
                     {
-                        enemyState = EnemyState.Attack;
+                        me.SetState(Enemy.EnemyState.Attack);
                         if (seenAlly == null)
                         {
                             TryStrike();
                         }
                         else
-                        if (seenAlly.GetState() != EnemyState.Strike || seenAlly.GetState() != EnemyState.PrepareStrike)
+                        if (seenAlly.GetState() != Enemy.EnemyState.Strike || seenAlly.GetState() != Enemy.EnemyState.PrepareStrike)
                         {
                             TryStrike();
                         }
@@ -127,7 +127,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 else
                 {
-                    enemyState = EnemyState.Idle;
+                    me.SetState(Enemy.EnemyState.Idle);
                     if (strikeTimer != null)
                         StopCoroutine(strikeTimer);
                 }
@@ -139,7 +139,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (strikeTimer == null)
             {
-                enemyState = EnemyState.PrepareStrike;
+                me.SetState(Enemy.EnemyState.PrepareStrike);
                 strikeTimer = StrikeTimer((1 + 5 * (float)rand.NextDouble()));
                 StartCoroutine(strikeTimer);
             }
@@ -154,26 +154,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (seenAlly != null)
             {
-                if (seenAlly.GetState() != EnemyState.Strike || seenAlly.GetState() != EnemyState.PrepareStrike)
+                if (seenAlly.GetState() != Enemy.EnemyState.Strike || seenAlly.GetState() != Enemy.EnemyState.PrepareStrike)
                 {
                     strikeTimer = null;
-                    enemyState = EnemyState.Strike;
+                    me.SetState(Enemy.EnemyState.Strike);
                 }
                 else
                 {
-                    enemyState = EnemyState.Attack;
+                    me.SetState(Enemy.EnemyState.Attack);
                 }
             }
             else
             {
                 strikeTimer = null;
-                enemyState = EnemyState.Strike;
+                me.SetState(Enemy.EnemyState.Strike);
             }
         }
 
         public void FinishStrike()
         {
-            enemyState = EnemyState.Attack;
+            me.SetState(Enemy.EnemyState.Attack);
         }
 
 
@@ -212,17 +212,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Kill()
         {
-            enemyState = EnemyState.Dead;
-            Level.currentLevel.RemoveObject(GetComponent<Enemy>());
+            me.SetState(Enemy.EnemyState.Dead);
+            //eventually call
+            LevelManager.currentLevel.RemoveDynamic(me);
         }
 
         Enemy CheckClosestAlley()
         {
             float minDist = float.MaxValue;
             Enemy minEnemy = null;
-            foreach (Enemy e in Level.GetAllEnemies())
+            foreach (GameObject g in Level.GetAllEnemies())
             {
-                if (e != null && e != me && e.GetState() != EnemyState.Dead)
+                Enemy e = g.GetComponent<Enemy>();
+                if (e != null && e != me && e.GetState() != Enemy.EnemyState.Dead)
                 {
 
                     Vector3 dir = e.transform.position - transform.position;

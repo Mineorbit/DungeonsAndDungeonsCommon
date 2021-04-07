@@ -61,11 +61,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+
+
+
         //These Objects will be dropped on the next Level reset
         public void AddDynamic(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
         {
             if (levelObjectData == null) return;
             levelObjectData.Create(position, rotation, dynamicObjects);
+        }
+
+        public void RemoveDynamic(LevelObject o)
+        {
+            if(o.transform.parent == dynamicObjects)
+            {
+                Destroy(o.gameObject);
+            }
+        }
+
+        public static GameObject[] GetAllEnemies()
+        {
+            return new GameObject[0];
         }
     }
 }
