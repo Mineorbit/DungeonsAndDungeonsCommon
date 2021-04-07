@@ -26,7 +26,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public EnemyState enemyState;
         Vector3 lastPositionOfPlayer;
 
-        BlobAnimator animator;
 
         NavMeshAgent navMeshAgent;
         System.Random rand;
@@ -44,9 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             navMeshAgent = GetComponent<NavMeshAgent>();
 
-            animator = GetComponentInChildren<BlobAnimator>();
 
-            animator.endAttackEvent.AddListener(FinishStrike);
 
             enemyState = EnemyState.Idle;
         }
@@ -161,7 +158,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     strikeTimer = null;
                     enemyState = EnemyState.Strike;
-                    animator.Attack();
                 }
                 else
                 {
@@ -172,7 +168,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 strikeTimer = null;
                 enemyState = EnemyState.Strike;
-                animator.Attack();
             }
         }
 
@@ -210,7 +205,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     Kill();
                 }
-                animator.Hit();
                 FreezeFramer.freeze(0.0075f);
             }
 
