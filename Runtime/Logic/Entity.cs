@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class Enemy : Entity
+    public class Entity : MonoBehaviour
     {
+        public int health;
         // Start is called before the first frame update
         void Start()
         {
