@@ -1,10 +1,10 @@
 {
   "name": "com.mineorbit.dungeonsanddungeonscommon",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "displayName": "Dungeons And Dungeons Commmon",
   "description": "Package with common assets and code between Server and Client",
-  "unity": "2020.2",
-  "unityRelease": "0f1",
+  "unity": "2020.3",
+  "unityRelease": "3f1",
   "keywords": [
     "Assets",
     "Level",
