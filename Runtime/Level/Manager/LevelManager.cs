@@ -27,19 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             currentLevel = level.GetComponent<Level>();
         }
 
-        public static void New()
-        {
-            LevelMetaData newMetaData = LevelDataManager.GetNewLevelMetaData();
-			New(newMetaData);
-        }
-
-		public static void New(LevelMetaData levelMetaData)
-        {
-            Clear();
-            currentLevelMetaData = levelMetaData;
-			Instantiate();
-			Save();
-        }
+        
 
         
         public static void Reset()
