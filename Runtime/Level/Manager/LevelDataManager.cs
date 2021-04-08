@@ -21,6 +21,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return 1;
         }
+		
+		public static void UpdateLocalLevelList(){
+		
+		}
 
     }
 }
