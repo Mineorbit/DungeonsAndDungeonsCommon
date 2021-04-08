@@ -205,7 +205,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     Kill();
                 }
-                FreezeFramer.freeze(0.0075f);
+                //FreezeFramer.freeze(0.0075f);
             }
 
         }
