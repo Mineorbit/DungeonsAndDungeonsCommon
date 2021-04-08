@@ -52,6 +52,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Clear();
             Load(lastMetaData);
         }
+		
+		public static void StartRound()
+		{
+			Reset();
+			currentLevel.OnStartRound();
+		}
+		
         public static void Clear()
         {
             if(currentLevel!=null)

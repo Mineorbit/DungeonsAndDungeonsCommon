@@ -22,7 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             loadType = LoadType.Target;
             dynamicObjects = transform.Find("Dynamic");
         }
-
+		
         void OnStartRound()
         {
             levelState = LevelState.Active;
