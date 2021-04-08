@@ -14,6 +14,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float granularity;
 
         public string name;
+		
+		public bool dynamicInstantiable;
+		
+		public bool levelInstantiable;
+		
 
     }
 

@@ -155,9 +155,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             PlayerManager.playerManager.DespawnPlayer(localId);
         }
 
+        void OnCollisionEnter(Collision collision)
+        {
+            GameObject col = collision.collider.gameObject;
+            if (col.tag == "Enemy")
+            {
+                //int damage = col.GetComponent<EnemyController>().damage;
+                int damage = 10;
+                if (damage > 0)
+                {
+                    Hit(damage);
+                }
+            }
+        }
 
         public void Update()
         {
+
+            if (transform.position.y < -8)
+                Kill();
         }
     }
 }

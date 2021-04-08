@@ -56,6 +56,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (levelObjectData == null) return;
 
+			if(!levelObjectData.dynamicInstantiable)
+			{
+				Debug.Log(levelObjectData.name+" cannot be created as constant part of Level");
+				return;
+			}
 
             Chunk chunk = ChunkManager.GetChunk(position);
 
@@ -76,6 +81,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void AddDynamic(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
         {
             if (levelObjectData == null) return;
+			if(!levelObjectData.dynamicInstantiable)
+			{
+				Debug.Log(levelObjectData.name+" cannot be created dynamically");
+				return;
+			}
             levelObjectData.Create(position, rotation, dynamicObjects);
         }
 
