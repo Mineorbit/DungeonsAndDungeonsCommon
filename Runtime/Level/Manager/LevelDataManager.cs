@@ -13,8 +13,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public static void Load(LevelMetaData levelMetaData)
         {
             if (levelMetaData == null) return;
-            currentLevelMetaData = levelMetaData;
-            Instantiate();
+            LevelManager.currentLevelMetaData = levelMetaData;
+            LevelManager.Instantiate();
         }
 		
         public static void Save()

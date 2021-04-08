@@ -9,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static UnityEngine.Object levelPrefab;
 
-        static LevelMetaData currentLevelMetaData;
+        public static LevelMetaData currentLevelMetaData;
         
         public static Level currentLevel;
 
@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             New();
         }
 
-        static void Instantiate()
+        public static void Instantiate()
         {
             if (levelPrefab == null) levelPrefab = Resources.Load("Level") as UnityEngine.Object;
             GameObject level = Instantiate(levelPrefab) as GameObject;
@@ -41,16 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			Save();
         }
 
-        public static void Load(LevelMetaData levelMetaData)
-        {
-            if (levelMetaData == null) return;
-            currentLevelMetaData = levelMetaData;
-            Instantiate();
-        }
-        public static void Save()
-        {
-
-        }
+        
         public static void Reset()
         {
             LevelMetaData lastMetaData = currentLevelMetaData;
