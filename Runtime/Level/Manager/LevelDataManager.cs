@@ -7,6 +7,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelDataManager : MonoBehaviour
     {
 
+		public static LevelMetaData[] localLevels;
+		public static LevelMetaData[] networkLevels;
+		
         public static LevelMetaData GetNewLevelMetaData()
         {
             LevelMetaData levelMetaData = LevelMetaData.CreateInstance<LevelMetaData>();
