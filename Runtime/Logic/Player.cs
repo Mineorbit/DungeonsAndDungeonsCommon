@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
 
     public class Player : Entity
     {
-        public PlayerController playerController;
 
         public Item[] items;
         public ItemHandle[] itemHandles;
@@ -65,7 +66,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Start()
         {
-            playerController = gameObject.GetComponent<PlayerController>();
             itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
             items = gameObject.GetComponentsInChildren<Item>();
 
