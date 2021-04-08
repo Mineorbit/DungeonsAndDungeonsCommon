@@ -47,7 +47,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Start()
         {
             player = transform.GetComponent<Player>();
-
         }
 
         public void UpdateGround()
