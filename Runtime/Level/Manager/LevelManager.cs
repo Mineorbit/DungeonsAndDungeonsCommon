@@ -29,8 +29,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void New()
         {
-            newMetaData = LevelDataManager.GetNewLevelMetaData();
-			New(currentLevelMetaData);
+            LevelMetaData newMetaData = LevelDataManager.GetNewLevelMetaData();
+			New(newMetaData);
         }
 
 		public static void New(LevelMetaData levelMetaData)
