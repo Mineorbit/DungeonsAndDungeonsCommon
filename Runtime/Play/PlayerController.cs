@@ -24,12 +24,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float currentSpeed;
 
-        public bool activated;
+        public bool locallyControllable;
+        public bool activated = true;
         public bool IsGrounded;
         public bool doInput;
         public bool isMe;
         public static bool doSim;
         public bool allowedToMove = true;
+
 
 
 
@@ -119,6 +121,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             player.GetLeftHandle().StopUse();
             StartCoroutine(attackWaitTime(0.025f));
         }
+
+
+        void Update()
+        {
+            UpdateGround();
+            StateUpdate();
+            Move();
+        }
+        void StateUpdate()
+        {
+            doSim = true;
+            currentSpeed = controller.velocity.magnitude / 3;
+            doInput = PlayerManager.acceptInput && allowedToMove && activated && locallyControllable; //&& !player.lockNetUpdate;
+        }
+        
 
         public void OnDisable()
         {
