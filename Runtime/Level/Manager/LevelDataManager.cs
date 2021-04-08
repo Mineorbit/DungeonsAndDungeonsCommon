@@ -10,12 +10,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public static LevelMetaData[] localLevels;
 		public static LevelMetaData[] networkLevels;
 		
+		public static void New()
+        {
+            LevelMetaData newMetaData = LevelDataManager.GetNewLevelMetaData();
+			New(newMetaData);
+        }
+
+		public static void New(LevelMetaData levelMetaData)
+        {
+            Clear();
+            LevelManager.currentLevelMetaData = levelMetaData;
+			LevelManager.Instantiate();
+			Save();
+        }
+		
 		public static void Load(LevelMetaData levelMetaData)
         {
             if (levelMetaData == null) return;
             LevelManager.currentLevelMetaData = levelMetaData;
             LevelManager.Instantiate();
         }
+		
+		
 		
         public static void Save()
         {
