@@ -65,9 +65,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 		public void Remove(LevelObject levelObjectData)
         {
-            if(o.transform.parent != dynamicObjects)
+            if(levelObjectData.transform.parent != dynamicObjects)
             {
-                Destroy(o.gameObject);
+                Destroy(levelObjectData.gameObject);
             }
         }
 
