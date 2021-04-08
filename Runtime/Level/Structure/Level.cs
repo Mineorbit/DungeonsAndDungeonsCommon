@@ -12,7 +12,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         LoadType loadType;
 
         Transform dynamicObjects;
-
+		
+		public PlayerSpawn[] 	spawn;
+		public PlayerGoal		goal;
 
         void Start()
         {
