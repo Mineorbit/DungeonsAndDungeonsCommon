@@ -63,7 +63,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-
+		public void Remove(LevelObject levelObjectData)
+        {
+            if(o.transform.parent != dynamicObjects)
+            {
+                Destroy(o.gameObject);
+            }
+        }
 
 
         //These Objects will be dropped on the next Level reset
