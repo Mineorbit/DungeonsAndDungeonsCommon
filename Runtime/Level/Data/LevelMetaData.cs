@@ -9,5 +9,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public long uniqueLevelId;
 		public string FullName;
         
+		public LevelMetaData(string name){
+		FullName = name;
+		localLevelId = 0;
+		uniqueLevelId = 0;
+		}
     }
 }
