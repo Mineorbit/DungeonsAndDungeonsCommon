@@ -29,12 +29,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void New()
         {
-            Clear();
-            currentLevelMetaData = LevelDataManager.GetNewLevelMetaData();
-            Instantiate();
-            ChunkManager.GetChunk(new Vector3(0,0,58));
+            newMetaData = LevelDataManager.GetNewLevelMetaData();
+			New(currentLevelMetaData);
         }
 
+		public static void New(LevelMetaData levelMetaData)
+        {
+            Clear();
+            currentLevelMetaData = levelMetaData;
+			Instantiate();
+			Save();
+        }
 
         public static void Load(LevelMetaData levelMetaData)
         {
