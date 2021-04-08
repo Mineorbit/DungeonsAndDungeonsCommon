@@ -7,6 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public int localLevelId;
         public long uniqueLevelId;
+		public string FullName;
         
     }
 }
