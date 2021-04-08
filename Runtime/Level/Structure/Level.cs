@@ -23,11 +23,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             dynamicObjects = transform.Find("Dynamic");
         }
 		
-        void OnStartRound()
+        public void OnStartRound()
         {
+            //GenerateNavigation(); Change generation to different interval
             levelState = LevelState.Active;
             loadType = LoadType.Target;
-            GenerateNavigation();
         }
 
         void GenerateNavigation()
