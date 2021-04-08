@@ -16,7 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Start()
         {
-            New();
+            LevelDataManager.New();
         }
 
         public static void Instantiate()
@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             LevelMetaData lastMetaData = currentLevelMetaData;
             Clear();
-            Load(lastMetaData);
+            LevelDataManager.Load(lastMetaData);
         }
 		
 		public static void StartRound()
