@@ -22,8 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             levelState = LevelState.Inactive;
             loadType = LoadType.All;
-            if(spawn.Length<4)
-                spawn = new PlayerSpawn[4];
+            createPlayerSpawnList();
         }
 		
         public void OnStartRound()
@@ -31,9 +30,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //GenerateNavigation(); Change generation to different interval
             levelState = LevelState.Active;
             loadType = LoadType.Target;
-            if (spawn == null)
-                spawn = new PlayerSpawn[4];
+            createPlayerSpawnList();
             dynamicObjects = transform.Find("Dynamic");
+        }
+
+        void createPlayerSpawnList()
+        {
+            if (spawn.Length < 4)
+                spawn = new PlayerSpawn[4];
         }
 
         void GenerateNavigation()
