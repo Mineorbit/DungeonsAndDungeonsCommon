@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -9,10 +10,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 		public static LevelMetaData[] localLevels;
 		public static LevelMetaData[] networkLevels;
-		
-		
 
-		public static void New(LevelMetaData levelMetaData)
+
+        public static UnityEvent levelLoadedEvent;
+
+        public void Start()
+        {
+            levelLoadedEvent = new UnityEvent();
+        }
+
+
+        public static void New(LevelMetaData levelMetaData)
         {
             LevelManager.Clear();
             LevelManager.currentLevelMetaData = levelMetaData;
@@ -30,6 +38,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (levelMetaData == null) return;
             LevelManager.currentLevelMetaData = levelMetaData;
             LevelManager.Instantiate();
+
+
+            levelLoadedEvent.Invoke();
         }
 		
 		

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelManager : MonoBehaviour
@@ -13,9 +13,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public static Level currentLevel;
 
+        public static UnityEvent levelStartedEvent;
 
         public void Start()
         {
+            if(gameObject.GetComponent<LevelDataManager>())
+            {
+                gameObject.AddComponent<LevelDataManager>();
+            }
+            levelStartedEvent = new UnityEvent();
             LevelDataManager.New();
         }
 
@@ -41,6 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		{
 			Reset();
 			currentLevel.OnStartRound();
+            levelStartedEvent.Invoke();
 		}
 		
         public static void Clear()
