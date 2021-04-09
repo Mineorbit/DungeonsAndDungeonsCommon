@@ -7,6 +7,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public UnityEngine.Object prefab;
 
+        public virtual GameObject Create(Vector3 location, Transform parent)
+        {
+            return Create(location,new Quaternion(0,0,0,0),parent);
+        }
 
         public virtual GameObject Create(Vector3 location, Quaternion rotation, Transform parent)
         {

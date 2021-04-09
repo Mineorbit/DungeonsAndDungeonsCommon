@@ -5,7 +5,7 @@ using UnityEngine;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
 
-    public class Item : MonoBehaviour
+    public class Item : LevelObject
     {
         public GameObject owner;
         public virtual void OnAttach()

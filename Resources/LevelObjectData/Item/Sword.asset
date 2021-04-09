@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: Player
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7709308443060799710, guid: d6825c22c98f482448a74582d929f45c, type: 3}
-  levelObjectDataId: 0
+  prefab: {fileID: 4659217188774830942, guid: 84050714d0d97d942a23cee443e58ee1, type: 3}
+  levelObjectDataId: 2
   granularity: 0
-  name: Player
+  name: Little Sword
   dynamicInstantiable: 1
-  levelInstantiable: 0
+  levelInstantiable: 1
