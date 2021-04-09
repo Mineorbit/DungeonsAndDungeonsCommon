@@ -61,11 +61,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Move()
         {
 
-            if (!controller.isGrounded && doSim)
+            if (IsGrounded && doSim)
             {
                 speedY -= gravity * Time.deltaTime;
             }
-            if (controller.isGrounded || !doSim)
+            if (IsGrounded || !doSim)
             {
                 speedY = 0;
             }

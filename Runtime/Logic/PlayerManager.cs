@@ -71,18 +71,17 @@ public class PlayerManager : MonoBehaviour
     {
 
         Instantiable t = Resources.Load("LevelObjectData/Entity/Player") as Instantiable;
-        Debug.Log(t);
-        GameObject g = t.Create(new Vector3(32 + freeLocalId * 8, 6, 0), transform);
-
+        GameObject g = t.Create(new Vector3(freeLocalId * 8, 6, 0), transform);
 
         Player player = g.AddComponent<Player>();
         PlayerController playerController = g.AddComponent<PlayerController>();
 
         playerController.locallyControllable = local;
-        
 
         player.name = name;
         player.localId = freeLocalId;
+
+        Debug.Log("1234");
         players[freeLocalId] = player;
         playerControllers[freeLocalId] = playerController;
 

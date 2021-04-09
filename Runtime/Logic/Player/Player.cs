@@ -38,7 +38,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Color playerColor;
 
         bool alive = true;
-        public int health = 100;
         float cooldownTime = 2f;
 
         public ItemHandle GetLeftHandle()
@@ -66,10 +65,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Start()
         {
+            // Temporary
             itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
-            items = gameObject.GetComponentsInChildren<Item>();
+            items = new Item[itemHandles.Length];
 
-            itemHandles[0].Attach(items[0]);
+            //itemHandles[0].Attach(items[0]);
         }
 
         public virtual bool IsAlive()
@@ -102,9 +102,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void setColor(UnityEngine.Color baseC)
         {
 
-            colorChanger.SetColor(7, baseC);
-            colorChanger.SetColor(2, colorChanger.comp(baseC));
-            colorChanger.SetColor(8, UnityEngine.Color.Lerp(baseC, UnityEngine.Color.white, 0.75f));
+            colorChanger.SetColor(0, baseC);
+            //colorChanger.SetColor(7, baseC);
+            //colorChanger.SetColor(2, colorChanger.comp(baseC));
+            //colorChanger.SetColor(8, UnityEngine.Color.Lerp(baseC, UnityEngine.Color.white, 0.75f));
         }
 
         public virtual void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
