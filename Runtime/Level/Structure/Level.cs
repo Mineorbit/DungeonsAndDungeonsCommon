@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void Start()
         {
+            spawn = new PlayerSpawn[4];
             levelState = LevelState.Inactive;
             loadType = LoadType.Target;
             dynamicObjects = transform.Find("Dynamic");
