@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour
     public void Add(int freeLocalId, string name, bool local)
     {
 
-            Vector3 position = new Vector3(freeLocalId * 8, 6, 0);
+        Vector3 position = new Vector3(freeLocalId * 8, 6, 0);
 
         LevelObjectData levelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
         GameObject g = LevelManager.currentLevel.AddDynamic(levelObjectData,position,new Quaternion(0,0,0,0));

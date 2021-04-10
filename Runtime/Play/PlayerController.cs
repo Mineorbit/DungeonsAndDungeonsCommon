@@ -106,8 +106,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Attack()
         {
+            if(player.GetLeftHandle()!=null)
+            {
             allowedToMove = false;
             player.GetLeftHandle().Use();
+            }
         }
 
         IEnumerator attackWaitTime(float t)
