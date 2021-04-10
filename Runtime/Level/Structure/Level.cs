@@ -11,7 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         LevelState levelState;
         LoadType loadType;
 
-        Transform dynamicObjects;
+        public Transform dynamicObjects;
 
         public PlayerSpawn[]    spawn;
         public PlayerGoal		goal;
@@ -22,7 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             levelState = LevelState.Inactive;
             loadType = LoadType.All;
-            createPlayerSpawnList();
+            Setup();
         }
 		
         public void OnStartRound()
@@ -30,10 +30,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //GenerateNavigation(); Change generation to different interval
             levelState = LevelState.Active;
             loadType = LoadType.Target;
-            createPlayerSpawnList();
-            dynamicObjects = transform.Find("Dynamic");
+            Setup();
         }
-
+        void Setup()
+        {
+            dynamicObjects = transform.Find("Dynamic");
+            createPlayerSpawnList();
+        }
         void createPlayerSpawnList()
         {
             if (spawn.Length < 4)
@@ -96,6 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				Debug.Log(levelObjectData.name+" cannot be created dynamically");
 				return null;
 			}
+            Debug.Log("HALLO");
             return levelObjectData.Create(position, rotation, dynamicObjects);
         }
 
