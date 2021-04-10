@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -19,6 +21,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		
 		public bool levelInstantiable;
 		
+
+        public static LevelObjectData[] GetAllBuildable()
+        {
+            List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
+            
+            return data.FindAll(x => x.levelInstantiable).ToArray();
+        }
 
     }
 
