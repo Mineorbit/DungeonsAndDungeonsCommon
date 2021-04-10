@@ -25,7 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static LevelObjectData[] GetAllBuildable()
         {
             List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
-            Debug.Log(data);
             return data.FindAll(x => x.levelInstantiable).ToArray();
         }
 
