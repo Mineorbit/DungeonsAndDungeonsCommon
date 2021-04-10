@@ -69,7 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (levelObjectData == null) return;
 
-			if(!levelObjectData.dynamicInstantiable)
+			if(!levelObjectData.levelInstantiable)
 			{
 				Debug.Log(levelObjectData.name+" cannot be created as constant part of Level");
 				return;
