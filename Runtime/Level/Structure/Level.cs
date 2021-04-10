@@ -20,6 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Start()
         {
+            gameObject.AddComponent<ChunkManager>();
             levelState = LevelState.Inactive;
             loadType = LoadType.All;
             Setup();
@@ -76,6 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			}
 
             Chunk chunk = ChunkManager.GetChunk(position);
+            Debug.Log(levelObjectData.name);
             if(chunk != null)
             levelObjectData.Create(position, rotation,chunk.transform);
 
