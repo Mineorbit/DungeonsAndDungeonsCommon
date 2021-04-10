@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: PlayerGoal
+  m_Name: PlayerSpawnGreen
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
   levelObjectDataId: 0
   granularity: 0
-  name: Goal
+  name: Green Player Spawn
   dynamicInstantiable: 0
   levelInstantiable: 1
