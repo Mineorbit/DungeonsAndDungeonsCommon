@@ -76,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			}
 
             Chunk chunk = ChunkManager.GetChunk(position);
-
+            if(chunk != null)
             levelObjectData.Create(position, rotation,chunk.transform);
 
         }
