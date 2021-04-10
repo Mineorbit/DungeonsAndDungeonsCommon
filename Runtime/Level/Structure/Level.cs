@@ -16,7 +16,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public PlayerSpawn[]    spawn;
         public PlayerGoal		goal;
 
-      
+
+        //this needs to be false in network play
+        bool _activated;
+        public bool activated
+        {
+            get
+            {
+                return _activated;
+            }
+            set
+            {
+                _activated = value;
+                SetLevelObjectActivity(_activated);
+            }
+        }
+
+        void SetLevelObjectActivity(bool a)
+        {
+            foreach(LevelObject levelObject in transform.GetComponentsInChildren<LevelObject>())
+            {
+                levelObject.enabled = a;
+            }
+        }
 
         public void Start()
         {
@@ -78,9 +100,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Chunk chunk = ChunkManager.GetChunk(position);
             Debug.Log(levelObjectData.name);
-            if(chunk != null)
-            levelObjectData.Create(position, rotation,chunk.transform);
-
+            if (chunk != null)
+            {
+            GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
+            g.GetComponent<LevelObject>().enabled = activated;
+            }
         }
 
 		public void Remove(LevelObject levelObjectData)
