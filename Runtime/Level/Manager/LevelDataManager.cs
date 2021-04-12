@@ -20,12 +20,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public static void New(LevelMetaData levelMetaData)
+        public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true)
         {
+            if(instantiateImmediately)
+            { 
             LevelManager.Clear();
             LevelManager.currentLevelMetaData = levelMetaData;
 			LevelManager.Instantiate();
-			Save();
+            }
+            Save();
         }
 		public static void New()
         {
