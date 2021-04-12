@@ -28,6 +28,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public string GetPath()
+        {
+            if(parent == null)
+            {
+                return Application.persistentDataPath + "/" + name + "/";
+            }else
+            {
+                return parent.GetPath() + name + "/";
+            }
+        }
+
        
     }
 }

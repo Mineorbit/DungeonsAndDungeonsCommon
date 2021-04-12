@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
+	[Serializable]
     public class LevelMetaData : ScriptableObject
     {
         public int localLevelId;
         public long uniqueLevelId;
 		public string FullName;
+		public string Description;
 		
 		public bool availBlue;
 		public bool availYellow;
@@ -19,5 +23,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		localLevelId = 0;
 		uniqueLevelId = 0;
 		}
+
+
+		public static LevelMetaData Load(string path)
+        {
+			// Add file safety check
+			SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
+			LevelMetaData metaData = m.Load<LevelMetaData>(path);
+			return metaData;
+        }
+		public void Save()
+        {
+
+        }
     }
 }
