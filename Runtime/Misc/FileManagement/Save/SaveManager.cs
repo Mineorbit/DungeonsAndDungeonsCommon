@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+
 public class SaveManager
 {
     public enum StorageType { BIN, XML, JSON };

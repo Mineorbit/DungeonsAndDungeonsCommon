@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.IO;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -11,14 +12,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public static LevelMetaData[] localLevels;
 		public static LevelMetaData[] networkLevels;
 
+        public static LevelDataManager instance;
+
+        public FileStructureProfile levelFolder;
 
         public static UnityEvent levelLoadedEvent;
 
         public void Start()
         {
+            if(instance != null)
+            {
+                Destroy(this);
+            }
+            instance = this;
             levelLoadedEvent = new UnityEvent();
         }
 
+       
 
         public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true)
         {
@@ -70,7 +80,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 		
 		public static void UpdateLocalLevelList(){
-		
+            Debug.Log("Reading local Levels");
+            string path = instance.levelFolder.GetPath();
+            string[] levelFolders = Directory.GetDirectories(path);
+            localLevels = new LevelMetaData[levelFolders.Length];
+            for(int i = 0;i<levelFolders.Length;i++)
+            {
+                localLevels[i] = LevelMetaData.Load(levelFolders[i]+"MetaData.json");
+            }
 		}
 
     }
