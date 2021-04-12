@@ -19,11 +19,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         async void EnterInParent()
         {
-            if (parent != null)
-            {
             subStructures = new List<FileStructureProfile>();
             listReady.SetResult(true);
-            
+            if (parent != null)
+            {
             await parent.listReady.Task;
             parent.subStructures.Add(this);
             }
