@@ -21,9 +21,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             subStructures = new List<FileStructureProfile>();
             listReady.SetResult(true);
-
+            if(parent != null)
+            { 
             await parent.listReady.Task;
             parent.subStructures.Add(this);
+            }
         }
 
        
