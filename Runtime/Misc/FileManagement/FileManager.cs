@@ -23,10 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public static string GetLevelPath()
-        {
-            return Application.persistentDataPath + "/gameData/levels/";
-        }
+
 
         string[] List(FileStructureProfile profile)
         {
