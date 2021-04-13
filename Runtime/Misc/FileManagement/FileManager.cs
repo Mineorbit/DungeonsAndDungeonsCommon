@@ -54,7 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public static void createFolder(string path, persistent = true)
+        public static void createFolder(string path, bool persistent = true)
         {
             string filePath = (persistent ? Application.persistentDataPath : "") + path;
 
