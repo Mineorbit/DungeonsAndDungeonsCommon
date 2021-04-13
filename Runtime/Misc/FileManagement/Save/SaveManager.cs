@@ -51,11 +51,11 @@ public class SaveManager
 
         return result;
     }
-    public bool Save(object o,string path)
-    {
+    public bool Save(object o,string path, bool persistent = true)
+        {
+        string filePath = (persistent ? Application.persistentDataPath : "") + path;
         if(storageType == StorageType.JSON)
         { 
-        string filePath = Application.persistentDataPath + path;
         StreamWriter writer = new StreamWriter(filePath);
         string content = JsonUtility.ToJson(o);
         writer.WriteLine(content);
@@ -65,7 +65,7 @@ public class SaveManager
         }
         else if(storageType == StorageType.BIN)
         {
-            FileStream fs = new FileStream(Application.persistentDataPath + path, FileMode.Create);
+            FileStream fs = new FileStream(filePath, FileMode.Create);
 
             BinaryFormatter formatter = new BinaryFormatter();
             try
