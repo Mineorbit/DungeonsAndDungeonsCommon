@@ -11,7 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class FileManager : MonoBehaviour
     {
         public FileStructureProfile root;
-        public static TaskCompletionSource<bool> foldersCreated = new TaskCompletionSource<bool>();
+        public static TaskCompletionSource<bool> foldersCreated;
         void Awake()
         {
             Setup();
@@ -19,7 +19,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void Setup()
         {
-            foreach (string s in List(root))
+        foldersCreated = new TaskCompletionSource<bool>();
+        foreach (string s in List(root))
             {
                 createFolder(s);
             }
