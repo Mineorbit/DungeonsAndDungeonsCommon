@@ -60,12 +60,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		
         public static void Save()
         {
-
+	LevelMetaData currentLevelMetaData = LevelManager.currentLevelMetaData;
+	currentLevelMetaData.Save();
         }
-		
-		public static void Delete(LevelMetaData metaData)
-		{
-		}
+	
+	public static void Delete(LevelMetaData metaData)
+	{
+	}
 		
         public static LevelMetaData GetNewLevelMetaData()
         {
