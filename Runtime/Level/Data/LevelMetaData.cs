@@ -32,9 +32,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			LevelMetaData metaData = m.Load<LevelMetaData>(path);
 			return metaData;
         }
-		public void Save()
+		public void Save(string path)
         {
-
+			SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
+			m.Save(this,path);
         }
     }
 }
