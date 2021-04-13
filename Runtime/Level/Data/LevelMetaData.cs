@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public void Save(string path)
         {
 			SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
-			m.Save(this,path);
+			m.Save(this,path, persistent: false);
         }
     }
 }
