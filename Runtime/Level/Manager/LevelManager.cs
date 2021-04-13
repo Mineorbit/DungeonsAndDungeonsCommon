@@ -20,7 +20,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Start()
         {
             levelStartedEvent = new UnityEvent();
-            LevelDataManager.New();
         }
 
 
