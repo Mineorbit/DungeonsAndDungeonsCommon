@@ -54,9 +54,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public static void createFolder(string path)
+        public static void createFolder(string path, persistent = true)
         {
-            string filePath = Application.persistentDataPath + path;
+            string filePath = (persistent ? Application.persistentDataPath : "") + path;
 
             UnityEngine.Debug.Log("Erstelle Ordner: " + filePath);
             try
