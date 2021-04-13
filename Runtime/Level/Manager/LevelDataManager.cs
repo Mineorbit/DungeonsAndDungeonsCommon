@@ -61,12 +61,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void Save()
         {
 
-	
 	LevelMetaData currentLevelMetaData = LevelManager.currentLevelMetaData;
-	string path = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId+"/MetaData.json";
-	FileManager.createFolder(path,persistent: false);
+	if(currentLevelMetaData != null)
+	{
+	string folder = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId
+	string path = folder+"/MetaData.json";
+	FileManager.createFolder(folder,persistent: false);
 	currentLevelMetaData.Save(path);
         }
+	}
 	
 	public static void Delete(LevelMetaData metaData)
 	{
