@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -10,6 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class FileManager : MonoBehaviour
     {
         public FileStructureProfile root;
+        public static TaskCompletionSource<bool> foldersCreated = new TaskCompletionSource<bool>();
         void Awake()
         {
             Setup();
@@ -21,6 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 createFolder(s);
             }
+            foldersCreated.SetResult(true);
         }
 
 
