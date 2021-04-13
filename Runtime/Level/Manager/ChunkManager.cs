@@ -47,13 +47,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Setup();
             count++;
             GameObject chunk = Instantiate(chunkPrefab) as GameObject;
-            chunk.name = "Chunk " + count;
             chunk.transform.parent = LevelManager.currentLevel.transform;
             chunk.transform.position = ChunkPositionFromGridPosition(gridPosition);
             var c = chunk.GetComponent<Chunk>();
+            c.chunkId = count;
             chunks.Add(gridPosition,c);
             return c;
         }
+
+        
 
         static Vector3 ChunkPositionFromGridPosition(Tuple<int,int> gridPosition)
         {
