@@ -48,6 +48,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelStartedEvent.Invoke();
         }
 
+        Vector3 GetGridPosition(Vector3 exactPosition, LevelObjectData levelObjectData)
+        {
+            float g = levelObjectData.granularity;
+            return g*(new Vector3(Mathf.Round(exactPosition.x/g), Mathf.Round(exactPosition.y / g), Mathf.Round(exactPosition.z / g)));
+        }
+
         public static void Clear()
         {
             if (currentLevel != null)

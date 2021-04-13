@@ -48,6 +48,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Setup();
         }
 		
+        public bool PositionOccupied()
+        {
+            return false;
+        }
+
         public void OnStartRound()
         {
             //GenerateNavigation(); Change generation to different interval
@@ -125,7 +130,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				Debug.Log(levelObjectData.name+" cannot be created dynamically");
 				return null;
 			}
-            Debug.Log("HALLO");
             return levelObjectData.Create(position, rotation, dynamicObjects);
         }
 

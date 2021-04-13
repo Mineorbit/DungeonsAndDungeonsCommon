@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Chunk : MonoBehaviour
+namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Chunk : MonoBehaviour
     {
-        
-    }
+        public int chunkId;
+        void Start()
+        {
+            gameObject.name = "Chunk " + chunkId;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
