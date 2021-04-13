@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
   levelObjectDataId: 1
-  granularity: 0
+  granularity: 2
   name: Floorpiece
   dynamicInstantiable: 0
   levelInstantiable: 1
