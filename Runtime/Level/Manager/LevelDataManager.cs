@@ -64,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	LevelMetaData currentLevelMetaData = LevelManager.currentLevelMetaData;
 	if(currentLevelMetaData != null)
 	{
-	string folder = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId
+	string folder = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId;
 	string path = folder+"/MetaData.json";
 	FileManager.createFolder(folder,persistent: false);
 	currentLevelMetaData.Save(path);
