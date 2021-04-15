@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -61,7 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Move()
         {
 
-            if (IsGrounded && doSim)
+            if (!IsGrounded && doSim)
             {
                 speedY -= gravity * Time.deltaTime;
             }
