@@ -48,7 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void SetParams()
         {
-            heightRay = 0.75f;
+            heightRay = 1.1f;
         }
 
         void Start()
