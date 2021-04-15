@@ -76,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        void ClearDynamicObjects()
+        public void ClearDynamicObjects()
         {
             foreach(Transform child in dynamicObjects)
             {

@@ -16,10 +16,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public static UnityEvent levelStartedEvent;
+        public static UnityEvent levelEndedEvent;
 
         public void Start()
         {
             levelStartedEvent = new UnityEvent();
+            levelEndedEvent = new UnityEvent();
         }
 
 
@@ -32,20 +34,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public static void ResetDynamic()
+        {
+            currentLevel.ClearDynamicObjects();
+        }
 
-
-        public static void Reset()
+        public static void ResetToSaveState()
         {
             LevelMetaData lastMetaData = currentLevelMetaData;
             Clear();
             LevelDataManager.Load(lastMetaData);
         }
 
-        public static void StartRound(bool reset = true)
+        public static void StartRound(bool reset = true, bool resetStatic = false)
         {
-            if (reset) Reset();
+            if (reset)
+            {
+                ResetDynamic();
+                if(resetStatic)
+                ResetToSaveState();
+
+            }
             currentLevel.OnStartRound();
             levelStartedEvent.Invoke();
+        }
+
+        public static void EndRound()
+        {
+            currentLevel.OnEndRound();
+            levelEndedEvent.Invoke();
         }
 
         public static Vector3 GetGridPosition(Vector3 exactPosition, LevelObjectData levelObjectData)
