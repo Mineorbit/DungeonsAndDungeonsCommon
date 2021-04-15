@@ -85,7 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void OnEndRound()
+        public void OnEndRound()
         {
             ClearDynamicObjects();
             levelState = LevelState.Inactive;
