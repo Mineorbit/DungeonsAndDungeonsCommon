@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: PlayerGoal
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  levelObjectDataId: 0
-  granularity: 0
+  prefab: {fileID: 8390361897316666614, guid: 2cd2f3ae494709a4d8d8fa3ceedab93a, type: 3}
+  levelObjectDataId: 4
+  granularity: 4
   name: Goal
   dynamicInstantiable: 0
   levelInstantiable: 1
