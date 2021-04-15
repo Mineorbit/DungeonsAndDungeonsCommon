@@ -78,7 +78,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void ClearDynamicObjects()
         {
-            foreach(GameObject child in dynamicObjects.transform)
+            foreach(Transform child in dynamicObjects.transform)
             {
                 Destroy(child);
             }
