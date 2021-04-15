@@ -41,8 +41,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (Camera.main != null)
                 cam = Camera.main.transform;
 
-            controller = transform.GetComponent<CharacterController>();
 
+            controller = transform.GetComponent<CharacterController>();
+            SetParams();
+        }
+
+        void SetParams()
+        {
+            heightRay = 0.55f;
         }
 
         void Start()
