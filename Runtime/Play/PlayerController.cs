@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static bool doSim;
         public bool allowedToMove = true;
 
-        public float heightRay = 0.5f;
+        public float heightRay = 0.55f;
 
 
 
