@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static bool doSim;
         public bool allowedToMove = true;
 
-
+        public float heightRay = 0.5f;
 
 
 
@@ -54,7 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             int mask = 1 << 10;
             RaycastHit hit;
-            IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, 1.5f, mask);
+            IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay, mask);
         }
 
         public void Move()
