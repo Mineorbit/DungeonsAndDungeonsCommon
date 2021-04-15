@@ -16,19 +16,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void UpdateNavMesh()
         {
             Debug.Log("Building");
-            GameObject[] enemies = Level.GetAllEnemies();
-            foreach (GameObject e in enemies)
+            Transform p = LevelManager.currentLevel.GetAllDynamicObjects();
+            foreach (Transform t in p)
             {
-                if (e != null)
-                    e.SetActive(false);
+                if (t != null)
+                    t.gameObject.SetActive(false);
             }
 
             navMeshSurface.BuildNavMesh();
 
-            foreach (GameObject e in enemies)
+            foreach (Transform t in p)
             {
-                if (e != null)
-                    e.SetActive(true);
+                if (t != null)
+                    t.gameObject.SetActive(true);
             }
         }
     }

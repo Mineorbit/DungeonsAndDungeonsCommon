@@ -55,7 +55,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnStartRound()
         {
-            //GenerateNavigation(); Change generation to different interval
+            GenerateNavigation();
             levelState = LevelState.Active;
             loadType = LoadType.Target;
             Setup();
@@ -73,14 +73,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void GenerateNavigation()
         {
-
+            LevelNavGenerator.UpdateNavMesh();
         }
 
         public void ClearDynamicObjects()
         {
-            foreach(Transform child in dynamicObjects)
+            foreach(GameObject child in dynamicObjects.transform)
             {
-                Destroy(child.gameObject);
+                Destroy(child);
             }
         }
 
@@ -141,9 +141,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public static GameObject[] GetAllEnemies()
+        public Transform GetAllDynamicObjects()
         {
-            return new GameObject[0];
+            return dynamicObjects;
         }
     }
 }

@@ -221,6 +221,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             float minDist = float.MaxValue;
             Enemy minEnemy = null;
+            /*
             foreach (GameObject g in Level.GetAllEnemies())
             {
                 Enemy e = g.GetComponent<Enemy>();
@@ -237,6 +238,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 }
             }
+            */
             return minEnemy;
         }
 
