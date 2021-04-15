@@ -80,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach(Transform child in dynamicObjects.transform)
             {
-                Destroy(child);
+                Destroy(child.gameObject);
             }
         }
 
