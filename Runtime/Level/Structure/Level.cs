@@ -104,10 +104,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			}
 
             Chunk chunk = ChunkManager.GetChunk(position);
-            Debug.Log(levelObjectData.name);
             if (chunk != null)
             {
-            GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
+                Debug.Log(levelObjectData.name);
+                GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
             g.GetComponent<LevelObject>().enabled = activated;
             }
         }
