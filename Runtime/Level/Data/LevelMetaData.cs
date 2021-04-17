@@ -6,7 +6,7 @@ using System;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
 	[Serializable]
-    public class LevelMetaData : ScriptableObject
+    public class LevelMetaData
     {
         public int localLevelId;
         public long uniqueLevelId;

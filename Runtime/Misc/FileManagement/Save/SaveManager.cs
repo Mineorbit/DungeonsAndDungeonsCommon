@@ -19,7 +19,7 @@ public class SaveManager
         T result = default(T);
         if (!File.Exists(path)) return result;
 
-        if(storageType == StorageType.JSON)
+        if (storageType == StorageType.JSON)
         { 
         StreamReader reader = new StreamReader(path);
         string data = reader.ReadToEnd();
