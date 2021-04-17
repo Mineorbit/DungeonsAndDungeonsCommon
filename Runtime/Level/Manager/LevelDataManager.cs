@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public FileStructureProfile levelFolder;
 
         public static UnityEvent levelLoadedEvent;
+        public static UnityEvent levelListLoadedEvent;
 
         public void Start()
         {
@@ -27,6 +28,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             instance = this;
             levelLoadedEvent = new UnityEvent();
+            levelListLoadedEvent = new UnityEvent();
+
+            UpdateLocalLevelList();
         }
 
        
@@ -102,6 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 instance.localLevels[i] = LevelMetaData.Load(levelFolders[i]+"/MetaData.json");
             }
+            levelListLoadedEvent.Invoke();
 		}
 
     }
