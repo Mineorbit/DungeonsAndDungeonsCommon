@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
+using System.Linq;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelDataManager : MonoBehaviour
     {
 
-		public static LevelMetaData[] localLevels;
-		public static LevelMetaData[] networkLevels;
+		public LevelMetaData[] localLevels;
+		public LevelMetaData[] networkLevels;
 
         public static LevelDataManager instance;
 
@@ -58,17 +59,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		
 		
 		
-        public static void Save()
-        {
+    public static void Save()
+    {
 
-	LevelMetaData currentLevelMetaData = LevelManager.currentLevelMetaData;
-	if(currentLevelMetaData != null)
-	{
-	string folder = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId;
-	string path = folder+"/MetaData.json";
-	FileManager.createFolder(folder,persistent: false);
-	currentLevelMetaData.Save(path);
+	    LevelMetaData currentLevelMetaData = LevelManager.currentLevelMetaData;
+	    if(currentLevelMetaData != null)
+	    {
+	    string folder = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId;
+	    string path = folder+"/MetaData.json";
+	    FileManager.createFolder(folder,persistent: false);
+	    currentLevelMetaData.Save(path);
         }
+            UpdateLocalLevelList();
 	}
 	
 	public static void Delete(LevelMetaData metaData)
@@ -77,24 +79,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		
         public static LevelMetaData GetNewLevelMetaData()
         {
-            LevelMetaData levelMetaData = LevelMetaData.CreateInstance<LevelMetaData>();
+            LevelMetaData levelMetaData = new LevelMetaData("NewMetaData");
             levelMetaData.localLevelId = GetFreeLocalId();
             return levelMetaData;
         }
 
         static int GetFreeLocalId()
         {
-            return 1;
+            UpdateLocalLevelList();
+            var localLevelIds = instance.localLevels.Select( x=> x.localLevelId);
+            int i = 0;
+            while (localLevelIds.Contains(i))
+                i++;
+            return i;
         }
 		
 		public static void UpdateLocalLevelList(){
-            Debug.Log("Reading local Levels");
             string path = instance.levelFolder.GetPath();
             string[] levelFolders = Directory.GetDirectories(path);
-            localLevels = new LevelMetaData[levelFolders.Length];
+            instance.localLevels = new LevelMetaData[levelFolders.Length];
             for(int i = 0;i<levelFolders.Length;i++)
             {
-                localLevels[i] = LevelMetaData.Load(levelFolders[i]+"MetaData.json");
+                instance.localLevels[i] = LevelMetaData.Load(levelFolders[i]+"/MetaData.json");
             }
 		}
 

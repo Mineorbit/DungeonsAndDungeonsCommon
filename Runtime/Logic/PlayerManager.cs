@@ -69,7 +69,8 @@ public class PlayerManager : MonoBehaviour
 
     public void Add(int freeLocalId, string name, bool local)
     {
-
+        if(LevelManager.currentLevel != null)
+        { 
         Vector3 position = new Vector3(freeLocalId * 8, 6, 0);
 
         LevelObjectData levelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
@@ -83,8 +84,9 @@ public class PlayerManager : MonoBehaviour
         player.localId = freeLocalId;
         players[freeLocalId] = player;
         playerControllers[freeLocalId] = playerController;
+        }
 
-    }
+        }
 
     public void DespawnPlayer(int localId)
     {
