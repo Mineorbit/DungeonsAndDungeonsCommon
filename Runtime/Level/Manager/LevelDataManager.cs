@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -60,9 +61,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             levelLoadedEvent.Invoke();
         }
-		
-		
-		
+
+
+    static void SaveLevelData(string pathToLevel)
+    {
+            Dictionary<Tuple<int, int>, RegionData> regions = ChunkManager.instance.FetchRegionData();
+            LevelData levelData = new LevelData();
+
+            SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
+            foreach (KeyValuePair<Tuple<int, int>, RegionData> region in regions)
+            {
+                levelData.regions.Add(region.Key,region.Value.id);
+                m.Save(region.Value, pathToLevel+"/"+region.Value.id+".json", persistent: false);
+            }
+
+            m.Save(levelData, pathToLevel + "/Index.json", persistent: false);
+
+    }
+
     public static void Save()
     {
 
@@ -70,12 +86,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	    if(currentLevelMetaData != null)
 	    {
 	    string folder = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId;
-	    string path = folder+"/MetaData.json";
+	    string metaDataPath = folder+"/MetaData.json";
 	    FileManager.createFolder(folder,persistent: false);
-	    currentLevelMetaData.Save(path);
+	    currentLevelMetaData.Save(metaDataPath);
+        SaveLevelData(folder);
         }
-            UpdateLocalLevelList();
+
+
+        UpdateLocalLevelList();
 	}
+
 	
 	public static void Delete(LevelMetaData metaData)
 	{

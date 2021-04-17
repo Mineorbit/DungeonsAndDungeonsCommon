@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class RegionData : ScriptableObject
+    [Serializable]
+    public class RegionData
     {
-        ChunkData[,] chunkDatas = new ChunkData[4,4];
+        public int id;
+        public ChunkData[,] chunkDatas = new ChunkData[ChunkManager.regionGranularity,ChunkManager.regionGranularity];
+        public RegionData(int rid)
+        {
+            id = rid;
+        }
     }
 }

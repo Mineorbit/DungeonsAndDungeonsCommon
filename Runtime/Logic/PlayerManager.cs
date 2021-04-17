@@ -50,6 +50,17 @@ public class PlayerManager : MonoBehaviour
 
 
 
+    Vector3 GetSpawnLocation(int i)
+    {
+            Vector3 location = new Vector3(i * 8, 6, 0);
+            if(LevelManager.currentLevel.spawn[i] != null)
+            {
+                location = LevelManager.currentLevel.spawn[i].transform.position;
+            }
+            return location;
+    }
+
+
 
     public void Remove(int localId)
     {
@@ -70,8 +81,8 @@ public class PlayerManager : MonoBehaviour
     public void Add(int freeLocalId, string name, bool local)
     {
         if(LevelManager.currentLevel != null)
-        { 
-        Vector3 position = new Vector3(freeLocalId * 8, 6, 0);
+        {
+        Vector3 position = GetSpawnLocation(freeLocalId);
 
         LevelObjectData levelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
         GameObject g = LevelManager.currentLevel.AddDynamic(levelObjectData,position,new Quaternion(0,0,0,0));
