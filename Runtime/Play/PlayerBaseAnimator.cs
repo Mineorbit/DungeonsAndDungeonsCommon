@@ -16,7 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Update()
         {
             Vector3 forwardDirection = characterController.velocity;
-            float angleY = Mathf.Atan2(forwardDirection.x,forwardDirection.z);
+            float angleY = (180/Mathf.PI) * Mathf.Atan2(forwardDirection.x,forwardDirection.z);
 
             transform.eulerAngles = (new Vector3(0,angleY,0));
         }
