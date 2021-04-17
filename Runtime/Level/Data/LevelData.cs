@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class LevelData : ScriptableObject
+    [Serializable]
+    public class LevelData
     {
-        Dictionary<Tuple<int,int>, RegionData> regions = new Dictionary<Tuple<int, int>, RegionData>();
+        public Dictionary<Tuple<int,int>,int> regions = new Dictionary<Tuple<int, int>, int>();
     }
 }

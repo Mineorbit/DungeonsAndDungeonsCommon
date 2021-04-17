@@ -13,7 +13,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Dictionary<Tuple<int, int>, Chunk> chunks;
 
-        static float chunkGranularity = 32;
+        public static float chunkGranularity = 32;
+
+        public static int regionGranularity = 2;
 
         public int count;
 
@@ -27,6 +29,48 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             } 
             instance = this;
             Setup();
+        }
+
+        
+
+        public Dictionary<Tuple<int, int>, RegionData> FetchRegionData()
+        {
+            Dictionary<Tuple<int, int>, RegionData> regionData = new Dictionary<Tuple<int, int>, RegionData>();
+            foreach (KeyValuePair<Tuple<int,int>,Chunk> chunk in chunks)
+            {
+                Tuple<int, int> regionPosition = GetRegionPosition(chunk.Key);
+                var positionInRegion = GetPositionInRegion(chunk.Key);
+                ChunkData chunkData = ChunkData.FromChunk(chunk.Value);
+
+                int rid = 0;
+
+                RegionData r;
+
+                if (regionData.TryGetValue(regionPosition, out r))
+                {
+                    r.chunkDatas[positionInRegion.a, positionInRegion.b] = chunkData;
+                }
+                else
+                {
+                    r = new RegionData(rid);
+                    r.chunkDatas[positionInRegion.a, positionInRegion.b] = chunkData;
+                    regionData.Add(regionPosition,r);
+                }
+            }
+            return regionData;
+        }
+        
+        (int a,int b) GetPositionInRegion(Tuple<int,int> chunkPosition)
+        {
+            return (chunkPosition.Item1 % regionGranularity, chunkPosition.Item2 % regionGranularity);
+        }
+
+        Tuple<int,int> GetRegionPosition(Tuple<int,int> chunkPosition)
+        {
+            int x = regionGranularity*(int)Mathf.Floor(chunkPosition.Item1 / (float)regionGranularity);
+            int y = regionGranularity * (int)Mathf.Floor(chunkPosition.Item2 / (float)regionGranularity);
+            Tuple<int, int> regionPosition = new Tuple<int, int>(x,y);
+            return regionPosition;
         }
 
         void Setup()

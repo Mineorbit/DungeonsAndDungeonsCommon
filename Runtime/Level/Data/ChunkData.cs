@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class ChunkData : ScriptableObject
+    [Serializable]
+    public class ChunkData
     {
-        // Start is called before the first frame update
-        void Start()
+        List<LevelObjectInstanceData> levelObjects = new List<LevelObjectInstanceData>();
+
+        public static ChunkData FromChunk(Chunk c)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            ChunkData chunkData = new ChunkData();
+            foreach(Transform t in c.transform)
+            {
+                chunkData.levelObjects.Add(LevelObjectInstanceData.FromInstance(t.GetComponent<LevelObject>()));
+            }
+            return chunkData;
         }
     }
 }
