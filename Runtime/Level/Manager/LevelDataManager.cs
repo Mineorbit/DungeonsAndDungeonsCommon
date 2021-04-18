@@ -83,6 +83,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateLiveLevelLoading()
         {
+            if(LevelManager.currentLevel != null)
+            { 
             if (LevelManager.currentLevel.loadType == Level.LoadType.All)
             {
 
@@ -90,6 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else if (LevelManager.currentLevel.loadType == Level.LoadType.Target)
             {
 
+            }
             }
         }
 
