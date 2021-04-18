@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lever
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: eda7a1e4-f76d-4585-9a81-f44ca18fd125
   granularity: 0
   name: 
   dynamicInstantiable: 0

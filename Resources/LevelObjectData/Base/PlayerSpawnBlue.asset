@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSpawnBlue
   m_EditorClassIdentifier: 
   prefab: {fileID: 3672395389633107163, guid: 30bff139244ced641b0d89ed372153a7, type: 3}
+  uniqueLevelObjectId: 4503c602-967c-4a3f-ac59-cd8a17405695
   levelObjectDataId: 5
   granularity: 2
   name: Blue Player Spawn

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: 65607ca5-5d80-4354-8540-f96c3785af82
   granularity: 0
   name: 
   dynamicInstantiable: 0

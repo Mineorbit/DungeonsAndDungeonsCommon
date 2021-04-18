@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerCheckpoint
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
+  uniqueLevelObjectId: 6f03aa17-cd58-4031-9b7b-302689cba929
   levelObjectDataId: 0
   granularity: 0
   name: Checkpoint

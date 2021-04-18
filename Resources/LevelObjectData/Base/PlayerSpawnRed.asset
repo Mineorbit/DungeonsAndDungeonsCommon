@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSpawnRed
   m_EditorClassIdentifier: 
   prefab: {fileID: 3672395389633107163, guid: 30bff139244ced641b0d89ed372153a7, type: 3}
-  levelObjectDataId: 7
+  uniqueLevelObjectId: f1653678-1faf-403e-bf84-3c36b3eb7f27
   granularity: 2
   name: Red Player Spawn
   dynamicInstantiable: 0

@@ -21,7 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static UnityEvent levelLoadedEvent;
         public static UnityEvent levelListLoadedEvent;
 
-        public void Start()
+        public void Awake()
         {
             if(instance != null)
             {
@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevelMetaData = levelMetaData;
 			LevelManager.Instantiate();
             }
-            Save();
+            Save(metaData: true, levelData: false);
         }
 		public static void New()
         {
@@ -79,7 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     }
 
-    public static void Save()
+    public static void Save(bool metaData = true, bool levelData = true)
     {
 
 	    LevelMetaData currentLevelMetaData = LevelManager.currentLevelMetaData;
@@ -88,8 +88,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	    string folder = instance.levelFolder.GetPath()+currentLevelMetaData.localLevelId;
 	    string metaDataPath = folder+"/MetaData.json";
 	    FileManager.createFolder(folder,persistent: false);
-	    currentLevelMetaData.Save(metaDataPath);
-        SaveLevelData(folder);
+        if(metaData) currentLevelMetaData.Save(metaDataPath);
+        if(levelData) SaveLevelData(folder);
         }
 
 
@@ -111,14 +111,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         static int GetFreeLocalId()
         {
             UpdateLocalLevelList();
+            if (instance != null || instance.localLevels != null)
+            { 
             var localLevelIds = instance.localLevels.Select( x=> x.localLevelId);
             int i = 0;
             while (localLevelIds.Contains(i))
                 i++;
             return i;
+            }
+            return -1;
         }
 		
 		public static void UpdateLocalLevelList(){
+            if(instance == null || instance.levelFolder == null)
+            {
+                Debug.Log("Level Folder not set for LevelDataManager or instance not set");
+                return;
+            }
             string path = instance.levelFolder.GetPath();
             string[] levelFolders = Directory.GetDirectories(path);
             instance.localLevels = new LevelMetaData[levelFolders.Length];

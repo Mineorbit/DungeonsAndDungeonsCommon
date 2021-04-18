@@ -130,7 +130,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				Debug.Log(levelObjectData.name+" cannot be created dynamically");
 				return null;
 			}
-            return levelObjectData.Create(position, rotation, dynamicObjects);
+            var created = levelObjectData.Create(position, rotation, dynamicObjects);
+            return created;
         }
 
         public void RemoveDynamic(LevelObject o)

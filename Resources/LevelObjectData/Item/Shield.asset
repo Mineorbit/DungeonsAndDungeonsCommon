@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: 48243e1c-4301-44d5-bf8f-f0387bb1487f
   granularity: 0
   name: 
   dynamicInstantiable: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bomb
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: c3d78dea-2b19-44a1-af56-d6e3739ef63b
   granularity: 0
   name: 
   dynamicInstantiable: 0

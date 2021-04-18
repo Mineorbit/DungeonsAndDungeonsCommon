@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmallFloor
   m_EditorClassIdentifier: 
   prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
-  levelObjectDataId: 3
+  uniqueLevelObjectId: af830fa8-67b4-4a69-8094-a6b8391933cd
   granularity: 2
   name: Small Floorpiece
   dynamicInstantiable: 0

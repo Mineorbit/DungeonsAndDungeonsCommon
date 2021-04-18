@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   prefab: {fileID: 4659217188774830942, guid: 84050714d0d97d942a23cee443e58ee1, type: 3}
-  levelObjectDataId: 2
+  uniqueLevelObjectId: db9c3303-4564-450d-8699-2ab9d56b99ad
   granularity: 0
   name: Little Sword
   dynamicInstantiable: 1

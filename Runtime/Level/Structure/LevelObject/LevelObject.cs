@@ -5,7 +5,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelObject : MonoBehaviour
     {
-        // Start is called before the first frame update
+
+        public string type;
+
+
         void Start()
         {
 
