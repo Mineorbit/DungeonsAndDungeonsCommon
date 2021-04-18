@@ -6,10 +6,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Level : MonoBehaviour
     {
-        enum LevelState {Active , Inactive};
-        enum LoadType { All, Target };
-        LevelState levelState;
-        LoadType loadType;
+        public enum LevelState {Active , Inactive};
+        public enum LoadType { All, Target };
+        
+        public LevelState levelState;
+        public LoadType _loadType;
+        public LoadType loadType
+        {
+            get
+            {
+                return _loadType;
+            }
+            set
+            {
+                _loadType = value;
+                LevelDataManager.ChangeLevelLoading();
+            }
+        }
 
         public Transform dynamicObjects;
 
@@ -47,6 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             loadType = LoadType.All;
             Setup();
         }
+
 		
         public bool PositionOccupied()
         {
