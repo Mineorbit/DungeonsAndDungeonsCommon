@@ -8,10 +8,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class RegionData
     {
         public int id;
-        public ChunkData[,] chunkDatas = new ChunkData[ChunkManager.regionGranularity,ChunkManager.regionGranularity];
+        public Dictionary<Tuple<int, int>, ChunkData> chunkDatas = new Dictionary<Tuple<int, int>, ChunkData>();
         public RegionData(int rid)
         {
             id = rid;
+        }
+
+        public string ToString()
+        {
+            string r = "Region: "+id;
+            foreach (KeyValuePair<Tuple<int,int>,ChunkData> k in chunkDatas)
+            {
+                r += "\n" + k+ " "+k.Value.ToString();
+            }
+            return r;
         }
     }
 }

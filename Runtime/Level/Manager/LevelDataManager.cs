@@ -69,10 +69,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelData levelData = new LevelData();
 
             SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
+            SaveManager c = new SaveManager(SaveManager.StorageType.BIN);
             foreach (KeyValuePair<Tuple<int, int>, RegionData> region in regions)
             {
                 levelData.regions.Add(region.Key,region.Value.id);
-                m.Save(region.Value, pathToLevel+"/"+region.Value.id+".json", persistent: false);
+                c.Save(region.Value, pathToLevel+"/"+region.Value.id+".bin", persistent: false);
             }
 
             m.Save(levelData, pathToLevel + "/Index.json", persistent: false);

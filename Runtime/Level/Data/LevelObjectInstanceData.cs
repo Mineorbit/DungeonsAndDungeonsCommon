@@ -36,5 +36,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return d;
 
         }
+        public string ToString()
+        {
+            return "Object "+type+" "+x+" "+y+" "+z;
+        }
     }
 }

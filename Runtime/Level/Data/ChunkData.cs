@@ -19,5 +19,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             return chunkData;
         }
+
+        public string ToString()
+        {
+            string r = "Chunk: ";
+            foreach(LevelObjectInstanceData d in levelObjects)
+            {
+                r += "\n"+d.ToString();
+            }
+            return r;
+        }
     }
 }

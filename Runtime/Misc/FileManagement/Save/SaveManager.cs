@@ -4,6 +4,7 @@ using System.Diagnostics;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -25,7 +26,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 StreamReader reader = new StreamReader(path);
                 string data = reader.ReadToEnd();
                 reader.Close();
-                result = JsonUtility.FromJson<T>(data);
+
+                result = JsonConvert.DeserializeObject<T>(data);
             }
             else if (storageType == StorageType.BIN)
             {
@@ -58,7 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (storageType == StorageType.JSON)
             {
                 StreamWriter writer = new StreamWriter(filePath);
-                string content = JsonUtility.ToJson(o);
+                string content = JsonConvert.SerializeObject(o, Formatting.Indented);
                 writer.WriteLine(content);
                 writer.Flush();
                 writer.Close();
