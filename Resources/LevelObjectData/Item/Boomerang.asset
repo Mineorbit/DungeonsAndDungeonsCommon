@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boomerang
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: 0dc75b82-49a0-4de7-85cb-536e3a3e514d
   granularity: 0
   name: 
   dynamicInstantiable: 0

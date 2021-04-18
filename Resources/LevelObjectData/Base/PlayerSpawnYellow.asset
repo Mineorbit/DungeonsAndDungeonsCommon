@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSpawnYellow
   m_EditorClassIdentifier: 
   prefab: {fileID: 3672395389633107163, guid: 30bff139244ced641b0d89ed372153a7, type: 3}
+  uniqueLevelObjectId: da5779f2-03f9-472c-8450-7ccd736f04dc
   levelObjectDataId: 8
   granularity: 2
   name: Yellow Player Spawn

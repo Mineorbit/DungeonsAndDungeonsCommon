@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   prefab: {fileID: 7709308443060799710, guid: d6825c22c98f482448a74582d929f45c, type: 3}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: d0ccd53d-b27b-4291-bd6a-0b26b5858e67
   granularity: 0
   name: Player
   dynamicInstantiable: 1

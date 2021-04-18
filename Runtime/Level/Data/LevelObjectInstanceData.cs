@@ -9,6 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     [Serializable]
     public class LevelObjectInstanceData
     {
+        string type;
         float x;
         float y;
         float z;
@@ -31,6 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             d.q_y = rotation.y;
             d.q_z = rotation.z;
             d.q_w = rotation.w;
+            d.type = o.type;
             return d;
 
         }

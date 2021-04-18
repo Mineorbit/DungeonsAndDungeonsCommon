@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Door
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: a1e742ae-21a3-4e51-8759-e98bb2856ce3
   granularity: 0
   name: 
   dynamicInstantiable: 0

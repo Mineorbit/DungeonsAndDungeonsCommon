@@ -21,7 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return g;
         }
 
-        //For UI
+        // For UI
         public virtual GameObject Create(Vector2 location, Transform parent)
         {
             GameObject g = Instantiate(prefab) as GameObject;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stair
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  levelObjectDataId: 0
+  uniqueLevelObjectId: 65cbc58f-2c51-4ee8-b790-6b13e5a267ec
   granularity: 0
   name: Stair
   dynamicInstantiable: 0
