@@ -23,6 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelData levelData;
 
+        Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
+
         public void Awake()
         {
             if(instance != null)
@@ -39,7 +41,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void LoadRegion(int regionId)
         {
+            if (instance.regionLoaded.ContainsKey(regionId) && instance.regionLoaded[regionId]) return;
             string pathToLevel = instance.levelFolder.GetPath()+LevelManager.currentLevelMetaData.localLevelId;
+            Debug.Log("Region "+regionId + " loaded at "+pathToLevel);
             SaveManager c = new SaveManager(SaveManager.StorageType.BIN);
             RegionData regionData = c.Load<RegionData>(pathToLevel + "/" + regionId + ".bin");
 
@@ -57,11 +61,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 LevelObjectData d;
                 if(levelObjectDatas.TryGetValue(i.type,out d))
                 {
-
                     LevelManager.currentLevel.Add(d,i.GetLocation(), i.GetRotation());
                 }
             }
 
+            instance.regionLoaded[regionId] = true;
+
+        }
+
+        public static void LoadAllRegions()
+        {
+            foreach (int regionId in instance.levelData.regions.Values)
+            {
+                LoadRegion(regionId);
+            }
         }
 
         public static void ChangeLevelLoading()
@@ -69,11 +82,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Load Type changed "+ LevelManager.currentLevel.loadType);
             if (LevelManager.currentLevel.loadType == Level.LoadType.All)
             {
-                foreach(int regionId in instance.levelData.regions.Values)
-                {
-                    Debug.Log("Loading region "+regionId);
-                    LoadRegion(regionId);
-                }
+                LoadAllRegions();
             }
             else if (LevelManager.currentLevel.loadType == Level.LoadType.Target)
             {
@@ -109,6 +118,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevelMetaData = levelMetaData;
 			LevelManager.Instantiate();
             }
+
+            instance.levelData = new LevelData();
+
+            instance.regionLoaded = new Dictionary<int, bool>();
+
             Save(metaData: true, levelData: false);
         }
 		public static void New()
@@ -126,13 +140,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.Instantiate();
 
 
+
             SaveManager m = new SaveManager(SaveManager.StorageType.BIN);
 
             string levelDataPath = instance.levelFolder.GetPath() + levelMetaData.localLevelId + "/Index.json";
 
             instance.levelData = m.Load<LevelData>(levelDataPath);
 
-            LevelManager.currentLevel.loadType = Level.LoadType.All;
+            instance.regionLoaded = new Dictionary<int, bool>();
+
+
+            LoadAllRegions();
 
             levelLoadedEvent.Invoke();
         }

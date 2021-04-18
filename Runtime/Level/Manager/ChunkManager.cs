@@ -23,11 +23,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         void Start()
         {
-            if(instance != null)
-            {
-                Destroy(this);
-            } 
-            instance = this;
             Setup();
         }
 
@@ -76,13 +71,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return regionPosition;
         }
 
-        void Setup()
+        public void Setup()
         {
-            if(!ready)
+
+
+            if (instance != null)
             {
+                Destroy(this);
+            }
+            instance = this;
+
+
+            if (!instance.ready)
+            {
+
                 chunkPrefab = Resources.Load("Chunk");
                 chunks = new Dictionary<Tuple<int, int>, Chunk>();
-                ready = true;
+                instance.ready = true;
             }
         }
 

@@ -31,6 +31,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameObject level = Instantiate(levelPrefab) as GameObject;
             level.name = "Level " + currentLevelMetaData.localLevelId;
             currentLevel = level.GetComponent<Level>();
+            ChunkManager cm = level.GetComponent<ChunkManager>();
+            cm.Setup();
         }
 
 
