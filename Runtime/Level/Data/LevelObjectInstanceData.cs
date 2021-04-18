@@ -9,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     [Serializable]
     public class LevelObjectInstanceData
     {
-        string type;
+        public string type;
         float x;
         float y;
         float z;
@@ -18,6 +18,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         float q_y;
         float q_z;
         float q_w;
+
+        public Vector3 GetLocation()
+        {
+            return new Vector3(x,y,z);
+        }
+
+        public Quaternion GetRotation()
+        {
+            return new Quaternion(q_x,q_y,q_z,q_w);
+        }
 
         public static LevelObjectInstanceData FromInstance(LevelObject o)
         {

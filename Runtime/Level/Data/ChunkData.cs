@@ -8,7 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     [Serializable]
     public class ChunkData
     {
-        List<LevelObjectInstanceData> levelObjects = new List<LevelObjectInstanceData>();
+        public List<LevelObjectInstanceData> levelObjects = new List<LevelObjectInstanceData>();
 
         public static ChunkData FromChunk(Chunk c)
         {

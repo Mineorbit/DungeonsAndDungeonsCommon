@@ -21,6 +21,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static UnityEvent levelLoadedEvent;
         public static UnityEvent levelListLoadedEvent;
 
+        public LevelData levelData;
+
         public void Awake()
         {
             if(instance != null)
@@ -34,7 +36,67 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateLocalLevelList();
         }
 
-       
+
+        public static void LoadRegion(int regionId)
+        {
+            string pathToLevel = instance.levelFolder.GetPath()+LevelManager.currentLevelMetaData.localLevelId;
+            SaveManager c = new SaveManager(SaveManager.StorageType.BIN);
+            RegionData regionData = c.Load<RegionData>(pathToLevel + "/" + regionId + ".bin");
+
+            List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
+
+            foreach (ChunkData chunkData in regionData.chunkDatas.Values)
+            {
+                levelObjectInstances.AddRange(chunkData.levelObjects);
+            }
+
+            Dictionary<string, LevelObjectData> levelObjectDatas = LevelObjectData.GetAllBuildableByUniqueType();
+
+            foreach (LevelObjectInstanceData i in levelObjectInstances)
+            {
+                LevelObjectData d;
+                if(levelObjectDatas.TryGetValue(i.type,out d))
+                {
+
+                    LevelManager.currentLevel.Add(d,i.GetLocation(), i.GetRotation());
+                }
+            }
+
+        }
+
+        public static void ChangeLevelLoading()
+        {
+            Debug.Log("Load Type changed "+ LevelManager.currentLevel.loadType);
+            if (LevelManager.currentLevel.loadType == Level.LoadType.All)
+            {
+                foreach(int regionId in instance.levelData.regions.Values)
+                {
+                    Debug.Log("Loading region "+regionId);
+                    LoadRegion(regionId);
+                }
+            }
+            else if (LevelManager.currentLevel.loadType == Level.LoadType.Target)
+            {
+
+            }
+        }
+
+        void UpdateLiveLevelLoading()
+        {
+            if (LevelManager.currentLevel.loadType == Level.LoadType.All)
+            {
+
+            }
+            else if (LevelManager.currentLevel.loadType == Level.LoadType.Target)
+            {
+
+            }
+        }
+
+        public void Update()
+        {
+            UpdateLiveLevelLoading();
+        }
 
         public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true)
         {
@@ -55,9 +117,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public static void Load(LevelMetaData levelMetaData)
         {
             if (levelMetaData == null) return;
+
+            LevelManager.Clear();
             LevelManager.currentLevelMetaData = levelMetaData;
             LevelManager.Instantiate();
 
+
+            SaveManager m = new SaveManager(SaveManager.StorageType.BIN);
+
+            string levelDataPath = instance.levelFolder.GetPath() + levelMetaData.localLevelId + "/Index.json";
+
+            instance.levelData = m.Load<LevelData>(levelDataPath);
+
+            LevelManager.currentLevel.loadType = Level.LoadType.All;
 
             levelLoadedEvent.Invoke();
         }
@@ -66,17 +138,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     static void SaveLevelData(string pathToLevel)
     {
             Dictionary<Tuple<int, int>, RegionData> regions = ChunkManager.instance.FetchRegionData();
-            LevelData levelData = new LevelData();
+            instance.levelData = new LevelData();
 
-            SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
             SaveManager c = new SaveManager(SaveManager.StorageType.BIN);
+
             foreach (KeyValuePair<Tuple<int, int>, RegionData> region in regions)
             {
-                levelData.regions.Add(region.Key,region.Value.id);
+                instance.levelData.regions.Add(region.Key,region.Value.id);
                 c.Save(region.Value, pathToLevel+"/"+region.Value.id+".bin", persistent: false);
             }
 
-            m.Save(levelData, pathToLevel + "/Index.json", persistent: false);
+            c.Save(instance.levelData, pathToLevel + "/Index.json", persistent: false);
 
     }
 

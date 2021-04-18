@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 string data = reader.ReadToEnd();
                 reader.Close();
 
-                result = JsonConvert.DeserializeObject<T>(data);
+                result = JsonUtility.FromJson<T>(data);
             }
             else if (storageType == StorageType.BIN)
             {
@@ -60,7 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (storageType == StorageType.JSON)
             {
                 StreamWriter writer = new StreamWriter(filePath);
-                string content = JsonConvert.SerializeObject(o, Formatting.Indented);
+                string content = JsonUtility.ToJson(o);
                 writer.WriteLine(content);
                 writer.Flush();
                 writer.Close();
