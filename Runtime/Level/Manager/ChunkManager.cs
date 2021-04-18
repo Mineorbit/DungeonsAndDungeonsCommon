@@ -40,7 +40,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Tuple<int, int> regionPosition = GetRegionPosition(chunk.Key);
                 var positionInRegion = GetPositionInRegion(chunk.Key);
+
                 ChunkData chunkData = ChunkData.FromChunk(chunk.Value);
+
+
 
                 int rid = 0;
 
@@ -48,12 +51,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (regionData.TryGetValue(regionPosition, out r))
                 {
-                    r.chunkDatas[positionInRegion.a, positionInRegion.b] = chunkData;
+                    r.chunkDatas.Add(new Tuple<int,int>(positionInRegion.a, positionInRegion.b),chunkData);
                 }
                 else
                 {
                     r = new RegionData(rid);
-                    r.chunkDatas[positionInRegion.a, positionInRegion.b] = chunkData;
+                    r.chunkDatas.Add(new Tuple<int, int>(positionInRegion.a, positionInRegion.b), chunkData);
                     regionData.Add(regionPosition,r);
                 }
             }
