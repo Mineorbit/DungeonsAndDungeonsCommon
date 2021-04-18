@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8463462398121663209}
   - component: {fileID: 8463462398121663214}
   - component: {fileID: 7449165393840690159}
+  - component: {fileID: -7932758986352618505}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -76,6 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ac786db4c49ae4bbaaccfcbffea7d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelState: 0
+  _loadType: 0
   dynamicObjects: {fileID: 0}
   spawn: []
   goal: {fileID: 0}
@@ -120,3 +123,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca9c102f89be074f8a9d2b6253fecde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7932758986352618505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8463462398121663211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce71630b6397d94fb312e42d728235b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  count: 0

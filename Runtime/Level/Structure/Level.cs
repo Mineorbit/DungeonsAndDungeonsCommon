@@ -8,21 +8,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public enum LevelState {Active , Inactive};
         public enum LoadType { All, Target };
-        
+
         public LevelState levelState;
-        public LoadType _loadType;
-        public LoadType loadType
-        {
-            get
-            {
-                return _loadType;
-            }
-            set
-            {
-                _loadType = value;
-                LevelDataManager.ChangeLevelLoading();
-            }
-        }
+        public LoadType loadType;
 
         public Transform dynamicObjects;
 
@@ -55,7 +43,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Start()
         {
-            gameObject.AddComponent<ChunkManager>();
             levelState = LevelState.Inactive;
             loadType = LoadType.All;
             Setup();
@@ -120,7 +107,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Chunk chunk = ChunkManager.GetChunk(position);
             if (chunk != null)
             {
-                Debug.Log(levelObjectData.name);
                 GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
                 g.GetComponent<LevelObject>().enabled = activated;
             }
