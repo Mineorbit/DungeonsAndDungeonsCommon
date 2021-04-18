@@ -122,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Debug.Log(levelObjectData.name);
                 GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
-            g.GetComponent<LevelObject>().enabled = activated;
+                g.GetComponent<LevelObject>().enabled = activated;
             }
         }
 
@@ -145,6 +145,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				return null;
 			}
             var created = levelObjectData.Create(position, rotation, dynamicObjects);
+            created.GetComponent<LevelObject>().enabled = activated;
             return created;
         }
 
