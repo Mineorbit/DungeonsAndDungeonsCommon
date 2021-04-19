@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: PlayerSpawnRed
   m_EditorClassIdentifier: 
-  prefab: {fileID: 11400000}
+  prefab: {fileID: 7565664751962724335, guid: b7d9d81b4aea53d44a2ca072e3b181b2, type: 3}
   uniqueLevelObjectId: f1653678-1faf-403e-bf84-3c36b3eb7f27
   granularity: 2
   name: Red Player Spawn
