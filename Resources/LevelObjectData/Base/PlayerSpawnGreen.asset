@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: PlayerSpawnGreen
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3672395389633107163, guid: 30bff139244ced641b0d89ed372153a7, type: 3}
+  prefab: {fileID: 11400000}
   uniqueLevelObjectId: 7fc33aec-19dc-4512-b31b-8a0c99a9d8b6
-  levelObjectDataId: 6
   granularity: 2
   name: Green Player Spawn
   dynamicInstantiable: 0
