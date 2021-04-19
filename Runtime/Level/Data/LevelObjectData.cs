@@ -53,7 +53,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override GameObject Create(Vector3 location, Quaternion rotation, Transform parent)
         {
             GameObject g = base.Create(location, rotation, parent);
-            g.GetComponent<LevelObject>().type = uniqueLevelObjectId;
+            LevelObject lO = g.GetComponent<LevelObject>();
+            lO.type = uniqueLevelObjectId;
+            lO.OnInit();
             return g;
         }
 
