@@ -11,13 +11,28 @@ public class PlayerSpawn : LevelObject
         public enum Color { Blue = 0, Red, Green, Yellow };
         public Color color;
         public ColorChanger colorChanger;
-    
+
+        UnityEngine.Color GetColor(Color c)
+        {
+            switch(c)
+            {
+                case Color.Blue:
+                    return UnityEngine.Color.blue;
+                case Color.Green:
+                    return UnityEngine.Color.green;
+                case Color.Red:
+                    return UnityEngine.Color.red;
+                case Color.Yellow:
+                    return UnityEngine.Color.yellow;
+            }
+            return UnityEngine.Color.white;
+        }
     public override void OnInit()
     {
             if (LevelManager.currentLevel.spawn[(int)color] != null)
                 LevelManager.currentLevel.Remove(this);
             LevelManager.currentLevel.spawn[(int)color] = this;
-            colorChanger.SetColor(0,UnityEngine.Color.green);
+            colorChanger.SetColor(0,GetColor(color));
     }
     
     void Start()

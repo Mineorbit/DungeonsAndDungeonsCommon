@@ -19,5 +19,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
         }
+
+        void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("Test");
+        }
     }
 }
