@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 
   color: 0
+  colorChanger: {fileID: 2067056128478078573}
 --- !u!114 &2067056128478078573
 MonoBehaviour:
   m_ObjectHideFlags: 0
