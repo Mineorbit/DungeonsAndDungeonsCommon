@@ -16,8 +16,8 @@ public class PlayerSpawn : LevelObject
     {
             if (LevelManager.currentLevel.spawn[(int)color] != null)
                 LevelManager.currentLevel.Remove(this);
-            colorChanger.SetColor(0,UnityEngine.Color.green);
             LevelManager.currentLevel.spawn[(int)color] = this;
+            colorChanger.SetColor(0,UnityEngine.Color.green);
     }
     
     void Start()

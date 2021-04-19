@@ -7,7 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class PlayerGoal : LevelObject
     {
         // Start is called before the first frame update
-        void Start()
+        public override void OnInit()
         {
             if (LevelManager.currentLevel.goal != null)
                 LevelManager.currentLevel.Remove(this);
