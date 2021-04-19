@@ -61,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             loadType = LoadType.Target;
             Setup();
         }
-        void Setup()
+        public void Setup()
         {
             dynamicObjects = transform.Find("Dynamic");
             createPlayerSpawnList();
