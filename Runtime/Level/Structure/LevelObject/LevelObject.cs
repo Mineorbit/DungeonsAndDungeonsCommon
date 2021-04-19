@@ -9,6 +9,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string type;
 
 
+        public virtual void OnInit()
+        {
+
+        }
+
+        public virtual void OnDeInit()
+        {
+
+        }
+
         void Start()
         {
 
