@@ -23,6 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     t.gameObject.SetActive(false);
             }
 
+            if (navMeshSurface == null) navMeshSurface = GetComponent<NavMeshSurface>();
             navMeshSurface.BuildNavMesh();
 
             foreach (Transform t in p)
