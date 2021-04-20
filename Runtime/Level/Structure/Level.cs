@@ -17,6 +17,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public PlayerSpawn[]    spawn;
         public PlayerGoal		goal;
 
+        bool changedAfterLoad = false;
+
 
         //this needs to be false in network play
         bool _activated;
@@ -56,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnStartRound()
         {
-            GenerateNavigation();
+            if(changedAfterLoad) GenerateNavigation();
             levelState = LevelState.Active;
             loadType = LoadType.Target;
             Setup();
@@ -109,6 +111,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
                 g.GetComponent<LevelObject>().enabled = activated;
+
+                changedAfterLoad = true;
             }
         }
 
@@ -117,6 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(levelObject.transform.parent != dynamicObjects)
             {
                 Destroy(levelObject.gameObject);
+                changedAfterLoad = true;
             }
         }
 
