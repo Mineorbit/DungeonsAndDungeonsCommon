@@ -127,14 +127,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         LevelObject GetTopLevelObject(GameObject g)
         {
-            LevelObject toDelete = null;
-            LevelObject p = g.GetComponent<LevelObject>();
+            LevelObject r = null;
+            GameObject p = g;
+            LevelObject z = g.GetComponent<LevelObject>();
             do
             {
-                toDelete = p;
-                p = p.transform.parent.gameObject.GetComponentInParent<LevelObject>(includeInactive: true);
-            } while (p != null);
-            return toDelete;
+                r = z;
+                z = p.transform.parent.gameObject.GetComponentInParent<LevelObject>(includeInactive: true);
+                p = p.transform.parent.gameObject;
+            } while (z != null);
+            return r;
         }
 
         public void Remove(GameObject levelObject)
