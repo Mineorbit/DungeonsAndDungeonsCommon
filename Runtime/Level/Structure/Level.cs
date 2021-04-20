@@ -65,10 +65,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnStartRound()
         {
+            Setup();
             GenerateNavigation();
             levelState = LevelState.Active;
             loadType = LoadType.Target;
-            Setup();
             SetLevelObjectActivity(true);
         }
        
