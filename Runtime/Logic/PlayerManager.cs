@@ -120,5 +120,21 @@ public class PlayerManager : MonoBehaviour
         playerControllers[localId].transform.position = location;
         //Noch HUD Aktivieren
     }
+
+    public static int GetPlayerId(GameObject player)
+        {
+            if (player.tag == "Player")
+            {
+                Player p = player.GetComponent<Player>();
+                for(int i = 0; i<4;i++)
+                {
+                    if(p == playerManager.players[i])
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
 }
 }
