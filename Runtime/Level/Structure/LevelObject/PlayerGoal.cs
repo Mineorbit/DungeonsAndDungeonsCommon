@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (LevelManager.currentLevel.goal != null)
                 LevelManager.currentLevel.Remove(this);
             LevelManager.currentLevel.goal = this;
-            hitbox = GetComponent<Hitbox>();
+            hitbox = GetComponentInChildren<Hitbox>();
             hitbox.Attach("Player");
             hitbox.enterEvent.AddListener((x) => { Enter(x); });
             hitbox.exitEvent.AddListener((x) => { Exit(x); });
