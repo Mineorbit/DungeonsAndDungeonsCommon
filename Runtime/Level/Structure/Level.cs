@@ -58,10 +58,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnStartRound()
         {
-            if(changedAfterLoad) GenerateNavigation();
+            GenerateNavigation();
             levelState = LevelState.Active;
             loadType = LoadType.Target;
             Setup();
+            SetLevelObjectActivity(true);
         }
         public void Setup()
         {
@@ -74,8 +75,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 spawn = new PlayerSpawn[4];
         }
 
-        void GenerateNavigation()
+        void GenerateNavigation(bool force = false)
         {
+            if(changedAfterLoad || force)
             LevelNavGenerator.UpdateNavMesh();
         }
 
@@ -90,6 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnEndRound()
         {
+            SetLevelObjectActivity(false);
             ClearDynamicObjects();
             levelState = LevelState.Inactive;
             loadType = LoadType.All;
