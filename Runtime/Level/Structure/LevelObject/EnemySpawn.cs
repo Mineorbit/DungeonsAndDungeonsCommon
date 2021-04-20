@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class EnemySpawn : MonoBehaviour
+    public class EnemySpawn : LevelObject
     {
         public LevelObjectData enemyToSpawn;
 

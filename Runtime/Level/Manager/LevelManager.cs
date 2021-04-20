@@ -49,15 +49,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelDataManager.Load(lastMetaData);
         }
 
-        public static void StartRound(bool reset = true, bool resetStatic = false)
+        public static void StartRound(bool resetDynamic = true, bool resetStatic = false)
         {
-            if (reset)
-            {
-                ResetDynamic();
+                if (resetDynamic)
+                    ResetDynamic();
                 if(resetStatic)
-                ResetToSaveState();
+                    ResetToSaveState();
 
-            }
             currentLevel.OnStartRound();
             levelStartedEvent.Invoke();
         }
