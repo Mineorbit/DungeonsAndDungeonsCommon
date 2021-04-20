@@ -38,10 +38,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void Enter(GameObject other)
         {
-            Debug.Log("Trigger triggered");
             int p = PlayerManager.GetPlayerId(other);
-            Debug.Log("We got "+p);
-            if (p > 0) playersInside[p] = true;
+            if (p >= 0) playersInside[p] = true;
             for (int i = 0; i < 4; i++)
             {
                 if (!playersInside[i]) return;
@@ -53,7 +51,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Exit(GameObject other)
         {
             int p = PlayerManager.GetPlayerId(other);
-            if (p > 0) playersInside[p] = false;
+            if (p >= 0) playersInside[p] = false;
         }
     }
 }
