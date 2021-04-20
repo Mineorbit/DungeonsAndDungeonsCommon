@@ -125,14 +125,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-		public void Remove(LevelObject levelObject)
+        public void Remove(GameObject levelObject)
         {
-            if(levelObject.transform.parent != dynamicObjects)
+            LevelObject toDelete = null;
+            LevelObject p = levelObject.GetComponent<LevelObject>();
+            do
             {
-                Destroy(levelObject.gameObject);
+                toDelete = p;
+                p = levelObject.gameObject.GetComponentInParent<LevelObject>();
+            } while (p != null);
+
+
+            if(toDelete != null)
+            {
+
+                if (toDelete.transform.parent != dynamicObjects)
+                {
+                Destroy(toDelete.gameObject);
                 navigationUpdateNeeded = true;
+                }
             }
         }
+
+
+       
 
 
         //These Objects will be dropped on the next Level reset
