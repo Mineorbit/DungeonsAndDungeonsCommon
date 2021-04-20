@@ -33,7 +33,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void OnTriggerEnter(Collider other)
         {
+            Debug.Log("Trigger triggered");
             int p = PlayerManager.GetPlayerId(other.gameObject);
+            Debug.Log("We got "+p);
             if (p > 0) playersInside[p] = true;
             for (int i = 0; i < 4; i++)
             {
@@ -42,6 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Game won");
             GameWinEvent.Invoke();
         }
+
         void OnTriggerExit(Collider other)
         {
             int p = PlayerManager.GetPlayerId(other.gameObject);
