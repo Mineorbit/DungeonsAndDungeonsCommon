@@ -39,6 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (!playersInside[i]) return;
             }
+            Debug.Log("Game won");
             GameWinEvent.Invoke();
         }
         void OnTriggerExit(Collider other)
