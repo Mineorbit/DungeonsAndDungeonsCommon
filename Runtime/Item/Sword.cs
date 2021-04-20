@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnAttach();
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
-            hitBox.Attach(owner, "Enemy", new Vector3(0, 0, 1));
+            //hitBox.Attach(owner, "Enemy", new Vector3(0, 0, 1));
             hitBox.enterEvent.AddListener((x) => { TryDamage(x); });
             hitBox.Deactivate();
         }
