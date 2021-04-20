@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class BlobEnemySpawn : MonoBehaviour
+    public class EnemySpawn : MonoBehaviour
     {
-        // Start is called before the first frame update
+        public LevelObjectData enemyToSpawn;
+
         void Start()
         {
 
