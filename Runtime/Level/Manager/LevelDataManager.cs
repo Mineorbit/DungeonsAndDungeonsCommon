@@ -39,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public static void LoadRegion(int regionId)
+        static void LoadRegion(int regionId)
         {
             if (instance.regionLoaded.ContainsKey(regionId) && instance.regionLoaded[regionId]) return;
             string pathToLevel = instance.levelFolder.GetPath()+LevelManager.currentLevelMetaData.localLevelId;
@@ -69,7 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        public static void LoadAllRegions()
+        static void LoadAllRegions()
         {
             foreach (int regionId in instance.levelData.regions.Values)
             {
@@ -77,7 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public static void ChangeLevelLoading()
+        static void ChangeLevelLoading()
         {
             Debug.Log("Load Type changed "+ LevelManager.currentLevel.loadType);
             if (LevelManager.currentLevel.loadType == Level.LoadType.All)
@@ -151,6 +151,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             LoadAllRegions();
+
+            LevelManager.currentLevel.GenerateNavigation(force: true);
 
             levelLoadedEvent.Invoke();
         }

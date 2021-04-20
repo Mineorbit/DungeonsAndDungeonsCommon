@@ -17,7 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public PlayerSpawn[]    spawn;
         public PlayerGoal		goal;
 
-        bool changedAfterLoad = false;
+        bool navigationUpdateNeeded = false;
 
 
         //this needs to be false in network play
@@ -75,10 +75,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 spawn = new PlayerSpawn[4];
         }
 
-        void GenerateNavigation(bool force = false)
+        public void GenerateNavigation(bool force = false)
         {
-            if(changedAfterLoad || force)
-            LevelNavGenerator.UpdateNavMesh();
+            if(navigationUpdateNeeded || force)
+            { 
+                LevelNavGenerator.UpdateNavMesh();
+                navigationUpdateNeeded = false;
+            }
         }
 
         public void ClearDynamicObjects()
@@ -115,7 +118,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
                 g.GetComponent<LevelObject>().enabled = activated;
 
-                changedAfterLoad = true;
+                navigationUpdateNeeded = true;
             }
         }
 
@@ -124,7 +127,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(levelObject.transform.parent != dynamicObjects)
             {
                 Destroy(levelObject.gameObject);
-                changedAfterLoad = true;
+                navigationUpdateNeeded = true;
             }
         }
 
