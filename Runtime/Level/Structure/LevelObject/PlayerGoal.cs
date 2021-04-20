@@ -8,8 +8,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class PlayerGoal : LevelObject
     {
         public static UnityEvent GameWinEvent = new UnityEvent();
+        Hitbox hitbox;
 
-        bool[] playersInside;
+        public bool[] playersInside;
 
         // Start is called before the first frame update
         public override void OnInit()
@@ -17,6 +18,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (LevelManager.currentLevel.goal != null)
                 LevelManager.currentLevel.Remove(this);
             LevelManager.currentLevel.goal = this;
+            hitbox = GetComponent<Hitbox>();
+            hitbox.Attach("Player");
+            hitbox.enterEvent.AddListener((x) => { Enter(x); });
+            hitbox.exitEvent.AddListener((x) => { Exit(x); });
         }
 
 
@@ -31,10 +36,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        void OnTriggerEnter(Collider other)
+        void Enter(GameObject other)
         {
             Debug.Log("Trigger triggered");
-            int p = PlayerManager.GetPlayerId(other.gameObject);
+            int p = PlayerManager.GetPlayerId(other);
             Debug.Log("We got "+p);
             if (p > 0) playersInside[p] = true;
             for (int i = 0; i < 4; i++)
@@ -45,9 +50,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameWinEvent.Invoke();
         }
 
-        void OnTriggerExit(Collider other)
+        void Exit(GameObject other)
         {
-            int p = PlayerManager.GetPlayerId(other.gameObject);
+            int p = PlayerManager.GetPlayerId(other);
             if (p > 0) playersInside[p] = false;
         }
     }
