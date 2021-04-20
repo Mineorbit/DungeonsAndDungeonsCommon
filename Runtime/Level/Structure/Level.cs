@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public PlayerGoal		goal;
 
         bool navigationUpdateNeeded = false;
+        LevelNavGenerator navGenerator;
 
 
         //this needs to be false in network play
@@ -50,7 +51,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Setup();
         }
 
-		
+        public void Setup()
+        {
+            dynamicObjects = transform.Find("Dynamic");
+            navGenerator = GetComponent<LevelNavGenerator>();
+            createPlayerSpawnList();
+        }
+
         public bool PositionOccupied()
         {
             return false;
@@ -64,11 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Setup();
             SetLevelObjectActivity(true);
         }
-        public void Setup()
-        {
-            dynamicObjects = transform.Find("Dynamic");
-            createPlayerSpawnList();
-        }
+       
         void createPlayerSpawnList()
         {
             if (spawn.Length < 4)
@@ -79,7 +82,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(navigationUpdateNeeded || force)
             { 
-                LevelNavGenerator.UpdateNavMesh();
+                navGenerator.UpdateNavMesh();
                 navigationUpdateNeeded = false;
             }
         }

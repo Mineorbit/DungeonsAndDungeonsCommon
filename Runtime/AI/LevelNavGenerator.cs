@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        public static void UpdateNavMesh()
+        public void UpdateNavMesh()
         {
             Debug.Log("Building");
             Transform p = LevelManager.currentLevel.GetAllDynamicObjects();
