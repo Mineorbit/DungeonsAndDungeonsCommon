@@ -8,16 +8,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public string levelObjectDataType;
 
-
+		bool initialized = false;
         public virtual void OnInit()
         {
-
+			initialized = true;
         }
 
         public virtual void OnDeInit()
         {
-
+			initialized = false;
         }
+		
+		public virtual void OnEnable(){
+		{
+			if(!initialized)
+			OnInit();	
+		}
+		
+		public virtual void OnDisable(){
+		{
+			if(initialized)
+			OnDeInit();
+		}
+
 
         void Start()
         {
