@@ -31,7 +31,7 @@ public class PlayerSpawn : LevelObject
     {
             if (LevelManager.currentLevel.spawn[(int)color] != null)
 			{
-                LevelManager.currentLevel.Remove(this);
+                LevelManager.currentLevel.Remove(this.gameObject);
 			}else
 			{
             LevelManager.currentLevel.spawn[(int)color] = this;
