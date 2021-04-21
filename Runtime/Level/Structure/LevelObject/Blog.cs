@@ -10,11 +10,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
-
-        }
-
-        void Start()
-        {
             enemyController = GetComponent<EnemyController>();
         }
 
