@@ -6,7 +6,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelNavGenerator : MonoBehaviour
     {
-        public static NavMeshSurface navMeshSurface;
+        public NavMeshSurface navMeshSurface;
         void Start()
         {
             if (navMeshSurface == null) navMeshSurface = GetComponent<NavMeshSurface>();
@@ -24,7 +24,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             if (navMeshSurface == null) navMeshSurface = GetComponent<NavMeshSurface>();
+
+
             navMeshSurface.BuildNavMesh();
+
+            Debug.Log("Built surface");
 
             foreach (Transform t in p)
             {
