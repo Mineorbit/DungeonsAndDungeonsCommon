@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         int spawnCount;
 
-        List<GameObject> spawnedEnemies;
+        GameObject spawnedEnemy;
 
 
 
@@ -22,14 +22,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(spawnedEnemies.Count == 1)
             {
-                spawnedEnemies[0].transform.position = SpawnLocation();
+                spawnedEnemy.transform.position = SpawnLocation();
             }
         }
 
         public override void OnEnable()
         {
-			if(spawnedEnemies == null)
-            spawnedEnemies = new List<GameObject>();
             spawnCount = maxSpawnCount;
             SpawnEnemy();
         }
@@ -49,15 +47,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		
         void SpawnEnemy()
         {
-            if(spawnCount > 0)
+            if(spawnedEnemy == null)
             {
-                spawnCount--;
                 Debug.Log("spawning it");
-                GameObject newEnemy = LevelManager.currentLevel.AddDynamic(enemyToSpawn,SpawnLocation(),new Quaternion(0,0,0,0));
-                Debug.Log(newEnemy);
-                if(newEnemy != null)
+                spawnedEnemy = LevelManager.currentLevel.AddDynamic(enemyToSpawn,SpawnLocation(),new Quaternion(0,0,0,0));
+                if(spawnedEnemy != null)
                 {
-                    spawnedEnemies.Add(newEnemy);
+                    spawnCount--;
                 }
             }
         }
