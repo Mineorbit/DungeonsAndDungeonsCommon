@@ -42,6 +42,8 @@ public class PlayerSpawn : LevelObject
 	public override void OnEnable()
 	{
 	}
+	
+	
     // Update is called once per frame
     void Update()
     {

@@ -15,10 +15,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         List<GameObject> spawnedEnemies;
 
 
-        void Start()
-        {
-        
-        }
 
         public override void OnInit()
         {
@@ -28,14 +24,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SpawnEnemy();
         }
 
-        void OnEnable()
+        public override void OnEnable()
         {
 			if(spawnedEnemies == null)
             spawnedEnemies = new List<GameObject>();
             spawnCount = maxSpawnCount - spawnedEnemies.Count;
             if(spawnCount == maxSpawnCount) SpawnEnemy();
         }
-
+		
+		public override void OnDisable()
+		{
+		foreach(GameObject g in spawnedEnemies)
+		{
+				LevelManager.currentLevel.RemoveDynamic(g.GetComponent<Enemy>());
+		}
+		}
+		
         void SpawnEnemy()
         {
             if(spawnCount > 0)

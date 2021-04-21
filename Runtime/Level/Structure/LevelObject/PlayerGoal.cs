@@ -30,7 +30,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			base.OnEnable();
             playersInside = new bool[4];
         }
-
         // Update is called once per frame
         void Update()
         {
