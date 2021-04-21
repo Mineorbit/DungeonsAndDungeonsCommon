@@ -6,10 +6,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Blog : Enemy
     {
-        // Start is called before the first frame update
-        void Start()
+        EnemyController enemyController;
+
+        public override void OnInit()
         {
 
+        }
+
+        void Start()
+        {
+            enemyController = GetComponent<EnemyController>();
+        }
+
+        void OnEnable()
+        {
+            enemyController.enabled = true;
+        }
+
+        void OnDisable()
+        {
+            enemyController.enabled = false;
         }
 
         // Update is called once per frame
