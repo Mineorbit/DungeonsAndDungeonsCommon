@@ -30,9 +30,13 @@ public class PlayerSpawn : LevelObject
     public override void OnInit()
     {
             if (LevelManager.currentLevel.spawn[(int)color] != null)
-                LevelManager.currentLevel.Remove(this.gameObject);
+			{
+                LevelManager.currentLevel.Remove(this);
+			}else
+			{
             LevelManager.currentLevel.spawn[(int)color] = this;
             colorChanger.SetColor(0,GetColor(color));
+			}
     }
     
     void Start()

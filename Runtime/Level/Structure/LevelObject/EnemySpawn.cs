@@ -29,8 +29,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SpawnEnemy();
         }
 
-		
-		public override void OnDeInit()
+        public override void OnDisable()
+        {
+            spawnCount = maxSpawnCount;
+            SpawnEnemy();
+        }
+
+
+
+        public override void OnDeInit()
 		{
             if(spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
 		}
