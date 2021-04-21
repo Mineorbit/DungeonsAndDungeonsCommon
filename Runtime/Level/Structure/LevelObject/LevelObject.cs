@@ -19,13 +19,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			initialized = false;
         }
 		
-		public virtual void OnEnable(){
+		public virtual void OnEnable()
 		{
 			if(!initialized)
 			OnInit();	
 		}
 		
-		public virtual void OnDisable(){
+		public virtual void OnDisable()
 		{
 			if(initialized)
 			OnDeInit();
