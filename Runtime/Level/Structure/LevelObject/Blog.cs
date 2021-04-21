@@ -10,16 +10,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
+			base.OnInit();
             enemyController = GetComponent<EnemyController>();
         }
 
-        void OnEnable()
+        public override void OnEnable()
         {
+			base.OnEnable();
             enemyController.enabled = true;
         }
 
-        void OnDisable()
+        public override void OnDisable()
         {
+			base.OnDisable();
             enemyController.enabled = false;
         }
 
