@@ -25,8 +25,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void OnEnable()
+        public override void OnEnable()
         {
+			base.OnEnable();
             playersInside = new bool[4];
         }
 
@@ -44,7 +45,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (!playersInside[i]) return;
             }
-            Debug.Log("Game won");
             GameWinEvent.Invoke();
         }
 
