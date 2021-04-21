@@ -96,7 +96,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             SetLevelObjectActivity(false);
             if(clearDynamic) ClearDynamicObjects();
-            levelState = LevelState.Inactive;
             loadType = LoadType.All;
         }
 
