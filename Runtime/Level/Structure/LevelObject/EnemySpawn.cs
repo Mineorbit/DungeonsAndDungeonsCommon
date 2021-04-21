@@ -20,10 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
-            if(spawnedEnemies.Count == 1)
-            {
-                spawnedEnemy.transform.position = SpawnLocation();
-            }
+            spawnedEnemy.transform.position = SpawnLocation();
         }
 
         public override void OnEnable()
@@ -35,10 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		
 		public override void OnDeInit()
 		{
-		    foreach(GameObject g in spawnedEnemies)
-		    {
-				LevelManager.currentLevel.RemoveDynamic(g.GetComponent<Enemy>());
-		    }
+            if(spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
 		}
         Vector3 SpawnLocation()
         {
