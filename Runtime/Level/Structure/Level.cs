@@ -6,10 +6,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Level : MonoBehaviour
     {
-        public enum LevelState {Active , Inactive};
         public enum LoadType { All, Target };
 
-        public LevelState levelState;
         public LoadType loadType;
 
         public Transform dynamicObjects;
@@ -46,7 +44,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Start()
         {
-            levelState = LevelState.Inactive;
             loadType = LoadType.All;
             Setup();
         }
@@ -67,7 +64,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Setup();
             GenerateNavigation();
-            levelState = LevelState.Active;
             loadType = LoadType.Target;
             SetLevelObjectActivity(true);
         }
@@ -96,10 +92,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void OnEndRound()
+        public void OnEndRound(bool clearDynamic = false)
         {
             SetLevelObjectActivity(false);
-            ClearDynamicObjects();
+            if(clearDynamic) ClearDynamicObjects();
             levelState = LevelState.Inactive;
             loadType = LoadType.All;
         }

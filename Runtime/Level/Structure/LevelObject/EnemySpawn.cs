@@ -40,6 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnDeInit()
 		{
 		}
+
         Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;
