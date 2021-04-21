@@ -10,6 +10,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public int maxSpawnCount = 1;
 
+        public Vector3 spawnOffset;
+
         int spawnCount;
 
         List<GameObject> spawnedEnemies;
@@ -18,34 +20,41 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
-			if(spawnedEnemies == null)
-            spawnedEnemies = new List<GameObject>();
-            spawnCount = maxSpawnCount;
-            SpawnEnemy();
+            if(spawnedEnemies.Count == 1)
+            {
+                spawnedEnemies[0].transform.position = SpawnLocation();
+            }
         }
 
         public override void OnEnable()
         {
 			if(spawnedEnemies == null)
             spawnedEnemies = new List<GameObject>();
-            spawnCount = maxSpawnCount - spawnedEnemies.Count;
-            if(spawnCount == maxSpawnCount) SpawnEnemy();
+            spawnCount = maxSpawnCount;
+            SpawnEnemy();
         }
+
 		
-		public override void OnDisable()
+		public override void OnDeInit()
 		{
-		foreach(GameObject g in spawnedEnemies)
-		{
+		    foreach(GameObject g in spawnedEnemies)
+		    {
 				LevelManager.currentLevel.RemoveDynamic(g.GetComponent<Enemy>());
+		    }
 		}
-		}
+        Vector3 SpawnLocation()
+        {
+            return transform.position + spawnOffset;
+        }
 		
         void SpawnEnemy()
         {
             if(spawnCount > 0)
             {
                 spawnCount--;
-                GameObject newEnemy = LevelManager.currentLevel.AddDynamic(enemyToSpawn,transform.position+new Vector3(0,0.5f,0),new Quaternion(0,0,0,0));
+                Debug.Log("spawning it");
+                GameObject newEnemy = LevelManager.currentLevel.AddDynamic(enemyToSpawn,SpawnLocation(),new Quaternion(0,0,0,0));
+                Debug.Log(newEnemy);
                 if(newEnemy != null)
                 {
                     spawnedEnemies.Add(newEnemy);
