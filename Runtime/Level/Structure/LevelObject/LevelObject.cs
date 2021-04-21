@@ -6,7 +6,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelObject : MonoBehaviour
     {
 
-        public string type;
+        public string levelObjectDataType;
 
 
         public virtual void OnInit()

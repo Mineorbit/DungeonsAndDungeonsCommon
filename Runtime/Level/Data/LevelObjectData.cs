@@ -54,7 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameObject g = base.Create(location, rotation, parent);
             LevelObject lO = g.GetComponent<LevelObject>();
-            lO.type = uniqueLevelObjectId;
+            lO.levelObjectDataType = uniqueLevelObjectId;
             lO.OnInit();
             return g;
         }
