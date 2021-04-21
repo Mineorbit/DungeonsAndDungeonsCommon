@@ -39,7 +39,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnDeInit()
 		{
-            if(spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
 		}
         Vector3 SpawnLocation()
         {
