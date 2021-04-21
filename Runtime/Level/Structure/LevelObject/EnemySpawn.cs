@@ -22,6 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
+			if(spawnedEnemies == null)
             spawnedEnemies = new List<GameObject>();
             spawnCount = maxSpawnCount;
             SpawnEnemy();
@@ -29,6 +30,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void OnEnable()
         {
+			if(spawnedEnemies == null)
+            spawnedEnemies = new List<GameObject>();
             spawnCount = maxSpawnCount - spawnedEnemies.Count;
             if(spawnCount == maxSpawnCount) SpawnEnemy();
         }
