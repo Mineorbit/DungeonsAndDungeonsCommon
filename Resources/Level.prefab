@@ -77,11 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ac786db4c49ae4bbaaccfcbffea7d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelState: 0
   loadType: 0
   dynamicObjects: {fileID: 0}
   spawn: []
   goal: {fileID: 0}
+  missingPrefab: {fileID: 11400000, guid: 7822ed9d946806140973287d512abf8f, type: 2}
 --- !u!114 &7449165393840690159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca9c102f89be074f8a9d2b6253fecde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navMeshSurface: {fileID: 0}
 --- !u!114 &-7932758986352618505
 MonoBehaviour:
   m_ObjectHideFlags: 0

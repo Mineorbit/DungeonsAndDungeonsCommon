@@ -70,6 +70,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay, mask);
         }
 
+        //Needs to be refined
+
+        void EquipItem()
+        {
+
+            if (player.itemHandles[0] != null && itemsInProximity[0] != null)
+                player.itemHandles[0].Attach(itemsInProximity[0]);
+        }
+
         public void Move()
         {
 
@@ -92,7 +101,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // Pickup closest item
                 if(Input.GetKeyDown(KeyCode.G))
                 {
-                    player.itemHandles[0].Attach(itemsInProximity[0]);
+                    EquipItem();
                 }
 
                 if (IsGrounded)
