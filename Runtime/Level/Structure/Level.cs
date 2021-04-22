@@ -66,8 +66,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GenerateNavigation();
             loadType = LoadType.Target;
             SetLevelObjectActivity(true);
+            StartLevelObjects();
         }
-       
+
+        void StartLevelObjects()
+        {
+            foreach(LevelObject o in GetComponentsInChildren<LevelObject>())
+            {
+                o.OnStartRound();
+            }
+        }
+
+        void EndLevelObjects()
+        {
+            foreach (LevelObject o in GetComponentsInChildren<LevelObject>())
+            {
+                o.OnEndRound();
+            }
+        }
+
         void createPlayerSpawnList()
         {
             if (spawn.Length < 4)
@@ -94,6 +111,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnEndRound(bool clearDynamic = false)
         {
+            EndLevelObjects();
             SetLevelObjectActivity(false);
             if(clearDynamic) ClearDynamicObjects();
             loadType = LoadType.All;
