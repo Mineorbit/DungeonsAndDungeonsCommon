@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         int spawnCount;
 
-        GameObject spawnedEnemy;
+        GameObject spawnedItem;
 
         public override void OnStartRound()
         {
@@ -28,7 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
-            spawnedEnemy.transform.position = SpawnLocation();
+            spawnedItem.transform.position = SpawnLocation();
         }
 
         public override void OnEnable()
@@ -44,6 +44,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        //Change to on remove
+
+        public void OnDestroy()
+        {
+            if (spawnedItem != null) LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>()); 
+        }
+
+
 
         public override void OnDeInit()
         {
@@ -56,11 +64,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void SpawnEnemy()
         {
-            if (spawnedEnemy == null)
+            if (spawnedItem == null)
             {
                 Debug.Log("spawning it");
-                spawnedEnemy = LevelManager.currentLevel.AddDynamic( itemToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
-                if (spawnedEnemy != null)
+                spawnedItem = LevelManager.currentLevel.AddDynamic( itemToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
+                if (spawnedItem != null)
                 {
                     spawnCount--;
                 }
