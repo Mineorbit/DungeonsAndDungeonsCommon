@@ -31,6 +31,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			OnDeInit();
 		}
 
+        public virtual void  OnStartRound()
+        {
+
+        }
+
+        public virtual void OnEndRound()
+        {
+
+        }
 
         void Start()
         {
