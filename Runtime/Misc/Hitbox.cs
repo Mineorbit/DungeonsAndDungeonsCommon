@@ -25,6 +25,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             collider = GetComponent<Collider>();
         }
 
+        public void Attach(GameObject parent, string target, Vector3 localLocation)
+        {
+            Attach(target);
+            transform.parent = parent.transform;
+            transform.localPosition = localLocation;
+        }
+
         public void Activate()
         {
             collider.enabled = true;

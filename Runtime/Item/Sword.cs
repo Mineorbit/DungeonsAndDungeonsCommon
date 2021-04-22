@@ -11,11 +11,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         Hitbox hitBox;
         int damage = 20;
+
         public override void OnAttach()
         {
             base.OnAttach();
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
-            //hitBox.Attach(owner, "Enemy", new Vector3(0, 0, 1));
+            hitBox.Attach(owner, "Enemy", new Vector3(0, 0, 1));
             hitBox.enterEvent.AddListener((x) => { TryDamage(x); });
             hitBox.Deactivate();
         }
@@ -42,11 +43,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnDettach()
         {
+            if(hitBox != null)
             Destroy(hitBox.gameObject);
         }
         public void OnDestroy()
         {
-            Destroy(hitBox.gameObject);
+            if (hitBox != null)
+                Destroy(hitBox.gameObject);
         }
     }
 }
