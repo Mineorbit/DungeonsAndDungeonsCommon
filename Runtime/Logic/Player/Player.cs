@@ -65,10 +65,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Start()
         {
+            SetupItems();
+
+        }
+        public override void OnEnable()
+        {
+            SetupItems();
+        }
+
+        void SetupItems()
+        {
             // Temporary
             itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
             items = new Item[itemHandles.Length];
-
         }
 
         public virtual bool IsAlive()
