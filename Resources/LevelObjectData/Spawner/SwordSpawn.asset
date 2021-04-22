@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: Sword
+  m_Name: SwordSpawn
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4659217188774830942, guid: 84050714d0d97d942a23cee443e58ee1, type: 3}
-  uniqueLevelObjectId: db9c3303-4564-450d-8699-2ab9d56b99ad
+  prefab: {fileID: 8532608643960838078, guid: 65a0a8cf0308cb2449f7702a08f147e1, type: 3}
+  uniqueLevelObjectId: efc022f1-a486-49eb-8980-014611b51604
   granularity: 1
-  name: Little Sword
-  dynamicInstantiable: 1
-  levelInstantiable: 0
+  name: Sword
+  dynamicInstantiable: 0
+  levelInstantiable: 1

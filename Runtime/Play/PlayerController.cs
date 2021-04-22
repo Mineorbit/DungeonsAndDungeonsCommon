@@ -33,7 +33,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float heightRay = 0.55f;
 
+        public Hitbox itemHitbox;
 
+        public List<Item> itemsInProximity;
 
         //Setup References for PlayerController and initial values if necessary
         public void Awake()
@@ -49,6 +51,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void SetParams()
         {
             heightRay = 1.1f;
+
+            itemsInProximity = new List<Item>();
+            itemHitbox.Attach("Item");
+            itemHitbox.enterEvent.AddListener((x)=> { itemsInProximity.Add(x.GetComponent<Item>());  });
+            itemHitbox.exitEvent.AddListener((x) => { itemsInProximity.Remove(x.GetComponent<Item>()); });
         }
 
         void Start()
@@ -81,7 +88,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (cam != null)
                     targetDirection = Vector3.Normalize(Vector3.ProjectOnPlane(cam.right, transform.up) * Input.GetAxisRaw("Horizontal") + Vector3.ProjectOnPlane(cam.forward, transform.up) * Input.GetAxisRaw("Vertical"));
 
-
+            
+                // Pickup closest item
+                if(Input.GetKeyDown(KeyCode.G))
+                {
+                    player.itemHandles[0].Attach(itemsInProximity[0]);
+                }
 
                 if (IsGrounded)
                 {

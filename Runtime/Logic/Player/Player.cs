@@ -69,7 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
             items = new Item[itemHandles.Length];
 
-            //itemHandles[0].Attach(items[0]);
         }
 
         public virtual bool IsAlive()
