@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         bool navigationUpdateNeeded = false;
         LevelNavGenerator navGenerator;
 
+        public LevelObjectData missingPrefab;
 
         //this needs to be false in network play
         bool _activated;
@@ -120,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //These Objects will be stored in the Chunks and are permanent Information
         public void Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
         {
-            if (levelObjectData == null) return;
+            if (levelObjectData == null || levelObjectData.prefab == null) { Add(missingPrefab,position,rotation); return; }
 
 			if(!levelObjectData.levelInstantiable)
 			{
@@ -175,8 +176,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //These Objects will be dropped on the next Level reset
         public GameObject AddDynamic(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
         {
-            if (levelObjectData == null) return null;
-			if(!levelObjectData.dynamicInstantiable)
+            if (levelObjectData == null || levelObjectData.prefab == null) {GameObject g = AddDynamic(missingPrefab, position, rotation); return g; }
+            if (!levelObjectData.dynamicInstantiable)
 			{
 				Debug.Log(levelObjectData.name+" cannot be created dynamically");
 				return null;
