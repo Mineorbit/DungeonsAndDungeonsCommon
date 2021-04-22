@@ -27,6 +27,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetComponent<Collider>().enabled = true;
         }
 
+        //Change to on remove
+
+        public void OnDestroy()
+        {
+            if (spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
+        }
+
         public override void OnInit()
         {
             spawnedEnemy.transform.position = SpawnLocation();
