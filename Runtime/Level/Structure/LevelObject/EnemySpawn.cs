@@ -11,20 +11,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 spawnOffset;
 
         GameObject spawnedEnemy;
-
+        bool inRound;
         public override void OnStartRound()
         {
             GetComponent<Collider>().enabled = false;
             SpawnEnemy();
+            inRound = true;
         }
 
         public override void OnEndRound()
         {
             GetComponent<Collider>().enabled = true;
             SpawnEnemy();
+            inRound = false;
         }
 
-        
+
+        //Not pretty
+        void Update()
+        {
+            if (!inRound && spawnedEnemy == null)
+            {
+                SpawnEnemy();
+            }
+        }
 
 
         //Change to on remove
