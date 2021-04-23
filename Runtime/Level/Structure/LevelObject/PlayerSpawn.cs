@@ -29,7 +29,7 @@ public class PlayerSpawn : LevelObject
         }
     public override void OnInit()
     {
-            if (LevelManager.currentLevel.spawn[(int)color] != null)
+            if (LevelManager.currentLevel.spawn[(int)color] != null && LevelManager.currentLevel.spawn[(int)color] != this)
 			{
                 LevelManager.currentLevel.Remove(this.gameObject);
 			}else

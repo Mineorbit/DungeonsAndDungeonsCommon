@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Start is called before the first frame update
         public override void OnInit()
         {
-            if (LevelManager.currentLevel.goal != null)
+            if (LevelManager.currentLevel.goal != null && LevelManager.currentLevel.goal != this)
                 LevelManager.currentLevel.Remove(this.gameObject);
             LevelManager.currentLevel.goal = this;
             hitbox = GetComponentInChildren<Hitbox>();
