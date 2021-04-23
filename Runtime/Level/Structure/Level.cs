@@ -70,7 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartLevelObjects();
         }
 
-        public void OnEndRound(bool resetDynamic = false)
+        public void OnEndRound(bool resetDynamic = true)
         {
             EndLevelObjects();
             SetLevelObjectActivity(false);
@@ -113,7 +113,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach(Transform child in dynamicObjects.transform)
             {
-                Destroy(child.gameObject);
+                RemoveDynamic(child.gameObject.getComponent<LevelObject>());
             }
         }
 
@@ -207,6 +207,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(o.transform.parent == dynamicObjects)
             {
+                Debug.Log("Removing dynamic LevelObject"+o.gameObject.name);
                 Destroy(o.gameObject);
             }
         }
