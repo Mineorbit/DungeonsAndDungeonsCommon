@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -217,11 +218,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             g.GetComponent<LevelObject>().isDynamic = true;
         }
 
-        public void RemoveDynamic(LevelObject o)
+        public void RemoveDynamic(LevelObject o, bool physics = true)
         {
             if(o.isDynamic)
             {
-                DestroyImmediate(o.gameObject);
+                if (physics)
+                {
+                    Destroy(o.gameObject);
+                }
+                else
+                {
+                    DestroyImmediate(o.gameObject);
+                }
             }
         }
 

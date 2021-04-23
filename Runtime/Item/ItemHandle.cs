@@ -35,9 +35,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Use()
         {
+            if(slot != null)
+            { 
             slot.Use();
             p.allowedToMove = false;
             UseWait();
+            }else
+            {
+                p.allowedToMove = true;
+            }
         }
 
         IEnumerator useWaitTime(float t)
