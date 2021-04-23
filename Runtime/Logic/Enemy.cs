@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -13,6 +13,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Start()
         {
 
+        }
+
+        public virtual  void OnEnable()
+        {
+            UnityEngine.AI.NavMeshAgent n = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (n != null) n.enabled = true;
+        }
+        public virtual void OnDisable()
+        {
+
+            UnityEngine.AI.NavMeshAgent n = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (n != null) n.enabled = false;
         }
 
         public EnemyState GetState()
