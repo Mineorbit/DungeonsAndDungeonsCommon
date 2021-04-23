@@ -76,7 +76,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetupItems();
 
         }
-        public override void OnEnable()
+
+        void OnEnable()
         {
             SetupItems();
         }
