@@ -6,7 +6,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class EnemySpawn : LevelObject
     {
-        public LevelObjectData enemyToSpawn;
+        public LevelObjectData EnemyToSpawn;
 
         public int maxSpawnCount = 1;
 
@@ -16,27 +16,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         GameObject spawnedEnemy;
 
-
         public override void OnStartRound()
         {
             GetComponent<Collider>().enabled = false;
+            SpawnEnemy();
         }
 
         public override void OnEndRound()
         {
             GetComponent<Collider>().enabled = true;
-        }
-
-        //Change to on remove
-
-        public void OnDestroy()
-        {
-            if (spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
+            SpawnEnemy();
         }
 
         public override void OnInit()
         {
-            spawnedEnemy.transform.position = SpawnLocation();
+            SpawnEnemy();
         }
 
         public override void OnEnable()
@@ -52,26 +46,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        //Change to on remove
+
+        public void OnDestroy()
+        {
+            if (spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
+        }
+
+
 
         public override void OnDeInit()
-		{
-		}
+        {
+        }
 
-        Vector3 SpawnLocation()
+        Vector3 SpawnLocation() 
         {
             return transform.position + spawnOffset;
         }
-		
+
         void SpawnEnemy()
         {
-            if(spawnedEnemy == null)
+            if (spawnedEnemy == null)
             {
                 Debug.Log("spawning it");
-                spawnedEnemy = LevelManager.currentLevel.AddDynamic(enemyToSpawn,SpawnLocation(),new Quaternion(0,0,0,0));
-                if(spawnedEnemy != null)
+                spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
+                if (spawnedEnemy != null)
                 {
                     spawnCount--;
                 }
+            }
+            else
+            {
+                spawnedEnemy.transform.position = SpawnLocation();
             }
         }
 

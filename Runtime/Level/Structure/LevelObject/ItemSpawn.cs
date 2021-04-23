@@ -19,28 +19,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             GetComponent<Collider>().enabled = false;
+            SpawnItem();
         }
 
         public override void OnEndRound()
         {
             GetComponent<Collider>().enabled = true;
+            SpawnItem();
         }
 
         public override void OnInit()
         {
-            spawnedItem.transform.position = SpawnLocation();
+            SpawnItem();
         }
 
         public override void OnEnable()
         {
             spawnCount = maxSpawnCount;
-            SpawnEnemy();
+            SpawnItem();
         }
 
         public override void OnDisable()
         {
             spawnCount = maxSpawnCount;
-            SpawnEnemy();
+            SpawnItem();
         }
 
 
@@ -62,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return transform.position + spawnOffset;
         }
 
-        void SpawnEnemy()
+        void SpawnItem()
         {
             if (spawnedItem == null)
             {
@@ -72,6 +74,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     spawnCount--;
                 }
+            }
+            else
+            {
+                spawnedItem.transform.position = SpawnLocation();
             }
         }
 
