@@ -15,14 +15,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             owner = GetComponentInParent<Player>().gameObject;
         }
+
         public virtual void OnDettach()
         {
 
-        }
-
-        public void OnDestroy()
-        {
-            Debug.Log("Removed Item");
         }
 
         public virtual void Use()

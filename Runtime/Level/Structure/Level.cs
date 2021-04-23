@@ -121,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach (LevelObject o in GetComponentsInChildren<LevelObject>())
             {
-                o.Reset();
+            //    o.Reset();
             }
         }
 
