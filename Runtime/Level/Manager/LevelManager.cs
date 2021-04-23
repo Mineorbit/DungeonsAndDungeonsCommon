@@ -73,9 +73,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else Debug.Log("Currently there is no Level instantiated");
         }
 
-        public static void EndRound()
+        public static void EndRound(bool resetDynamic = true)
         {
-            currentLevel.OnEndRound();
+            currentLevel.OnEndRound(resetDynamic: resetDynamic);
             levelEndedEvent.Invoke();
         }
 

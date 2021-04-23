@@ -70,6 +70,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartLevelObjects();
         }
 
+        public void OnEndRound(bool resetDynamic = false)
+        {
+            EndLevelObjects();
+            SetLevelObjectActivity(false);
+            if (resetDynamic) ClearDynamicObjects();
+            loadType = LoadType.All;
+        }
+
         void StartLevelObjects()
         {
             foreach(LevelObject o in GetComponentsInChildren<LevelObject>())
@@ -118,13 +126,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void OnEndRound(bool clearDynamic = false)
-        {
-            EndLevelObjects();
-            SetLevelObjectActivity(false);
-            if(clearDynamic) ClearDynamicObjects();
-            loadType = LoadType.All;
-        }
+       
 
         //These Objects will be stored in the Chunks and are permanent Information
         public void Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
