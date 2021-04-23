@@ -46,7 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 StartHitCooldown();
                 health = health - damage;
-                if (health == 0)
+                if (health <= 0)
                 {
                     Kill();
                 }
@@ -59,6 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             // SetState(Enemy.EnemyState.Dead);
             //eventually call
+            Debug.Log("Entity dead");
             LevelManager.currentLevel.RemoveDynamic(this);
         }
     }

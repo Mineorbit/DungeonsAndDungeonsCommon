@@ -12,7 +12,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Enemy me;
         public Player seenPlayer;
         public Enemy seenAlly;
-        public int health;
         public int damage;
 
 
@@ -35,7 +34,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             me = GetComponent<Enemy>();
 
             rand = new System.Random();
-            health = 100;
 
             damage = 2;
 

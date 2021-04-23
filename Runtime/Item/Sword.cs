@@ -16,6 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnAttach()
         {
             base.OnAttach();
+            GetComponent<Collider>().enabled = false;
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
             hitBox.Attach(owner, "Enemy", new Vector3(0, 0, 1));
             hitBox.enterEvent.AddListener((x) => { TryDamage(x); });
@@ -46,6 +47,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(hitBox != null)
             Destroy(hitBox.gameObject);
+
+            GetComponent<Collider>().enabled = true;
         }
         public void OnDestroy()
         {
