@@ -28,13 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Resetting "+levelObjectDataType);
             OnInit();
         }
-        
 
-        public void OnDestroy()
-        {
-            Debug.Log("LevelObject destroyed: "+gameObject.name);
-        }
- 
 
         public virtual void  OnStartRound()
         {
