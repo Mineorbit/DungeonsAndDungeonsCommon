@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 
-  enemyToSpawn: {fileID: 11400000, guid: 004b72feca8fde54d827e864e3a7f547, type: 2}
+  EnemyToSpawn: {fileID: 11400000, guid: 004b72feca8fde54d827e864e3a7f547, type: 2}
   maxSpawnCount: 1
   spawnOffset: {x: 0, y: -0.25, z: 0}
 --- !u!65 &-5099622664477059230
