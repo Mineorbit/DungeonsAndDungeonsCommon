@@ -9,6 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string levelObjectDataType;
 
 		bool initialized = false;
+
         public virtual void OnInit()
         {
 			initialized = true;
