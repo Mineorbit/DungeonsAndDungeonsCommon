@@ -23,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			initialized = false;
         }
 
-        public virtual void Reset()
+        public virtual void OnReset()
         {
             Debug.Log("Resetting "+levelObjectDataType);
             OnInit();

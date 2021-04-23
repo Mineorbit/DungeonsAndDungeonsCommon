@@ -50,9 +50,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             GetComponent<Collider>().enabled = true;
         }
+
         public void OnDestroy()
         {
-            base.OnDestroy();
             if (hitBox != null)
                 Destroy(hitBox.gameObject);
         }
