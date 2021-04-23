@@ -13,6 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void OnAttach()
         {
+            Debug.Log(gameObject.name+" was attached");
             owner = GetComponentInParent<Player>().gameObject;
         }
 
