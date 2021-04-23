@@ -11,31 +11,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 spawnOffset;
 
         GameObject spawnedEnemy;
-        bool inRound;
+
+        int maxSpawnCount = 1;
+
+        int spawnCount = 1;
+
         public override void OnStartRound()
         {
             GetComponent<Collider>().enabled = false;
-            SpawnEnemy();
-            inRound = true;
+            Setup();
         }
 
         public override void OnEndRound()
         {
             GetComponent<Collider>().enabled = true;
-            SpawnEnemy();
-            inRound = false;
+            Setup();
         }
 
-
-        //Not pretty
-        void Update()
+        void Setup()
         {
-            if (!inRound && spawnedEnemy == null)
-            {
-                SpawnEnemy();
-            }
+            spawnCount = maxSpawnCount;
+            SpawnEnemy();
         }
-
 
         //Change to on remove
 
@@ -45,13 +42,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        Vector3 SpawnLocation() 
+        public override void OnInit()
+        {
+            Setup();
+        }
+
+        public override void OnDeInit()
+        {
+            Setup();
+        }
+
+        Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;
         }
 
         public void SpawnEnemy()
         {
+            Debug.Log("Spawned Enemy");
             if (spawnedEnemy == null)
             {
                 spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
@@ -61,7 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 spawnedEnemy.transform.position = SpawnLocation();
             }
         }
-
 
     }
 }

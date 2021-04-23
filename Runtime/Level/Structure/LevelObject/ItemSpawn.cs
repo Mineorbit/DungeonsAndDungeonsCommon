@@ -11,22 +11,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 spawnOffset;
 
         GameObject spawnedItem;
-        bool inRound;
+
+        int maxSpawnCount = 1;
+
+        int spawnCount = 1;
 
         public override void OnStartRound()
         {
             GetComponent<Collider>().enabled = false;
-            SpawnItem();
-            inRound = true;
+            Setup();
         }
 
         public override void OnEndRound()
         {
             GetComponent<Collider>().enabled = true;
-            SpawnItem();
-            inRound = false;
+            Setup();
         }
 
+        void Setup()
+        {
+            spawnCount = maxSpawnCount;
+            SpawnItem();
+        }
 
         //Change to on remove
 
@@ -35,16 +41,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (spawnedItem != null) LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>()); 
         }
 
-        void Update()
+
+        public override void OnInit()
         {
-            if(!inRound && spawnedItem == null)
-            {
-                SpawnItem();
-            }
+            Setup();
         }
 
         public override void OnDeInit()
         {
+            Setup();
         }
 
         Vector3 SpawnLocation()
