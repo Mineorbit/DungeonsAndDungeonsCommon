@@ -37,17 +37,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
-            if (spawnedItem.GetComponent<Item>().isEquipped)
                 RemoveSpawnedItem();
         }
 
-        void RemoveSpawnedItem()
+        void RemoveSpawnedItem(bool physics = true)
         {
             Debug.Log("Trying to Remove");
 
             if (spawnedItem != null)
             {
-                LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>(), physics: false);
+                LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>(), physics: physics);
             }
         }
 
@@ -60,7 +59,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnDeInit()
         {
             base.OnDeInit();
-            RemoveSpawnedItem();
+            if (spawnedItem.GetComponent<Item>().isEquipped)
+                RemoveSpawnedItem(physics: false);
         }
 
         
