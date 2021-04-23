@@ -37,13 +37,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
-            Debug.Log("Taking down spawned Enemy");
             RemoveSpawnedEnemy();
         }
 
         void RemoveSpawnedEnemy()
         {
-            if (spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
+            Debug.Log("Trying to Remove");
+
+            if (spawnedEnemy != null)
+            {
+                LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
+            }
         }
 
         public override void OnInit()
@@ -58,6 +62,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RemoveSpawnedEnemy();
         }
 
+
+        // Currently this needs to be ovewritten, looking for a fix
+        public override void OnReset()
+        {
+            OnDeInit();
+            OnInit();
+        }
+
+
         Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;
@@ -65,14 +78,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SpawnEnemy()
         {
-            Debug.Log("Spawned Enemy "+spawnedEnemy);
             if (spawnedEnemy == null)
             {
                 spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
             }
             else
             {
-                spawnedEnemy.transform.position = SpawnLocation();
+                LevelManager.currentLevel.AddToDynamic(spawnedEnemy, SpawnLocation(), new Quaternion(0, 0, 0, 0));
             }
         }
 

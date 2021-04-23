@@ -122,6 +122,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (LevelObject o in GetComponentsInChildren<LevelObject>())
             {
                 o.OnReset();
+                if(o.GetType() == typeof(ItemSpawn))
+                {
+                    ((ItemSpawn)o).OnReset();
+                }
             }
         }
 
@@ -144,6 +148,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
                 g.GetComponent<LevelObject>().enabled = activated;
+                g.GetComponent<LevelObject>().isDynamic = false;
 
                 navigationUpdateNeeded = true;
             }
@@ -194,6 +199,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			}
             var created = levelObjectData.Create(position, rotation, dynamicObjects);
             created.GetComponent<LevelObject>().enabled = activated;
+            created.GetComponent<LevelObject>().isDynamic = true;
             return created;
         }
 
@@ -201,14 +207,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             g.transform.position = transform.position;
             g.transform.parent = dynamicObjects;
+            g.GetComponent<LevelObject>().isDynamic = true;
+        }
+        public void AddToDynamic(GameObject g, Vector3 position, Quaternion rotation)
+        {
+            g.transform.position = position;
+            g.transform.rotation = rotation;
+            g.transform.parent = dynamicObjects;
+            g.GetComponent<LevelObject>().isDynamic = true;
         }
 
         public void RemoveDynamic(LevelObject o)
         {
-            if(o.transform.parent == dynamicObjects)
+            if(o.isDynamic)
             {
-                Debug.Log("Removing dynamic LevelObject"+o.gameObject.name);
-                Destroy(o.gameObject);
+                DestroyImmediate(o.gameObject);
             }
         }
 

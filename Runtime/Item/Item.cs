@@ -11,15 +11,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float useTime = 0.25f;
         public GameObject owner;
 
+        public bool isEquipped;
+
         public virtual void OnAttach()
         {
-            Debug.Log(gameObject.name+" was attached");
+            isEquipped = true;
             owner = GetComponentInParent<Player>().gameObject;
         }
 
         public virtual void OnDettach()
         {
-
+            isEquipped = false;
+            LevelManager.currentLevel.AddToDynamic(this.gameObject);
         }
 
         public virtual void Use()
