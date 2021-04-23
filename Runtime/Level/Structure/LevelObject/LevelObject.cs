@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             OnDeInit();
             OnInit();
         }
-
+        /*
         public virtual void OnEnable()
 		{
 			if(!initialized)
@@ -38,6 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			if(initialized)
 			OnDeInit();
 		}
+        */
 
         public virtual void  OnStartRound()
         {
