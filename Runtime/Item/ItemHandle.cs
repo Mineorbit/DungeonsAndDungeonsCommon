@@ -29,6 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         public void Dettach()
         {
+            LevelManager.currentLevel.AddToDynamic(slot.gameObject);
             slot.OnDettach();
         }
 

@@ -187,6 +187,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return created;
         }
 
+        public void AddToDynamic(GameObject g)
+        {
+            g.transform.position = transform.position;
+            g.transform.parent = dynamicObjects;
+        }
+
         public void RemoveDynamic(LevelObject o)
         {
             if(o.transform.parent == dynamicObjects)

@@ -72,11 +72,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         //Needs to be refined
 
-        void EquipItem()
+        void UpdateEquipItem()
         {
-
-            if (player.itemHandles[0] != null && itemsInProximity[0] != null)
-                player.itemHandles[0].Attach(itemsInProximity[0]);
+            if(player.itemHandles.Length > 0)
+            {
+                if (player.itemHandles[0] != null)
+                {
+                    if(itemsInProximity.Count > 0)
+                    player.itemHandles[0].Attach(itemsInProximity[0]);
+                }else
+                {
+                    player.itemHandles[0].Dettach();
+                }
+            }
         }
 
         public void Move()
@@ -101,7 +109,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // Pickup closest item
                 if(Input.GetKeyDown(KeyCode.G))
                 {
-                    EquipItem();
+                    UpdateEquipItem();
                 }
 
                 if (IsGrounded)
