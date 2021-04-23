@@ -46,7 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (spawnedEnemy != null)
             {
-                LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
+                LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>(),physics: false);
             }
         }
 
