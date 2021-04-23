@@ -6,7 +6,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Blog : Enemy
     {
-        EnemyController enemyController;
 
         public override void OnInit()
         {
@@ -18,13 +17,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnEnable()
         {
 			base.OnEnable();
-            enemyController.enabled = true;
         }
 
         public override void OnDisable()
         {
 			base.OnDisable();
-            enemyController.enabled = false;
         }
 
         // Update is called once per frame
