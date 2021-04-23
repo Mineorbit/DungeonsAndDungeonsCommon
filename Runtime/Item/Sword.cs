@@ -10,6 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEngine.Object hitboxPrefab;
 
         Hitbox hitBox;
+
         int damage = 20;
 
         public override void OnAttach()
