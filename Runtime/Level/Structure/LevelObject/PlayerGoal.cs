@@ -22,14 +22,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitbox.Attach("Player");
             hitbox.enterEvent.AddListener((x) => { Enter(x); });
             hitbox.exitEvent.AddListener((x) => { Exit(x); });
-        }
-
-
-        public override void OnEnable()
-        {
-			base.OnEnable();
             playersInside = new bool[4];
         }
+
         // Update is called once per frame
         void Update()
         {
