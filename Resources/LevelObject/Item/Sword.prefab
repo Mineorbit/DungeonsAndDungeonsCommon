@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 
+  useTime: 0.125
   owner: {fileID: 0}
   hitboxPrefab: {fileID: 5539105604195314118, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
 --- !u!54 &8138660057824271279
