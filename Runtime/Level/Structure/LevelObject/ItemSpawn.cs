@@ -44,7 +44,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void RemoveSpawnedItem()
         {
 
-            if (spawnedItem != null) LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>());
+            if (spawnedItem != null)
+            {
+                LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>());
+            }
         }
 
         public override void OnInit()

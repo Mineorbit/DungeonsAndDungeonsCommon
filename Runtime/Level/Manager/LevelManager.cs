@@ -44,6 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void ResetDynamicObjects()
         {
+            Debug.Log("Resetting dynamic LevelObjects");
             if (currentLevel != null)
             {
                 currentLevel.ResetDynamicObjects();
