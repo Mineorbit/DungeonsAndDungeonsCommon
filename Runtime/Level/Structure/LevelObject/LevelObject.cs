@@ -26,19 +26,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             OnDeInit();
             OnInit();
         }
-        /*
+        
+
         public virtual void OnEnable()
 		{
 			if(!initialized)
 			OnInit();	
 		}
 
+        /*
         public virtual void OnDisable()
 		{
 			if(initialized)
 			OnDeInit();
 		}
         */
+        
 
         public virtual void  OnStartRound()
         {
