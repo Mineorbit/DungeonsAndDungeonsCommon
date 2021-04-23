@@ -65,10 +65,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
