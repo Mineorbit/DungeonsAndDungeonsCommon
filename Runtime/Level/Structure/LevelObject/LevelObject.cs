@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public abstract class LevelObject : MonoBehaviour
+    public class LevelObject : MonoBehaviour
     {
 
         public string levelObjectDataType;
@@ -23,7 +23,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			initialized = false;
         }
 
-        public abstract void OnReset();
+        public virtual void OnReset()
+        {
+            Debug.Log("Resetting "+this.GetType());
+        }
 
 
         public virtual void  OnStartRound()
