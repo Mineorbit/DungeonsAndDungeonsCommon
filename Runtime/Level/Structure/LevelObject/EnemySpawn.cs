@@ -65,7 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SpawnEnemy()
         {
-            Debug.Log("Spawned Enemy");
+            Debug.Log("Spawned Enemy "+spawnedEnemy);
             if (spawnedEnemy == null)
             {
                 spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
