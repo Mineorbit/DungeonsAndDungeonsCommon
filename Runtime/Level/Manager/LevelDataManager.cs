@@ -110,7 +110,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateLiveLevelLoading();
         }
 
-        public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true)
+        // Save immediately false for example in lobby
+        public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true, bool saveImmediately = true)
         {
             if(instantiateImmediately)
             { 
@@ -122,13 +123,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance.levelData = new LevelData();
 
             instance.regionLoaded = new Dictionary<int, bool>();
-
+            if(saveImmediately)
             Save(metaData: true, levelData: false);
         }
-		public static void New()
+		public static void New(bool saveImmediately = true)
         {
             LevelMetaData newMetaData = GetNewLevelMetaData();
-			New(newMetaData);
+			New(newMetaData,saveImmediately: saveImmediately);
         }
 		
 		public static void Load(LevelMetaData levelMetaData)
