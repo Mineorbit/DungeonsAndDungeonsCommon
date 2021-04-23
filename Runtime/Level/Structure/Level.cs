@@ -113,7 +113,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach(Transform child in dynamicObjects.transform)
             {
-                RemoveDynamic(child.gameObject.getComponent<LevelObject>());
+                RemoveDynamic(child.gameObject.GetComponent<LevelObject>());
             }
         }
 
