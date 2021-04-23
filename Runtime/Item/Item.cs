@@ -7,7 +7,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     public class Item : LevelObject
     {
+
+        public float useTime = 0.25f;
         public GameObject owner;
+
         public virtual void OnAttach()
         {
             owner = GetComponentInParent<Player>().gameObject;

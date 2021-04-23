@@ -139,17 +139,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        IEnumerator attackWaitTime(float t)
-        {
-            yield return new WaitForSeconds(t);
-            allowedToMove = true;
-        }
-
-        public virtual void AttackFinished()
-        {
-            player.GetLeftHandle().StopUse();
-            StartCoroutine(attackWaitTime(0.025f));
-        }
+       
 
 
         void Update()

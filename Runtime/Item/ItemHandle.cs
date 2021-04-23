@@ -12,6 +12,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Item slot;
         public HandleType handleType;
 
+        PlayerController p;
+
+        void Start()
+        {
+            p = GetComponentInParent<PlayerController>();
+        }
+
 
         public void Attach(Item item)
         {
@@ -28,7 +35,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Use()
         {
             slot.Use();
+            p.allowedToMove = false;
+            UseWait();
         }
+
+        IEnumerator useWaitTime(float t)
+        {
+            yield return new WaitForSeconds(t);
+            StopUse();
+            p.allowedToMove = true;
+        }
+
+
+        public virtual void UseWait()
+        {
+            StartCoroutine(useWaitTime(slot.useTime));
+        }
+
+
 
         public void StopUse()
         {
