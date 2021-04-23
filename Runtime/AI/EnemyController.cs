@@ -178,44 +178,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        bool hitCooldown = false;
 
-        IEnumerator HitTimer(float time)
-        {
-            yield return new WaitForSeconds(time);
-            hitCooldown = false;
-        }
-
-
-        void StartHitCooldown()
-        {
-            hitCooldown = true;
-            StartCoroutine(HitTimer(0.5f));
-        }
-
-
-        public virtual void Hit(int damage)
-        {
-            if (!hitCooldown)
-            {
-
-                StartHitCooldown();
-                health = health - damage;
-                if (health == 0)
-                {
-                    Kill();
-                }
-                //FreezeFramer.freeze(0.0075f);
-            }
-
-        }
-
-        public void Kill()
-        {
-            me.SetState(Enemy.EnemyState.Dead);
-            //eventually call
-            LevelManager.currentLevel.RemoveDynamic(me);
-        }
+        
 
         Enemy CheckClosestAlley()
         {
