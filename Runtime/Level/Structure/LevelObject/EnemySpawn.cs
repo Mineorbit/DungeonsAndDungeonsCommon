@@ -37,6 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
+            Debug.Log("Taking down spawned Enemy");
             RemoveSpawnedEnemy();
         }
 
@@ -48,7 +49,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
-            Debug.Log("Test");
             Setup();
         }
 
