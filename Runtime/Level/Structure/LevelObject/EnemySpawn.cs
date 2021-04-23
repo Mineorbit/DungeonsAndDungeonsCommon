@@ -25,7 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnEndRound()
         {
             GetComponent<Collider>().enabled = true;
-            Setup();
         }
 
         void Setup()
@@ -48,11 +47,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
+            base.OnInit();
             Setup();
         }
 
         public override void OnDeInit()
         {
+            base.OnDeInit();
             RemoveSpawnedEnemy();
         }
 
