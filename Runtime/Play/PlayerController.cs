@@ -70,6 +70,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay, mask);
         }
 
+
+
         //Needs to be refined
 
         void UpdateEquipItem()
@@ -78,11 +80,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (player.itemHandles[0] != null)
                 {
-                    if(itemsInProximity.Count > 0)
-                    player.itemHandles[0].Attach(itemsInProximity[0]);
-                }else
-                {
-                    player.itemHandles[0].Dettach();
+                    List<Item> pickUpItems = itemsInProximity;
+                    foreach(Item i in player.items)
+                    {
+                        pickUpItems.Remove(i);
+                    }
+                    if(pickUpItems.Count > 0)
+                    {
+                        Debug.Log("Swapping");
+                        player.itemHandles[0].Dettach();
+                        player.itemHandles[0].Attach(pickUpItems[0]);
+
+                    }
+                    else
+                    {
+                        Debug.Log("Dettachment");
+                        player.itemHandles[0].Dettach();
+                    }
                 }
             }
         }

@@ -13,24 +13,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public HandleType handleType;
 
         PlayerController p;
+        Player player;
 
         void Start()
         {
             p = GetComponentInParent<PlayerController>();
+            player = GetComponentInParent<Player>();
         }
 
 
         public void Attach(Item item)
         {
             item.transform.position = transform.position;
+            item.transform.localRotation = new Quaternion(0,0,0,0);
             item.transform.parent = transform;
             slot = item;
+            player.items[0] = item;
             slot.OnAttach();
         }
         public void Dettach()
         {
-            LevelManager.currentLevel.AddToDynamic(slot.gameObject);
-            slot.OnDettach();
+            if(slot != null)
+            {
+                LevelManager.currentLevel.AddToDynamic(slot.gameObject,slot.gameObject.transform.position, new Quaternion(0,0,0,0));
+                player.items[0] = null;
+                slot.OnDettach();
+                slot = null;
+            }
         }
 
         public void Use()
