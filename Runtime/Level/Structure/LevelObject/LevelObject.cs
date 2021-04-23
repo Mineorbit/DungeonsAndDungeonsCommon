@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class LevelObject : MonoBehaviour
+    public abstract class LevelObject : MonoBehaviour
     {
 
         public string levelObjectDataType;
