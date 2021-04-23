@@ -29,7 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void TryDamage(GameObject g)
         {
-            EnemyController c = g.GetComponentInParent<EnemyController>();
+            Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
             if (c != null)
             {
                 c.Hit(damage);
