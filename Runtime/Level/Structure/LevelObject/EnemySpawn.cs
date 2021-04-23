@@ -38,9 +38,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
+            RemoveSpawnedEnemy();
+        }
+
+        void RemoveSpawnedEnemy()
+        {
             if (spawnedEnemy != null) LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>());
         }
 
+        public override void OnInit()
+        {
+            Setup();
+        }
+
+        public override void OnDeInit()
+        {
+            RemoveSpawnedEnemy();
+        }
 
         public override void OnInit()
         {
