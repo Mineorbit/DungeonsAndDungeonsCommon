@@ -27,6 +27,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             OnInit();
         }
         
+
+        public void OnDestroy()
+        {
+            Debug.Log("LevelObject destroyed: "+gameObject.name);
+        }
  
 
         public virtual void  OnStartRound()
