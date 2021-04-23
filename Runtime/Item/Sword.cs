@@ -53,6 +53,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
+            Debug.Log("I am being destroyed");
             if (hitBox != null)
                 Destroy(hitBox.gameObject);
         }

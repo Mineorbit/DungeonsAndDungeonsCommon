@@ -37,11 +37,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
-            RemoveSpawnedItem();
+            if (spawnedItem.GetComponent<Item>().isEquipped)
+                RemoveSpawnedItem();
         }
 
         void RemoveSpawnedItem()
         {
+            Debug.Log("Trying to Remove");
 
             if (spawnedItem != null)
             {
@@ -61,12 +63,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RemoveSpawnedItem();
         }
 
+        
+        // Currently this needs to be ovewritten, looking for a fix
         public override void OnReset()
         {
-            Debug.Log("Resetting with better method " + levelObjectDataType);
             OnDeInit();
             OnInit();
         }
+        
 
         Vector3 SpawnLocation()
         {
@@ -75,14 +79,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SpawnItem()
         {
-            Debug.Log("Spawned Item");
             if (spawnedItem == null)
             {
                 spawnedItem = LevelManager.currentLevel.AddDynamic( itemToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
             }
             else
             {
-                spawnedItem.transform.position = SpawnLocation();
+                LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), new Quaternion(0, 0, 0, 0));
             }
         }
 
