@@ -8,11 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public LevelObjectData itemToSpawn;
 
-        public int maxSpawnCount = 1;
-
         public Vector3 spawnOffset;
-
-        int spawnCount;
 
         GameObject spawnedItem;
 
@@ -25,23 +21,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnEndRound()
         {
             GetComponent<Collider>().enabled = true;
-            SpawnItem();
-        }
-
-        public override void OnInit()
-        {
-            SpawnItem();
-        }
-
-        public override void OnEnable()
-        {
-            spawnCount = maxSpawnCount;
-            SpawnItem();
-        }
-
-        public override void OnDisable()
-        {
-            spawnCount = maxSpawnCount;
             SpawnItem();
         }
 
@@ -64,16 +43,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return transform.position + spawnOffset;
         }
 
-        void SpawnItem()
+        public void SpawnItem()
         {
+            Debug.Log("Spawned Item");
             if (spawnedItem == null)
             {
-                Debug.Log("spawning it");
                 spawnedItem = LevelManager.currentLevel.AddDynamic( itemToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
-                if (spawnedItem != null)
-                {
-                    spawnCount--;
-                }
             }
             else
             {

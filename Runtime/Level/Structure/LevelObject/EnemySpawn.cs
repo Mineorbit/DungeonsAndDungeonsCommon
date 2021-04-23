@@ -8,11 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public LevelObjectData EnemyToSpawn;
 
-        public int maxSpawnCount = 1;
-
         public Vector3 spawnOffset;
-
-        int spawnCount;
 
         GameObject spawnedEnemy;
 
@@ -28,22 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SpawnEnemy();
         }
 
-        public override void OnInit()
-        {
-            SpawnEnemy();
-        }
-
-        public override void OnEnable()
-        {
-            spawnCount = maxSpawnCount;
-            SpawnEnemy();
-        }
-
-        public override void OnDisable()
-        {
-            spawnCount = maxSpawnCount;
-            SpawnEnemy();
-        }
+        
 
 
         //Change to on remove
@@ -54,26 +35,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-
-        public override void OnDeInit()
-        {
-        }
-
         Vector3 SpawnLocation() 
         {
             return transform.position + spawnOffset;
         }
 
-        void SpawnEnemy()
+        public void SpawnEnemy()
         {
             if (spawnedEnemy == null)
             {
-                Debug.Log("spawning it");
                 spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
-                if (spawnedEnemy != null)
-                {
-                    spawnCount--;
-                }
             }
             else
             {

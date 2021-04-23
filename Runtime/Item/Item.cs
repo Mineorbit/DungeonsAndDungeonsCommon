@@ -20,6 +20,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+        public void OnDestroy()
+        {
+            Debug.Log("Removed Item");
+        }
+
         public virtual void Use()
         {
 
