@@ -56,16 +56,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RemoveSpawnedEnemy();
         }
 
-        public override void OnInit()
-        {
-            Setup();
-        }
-
-        public override void OnDeInit()
-        {
-            Setup();
-        }
-
         Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;
