@@ -61,6 +61,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RemoveSpawnedItem();
         }
 
+        public override void OnReset()
+        {
+            Debug.Log("Resetting with better method " + levelObjectDataType);
+            OnDeInit();
+            OnInit();
+        }
+
         Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;
