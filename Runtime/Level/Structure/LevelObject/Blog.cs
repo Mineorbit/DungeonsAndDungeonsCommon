@@ -10,8 +10,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
 			base.OnInit();
+        }
+
+        public override void OnStartRound()
+        {
+            base.OnStartRound();
             health = 100;
         }
+
 
         public override void OnEnable()
         {

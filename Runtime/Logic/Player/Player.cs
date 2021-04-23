@@ -40,6 +40,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         bool alive = true;
         float cooldownTime = 2f;
 
+
+        public override void OnStartRound()
+        {
+            base.OnStartRound();
+            health = 100;
+        }
+
+
         public ItemHandle GetLeftHandle()
         {
             foreach (ItemHandle i in itemHandles)
