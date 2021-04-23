@@ -11,7 +11,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 			base.OnInit();
             health = 100;
-            enemyController = GetComponent<EnemyController>();
         }
 
         public override void OnEnable()
