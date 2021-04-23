@@ -18,14 +18,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 			initialized = false;
         }
-		
-		public virtual void OnEnable()
+
+        public virtual void Reset()
+        {
+            OnDeInit();
+            OnInit();
+        }
+
+        public virtual void OnEnable()
 		{
 			if(!initialized)
 			OnInit();	
 		}
-		
-		public virtual void OnDisable()
+
+        public virtual void OnDisable()
 		{
 			if(initialized)
 			OnDeInit();
@@ -41,12 +47,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+
         void Start()
         {
 
         }
 
-        // Update is called once per frame
         void Update()
         {
 

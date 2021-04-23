@@ -109,6 +109,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public void ResetDynamicObjects()
+        {
+            foreach (Transform child in dynamicObjects.transform)
+            {
+                child.GetComponent<LevelObject>().Reset();
+            }
+        }
+
 
         public void OnEndRound(bool clearDynamic = false)
         {

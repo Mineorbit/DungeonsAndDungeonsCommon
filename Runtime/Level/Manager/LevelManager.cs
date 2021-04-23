@@ -37,9 +37,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public static void ResetDynamic()
+        public static void ResetDynamicState()
         {
             currentLevel.ClearDynamicObjects();
+        }
+
+        public static void ResetDynamicObjects()
+        {
+            if (currentLevel != null)
+            {
+                currentLevel.ResetDynamicObjects();
+            }
+            else Debug.Log("Currently there is no Level instantiated");
         }
 
         public static void ResetToSaveState()
@@ -52,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void StartRound(bool resetDynamic = true, bool resetStatic = false)
         {
                 if (resetDynamic)
-                    ResetDynamic();
+                    ResetDynamicState();
                 if(resetStatic)
                     ResetToSaveState();
             if (currentLevel != null)
@@ -60,7 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 currentLevel.OnStartRound();
                 levelStartedEvent.Invoke();
             }
-            else Debug.Log("There currently is no Level instantiated");
+            else Debug.Log("Currently there is no Level instantiated");
         }
 
         public static void EndRound()
