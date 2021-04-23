@@ -30,6 +30,15 @@ public class PlayerManager : MonoBehaviour
            Remove(i);
         }
     }
+    
+        
+    public void StartRound()
+    {
+            foreach(Player p in players)
+            {
+                p.OnStartRound();
+            }
+    }
 
 
     public void SetCurrentPlayer(int localId)
