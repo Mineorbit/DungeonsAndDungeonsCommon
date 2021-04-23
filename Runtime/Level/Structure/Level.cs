@@ -109,11 +109,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void ResetDynamicObjects()
+        public void ResetDynamicState()
         {
-            foreach (Transform child in dynamicObjects.transform)
+            foreach (LevelObject o in GetComponentsInChildren<LevelObject>())
             {
-                child.GetComponent<LevelObject>().Reset();
+                o.Reset();
             }
         }
 
