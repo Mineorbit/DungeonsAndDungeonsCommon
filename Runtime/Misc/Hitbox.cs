@@ -15,6 +15,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         string targetTag;
 
+        bool isAttached = false;
+
         void Start()
         {
         }
@@ -23,23 +25,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             targetTag = target;
             collider = GetComponent<Collider>();
+            isAttached = true;
         }
 
         public void Attach(GameObject parent, string target, Vector3 localLocation)
         {
-            Attach(target);
             transform.parent = parent.transform;
             transform.localPosition = localLocation;
+            Attach(target);
         }
 
         public void Activate()
         {
-            collider.enabled = true;
+            if (isAttached)
+            {
+                collider.enabled = true;
+            }
+            else Debug.Log("Hitbox "+gameObject.name+" was not attached");
         }
 
         public void Deactivate()
         {
-            collider.enabled = false;
+            if (isAttached)
+            { 
+                collider.enabled = false;
+            }
         }
 
         public void OnTriggerEnter(Collider other)

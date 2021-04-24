@@ -12,7 +12,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Enemy me;
         public Player seenPlayer;
         public Enemy seenAlly;
-        public int damage;
+
 
 
         float viewDistance = 15;
@@ -29,17 +29,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float currentSpeed;
 
+        public Hitbox attackHitbox;
+
+        public float currentDamage;
+
+
+
+        IEnumerator Timer(float strikeTime, Func<object, object> act, object input)
+        {
+            yield return new WaitForSeconds(strikeTime);
+            act(input);
+        }
+
+
         void Start()
         {
             me = GetComponent<Enemy>();
 
             rand = new System.Random();
 
-            damage = 2;
-
             navMeshAgent = GetComponent<NavMeshAgent>();
 
+            attackHitbox.Attach("Player");
 
+            attackHitbox.enterEvent.AddListener((x)=> { me.TryDamage(x,currentDamage); });
 
             me.SetState(Enemy.EnemyState.Idle);
         }
@@ -48,6 +61,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             currentSpeed = navMeshAgent.velocity.magnitude;
         }
+
+
+        Player CheckVisiblePlayer()
+        {
+            float minDist = float.MaxValue;
+            Player minPlayer = null;
+            for (int i = 0; i < 4; i++)
+            {
+                Player p = PlayerManager.playerManager.players[i];
+                if (p != null)
+                {
+                    if (p.IsAlive())
+                    {
+                        Vector3 dir = p.transform.position - transform.position;
+                        float dist = dir.magnitude;
+
+                        if (Vector3.Dot(transform.forward, dir) > 0 && dist <= viewDistance && dist < minDist)
+                        {
+                            minPlayer = p;
+                            minDist = dist;
+                        }
+                    }
+                }
+            }
+            return minPlayer;
+        }
+
 
         void FixedUpdate()
         {
@@ -91,46 +131,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateState()
         {
-            var enemyState = me.GetState();
-            if (enemyState != Enemy.EnemyState.Strike || enemyState != Enemy.EnemyState.PrepareStrike)
-            {
-
-                if (attackDistance <= distToTarget && distToTarget <= viewDistance)
-                {
-                    if (seenPlayer != null)
-                    {
-                        me.SetState(Enemy.EnemyState.Track);
-                        if (strikeTimer != null)
-                        {
-                            StopCoroutine(strikeTimer);
-                            strikeTimer = null;
-                        }
-                    }
-                }
-                else if (distToTarget <= attackDistance)
-                {
-                    if (seenPlayer != null)
-                    {
-                        me.SetState(Enemy.EnemyState.Attack);
-                        if (seenAlly == null)
-                        {
-                            TryStrike();
-                        }
-                        else
-                        if (seenAlly.GetState() != Enemy.EnemyState.Strike || seenAlly.GetState() != Enemy.EnemyState.PrepareStrike)
-                        {
-                            TryStrike();
-                        }
-                    }
-                }
-                else
-                {
-                    me.SetState(Enemy.EnemyState.Idle);
-                    if (strikeTimer != null)
-                        StopCoroutine(strikeTimer);
-                }
-
-            }
+            if (me.GetState() != Enemy.EnemyState.Attack) attackHitbox.Deactivate(); 
+            TryStrike();
         }
 
         public void TryStrike()
@@ -138,40 +140,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (strikeTimer == null)
             {
                 me.SetState(Enemy.EnemyState.PrepareStrike);
-                strikeTimer = StrikeTimer((1 + 5 * (float)rand.NextDouble()));
+                strikeTimer = Timer((1 + 5 * (float)rand.NextDouble()),Strike, (float) me.damage);
                 StartCoroutine(strikeTimer);
             }
         }
-        IEnumerator StrikeTimer(float strikeTime)
+        
+
+        object Strike(object damage)
         {
-            yield return new WaitForSeconds(strikeTime);
-            Strike();
+            Debug.Log("Test");
+
+            me.SetState(Enemy.EnemyState.Attack);
+            Attack((float)damage);
+            return null;
         }
 
-        void Strike()
+        void Attack(float damage)
         {
-            if (seenAlly != null)
-            {
-                if (seenAlly.GetState() != Enemy.EnemyState.Strike || seenAlly.GetState() != Enemy.EnemyState.PrepareStrike)
-                {
-                    strikeTimer = null;
-                    me.SetState(Enemy.EnemyState.Strike);
-                }
-                else
-                {
-                    me.SetState(Enemy.EnemyState.Attack);
-                }
-            }
-            else
-            {
-                strikeTimer = null;
-                me.SetState(Enemy.EnemyState.Strike);
-            }
+            Debug.Log("Attacking");
+            currentDamage = damage * (1 + 5 * (float)rand.NextDouble());
+            attackHitbox.Activate();
+
+            var attackTimer = Timer(0.025f, FinishStrike, null);
+            StartCoroutine(attackTimer);
         }
 
-        public void FinishStrike()
+        public object FinishStrike(object val)
         {
             me.SetState(Enemy.EnemyState.Attack);
+            attackHitbox.Deactivate();
+            Debug.Log("Finished Strike");
+            strikeTimer = null;
+            return null;
         }
 
 
@@ -204,29 +204,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return minEnemy;
         }
 
-        Player CheckVisiblePlayer()
-        {
-            float minDist = float.MaxValue;
-            Player minPlayer = null;
-            for (int i = 0; i < 4; i++)
-            {
-                Player p = PlayerManager.playerManager.players[i];
-                if (p != null)
-                {
-                    if (p.IsAlive())
-                    {
-                        Vector3 dir = p.transform.position - transform.position;
-                        float dist = dir.magnitude;
-
-                        if (Vector3.Dot(transform.forward, dir) > 0 && dist <= viewDistance && dist < minDist)
-                        {
-                            minPlayer = p;
-                            minDist = dist;
-                        }
-                    }
-                }
-            }
-            return minPlayer;
-        }
+        
     }
 }
