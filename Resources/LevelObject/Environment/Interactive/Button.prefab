@@ -233,7 +233,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7304749324841192839}
-  - component: {fileID: 2637142725220783685}
+  - component: {fileID: 2808803964958646776}
+  - component: {fileID: 46853627974254591}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -256,7 +257,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2637142725220783685
+--- !u!114 &2808803964958646776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,8 +266,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7932103809837258557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f4226a43bb9c544690b6b0e409d8dc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 70e0263349849dc46b29267edffcd334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 
   isDynamic: 0
+  receivers: []
+--- !u!65 &46853627974254591
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932103809837258557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: -0.5, z: 0}

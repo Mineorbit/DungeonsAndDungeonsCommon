@@ -131,7 +131,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return chunkGranularity * (new Vector3(Mathf.Round(position.x/chunkGranularity),0,Mathf.Round(position.z/chunkGranularity))) - chunkGranularity/2*new Vector3(1,0,1);
         }
 
-        public static Chunk GetChunk(Vector3 position)
+        public static Chunk GetChunk(Vector3 position, bool createIfNotThere = true)
         {
             var chunkGridPosition = instance.GetChunkGridPosition(position);
             Chunk result_chunk = null;
@@ -142,7 +142,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // chunk was found here eventually something
             }else
             {
-                result_chunk = instance.AddChunk(chunkGridPosition);
+               if(createIfNotThere)
+                    result_chunk = instance.AddChunk(chunkGridPosition);
             }
             }
             return result_chunk;

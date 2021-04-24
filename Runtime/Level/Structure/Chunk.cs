@@ -10,6 +10,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             gameObject.name = "Chunk " + chunkId;
         }
+        float eps = 0.05f;
+        public LevelObject GetLevelObjectAt(Vector3 position)
+        {
+            foreach(Transform child in transform)
+               if((child.transform.position-position).magnitude < eps)
+                {
+                    return child.gameObject.GetComponent<LevelObject>();
+                }
+            return null;
+        }
 
     }
 }
