@@ -10,16 +10,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class EnemyController : MonoBehaviour
     {
         Enemy me;
+
         public Player seenPlayer;
+        public Player lastSeenPlayer;
         public Enemy seenAlly;
 
 
 
-        float viewDistance = 15;
-        float attackDistance = 4;
+        public float viewDistance = 15;
+        public float attackDistance = 4;
 
 
         float distToTarget = float.MaxValue;
+
+
 
         Vector3 lastPositionOfPlayer;
 
@@ -33,6 +37,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float currentDamage;
 
+
+        public float forgetTime = 5f;
 
 
         IEnumerator Timer(float strikeTime, Func<object, object> act, object input)
@@ -54,8 +60,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             attackHitbox.enterEvent.AddListener((x)=> { me.TryDamage(x,currentDamage); });
 
+            attackHitbox.Deactivate();
+
             me.SetState(Enemy.EnemyState.Idle);
         }
+
+        
 
         void Update()
         {
@@ -85,37 +95,89 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 }
             }
-            return minPlayer;
+
+
+            if(CheckLineOfSight(minPlayer))
+            {            
+                return minPlayer;
+            }else
+            {
+                return null;
+            }
+
+        }
+
+        bool CheckLineOfSight(Player target)
+        {
+            if (target == null) return false;
+
+            int layerMask = 0;
+
+            layerMask = ~layerMask;
+
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, target.transform.position - transform.position, out hit, Mathf.Infinity, layerMask))
+            {
+                if (hit.collider.gameObject.GetComponentInParent<Player>()) return true;
+
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        IEnumerator visibilityTimer;
+        void UpdateSeenPlayer()
+        {
+            Player currentViewedPlayer = CheckVisiblePlayer();
+            if(currentViewedPlayer == null)
+            {
+                // start timer for 2 seconds then drop player
+                if(visibilityTimer == null && lastSeenPlayer != null)
+                {
+                    visibilityTimer = Timer(forgetTime,ForgetPlayer,null);
+                    StartCoroutine(visibilityTimer);
+                }
+            }
+            else
+            {
+                if(visibilityTimer != null)
+                { 
+                    StopCoroutine(visibilityTimer);
+                    visibilityTimer = null;
+                }
+                lastSeenPlayer = currentViewedPlayer;
+                seenPlayer = currentViewedPlayer;
+            }
+        }
+
+
+        object ForgetPlayer(object input)
+        {
+            seenPlayer = null;
+            return null;
+        }
+
+        void UpdateVariables()
+        {
+            UpdateSeenPlayer();
+            UpdateDistance();
         }
 
 
         void FixedUpdate()
         {
-            UpdateDistance();
+            UpdateVariables();
             UpdateState();
-
-            UpdateTarget();
-
         }
 
-        void UpdateTarget()
-        {
-            var enemyState = me.GetState();
-            if (enemyState == Enemy.EnemyState.Track)
-            {
-                navMeshAgent.SetDestination(lastPositionOfPlayer);
-            }
-            else if (enemyState == Enemy.EnemyState.Attack)
-            {
-                navMeshAgent.SetDestination(transform.position);
-                transform.LookAt(lastPositionOfPlayer);
-            }
-        }
+        
 
         void UpdateDistance()
         {
             seenAlly = CheckClosestAlley();
-            seenPlayer = CheckVisiblePlayer();
             if (seenPlayer != null)
             {
                 distToTarget = (seenPlayer.transform.position - transform.position).magnitude;
@@ -131,8 +193,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateState()
         {
-            if (me.GetState() != Enemy.EnemyState.Attack) attackHitbox.Deactivate(); 
-            TryStrike();
+
         }
 
         public void TryStrike()
