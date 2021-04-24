@@ -62,15 +62,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RemoveSpawnedEnemy();
         }
 
-
-        // Currently this needs to be ovewritten, looking for a fix
-        public override void OnReset()
-        {
-            OnDeInit();
-            OnInit();
-        }
-
-
         Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;

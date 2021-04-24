@@ -26,12 +26,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			initialized = false;
         }
 
-        public virtual void OnReset()
-        {
-            Debug.Log("Resetting "+this.GetType());
-        }
-
-
         public virtual void  OnStartRound()
         {
 

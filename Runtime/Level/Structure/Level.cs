@@ -122,11 +122,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach (LevelObject o in GetComponentsInChildren<LevelObject>())
             {
-                o.OnReset();
-                if(o.GetType() == typeof(ItemSpawn))
-                {
-                    ((ItemSpawn)o).OnReset();
-                }
+                o.OnDeInit();
+                o.OnInit();
             }
         }
 
