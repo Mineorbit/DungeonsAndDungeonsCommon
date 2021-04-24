@@ -10,6 +10,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public Dictionary<Vector3,InteractiveLevelObject> receivers = new Dictionary<Vector3, InteractiveLevelObject>();
 
+        public List<InteractiveLevelObject> receiversList = new List<InteractiveLevelObject>();
+
         Queue<Vector3> receiversToAdd = new Queue<Vector3>();
 
         bool activated = false;
@@ -27,9 +29,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AddReceiver(Vector3 location)
         {
+            Debug.Log(gameObject.name+" adding receiver at location "+location);
             if(! (receivers.ContainsKey(location) || receiversToAdd.Contains(location)))
             {
                 receiversToAdd.Enqueue(location);
+            }
+        }
+
+        public void AddReceiver(Vector3 location, InteractiveLevelObject r)
+        {
+            if(r != null)
+            { 
+                receivers.Add(location,r);
+                receiversList.Add(r);
+            DrawLine(transform.position, location, Color.black);
             }
         }
 
@@ -46,12 +59,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 targetLocation = receiversToAdd.Dequeue();
                 Debug.Log("Trying to add receiver " +targetLocation);
                 LevelObject receiver = LevelManager.currentLevel.GetLevelObjectAt(targetLocation);
-                if(receiver != null && receiver.GetType() == typeof(InteractiveLevelObject))
+                if(receiver != null && receiver.GetType() == typeof(InteractiveLevelObject) && receiver != this)
                 {
                     InteractiveLevelObject r = (InteractiveLevelObject) receiver;
-                    receivers.Add(targetLocation, r);
+                    AddReceiver(receiver.transform.position, r);
                 }
             }
+        }
+
+        void DrawLine(Vector3 start, Vector3 end, Color color)
+        {
+            GameObject myLine = new GameObject();
+            myLine.transform.position = start;
+            myLine.AddComponent<LineRenderer>();
+            LineRenderer lr = myLine.GetComponent<LineRenderer>();
+
+            lr.material = new Material(Shader.Find("Sprites/Default"));
+            lr.widthMultiplier = 0.2f;
+            lr.positionCount = 2;
+            lr.SetPosition(0, start);
+            lr.SetPosition(1, end);
         }
 
         public override void OnInit()
