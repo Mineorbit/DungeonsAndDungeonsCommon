@@ -35,6 +35,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             enemyController.enabled = false;
         }
 
+
+        public override void OnInit()
+        {
+            base.OnInit();
+            enemyController.seenPlayer = null;
+            enemyController.seenAlly = null;
+            enemyController.lastSeenPlayer = null;
+        }
+
         public void TryDamage(GameObject g, float hitDamage)
         {
             Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
