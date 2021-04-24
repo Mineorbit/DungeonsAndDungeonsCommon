@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -8,8 +8,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
 
         EnemyController enemyController;
-        public enum EnemyState { Idle = 1, Track, Attack, PrepareStrike, Strike, Dead };
+        public enum EnemyState { Idle = 1, Track,  PrepareStrike, Strike, Attack, Dead };
         public EnemyState enemyState;
+
+        public int damage = 5;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -30,6 +33,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UnityEngine.AI.NavMeshAgent n = GetComponent<UnityEngine.AI.NavMeshAgent>();
             if (n != null) n.enabled = false;
             enemyController.enabled = false;
+        }
+
+        public void TryDamage(GameObject g, float hitDamage)
+        {
+            Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
+            if (c != null)
+            {
+                c.Hit((int) hitDamage);
+            }
         }
 
         public EnemyState GetState()
