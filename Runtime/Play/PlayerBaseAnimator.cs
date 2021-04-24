@@ -16,6 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Update is called once per frame
         void Update()
         {
+            if(characterController.velocity.magnitude > 0)
             forwardDirection =  (forwardDirection + characterController.velocity)/2;
             float angleY = 180 + (180/Mathf.PI) * Mathf.Atan2(forwardDirection.x,forwardDirection.z);
 

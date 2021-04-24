@@ -19,7 +19,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public bool dynamicInstantiable;
 		
 		public bool levelInstantiable;
-		
+
+        public bool Buildable;
+
+
         void OnValidate()
         {
 #if UNITY_EDITOR
@@ -28,19 +31,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             uniqueLevelObjectId = System.Guid.NewGuid().ToString();
             UnityEditor.EditorUtility.SetDirty(this);
             }
+            if(Buildable) levelInstantiable = true;
 #endif
         }
 
         public static LevelObjectData[] GetAllBuildable()
         {
             List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
-            return data.FindAll(x => x.levelInstantiable).ToArray();
+            return data.FindAll(x => x.Buildable).ToArray();
         }
 
         public static Dictionary<string,LevelObjectData> GetAllBuildableByUniqueType()
         {
             List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
-            data = data.FindAll(x => x.levelInstantiable);
+            data = data.FindAll(x => x.Buildable);
             Dictionary<string, LevelObjectData> dict = new Dictionary<string, LevelObjectData>();
             foreach(LevelObjectData objectData in data)
             {

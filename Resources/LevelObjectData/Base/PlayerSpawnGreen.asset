@@ -18,3 +18,4 @@ MonoBehaviour:
   name: Green Player Spawn
   dynamicInstantiable: 0
   levelInstantiable: 1
+  Buildable: 1

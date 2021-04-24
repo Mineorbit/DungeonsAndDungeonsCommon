@@ -87,14 +87,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                     if(pickUpItems.Count > 0)
                     {
-                        Debug.Log("Swapping");
+                        Debug.Log("Swapping of Item");
                         player.itemHandles[0].Dettach();
                         player.itemHandles[0].Attach(pickUpItems[0]);
 
                     }
                     else
                     {
-                        Debug.Log("Dettachment");
+                        Debug.Log("Dettachment of Item");
                         player.itemHandles[0].Dettach();
                     }
                 }
