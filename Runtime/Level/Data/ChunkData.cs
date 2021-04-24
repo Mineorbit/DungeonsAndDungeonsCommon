@@ -15,7 +15,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ChunkData chunkData = new ChunkData();
             foreach(Transform t in c.transform)
             {
-                chunkData.levelObjects.Add(LevelObjectInstanceData.FromInstance(t.GetComponent<LevelObject>()));
+                var x = t.GetComponent<LevelObject>() as dynamic;
+                chunkData.levelObjects.Add(LevelObjectInstanceData.FromInstance(x));
             }
             return chunkData;
         }

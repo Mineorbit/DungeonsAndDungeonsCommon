@@ -54,15 +54,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 levelObjectInstances.AddRange(chunkData.levelObjects);
             }
 
-            Dictionary<string, LevelObjectData> levelObjectDatas = LevelObjectData.GetAllBuildableByUniqueType();
 
             foreach (LevelObjectInstanceData i in levelObjectInstances)
             {
-                LevelObjectData d;
-                if(levelObjectDatas.TryGetValue(i.type,out d))
-                {
-                    LevelManager.currentLevel.Add(d,i.GetLocation(), i.GetRotation());
-                }
+               LevelManager.currentLevel.Add(i);
             }
 
             instance.regionLoaded[regionId] = true;

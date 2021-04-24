@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
+
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -20,6 +22,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         LevelNavGenerator navGenerator;
 
         public LevelObjectData missingPrefab;
+
+        Dictionary<string, LevelObjectData> levelObjectDatas;
 
         //this needs to be false in network play
         bool _activated;
@@ -52,6 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Setup()
         {
+            levelObjectDatas = LevelObjectData.GetAllBuildableByUniqueType();
             dynamicObjects = transform.Find("Dynamic");
             navGenerator = GetComponent<LevelNavGenerator>();
             createPlayerSpawnList();
@@ -127,18 +132,49 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public GameObject Add(LevelObjectInstanceData levelObjectInstanceData)
+        {
+            GameObject result = null;
+            LevelObjectData d;
+            if (levelObjectDatas.TryGetValue(levelObjectInstanceData.type, out d))
+            {
+                if(levelObjectInstanceData.locations.Count > 1)
+                {
+                    List<Vector3> receiverLocations = levelObjectInstanceData.locations.Select((x) => { return x.ToVector(); }).ToList();
+                    result = Add(d, levelObjectInstanceData.GetLocation(), levelObjectInstanceData.GetRotation(),receiverLocations);
+                }
+                else
+                    result = Add(d, levelObjectInstanceData.GetLocation(), levelObjectInstanceData.GetRotation());
+            }
 
+            return result;
+        }
+
+        // These Objects will be stored in the Chunks and are permanent Information
+        // For Interactive Objects only
+        public GameObject Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation, List<Vector3> receiverLocations)
+        {
+            GameObject g = Add(levelObjectData,position,rotation);
+
+            InteractiveLevelObject interactiveObject = g.GetComponent<InteractiveLevelObject>();
+            foreach(Vector3 receiverlocation in receiverLocations)
+            {
+                interactiveObject.AddReceiver(receiverlocation);
+            }
+            //TODO
+            return g;
+        }
        
 
-        //These Objects will be stored in the Chunks and are permanent Information
-        public void Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
+        // These Objects will be stored in the Chunks and are permanent Information
+        public GameObject Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
         {
-            if (levelObjectData == null || levelObjectData.prefab == null) { Add(missingPrefab,position,rotation); return; }
+            if (levelObjectData == null || levelObjectData.prefab == null) { return Add(missingPrefab,position,rotation); }
 
 			if(!levelObjectData.levelInstantiable)
 			{
 				Debug.Log(levelObjectData.name+" cannot be created as constant part of Level");
-				return;
+				return null;
 			}
 
             Chunk chunk = ChunkManager.GetChunk(position);
@@ -149,7 +185,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 g.GetComponent<LevelObject>().isDynamic = false;
 
                 navigationUpdateNeeded = true;
+                return g;
             }
+            return null;
         }
 
         LevelObject GetTopLevelObject(GameObject g)
@@ -233,6 +271,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Transform GetAllDynamicObjects()
         {
             return dynamicObjects;
+        }
+
+        public LevelObject GetLevelObjectAt(Vector3 position)
+        {
+            Chunk targetChunk = ChunkManager.GetChunk(position,createIfNotThere: false);
+            if (targetChunk == null) return null;
+            return targetChunk.GetLevelObjectAt(position);
         }
     }
 }
