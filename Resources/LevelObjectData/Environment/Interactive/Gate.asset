@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: Door
+  m_Name: Gate
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  uniqueLevelObjectId: a1e742ae-21a3-4e51-8759-e98bb2856ce3
-  granularity: 0
-  name: 
+  prefab: {fileID: 4924650896210544278, guid: f159be7f38d48e4468488f8a1e54fa1a, type: 3}
+  uniqueLevelObjectId: 020bab82-53e2-4501-91b4-e3eddc29b8c1
+  granularity: 3
+  name: Gate
   dynamicInstantiable: 0
-  levelInstantiable: 0
+  levelInstantiable: 1
+  Buildable: 1

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: SmallFloor
+  m_Name: Wire
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
-  uniqueLevelObjectId: af830fa8-67b4-4a69-8094-a6b8391933cd
-  granularity: 2
-  name: Small Floorpiece
+  prefab: {fileID: 0}
+  uniqueLevelObjectId: 50ab342c-ec87-4925-a748-f0290c827f1a
+  granularity: 0
+  name: Wire
   dynamicInstantiable: 0
   levelInstantiable: 1
-  Buildable: 1
+  Buildable: 0

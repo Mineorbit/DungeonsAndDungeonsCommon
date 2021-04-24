@@ -17,4 +17,5 @@ MonoBehaviour:
   granularity: 0
   name: 
   dynamicInstantiable: 0
-  levelInstantiable: 0
+  levelInstantiable: 1
+  Buildable: 1
