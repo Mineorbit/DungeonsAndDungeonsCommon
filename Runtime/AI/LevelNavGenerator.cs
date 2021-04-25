@@ -16,11 +16,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void UpdateNavMesh()
         {
             Debug.Log("Building");
-            Transform p = LevelManager.currentLevel.GetAllDynamicObjects();
-            foreach (Transform t in p)
+            List<LevelObject> dynObjects = LevelManager.currentLevel.GetAllDynamicLevelObjects(inactive: false);
+            foreach (LevelObject o in dynObjects)
             {
-                if (t != null)
-                    t.gameObject.SetActive(false);
+                    o.gameObject.SetActive(false);
             }
 
             if (navMeshSurface == null) navMeshSurface = GetComponent<NavMeshSurface>();
@@ -30,10 +29,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log("Built surface");
 
-            foreach (Transform t in p)
+            foreach (LevelObject o in dynObjects)
             {
-                if (t != null)
-                    t.gameObject.SetActive(true);
+                o.gameObject.SetActive(true);
             }
         }
     }
