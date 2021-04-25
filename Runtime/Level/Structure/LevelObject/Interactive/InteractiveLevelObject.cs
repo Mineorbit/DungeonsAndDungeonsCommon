@@ -27,9 +27,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(!activated)
             {
+                activated = true;
                 foreach(var receiver in receivers.Values)
                 {
                     receiver.Activate();
+                }
+            }
+        }
+        public virtual void Deactivate()
+        {
+            if (activated)
+            {
+                activated = false;
+                foreach (var receiver in receivers.Values)
+                {
+                    receiver.Deactivate();
                 }
             }
         }
@@ -69,10 +81,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Added receiver at location really" + location);
             if (r != null)
             { 
+                if(!receivers.ContainsKey(location))
+                {
                 receivers.Add(location,r);
                 Wire line = Wire.Create(this, r, Color.black);
                 outBoundWires.Add(line);
                 r.inBoundWires.Add(line);
+                }
             }
         }
 
