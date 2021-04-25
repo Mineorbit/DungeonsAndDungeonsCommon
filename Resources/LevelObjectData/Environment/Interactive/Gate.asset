@@ -16,6 +16,6 @@ MonoBehaviour:
   uniqueLevelObjectId: 020bab82-53e2-4501-91b4-e3eddc29b8c1
   granularity: 3
   name: Gate
-  dynamicInstantiable: 0
+  dynamicInstantiable: 1
   levelInstantiable: 1
   Buildable: 1

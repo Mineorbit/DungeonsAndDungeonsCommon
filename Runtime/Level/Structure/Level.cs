@@ -182,7 +182,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
                 g.GetComponent<LevelObject>().enabled = activated;
-                g.GetComponent<LevelObject>().isDynamic = false;
+                g.GetComponent<LevelObject>().isDynamic = levelObjectData.dynamicInstantiable;
 
                 navigationUpdateNeeded = true;
                 return g;
@@ -241,7 +241,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			}
             var created = levelObjectData.Create(position, rotation, dynamicObjects);
             created.GetComponent<LevelObject>().enabled = activated;
-            created.GetComponent<LevelObject>().isDynamic = true;
+            created.GetComponent<LevelObject>().isDynamic = levelObjectData.dynamicInstantiable;
             return created;
         }
 
@@ -274,8 +274,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public Transform GetAllDynamicObjects()
+        public List<LevelObject> GetAllDynamicLevelObjects(bool inactive = true)
         {
+            List<LevelObject> dynamicObjects = transform.GetComponentsInChildren<LevelObject>(includeInactive: inactive).ToList();
+            dynamicObjects = dynamicObjects.FindAll( (x) => x.isDynamic == true ).ToList();
             return dynamicObjects;
         }
 
