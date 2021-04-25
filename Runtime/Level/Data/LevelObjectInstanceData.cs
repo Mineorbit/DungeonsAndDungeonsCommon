@@ -115,6 +115,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             foreach (Vector3 receiverLocation in o.receivers.Keys)
             {
+                Debug.Log("Adding ReceiverLocation "+receiverLocation);
                 d.AddLocation(receiverLocation);
             }
 

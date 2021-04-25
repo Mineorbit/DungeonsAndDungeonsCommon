@@ -8,13 +8,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     public class InteractiveLevelObject : LevelObject
     {
+
+
         public Dictionary<Vector3,InteractiveLevelObject> receivers = new Dictionary<Vector3, InteractiveLevelObject>();
 
-        public List<InteractiveLevelObject> receiversList = new List<InteractiveLevelObject>();
+
+        public List<Wire> inBoundWires = new List<Wire>();
+        public List<Wire> outBoundWires = new List<Wire>();
+
+
 
         Queue<Vector3> receiversToAdd = new Queue<Vector3>();
 
         bool activated = false;
+
 
         public virtual void Activate()
         {
@@ -27,28 +34,58 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+
+        public void RemoveReceiver(InteractiveLevelObject o, Wire wireToO)
+        {
+            if(receivers.ContainsValue(o))
+            {
+                Vector3 k = new Vector3(0,0,0);
+                foreach(KeyValuePair < Vector3,InteractiveLevelObject > receiver in receivers)
+                {
+                    if(receiver.Value == o)
+                    {
+                        k = receiver.Key;
+                    }
+                }
+                receivers.Remove(k);
+            }
+            outBoundWires.Remove(wireToO);
+        }
+
         public void AddReceiver(Vector3 location)
         {
-            Debug.Log(gameObject.name+" adding receiver at location "+location);
+            Debug.Log("Adding Receiver at "+location);
             if(! (receivers.ContainsKey(location) || receiversToAdd.Contains(location)))
             {
                 receiversToAdd.Enqueue(location);
             }
+            FindReceivers();
         }
 
-        public void AddReceiver(Vector3 location, InteractiveLevelObject r)
+        public void AddReceiverDynamic(Vector3 location, InteractiveLevelObject r)
         {
-            if(r != null)
+            Debug.Log("HELLO");
+            Debug.Log("Added receiver at location really" + location);
+            if (r != null)
             { 
                 receivers.Add(location,r);
-                receiversList.Add(r);
-            DrawLine(transform.position, location, Color.black);
+                Wire line = Wire.Create(this, r, Color.black);
+                outBoundWires.Add(line);
+                r.inBoundWires.Add(line);
             }
         }
 
-        void Start()
+        public virtual void OnDestroy()
         {
-
+            foreach(Wire w in  inBoundWires)
+            {
+                LevelManager.currentLevel.RemoveDynamic(w);
+            }
+            foreach(Wire w in outBoundWires)
+            {
+                LevelManager.currentLevel.RemoveDynamic(w);
+            }
         }
 
         // Will try to find receiver at that location, if not found, will drop that receiver
@@ -57,39 +94,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while(receiversToAdd.Count > 0)
             {
                 Vector3 targetLocation = receiversToAdd.Dequeue();
-                Debug.Log("Trying to add receiver " +targetLocation);
                 LevelObject receiver = LevelManager.currentLevel.GetLevelObjectAt(targetLocation);
-                if(receiver != null && receiver.GetType() == typeof(InteractiveLevelObject) && receiver != this)
+                if(receiver != null)
+                Debug.Log(this.gameObject.name+" found "+receiver.gameObject.name+"");
+                if (receiver != null && receiver.GetType().IsSubclassOf(typeof(InteractiveLevelObject)) && receiver != this)
                 {
                     InteractiveLevelObject r = (InteractiveLevelObject) receiver;
-                    AddReceiver(receiver.transform.position, r);
+                    Debug.Log("Found " + r);
+                    AddReceiverDynamic(r.transform.position, r);
                 }
             }
         }
 
-        void DrawLine(Vector3 start, Vector3 end, Color color)
-        {
-            GameObject myLine = new GameObject();
-            myLine.transform.position = start;
-            myLine.AddComponent<LineRenderer>();
-            LineRenderer lr = myLine.GetComponent<LineRenderer>();
-
-            lr.material = new Material(Shader.Find("Sprites/Default"));
-            lr.widthMultiplier = 0.2f;
-            lr.positionCount = 2;
-            lr.SetPosition(0, start);
-            lr.SetPosition(1, end);
-        }
+        
 
         public override void OnInit()
         {
             base.OnInit();
+
+            
             FindReceivers();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        }
+        
     }
 }

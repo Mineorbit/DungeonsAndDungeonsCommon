@@ -8,10 +8,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     public class PressurePad : InteractiveLevelObject
     {
-        // Start is called before the first frame update
-        void Start()
+        public Hitbox playerStandinghitbox;
+        public override void OnInit()
         {
-
+            base.OnInit();
+            playerStandinghitbox.Attach("Player");
+            playerStandinghitbox.enterEvent.AddListener((x)=> { Activate(); });
         }
 
         // Update is called once per frame
