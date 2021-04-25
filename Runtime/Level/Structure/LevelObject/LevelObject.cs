@@ -37,14 +37,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
+        
     }
 }

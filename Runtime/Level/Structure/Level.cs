@@ -192,13 +192,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         LevelObject GetTopLevelObject(GameObject g)
         {
+            Debug.Log("Getting Top Level of "+g.name);
             LevelObject r = null;
             GameObject p = g;
             LevelObject z = g.GetComponent<LevelObject>();
             do
             {
                 r = z;
-                z = p.transform.parent.gameObject.GetComponentInParent<LevelObject>(includeInactive: true);
+                var parent = p.transform.parent;
+                if (parent == null) break;
+                z = parent.gameObject.GetComponentInParent<LevelObject>(includeInactive: true);
                 p = p.transform.parent.gameObject;
             } while (z != null);
             return r;
@@ -206,11 +209,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Remove(GameObject levelObject)
         {
-
             LevelObject toDelete = GetTopLevelObject(levelObject);
-
             if(toDelete != null)
             {
+
+                if (toDelete.isDynamic)
+                {
+                    RemoveDynamic(toDelete);
+                }
 
                 if (toDelete.transform.parent != dynamicObjects)
                 {
