@@ -93,7 +93,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3909233067320746374, guid: dbbfe9a059620e14eb8c7afca28be931, type: 3}
 --- !u!1 &7591226458481121288
@@ -122,13 +122,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7591226458481121288}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 69.756645, y: 69.75664, z: 69.75664}
+  m_LocalScale: {x: 70, y: 70, z: 70}
   m_Children: []
   m_Father: {fileID: 8939246234319776795}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &2941793721606168700
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -157,6 +157,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7b9b432d24ae84c488dcc779886c96ab, type: 2}
+  - {fileID: 2100000, guid: 08658ca7ba9b3d346a22096f09ee0f09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -189,7 +190,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: dbbfe9a059620e14eb8c7afca28be931, type: 3}
 --- !u!1 &7732762017882436316
@@ -275,6 +276,8 @@ MonoBehaviour:
   inBoundWires: []
   outBoundWires: []
   playerStandinghitbox: {fileID: 3980620929386042251}
+  buttonHead: {fileID: 5849622161652848354}
+  buildCollider: {fileID: 46853627974254591}
 --- !u!65 &46853627974254591
 BoxCollider:
   m_ObjectHideFlags: 0

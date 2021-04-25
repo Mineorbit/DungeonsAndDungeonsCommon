@@ -28,13 +28,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 wirePreset = Resources.Load<LevelObjectData>("LevelObjectData/Environment/Interactive/Wire");
             }
-            Debug.Log(wirePreset);
 
             GameObject wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0,0,0), new Quaternion(0, 0, 0, 0));
             Wire w = wire.GetComponent<Wire>();
             w.SetSender(start);
             w.SetReceiver(end);
             w.Render();
+
+            return w;
+
+
+        }
+
+        public static Wire CreateDynamic(Vector3 start, Vector3 end, Color color)
+        {
+            if (wirePreset == null)
+            {
+                wirePreset = Resources.Load<LevelObjectData>("LevelObjectData/Environment/Interactive/Wire");
+            }
+
+            GameObject wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            Wire w = wire.GetComponent<Wire>();
+            w.SetSenderPosition(start);
+            w.SetReceiverPosition(end);
+            //w.Render();
 
             return w;
 
@@ -67,6 +84,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             mc.enabled = true;
         }
 
+        public void SetSenderPosition(Vector3 s)
+        {
+            lr.SetPosition(0, s);
+        }
+        public void SetReceiverPosition(Vector3 r)
+        {
+            lr.SetPosition(1, r);
+        }
+
         public void SetSender(InteractiveLevelObject s)
         {
             sender = s;
@@ -80,8 +106,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
-            receiver.inBoundWires.Remove(this);
-            sender.RemoveReceiver(receiver,this);
+            if (receiver != null)
+                receiver.inBoundWires.Remove(this);
+            if(sender != null)
+                sender.RemoveReceiver(receiver,this);
         }
     }
 }
