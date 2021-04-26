@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -8,10 +9,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
 
         EnemyController enemyController;
-        public enum EnemyState { Idle = 1, Track,  PrepareStrike, Strike, Attack, Dead };
-        public EnemyState enemyState;
 
+
+        // Enemy Properties
+
+
+        public bool seeThroughWalls = false;
         public int damage = 5;
+
+
+        public float currentDamage;
+
+        public class EnemyState : CustomEnum
+        {
+
+            public EnemyState(string val) : base(val)
+            {
+                Value = val;
+            }
+        }
+
+        public static EnemyState Idle = new EnemyState("Idle");
+        public static EnemyState PrepareStrike = new EnemyState("PrepareStrike");
+        public static EnemyState Attack = new EnemyState("Attack");
+
+
+        public class EnemyAction : CustomEnum
+        {
+            public EnemyAction(string val) : base(val)
+            {
+                Value = val;
+            }
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -39,28 +68,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
+
+            //overriden by subclass
+            enemyController.enemyStateFSM = new FSM<EnemyState,EnemyAction>();
             enemyController.seenPlayer = null;
             enemyController.seenAlly = null;
             enemyController.lastSeenPlayer = null;
         }
 
-        public void TryDamage(GameObject g, float hitDamage)
-        {
-            Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
-            if (c != null)
-            {
-                c.Hit((int) hitDamage);
-            }
-        }
+        
 
         public EnemyState GetState()
         {
-            return enemyState;
+            return enemyController.enemyStateFSM.state;
         }
 
         public void SetState(EnemyState state)
         {
-            enemyState = state;
+            enemyController.enemyStateFSM.state = state;
         }
         // Update is called once per frame
         void Update()

@@ -59,7 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnDeInit()
         {
             base.OnDeInit();
-            if (spawnedItem.GetComponent<Item>().isEquipped)
+            if (spawnedItem != null && spawnedItem.GetComponent<Item>().isEquipped)
                 RemoveSpawnedItem(physics: false);
         }
 
