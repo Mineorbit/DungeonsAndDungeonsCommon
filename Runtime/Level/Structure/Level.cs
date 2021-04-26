@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach(LevelObject levelObject in transform.GetComponentsInChildren<LevelObject>())
             {
-                levelObject.enabled = a;
+                levelObject.enabled = a || levelObject.ActivateWhenInactive;
             }
         }
 
@@ -181,8 +181,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (chunk != null)
             {
                 GameObject g = levelObjectData.Create(position, rotation, chunk.transform);
-                g.GetComponent<LevelObject>().enabled = activated;
+                g.GetComponent<LevelObject>().enabled = activated||levelObjectData.ActivateWhenInactive;
                 g.GetComponent<LevelObject>().isDynamic = levelObjectData.dynamicInstantiable;
+                g.GetComponent<LevelObject>().ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
 
                 navigationUpdateNeeded = true;
                 return g;
@@ -192,9 +193,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         LevelObject GetTopLevelObject(GameObject g)
         {
-            Debug.Log("Getting Top Level of "+g.name);
             LevelObject r = null;
             GameObject p = g;
+            if (g == null) return null;
             LevelObject z = g.GetComponent<LevelObject>();
             do
             {
@@ -240,8 +241,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				return null;
 			}
             var created = levelObjectData.Create(position, rotation, dynamicObjects);
-            created.GetComponent<LevelObject>().enabled = activated;
+            created.GetComponent<LevelObject>().enabled = activated || levelObjectData.ActivateWhenInactive;
             created.GetComponent<LevelObject>().isDynamic = levelObjectData.dynamicInstantiable;
+            created.GetComponent<LevelObject>().ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
             return created;
         }
 

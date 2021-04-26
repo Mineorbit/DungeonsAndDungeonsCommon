@@ -18,4 +18,5 @@ MonoBehaviour:
   name: Wire
   dynamicInstantiable: 1
   levelInstantiable: 0
+  ActivateWhenInactive: 1
   Buildable: 0

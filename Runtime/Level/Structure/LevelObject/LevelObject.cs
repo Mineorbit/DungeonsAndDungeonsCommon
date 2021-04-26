@@ -12,6 +12,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool isDynamic = false;
 
+        public bool ActivateWhenInactive = false;
 
         // Initializes a LevelObject to its original state
         // It must be assured that this also resets a LevelObject to its Initial State in the Level (If Static that is  self explanatory, might cause

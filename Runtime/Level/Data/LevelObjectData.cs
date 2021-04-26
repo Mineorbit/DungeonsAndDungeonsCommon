@@ -20,6 +20,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		
 		public bool levelInstantiable;
 
+        public bool ActivateWhenInactive;
+
         public bool Buildable;
 
 

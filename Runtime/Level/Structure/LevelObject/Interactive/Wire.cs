@@ -15,10 +15,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LineRenderer lr;
         public MeshCollider mc;
+
+        public Transform A;
+
+        public Transform B;
+
+        float t = 0;
+
+        public int numberOfPoints = 20;
+
+        public void Start()
+        {
+            lr.SetWidth(0.4f, 0.4f);
+        }
+        public void Update()
+        {
+            AnimationCurve curve = new AnimationCurve();
+            t += Time.deltaTime;
+            for(float f = 0;f<1;f+=1f/((float)numberOfPoints))
+            {
+
+                curve.AddKey(f, 0.3f+(0.125f/2)*Mathf.Sin(-8*t + 8 * f));
+            }
+            lr.widthCurve = curve;
+        }
         public override void OnInit()
         {
             base.OnInit();
-            lr.positionCount = 2;
+            this.enabled = true; 
+            numberOfPoints = 16;
+            lr.positionCount = numberOfPoints;
         }
 
 
@@ -62,7 +88,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Render()
         {
             Mesh mesh = new Mesh();
+            lr.SetWidth(1, 1);
             lr.BakeMesh(mesh, true);
+            lr.SetWidth(0.4f, 0.4f);
             mc.sharedMesh = mesh;
             Debug.Log("Rendered mesh ");
             foreach(var x in mesh.vertices)
@@ -84,24 +112,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             mc.enabled = true;
         }
 
+        Vector3 start = new Vector3(0,0,0);
+
         public void SetSenderPosition(Vector3 s)
         {
+            start = s;
             lr.SetPosition(0, s);
+            A.position = s;
         }
+
         public void SetReceiverPosition(Vector3 r)
         {
-            lr.SetPosition(1, r);
+            for(int i = 1; i < numberOfPoints; i++)
+            {
+                float t = ((float)i / (float)(numberOfPoints-1));
+                Vector3 pos = (1 - t) * start + t * r;
+                Debug.Log(pos);
+                lr.SetPosition(i, pos);
+            }
+            B.position = r;
         }
 
         public void SetSender(InteractiveLevelObject s)
         {
             sender = s;
-            lr.SetPosition(0,s.transform.position);
+            SetSenderPosition(s.transform.position);
         }
         public void SetReceiver(InteractiveLevelObject r)
         {
             receiver = r;
-            lr.SetPosition(1,r.transform.position);
+            SetReceiverPosition(r.transform.position);
         }
 
         public void OnDestroy()
