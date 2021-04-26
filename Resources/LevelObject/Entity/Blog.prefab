@@ -111,11 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf0b93189c4eff4e837177c34e878bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  me: {fileID: 0}
   seenPlayer: {fileID: 0}
+  lastSeenPlayer: {fileID: 0}
   seenAlly: {fileID: 0}
+  viewDistance: 15
+  attackDistance: 4
   currentSpeed: 0
-  attackHitbox: {fileID: 4602278566786722469}
-  currentDamage: 0
 --- !u!114 &736877002971563754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,8 +133,10 @@ MonoBehaviour:
   levelObjectDataType: 
   isDynamic: 0
   health: 0
-  enemyState: 0
+  seeThroughWalls: 0
   damage: 5
+  currentDamage: 0
+  attackHitbox: {fileID: 4602278566786722469}
 --- !u!195 &736877002971563753
 NavMeshAgent:
   m_ObjectHideFlags: 0

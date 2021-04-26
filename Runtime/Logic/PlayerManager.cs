@@ -64,7 +64,7 @@ public class PlayerManager : MonoBehaviour
             Vector3 location = new Vector3(i * 8, 6, 0);
             if(LevelManager.currentLevel.spawn[i] != null)
             {
-                location = LevelManager.currentLevel.spawn[i].transform.position;
+                location = LevelManager.currentLevel.spawn[i].transform.position+new Vector3(0,0.25f,0);
             }
             return location;
     }

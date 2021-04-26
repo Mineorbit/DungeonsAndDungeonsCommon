@@ -4,12 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using com.mineorbit.dungeonsanddungeonscommon;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class EnemyController : MonoBehaviour
     {
-        Enemy me;
+
+        public Enemy me;
+
+
+        public FSM<Enemy.EnemyState, Enemy.EnemyAction> enemyStateFSM;
 
         public Player seenPlayer;
         public Player lastSeenPlayer;
@@ -29,43 +34,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         NavMeshAgent navMeshAgent;
-        System.Random rand;
 
         public float currentSpeed;
 
-        public Hitbox attackHitbox;
-
-        public float currentDamage;
 
 
-        public float forgetTime = 5f;
+
+        public static float forgetTime = 5f;
 
 
-        IEnumerator Timer(float strikeTime, Func<object, object> act, object input)
-        {
-            yield return new WaitForSeconds(strikeTime);
-            act(input);
-        }
+
 
 
         void Start()
         {
             me = GetComponent<Enemy>();
 
-            rand = new System.Random();
 
             navMeshAgent = GetComponent<NavMeshAgent>();
 
-            attackHitbox.Attach("Player");
+            
 
-            attackHitbox.enterEvent.AddListener((x)=> { me.TryDamage(x,currentDamage); });
-
-            attackHitbox.Deactivate();
-
-            me.SetState(Enemy.EnemyState.Idle);
+            me.SetState(Enemy.Idle);
         }
 
-        
+
 
         void Update()
         {
@@ -96,11 +89,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
 
-
-            if(CheckLineOfSight(minPlayer))
-            {            
+            bool walls = me.seeThroughWalls;
+            if (walls ? true : CheckLineOfSight(minPlayer))
+            {
                 return minPlayer;
-            }else
+            } else
             {
                 return null;
             }
@@ -128,36 +121,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        IEnumerator visibilityTimer;
+        TimerManager.Timer visibilityTimer;
         void UpdateSeenPlayer()
         {
             Player currentViewedPlayer = CheckVisiblePlayer();
             if(currentViewedPlayer == null)
             {
                 // start timer for 2 seconds then drop player
-                if(visibilityTimer == null && lastSeenPlayer != null)
+                if(lastSeenPlayer != null)
                 {
-                    visibilityTimer = Timer(forgetTime,ForgetPlayer,null);
-                    StartCoroutine(visibilityTimer);
+                    visibilityTimer = TimerManager.StartTimer(forgetTime, () => { this.ForgetPlayer(); });
                 }
             }
             else
             {
-                if(visibilityTimer != null)
-                { 
-                    StopCoroutine(visibilityTimer);
-                    visibilityTimer = null;
-                }
+                TimerManager.StopTimer(visibilityTimer);
+
                 lastSeenPlayer = currentViewedPlayer;
                 seenPlayer = currentViewedPlayer;
             }
         }
 
 
-        object ForgetPlayer(object input)
+        void ForgetPlayer()
         {
             seenPlayer = null;
-            return null;
         }
 
         void UpdateVariables()
@@ -189,51 +177,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public IEnumerator strikeTimer;
 
         void UpdateState()
         {
-
+            enemyStateFSM.ExecuteState();
         }
 
-        public void TryStrike()
-        {
-            if (strikeTimer == null)
-            {
-                me.SetState(Enemy.EnemyState.PrepareStrike);
-                strikeTimer = Timer((1 + 5 * (float)rand.NextDouble()),Strike, (float) me.damage);
-                StartCoroutine(strikeTimer);
-            }
-        }
         
-
-        object Strike(object damage)
-        {
-            Debug.Log("Test");
-
-            me.SetState(Enemy.EnemyState.Attack);
-            Attack((float)damage);
-            return null;
-        }
-
-        void Attack(float damage)
-        {
-            Debug.Log("Attacking");
-            currentDamage = damage * (1 + 5 * (float)rand.NextDouble());
-            attackHitbox.Activate();
-
-            var attackTimer = Timer(0.025f, FinishStrike, null);
-            StartCoroutine(attackTimer);
-        }
-
-        public object FinishStrike(object val)
-        {
-            me.SetState(Enemy.EnemyState.Attack);
-            attackHitbox.Deactivate();
-            Debug.Log("Finished Strike");
-            strikeTimer = null;
-            return null;
-        }
 
 
 
