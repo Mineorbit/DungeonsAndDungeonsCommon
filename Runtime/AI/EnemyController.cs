@@ -57,6 +57,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             currentTarget = transform.position;
 
             me.SetState(Enemy.EnemyState.Idle);
+            SetTrackingAbility(true);
+        }
+
+
+        public void SetTrackingAbility(bool ability, bool reset = false)
+        {
+            if(navMeshAgent != null)
+            { 
+            navMeshAgent.isStopped = !ability;
+            if(reset) navMeshAgent.ResetPath();
+            }
         }
 
         public void GoTo(Vector3 target)

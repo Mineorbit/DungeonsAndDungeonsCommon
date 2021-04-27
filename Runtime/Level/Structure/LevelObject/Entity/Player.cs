@@ -172,6 +172,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             PlayerManager.playerManager.DespawnPlayer(localId);
         }
 
+        public void OnDestroy()
+        {
+            foreach(ItemHandle itemHandle in itemHandles)
+            {
+                itemHandle.Dettach();
+            }
+        }
+
         void OnCollisionEnter(Collision collision)
         {
             GameObject col = collision.collider.gameObject;
