@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1699927312025447298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7701269289737528328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 262623f5d57cbad448b7ebf29f9b9b8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slot: {fileID: 0}
-  handleType: 0
 --- !u!95 &7589352983227760250
 Animator:
   serializedVersion: 3
@@ -24,7 +10,7 @@ Animator:
   m_GameObject: {fileID: 4269609861049974646}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 330404e79095000479658f4ab8501a22, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -46,6 +32,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 6344021777004394327}
+  animator: {fileID: 7589352983227760250}
+--- !u!114 &1699927312025447298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7701269289737528328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262623f5d57cbad448b7ebf29f9b9b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slot: {fileID: 0}
+  handleType: 0
 --- !u!1 &7709308443060799710
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +143,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 
+  isDynamic: 0
+  ActivateWhenInactive: 0
   health: 0
+  onAttackEvent:
+    m_PersistentCalls:
+      m_Calls: []
   items: []
   itemHandles: []
   colorChanger: {fileID: 0}

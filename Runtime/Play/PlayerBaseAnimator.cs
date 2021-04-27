@@ -7,6 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class PlayerBaseAnimator : MonoBehaviour
     {
         public CharacterController characterController;
+        public Animator animator;
         Vector3 forwardDirection;
         void Start()
         {
@@ -16,10 +17,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Update is called once per frame
         void Update()
         {
-            if(characterController.velocity.magnitude > 0)
+            float speed = characterController.velocity.magnitude;
+            if (speed > 0)
             forwardDirection =  (forwardDirection + characterController.velocity)/2;
             float angleY = 180 + (180/Mathf.PI) * Mathf.Atan2(forwardDirection.x,forwardDirection.z);
-
+            animator.SetFloat("Speed",speed);
             transform.eulerAngles = (new Vector3(0,angleY,0));
         }
     }

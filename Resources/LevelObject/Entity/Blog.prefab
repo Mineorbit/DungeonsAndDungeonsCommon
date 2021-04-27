@@ -115,8 +115,6 @@ MonoBehaviour:
   seenPlayer: {fileID: 0}
   lastSeenPlayer: {fileID: 0}
   seenAlly: {fileID: 0}
-  viewDistance: 15
-  attackDistance: 4
   currentSpeed: 0
 --- !u!114 &736877002971563754
 MonoBehaviour:
@@ -134,11 +132,18 @@ MonoBehaviour:
   isDynamic: 0
   ActivateWhenInactive: 0
   health: 0
+  onAttackEvent:
+    m_PersistentCalls:
+      m_Calls: []
   enemyController: {fileID: 0}
+  viewDistance: 15
+  attackDistance: 4
+  forgetPlayer: 0
   seeThroughWalls: 0
   damage: 5
   currentDamage: 0
   attackHitbox: {fileID: 4602278566786722469}
+  attackTarget: {fileID: 0}
 --- !u!195 &736877002971563753
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -233,6 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7247790739610513576}
+  - component: {fileID: 7885660916142931459}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -256,6 +262,25 @@ Transform:
   m_Father: {fileID: 8443121854715069616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &7885660916142931459
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524717565399633535}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8143a7cd66ab8754e9fd60b3987b8315, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1889944188183267255
 GameObject:
   m_ObjectHideFlags: 0
