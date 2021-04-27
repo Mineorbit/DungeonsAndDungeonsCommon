@@ -223,10 +223,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelObjectDataType: 
   isDynamic: 0
+  ActivateWhenInactive: 0
   inBoundWires: []
   outBoundWires: []
   collider: {fileID: 5230568351884737477}
   model: {fileID: 8263260763983646358}
+  navMeshObstacle: {fileID: -6315356682183278751}
 --- !u!208 &-6315356682183278751
 NavMeshObstacle:
   m_ObjectHideFlags: 0

@@ -12,6 +12,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Transform buttonHead;
         public Collider buildCollider;
 
+        public bool returnToUnpress;
+
         bool pressed = false;
         IEnumerator unpressTimer;
         public override void OnInit()
@@ -19,7 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnInit();
             playerStandinghitbox.Attach("Player");
             playerStandinghitbox.enterEvent.AddListener((x)=> { if (unpressTimer != null) { StopCoroutine(unpressTimer); unpressTimer = null; } StartCoroutine("Press");});
-            playerStandinghitbox.exitEvent.AddListener((x) => { unpressTimer = TimerUnpress(); StartCoroutine(unpressTimer); });
+            playerStandinghitbox.exitEvent.AddListener((x) => { if (returnToUnpress) { unpressTimer = TimerUnpress(); StartCoroutine(unpressTimer); } });
         }
 
         public override void OnStartRound()

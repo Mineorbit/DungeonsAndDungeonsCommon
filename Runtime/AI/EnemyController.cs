@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        Queue<Vector3> targetPoints = new Queue<Vector3>();
+        //Queue<Vector3> targetPoints = new Queue<Vector3>();
 
         Vector3 currentTarget = new Vector3(0,0,0);
         void Start()
@@ -61,10 +61,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void GoTo(Vector3 target)
         {
+            currentTarget = target;
+        }
+        /*
+        public void GoTo(Vector3 target)
+        {
             targetPoints.Enqueue(target);
         }
 
         TimerManager.Timer walkTimer;
+
 
         public void UpdateLocomotion()
         {
@@ -78,6 +84,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
             }
+        }*/
+
+        public void UpdateLocomotion()
+        {
+            navMeshAgent.SetDestination(currentTarget);
         }
 
         void Update()
