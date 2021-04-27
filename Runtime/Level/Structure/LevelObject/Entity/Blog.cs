@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -16,22 +17,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public class BlogState : EnemyState
         {
 
-            public BlogState(string val) : base(val)
+            public static BlogState Track = new BlogState("Track",5);
+
+
+            public BlogState(string val, int card) : base(val,  card)
             {
                 Value = val;
+                cardinal = card;
             }
         }
+
+
+
+
+        public static EnemyAction Striking = new EnemyAction("Striking", 3);
+
+        float distanceToPlayer = 4f;
+        float maximumTrackTime = 15f;
+        float strikeDistance = 3f;
 
         public Hitbox attackHitbox;
 
         System.Random rand;
 
         TimerManager.Timer randomWalkTimer;
+
         void RandomWalk()
         {
             if(!TimerManager.isRunning(randomWalkTimer))
             {
-                float randomAngle = Random.Range(0,Mathf.PI);
+                float randomAngle = UnityEngine.Random.Range(0,Mathf.PI);
                 float randomDistance = 6f;
                 Vector3 randomGoal = transform.position+randomDistance*(transform.forward * Mathf.Sin(randomAngle) + transform.right * Mathf.Cos(randomAngle));
                 enemyController.GoTo(randomGoal);
@@ -53,17 +68,97 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-
         void SetupBlogFSM()
         {
             me = new FSM<EnemyState, EnemyAction>();
 
 
-            me.stateAction.Add(BlogState.Idle,()=> { RandomWalk(); });
+            me.stateAction.Add(BlogState.Idle,()=> {
+                RandomWalk(); 
+                if(enemyController.seenPlayer !=  null)
+                {
+                    me.Move(Enemy.EnemyAction.Engage);
+                }
+            });
 
+            me.stateAction.Add(BlogState.Track, () => {
+
+                float distanceToTarget = (transform.position - targetEntity.position).magnitude;
+                if (targetEntity != null)
+                {
+
+                    if( distanceToTarget > strikeDistance)
+                    {
+                    enemyController.GoTo(targetEntity.position-targetEntity.forward*distanceToPlayer);
+                    }else
+                    if(distanceToTarget < strikeDistance)
+                    {
+                        me.Move(Striking);
+                    }
+                }
+            });
+
+            me.stateAction.Add(BlogState.PrepareStrike, () => {
+                Vector3 dir = transform.position - targetEntity.position;
+                float distanceToTarget = (dir).magnitude;
+
+                float angle = 180 + (180/Mathf.PI) * Mathf.Atan2(dir.x,dir.z);
+
+                transform.localEulerAngles = new Vector3(0,angle,0);
+
+                if (distanceToTarget < distanceToPlayer )
+                {
+                    me.Move(Enemy.EnemyAction.Engage);
+                }else
+                {
+                    TryStrike();
+                }
+            });
+
+
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> { TrackTarget(enemyController.seenPlayer); },Blog.BlogState.Track));
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Striking), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { TryStrike(); }, BlogState.PrepareStrike));
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.PrepareStrike, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { TrackTarget(enemyController.seenPlayer); }, Blog.BlogState.Track));
 
             enemyController.enemyStateFSM = me;
             SetState(BlogState.Idle);
+        }
+
+
+
+
+        Transform targetEntity;
+
+        TimerManager.Timer maximumTrackTimer;
+
+        void TrackTarget(Entity target)
+        {
+            if(target == null)
+            {
+                me.Move(Enemy.EnemyAction.Disengage);
+            }
+            targetEntity = target.transform;
+
+            maximumTrackTimer = TimerManager.StartTimer(15f,()=>
+            {
+                me.Move(Enemy.EnemyAction.Disengage);
+                if (TimerManager.isRunning(maximumTrackTimer))
+                {
+                    TimerManager.StopTimer(maximumTrackTimer);
+                }
+            });
+        }
+
+        void StopTrackTarget()
+        {
+            targetEntity = null;
+        }
+
+
+        void StopTrack()
+        {
+            
         }
 
         bool go = false;
@@ -101,7 +196,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!TimerManager.isRunning(strikeTimer))
             {
                 Debug.Log("Blog trying to Strike");
-                //me.SetState(Enemy.PrepareStrike);
                 
                 strikeTimer = TimerManager.StartTimer((1 + 5 * (float)rand.NextDouble()),()=> { Strike(10); } );
             }
@@ -111,7 +205,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Strike(float damage)
         {
 
-            //me.SetState(Enemy.Attack);
             Attack((float)damage);
         }
 
@@ -119,7 +212,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void Attack(float damage)
         {
-            Debug.Log("Attacking");
+            me.SetState(Enemy.EnemyState.Attack);
             currentDamage = damage * (1 + 5 * (float)rand.NextDouble());
 
             attackHitbox.Activate();
@@ -130,8 +223,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void FinishStrike()
         {
-            //me.SetState(Enemy.Attack);
             attackHitbox.Deactivate();
+            me.SetState(Enemy.EnemyState.PrepareStrike);
             Debug.Log("Finished Strike");
         }
 

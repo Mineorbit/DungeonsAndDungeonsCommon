@@ -23,22 +23,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public class EnemyState : CustomEnum
         {
 
-            public EnemyState(string val) : base(val)
+            public EnemyState(string val, int card) : base(val, card)
             {
                 Value = val;
+                cardinal = card;
             }
-            public static EnemyState Idle = new EnemyState("Idle");
-            public static EnemyState PrepareStrike = new EnemyState("PrepareStrike");
-            public static EnemyState Attack = new EnemyState("Attack");
+            public static EnemyState Idle = new EnemyState("Idle",1);
+            public static EnemyState PrepareStrike = new EnemyState("PrepareStrike",2);
+            public static EnemyState Attack = new EnemyState("Attack",3);
 
         }
 
 
         public class EnemyAction : CustomEnum
         {
-            public EnemyAction(string val) : base(val)
+            public static EnemyAction Engage = new EnemyAction("Engage",1);
+            public static EnemyAction Disengage = new EnemyAction("Disengage",2);
+            public EnemyAction(string val,int card) : base(val, card)
             {
                 Value = val;
+                cardinal = card;
             }
         }
 
