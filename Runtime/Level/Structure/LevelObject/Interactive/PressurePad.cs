@@ -19,6 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
+            UnpressButton();
             playerStandinghitbox.Attach("Player");
             playerStandinghitbox.enterEvent.AddListener((x)=> { if (unpressTimer != null) { StopCoroutine(unpressTimer); unpressTimer = null; } StartCoroutine("Press");});
             playerStandinghitbox.exitEvent.AddListener((x) => { if (returnToUnpress) { unpressTimer = TimerUnpress(); StartCoroutine(unpressTimer); } });
@@ -61,6 +62,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         IEnumerator TimerUnpress()
         {
             yield return new WaitForSeconds(5);
+            UnpressButton();
+        }
+
+        void UnpressButton()
+        {
             StartCoroutine("Unpress");
         }
 

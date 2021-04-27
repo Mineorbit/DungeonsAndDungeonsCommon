@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Entity : LevelObject
     {
         public int health;
+
+        public UnityEvent<Entity> onAttackEvent;
+
         // Start is called before the first frame update
         void Start()
         {
-
         }
 
         // Update is called once per frame
@@ -39,12 +42,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public virtual void Hit(int damage)
+        public virtual void Hit(Entity hitter,int damage)
         {
             if (!hitCooldown)
             {
-
+                onAttackEvent.Invoke(hitter);
                 StartHitCooldown();
+                Debug.Log(hitter.gameObject.name+" HIT "+this.gameObject.name+" AND CAUSED "+damage+" HP DAMAGE");
                 health = health - damage;
                 if (health <= 0)
                 {
@@ -59,7 +63,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             // SetState(Enemy.EnemyState.Dead);
             //eventually call
-            Debug.Log("Entity dead");
             LevelManager.currentLevel.RemoveDynamic(this);
         }
     }

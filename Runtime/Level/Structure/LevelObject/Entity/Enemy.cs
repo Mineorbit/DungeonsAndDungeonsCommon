@@ -11,8 +11,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public EnemyController enemyController;
 
 
+
+        public float viewDistance = 15;
+        public float attackDistance = 4;
+
         // Enemy Properties
 
+        public bool forgetPlayer = false;
 
         public bool seeThroughWalls = false;
         public int damage = 5;
@@ -28,6 +33,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Value = val;
                 cardinal = card;
             }
+
             public static EnemyState Idle = new EnemyState("Idle",1);
             public static EnemyState PrepareStrike = new EnemyState("PrepareStrike",2);
             public static EnemyState Attack = new EnemyState("Attack",3);
@@ -37,13 +43,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public class EnemyAction : CustomEnum
         {
-            public static EnemyAction Engage = new EnemyAction("Engage",1);
-            public static EnemyAction Disengage = new EnemyAction("Disengage",2);
             public EnemyAction(string val,int card) : base(val, card)
             {
                 Value = val;
                 cardinal = card;
             }
+
+            public static EnemyAction Engage = new EnemyAction("Engage", 1);
+            public static EnemyAction Disengage = new EnemyAction("Disengage", 2);
+            public static EnemyAction Attack = new EnemyAction("Attack", 3);
+            
         }
 
         // Start is called before the first frame update
@@ -51,6 +60,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
         }
+
+        public void TryDamage(GameObject g, float damage)
+        {
+            Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
+            if (c != null)
+            {
+                Debug.Log(c.gameObject.name + " hit with " + damage);
+                c.Hit(this, (int)damage);
+            }
+        }
+
 
         public virtual  void OnEnable()
         {

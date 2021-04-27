@@ -106,6 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             A.gameObject.SetActive(false);
             B.gameObject.SetActive(false);
             mc.enabled = false;
+            this.enabled = false;
         }
         public override void OnEndRound()
         {
@@ -114,6 +115,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             A.gameObject.SetActive(true);
             B.gameObject.SetActive(true);
             mc.enabled = true;
+            this.enabled = true;
         }
 
         Vector3 start = new Vector3(0,0,0);
