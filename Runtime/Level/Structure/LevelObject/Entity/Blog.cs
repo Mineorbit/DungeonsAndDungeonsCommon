@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         float distanceToPlayer = 4f;
         float maximumTrackTime = 15f;
-        float strikeDistance = 3f;
+        float strikeDistance = 2f;
 
         public Hitbox attackHitbox;
 
@@ -44,7 +44,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void RandomWalk()
         {
-            if(!TimerManager.isRunning(randomWalkTimer))
+            enemyController.SetTrackingAbility(true);
+            if (!TimerManager.isRunning(randomWalkTimer))
             {
                 float randomAngle = UnityEngine.Random.Range(0,Mathf.PI);
                 float randomDistance = 6f;
@@ -68,6 +69,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
+        float eps = 0.5f;
+
+        float t = 0;
+        Transform attackTarget;
+
         void SetupBlogFSM()
         {
             me = new FSM<EnemyState, EnemyAction>();
@@ -87,10 +93,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (targetEntity != null)
                 {
 
-                    if( distanceToTarget > strikeDistance)
-                    {
-                    enemyController.GoTo(targetEntity.position-targetEntity.forward*distanceToPlayer);
-                    }else
+                    enemyController.GoTo(targetEntity.position + targetEntity.forward * distanceToPlayer);
+                    
                     if(distanceToTarget < strikeDistance)
                     {
                         me.Move(Striking);
@@ -98,34 +102,71 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             });
 
+
             me.stateAction.Add(BlogState.PrepareStrike, () => {
-                Vector3 dir = transform.position - targetEntity.position;
+
+
+                if (attackTarget == null )
+                {
+                    me.Move(Enemy.EnemyAction.Disengage);
+                    return;
+                }
+
+                Vector3 dir = transform.position - attackTarget.position;
                 float distanceToTarget = (dir).magnitude;
+
+
+                if (distanceToTarget > distanceToPlayer)
+                {
+                    me.Move(Enemy.EnemyAction.Engage);
+                }
 
                 float angle = 180 + (180/Mathf.PI) * Mathf.Atan2(dir.x,dir.z);
 
+
+                t += Time.deltaTime;
+                //Vector3 targetPoint = attackTarget.position + distanceToPlayer * (attackTarget.forward * Mathf.Sin(t) + attackTarget.right * Mathf.Cos(t));
+                
+                //transform.position = Circle(targetPoint);
+
                 transform.localEulerAngles = new Vector3(0,angle,0);
 
-                if (distanceToTarget < distanceToPlayer )
-                {
-                    me.Move(Enemy.EnemyAction.Engage);
-                }else
+                if (distanceToTarget > distanceToPlayer - eps )
                 {
                     TryStrike();
                 }
+
             });
 
 
             me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> { TrackTarget(enemyController.seenPlayer); },Blog.BlogState.Track));
             me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Striking), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { TryStrike(); }, BlogState.PrepareStrike));
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.PrepareStrike, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { TrackTarget(enemyController.seenPlayer); }, Blog.BlogState.Track));
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.PrepareStrike, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
+
+
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Striking), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+
+                attackTarget = targetEntity.transform;
+                StopTrackTarget();
+                Debug.Log(attackTarget);
+                t = 0; TryStrike(); }, BlogState.PrepareStrike));
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.PrepareStrike, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+                
+                TrackTarget(enemyController.seenPlayer); }, Blog.BlogState.Track));
 
             enemyController.enemyStateFSM = me;
             SetState(BlogState.Idle);
         }
 
-
+        Vector3 Circle(Vector3 targetPoint)
+        {
+            UnityEngine.AI.NavMeshHit myNavHit;
+            if (UnityEngine.AI.NavMesh.SamplePosition(targetPoint, out myNavHit, 100, -1))
+            {
+                return myNavHit.position;
+            }
+            return targetPoint;
+        }
 
 
         Transform targetEntity;
@@ -134,7 +175,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void TrackTarget(Entity target)
         {
-            if(target == null)
+            enemyController.SetTrackingAbility(true, reset:true);
+            if (target == null)
             {
                 me.Move(Enemy.EnemyAction.Disengage);
             }
@@ -152,14 +194,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void StopTrackTarget()
         {
+            enemyController.SetTrackingAbility(false);
             targetEntity = null;
         }
 
-
-        void StopTrack()
-        {
-            
-        }
 
         bool go = false;
         public override void OnStartRound()
@@ -212,7 +250,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void Attack(float damage)
         {
-            me.SetState(Enemy.EnemyState.Attack);
+            //me.SetState(Enemy.EnemyState.Attack);
             currentDamage = damage * (1 + 5 * (float)rand.NextDouble());
 
             attackHitbox.Activate();
