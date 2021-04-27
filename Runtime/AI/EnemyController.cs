@@ -22,8 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        public float viewDistance = 15;
-        public float attackDistance = 4;
 
 
         float distToTarget = float.MaxValue;
@@ -124,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         Vector3 dir = p.transform.position - transform.position;
                         float dist = dir.magnitude;
 
-                        if (Vector3.Dot(transform.forward, dir) > 0 && dist <= viewDistance && dist < minDist)
+                        if (Vector3.Dot(transform.forward, dir) > 0 && dist <= me.viewDistance && dist < minDist)
                         {
                             minPlayer = p;
                             minDist = dist;
@@ -174,6 +172,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // start timer for 2 seconds then drop player
                 if(lastSeenPlayer != null)
                 {
+                    if(me.forgetPlayer)
                     visibilityTimer = TimerManager.StartTimer(forgetTime, () => { this.ForgetPlayer(); });
                 }
             }

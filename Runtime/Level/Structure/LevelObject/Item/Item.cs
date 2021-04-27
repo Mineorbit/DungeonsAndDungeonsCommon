@@ -9,14 +9,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
 
         public float useTime = 0.25f;
-        public GameObject owner;
+        public Entity owner;
 
         public bool isEquipped;
 
         public virtual void OnAttach()
         {
             isEquipped = true;
-            owner = GetComponentInParent<Player>().gameObject;
+            owner = GetComponentInParent<Entity>();
         }
 
         public virtual void OnDettach()

@@ -40,7 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
             if (c != null)
             {
-                c.Hit(damage);
+                c.Hit(this.owner,damage);
             }
         }
 
