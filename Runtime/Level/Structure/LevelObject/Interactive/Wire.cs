@@ -103,12 +103,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnStartRound();
             lr.enabled = false;
+            A.gameObject.SetActive(false);
+            B.gameObject.SetActive(false);
             mc.enabled = false;
         }
         public override void OnEndRound()
         {
             base.OnEndRound();
             lr.enabled = true;
+            A.gameObject.SetActive(true);
+            B.gameObject.SetActive(true);
             mc.enabled = true;
         }
 

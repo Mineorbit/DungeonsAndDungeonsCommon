@@ -8,7 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Enemy : Entity
     {
 
-        EnemyController enemyController;
+        public EnemyController enemyController;
 
 
         // Enemy Properties
@@ -27,11 +27,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Value = val;
             }
-        }
+            public static EnemyState Idle = new EnemyState("Idle");
+            public static EnemyState PrepareStrike = new EnemyState("PrepareStrike");
+            public static EnemyState Attack = new EnemyState("Attack");
 
-        public static EnemyState Idle = new EnemyState("Idle");
-        public static EnemyState PrepareStrike = new EnemyState("PrepareStrike");
-        public static EnemyState Attack = new EnemyState("Attack");
+        }
 
 
         public class EnemyAction : CustomEnum
@@ -69,8 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
 
-            //overriden by subclass
-            enemyController.enemyStateFSM = new FSM<EnemyState,EnemyAction>();
             enemyController.seenPlayer = null;
             enemyController.seenAlly = null;
             enemyController.lastSeenPlayer = null;
@@ -78,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
 
-        public EnemyState GetState()
+        public EnemyState getState()
         {
             return enemyController.enemyStateFSM.state;
         }

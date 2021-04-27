@@ -9,22 +9,63 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         // FSM is shared between all components of any enemy but is  defined in the enemy monobehaviour
 
-        FSM<Enemy.EnemyState, Enemy.EnemyAction> me;
+        FSM<EnemyState, Enemy.EnemyAction> me;
 
+        float randomWalkTime = 8f;
+
+        public class BlogState : EnemyState
+        {
+
+            public BlogState(string val) : base(val)
+            {
+                Value = val;
+            }
+        }
 
         public Hitbox attackHitbox;
 
         System.Random rand;
 
+        TimerManager.Timer randomWalkTimer;
+        void RandomWalk()
+        {
+            if(!TimerManager.isRunning(randomWalkTimer))
+            {
+                float randomAngle = Random.Range(0,Mathf.PI);
+                float randomDistance = 6f;
+                Vector3 randomGoal = transform.position+randomDistance*(transform.forward * Mathf.Sin(randomAngle) + transform.right * Mathf.Cos(randomAngle));
+                enemyController.GoTo(randomGoal);
+                randomWalkTimer = TimerManager.StartTimer(randomWalkTime,()=> { });
+            }
+        }
+
+
+
         public override void OnInit()
         {
             base.OnInit();
 
-
             rand = new System.Random();
+
+            SetupBlogFSM();
+
 
             
         }
+
+
+        void SetupBlogFSM()
+        {
+            me = new FSM<EnemyState, EnemyAction>();
+
+
+            me.stateAction.Add(BlogState.Idle,()=> { RandomWalk(); });
+
+
+            enemyController.enemyStateFSM = me;
+            SetState(BlogState.Idle);
+        }
+
         bool go = false;
         public override void OnStartRound()
         {
@@ -99,7 +140,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
             if (c != null)
             {
-                Debug.Log(c+" hit with"+currentDamage);
+                Debug.Log(c.gameObject.name+" hit with "+currentDamage);
                 c.Hit((int)currentDamage);
             }
         }
