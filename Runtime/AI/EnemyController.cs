@@ -44,8 +44,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
+        Queue<Vector3> targetPoints = new Queue<Vector3>();
 
-
+        Vector3 currentTarget = new Vector3(0,0,0);
         void Start()
         {
             me = GetComponent<Enemy>();
@@ -53,15 +54,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             navMeshAgent = GetComponent<NavMeshAgent>();
 
-            
+            currentTarget = transform.position;
 
-            me.SetState(Enemy.Idle);
+            me.SetState(Enemy.EnemyState.Idle);
         }
 
+        public void GoTo(Vector3 target)
+        {
+            targetPoints.Enqueue(target);
+        }
 
+        TimerManager.Timer walkTimer;
+
+        public void UpdateLocomotion()
+        {
+            if ((currentTarget - transform.position).magnitude < 0.05f || !TimerManager.isRunning(walkTimer))
+            {
+                if (targetPoints.Count > 0)
+                {
+                    currentTarget = targetPoints.Dequeue();
+                    navMeshAgent.SetDestination(currentTarget);
+                    walkTimer = TimerManager.StartTimer(5f,()=> { });
+                }
+
+            }
+        }
 
         void Update()
         {
+            UpdateLocomotion();
+
             currentSpeed = navMeshAgent.velocity.magnitude;
         }
 

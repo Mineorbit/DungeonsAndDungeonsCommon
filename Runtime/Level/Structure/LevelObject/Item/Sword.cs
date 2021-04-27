@@ -13,9 +13,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         int damage = 20;
 
+        public Rigidbody rigidBody;
+
         public override void OnAttach()
         {
             base.OnAttach();
+            rigidBody.useGravity = false;
+            rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
 
@@ -50,6 +54,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(hitBox != null)
             Destroy(hitBox.gameObject);
 
+            rigidBody.useGravity = true;
+            rigidBody.isKinematic = false;
             GetComponent<Collider>().enabled = true;
         }
 
