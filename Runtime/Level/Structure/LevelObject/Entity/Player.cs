@@ -113,6 +113,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     break;
             }
         }
+
         void setColor(UnityEngine.Color baseC)
         {
 
@@ -128,17 +129,39 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             PlayerManager.playerManager.SpawnPlayer(localId, location);
         }
 
-        public void setMovementStatus(bool allowedToMove)
+        public override void setMovementStatus(bool allowedToMove)
         {
             PlayerManager.playerManager.playerControllers[localId].allowedToMove = allowedToMove;
         }
 
+
+        public void UseLeft()
+        {
+            ItemHandle h = GetLeftHandle();
+            if(h != null)
+            {
+                setMovementStatus(false);
+                UseHandle(h);
+            }
+        }
+
+        public void UseRight()
+        {
+            ItemHandle h = GetLeftHandle();
+            if (h != null)
+            {
+                setMovementStatus(false);
+                UseHandle(h);
+            }
+        }
 
         IEnumerator HitTimer(float time)
         {
             yield return new WaitForSeconds(time);
             hitCooldown = false;
         }
+
+
 
 
         void StartHitCooldown()

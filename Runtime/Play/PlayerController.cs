@@ -136,7 +136,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Attack();
+                    player.UseLeft();
+                }else
+                if (Input.GetMouseButtonDown(1))
+                {
+                    player.UseRight();
                 }
             }
 
@@ -152,14 +156,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             controller.Move(targetDirection * Speed * Time.deltaTime);
         }
 
-        public virtual void Attack()
-        {
-            if(player.GetLeftHandle()!=null)
-            {
-            allowedToMove = false;
-            player.GetLeftHandle().Use();
-            }
-        }
+        
 
        
 

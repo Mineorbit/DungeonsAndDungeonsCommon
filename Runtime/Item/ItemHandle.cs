@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public HandleType handleType;
 
         PlayerController p;
-        Player player;
+        Entity player;
 
         void Start()
         {
@@ -46,12 +46,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(slot != null)
             { 
-            slot.Use();
-            p.allowedToMove = false;
-            UseWait();
+                slot.Use();
+                player.setMovementStatus(false);
+                UseWait();
             }else
             {
-                p.allowedToMove = true;
+                player.setMovementStatus(true);
             }
         }
 
@@ -59,7 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             yield return new WaitForSeconds(t);
             StopUse();
-            p.allowedToMove = true;
+            player.setMovementStatus(true);
         }
 
 
