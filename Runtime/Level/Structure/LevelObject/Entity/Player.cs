@@ -9,9 +9,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Player : Entity
     {
 
-        public Item[] items;
-        public ItemHandle[] itemHandles;
-
         public ColorChanger colorChanger;
 
         public int _localId;
