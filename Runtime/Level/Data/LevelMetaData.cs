@@ -34,6 +34,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 		public void Save(string path)
         {
+			availBlue = LevelManager.currentLevel.spawn[0] != null;
+			availYellow = LevelManager.currentLevel.spawn[1] != null;
+			availRed = LevelManager.currentLevel.spawn[2] != null;
+			availGreen = LevelManager.currentLevel.spawn[3] != null;
+
 			SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
 			m.Save(this,path, persistent: false);
         }
