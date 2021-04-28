@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
 
     public static int currentPlayerLocalId;
 
+    public static Player currentPlayer;
     public void Start()
     {
         if(playerManager!=null) Destroy(this);
@@ -53,7 +54,8 @@ public class PlayerManager : MonoBehaviour
         {
             playerControllers[i].activated = localId == i;
         }
-        currentPlayerLocalId = localId;
+            currentPlayerLocalId = localId;
+            currentPlayer = players[currentPlayerLocalId];
     }
 
 

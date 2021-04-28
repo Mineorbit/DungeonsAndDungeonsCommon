@@ -15,6 +15,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         PlayerController p;
         Entity player;
 
+        bool dettachNext = false;
+
         void Start()
         {
             p = GetComponentInParent<PlayerController>();
@@ -24,6 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Attach(Item item)
         {
+            dettachNext = false;
             item.transform.position = transform.position;
             item.transform.localRotation = new Quaternion(0,0,0,0);
             item.transform.parent = transform;
@@ -33,12 +36,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         public void Dettach()
         {
-            if(slot != null)
+            dettachNext = true;
+        }
+
+        public void Update()
+        {
+            DettachItem();
+        }
+
+        public void DettachItem()
+        {
+            if(dettachNext)
             {
-                LevelManager.currentLevel.AddToDynamic(slot.gameObject,slot.gameObject.transform.position, new Quaternion(0,0,0,0));
-                player.items[0] = null;
-                slot.OnDettach();
-                slot = null;
+                if (slot != null)
+                {
+                    LevelManager.currentLevel.AddToDynamic(slot.gameObject, slot.gameObject.transform.position, new Quaternion(0, 0, 0, 0));
+                    player.items[0] = null;
+                    slot.OnDettach();
+                    slot = null;
+                }
             }
         }
 
