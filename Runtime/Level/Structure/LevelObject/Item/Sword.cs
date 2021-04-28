@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -21,6 +22,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public ParticleSystem effectSystem;
 
         float effectThreshhold = 0.05f;
+
+        public UnityEvent onHitEvent = new UnityEvent();
 
         void Start()
         {
@@ -53,6 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
             hitBox.Activate();
 
+            // factor out just like audio component
             effectSystem.Play();
             TimerManager.StartTimer(whipeTime,()=> { effectSystem.Stop(); });
         }
@@ -62,6 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
             if (c != null)
             {
+                onHitEvent.Invoke();
                 c.Hit(this.owner,damage);
             }
         }

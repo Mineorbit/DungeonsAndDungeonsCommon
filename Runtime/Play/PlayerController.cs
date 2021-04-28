@@ -18,10 +18,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float Speed = 3f;
         public Vector3 targetDirection;
         public Vector3 movingDirection;
-        float speedY = 0;
+        public float speedY = 0;
         float gravity = 4f;
 
-        public float currentSpeed;
 
         public bool locallyControllable;
         public bool activated = true;
@@ -37,6 +36,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public List<Item> itemsInProximity;
 
+
+        public float currentSpeed;
+
+        int k = 15;
+
+
+        public List<float> lastSpeeds = new List<float>();
+
         //Setup References for PlayerController and initial values if necessary
         public void Awake()
         {
@@ -46,6 +53,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             controller = transform.GetComponent<CharacterController>();
             SetParams();
+        }
+
+        void ComputeCurrentSpeed()
+        {
+            lastSpeeds.Add(controller.velocity.magnitude);
+            if(lastSpeeds.Count>k)
+            {
+                lastSpeeds.RemoveAt(0);
+            }
+            float sum = 0;
+            for(int i = 0;i<lastSpeeds.Count;i++)
+            {
+                sum += lastSpeeds[i];
+            }
+            currentSpeed = sum / k;
         }
 
         void SetParams()
@@ -170,10 +192,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void StateUpdate()
         {
             doSim = true;
-            currentSpeed = controller.velocity.magnitude / 3;
             doInput = PlayerManager.acceptInput && allowedToMove && activated && locallyControllable; //&& !player.lockNetUpdate;
         }
         
+        void FixedUpdate()
+        {
+            ComputeCurrentSpeed();
+        }
 
         public void OnDisable()
         {

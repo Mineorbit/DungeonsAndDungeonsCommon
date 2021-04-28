@@ -9646,6 +9646,22 @@ MonoBehaviour:
   characterController: {fileID: 6344021777004394327}
   playerController: {fileID: -4485675669329379349}
   footFX: {fileID: 8164085133219797599}
+--- !u!114 &8472775196247414597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269609861049974646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506c540b121c3b74fa60a2f1fe732186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioProfiles:
+  - {fileID: 11400000, guid: ec7965c5338dbb548b982bf9033bf5bb, type: 2}
+  - {fileID: 11400000, guid: e4a9dee20181c964ab50261eca70a24e, type: 2}
+  controller: {fileID: -4485675669329379349}
 --- !u!114 &1699927312025447298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9787,7 +9803,7 @@ MonoBehaviour:
   Speed: 3
   targetDirection: {x: 0, y: 0, z: 0}
   movingDirection: {x: 0, y: 0, z: 0}
-  currentSpeed: 0
+  speedY: 0
   locallyControllable: 0
   activated: 1
   IsGrounded: 0
@@ -9797,6 +9813,8 @@ MonoBehaviour:
   heightRay: 0.45
   itemHitbox: {fileID: 1289797724913908694}
   itemsInProximity: []
+  currentSpeed: 0
+  lastSpeeds: []
 --- !u!54 &6975951243435457332
 Rigidbody:
   m_ObjectHideFlags: 0
