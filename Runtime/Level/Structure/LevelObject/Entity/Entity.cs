@@ -39,6 +39,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitCooldown = false;
         }
 
+        public virtual void setMovementStatus(bool allowedToMove)
+        {
+        }
+
+        public void UseHandle(ItemHandle h)
+        {
+            if (h != null)
+            {
+                h.Use();
+            }
+        }
+
 
         void StartHitCooldown()
         {

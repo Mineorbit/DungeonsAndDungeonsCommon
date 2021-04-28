@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Debug.Log("Changed Setting");
             oldAngles = me.items[0].transform.localEulerAngles;
-            me.items[0].transform.localEulerAngles = new Vector3(90, 0,90);
+            me.items[0].transform.localEulerAngles = new Vector3(0, 0,0);
         }
 
         public void ChangeItemSettingBack()
