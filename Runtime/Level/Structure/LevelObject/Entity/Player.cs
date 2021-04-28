@@ -214,11 +214,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void Update()
-        {
-
-            if (transform.position.y < -8)
-                Kill();
-        }
     }
 }

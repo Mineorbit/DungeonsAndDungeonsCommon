@@ -11,7 +11,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent<GameObject> enterEvent = new UnityEvent<GameObject>();
         public UnityEvent<GameObject> exitEvent = new UnityEvent<GameObject>();
-        Collider collider;
+        
+        public Collider collider;
 
         string targetTag;
 
@@ -24,7 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Attach(string target)
         {
             targetTag = target;
-            collider = GetComponent<Collider>();
             isAttached = true;
         }
 
@@ -56,6 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (other.gameObject.tag == targetTag)
             {
+                Debug.Log(other.gameObject.name+" inside");
                 enterEvent.Invoke(other.gameObject);
             }
         }

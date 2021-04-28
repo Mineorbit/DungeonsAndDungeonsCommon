@@ -24,7 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Update is called once per frame
         void Update()
         {
-            if(transform.position.y < 0)
+            if(transform.position.y < -8)
             {
                 Kill();
             }

@@ -15,6 +15,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Rigidbody rigidBody;
 
+
+        Vector3 lastPosition = new Vector3(0, 0, 0);
+
+        public ParticleSystem effectSystem;
+
+        float effectThreshhold = 0.05f;
+
+        void Start()
+        {
+            lastPosition = transform.position;
+        }
+
+        float whipeTime = 0.02f;
+
         public override void OnAttach()
         {
             base.OnAttach();
@@ -24,18 +38,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
-
-            hitBox.Attach(owner.transform.Find("Model").gameObject, "Enemy", new Vector3(0, 0, 1));
+            hitBox.Attach(owner.transform.Find("Model").gameObject, "Enemy", new Vector3(0, 0, -2));
+            hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
 
             hitBox.enterEvent.AddListener((x) => { TryDamage(x); });
             hitBox.Deactivate();
         }
 
+
         public override void Use()
         {
             base.Use();
             owner.baseAnimator.Strike();
+            hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
             hitBox.Activate();
+
+            effectSystem.Play();
+            TimerManager.StartTimer(whipeTime,()=> { effectSystem.Stop(); });
         }
 
         void TryDamage(GameObject g)
@@ -49,6 +68,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void StopUse()
         {
+            effectSystem.Stop();
             hitBox.Deactivate();
         }
 
@@ -61,6 +81,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidBody.isKinematic = false;
             GetComponent<Collider>().enabled = true;
         }
+
 
         public void OnDestroy()
         {
