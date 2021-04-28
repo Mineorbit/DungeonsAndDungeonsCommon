@@ -4,14 +4,28 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class PlayerBaseAnimator : MonoBehaviour
+    public class PlayerBaseAnimator : EntityBaseAnimator
     {
         public CharacterController characterController;
-        public Animator animator;
         Vector3 forwardDirection;
         void Start()
         {
             forwardDirection = new Vector3(0,0,0);
+        }
+
+        Vector3 oldAngles;
+
+        public void ChangeitemSetting()
+        {
+            Debug.Log("Changed Setting");
+            oldAngles = me.items[0].transform.localEulerAngles;
+            me.items[0].transform.localEulerAngles = new Vector3(90, 0,90);
+        }
+
+        public void ChangeItemSettingBack()
+        {
+            Debug.Log("Changed Setting back");
+            me.items[0].transform.localEulerAngles = oldAngles;
         }
 
         // Update is called once per frame

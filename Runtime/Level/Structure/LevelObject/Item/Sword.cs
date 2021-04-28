@@ -18,6 +18,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnAttach()
         {
             base.OnAttach();
+            transform.localPosition = new Vector3(0, 0.00181f, 0);
+            transform.localEulerAngles = new Vector3(0, -75, 90f);
             rigidBody.useGravity = false;
             rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
@@ -32,6 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Use()
         {
             base.Use();
+            owner.baseAnimator.Strike();
             hitBox.Activate();
         }
 
