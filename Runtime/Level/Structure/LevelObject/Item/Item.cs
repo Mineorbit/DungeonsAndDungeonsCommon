@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -13,10 +14,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool isEquipped;
 
+        public UnityEvent onUseEvent = new UnityEvent();
+
         public virtual void OnAttach()
         {
             isEquipped = true;
             owner = GetComponentInParent<Entity>();
+            
         }
 
         public virtual void OnDettach()
@@ -27,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Use()
         {
-
+            onUseEvent.Invoke();
         }
 
         public virtual void StopUse()
