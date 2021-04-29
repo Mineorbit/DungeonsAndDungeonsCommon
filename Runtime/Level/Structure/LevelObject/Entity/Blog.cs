@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Entity attackTarget;
 
         TimerManager.Timer circleTimer;
-        float circleTime = 150;
+        float circleTime = 15;
 
         void SetupBlogFSM()
         {
