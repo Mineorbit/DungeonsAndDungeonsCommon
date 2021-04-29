@@ -68,6 +68,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+        public Vector3 GetDirection()
+        {
+            return navMeshAgent.velocity;
+        }
+
         public void GoTo(Vector3 target)
         {
             currentTarget = target;
