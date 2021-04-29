@@ -36,6 +36,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
+        public BlogBaseAnimator blogAnimator;
+
         public Hitbox attackHitbox;
 
         System.Random rand;
@@ -92,8 +94,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             me.stateAction.Add(BlogState.Idle,()=> {
-                RandomWalk(); 
-                if(enemyController.seenPlayer !=  null)
+                RandomWalk();
+                blogAnimator.target = -enemyController.GetDirection();
+
+                if (enemyController.seenPlayer !=  null)
                 {
                     me.Move(Enemy.EnemyAction.Engage);
                 }
@@ -105,8 +109,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
 
                     enemyController.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
-                    
-                    if(distanceToTarget < attackDistance+eps)
+
+
+                    blogAnimator.target = -enemyController.GetDirection();
+
+                    if (distanceToTarget < attackDistance+eps)
                     {
                         me.Move(Enemy.EnemyAction.Attack);
                     }
@@ -130,11 +137,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (!enemyController.CheckLineOfSight(attackTarget))
                 {
                     me.Move(Enemy.EnemyAction.Engage);
-                }              
+                }
 
-                //float angle = 180 + (180/Mathf.PI) * Mathf.Atan2(dir.x,dir.z);
 
-                //transform.localEulerAngles = new Vector3(0, angle, 0);
+                blogAnimator.target = dir;
 
                 if (TimerManager.isRunning(circleTimer))
                 {
@@ -145,6 +151,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         Vector3 targetPoint = attackTarget.transform.position + attackDistance * (attackTarget.transform.forward * Mathf.Sin(t) + attackTarget.transform.right * Mathf.Cos(t));
 
                         enemyController.GoTo(Circle(targetPoint));
+
+
+                        
                     }
                 }else
                 {
@@ -155,7 +164,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
 
 
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> {
+            me.stateAction.Add(BlogState.Strike, () => {
+
+                Vector3 dir = transform.position - attackTarget.transform.position;
+                blogAnimator.target = dir;
+                enemyController.GoTo(attackTarget.transform.position);
+
+            });
+
+
+
+                me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> {
                 forgetPlayer = true; TrackTarget(enemyController.seenPlayer); },Blog.BlogState.Track));
             me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
             me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
@@ -272,6 +291,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!TimerManager.isRunning(strikeTimer) && !TimerManager.isRunning(finishStrikeTimer))
             {
                 StopTrackTarget(disableTracking: false);
+                enemyController.GoTo(attackTarget.transform.position);
                 Debug.Log("Blog trying to Strike");
                 me.SetState(BlogState.Strike);
                 strikeTimer = TimerManager.StartTimer((1 + 5 * (float)rand.NextDouble()),()=> { Strike(10); } );

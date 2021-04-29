@@ -145,6 +145,8 @@ MonoBehaviour:
   seeThroughWalls: 0
   damage: 5
   currentDamage: 0
+  circlePlayer: 1
+  blogAnimator: {fileID: 5603963655004878686}
   attackHitbox: {fileID: 5945292434564437852}
   attackTarget: {fileID: 0}
 --- !u!195 &736877002971563753
@@ -324,8 +326,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8443121854715069616}
+  - component: {fileID: 5603963655004878686}
   m_Layer: 0
-  m_Name: Blog
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,6 +350,28 @@ Transform:
   m_Father: {fileID: 987221561569911037}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5603963655004878686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939387170521057892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a35e6d214ce6a488db31fa9dd179cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  me: {fileID: 736877002971563754}
+  animator: {fileID: 7885660916142931459}
+  speed: 0
+  target: {x: 0, y: 0, z: 0}
+  attackEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  endAttackEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2215877215734550297
 GameObject:
   m_ObjectHideFlags: 0
