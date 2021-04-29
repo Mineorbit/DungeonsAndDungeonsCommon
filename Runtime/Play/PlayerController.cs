@@ -134,7 +134,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 speedY = 0;
             }
-            targetDirection = new Vector3(0, 0, 0);
+            //targetDirection = new Vector3(0, 0, 0);
 
             if (doInput)
             {
