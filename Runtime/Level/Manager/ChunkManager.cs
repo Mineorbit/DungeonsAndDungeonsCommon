@@ -31,6 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Dictionary<Tuple<int, int>, RegionData> FetchRegionData()
         {
             Dictionary<Tuple<int, int>, RegionData> regionData = new Dictionary<Tuple<int, int>, RegionData>();
+            int rid = 0;
             foreach (KeyValuePair<Tuple<int,int>,Chunk> chunk in chunks)
             {
                 Tuple<int, int> regionPosition = GetRegionPosition(chunk.Key);
@@ -40,7 +41,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-                int rid = 0;
+                Debug.Log("Chunk at "+chunk.Key+" goes to Region "+regionPosition);
+
 
                 RegionData r;
 
@@ -51,6 +53,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                 {
                     r = new RegionData(rid);
+                    rid++;
                     r.chunkDatas.Add(new Tuple<int, int>(positionInRegion.a, positionInRegion.b), chunkData);
                     regionData.Add(regionPosition,r);
                 }
@@ -65,8 +68,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         Tuple<int,int> GetRegionPosition(Tuple<int,int> chunkPosition)
         {
-            int x = regionGranularity*(int)Mathf.Floor(chunkPosition.Item1 / (float)regionGranularity);
-            int y = regionGranularity * (int)Mathf.Floor(chunkPosition.Item2 / (float)regionGranularity);
+            int x =  (int)Mathf.Floor((float) chunkPosition.Item1 / (float)regionGranularity);
+            int y =  (int)Mathf.Floor((float) chunkPosition.Item2 / (float)regionGranularity);
             Tuple<int, int> regionPosition = new Tuple<int, int>(x,y);
             return regionPosition;
         }

@@ -142,7 +142,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        bool CheckLineOfSight(Player target)
+        public bool CheckLineOfSight(Entity target)
         {
             if (target == null) return false;
 
