@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             public static BlogState Track = new BlogState("Track",5);
-            public static BlogState Strike = new BlogState("Track", 6);
+            public static BlogState Strike = new BlogState("Strike", 6);
 
 
             public BlogState(string val, int card) : base(val,  card)
@@ -29,13 +29,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        static EnemyAction BackToAttack = new EnemyAction("BackToAttack",6);
 
 
+        public bool circlePlayer = true;
 
-        float distanceToPlayer = 4f;
-        float maximumTrackTime = 15f;
-        float strikeDistance = 2f;
-        bool circlePlayer = true;
+
 
         public Hitbox attackHitbox;
 
@@ -84,6 +83,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Entity attackTarget;
 
+        TimerManager.Timer circleTimer;
+        float circleTime = 150;
+
         void SetupBlogFSM()
         {
             me = new FSM<EnemyState, EnemyAction>();
@@ -102,9 +104,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (targetEntity != null)
                 {
 
-                    enemyController.GoTo(targetEntity.transform.position + targetEntity.transform.forward * distanceToPlayer);
+                    enemyController.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
                     
-                    if(distanceToTarget < strikeDistance)
+                    if(distanceToTarget < attackDistance+eps)
                     {
                         me.Move(Enemy.EnemyAction.Attack);
                     }
@@ -125,31 +127,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 dir = transform.position - attackTarget.transform.position;
                 float distanceToTarget = (dir).magnitude;
 
-                
-                if (distanceToTarget > distanceToPlayer+eps)
+                if (!enemyController.CheckLineOfSight(attackTarget))
                 {
                     me.Move(Enemy.EnemyAction.Engage);
-                }
-                
+                }              
 
-                float angle = 180 + (180/Mathf.PI) * Mathf.Atan2(dir.x,dir.z);
+                //float angle = 180 + (180/Mathf.PI) * Mathf.Atan2(dir.x,dir.z);
 
+                //transform.localEulerAngles = new Vector3(0, angle, 0);
 
-
-                if(circlePlayer)
+                if (TimerManager.isRunning(circleTimer))
                 {
+                    if (circlePlayer)
+                    {
 
-                    t += Time.deltaTime;
-                    Vector3 targetPoint = attackTarget.transform.position + distanceToPlayer/2 * (attackTarget.transform.forward * Mathf.Sin(t) + attackTarget.transform.right * Mathf.Cos(t));
-                
-                    transform.position = Circle(targetPoint);
+                        t += Time.deltaTime;
+                        Vector3 targetPoint = attackTarget.transform.position + attackDistance * (attackTarget.transform.forward * Mathf.Sin(t) + attackTarget.transform.right * Mathf.Cos(t));
 
+                        enemyController.GoTo(Circle(targetPoint));
+                    }
+                }else
+                {
+                    Debug.Log("Restarting Timer");
+                    circleTimer = TimerManager.StartTimer(circleTime, () => { TryStrike(); });
                 }
-                transform.localEulerAngles = new Vector3(0,angle,0);
-
-                float pull = UnityEngine.Random.Range(0,1);
-                if(pull>0.5f)
-                TryStrike();
 
             });
 
@@ -163,7 +164,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 forgetPlayer = false;
                 attackTarget = targetEntity;
-                StopTrackTarget();
+                StopTrackTarget(disableTracking: false);
                 Debug.Log("Attacking " + attackTarget.gameObject.name);
                 t = 0; TryStrike();
             }, BlogState.Attack));
@@ -172,12 +173,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 forgetPlayer = false;
                 attackTarget = targetEntity;
-                StopTrackTarget();
+                StopTrackTarget(disableTracking: false);
+
                 Debug.Log("Attacking "+attackTarget.gameObject.name);
                 t = 0; TryStrike(); }, BlogState.Attack));
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
 
-                forgetPlayer = true;
+
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Strike, BackToAttack), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+
+                forgetPlayer = false;
+                attackTarget = targetEntity;
+                StopTrackTarget(disableTracking: false);
+
+                Debug.Log("Attacking " + attackTarget.gameObject.name);
+                t = 0; TryStrike();
+            }, BlogState.Attack));
+
+            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+            
+                    forgetPlayer = true;
                 TrackTarget(enemyController.seenPlayer); }, Blog.BlogState.Track));
 
             enemyController.enemyStateFSM = me;
@@ -218,9 +232,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
-        void StopTrackTarget()
+        void StopTrackTarget(bool disableTracking = true)
         {
-            enemyController.SetTrackingAbility(false);
+            enemyController.SetTrackingAbility(!disableTracking);
             targetEntity = null;
         }
 
@@ -257,6 +271,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (!TimerManager.isRunning(strikeTimer) && !TimerManager.isRunning(finishStrikeTimer))
             {
+                StopTrackTarget(disableTracking: false);
                 Debug.Log("Blog trying to Strike");
                 me.SetState(BlogState.Strike);
                 strikeTimer = TimerManager.StartTimer((1 + 5 * (float)rand.NextDouble()),()=> { Strike(10); } );
@@ -287,7 +302,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             attackHitbox.Deactivate();
             Debug.Log("Finished Strike");
             targetEntity = attackTarget;
-            me.SetState(BlogState.Attack);
+            me.Move(BackToAttack);
         }
 
         
@@ -298,9 +313,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        }
     }
 }
