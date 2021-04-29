@@ -330,7 +330,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             TimerManager.StopTimer(strikeTimer);
             TimerManager.StopTimer(finishStrikeTimer);
-
+            TimerManager.StopTimer(circleTimer);
+            TimerManager.StopTimer(randomWalkTimer);
+            TimerManager.StopTimer(maximumTrackTimer);
         }
 
     }

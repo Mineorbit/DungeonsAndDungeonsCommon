@@ -18,10 +18,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Blend(0, walkSoundStrength);
             if (controller.IsGrounded && controller.currentSpeed > 0)
             {
+                Stop(2);
                 Play(0);
             }
             else
             {
+                Play(2);
                 Stop(0);
             }
             if(!jumped && controller.speedY > 0)
