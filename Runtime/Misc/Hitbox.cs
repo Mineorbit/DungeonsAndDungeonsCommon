@@ -26,6 +26,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             targetTag = target;
             isAttached = true;
+            enterEvent = new UnityEvent<GameObject>();
+            exitEvent = new UnityEvent<GameObject>();
         }
 
         public void Attach(GameObject parent, string target, Vector3 localLocation)

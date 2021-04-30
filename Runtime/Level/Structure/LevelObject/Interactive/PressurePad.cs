@@ -9,88 +9,72 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class PressurePad : InteractiveLevelObject
     {
         public Hitbox playerStandinghitbox;
-        public Transform buttonHead;
         public Collider buildCollider;
 
         public bool returnToUnpress;
 
         bool pressed = false;
-        IEnumerator unpressTimer;
+
+        public float unpressTime = 5f;
+        TimerManager.Timer unpressTimer;
+
+        public ButtonBaseAnimator buttonBaseAnimator;
+
         public override void OnInit()
         {
             base.OnInit();
-            UnpressButton();
-            playerStandinghitbox.Attach("Player");
-            playerStandinghitbox.enterEvent.AddListener((x)=> { if (unpressTimer != null) { StopCoroutine(unpressTimer); unpressTimer = null; } StartCoroutine("Press");});
-            playerStandinghitbox.exitEvent.AddListener((x) => { if (returnToUnpress) { unpressTimer = TimerUnpress(); StartCoroutine(unpressTimer); } });
         }
 
         public override void OnStartRound()
         {
             base.OnStartRound();
             buildCollider.enabled = false;
+            playerStandinghitbox.Attach("Player");
+
+            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); PressButton(); });
+            playerStandinghitbox.exitEvent.AddListener((x) => { StartUnpress(); });
+
+
         }
 
         public override void OnEndRound()
         {
             base.OnEndRound();
+            UnpressButton();
             buildCollider.enabled = true;
         }
 
-        IEnumerator Press()
+        void PressButton()
         {
             if(!pressed)
             {
             pressed = true;
-            float time = 0.25f;
-            float elapsedTime = 0;
-
-            buttonHead.localScale = new Vector3(70,70,70);
-
-            while (elapsedTime < time)
-            {
-                    float t = (elapsedTime / time);
-                    float inert = 10*Mathf.Sin(t*Mathf.PI);
-                buttonHead.localScale = new Vector3(70+inert, 70+inert,  (Mathf.Pow((1-t),3))*40+30);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
             Activate();
+                buttonBaseAnimator.Press();
             }
         }
 
-        IEnumerator TimerUnpress()
+        void StartUnpress()
         {
-            yield return new WaitForSeconds(5);
-            UnpressButton();
+            if (returnToUnpress && !TimerManager.isRunning(unpressTimer))
+                unpressTimer = TimerManager.StartTimer(unpressTime, UnpressButton);
         }
+        
 
         void UnpressButton()
         {
-            StartCoroutine("Unpress");
-        }
-
-        IEnumerator Unpress()
-        {
-            if (pressed)
-            {
-                float time = 0.25f;
-                float elapsedTime = 0;
-
-                buttonHead.localScale = new Vector3(70, 70, 30);
-
-                while (elapsedTime < time)
+            if(returnToUnpress)
+            { 
+                if(pressed)
                 {
-                    float t = (elapsedTime / time);
-                    float inert = 10 * Mathf.Sin((1-t) * Mathf.PI);
-                    buttonHead.localScale = new Vector3(70 + inert, 70 + inert, (Mathf.Pow((1 - (1-t)), 3)) * 40 + 30);
-                    elapsedTime += Time.deltaTime;
-                    yield return null;
+                    pressed = false;
+                    Deactivate();
+                    buttonBaseAnimator.Unpress();
                 }
-                Deactivate();
-                pressed = false;
             }
         }
+
+        
         // Update is called once per frame
         void Update()
         {

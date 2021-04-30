@@ -18,20 +18,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         Vector3 oldAngles;
 
-        public void ChangeitemSetting()
+        void ChangeitemSetting()
         {
             Debug.Log("Changed Setting");
             oldAngles = me.items[0].transform.localEulerAngles;
             me.items[0].transform.localEulerAngles = new Vector3(0, 0,0);
         }
 
-        public void ChangeItemSettingBack()
+        void ChangeItemSettingBack()
         {
             Debug.Log("Changed Setting back");
             me.items[0].transform.localEulerAngles = oldAngles;
         }
 
-        // Update is called once per frame
         void Update()
         {
             float speed = characterController.velocity.magnitude;
