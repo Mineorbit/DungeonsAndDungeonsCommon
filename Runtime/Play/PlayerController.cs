@@ -84,12 +84,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             player = transform.GetComponent<Player>();
         }
+        public Collider col;
 
         public void UpdateGround()
         {
             int mask = 1 << 10;
-            RaycastHit hit;
-            IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay, mask);
+            RaycastHit hit = new RaycastHit();
+            IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay, mask, QueryTriggerInteraction.Ignore);
+            col = hit.collider;
         }
 
 

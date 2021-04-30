@@ -8,14 +8,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Gate : InteractiveLevelObject
     {
         public Collider collider;
-        public GameObject model;
+        public GateBaseAnimator gateBaseAnimator;
         public UnityEngine.AI.NavMeshObstacle navMeshObstacle;
         
         public override void OnInit()
         {
             base.OnInit();
-
-            model.SetActive(true);
+            gateBaseAnimator.Close();
             collider.enabled = true;
             navMeshObstacle.enabled = true;
         }
@@ -23,21 +22,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Activate()
         {
             base.Activate();
-            model.SetActive(false);
+            gateBaseAnimator.Open();
             collider.enabled = false;
             navMeshObstacle.enabled = false;
         }
-
-        // Start is called before the first frame update
-        void Start()
+        public override void Deactivate()
         {
-
+            base.Deactivate();
+            gateBaseAnimator.Close();
+            collider.enabled = true;
+            navMeshObstacle.enabled = true;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

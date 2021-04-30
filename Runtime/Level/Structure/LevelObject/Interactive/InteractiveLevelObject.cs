@@ -25,6 +25,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Activate()
         {
+            if(this.enabled)
+            { 
             if(!activated)
             {
                 activated = true;
@@ -33,9 +35,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     receiver.Activate();
                 }
             }
+            }
         }
         public virtual void Deactivate()
         {
+            if(this.enabled)
+            { 
             if (activated)
             {
                 activated = false;
@@ -43,6 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     receiver.Deactivate();
                 }
+            }
             }
         }
 

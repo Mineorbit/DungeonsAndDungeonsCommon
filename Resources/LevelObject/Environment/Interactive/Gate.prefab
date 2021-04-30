@@ -227,7 +227,7 @@ MonoBehaviour:
   inBoundWires: []
   outBoundWires: []
   collider: {fileID: 5230568351884737477}
-  model: {fileID: 8263260763983646358}
+  gateBaseAnimator: {fileID: 7982219347092909750}
   navMeshObstacle: {fileID: -6315356682183278751}
 --- !u!208 &-6315356682183278751
 NavMeshObstacle:
@@ -335,6 +335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856738501880088313}
+  - component: {fileID: 7982219347092909750}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -359,3 +360,16 @@ Transform:
   m_Father: {fileID: 5700448036526758956}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7982219347092909750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263260763983646358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a17b3be73da3dd40a7749623b8ef5d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 8263260763983646358}
