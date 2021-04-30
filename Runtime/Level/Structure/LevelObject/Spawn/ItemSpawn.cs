@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class ItemSpawn : LevelObject
+    public class ItemSpawn : Spawn
     {
         public LevelObjectData itemToSpawn;
 
@@ -37,8 +37,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
-                RemoveSpawnedItem();
+            RemoveSpawnedItem();
         }
+
+        
+
 
         void RemoveSpawnedItem(bool physics = true)
         {

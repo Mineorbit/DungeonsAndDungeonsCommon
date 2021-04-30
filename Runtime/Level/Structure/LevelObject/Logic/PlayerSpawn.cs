@@ -5,7 +5,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
 
 
-public class PlayerSpawn : LevelObject
+public class PlayerSpawn : Spawn
 {
 
         public enum Color { Blue = 0, Red, Green, Yellow };

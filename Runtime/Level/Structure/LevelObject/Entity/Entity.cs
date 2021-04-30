@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class Entity : LevelObject
+    public class Entity : NetworkLevelObject
     {
         public int health;
 
