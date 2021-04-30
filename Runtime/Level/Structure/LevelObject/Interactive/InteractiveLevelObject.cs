@@ -6,7 +6,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
 
 
-    public class InteractiveLevelObject : LevelObject
+    public class InteractiveLevelObject : NetworkLevelObject
     {
 
 
