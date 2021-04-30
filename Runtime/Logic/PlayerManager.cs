@@ -96,7 +96,7 @@ public class PlayerManager : MonoBehaviour
         Vector3 position = GetSpawnLocation(freeLocalId);
 
         LevelObjectData levelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
-        GameObject g = LevelManager.currentLevel.AddDynamic(levelObjectData,position,new Quaternion(0,0,0,0));
+        GameObject g = levelObjectData.Create(position,new Quaternion(0,0,0,0),transform);
         Player player = g.GetComponent<Player>();
                 player.enabled = true;
         PlayerController playerController = g.GetComponent<PlayerController>();
