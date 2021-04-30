@@ -11,12 +11,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float speed;
 
         public Vector3 target;
+        Vector3 targetInterpolation;
 
         public UnityEvent attackEvent;
         public UnityEvent endAttackEvent;
 
         void Start()
         {
+            target = transform.forward;
+            targetInterpolation = target;
             attackEvent = new UnityEvent();
             endAttackEvent = new UnityEvent();
         }
@@ -26,8 +29,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (animator != null)
                 animator.SetFloat("Speed", speed);
 
+            targetInterpolation = (targetInterpolation + target) / 2;
 
-            float angle = 180 + (180 / Mathf.PI) * Mathf.Atan2(target.x, target.z);
+            float angle = 180 + (180 / Mathf.PI) * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
 
             transform.eulerAngles = new Vector3(0, angle, 0);
         }

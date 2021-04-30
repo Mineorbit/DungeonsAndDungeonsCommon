@@ -18,4 +18,9 @@ MonoBehaviour:
   name: Sword
   dynamicInstantiable: 0
   levelInstantiable: 1
+  ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: 6687708012848683952, guid: e3b5d6f609ae9964aa193a97a1071f1f, type: 3}
+  cursorScale: {x: 30, y: 30, z: 30}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: -90, y: 0, z: 0}

@@ -189,9 +189,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	}
 
 	
-	public static void Delete(LevelMetaData metaData)
-	{
-	}
+	    public static void Delete(LevelMetaData metaData)
+	    {
+            if (metaData == null) return;
+            string levelPath = instance.levelFolder.GetPath() + metaData.localLevelId.ToString();
+            if (Directory.Exists(levelPath))
+            {
+                Directory.Delete(levelPath,true);
+            }
+            UpdateLocalLevelList();
+        }
 		
         public static LevelMetaData GetNewLevelMetaData()
         {
