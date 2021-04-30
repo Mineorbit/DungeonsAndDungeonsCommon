@@ -240,6 +240,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				Debug.Log(levelObjectData.name+" cannot be created dynamically");
 				return null;
 			}
+            Debug.Log(rotation.eulerAngles);
             var created = levelObjectData.Create(position, rotation, dynamicObjects);
             created.GetComponent<LevelObject>().enabled = activated || levelObjectData.ActivateWhenInactive;
             created.GetComponent<LevelObject>().isDynamic = levelObjectData.dynamicInstantiable;

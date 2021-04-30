@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HeldButton
   m_EditorClassIdentifier: 
   prefab: {fileID: 1799961556551171886, guid: 16e23441e397ff24798643e3e711bbdd, type: 3}
+  cursorMesh: {fileID: 3909233067320746374, guid: 4e3bfeec68d094e45b04742576f61254, type: 3}
   uniqueLevelObjectId: 609b061b-3f8a-4fe1-85fc-009379716805
   granularity: 1
   name: Pressure Switch

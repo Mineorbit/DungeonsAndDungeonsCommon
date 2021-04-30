@@ -10,6 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelObjectData : Instantiable
     {
 
+
         public string uniqueLevelObjectId;
 
         public float granularity;
@@ -24,6 +25,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool Buildable;
 
+        public Mesh cursorMesh;
+
+        public Vector3 cursorScale;
+        public Vector3 cursorOffset;
+        public Vector3 cursorRotation;
 
         void OnValidate()
         {
@@ -34,6 +40,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UnityEditor.EditorUtility.SetDirty(this);
             }
             if(Buildable) levelInstantiable = true;
+
+            if(cursorScale == Vector3.zero)
+            {
+            cursorScale = new Vector3(1,1,1);
+            }
 #endif
         }
 
@@ -55,6 +66,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return dict;
         }
 
+
+        public Mesh GetMesh()
+        {
+            return cursorMesh;
+        }
 
         public override GameObject Create(Vector3 location, Quaternion rotation, Transform parent)
         {

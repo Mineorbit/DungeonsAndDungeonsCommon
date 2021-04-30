@@ -68,15 +68,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return transform.position + spawnOffset;
         }
 
+        Quaternion SpawnRotation()
+        {
+            return transform.rotation;
+        }
+
         public void SpawnItem()
         {
             if (spawnedItem == null)
             {
-                spawnedItem = LevelManager.currentLevel.AddDynamic( itemToSpawn, SpawnLocation(), new Quaternion(0, 0, 0, 0));
+                spawnedItem = LevelManager.currentLevel.AddDynamic( itemToSpawn, SpawnLocation(), SpawnRotation());
             }
             else
             {
-                LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), new Quaternion(0, 0, 0, 0));
+                LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), SpawnRotation());
             }
         }
 
