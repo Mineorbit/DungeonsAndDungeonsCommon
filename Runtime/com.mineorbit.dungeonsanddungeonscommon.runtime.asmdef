@@ -2,8 +2,7 @@
     "name": "com.mineorbit.dungeonsanddungeonscommon",
     "rootNamespace": "",
     "references": [
-        "GUID:8c4dd21966739024fbd72155091d199e",
-        "GUID:86c9d8e67265f41469be06142c397d17"
+        "GUID:d68d42aed8f60ff47b975a2df2028213"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
