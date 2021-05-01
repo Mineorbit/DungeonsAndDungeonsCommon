@@ -12,7 +12,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
-            if(typeof(Entity).IsInstanceOfType(this))
+            if (typeof(Player).IsInstanceOfType(this))
+            {
+                h = gameObject.AddComponent<PlayerNetworkHandler>();
+            }
+            else
+            if (typeof(Entity).IsInstanceOfType(this))
             {
                 h = gameObject.AddComponent<EntityNetworkHandler>();
             }

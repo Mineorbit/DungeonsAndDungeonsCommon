@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     public static int currentPlayerLocalId;
 
     public static Player currentPlayer;
+
     public void Start()
     {
         if(playerManager!=null) Destroy(this);
@@ -32,7 +33,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
     
-        
+    public GameObject GetPlayer(int id)
+    {
+            return players[id].gameObject;
+    }
+
     public void StartRound()
     {
             foreach(Player p in players)

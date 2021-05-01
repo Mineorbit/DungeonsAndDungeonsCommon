@@ -10,6 +10,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkHandler : MonoBehaviour
     {
+        public string IdentityMe;
+        public string IdentityOther;
 
         public static List<Type> loadedTypes = new List<Type>();
         public static Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
