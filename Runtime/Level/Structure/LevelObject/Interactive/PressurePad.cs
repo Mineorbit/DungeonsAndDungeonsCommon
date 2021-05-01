@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buildCollider.enabled = false;
             playerStandinghitbox.Attach("Player");
 
-            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); if(!pressed) Invoke(PressButton); });
+            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); if(!pressed) PressButton(); });
             playerStandinghitbox.exitEvent.AddListener((x) => { StartUnpress(); });
 
 
@@ -48,16 +48,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(!pressed)
             {
-            pressed = true;
-            Activate();
-                buttonBaseAnimator.Press();
+                pressed = true;
+                Activate();
+                Invoke(AnimPress);
             }
+        }
+
+        public void AnimPress()
+        {
+            buttonBaseAnimator.Press();
+        }
+
+        public void AnimUnpress()
+        {
+            buttonBaseAnimator.Unpress();
         }
 
         void StartUnpress()
         {
             if (returnToUnpress && !TimerManager.isRunning(unpressTimer))
-                unpressTimer = TimerManager.StartTimer(unpressTime, ()=> { Invoke(UnpressButton); });
+                unpressTimer = TimerManager.StartTimer(unpressTime, ()=> { UnpressButton(); });
         }
         
 
@@ -69,7 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     pressed = false;
                     Deactivate();
-                    buttonBaseAnimator.Unpress();
+                    Invoke(AnimUnpress);
                 }
             }
         }

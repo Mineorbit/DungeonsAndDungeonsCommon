@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(transform.position.y < -8)
             {
-                Kill();
+                Invoke(Kill);
             }
         }
 
@@ -76,14 +76,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 health = health - damage;
                 if (health <= 0)
                 {
-                    Kill();
+                    Invoke(Kill);
                 }
                 //FreezeFramer.freeze(0.0075f);
             }
 
         }
 
-        public void Kill()
+        public virtual void Kill()
         {
             // SetState(Enemy.EnemyState.Dead);
             //eventually call
