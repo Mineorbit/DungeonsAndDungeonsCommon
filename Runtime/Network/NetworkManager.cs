@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Net;
 using System.Threading.Tasks;
 using UnityEngine.Events;
+using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -23,7 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance = this;
         }
 
-        public void Connect(string playerName)
+        public void Connect(string playerName, Action onConnect)
         {
             Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
             client = t.Result;
@@ -31,6 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int id = -1;
 
             onConnectEvent.Invoke(id);
+            onConnect.Invoke();
             
         }
     }

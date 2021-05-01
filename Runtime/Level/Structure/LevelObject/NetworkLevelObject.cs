@@ -48,8 +48,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Invoke(Action a)
         {
             MethodInfo methodInfo = a.Method;
+            Debug.Log("Test");
+            if (this.enabled) a.Invoke();
             if (h != null) h.Marshall(methodInfo);
-            if(this.enabled) a.Invoke();
         }
 
     }

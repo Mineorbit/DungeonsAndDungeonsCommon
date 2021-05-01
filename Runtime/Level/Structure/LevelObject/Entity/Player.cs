@@ -185,12 +185,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        public virtual void Kill()
-        {
-            health = 0;
-            alive = false;
-            PlayerManager.playerManager.DespawnPlayer(localId);
-        }
+        
 
         public void OnDestroy()
         {
@@ -212,6 +207,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Hit(damage);
                 }
             }
+        }
+
+        public override void Kill()
+        {
+            health = 0;
+            alive = false;
+            PlayerManager.playerManager.DespawnPlayer(localId);
         }
 
     }
