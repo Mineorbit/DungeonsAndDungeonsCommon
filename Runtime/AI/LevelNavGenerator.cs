@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelNavGenerator : MonoBehaviour

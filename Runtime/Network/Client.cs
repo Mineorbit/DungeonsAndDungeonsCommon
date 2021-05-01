@@ -22,10 +22,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             tcpClient = tcpC;
         }
 
-        void Connect(IPAddress host, int port)
+        public static async Task<Client> Connect(IPAddress host, int port)
         {
-            tcpClient = new TcpClient();
-            tcpClient.ConnectAsync(host, port);
+            TcpClient tClient = new TcpClient();
+            await tClient.ConnectAsync(host, port);
+
+            Client client = new Client(tClient);
+            return client;
         }
         // This needs to be exited when no more messages  are  received
         public async Task Process()
