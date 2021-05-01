@@ -1,37 +1,107 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 
-public class Server
+namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
-    public Server()
+    public class Server
     {
+        public Client[] clients;
+        
+        int port = 13565;
 
-    }
+        IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
-    public static void Disconnect(int localId)
-    {
+        TcpListener listener;
 
-    }
 
-    public void Start()
-    {
 
-    }
+        public Server()
+        {
 
-    public void Stop()
-    {
+        }
 
-    }
+        public override string ToString()
+        {
+            string s = "Server:";
+            for(int i = 0;i<4;i++)
+            {
+                s += "\n"+ i +": "+ clients[i];
+            }
+            return s;
+        }
 
-    public void DisconnectAll()
-    {
+        public void Disconnect(int localId)
+        {
+            if(clients[localId] != null)
+            { 
+            clients[localId].networkStream.Close();
+            clients[localId].tcpClient.Close();
+            clients[localId] = null;
+            }
+        }
 
-    }
+        public void Start()
+        {
+            clients = new Client[4];
+            listener = new TcpListener(this.localAddr, this.port);
+            listener.Start();
 
-    public void StopListen()
-    {
+            Task.Run(HandleNewConnection);
 
+        }
+
+        async Task HandleNewConnection()
+        {
+            TcpClient tcpClient = await listener.AcceptTcpClientAsync();
+            int i = GetFreeSlot();
+            
+            if(i == -1)
+            {
+                tcpClient.Close();
+            }
+            else
+            {
+                Client c = new Client(tcpClient);
+                clients[i] = c;
+                await c.Process();
+                Debug.Log("Disconnect");
+                Disconnect(i);
+
+            }
+
+            await HandleNewConnection();
+        }
+
+        int GetFreeSlot()
+        {
+            for (int i = 0; i < 4; i++)
+                if (clients[i] == null) return i;
+            return -1;
+        }
+
+
+        public void Stop()
+        {
+            DisconnectAll();
+            StopListen();
+        }
+
+        public void DisconnectAll()
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                Disconnect(i);
+            }
+        }
+
+        public void StopListen()
+        {
+            listener.Stop();
+        }
     }
 }
