@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buildCollider.enabled = false;
             playerStandinghitbox.Attach("Player");
 
-            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); Invoke(PressButton); });
+            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); if(!pressed) Invoke(PressButton); });
             playerStandinghitbox.exitEvent.AddListener((x) => { StartUnpress(); });
 
 

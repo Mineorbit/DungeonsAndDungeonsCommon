@@ -55,7 +55,7 @@ MonoBehaviour:
   buildCollider: {fileID: 8523260464767948780}
   returnToUnpress: 0
   unpressTime: 5
-  buttonBaseAnimator: {fileID: 0}
+  buttonBaseAnimator: {fileID: 5085013479506201337}
 --- !u!65 &8523260464767948780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -248,6 +248,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1309726771771662545, guid: 0e1f5247c3ca928489134a6873b616ad, type: 3}
   m_PrefabInstance: {fileID: 7064706685356086558}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5085013479506201337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2637835724840263655, guid: 0e1f5247c3ca928489134a6873b616ad, type: 3}
+  m_PrefabInstance: {fileID: 7064706685356086558}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d720d3424902f44fa2c229b916c0e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6703442603423829814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4543437977899375144, guid: 0e1f5247c3ca928489134a6873b616ad, type: 3}

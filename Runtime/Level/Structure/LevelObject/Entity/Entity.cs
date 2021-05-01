@@ -47,7 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (h != null)
             {
-                h.Use();
+                Invoke(h.Use);
             }
         }
 
