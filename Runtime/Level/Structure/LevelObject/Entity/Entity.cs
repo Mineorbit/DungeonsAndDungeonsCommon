@@ -43,14 +43,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
         }
 
+        ItemHandle handle;
+
         public void UseHandle(ItemHandle h)
         {
             if (h != null)
             {
-                Invoke(h.Use);
+                handle = h;
+                Invoke(UseSelectedHandle);
             }
         }
 
+        public void UseSelectedHandle()
+        {
+            handle.Use();
+        }
 
         void StartHitCooldown()
         {
