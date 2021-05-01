@@ -31,6 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnCreationRequest(string identifier, LevelObjectData entityType, Vector3 position, Quaternion rotation)
         {
             GameObject e = LevelManager.currentLevel.AddDynamic(entityType,position,rotation);
+            e.GetComponent<EntityNetworkHandler>().identifier = identifier;
         }
 
         //UPDATE LOCOMOTION

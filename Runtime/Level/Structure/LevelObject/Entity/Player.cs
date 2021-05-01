@@ -147,7 +147,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseRight()
         {
-            ItemHandle h = GetLeftHandle();
+            ItemHandle h = GetRightHandle();
             if (h != null)
             {
                 setMovementStatus(false);
