@@ -7,6 +7,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class NetworkManager : MonoBehaviour
     {
         public static NetworkManager instance;
+
+        public Client client;
         public int localId;
         // Start is called before the first frame update
         void Start()
