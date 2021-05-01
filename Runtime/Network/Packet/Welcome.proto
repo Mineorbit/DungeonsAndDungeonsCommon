@@ -1,0 +1,3 @@
+message Welcome {
+  required int32 localId = 2;
+}

@@ -1,0 +1,5 @@
+message Player {
+  required string entity_identifier;
+  required string name = 1;
+  optional int32 localId = 2;
+}
