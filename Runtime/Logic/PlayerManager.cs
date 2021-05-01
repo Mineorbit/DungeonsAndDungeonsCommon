@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    Vector3 GetSpawnLocation(int i)
+    public Vector3 GetSpawnLocation(int i)
     {
             Vector3 location = new Vector3(i * 8, 6, 0);
             if(LevelManager.currentLevel.spawn[i] != null)
