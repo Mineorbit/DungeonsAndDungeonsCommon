@@ -35,21 +35,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MethodInfo methodInfo = a.Method;
             if(h!=null)h.Marshall(methodInfo, argument);
-            a.Invoke(argument);
+            if (this.enabled) a.Invoke(argument);
         }
 
         public void Invoke(ParamsAction a)
         {
             MethodInfo methodInfo = a.Method;
             if (h != null) h.Marshall(methodInfo);
-            a.Invoke();
+            if (this.enabled) a.Invoke();
         }
 
         public void Invoke(Action a)
         {
             MethodInfo methodInfo = a.Method;
             if (h != null) h.Marshall(methodInfo);
-            a.Invoke();
+            if(this.enabled) a.Invoke();
         }
 
     }
