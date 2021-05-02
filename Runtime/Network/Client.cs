@@ -155,7 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Name = NetworkManager.userName,
                 LocalId = localid
             };
-
+            WritePacket(playerConnect);
         }
 
         // This needs to be exited after some kind of timeout
