@@ -24,12 +24,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Client(TcpClient tcpC, int lId)
         {
             tcpClient = tcpC;
+            tcpStream = tcpClient.GetStream();
             localid = lId;
         }
 
         public Client(TcpClient tcpC)
         {
             tcpClient = tcpC;
+            tcpStream = tcpClient.GetStream();
             localid = -1;
         }
 
@@ -39,6 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             await tClient.ConnectAsync(host, port);
 
             Client client = new Client(tClient);
+
 
             await client.Setup();
             return client;
@@ -93,7 +96,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This needs to be exited when no more messages  are  received
         public async Task Process()
         {
-            tcpStream = tcpClient.GetStream();
 
             Welcome w = new Welcome
             {
