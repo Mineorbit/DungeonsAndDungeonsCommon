@@ -14,12 +14,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public TcpClient tcpClient;
         public UdpClient udpClient;
 
-        public NetworkStream networkStream;
+        int localid;
+
+        public NetworkStream tcpStream;
 
         byte[] buffer = new byte[4];
+        public Client(TcpClient tcpC, int lId)
+        {
+            tcpClient = tcpC;
+            localid = lId;
+        }
+
         public Client(TcpClient tcpC)
         {
             tcpClient = tcpC;
+            localid = -1;
         }
 
         public static async Task<Client> Connect(IPAddress host, int port)
@@ -33,12 +42,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This needs to be exited when no more messages  are  received
         public async Task Process()
         {
-            networkStream = tcpClient.GetStream();
-            int i = 0;
-            while(networkStream.Read(buffer,0,1) != 0 && i<4)
-            {
-                
-            }
+            tcpStream = tcpClient.GetStream();
+            
+
+            //Send welcome
+
+
         }
     }
 }

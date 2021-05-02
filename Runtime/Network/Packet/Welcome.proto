@@ -1,3 +1,6 @@
+syntax = "proto3";
+package state;
+
 message Welcome {
-  required int32 localId = 2;
+  int32 localId = 1;
 }
