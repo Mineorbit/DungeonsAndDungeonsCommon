@@ -42,6 +42,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static async Task<Client> Connect(IPAddress host, int port)
         {
             TcpClient tClient = new TcpClient();
+
+            Debug.Log("Trying to Connect");
             await tClient.ConnectAsync(host, port);
 
             Debug.Log("Connected");
