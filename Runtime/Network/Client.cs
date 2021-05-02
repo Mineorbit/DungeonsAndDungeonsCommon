@@ -9,6 +9,7 @@ using Google.Protobuf;
 using State;
 using System.IO;
 using General;
+using System.Threading;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -19,6 +20,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         BinaryWriter ostream;
 
         int localid;
+
+        Semaphore waitingForSpecific = new Semaphore(0,1);
 
         public NetworkStream tcpStream;
 
@@ -69,21 +72,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        public T ReadPacket<T>() where T : IMessage, new()
+        async Task<byte[]> ReadData()
         {
+            waitingForSpecific.WaitOne();
             byte[] lengthBytes = new byte[4];
-            tcpStream.Read(lengthBytes,0,4);
+            await tcpStream.ReadAsync(lengthBytes, 0, 4);
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(lengthBytes);
             }
-            int length = BitConverter.ToInt32(lengthBytes,0);
+            int length = BitConverter.ToInt32(lengthBytes, 0);
             byte[] data = new byte[length];
-            tcpStream.Read(data,0,length);
+            await tcpStream.ReadAsync(data, 0, length);
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(data);
             }
+            waitingForSpecific.Release();
+            return data;
+        }
+
+        // int tries; necessary?
+        public async Task<T> ReadPacket<T>() where T : IMessage, new()
+        {
+            byte[] data = await ReadData();
+
             var p = General.Packet.Parser.ParseFrom(data);
             T result;
             if (p.Content.TryUnpack<T>(out result))
@@ -91,20 +104,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return result;
             }else
             {
-                throw new Exception();
+                //handle packet otherwise?
+                return await ReadPacket<T>();
             }
-
         }
+
 
 
         public void Setup()
         {
-            Welcome w = ReadPacket<Welcome>();
+            Welcome w = Task.Run(ReadPacket<Welcome>).Result;
             Debug.Log(w);
 
         }
 
-        // This needs to be exited when no more messages  are  received
+        // This needs to be exited after some kind of timeout
         public async Task Process()
         {
 
@@ -117,14 +131,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(w);
 
-            PlayerConnect p = ReadPacket<PlayerConnect>();
-            /*
-            while (tcpClient.Connected)
-            {
+            PlayerConnect p = await ReadPacket<PlayerConnect>();
+            await HandlePackets();
+        }
 
+        public async Task HandlePackets()
+        {
+            byte[] data = await ReadData();
 
-            }
-            */
+            Debug.Log("Received new Packet");
+
+            //Processing needed
+
+            await HandlePackets();
         }
     }
 }
