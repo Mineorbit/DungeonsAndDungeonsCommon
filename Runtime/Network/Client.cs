@@ -15,9 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public TcpClient tcpClient;
         public UdpClient udpClient;
-        static int maxSize = 4096;
-        byte[] dataOut = new byte[maxSize];
-        //BinaryWriter ostream = new BinaryWriter(new MemoryStream(dataOut));
+        BinaryWriter ostream;
 
         int localid;
 
@@ -47,27 +45,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        //Temporary stolen from stackoverflow
         public void WritePacket(IMessage message)
         {
-            /*
-            CodedOutputStream output = new CodedOutputStream(ostream.BaseStream, true);
-            output.WriteMessage(message);
-            output.Flush();
-            (ostream.BaseStream as MemoryStream).SetLength(0); // reset stream for next packet(s)
+            byte[] data = message.ToByteArray();
+            int length = data.Length;
+            byte[] result = new byte[length + 4];
+            byte[] lengthBytes = BitConverter.GetBytes(length);
+            if(BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(lengthBytes);
+                Array.Reverse(data); 
+            }
+            Array.Copy(lengthBytes,0,result,0,4);
+            Array.Copy(data, 0, result, 4, length);
 
-            tcpStream.Write(dataOut,0, message.CalculateSize() + 1);
+            
+            tcpStream.Write(result,0,result.Length);
 
-            */
+        }
 
-            message.WriteDelimitedTo(tcpStream);
-
+        public Welcome ReadWelcomePacket()
+        {
+            return Welcome.Parser.ParseFrom(tcpStream);
         }
 
 
         public async Task Setup()
         {
-            Welcome w = Welcome.Parser.ParseDelimitedFrom(tcpStream);
+            Welcome w = ReadWelcomePacket();
+            Debug.Log(w);
 
         }
 
@@ -80,10 +86,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 LocalId = localid
             };
-            WritePacket(w);
+
             //Send welcome
 
+            w.WriteTo(tcpStream);
 
+            while (tcpClient.Connected)
+            {
+
+
+            }
         }
     }
 }
