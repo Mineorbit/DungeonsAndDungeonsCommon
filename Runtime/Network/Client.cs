@@ -21,7 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public int localid;
 
-        Semaphore waitingForSpecific = new Semaphore(0,1);
+        Semaphore waitingForSpecific = new Semaphore(1,1);
 
         public NetworkStream tcpStream;
 
@@ -126,9 +126,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // int tries; necessary?
         public async Task<T> ReadPacket<T>() where T : IMessage, new()
         {
+            Debug.Log("Waiting for Data");
             byte[] data = await ReadData();
 
-            Debug.Log("Waiting for Data");
             var p = General.Packet.Parser.ParseFrom(data);
             Debug.Log("Received "+p);
             T result;
