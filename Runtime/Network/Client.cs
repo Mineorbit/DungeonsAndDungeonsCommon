@@ -105,6 +105,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         async Task<byte[]> ReadData()
         {
             waitingForSpecific.WaitOne();
+            Debug.Log("Data Lock claimed");
             byte[] lengthBytes = new byte[4];
             await tcpStream.ReadAsync(lengthBytes, 0, 4);
             if (BitConverter.IsLittleEndian)
@@ -127,6 +128,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             byte[] data = await ReadData();
 
+            Debug.Log("Waiting for Data");
             var p = General.Packet.Parser.ParseFrom(data);
             Debug.Log("Received "+p);
             T result;
