@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Debug.Log("Trying to Connect");
 
-            TcpClient tcpClient = new TcpClient(host, this.Port);
+            TcpClient tcpClient = new TcpClient(host.ToString(), port);
             tcpClient.SendTimeout = 1000;
 
             Debug.Log("Connected");
