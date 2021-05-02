@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Client client = new Client(tClient);
 
 
-            await client.Setup();
+            client.Setup();
             return client;
         }
 
@@ -89,7 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public async Task Setup()
+        public void Setup()
         {
             Welcome w = ReadWelcomePacket();
             Debug.Log(w);
@@ -108,12 +108,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //Send welcome
 
             WritePacket(w);
-
+            /*
             while (tcpClient.Connected)
             {
 
 
             }
+            */
         }
     }
 }
