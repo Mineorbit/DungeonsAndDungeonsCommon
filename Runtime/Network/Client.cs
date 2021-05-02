@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using State;
+using System.IO;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -14,12 +15,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public TcpClient tcpClient;
         public UdpClient udpClient;
+        static int maxSize = 4096;
+        byte[] dataOut = new byte[maxSize];
+        //BinaryWriter ostream = new BinaryWriter(new MemoryStream(dataOut));
 
         int localid;
 
         public NetworkStream tcpStream;
 
-        byte[] buffer = new byte[4];
         public Client(TcpClient tcpC, int lId)
         {
             tcpClient = tcpC;
@@ -38,8 +41,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             await tClient.ConnectAsync(host, port);
 
             Client client = new Client(tClient);
+
+            await client.Setup();
             return client;
         }
+
+
+        //Temporary stolen from stackoverflow
+        public void WritePacket(IMessage message)
+        {
+            /*
+            CodedOutputStream output = new CodedOutputStream(ostream.BaseStream, true);
+            output.WriteMessage(message);
+            output.Flush();
+            (ostream.BaseStream as MemoryStream).SetLength(0); // reset stream for next packet(s)
+
+            tcpStream.Write(dataOut,0, message.CalculateSize() + 1);
+
+            */
+
+            message.WriteDelimitedTo(tcpStream);
+
+        }
+
+
+        public async Task Setup()
+        {
+            Welcome w = Welcome.Parser.ParseDelimitedFrom(tcpStream);
+
+        }
+
         // This needs to be exited when no more messages  are  received
         public async Task Process()
         {
@@ -49,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 LocalId = localid
             };
-            w.WriteTo(tcpStream);
+            WritePacket(w);
             //Send welcome
 
 
