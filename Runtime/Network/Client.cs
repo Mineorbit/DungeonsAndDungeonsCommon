@@ -115,6 +115,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
             Debug.Log(w);
+            PlayerConnect playerConnect = new PlayerConnect
+            {
+                EntityIdentifier = "",
+                Name = NetworkManager.userName,
+                LocalId = localid
+            };
 
         }
 
@@ -131,7 +137,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(w);
 
-            PlayerConnect p = await ReadPacket<PlayerConnect>();
+            PlayerConnect playerConnect = await ReadPacket<PlayerConnect>();
+            Debug.Log("New Player: "+playerConnect);
             await HandlePackets();
         }
 

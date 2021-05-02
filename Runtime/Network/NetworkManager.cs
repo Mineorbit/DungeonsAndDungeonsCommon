@@ -16,6 +16,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public Client client;
         public int localId;
+
+        public static string userName;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -26,6 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Connect(string playerName, Action onConnect)
         {
+            userName = playerName;
             Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
             client = t.Result;
 
