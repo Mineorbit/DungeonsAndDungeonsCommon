@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package State;
+
+
+message PlayerConnect {
+  string entity_identifier = 1;
+  string name = 2;
+  int32 localId = 3;
+}

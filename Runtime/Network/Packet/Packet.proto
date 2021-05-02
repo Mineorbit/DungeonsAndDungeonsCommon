@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "any.proto";
+
+package General;
+
+message Packet {
+  string type = 1;
+  google.protobuf.Any content = 2;
+}
