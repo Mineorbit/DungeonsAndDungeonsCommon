@@ -59,7 +59,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void WritePacket(IMessage message)
         {
-            byte[] data = message.ToByteArray();
+
+            General.Packet p = new General.Packet
+            {
+                Type = "Default",
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
+            };
+            
+
+            byte[] data = p.ToByteArray();
             int length = data.Length;
             byte[] result = new byte[length + 4];
             byte[] lengthBytes = BitConverter.GetBytes(length);
