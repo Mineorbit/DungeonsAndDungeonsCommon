@@ -102,7 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             //Send welcome
 
-            w.WriteTo(tcpStream);
+            WritePacket(w);
 
             while (tcpClient.Connected)
             {
