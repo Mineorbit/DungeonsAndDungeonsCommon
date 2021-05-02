@@ -62,7 +62,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes,0,result,0,4);
             Array.Copy(data, 0, result, 4, length);
 
-            Debug.Log("Writing "+data.length);
+            Debug.Log("Writing "+data.Length);
             
             tcpStream.Write(result,0,result.Length);
 
@@ -70,6 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Welcome ReadWelcomePacket()
         {
+            Debug.Log("Beginning Read");
             byte[] lengthBytes = new byte[4];
             tcpStream.Read(lengthBytes,0,4);
             if (BitConverter.IsLittleEndian)
@@ -77,6 +78,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Array.Reverse(lengthBytes);
             }
             int length = BitConverter.ToInt32(lengthBytes,0);
+            Debug.Log("Read "+length);
             byte[] data = new byte[length];
             tcpStream.Read(data,0,length);
             if (BitConverter.IsLittleEndian)
