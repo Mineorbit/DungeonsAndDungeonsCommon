@@ -145,6 +145,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Setup()
         {
 
+            Debug.Log("Waiting for Welcome");
+
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
             
             Debug.Log(w);
