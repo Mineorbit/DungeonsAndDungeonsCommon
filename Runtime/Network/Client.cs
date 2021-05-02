@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Google.Protobuf;
 using State;
 using System.IO;
+using General;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -68,9 +69,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        public Welcome ReadWelcomePacket()
+        public T ReadPacket<T>() where T : IMessage, new()
         {
-            Debug.Log("Beginning Read");
             byte[] lengthBytes = new byte[4];
             tcpStream.Read(lengthBytes,0,4);
             if (BitConverter.IsLittleEndian)
@@ -78,20 +78,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Array.Reverse(lengthBytes);
             }
             int length = BitConverter.ToInt32(lengthBytes,0);
-            Debug.Log("Read "+length);
             byte[] data = new byte[length];
             tcpStream.Read(data,0,length);
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(data);
             }
-            return Welcome.Parser.ParseFrom(data);
+            var p = General.Packet.Parser.ParseFrom(data);
+            T result;
+            if (p.Content.TryUnpack<T>(out result))
+            {
+                return result;
+            }else
+            {
+                throw new Exception();
+            }
+
         }
 
 
         public void Setup()
         {
-            Welcome w = ReadWelcomePacket();
+            Welcome w = ReadPacket<Welcome>();
             Debug.Log(w);
 
         }
@@ -108,6 +116,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //Send welcome
 
             WritePacket(w);
+
+            PlayerConnect p = ReadPacket<PlayerConnect>();
             /*
             while (tcpClient.Connected)
             {
