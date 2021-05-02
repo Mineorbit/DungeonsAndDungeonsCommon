@@ -34,9 +34,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
             client = t.Result;
 
-            localId = client.localId;
+            localId = client.localid;
 
-            onConnectEvent.Invoke(client.localId);
+            onConnectEvent.Invoke(client.localid);
             onConnect.Invoke();
             
         }
