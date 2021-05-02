@@ -57,16 +57,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         async Task HandleNewConnection()
         {
-            TcpClient tcpClient = await listener.AcceptTcpClientAsync();
+            TcpClient tpClient = await listener.AcceptTcpClientAsync();
             int i = GetFreeSlot();
             
             if(i == -1)
             {
-                tcpClient.Close();
+                tpClient.Close();
             }
             else
             {
-                Client c = new Client(tcpClient);
+                Client c = new Client(tpClient);
                 clients[i] = c;
                 await c.Process();
                 Debug.Log("Disconnect");

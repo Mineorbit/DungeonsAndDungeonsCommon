@@ -2,7 +2,7 @@
   "name": "com.mineorbit.dungeonsanddungeonscommon",
   "version": "0.1.6",
   "displayName": "Dungeons And Dungeons Commmon",
-  "description": "Package with common assets and code between Server and Client",
+  "description": "Package with common assets and code between Server and Client ProtoBuf NuGet Package",
   "unity": "2020.3",
   "unityRelease": "3f1",
   "keywords": [
