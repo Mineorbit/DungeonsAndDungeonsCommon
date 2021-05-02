@@ -53,15 +53,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static async Task<Client> Connect(IPAddress host, int port)
         {
-            Debug.Log("Trying to Connect");
-
 
             Client client = new Client();
 
             Thread createThread = new Thread(new ThreadStart(()=> { CreateTcpClientForClient(client, host, port); }));
             createThread.IsBackground = true;
             createThread.Start();
-            Debug.Log("Connected");
 
 
 
@@ -114,7 +111,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         async Task<byte[]> ReadData()
         {
             waitingForSpecific.WaitOne();
-            Debug.Log("Data Lock claimed");
             byte[] lengthBytes = new byte[4];
             await tcpStream.ReadAsync(lengthBytes, 0, 4);
             if (BitConverter.IsLittleEndian)
@@ -158,8 +154,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
-            
-            Debug.Log(w);
 
             MeConnect meConnect = new MeConnect
             {
@@ -183,7 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Sent "+w);
 
             MeConnect meConnect = await ReadPacket<MeConnect>();
-            
+            userName = meConnect.Name;
             Debug.Log("New Player: "+meConnect);
             await HandlePackets();
         }
