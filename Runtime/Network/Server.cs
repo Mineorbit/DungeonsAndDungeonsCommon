@@ -39,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(clients[localId] != null)
             { 
-            clients[localId].networkStream.Close();
+            clients[localId].tcpStream.Close();
             clients[localId].tcpClient.Close();
             clients[localId] = null;
             }
