@@ -38,24 +38,42 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             tcpStream = tcpClient.GetStream();
             localid = -1;
         }
+        public Client()
+        {
+
+        }
 
         public static async Task<Client> Connect(IPAddress host, int port)
         {
             Debug.Log("Trying to Connect");
 
-            TcpClient tcpClient = null;
-            tcpClient = new TcpClient(host.ToString(), port);
-            tcpClient.SendTimeout = 1000;
 
+            Client client = new Client();
+
+            Thread createThread = new Thread(new ThreadStart(()=> { CreateTcpClientForClient(client, host, port); }));
+            createThread.IsBackground = true;
+            createThread.Start();
             Debug.Log("Connected");
 
-            Client client = new Client(tcpClient);
 
 
-            client.Setup();
             return client;
         }
 
+        //evtl async später
+        public static void CreateTcpClientForClient(Client client,IPAddress host, int port)
+        {
+            client.tcpClient = new TcpClient(host.ToString(), port);
+            client.tcpClient.SendTimeout = 1000;
+            client.Setup();
+        }
+
+        public static void CreateUdpClientForClient(Client client, IPAddress host, int port)
+        {
+            client.tcpClient = new TcpClient(host.ToString(), port);
+            client.tcpClient.SendTimeout = 1000;
+            client.Setup();
+        }
 
         public void WritePacket(IMessage message)
         {
@@ -80,6 +98,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(data, 0, result, 4, length);
             
             tcpStream.Write(result,0,result.Length);
+            Debug.Log("Sent "+p);
 
         }
 
@@ -106,10 +125,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // int tries; necessary?
         public async Task<T> ReadPacket<T>() where T : IMessage, new()
         {
-            Debug.Log("Reading for "+typeof(T));
             byte[] data = await ReadData();
 
             var p = General.Packet.Parser.ParseFrom(data);
+            Debug.Log("Received "+p);
             T result;
             if (p.Content.TryUnpack<T>(out result))
             {
