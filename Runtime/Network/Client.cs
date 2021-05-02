@@ -66,14 +66,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Welcome ReadWelcomePacket()
         {
-            byte[] lengthBytes;
-            byte[] data;
+            byte[] lengthBytes = new byte[4];
             tcpStream.Read(lengthBytes,0,4);
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(lengthBytes);
             }
             int length = BitConverter.ToInt32(lengthBytes,0);
+            byte[] data = new byte[length];
             tcpStream.Read(data,0,length);
             if (BitConverter.IsLittleEndian)
             {
