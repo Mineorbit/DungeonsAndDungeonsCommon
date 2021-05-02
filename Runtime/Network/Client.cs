@@ -44,6 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             TcpClient tClient = new TcpClient();
 
             Debug.Log("Trying to Connect");
+
             await tClient.ConnectAsync(host, port);
 
             Debug.Log("Connected");
@@ -142,6 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //Send welcome
 
             WritePacket(w);
+            Debug.Log("Sent "+w);
 
             PlayerConnect playerConnect = await ReadPacket<PlayerConnect>();
             Debug.Log("New Player: "+playerConnect);
