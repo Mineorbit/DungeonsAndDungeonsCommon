@@ -66,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Client c = new Client(tpClient);
+                Client c = new Client(tpClient,i);
                 clients[i] = c;
                 await c.Process();
                 Debug.Log("Disconnect");

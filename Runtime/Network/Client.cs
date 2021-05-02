@@ -5,7 +5,8 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-
+using Google.Protobuf;
+using State;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -43,8 +44,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public async Task Process()
         {
             tcpStream = tcpClient.GetStream();
-            
 
+            Welcome w = new Welcome
+            {
+                LocalId = localid
+            };
+            w.WriteTo(tcpStream);
             //Send welcome
 
 
