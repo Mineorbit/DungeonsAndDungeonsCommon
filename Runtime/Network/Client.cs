@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UdpClient udpClient;
         BinaryWriter ostream;
 
-        int localid;
+        public int localid;
 
         Semaphore waitingForSpecific = new Semaphore(0,1);
 
