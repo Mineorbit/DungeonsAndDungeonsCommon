@@ -17,13 +17,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public TcpClient tcpClient;
         public UdpClient udpClient;
+        
         BinaryWriter ostream;
 
+        public string userName;
         public int localid;
 
         Semaphore waitingForSpecific = new Semaphore(1,1);
 
         public NetworkStream tcpStream;
+
+
+        public override string ToString()
+        {
+            return "NetworkClient "+userName+" "+localid;
+        }
 
         public Client(TcpClient tcpC, int lId)
         {
@@ -81,7 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             General.Packet p = new General.Packet
             {
-                Type = "Default",
+                Type = message.GetType().ToString(),
                 Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
             };
             
@@ -148,19 +156,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Setup()
         {
 
-            Debug.Log("Waiting for Welcome");
 
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
             
             Debug.Log(w);
 
-            PlayerConnect playerConnect = new PlayerConnect
+            MeConnect meConnect = new MeConnect
             {
-                EntityIdentifier = "",
-                Name = NetworkManager.userName,
-                LocalId = localid
+                Name = NetworkManager.userName
             };
-            WritePacket(playerConnect);
+            WritePacket(meConnect);
         }
 
         // This needs to be exited after some kind of timeout
@@ -177,8 +182,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             WritePacket(w);
             Debug.Log("Sent "+w);
 
-            PlayerConnect playerConnect = await ReadPacket<PlayerConnect>();
-            Debug.Log("New Player: "+playerConnect);
+            MeConnect meConnect = await ReadPacket<MeConnect>();
+            
+            Debug.Log("New Player: "+meConnect);
             await HandlePackets();
         }
 
