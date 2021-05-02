@@ -44,6 +44,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             TcpClient tClient = new TcpClient();
             await tClient.ConnectAsync(host, port);
 
+            Debug.Log("Connected");
+
             Client client = new Client(tClient);
 
 
@@ -65,8 +67,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             Array.Copy(lengthBytes,0,result,0,4);
             Array.Copy(data, 0, result, 4, length);
-
-            Debug.Log("Writing "+data.Length);
             
             tcpStream.Write(result,0,result.Length);
 
@@ -95,6 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // int tries; necessary?
         public async Task<T> ReadPacket<T>() where T : IMessage, new()
         {
+            Debug.Log("Reading for "+typeof(T));
             byte[] data = await ReadData();
 
             var p = General.Packet.Parser.ParseFrom(data);
@@ -113,8 +114,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Setup()
         {
+
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
+            
             Debug.Log(w);
+
             PlayerConnect playerConnect = new PlayerConnect
             {
                 EntityIdentifier = "",
