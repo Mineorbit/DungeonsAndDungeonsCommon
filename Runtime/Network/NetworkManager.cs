@@ -13,7 +13,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public static NetworkManager instance;
 
+
+        public List<NetworkHandler> networkHandlers = new List<NetworkHandler>();
+
         UnityEvent<int> onConnectEvent = new UnityEvent<int>();
+        
         public Client client;
         public int localId;
 

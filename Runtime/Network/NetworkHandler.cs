@@ -10,25 +10,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkHandler : MonoBehaviour
     {
-        public string IdentityMe;
-        public string IdentityOther;
+        public string Identity;
+
+        public Component observed;
 
         public static List<Type> loadedTypes = new List<Type>();
         public static Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
 
+        //Fetch Methods
         public void Awake()
         {
-            LevelObject levelObject = gameObject.GetComponent<LevelObject>();
-            if(!loadedTypes.Contains(levelObject.GetType()))
+            if(!loadedTypes.Contains(observed.GetType()))
             {
-                loadedTypes.Add(levelObject.GetType());
-                foreach (MethodInfo info in levelObject.GetType().GetMethods())
+                loadedTypes.Add(observed.GetType());
+                foreach (MethodInfo info in observed.GetType().GetMethods())
                 {
                 if (!methods.ContainsKey(info.ToString()))
                     methods.Add(info.ToString(), info);
                 }
             }
-
+            NetworkManager.instance.networkHandlers.Add(this);
 
         }
 
