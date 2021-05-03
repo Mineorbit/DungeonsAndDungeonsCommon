@@ -26,32 +26,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             h =  gameObject.AddComponent<NetworkHandler>();
         }
 
-        public delegate void ParamsAction(params object[] arguments);
-
+        
 
         //This marks a message for transport through network
 
-        public void Invoke(ParamsAction a, object[] argument)
+        public void Invoke(Action<Dictionary<string,object>> a, Dictionary<string, object> argument)
         {
-            MethodInfo methodInfo = a.Method;
-            if(h!=null)h.Marshall(methodInfo, argument);
-            if (this.enabled) a.Invoke(argument);
+            if(h!=null) h.Marshall(a.Method.Name, argument);
+            if (this.enabled) a.DynamicInvoke(argument);
         }
 
-        public void Invoke(ParamsAction a)
+
+        public void Invoke(Action a)
         {
-            MethodInfo methodInfo = a.Method;
-            if (h != null) h.Marshall(methodInfo);
-            if (this.enabled) a.Invoke();
+            if (h != null) h.Marshall(a.Method.Name);
+            if (this.enabled) a.DynamicInvoke();
         }
+
+        /*
 
         public void Invoke(Action a)
         {
             MethodInfo methodInfo = a.Method;
-            Debug.Log("Test");
             if (this.enabled) a.Invoke();
-            if (h != null) h.Marshall(methodInfo);
-        }
+            if (h != null) h.Marshall(a);
+        }*/
 
     }
 }

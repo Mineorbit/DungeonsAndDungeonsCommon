@@ -8,30 +8,37 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public Entity me;
 
-        public string identifier;
 
 
+        public virtual void Awake()
+        {
+            base.Awake();
+            me = GetComponent<Entity>();
+            //base.AddMethodMarshalling(me.UseSelectedHandle);
+        }
+
+
+        
 
         void Start()
         {
-            me = GetComponent<Entity>();
-            //if(Currently Server)
-            //{ 
+            if(isOnServer)
+            { 
             RequestCreation();
-            //}
+            }
         }
 
         public virtual void RequestCreation()
         {
             Vector3 position = transform.position;
             Quaternion rotation = transform.rotation;
-            //Send request to the spawner
+            // CREATE REQUEST
         }
 
-        public static void OnCreationRequest(string identifier, LevelObjectData entityType, Vector3 position, Quaternion rotation)
+        public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation)
         {
             GameObject e = LevelManager.currentLevel.AddDynamic(entityType,position,rotation);
-            e.GetComponent<EntityNetworkHandler>().identifier = identifier;
+            e.GetComponent<EntityNetworkHandler>().Identity = identity;
         }
 
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE

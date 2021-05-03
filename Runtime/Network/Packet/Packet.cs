@@ -24,13 +24,14 @@ namespace General {
     static PacketReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxQYWNrZXQucHJvdG8SB0dlbmVyYWwaCWFueS5wcm90byI9CgZQYWNrZXQS",
-            "DAoEdHlwZRgBIAEoCRIlCgdjb250ZW50GAIgASgLMhQuZ29vZ2xlLnByb3Rv",
-            "YnVmLkFueWIGcHJvdG8z"));
+            "CgxQYWNrZXQucHJvdG8SB0dlbmVyYWwaCWFueS5wcm90byJgCgZQYWNrZXQS",
+            "DAoEdHlwZRgBIAEoCRIPCgdIYW5kbGVyGAIgASgJEiUKB2NvbnRlbnQYAyAB",
+            "KAsyFC5nb29nbGUucHJvdG9idWYuQW55EhAKCGlkZW50aXR5GAQgASgJYgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::General.Packet), global::General.Packet.Parser, new[]{ "Type", "Content" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::General.Packet), global::General.Packet.Parser, new[]{ "Type", "Handler", "Content", "Identity" }, null, null, null, null)
           }));
     }
     #endregion
@@ -67,7 +68,9 @@ namespace General {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Packet(Packet other) : this() {
       type_ = other.type_;
+      handler_ = other.handler_;
       content_ = other.content_ != null ? other.content_.Clone() : null;
+      identity_ = other.identity_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -87,14 +90,36 @@ namespace General {
       }
     }
 
+    /// <summary>Field number for the "Handler" field.</summary>
+    public const int HandlerFieldNumber = 2;
+    private string handler_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Handler {
+      get { return handler_; }
+      set {
+        handler_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "content" field.</summary>
-    public const int ContentFieldNumber = 2;
+    public const int ContentFieldNumber = 3;
     private global::Google.Protobuf.WellKnownTypes.Any content_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Google.Protobuf.WellKnownTypes.Any Content {
       get { return content_; }
       set {
         content_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "identity" field.</summary>
+    public const int IdentityFieldNumber = 4;
+    private string identity_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Identity {
+      get { return identity_; }
+      set {
+        identity_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -112,7 +137,9 @@ namespace General {
         return true;
       }
       if (Type != other.Type) return false;
+      if (Handler != other.Handler) return false;
       if (!object.Equals(Content, other.Content)) return false;
+      if (Identity != other.Identity) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -120,7 +147,9 @@ namespace General {
     public override int GetHashCode() {
       int hash = 1;
       if (Type.Length != 0) hash ^= Type.GetHashCode();
+      if (Handler.Length != 0) hash ^= Handler.GetHashCode();
       if (content_ != null) hash ^= Content.GetHashCode();
+      if (Identity.Length != 0) hash ^= Identity.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -141,9 +170,17 @@ namespace General {
         output.WriteRawTag(10);
         output.WriteString(Type);
       }
-      if (content_ != null) {
+      if (Handler.Length != 0) {
         output.WriteRawTag(18);
+        output.WriteString(Handler);
+      }
+      if (content_ != null) {
+        output.WriteRawTag(26);
         output.WriteMessage(Content);
+      }
+      if (Identity.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(Identity);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -158,9 +195,17 @@ namespace General {
         output.WriteRawTag(10);
         output.WriteString(Type);
       }
-      if (content_ != null) {
+      if (Handler.Length != 0) {
         output.WriteRawTag(18);
+        output.WriteString(Handler);
+      }
+      if (content_ != null) {
+        output.WriteRawTag(26);
         output.WriteMessage(Content);
+      }
+      if (Identity.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(Identity);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -174,8 +219,14 @@ namespace General {
       if (Type.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Type);
       }
+      if (Handler.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Handler);
+      }
       if (content_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Content);
+      }
+      if (Identity.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -191,11 +242,17 @@ namespace General {
       if (other.Type.Length != 0) {
         Type = other.Type;
       }
+      if (other.Handler.Length != 0) {
+        Handler = other.Handler;
+      }
       if (other.content_ != null) {
         if (content_ == null) {
           Content = new global::Google.Protobuf.WellKnownTypes.Any();
         }
         Content.MergeFrom(other.Content);
+      }
+      if (other.Identity.Length != 0) {
+        Identity = other.Identity;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -216,10 +273,18 @@ namespace General {
             break;
           }
           case 18: {
+            Handler = input.ReadString();
+            break;
+          }
+          case 26: {
             if (content_ == null) {
               Content = new global::Google.Protobuf.WellKnownTypes.Any();
             }
             input.ReadMessage(Content);
+            break;
+          }
+          case 34: {
+            Identity = input.ReadString();
             break;
           }
         }
@@ -241,10 +306,18 @@ namespace General {
             break;
           }
           case 18: {
+            Handler = input.ReadString();
+            break;
+          }
+          case 26: {
             if (content_ == null) {
               Content = new global::Google.Protobuf.WellKnownTypes.Any();
             }
             input.ReadMessage(Content);
+            break;
+          }
+          case 34: {
+            Identity = input.ReadString();
             break;
           }
         }

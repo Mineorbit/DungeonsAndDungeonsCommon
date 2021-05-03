@@ -6,5 +6,7 @@ package General;
 
 message Packet {
   string type = 1;
-  google.protobuf.Any content = 2;
+  string Handler = 2;
+  google.protobuf.Any content = 3;
+  string identity = 4;
 }

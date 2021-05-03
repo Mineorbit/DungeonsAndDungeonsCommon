@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package State;
+
+
+message LevelObjectConnect {
+	string identity = 1;
+	float x =  2;
+	float y =  3;
+	float z =  4;
+}
