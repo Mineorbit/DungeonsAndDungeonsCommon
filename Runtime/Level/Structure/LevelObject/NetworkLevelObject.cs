@@ -8,14 +8,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkLevelObject : LevelObject
     {
-        LevelObjectNetworkHandler h;
+        public LevelObjectNetworkHandler levelObjectNetworkHandler;
+
+        public static bool enableNetworking = false;
 
         public override void OnInit()
         {
             base.OnInit();
-            if(NetworkManager.isConnected)
+            Debug.Log("Test");
+            if(enableNetworking)
             {
-                h = GetComponent<LevelObjectNetworkHandler>();
+                levelObjectNetworkHandler = GetComponent<LevelObjectNetworkHandler>();
+            }
+            else
+            {
+                GetComponent<LevelObjectNetworkHandler>().enabled = false;
             }
         }
 
@@ -24,13 +31,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //This marks a message for transport through network
         public void Invoke(Action<Dictionary<string, object>> a, Dictionary<string, object> argument)
         {
-            if (h != null) h.SendAction(a.Method.Name, argument);
+            if (levelObjectNetworkHandler != null) levelObjectNetworkHandler.SendAction(a.Method.Name, argument);
             if (this.enabled) a.DynamicInvoke(argument);
         }
 
         public void Invoke(Action a)
         {
-            if (h != null) h.SendAction(a.Method.Name);
+            if (levelObjectNetworkHandler != null) levelObjectNetworkHandler.SendAction(a.Method.Name);
             if (this.enabled) a.DynamicInvoke();
         }
 

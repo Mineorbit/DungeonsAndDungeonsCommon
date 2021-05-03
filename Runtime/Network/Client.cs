@@ -18,6 +18,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public TcpClient tcpClient;
         public UdpClient udpClient;
 
+
+        public bool isOnServer;
+
         public string userName;
         public int localid;
 
@@ -188,8 +191,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log("New Player: "+meConnect);
 
-            PlayerManager.playerManager.Add(localid,userName,true);
-
+            MainCaller.Do(()=> { PlayerManager.playerManager.Add(localid, userName, true); });
+            
             await HandlePackets();
         }
 

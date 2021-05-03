@@ -69,9 +69,12 @@ public class PlayerManager : MonoBehaviour
     public Vector3 GetSpawnLocation(int i)
     {
             Vector3 location = new Vector3(i * 8, 6, 0);
-            if(LevelManager.currentLevel.spawn[i] != null)
+            if (LevelManager.currentLevel != null)
             {
-                location = LevelManager.currentLevel.spawn[i].transform.position+new Vector3(0,0.25f,0);
+                if (LevelManager.currentLevel.spawn[i] != null)
+                {
+                    location = LevelManager.currentLevel.spawn[i].transform.position + new Vector3(0, 0.25f, 0);
+                }
             }
             return location;
     }
@@ -96,14 +99,19 @@ public class PlayerManager : MonoBehaviour
 
     public void Add(int freeLocalId, string name, bool local)
     {
-        if(LevelManager.currentLevel != null)
-        {
-        Vector3 position = GetSpawnLocation(freeLocalId);
 
-        LevelObjectData levelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
-        GameObject g = levelObjectData.Create(position,new Quaternion(0,0,0,0),transform);
+            Debug.Log("New Player: " + freeLocalId + " " + name);
+
+            Vector3 position = GetSpawnLocation(freeLocalId);
+
+
+            Debug.Log("New Player: " + freeLocalId + " " + name + " " + position);
+
+            LevelObjectData levelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
+            
+            GameObject g = levelObjectData.Create(position,new Quaternion(0,0,0,0),transform);
         Player player = g.GetComponent<Player>();
-                player.enabled = true;
+        player.enabled = true;
         PlayerController playerController = g.GetComponent<PlayerController>();
 
         playerController.locallyControllable = local;
@@ -112,9 +120,8 @@ public class PlayerManager : MonoBehaviour
         player.localId = freeLocalId;
         players[freeLocalId] = player;
         playerControllers[freeLocalId] = playerController;
-        }
 
-        }
+    }
 
     public void DespawnPlayer(int localId)
     {
