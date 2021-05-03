@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buildCollider.enabled = false;
             playerStandinghitbox.Attach("Player");
 
-            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); if(!pressed) PressButton(); });
+            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); if(!pressed) Invoke(Activate); });
             playerStandinghitbox.exitEvent.AddListener((x) => { StartUnpress(); });
 
 
@@ -40,23 +40,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnEndRound()
         {
             base.OnEndRound();
-            UnpressButton();
+            Invoke(Deactivate);
             buildCollider.enabled = true;
         }
 
-        void PressButton()
+        public override void Activate()
         {
             if(!pressed)
             {
                 pressed = true;
-                Activate();
-                Invoke(AnimPress);
+                base.Activate();
+                AnimPress();
             }
         }
 
         public void AnimPress()
         {
-            buttonBaseAnimator.Press();
+            AnimPress();
         }
 
         public void AnimUnpress()
@@ -67,19 +67,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void StartUnpress()
         {
             if (returnToUnpress && !TimerManager.isRunning(unpressTimer))
-                unpressTimer = TimerManager.StartTimer(unpressTime, ()=> { UnpressButton(); });
+                unpressTimer = TimerManager.StartTimer(unpressTime, ()=> { Invoke(Deactivate); });
         }
         
 
-        void UnpressButton()
+        public override void Deactivate()
         {
             if(returnToUnpress)
             { 
                 if(pressed)
                 {
                     pressed = false;
-                    Deactivate();
-                    Invoke(AnimUnpress);
+                    base.Deactivate();
+                    AnimUnpress();
                 }
             }
         }

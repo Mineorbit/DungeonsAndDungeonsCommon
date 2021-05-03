@@ -23,6 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         bool activated = false;
 
 
+
+
         public virtual void Activate()
         {
             if(this.enabled)

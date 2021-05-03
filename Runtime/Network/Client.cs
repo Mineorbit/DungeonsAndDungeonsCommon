@@ -17,8 +17,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public TcpClient tcpClient;
         public UdpClient udpClient;
-        
-        BinaryWriter ostream;
 
         public string userName;
         public int localid;
@@ -155,6 +153,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
 
+            localid = w.LocalId;
+
             MeConnect meConnect = new MeConnect
             {
                 Name = NetworkManager.userName
@@ -192,7 +192,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = await ReadData();
 
             Debug.Log("Received new Packet");
+            Packet p = General.Packet.Parser.ParseFrom(data);
 
+            NetworkHandler.UnMarshall(p);
             //Processing needed
 
             await HandlePackets();

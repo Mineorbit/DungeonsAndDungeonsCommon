@@ -13,5 +13,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed = GetComponent<LevelObject>();
             base.Awake();
         }
+
     }
 }
