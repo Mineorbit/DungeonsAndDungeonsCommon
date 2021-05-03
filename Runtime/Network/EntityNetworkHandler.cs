@@ -17,7 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
 
-        void Start()
+        public virtual void Start()
         {
             if (isOnServer)
             {
@@ -30,7 +30,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 position = transform.position;
             Quaternion rotation = transform.rotation;
 
-            Debug.Log("PlayerCreate");
+            Debug.Log("Entity Create");
             // CREATE REQUEST
         }
 

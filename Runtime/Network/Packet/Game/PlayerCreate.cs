@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace State {
+namespace Game {
 
   /// <summary>Holder for reflection information generated from PlayerCreate.proto</summary>
   public static partial class PlayerCreateReflection {
@@ -24,13 +24,13 @@ namespace State {
     static PlayerCreateReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChJQbGF5ZXJDcmVhdGUucHJvdG8SBVN0YXRlImAKDFBsYXllckNyZWF0ZRIQ",
-            "CghJZGVudGl0eRgBIAEoCRIMCgRuYW1lGAIgASgJEg8KB2xvY2FsSWQYAyAB",
-            "KAUSCQoBWBgEIAEoAhIJCgFZGAUgASgCEgkKAVoYBiABKAJiBnByb3RvMw=="));
+            "ChJQbGF5ZXJDcmVhdGUucHJvdG8SBEdhbWUiYAoMUGxheWVyQ3JlYXRlEhAK",
+            "CElkZW50aXR5GAEgASgJEgwKBG5hbWUYAiABKAkSDwoHbG9jYWxJZBgDIAEo",
+            "BRIJCgFYGAQgASgCEgkKAVkYBSABKAISCQoBWhgGIAEoAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::State.PlayerCreate), global::State.PlayerCreate.Parser, new[]{ "Identity", "Name", "LocalId", "X", "Y", "Z" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.PlayerCreate), global::Game.PlayerCreate.Parser, new[]{ "Identity", "Name", "LocalId", "X", "Y", "Z" }, null, null, null, null)
           }));
     }
     #endregion
@@ -49,7 +49,7 @@ namespace State {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::State.PlayerCreateReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Game.PlayerCreateReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
