@@ -24,28 +24,28 @@ namespace State {
     static PlayerCreateReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChJQbGF5ZXJDcmVhdGUucHJvdG8SBVN0YXRlIkkKDVBsYXllckNvbm5lY3QS",
-            "GQoRZW50aXR5X2lkZW50aWZpZXIYASABKAkSDAoEbmFtZRgCIAEoCRIPCgds",
-            "b2NhbElkGAMgASgFYgZwcm90bzM="));
+            "ChJQbGF5ZXJDcmVhdGUucHJvdG8SBVN0YXRlImAKDFBsYXllckNyZWF0ZRIQ",
+            "CghJZGVudGl0eRgBIAEoCRIMCgRuYW1lGAIgASgJEg8KB2xvY2FsSWQYAyAB",
+            "KAUSCQoBWBgEIAEoAhIJCgFZGAUgASgCEgkKAVoYBiABKAJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::State.PlayerConnect), global::State.PlayerConnect.Parser, new[]{ "EntityIdentifier", "Name", "LocalId" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::State.PlayerCreate), global::State.PlayerCreate.Parser, new[]{ "Identity", "Name", "LocalId", "X", "Y", "Z" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Messages
-  public sealed partial class PlayerConnect : pb::IMessage<PlayerConnect>
+  public sealed partial class PlayerCreate : pb::IMessage<PlayerCreate>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<PlayerConnect> _parser = new pb::MessageParser<PlayerConnect>(() => new PlayerConnect());
+    private static readonly pb::MessageParser<PlayerCreate> _parser = new pb::MessageParser<PlayerCreate>(() => new PlayerCreate());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<PlayerConnect> Parser { get { return _parser; } }
+    public static pb::MessageParser<PlayerCreate> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -58,33 +58,36 @@ namespace State {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayerConnect() {
+    public PlayerCreate() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayerConnect(PlayerConnect other) : this() {
-      entityIdentifier_ = other.entityIdentifier_;
+    public PlayerCreate(PlayerCreate other) : this() {
+      identity_ = other.identity_;
       name_ = other.name_;
       localId_ = other.localId_;
+      x_ = other.x_;
+      y_ = other.y_;
+      z_ = other.z_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayerConnect Clone() {
-      return new PlayerConnect(this);
+    public PlayerCreate Clone() {
+      return new PlayerCreate(this);
     }
 
-    /// <summary>Field number for the "entity_identifier" field.</summary>
-    public const int EntityIdentifierFieldNumber = 1;
-    private string entityIdentifier_ = "";
+    /// <summary>Field number for the "Identity" field.</summary>
+    public const int IdentityFieldNumber = 1;
+    private string identity_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string EntityIdentifier {
-      get { return entityIdentifier_; }
+    public string Identity {
+      get { return identity_; }
       set {
-        entityIdentifier_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        identity_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -110,31 +113,70 @@ namespace State {
       }
     }
 
+    /// <summary>Field number for the "X" field.</summary>
+    public const int XFieldNumber = 4;
+    private float x_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as PlayerConnect);
+    public float X {
+      get { return x_; }
+      set {
+        x_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "Y" field.</summary>
+    public const int YFieldNumber = 5;
+    private float y_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Y {
+      get { return y_; }
+      set {
+        y_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "Z" field.</summary>
+    public const int ZFieldNumber = 6;
+    private float z_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Z {
+      get { return z_; }
+      set {
+        z_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(PlayerConnect other) {
+    public override bool Equals(object other) {
+      return Equals(other as PlayerCreate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(PlayerCreate other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (EntityIdentifier != other.EntityIdentifier) return false;
+      if (Identity != other.Identity) return false;
       if (Name != other.Name) return false;
       if (LocalId != other.LocalId) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (EntityIdentifier.Length != 0) hash ^= EntityIdentifier.GetHashCode();
+      if (Identity.Length != 0) hash ^= Identity.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (LocalId != 0) hash ^= LocalId.GetHashCode();
+      if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
+      if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
+      if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -151,9 +193,9 @@ namespace State {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (EntityIdentifier.Length != 0) {
+      if (Identity.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(EntityIdentifier);
+        output.WriteString(Identity);
       }
       if (Name.Length != 0) {
         output.WriteRawTag(18);
@@ -162,6 +204,18 @@ namespace State {
       if (LocalId != 0) {
         output.WriteRawTag(24);
         output.WriteInt32(LocalId);
+      }
+      if (X != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(X);
+      }
+      if (Y != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(Y);
+      }
+      if (Z != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(Z);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -172,9 +226,9 @@ namespace State {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (EntityIdentifier.Length != 0) {
+      if (Identity.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(EntityIdentifier);
+        output.WriteString(Identity);
       }
       if (Name.Length != 0) {
         output.WriteRawTag(18);
@@ -183,6 +237,18 @@ namespace State {
       if (LocalId != 0) {
         output.WriteRawTag(24);
         output.WriteInt32(LocalId);
+      }
+      if (X != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(X);
+      }
+      if (Y != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(Y);
+      }
+      if (Z != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(Z);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -193,14 +259,23 @@ namespace State {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (EntityIdentifier.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityIdentifier);
+      if (Identity.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
       }
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
       if (LocalId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(LocalId);
+      }
+      if (X != 0F) {
+        size += 1 + 4;
+      }
+      if (Y != 0F) {
+        size += 1 + 4;
+      }
+      if (Z != 0F) {
+        size += 1 + 4;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -209,18 +284,27 @@ namespace State {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(PlayerConnect other) {
+    public void MergeFrom(PlayerCreate other) {
       if (other == null) {
         return;
       }
-      if (other.EntityIdentifier.Length != 0) {
-        EntityIdentifier = other.EntityIdentifier;
+      if (other.Identity.Length != 0) {
+        Identity = other.Identity;
       }
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
       if (other.LocalId != 0) {
         LocalId = other.LocalId;
+      }
+      if (other.X != 0F) {
+        X = other.X;
+      }
+      if (other.Y != 0F) {
+        Y = other.Y;
+      }
+      if (other.Z != 0F) {
+        Z = other.Z;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -237,7 +321,7 @@ namespace State {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            EntityIdentifier = input.ReadString();
+            Identity = input.ReadString();
             break;
           }
           case 18: {
@@ -246,6 +330,18 @@ namespace State {
           }
           case 24: {
             LocalId = input.ReadInt32();
+            break;
+          }
+          case 37: {
+            X = input.ReadFloat();
+            break;
+          }
+          case 45: {
+            Y = input.ReadFloat();
+            break;
+          }
+          case 53: {
+            Z = input.ReadFloat();
             break;
           }
         }
@@ -263,7 +359,7 @@ namespace State {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            EntityIdentifier = input.ReadString();
+            Identity = input.ReadString();
             break;
           }
           case 18: {
@@ -272,6 +368,18 @@ namespace State {
           }
           case 24: {
             LocalId = input.ReadInt32();
+            break;
+          }
+          case 37: {
+            X = input.ReadFloat();
+            break;
+          }
+          case 45: {
+            Y = input.ReadFloat();
+            break;
+          }
+          case 53: {
+            Z = input.ReadFloat();
             break;
           }
         }
