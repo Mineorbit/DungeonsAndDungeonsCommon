@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class EntityNetworkHandler : NetworkHandler
+    public class EntityNetworkHandler : LevelObjectNetworkHandler
     {
         public Entity me;
 
@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             e.GetComponent<EntityNetworkHandler>().identifier = identifier;
         }
 
-        //UPDATE LOCOMOTION
+        //UPDATE LOCOMOTION COUPLED WITH TICKRATE
         void FixedUpdate()
         {
 

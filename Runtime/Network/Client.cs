@@ -178,7 +178,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             MeConnect meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
+
+
             Debug.Log("New Player: "+meConnect);
+
+            PlayerManager.playerManager.Add(localid,userName,true);
+
             await HandlePackets();
         }
 

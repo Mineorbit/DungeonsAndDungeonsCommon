@@ -25,6 +25,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+
+
+
         public override string ToString()
         {
             string s = "Server:";
@@ -34,6 +37,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             return s;
         }
+
+
+
 
         public void Disconnect(int localId)
         {
@@ -69,7 +75,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Client c = new Client(tpClient,i);
                 clients[i] = c;
                 await c.Process();
-                Debug.Log("Disconnect");
                 Disconnect(i);
 
             }
