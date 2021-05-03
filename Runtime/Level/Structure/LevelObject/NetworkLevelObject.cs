@@ -8,22 +8,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkLevelObject : LevelObject
     {
-        NetworkHandler h;
+        LevelObjectNetworkHandler h;
 
         public override void OnInit()
         {
             base.OnInit();
-            if (typeof(Player).IsInstanceOfType(this))
+            if(NetworkManager.isConnected)
             {
-                h = gameObject.AddComponent<PlayerNetworkHandler>();
+                h = GetComponent<LevelObjectNetworkHandler>();
             }
-            else
-            if (typeof(Entity).IsInstanceOfType(this))
-            {
-                h = gameObject.AddComponent<EntityNetworkHandler>();
-            }
-            else
-            h =  gameObject.AddComponent<NetworkHandler>();
         }
 
         
@@ -32,14 +25,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Invoke(Action<Dictionary<string,object>> a, Dictionary<string, object> argument)
         {
-            if(h!=null) h.Marshall(a.Method.Name, argument);
+            if(h!=null) h.SendAction(a.Method.Name, argument);
             if (this.enabled) a.DynamicInvoke(argument);
         }
 
 
         public void Invoke(Action a)
         {
-            if (h != null) h.Marshall(a.Method.Name);
+            if (h != null) h.SendAction(a.Method.Name);
             if (this.enabled) a.DynamicInvoke();
         }
 

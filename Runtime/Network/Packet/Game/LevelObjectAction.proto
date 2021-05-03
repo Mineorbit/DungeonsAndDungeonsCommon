@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package Game;
+
+
+message LevelObjectAction {
+  string ActionName = 2;
+}

@@ -5,6 +5,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using General;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -18,11 +19,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         TcpListener listener;
 
+        public static Server instance;
 
 
         public Server()
         {
-
+            if(instance == null)
+            {
+                instance = this;
+            }
         }
 
 
@@ -101,6 +106,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             for(int i = 0; i < 4; i++)
             {
                 Disconnect(i);
+            }
+        }
+
+
+        public  void WriteAll(Packet p)
+        {
+            for(int i = 0;i<4;i++)
+            {
+                if(clients[i] != null)
+                {
+                    clients[i].WritePacket(p);
+                }
             }
         }
 
