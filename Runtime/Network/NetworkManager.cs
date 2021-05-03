@@ -15,6 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool isConnected;
 
+
         UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         
         public Client client;

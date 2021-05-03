@@ -32,6 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //Fetch Methods
         public virtual void Awake()
         {
+            isOnServer = Server.instance != null;
             networkHandlers.Add(this);
 
             AddMethodMarshalling(typeof(LevelObjectConnect),ConnectHandler);

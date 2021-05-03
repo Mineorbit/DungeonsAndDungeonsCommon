@@ -6,15 +6,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class EntityNetworkHandler : LevelObjectNetworkHandler
     {
-        public Entity me;
 
 
 
         public virtual void Awake()
         {
             base.Awake();
-            me = GetComponent<Entity>();
-            //base.AddMethodMarshalling(me.UseSelectedHandle);
         }
 
 
@@ -22,9 +19,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void Start()
         {
-            if(isOnServer)
-            { 
-            RequestCreation();
+            if (isOnServer)
+            {
+                RequestCreation();
             }
         }
 
@@ -32,6 +29,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Vector3 position = transform.position;
             Quaternion rotation = transform.rotation;
+
+            Debug.Log("PlayerCreate");
             // CREATE REQUEST
         }
 
