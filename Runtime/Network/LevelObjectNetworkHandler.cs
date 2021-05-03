@@ -11,6 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public new LevelObject observed;
 
         List<string> availableActions = new List<string>();
+
         public virtual void Awake()
         {
             observed = GetComponent<LevelObject>();
@@ -27,7 +28,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(availableActions.Contains(actionName))
             {
+                LevelObjectAction action = new LevelObjectAction
+                {
+                    ActionName =  actionName
+                };
+                Marshall(action);
+            }
+        }
 
+        // NOT COMPLETED
+        public void SendAction(string actionName, Dictionary<string, object> argument)
+        {
+            if (availableActions.Contains(actionName))
+            {
+                LevelObjectAction action = new LevelObjectAction
+                {
+                    ActionName = actionName
+                };
+                Marshall(action);
             }
         }
 

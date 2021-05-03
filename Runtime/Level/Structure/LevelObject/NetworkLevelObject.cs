@@ -19,16 +19,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        
+
 
         //This marks a message for transport through network
-
-        public void Invoke(Action<Dictionary<string,object>> a, Dictionary<string, object> argument)
+        public void Invoke(Action<Dictionary<string, object>> a, Dictionary<string, object> argument)
         {
-            if(h!=null) h.SendAction(a.Method.Name, argument);
+            if (h != null) h.SendAction(a.Method.Name, argument);
             if (this.enabled) a.DynamicInvoke(argument);
         }
-
 
         public void Invoke(Action a)
         {
