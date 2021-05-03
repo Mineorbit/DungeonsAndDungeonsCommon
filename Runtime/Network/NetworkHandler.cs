@@ -106,14 +106,45 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
 
-
-        public void Marshall(string methodName)
+        // eventually type strings are not jet correcty matched
+        public void Marshall(IMessage message)
         {
+            Packet packet = new Packet
+            {
+                Type = message.GetType().ToString(),
+                Handler = this.GetType().ToString(),
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                Identity = this.Identity
+            };
+
+            if(isOnServer)
+            {
+                NetworkManager.instance.client.WritePacket(packet);
+            }else
+            {
+                Server.instance.WriteAll(packet);
+            }
         }
 
-
-        public void Marshall(string methodName, object param)
+        public void Marshall(IMessage message, int target)
         {
+            Packet packet = new Packet
+            {
+                Type = message.GetType().ToString(),
+                Handler = this.GetType().ToString(),
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                Identity = this.Identity
+            };
+
+            if (isOnServer)
+            {
+                NetworkManager.instance.client.WritePacket(packet);
+            }
+            else
+            {
+                if(Server.instance.clients[target] != null)
+                Server.instance.clients[target].WritePacket(packet);
+            }
         }
 
     }

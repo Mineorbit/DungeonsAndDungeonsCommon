@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public static NetworkManager instance;
 
-
+        public static bool isConnected;
 
         UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         

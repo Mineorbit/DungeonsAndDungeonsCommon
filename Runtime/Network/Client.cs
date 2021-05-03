@@ -87,22 +87,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Type = message.GetType().ToString(),
                 Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
             };
-            
+
+            WritePacket(p);
+
+        }
+
+        public void WritePacket(Packet p)
+        {
 
             byte[] data = p.ToByteArray();
             int length = data.Length;
             byte[] result = new byte[length + 4];
             byte[] lengthBytes = BitConverter.GetBytes(length);
-            if(BitConverter.IsLittleEndian)
+            if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(lengthBytes);
-                Array.Reverse(data); 
+                Array.Reverse(data);
             }
-            Array.Copy(lengthBytes,0,result,0,4);
+            Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
-            
-            tcpStream.Write(result,0,result.Length);
-            Debug.Log("Sent "+p);
+
+            tcpStream.Write(result, 0, result.Length);
+            Debug.Log("Sent " + p);
 
         }
 
