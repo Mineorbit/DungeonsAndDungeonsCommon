@@ -15,7 +15,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            AddMethodMarshalling(typeof(PlayerCreate), (x)=> { HandleCreatePacket(x); });
+        }
+
+        public virtual void SetupLocalMarshalls()
+        {
+            base.SetupLocalMarshalls();
         }
 
         public override void RequestCreation()
@@ -36,7 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Server.instance.WriteAll(playerCreate);
         }
 
-        void HandleCreatePacket(Packet p)
+        public static void HandleCreatePacket(Packet p)
         {
             PlayerCreate playerCreate;
             if(p.Content.TryUnpack<PlayerCreate>(out playerCreate))

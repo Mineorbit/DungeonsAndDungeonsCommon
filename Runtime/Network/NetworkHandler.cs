@@ -7,6 +7,7 @@ using System.Reflection.Emit;
 using General;
 using Google.Protobuf;
 using State;
+using Game;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -25,7 +26,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static List<NetworkHandler> networkHandlers = new List<NetworkHandler>();
 
         public static List<Type> loadedTypes = new List<Type>();
-        public static Dictionary<Tuple<Type,Type>, Action<Packet>> globalMethodMarshallings = new Dictionary<Tuple<Type, Type>, Action<Packet>>();
+        // first type in  key (Packet) second (Handler)
+        public static Dictionary<Tuple<Type,Type>, Action<Packet>> globalMethodMarshallings = new Dictionary<Tuple<Type, Type>, Action<Packet>>
+        {
+            {new Tuple<Type, Type>(typeof(LevelObjectConnect),typeof(NetworkHandler)), ConnectHandler},
+            {new Tuple<Type, Type>(typeof(PlayerCreate),typeof(PlayerNetworkHandler)), (x) => { PlayerNetworkHandler.HandleCreatePacket(x); } }
+        };
         
 
 
@@ -34,8 +40,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             isOnServer = Server.instance != null;
             networkHandlers.Add(this);
+            SetupLocalMarshalls();
 
-            AddMethodMarshalling(typeof(LevelObjectConnect),ConnectHandler);
+        }
+
+        public virtual void SetupLocalMarshalls()
+        {
         }
 
         public void AddMethodMarshalling(Type packetType, Action<Packet> process)

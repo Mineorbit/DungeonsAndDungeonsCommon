@@ -47,15 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        public void Disconnect(int localId)
-        {
-            if(clients[localId] != null)
-            { 
-            clients[localId].tcpStream.Close();
-            clients[localId].tcpClient.Close();
-            clients[localId] = null;
-            }
-        }
+        
 
         public void Start()
         {
@@ -81,7 +73,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Client c = new Client(tpClient,i);
                 clients[i] = c;
                 await c.Process();
-                Disconnect(i);
+                c.Disconnect();
 
             }
 
@@ -106,7 +98,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             for(int i = 0; i < 4; i++)
             {
-                Disconnect(i);
+                if(clients[i] != null)
+                    clients[i].Disconnect();
             }
         }
 
