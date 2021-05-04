@@ -15,9 +15,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool isConnected;
 
-
-        UnityEvent<int> onConnectEvent = new UnityEvent<int>();
-        UnityEvent onDisconnectEvent = new UnityEvent();
         
         public Client client;
 
@@ -35,6 +32,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Connect(string playerName, Action onConnect)
         {
+            if(!isConnected)
+            { 
             userName = playerName;
             Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
             //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
@@ -42,15 +41,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             localId = client.localid;
 
-            onConnectEvent.Invoke(client.localid);
+            isConnected = true;
             onConnect.Invoke();
-            
+            }
+
+        }
+
+        public void Update()
+        {
+            if(!isConnected)
+            {
+
+            }
         }
 
         public void Disconnect()
         {
+            if(isConnected)
+            { 
+            isConnected = false;
             client.Disconnect();
-            onDisconnectEvent.Invoke();
+            }
         }
         public void OnDestroy()
         {
