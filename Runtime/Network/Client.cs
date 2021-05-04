@@ -229,13 +229,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             byte[] data = await ReadData();
 
-            Debug.Log("Received new Packet moin");
+            if(!Connected)
+            {
+                return;
+            }
 
-            Debug.Log("Data " + data.Length);
-
-            Debug.Log("HALLO");
             Packet p = General.Packet.Parser.ParseFrom(data);
-            Debug.Log("Joho: " + p);
 
             Type packetType = Type.GetType(p.Type);
 
