@@ -51,13 +51,17 @@ public class PlayerManager : MonoBehaviour
     {
         if (localId > 3 || localId < 0) return;
         if(playerControllers[localId]==null)
-        {
-            playerControllers[localId] = GameObject.Find("Player"+localId).GetComponent<PlayerController>();
-            players[localId] = GameObject.Find("Player" + localId).GetComponent<Player>();
+            {
+                if (playerControllers[localId] != null)
+                    playerControllers[localId] = GameObject.Find("Player"+localId).GetComponent<PlayerController>();
+
+                if (players[localId] != null)
+                    players[localId] = GameObject.Find("Player" + localId).GetComponent<Player>();
         }
         for(int i = 0; i<4;i++)
         {
-            playerControllers[i].activated = localId == i;
+                if(playerControllers[i] != null)
+                    playerControllers[i].activated = localId == i;
         }
             currentPlayerLocalId = localId;
             currentPlayer = players[currentPlayerLocalId];
