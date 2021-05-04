@@ -217,6 +217,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Received new Packet");
 
             MainCaller.Do(() => {
+
+                Debug.Log("Data "+data.Length);
                 Packet p = General.Packet.Parser.ParseFrom(data);
                 Debug.Log("Joho: "+p);
                 NetworkHandler.UnMarshall(p);
