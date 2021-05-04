@@ -98,8 +98,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             for(int i = 0; i < 4; i++)
             {
-                if(clients[i] != null)
-                    clients[i].Disconnect();
+                Disconnect(i);
+            }
+        }
+
+        public void Disconnect(int localId)
+        {
+
+            if (clients[localId] != null)
+            { 
+                clients[localId].Disconnect();
+                clients[localId] = null;
             }
         }
 
