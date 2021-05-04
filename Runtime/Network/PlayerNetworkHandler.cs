@@ -37,7 +37,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Identity = this.Identity
             };
 
-            Server.instance.WriteAll(playerCreate);
+            Packet p = new Packet
+            {
+                Type = typeof(PlayerCreate).FullName,
+                Handler = typeof(PlayerNetworkHandler).FullName,
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(playerCreate)
+            };
+
+            Server.instance.WriteAll(p);
         }
 
         public static void HandleCreatePacket(Packet p)

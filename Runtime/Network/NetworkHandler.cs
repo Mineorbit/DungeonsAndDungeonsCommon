@@ -57,13 +57,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+
         public static void UnMarshall(Packet p)
         {
             string packetTypeString = p.Type;
             Type packetType = Type.GetType(packetTypeString);
             string packetHandlerString = p.Handler;
             Type networkHandlerType = Type.GetType(packetHandlerString);
-            
+
+            Debug.Log("Handling Packet "+packetTypeString+" "+packetHandlerString);
+
+            Debug.Log("Types: "+ packetType+" "+networkHandlerType);
+
+
                 Action<Packet> handle;
                 if (globalMethodMarshallings.TryGetValue(new Tuple<Type, Type>(packetType,networkHandlerType), out handle))
                 {
@@ -122,8 +128,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Packet packet = new Packet
             {
-                Type = message.GetType().ToString(),
-                Handler = this.GetType().ToString(),
+                Type = message.GetType().FullName,
+                Handler = this.GetType().FullName,
                 Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
                 Identity = this.Identity
             };
