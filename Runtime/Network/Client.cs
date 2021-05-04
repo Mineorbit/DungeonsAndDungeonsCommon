@@ -169,7 +169,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(meConnect);
 
-            await HandlePackets();
+            Task.Run(HandlePackets());
         }
 
         // This needs to be exited after some kind of timeout
