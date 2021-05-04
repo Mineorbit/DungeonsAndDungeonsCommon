@@ -158,8 +158,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Setup()
         {
-
-
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
 
             localid = w.LocalId;
@@ -168,7 +166,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Name = NetworkManager.userName
             };
+
             WritePacket(meConnect);
+
+            await HandlePackets();
         }
 
         // This needs to be exited after some kind of timeout
@@ -203,7 +204,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Received new Packet");
             Packet p = General.Packet.Parser.ParseFrom(data);
 
-            NetworkHandler.UnMarshall(p);
+            MainCaller.Do(() => {
+                NetworkHandler.UnMarshall(p);
+            });
             //Processing needed
 
             await HandlePackets();
