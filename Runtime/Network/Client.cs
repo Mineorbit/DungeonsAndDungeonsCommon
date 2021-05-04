@@ -11,6 +11,7 @@ using System.IO;
 using General;
 using System.Threading;
 using Game;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -18,6 +19,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public TcpClient tcpClient;
         public UdpClient udpClient;
+
+
+
+        public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
+        public UnityEvent onDisconnectEvent = new UnityEvent();
 
 
         public bool isOnServer;
@@ -87,10 +93,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 MeDisconnect meDisconnect = new MeDisconnect();
                 WritePacket(meDisconnect);
             }
-                MainCaller.Do(() => { PlayerManager.playerManager.Remove(localid); });
-
-                tcpStream.Close();
+            MainCaller.Do(() => { PlayerManager.playerManager.Remove(localid); });
+            tcpStream.Close();
             tcpClient.Close();
+            Debug.Log("We disconnected");
+            onDisconnectEvent.Invoke();
             Connected = false;
             }
         }
@@ -198,6 +205,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(meConnect);
 
+            Connected = true;
+            onConnectEvent.Invoke(w.LocalId);
+
             Task.Run(HandlePackets);
         }
 
@@ -220,6 +230,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             userName = meConnect.Name;
 
             Connected = true;
+            onConnectEvent.Invoke(w.LocalId);
 
             MainCaller.Do(()=> {
 
