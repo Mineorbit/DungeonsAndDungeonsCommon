@@ -202,9 +202,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = await ReadData();
 
             Debug.Log("Received new Packet");
-            Packet p = General.Packet.Parser.ParseFrom(data);
 
             MainCaller.Do(() => {
+                Packet p = General.Packet.Parser.ParseFrom(data);
                 NetworkHandler.UnMarshall(p);
             });
             //Processing needed
