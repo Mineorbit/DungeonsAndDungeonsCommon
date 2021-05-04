@@ -24,27 +24,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void RequestCreation()
         {
-            Vector3 position = transform.position;
-            Quaternion rotation = transform.rotation;
+            Packet p = GenerateCreationRequest(observed);
+
+            Server.instance.WriteAll(p);
+        }
+
+        public static Packet GenerateCreationRequest(Player p)
+        {
+            Vector3 position = p.transform.position;
+            Quaternion rotation = p.transform.rotation;
+
+            PlayerNetworkHandler playerNetworkHandler = p.GetComponent<PlayerNetworkHandler>();
 
             PlayerCreate playerCreate = new PlayerCreate
             {
-                Name = observed.name,
-                LocalId = observed.localId,
+                Name = p.name,
+                LocalId = p.localId,
                 X = position.x,
                 Y = position.y,
                 Z = position.z,
-                Identity = this.Identity
+                Identity = playerNetworkHandler.Identity
             };
 
-            Packet p = new Packet
+            Packet packet = new Packet
             {
                 Type = typeof(PlayerCreate).FullName,
                 Handler = typeof(PlayerNetworkHandler).FullName,
                 Content = Google.Protobuf.WellKnownTypes.Any.Pack(playerCreate)
             };
-
-            Server.instance.WriteAll(p);
+            return packet;
         }
 
         public static void HandleCreatePacket(Packet p)

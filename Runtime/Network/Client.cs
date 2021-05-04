@@ -10,6 +10,7 @@ using State;
 using System.IO;
 using General;
 using System.Threading;
+using Game;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -220,7 +221,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Connected = true;
 
-            MainCaller.Do(()=> { PlayerManager.playerManager.Add(localid, userName, true); });
+            MainCaller.Do(()=> {
+
+            //  Send missing players to new connectee
+                for (int id = 0; id <4 && id != localid; id++ )
+                {
+                    Player player = PlayerManager.playerManager.players[id];
+                    if(player !=null)
+                    {
+                        Packet packet = PlayerNetworkHandler.GenerateCreationRequest(player);
+                        WritePacket(packet);
+                    }
+
+                }
+
+
+                PlayerManager.playerManager.Add(localid, userName, true); 
+            });
             
             await HandlePackets();
         }
