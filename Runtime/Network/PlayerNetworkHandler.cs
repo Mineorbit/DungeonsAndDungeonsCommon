@@ -1,26 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game;
+using General;
+using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class PlayerNetworkHandler : EntityNetworkHandler
     {
+        new Player observed;
 
-
-        
+        public virtual void Awake()
+        {
+            base.Awake();
+            observed = GetComponent<Player>();
+            AddMethodMarshalling(typeof(PlayerCreate), (x)=> { HandleCreatePacket(x); });
+        }
 
         public override void RequestCreation()
         {
             Vector3 position = transform.position;
             Quaternion rotation = transform.rotation;
 
-            Debug.Log("Player Create Request");
-            // CREATE REQUEST
+            PlayerCreate playerCreate = new PlayerCreate
+            {
+                Name = observed.name,
+                LocalId = observed.localId,
+                X = position.x,
+                Y = position.y,
+                Z = position.z,
+                Identity = this.Identity
+            };
+
+            Server.instance.WriteAll(playerCreate);
         }
 
-        public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation, int localId)
+        void HandleCreatePacket(Packet p)
         {
+            PlayerCreate playerCreate;
+            if(p.Content.TryUnpack<PlayerCreate>(out playerCreate))
+            {
+                Vector3 position = new Vector3(playerCreate.X,playerCreate.Y,playerCreate.Z);
+                OnCreationRequest(playerCreate.Identity,position, new Quaternion(0,0,0,0), playerCreate.LocalId ,playerCreate.Name);
+            }
+        }
+
+
+        public static void OnCreationRequest(string identity, Vector3 position, Quaternion rotation, int localId,string name)
+        {
+            Debug.Log("Creating player");
+
             bool local = localId == NetworkManager.instance.localId;
             PlayerManager.playerManager.Add(localId,"Test",local);
             PlayerManager.playerManager.SpawnPlayer(localId, position);

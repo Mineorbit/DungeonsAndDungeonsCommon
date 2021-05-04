@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using General;
+using Google.Protobuf;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -117,6 +118,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(clients[i] != null)
                 {
                     clients[i].WritePacket(p);
+                }
+            }
+        }
+
+        public void WriteAll(IMessage message)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (clients[i] != null)
+                {
+                    clients[i].WritePacket(message);
                 }
             }
         }
