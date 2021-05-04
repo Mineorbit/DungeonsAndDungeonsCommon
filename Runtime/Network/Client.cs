@@ -214,7 +214,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             byte[] data = await ReadData();
 
-            Debug.Log("Received new Packet!");
+            Debug.Log("Received new Packet moin");
 
             Debug.Log("Data " + data.Length);
 
