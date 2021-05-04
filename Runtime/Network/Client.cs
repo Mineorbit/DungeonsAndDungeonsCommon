@@ -214,11 +214,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             byte[] data = await ReadData();
 
-            Debug.Log("Received new Packet");
+            Debug.Log("Received new Packet!");
+
+            Debug.Log("Data " + data.Length);
 
             MainCaller.Do(() => {
 
-                Debug.Log("Data "+data.Length);
                 Packet p = General.Packet.Parser.ParseFrom(data);
                 Debug.Log("Joho: "+p);
                 NetworkHandler.UnMarshall(p);
