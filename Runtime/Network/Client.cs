@@ -21,6 +21,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool isOnServer;
 
+        public bool Connected = false;
+
         public string userName;
         public int localid;
 
@@ -36,6 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Client(TcpClient tcpC, int lId)
         {
+            Connected = true;
             tcpClient = tcpC;
             tcpStream = tcpClient.GetStream();
             localid = lId;
@@ -43,6 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Client(TcpClient tcpC)
         {
+            Connected = true;
             tcpClient = tcpC;
             tcpStream = tcpClient.GetStream();
             localid = -1;
@@ -62,21 +66,32 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static async Task<Client> Connect(IPAddress host, int port)
         {
 
-            Client client = new Client();
+                Client client = new Client();
 
-            Thread createThread = new Thread(new ThreadStart(()=> { CreateTcpClientForClient(client, host, port); }));
-            createThread.IsBackground = true;
-            createThread.Start();
+                Thread createThread = new Thread(new ThreadStart(() => { CreateTcpClientForClient(client, host, port); client.Connected = true; }));
+                createThread.IsBackground = true;
+                createThread.Start();
 
+                
 
-
-            return client;
+                return client;
         }
 
-        public void Disconnect()
+        public void Disconnect(bool respond = true)
         {
-            tcpStream.Close();
+            if(Connected)
+            { 
+            if(respond)
+            {
+                MeDisconnect meDisconnect = new MeDisconnect();
+                WritePacket(meDisconnect);
+            }
+                MainCaller.Do(() => { PlayerManager.playerManager.Remove(localid); });
+
+                tcpStream.Close();
             tcpClient.Close();
+            Connected = false;
+            }
         }
 
         //evtl async später
@@ -197,13 +212,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //Send welcome
 
             WritePacket(w);
+
             Debug.Log("Sent "+w);
 
             MeConnect meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
 
-
-            Debug.Log("New Player: "+meConnect);
+            Connected = true;
 
             MainCaller.Do(()=> { PlayerManager.playerManager.Add(localid, userName, true); });
             
@@ -222,7 +237,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Packet p = General.Packet.Parser.ParseFrom(data);
             Debug.Log("Joho: " + p);
 
-            NetworkHandler.UnMarshall(p);
+            Type packetType = Type.GetType(p.Type);
+
+            if(packetType == typeof(MeDisconnect))
+            {
+                Disconnect(respond: false);
+            }else
+            {
+                NetworkHandler.UnMarshall(p);
+            }
+
             //Processing needed
 
             await HandlePackets();

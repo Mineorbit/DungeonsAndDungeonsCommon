@@ -4,5 +4,4 @@ package State;
 
 
 message MeDisconnect {
-  string name = 2;
 }
