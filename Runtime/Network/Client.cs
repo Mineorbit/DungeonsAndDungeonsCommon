@@ -222,9 +222,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Packet p = General.Packet.Parser.ParseFrom(data);
             Debug.Log("Joho: " + p);
 
-            MainCaller.Do(() => {
-                NetworkHandler.UnMarshall(p);
-            });
+            NetworkHandler.UnMarshall(p);
             //Processing needed
 
             await HandlePackets();
