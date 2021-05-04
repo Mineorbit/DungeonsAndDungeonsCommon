@@ -52,6 +52,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+        ~Client()
+        {
+            Disconnect();
+        }
+
+        
+
         public static async Task<Client> Connect(IPAddress host, int port)
         {
 
@@ -64,6 +71,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             return client;
+        }
+
+        public void Disconnect()
+        {
+            tcpStream.Close();
+            tcpClient.Close();
         }
 
         //evtl async später
@@ -205,6 +218,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             MainCaller.Do(() => {
                 Packet p = General.Packet.Parser.ParseFrom(data);
+                Debug.Log("Joho: "+p);
                 NetworkHandler.UnMarshall(p);
             });
             //Processing needed
