@@ -103,17 +103,11 @@ public class PlayerManager : MonoBehaviour
 
     public void Add(int freeLocalId, string name, bool local)
     {
+        Vector3 position = GetSpawnLocation(freeLocalId);
 
-            Debug.Log("New Player: " + freeLocalId + " " + name);
-
-            Vector3 position = GetSpawnLocation(freeLocalId);
-
-
-            Debug.Log("New Player: " + freeLocalId + " " + name + " " + position);
-
-            LevelObjectData levelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
+        LevelObjectData playerLevelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
             
-            GameObject g = levelObjectData.Create(position,new Quaternion(0,0,0,0),transform);
+        GameObject g = playerLevelObjectData.Create(position,new Quaternion(0,0,0,0),transform);
         Player player = g.GetComponent<Player>();
         player.enabled = true;
         PlayerController playerController = g.GetComponent<PlayerController>();
