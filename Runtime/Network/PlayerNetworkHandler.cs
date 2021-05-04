@@ -63,16 +63,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Creating player");
 
             bool local = localId == NetworkManager.instance.localId;
-            PlayerManager.playerManager.Add(localId,"Test",local);
-            PlayerManager.playerManager.SpawnPlayer(localId, position);
 
-            GameObject player = PlayerManager.playerManager.GetPlayer(localId);
-            player.GetComponent<PlayerNetworkHandler>().Identity = identity;
+            MainCaller.Do(()=> {
+                PlayerManager.playerManager.Add(localId, name, local);
 
-            if(local)
-            {
-                PlayerManager.playerManager.SetCurrentPlayer(localId);
-            }
+                GameObject player = PlayerManager.playerManager.GetPlayer(localId);
+                player.GetComponent<PlayerNetworkHandler>().Identity = identity;
+
+                if (local)
+                {
+                    PlayerManager.playerManager.SetCurrentPlayer(localId);
+                }
+
+            });
+            
         }
     }
 }
