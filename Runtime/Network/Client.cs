@@ -218,10 +218,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log("Data " + data.Length);
 
-            MainCaller.Do(() => {
+            Debug.Log("HALLO");
+            Packet p = General.Packet.Parser.ParseFrom(data);
+            Debug.Log("Joho: " + p);
 
-                Packet p = General.Packet.Parser.ParseFrom(data);
-                Debug.Log("Joho: "+p);
+            MainCaller.Do(() => {
                 NetworkHandler.UnMarshall(p);
             });
             //Processing needed
