@@ -17,6 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         UnityEvent<int> onConnectEvent = new UnityEvent<int>();
+        UnityEvent onDisconnectEvent = new UnityEvent();
         
         public Client client;
 
@@ -44,6 +45,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             onConnectEvent.Invoke(client.localid);
             onConnect.Invoke();
             
+        }
+
+        public void Disconnect()
+        {
+            client.Disconnect();
+            onDisconnectEvent.Invoke();
+        }
+        public void OnDestroy()
+        {
+            Disconnect();
         }
     }
 }
