@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: Shield
+  m_Name: ShieldSpawn
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6257500645298154876, guid: 7237a5a6b552ec44eb9cf655d2293f13, type: 3}
-  uniqueLevelObjectId: 48243e1c-4301-44d5-bf8f-f0387bb1487f
+  prefab: {fileID: 7459656127868474107, guid: 0c882f29bb93ece449203ef8f8ff46a3, type: 3}
+  uniqueLevelObjectId: ce42b008-c147-4a66-8133-ad8411166082
   granularity: 1
-  name: Shield
-  dynamicInstantiable: 1
-  levelInstantiable: 0
+  name: Shield Spawn
+  dynamicInstantiable: 0
+  levelInstantiable: 1
   ActivateWhenInactive: 0
-  Buildable: 0
-  cursorMesh: {fileID: -5495902117074765545, guid: dacaf4385eee4024fbbf0a5910da4147, type: 3}
-  cursorScale: {x: 1, y: 1, z: 1}
+  Buildable: 1
+  cursorMesh: {fileID: -2124705421725058983, guid: 09cd5596fd7aac84a83eb2ee59dfe0d9, type: 3}
+  cursorScale: {x: 30, y: 30, z: 30}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: -90, y: 0, z: 0}

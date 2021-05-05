@@ -14,8 +14,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         int damage = 20;
 
-        public Rigidbody rigidBody;
-
 
         Vector3 lastPosition = new Vector3(0, 0, 0);
 
@@ -37,9 +35,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnAttach();
             transform.localPosition = new Vector3(0, 0.00181f, 0);
             transform.localEulerAngles = new Vector3(0, -75, 90f);
-            rigidBody.useGravity = false;
-            rigidBody.isKinematic = true;
-            GetComponent<Collider>().enabled = false;
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
             hitBox.Attach(owner.transform.Find("Model").gameObject, "Enemy", new Vector3(0, 0, -2));
             hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
@@ -79,12 +74,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnDettach()
         {
+            base.OnDettach();
             if(hitBox != null)
             Destroy(hitBox.gameObject);
 
-            rigidBody.useGravity = true;
-            rigidBody.isKinematic = false;
-            GetComponent<Collider>().enabled = true;
         }
 
 
