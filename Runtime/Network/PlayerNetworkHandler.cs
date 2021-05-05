@@ -87,11 +87,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void HandleRemovePacket(Packet value)
         {
-            Debug.Log("Handling Remove");
             PlayerRemove playerRemove;
             if (value.Content.TryUnpack<PlayerRemove>(out playerRemove))
             {
                 int localIdToRemove = playerRemove.LocalId;
+                Debug.Log("Handling Remove for"+localIdToRemove);
                 PlayerManager.playerManager.Remove(localIdToRemove);
             }
         }
