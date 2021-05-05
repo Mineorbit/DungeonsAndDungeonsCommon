@@ -87,6 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void HandleRemovePacket(Packet value)
         {
+            Debug.Log("Handling Remove");
             PlayerRemove playerRemove;
             if (value.Content.TryUnpack<PlayerRemove>(out playerRemove))
             {
@@ -111,19 +112,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Debug.Log("Creating player");
 
-            bool local = localId == NetworkManager.instance.localId;
-
             MainCaller.Do(()=> {
-                PlayerManager.playerManager.Add(localId, name, local);
-
+                PlayerManager.playerManager.Add(localId, name, true);
                 GameObject player = PlayerManager.playerManager.GetPlayer(localId);
                 player.GetComponent<PlayerNetworkHandler>().Identity = identity;
-
-                if (local)
-                {
-                    PlayerManager.playerManager.SetCurrentPlayer(localId);
-                }
-
             });
             
         }
