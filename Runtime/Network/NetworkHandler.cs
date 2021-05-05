@@ -24,7 +24,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        public static List<NetworkHandler> networkHandlers = new List<NetworkHandler>();
 
         public static List<Type> loadedTypes = new List<Type>();
         // first type in  key (Packet) second (Handler)
@@ -35,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Awake()
         {
             isOnServer = Server.instance != null;
-            networkHandlers.Add(this);
+            NetworkManager.networkHandlers.Add(this);
             SetupLocalMarshalls();
 
         }
@@ -78,7 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static T FindByIdentity<T>(string identity) where T : NetworkHandler
         {
-            return (T) networkHandlers.Find((x) => x.Identity == identity); 
+            return (T) NetworkManager.networkHandlers.Find((x) => x.Identity == identity); 
         }
 
 
@@ -104,7 +103,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(connectPackage.Content.TryUnpack<LevelObjectConnect>(out levelObjectConnect))
             {
                 Vector3 handlerPosition = new Vector3(levelObjectConnect.X,levelObjectConnect.Y,levelObjectConnect.Z);
-                foreach(NetworkHandler h in networkHandlers)
+                foreach(NetworkHandler h in NetworkManager.networkHandlers)
                 {
                     float distance = (handlerPosition - h.transform.position).magnitude;
                     if(distance < eps)

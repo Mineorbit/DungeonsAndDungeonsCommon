@@ -90,6 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             possibleMethods.AddRange(methods.Select((x) => { return x.Name; }).ToList());
 
             bindedMethods = BindedMethods.Select((x) => { return handlerType.GetMethod(x); }).ToList();
+            
         }
 
 
@@ -118,16 +119,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void Awake()
+
+        void AddToBinding()
         {
-            foreach(MethodInfo methodInfo in bindedMethods)
+            Debug.Log("Trying Binding");
+            foreach (MethodInfo methodInfo in bindedMethods)
             {
-                Debug.Log("Binding for "+methodInfo.Name);
+                Debug.Log("Binding for " + methodInfo.Name);
 
                 UnityAction<Packet> action = (x) => { CreateMethod(methodInfo).DynamicInvoke(x); };
-
-                NetworkHandler.globalMethodBindings.Add(new Tuple<Type, Type>(packetType,handlerType),action);
+                Tuple<Type, Type> key = new Tuple<Type, Type>(packetType, handlerType);
+                if (!NetworkHandler.globalMethodBindings.ContainsKey(key))
+                    NetworkHandler.globalMethodBindings.Add(key, action);
             }
+        }
+
+        public void Awake()
+        {
+            AddToBinding();
         }
 
     }
