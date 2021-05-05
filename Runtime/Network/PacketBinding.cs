@@ -122,18 +122,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void AddToBinding()
         {
-            if(bindedMethods.Count>0)
-            { 
-            Debug.Log("Trying Binding");
-            foreach (MethodInfo methodInfo in bindedMethods)
+            if (bindedMethods != null && bindedMethods.Count > 0)
             {
-                Debug.Log("Binding for " + methodInfo.Name);
+                Debug.Log("Trying Binding");
+                foreach (MethodInfo methodInfo in bindedMethods)
+                {
+                    Debug.Log("Binding for " + methodInfo.Name);
 
-                UnityAction<Packet> action = (x) => { CreateMethod(methodInfo).DynamicInvoke(x); };
-                Tuple<Type, Type> key = new Tuple<Type, Type>(packetType, handlerType);
-                if (!NetworkHandler.globalMethodBindings.ContainsKey(key))
-                    NetworkHandler.globalMethodBindings.Add(key, action);
-            }
+                    UnityAction<Packet> action = (x) => { CreateMethod(methodInfo).DynamicInvoke(x); };
+                    Tuple<Type, Type> key = new Tuple<Type, Type>(packetType, handlerType);
+                    if (!NetworkHandler.globalMethodBindings.ContainsKey(key))
+                        NetworkHandler.globalMethodBindings.Add(key, action);
+                }
             }
         }
 
