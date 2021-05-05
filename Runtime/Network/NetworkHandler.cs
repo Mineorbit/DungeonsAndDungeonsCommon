@@ -8,6 +8,7 @@ using General;
 using Google.Protobuf;
 using State;
 using Game;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -27,12 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static List<Type> loadedTypes = new List<Type>();
         // first type in  key (Packet) second (Handler)
-        public static Dictionary<Tuple<Type,Type>, Action<Packet>> globalMethodMarshallings = new Dictionary<Tuple<Type, Type>, Action<Packet>>
-        {
-            {new Tuple<Type, Type>(typeof(LevelObjectConnect),typeof(NetworkHandler)), ConnectHandler},
-            {new Tuple<Type, Type>(typeof(PlayerCreate),typeof(PlayerNetworkHandler)), (x) => { PlayerNetworkHandler.HandleCreatePacket(x); } }
-        };
-        
+        public static Dictionary<Tuple<Type, Type>, UnityAction<Packet>> globalMethodBindings = new Dictionary<Tuple<Type, Type>, UnityAction<Packet>>();
 
 
         //Fetch Methods
@@ -48,12 +44,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
         }
 
-        public void AddMethodMarshalling(Type packetType, Action<Packet> process)
+        public void AddMethodMarshalling(Type packetType, UnityAction<Packet> process)
         {
             Type handlerType = this.GetType();
             Tuple<Type, Type> t = new Tuple<Type, Type>(packetType, handlerType);
-            if(!globalMethodMarshallings.ContainsKey(t))
-            globalMethodMarshallings.Add(t,process);
+            if(!globalMethodBindings.ContainsKey(t))
+            globalMethodBindings.Add(t,process);
 
         }
 
@@ -70,8 +66,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Types: "+ packetType+" "+networkHandlerType);
 
 
-                Action<Packet> handle;
-                if (globalMethodMarshallings.TryGetValue(new Tuple<Type, Type>(packetType,networkHandlerType), out handle))
+                UnityAction<Packet> handle;
+                if (globalMethodBindings.TryGetValue(new Tuple<Type, Type>(packetType,networkHandlerType), out handle))
                 {
                     handle.Invoke(p);
                 }else

@@ -55,10 +55,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return packet;
         }
 
-        public static void HandleCreatePacket(Packet p)
+
+        [PacketBinding.Binding]
+        public static void HandleCreatePacket(Packet value)
         {
             PlayerCreate playerCreate;
-            if(p.Content.TryUnpack<PlayerCreate>(out playerCreate))
+            if(value.Content.TryUnpack<PlayerCreate>(out playerCreate))
             {
                 Vector3 position = new Vector3(playerCreate.X,playerCreate.Y,playerCreate.Z);
                 OnCreationRequest(playerCreate.Identity,position, new Quaternion(0,0,0,0), playerCreate.LocalId ,playerCreate.Name);
