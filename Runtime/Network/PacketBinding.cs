@@ -56,19 +56,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             GetPossibleMethods();
 
-            if(packetType != null && handlerType != null)
-            { 
             
-            bindedMethods = BindedMethods.Select((x) => { return handlerType.GetMethod(x); }).ToList();
-            }
 
         }
 
 
 
 
+        //Multiple action calls not yet supported but can be  done via combination
         public void AddToBinding()
         {
+            packetType = Type.GetType(PacketType);
+            handlerType = Type.GetType(HandlerType);
+            if (packetType != null && handlerType != null)
+            {
+                bindedMethods = BindedMethods.Select((x) => { return handlerType.GetMethod(x); }).ToList();
+            }
+
+            Debug.Log(bindedMethods);
+            Debug.Log(bindedMethods.Count);
             if (bindedMethods != null && bindedMethods.Count > 0)
             {
                 foreach (MethodInfo methodInfo in bindedMethods)
