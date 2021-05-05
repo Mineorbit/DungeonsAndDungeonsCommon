@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using General;
 using Google.Protobuf;
+using System.Threading;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -54,8 +55,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             clients = new Client[4];
             listener = new TcpListener(this.localAddr, this.port);
             listener.Start();
-
-            Task.Run(HandleNewConnection);
+            Thread createThread = new Thread(new ThreadStart(() =>
+            {
+                Task.Run(HandleNewConnection);
+            }));
+            createThread.IsBackground = true;
+            createThread.Start();
 
         }
 
@@ -72,8 +77,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Client c = new Client(tpClient,i);
                 clients[i] = c;
-                await c.Process();
-                c.Disconnect();
+                Thread handleThread = new Thread(new ThreadStart(() =>
+                {
+                    Task.Run(c.Process);
+                    c.Disconnect();
+                }));
+                handleThread.IsBackground = true;
+                handleThread.Start();
 
             }
 
