@@ -32,6 +32,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (instance != null)
                 Destroy(this);
             instance = this;
+
+            foreach(PacketBinding p in packetBindings)
+            {
+                p.AddToBinding();
+            }
         }
 
         public void Connect(string playerName, Action onConnect)

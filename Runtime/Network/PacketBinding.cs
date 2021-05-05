@@ -67,7 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        void AddToBinding()
+        public void AddToBinding()
         {
             if (bindedMethods != null && bindedMethods.Count > 0)
             {
