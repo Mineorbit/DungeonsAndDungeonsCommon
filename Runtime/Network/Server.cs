@@ -79,8 +79,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 clients[i] = c;
                 Thread handleThread = new Thread(new ThreadStart(() =>
                 {
-                    Task.Run(c.Process);
-                    c.Disconnect();
+                    Task.Run(async () => { await c.Process(); c.Disconnect(); });
+                    
                 }));
                 handleThread.IsBackground = true;
                 handleThread.Start();
