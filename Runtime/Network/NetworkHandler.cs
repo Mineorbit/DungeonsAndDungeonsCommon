@@ -68,7 +68,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 UnityAction<Packet> handle;
                 if (globalMethodBindings.TryGetValue(new Tuple<Type, Type>(packetType,networkHandlerType), out handle))
                 {
-                    Debug.Log("Handle found");
+                    Debug.Log("Handle found "+handle);
                     handle.Invoke(p);
                 }else
                 {

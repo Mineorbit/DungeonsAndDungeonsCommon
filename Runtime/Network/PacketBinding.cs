@@ -64,30 +64,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        //This currently is somewhat stolen
-        Delegate CreateMethod(MethodInfo method, Expression instance = null)
-        {
-            if (method == null)
-            {
-                throw new ArgumentNullException("method");
-            }
-
-            if(!withIdentity && method.IsStatic)
-            {
-                throw new ArgumentException("The provided method must be static.", "method");
-            }
-
-            if (method.IsGenericMethod)
-            {
-                throw new ArgumentException("The provided method must not be generic.", "method");
-            }
-
-            var parameters = method.GetParameters()
-                                   .Select(p => Expression.Parameter(p.ParameterType, p.Name))
-                                   .ToArray();
-            var call = Expression.Call(instance, method, parameters);
-            return Expression.Lambda(call, parameters).Compile();
-        }
 
 
 
@@ -98,15 +74,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 foreach (MethodInfo methodInfo in bindedMethods)
                 {
                     Debug.Log("Binding for " + methodInfo.Name);
-                    UnityAction<Packet> action;
+                    UnityAction<Packet> action = null;
                     if (withIdentity)
                     {
                         Debug.Log("With Identity");
-                        action = (x) => { Debug.Log("Handling this"); NetworkHandler h = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity); Expression e = Expression.Constant(h);  CreateMethod(methodInfo, instance: e).DynamicInvoke(x); };
+                        action = (x) => {  NetworkHandler handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity); Debug.Log("Packet forwarded to "+handler.gameObject.name); Delegate.CreateDelegate(type: typeof(UnityAction<Packet>),handler, methodInfo.Name,true,true).DynamicInvoke(x); };
                     }else
                     {
                         Debug.Log("Without Identity");
-                        action = (x) => { CreateMethod(methodInfo).DynamicInvoke(x); };
+                        action = (UnityAction<Packet>) Delegate.CreateDelegate(typeof(UnityAction<Packet>),methodInfo);
                     }
 
                     Tuple<Type, Type> key = new Tuple<Type, Type>(packetType, handlerType);
