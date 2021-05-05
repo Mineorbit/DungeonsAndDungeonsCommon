@@ -88,16 +88,10 @@ public class PlayerManager : MonoBehaviour
     public void Remove(int localId)
     {
         if (localId > 3 || localId < 0) return;
-        if(playerControllers[localId]!=null)
-        if (playerControllers[localId].gameObject!=null)
+        if(players[localId]!=null)
+        if (players[localId].gameObject!=null)
 
-        Destroy(playerControllers[localId].gameObject);
-
-        if(currentPlayerLocalId == localId)
-        {
-            currentPlayerLocalId = -1;
-        }
-
+        Destroy(players[localId].gameObject);
     }
 
 

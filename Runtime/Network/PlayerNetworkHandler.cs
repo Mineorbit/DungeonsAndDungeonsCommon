@@ -116,6 +116,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerManager.playerManager.Add(localId, name, true);
                 GameObject player = PlayerManager.playerManager.GetPlayer(localId);
                 player.GetComponent<PlayerNetworkHandler>().Identity = identity;
+
+                if(isOnServer)
+                {
+                    //this is just for now and ugly, will fix later
+                    Destroy(player.GetComponent<PlayerController>());
+                }
             });
             
         }
