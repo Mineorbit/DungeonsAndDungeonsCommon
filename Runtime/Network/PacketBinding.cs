@@ -98,8 +98,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 foreach (MethodInfo methodInfo in bindedMethods)
                 {
                     Debug.Log("Binding for " + methodInfo.Name);
+                    UnityAction<Packet> action;
+                    if (withIdentity)
+                    {
+                        Debug.Log("With Identity");
+                        action = (x) => { Debug.Log("Handling this"); NetworkHandler h = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity); Expression e = Expression.Constant(h);  CreateMethod(methodInfo, instance: e).DynamicInvoke(x); };
+                    }else
+                    {
+                        Debug.Log("Without Identity");
+                        action = (x) => { CreateMethod(methodInfo).DynamicInvoke(x); };
+                    }
 
-                    UnityAction<Packet> action = (x) => { Expression e = null; if (withIdentity) { NetworkHandler h = NetworkHandler.FindByIdentity <NetworkHandler>(x.Identity); e = Expression.Constant(h); } CreateMethod(methodInfo,instance:e).DynamicInvoke(x); };
                     Tuple<Type, Type> key = new Tuple<Type, Type>(packetType, handlerType);
                     if (!NetworkHandler.globalMethodBindings.ContainsKey(key))
                         NetworkHandler.globalMethodBindings.Add(key, action);
