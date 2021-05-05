@@ -81,8 +81,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             packetType = Type.GetType(PacketType);
             handlerType = Type.GetType(HandlerType);
 
-            Debug.Log("Test: "+handlerType);
-
+            if(packetType != null && handlerType != null)
+            { 
             var methods = handlerType.GetMethods()
                       .Where(m => m.GetCustomAttributes(typeof(Binding), false).Length > 0)
                       .ToList();
@@ -90,7 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             possibleMethods.AddRange(methods.Select((x) => { return x.Name; }).ToList());
 
             bindedMethods = BindedMethods.Select((x) => { return handlerType.GetMethod(x); }).ToList();
-            
+            }
         }
 
 
@@ -122,6 +122,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void AddToBinding()
         {
+            if(bindedMethods.Count>0)
+            { 
             Debug.Log("Trying Binding");
             foreach (MethodInfo methodInfo in bindedMethods)
             {
@@ -132,9 +134,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (!NetworkHandler.globalMethodBindings.ContainsKey(key))
                     NetworkHandler.globalMethodBindings.Add(key, action);
             }
+            }
         }
 
         public void Awake()
+        {
+            AddToBinding();
+        }
+
+        public void OnEnable()
         {
             AddToBinding();
         }
