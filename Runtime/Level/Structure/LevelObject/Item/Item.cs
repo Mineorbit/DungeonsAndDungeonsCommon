@@ -9,6 +9,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Item : LevelObject
     {
 
+        public Rigidbody rigidBody;
+
         public float useTime = 0.25f;
         public Entity owner;
 
@@ -20,13 +22,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             isEquipped = true;
             owner = GetComponentInParent<Entity>();
-            
+            rigidBody.useGravity = false;
+            rigidBody.isKinematic = true;
+            GetComponent<Collider>().enabled = false;
         }
 
         public virtual void OnDettach()
         {
             isEquipped = false;
             LevelManager.currentLevel.AddToDynamic(this.gameObject);
+
+
+            rigidBody.useGravity = true;
+            rigidBody.isKinematic = false;
+            GetComponent<Collider>().enabled = true;
         }
 
         public virtual void Use()
