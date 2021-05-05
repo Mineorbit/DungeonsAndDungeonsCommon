@@ -34,6 +34,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // CREATE REQUEST
         }
 
+
+        public virtual void RequestRemoval()
+        {
+
+        }
+
+
         public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation)
         {
             GameObject e = LevelManager.currentLevel.AddDynamic(entityType,position,rotation);

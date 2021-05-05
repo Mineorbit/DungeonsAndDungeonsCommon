@@ -29,6 +29,34 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Server.instance.WriteAll(p);
         }
 
+        public void OnDestroy()
+        {
+            RequestRemoval();
+        }
+
+        public override void RequestRemoval()
+        {
+            Packet p = GenerateRemovalRequest(observed,this);
+            Server.instance.WriteAll(p);
+        }
+
+        public static Packet GenerateRemovalRequest(Player p, PlayerNetworkHandler playerNetworkHandler)
+        {
+            PlayerRemove playerRemove = new PlayerRemove
+            {
+                LocalId = p.localId
+            };
+
+            Packet packet = new Packet
+            {
+                Type = typeof(PlayerRemove).FullName,
+                Handler = typeof(PlayerNetworkHandler).FullName,
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(playerRemove),
+                Identity = playerNetworkHandler.Identity
+            };
+            return packet;
+        }
+
         public static Packet GenerateCreationRequest(Player p)
         {
             Vector3 position = p.transform.position;
@@ -55,6 +83,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return packet;
         }
 
+
+        [PacketBinding.Binding]
+        public static void HandleRemovePacket(Packet value)
+        {
+            PlayerRemove playerRemove;
+            if (value.Content.TryUnpack<PlayerRemove>(out playerRemove))
+            {
+                int localIdToRemove = playerRemove.LocalId;
+                PlayerManager.playerManager.Remove(localIdToRemove);
+            }
+        }
 
         [PacketBinding.Binding]
         public static void HandleCreatePacket(Packet value)

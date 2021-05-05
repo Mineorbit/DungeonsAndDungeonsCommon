@@ -29,7 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public List<string> BindedMethods;
 
-
+        public bool withIdentity;
 
         public Type packetType;
 
@@ -49,59 +49,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        possiblePacketTypes = new List<string>();
-        possibleHandlerTypes = new List<string>();
-        possibleMethods = new List<string>();
 
-        List<Type> types = (
-                    from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                        // alternative: from domainAssembly in domainAssembly.GetExportedTypes()
-                    from assemblyType in domainAssembly.GetTypes()
-                    where typeof(IMessage).IsAssignableFrom(assemblyType)
-                    // alternative: where assemblyType.IsSubclassOf(typeof(B))
-                    // alternative: && ! assemblyType.IsAbstract
-                    select assemblyType).ToList();
-
-
-            List<Type> networkHandlerTypes = (
-                    from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                        // alternative: from domainAssembly in domainAssembly.GetExportedTypes()
-                    from assemblyType in domainAssembly.GetTypes()
-                    where typeof(NetworkHandler).IsAssignableFrom(assemblyType)
-                    // alternative: where assemblyType.IsSubclassOf(typeof(B))
-                    // alternative: && ! assemblyType.IsAbstract
-                    select assemblyType).ToList();
-
-
-
-
-            possiblePacketTypes.AddRange(types.Select((x) => { return x.FullName; }).ToList());
-            possibleHandlerTypes.AddRange(networkHandlerTypes.Select((x) => { return x.FullName; }).ToList());
-
+            
             packetType = Type.GetType(PacketType);
             handlerType = Type.GetType(HandlerType);
 
+            GetPossibleMethods();
+
             if(packetType != null && handlerType != null)
             { 
-            var methods = handlerType.GetMethods()
-                      .Where(m => m.GetCustomAttributes(typeof(Binding), false).Length > 0)
-                      .ToList();
-
-            possibleMethods.AddRange(methods.Select((x) => { return x.Name; }).ToList());
-
+            
             bindedMethods = BindedMethods.Select((x) => { return handlerType.GetMethod(x); }).ToList();
             }
+
         }
 
-
-        static Delegate CreateMethod(MethodInfo method)
+        //This currently is somewhat stolen
+        Delegate CreateMethod(MethodInfo method, Expression instance = null)
         {
             if (method == null)
             {
                 throw new ArgumentNullException("method");
             }
 
-            if (!method.IsStatic)
+            if(!withIdentity && method.IsStatic)
             {
                 throw new ArgumentException("The provided method must be static.", "method");
             }
@@ -114,7 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var parameters = method.GetParameters()
                                    .Select(p => Expression.Parameter(p.ParameterType, p.Name))
                                    .ToArray();
-            var call = Expression.Call(null, method, parameters);
+            var call = Expression.Call(instance, method, parameters);
             return Expression.Lambda(call, parameters).Compile();
         }
 
@@ -128,7 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     Debug.Log("Binding for " + methodInfo.Name);
 
-                    UnityAction<Packet> action = (x) => { CreateMethod(methodInfo).DynamicInvoke(x); };
+                    UnityAction<Packet> action = (x) => { Expression e = null; if (withIdentity) { NetworkHandler h = NetworkHandler.FindByIdentity <NetworkHandler>(x.Identity); e = Expression.Constant(h); } CreateMethod(methodInfo,instance:e).DynamicInvoke(x); };
                     Tuple<Type, Type> key = new Tuple<Type, Type>(packetType, handlerType);
                     if (!NetworkHandler.globalMethodBindings.ContainsKey(key))
                         NetworkHandler.globalMethodBindings.Add(key, action);
@@ -136,13 +107,60 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        void GetLists()
+        {
+            List<Type> types;
+            List<Type> networkHandlerTypes;
+            possiblePacketTypes = new List<string>();
+            possibleHandlerTypes = new List<string>();
+
+            types = (
+                        from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                            // alternative: from domainAssembly in domainAssembly.GetExportedTypes()
+                        from assemblyType in domainAssembly.GetTypes()
+                        where typeof(IMessage).IsAssignableFrom(assemblyType)
+                        // alternative: where assemblyType.IsSubclassOf(typeof(B))
+                        // alternative: && ! assemblyType.IsAbstract
+                        select assemblyType).ToList();
+
+
+            networkHandlerTypes = (
+                    from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                        // alternative: from domainAssembly in domainAssembly.GetExportedTypes()
+                    from assemblyType in domainAssembly.GetTypes()
+                    where typeof(NetworkHandler).IsAssignableFrom(assemblyType)
+                    // alternative: where assemblyType.IsSubclassOf(typeof(B))
+                    // alternative: && ! assemblyType.IsAbstract
+                    select assemblyType).ToList();
+
+            possiblePacketTypes.AddRange(types.Select((x) => { return x.FullName; }).ToList());
+            possibleHandlerTypes.AddRange(networkHandlerTypes.Select((x) => { return x.FullName; }).ToList());
+
+            GetPossibleMethods();
+        }
+
+        void GetPossibleMethods()
+        {
+            if(handlerType!=null)
+            {
+                possibleMethods = new List<string>();
+                var methods = handlerType.GetMethods()
+                      .Where(m => m.GetCustomAttributes(typeof(Binding), false).Length > 0)
+                      .ToList();
+                possibleMethods.AddRange(methods.Select((x) => { return x.Name; }).ToList());
+            }
+        }
+
         public void Awake()
         {
+            GetLists();
             AddToBinding();
         }
 
+
         public void OnEnable()
         {
+            GetLists();
             AddToBinding();
         }
 
