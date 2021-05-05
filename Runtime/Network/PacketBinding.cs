@@ -124,7 +124,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (bindedMethods != null && bindedMethods.Count > 0)
             {
-                Debug.Log("Trying Binding");
                 foreach (MethodInfo methodInfo in bindedMethods)
                 {
                     Debug.Log("Binding for " + methodInfo.Name);
