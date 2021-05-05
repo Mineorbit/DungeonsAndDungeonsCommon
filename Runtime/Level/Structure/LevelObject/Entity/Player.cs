@@ -15,8 +15,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float speed;
 
-
-
         bool hitCooldown = false;
 
         public int localId
@@ -71,7 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Start()
         {
             SetupItems();
-
         }
 
         void OnEnable()
