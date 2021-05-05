@@ -91,8 +91,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (value.Content.TryUnpack<PlayerRemove>(out playerRemove))
             {
                 int localIdToRemove = playerRemove.LocalId;
-                Debug.Log("Handling Remove for"+localIdToRemove);
-                PlayerManager.playerManager.Remove(localIdToRemove);
+                Debug.Log("Handling Remove for "+localIdToRemove);
+
+                MainCaller.Do(() =>
+                {
+                    PlayerManager.playerManager.Remove(localIdToRemove);
+                });
             }
         }
 
