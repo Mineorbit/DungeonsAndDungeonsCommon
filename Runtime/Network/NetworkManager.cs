@@ -13,6 +13,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public static NetworkManager instance;
 
+        public List<PacketBinding> packetBindings = new List<PacketBinding>();
+
+        public static List<NetworkHandler> networkHandlers = new List<NetworkHandler>();
+
         public static bool isConnected;
 
         
