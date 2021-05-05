@@ -81,6 +81,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             packetType = Type.GetType(PacketType);
             handlerType = Type.GetType(HandlerType);
 
+            Debug.Log("Test: "+handlerType);
 
             var methods = handlerType.GetMethods()
                       .Where(m => m.GetCustomAttributes(typeof(Binding), false).Length > 0)
@@ -121,7 +122,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach(MethodInfo methodInfo in bindedMethods)
             {
+                Debug.Log("Binding for "+methodInfo.Name);
+
                 UnityAction<Packet> action = (x) => { CreateMethod(methodInfo).DynamicInvoke(x); };
+
                 NetworkHandler.globalMethodBindings.Add(new Tuple<Type, Type>(packetType,handlerType),action);
             }
         }
