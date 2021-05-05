@@ -266,17 +266,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Type packetType = Type.GetType(p.Type);
 
-            if(packetType == typeof(MeDisconnect))
+
+
+            UnityAction processPacket = null;
+            if (packetType == typeof(MeDisconnect))
             {
-                Disconnect(respond: false);
+                processPacket = () => {
+                    Disconnect(respond: false); 
+                };
             }else
             {
-                NetworkHandler.UnMarshall(p);
+                processPacket = () =>
+                {
+                    NetworkHandler.UnMarshall(p);
+                };
             }
 
-            //Processing needed
+            Thread handleThread = new Thread(new ThreadStart(processPacket));
+            handleThread.IsBackground = true;
+            handleThread.Start();
+                //Processing needed
 
-            await HandlePackets();
+                await HandlePackets();
         }
     }
 }
