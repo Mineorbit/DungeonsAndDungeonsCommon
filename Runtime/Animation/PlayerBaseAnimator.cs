@@ -18,17 +18,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         Vector3 oldAngles;
 
-        void ChangeitemSetting()
+        public void ChangeitemSetting(int leftSide)
         {
             Debug.Log("Changed Setting");
-            oldAngles = me.items[0].transform.localEulerAngles;
-            me.items[0].transform.localEulerAngles = new Vector3(0, 0,0);
+
+
+            // WE NEED TO DETERMINE ITEM TYPE FROM USED IN FUTURE
+
+            if(leftSide == 0)
+            { 
+                oldAngles = ((Player) me).GetLeftHandle().slot.transform.localEulerAngles;
+
+                ((Player)me).GetLeftHandle().slot.transform.localEulerAngles = new Vector3(0, 0,0);
+            }else
+            {
+
+                oldAngles = ((Player)me).GetRightHandle().transform.localEulerAngles;
+
+
+                ((Player)me).GetRightHandle().slot.transform.localEulerAngles = new Vector3(0, 0, 0);
+            }
         }
 
-        void ChangeItemSettingBack()
+        public void ChangeItemSettingBack(int leftSide)
         {
             Debug.Log("Changed Setting back");
-            me.items[0].transform.localEulerAngles = oldAngles;
+            if(leftSide == 0)
+            {
+                ((Player)me).GetLeftHandle().slot.transform.localEulerAngles = oldAngles;
+            }else
+            {
+                ((Player)me).GetRightHandle().slot.transform.localEulerAngles = oldAngles;
+            }
         }
 
         void Update()

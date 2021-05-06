@@ -31,6 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
+            if(enabled)
             RequestRemoval();
         }
 

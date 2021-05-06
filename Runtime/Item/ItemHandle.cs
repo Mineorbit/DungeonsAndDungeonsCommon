@@ -31,31 +31,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             item.transform.localRotation = new Quaternion(0,0,0,0);
             item.transform.parent = transform;
             slot = item;
-            player.items[0] = item;
+            if(!player.items.Contains(item))player.items.Add(item);
             slot.OnAttach();
         }
+
+
         public void Dettach()
         {
-            dettachNext = true;
-        }
-
-        public void Update()
-        {
-            DettachItem();
-        }
-
-        public void DettachItem()
-        {
-            if(dettachNext)
-            {
+            
                 if (slot != null)
                 {
                     LevelManager.currentLevel.AddToDynamic(slot.gameObject, slot.gameObject.transform.position, new Quaternion(0, 0, 0, 0));
-                    player.items[0] = null;
+                player.items.Remove(slot);
                     slot.OnDettach();
                     slot = null;
                 }
-            }
         }
 
         public void Use()
