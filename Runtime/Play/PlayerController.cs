@@ -133,15 +133,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         speedY = 1.5f;
                     }
                 }
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     //INVOKE
                     player.UseLeft();
                 }else
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButton(1))
                 {
                     //INVOKE
                     player.UseRight();
+                }
+                if (Input.GetMouseButtonUp(1))
+                {
+
+                    player.StopUseRight();
                 }
             }
 

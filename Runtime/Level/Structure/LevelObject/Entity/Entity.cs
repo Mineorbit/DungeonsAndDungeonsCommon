@@ -16,10 +16,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent<Entity> onAttackEvent;
 
+        public bool invincible = false;
+
         // Start is called before the first frame update
-        void Start()
-        {
-        }
+        
 
         // Update is called once per frame
         void Update()
@@ -54,9 +54,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public void StopUseHandle(ItemHandle h)
+        {
+            Debug.Log("JOHO");
+            if (h != null)
+            {
+                handle = h;
+                Invoke(StopUseSelectedHandle);
+            }
+        }
+
         public void UseSelectedHandle()
         {
             handle.Use();
+        }
+
+        public void StopUseSelectedHandle()
+        {
+            Debug.Log("JOHO");
+            handle.StopUse();
         }
 
         void StartHitCooldown()
@@ -68,7 +84,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Hit(Entity hitter,int damage)
         {
-            if (!hitCooldown)
+            if (!invincible && !hitCooldown)
             {
                 onAttackEvent.Invoke(hitter);
                 StartHitCooldown();

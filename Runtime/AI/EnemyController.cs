@@ -14,8 +14,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Enemy me;
 
 
-        public FSM<Enemy.EnemyState, Enemy.EnemyAction> enemyStateFSM;
-
         public Player seenPlayer;
         public Player lastSeenPlayer;
         public Enemy seenAlly;
@@ -54,7 +52,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             currentTarget = transform.position;
 
-            me.SetState(Enemy.EnemyState.Idle);
             SetTrackingAbility(true);
         }
 
@@ -229,7 +226,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateState()
         {
-            enemyStateFSM.ExecuteState();
+            Debug.Log(me);
+            Debug.Log(me.FSM);
+            me.FSM.ExecuteState();
         }
 
         

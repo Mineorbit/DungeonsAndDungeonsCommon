@@ -43,10 +43,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitBox.Deactivate();
         }
 
-
+        bool block = false;
         public override void Use()
         {
+            if(!block)
+            {
+            block = true;
             base.Use();
+
             owner.baseAnimator.Strike();
             hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
             hitBox.Activate();
@@ -54,7 +58,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // factor out just like audio component
             effectSystem.Play();
             TimerManager.StartTimer(whipeTime,()=> { effectSystem.Stop(); });
+            }
         }
+
+        
+
 
         void TryDamage(GameObject g)
         {
@@ -68,9 +76,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void StopUse()
         {
+            base.StopUse();
             effectSystem.Stop();
             //transform.localEulerAngles = new Vector3(0, -75, 90f);
             hitBox.Deactivate();
+            block = false;
         }
 
         public override void OnDettach()

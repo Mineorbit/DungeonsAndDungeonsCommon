@@ -17,6 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isEquipped;
 
         public UnityEvent onUseEvent = new UnityEvent();
+        public UnityEvent onStopUseEvent = new UnityEvent();
 
         public virtual void OnAttach()
         {
@@ -45,6 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void StopUse()
         {
+            onStopUseEvent.Invoke();
 
         }
     }

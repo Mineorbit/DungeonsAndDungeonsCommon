@@ -12,7 +12,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool enableNetworking = false;
 
-        public virtual void OnInit()
+        public override void OnInit()
         {
             base.OnInit();
             if(enableNetworking)

@@ -11,6 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public EnemyController enemyController;
 
 
+        public FSM<EnemyState, Enemy.EnemyAction> FSM;
 
         public float viewDistance = 15;
         public float attackDistance = 4;
@@ -92,6 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
+            Debug.Log("TEST2");
 
             enemyController.seenPlayer = null;
             enemyController.seenAlly = null;
@@ -102,12 +104,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public EnemyState getState()
         {
-            return enemyController.enemyStateFSM.state;
+            return FSM.state;
         }
 
         public void SetState(EnemyState state)
         {
-            enemyController.enemyStateFSM.state = state;
+            FSM.state = state;
         }
         // Update is called once per frame
         void Update()
