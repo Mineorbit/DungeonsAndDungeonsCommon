@@ -10,7 +10,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         // FSM is shared between all components of any enemy but is  defined in the enemy monobehaviour
 
-        FSM<EnemyState, Enemy.EnemyAction> me;
 
         float randomWalkTime = 8f;
 
@@ -63,6 +62,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
 
+            Debug.Log("TEST1");
+
             onAttackEvent.AddListener((x)=> { Counter(x); });
             rand = new System.Random();
             viewDistance = 5;
@@ -70,13 +71,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetupBlogFSM();
 
 
-            
+            FSM.SetState(Enemy.EnemyState.Idle);
+
         }
 
         void Counter(Entity attacker)
         {
             targetEntity = attacker;
-            me.Move(Enemy.EnemyAction.Attack);
+            FSM.Move(Enemy.EnemyAction.Attack);
         }
 
         float eps = 1f;
@@ -90,20 +92,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void SetupBlogFSM()
         {
-            me = new FSM<EnemyState, EnemyAction>();
+            Debug.Log("Setup FSM");
+            FSM = new FSM<EnemyState, EnemyAction>();
 
 
-            me.stateAction.Add(BlogState.Idle,()=> {
+            FSM.stateAction.Add(BlogState.Idle,()=> {
                 RandomWalk();
                 blogAnimator.target = -enemyController.GetDirection();
 
                 if (enemyController.seenPlayer !=  null)
                 {
-                    me.Move(Enemy.EnemyAction.Engage);
+                    FSM.Move(Enemy.EnemyAction.Engage);
                 }
             });
 
-            me.stateAction.Add(BlogState.Track, () => {
+            FSM.stateAction.Add(BlogState.Track, () => {
                 float distanceToTarget = (transform.position - targetEntity.transform.position).magnitude;
                 if (targetEntity != null)
                 {
@@ -115,18 +118,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                     if (distanceToTarget < attackDistance+eps)
                     {
-                        me.Move(Enemy.EnemyAction.Attack);
+                        FSM.Move(Enemy.EnemyAction.Attack);
                     }
                 }
             });
 
 
-            me.stateAction.Add(BlogState.Attack, () => {
+            FSM.stateAction.Add(BlogState.Attack, () => {
 
 
                 if (attackTarget == null )
                 {
-                    me.Move(Enemy.EnemyAction.Disengage);
+                    FSM.Move(Enemy.EnemyAction.Disengage);
                     return;
                 }
 
@@ -136,7 +139,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (!enemyController.CheckLineOfSight(attackTarget))
                 {
-                    me.Move(Enemy.EnemyAction.Engage);
+                    FSM.Move(Enemy.EnemyAction.Engage);
                 }
 
 
@@ -164,7 +167,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
 
 
-            me.stateAction.Add(BlogState.Strike, () => {
+            FSM.stateAction.Add(BlogState.Strike, () => {
 
                 Vector3 dir = transform.position - attackTarget.transform.position;
                 blogAnimator.target = dir;
@@ -174,12 +177,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-                me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> {
-                forgetPlayer = true; TrackTarget(enemyController.seenPlayer); },Blog.BlogState.Track));
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> { forgetPlayer = true; TrackTarget(enemyController.seenPlayer); },Blog.BlogState.Track));
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
 
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle, Enemy.EnemyAction.Attack), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle, Enemy.EnemyAction.Attack), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
 
                 forgetPlayer = false;
                 attackTarget = targetEntity;
@@ -188,7 +190,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 t = 0; TryStrike();
             }, BlogState.Attack));
 
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Attack), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Attack), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
 
                 forgetPlayer = false;
                 attackTarget = targetEntity;
@@ -198,7 +200,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 t = 0; TryStrike(); }, BlogState.Attack));
 
 
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Strike, BackToAttack), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Strike, BackToAttack), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
 
                 forgetPlayer = false;
                 attackTarget = targetEntity;
@@ -208,12 +210,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 t = 0; TryStrike();
             }, BlogState.Attack));
 
-            me.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
             
                     forgetPlayer = true;
                 TrackTarget(enemyController.seenPlayer); }, Blog.BlogState.Track));
 
-            enemyController.enemyStateFSM = me;
             SetState(BlogState.Idle);
         }
 
@@ -237,13 +238,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             enemyController.SetTrackingAbility(true, reset:true);
             if (target == null)
             {
-                me.Move(Enemy.EnemyAction.Disengage);
+                FSM.Move(Enemy.EnemyAction.Disengage);
             }
             targetEntity = target;
 
             maximumTrackTimer = TimerManager.StartTimer(15f,()=>
             {
-                me.Move(Enemy.EnemyAction.Disengage);
+                FSM.Move(Enemy.EnemyAction.Disengage);
                 if (TimerManager.isRunning(maximumTrackTimer))
                 {
                     TimerManager.StopTimer(maximumTrackTimer);
@@ -293,7 +294,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 StopTrackTarget(disableTracking: false);
                 enemyController.GoTo(attackTarget.transform.position);
                 Debug.Log("Blog trying to Strike");
-                me.SetState(BlogState.Strike);
+                FSM.SetState(BlogState.Strike);
                 strikeTimer = TimerManager.StartTimer((1 + 5 * (float)rand.NextDouble()),()=> { Strike(10); } );
             }
         }
@@ -322,7 +323,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             attackHitbox.Deactivate();
             Debug.Log("Finished Strike");
             targetEntity = attackTarget;
-            me.Move(BackToAttack);
+            FSM.Move(BackToAttack);
         }
 
         

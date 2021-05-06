@@ -175,7 +175,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ItemHandle h = GetLeftHandle();
             if(h != null)
             {
-                setMovementStatus(false);
                 UseHandle(h);
             }
         }
@@ -185,8 +184,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ItemHandle h = GetRightHandle();
             if (h != null)
             {
-                setMovementStatus(false);
                 UseHandle(h);
+            }
+        }
+
+
+        public void StopUseRight()
+        {
+            Debug.Log("JJJJAAAY");
+            ItemHandle h = GetRightHandle();
+            if (h != null)
+            {
+                Debug.Log("JJJJAAAY");
+                StopUseHandle(h);
             }
         }
 

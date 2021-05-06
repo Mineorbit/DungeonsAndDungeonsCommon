@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (slot != null)
                 {
                     LevelManager.currentLevel.AddToDynamic(slot.gameObject, slot.gameObject.transform.position, new Quaternion(0, 0, 0, 0));
-                player.items.Remove(slot);
+                    player.items.Remove(slot);
                     slot.OnDettach();
                     slot = null;
                 }
@@ -53,12 +53,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(slot != null)
             { 
                 slot.Use();
+
+                bool waitingStarted = false;
+                if(slot.GetType() == typeof(Sword))
+                {
+                    waitingStarted = true;
+                    UseWait();
+                }
+                if(waitingStarted)
                 player.setMovementStatus(false);
-                UseWait();
             }else
             {
                 player.setMovementStatus(true);
             }
+        }
+
+
+
+        public virtual void UseWait()
+        {
+            StartCoroutine(useWaitTime(slot.useTime));
         }
 
         IEnumerator useWaitTime(float t)
@@ -69,16 +83,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public virtual void UseWait()
-        {
-            StartCoroutine(useWaitTime(slot.useTime));
-        }
-
-
 
         public void StopUse()
         {
+            if(slot != null)
             slot.StopUse();
+            player.setMovementStatus(true);
         }
     }
 }
