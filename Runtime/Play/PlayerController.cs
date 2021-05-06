@@ -32,9 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float heightRay = 0.55f;
 
-        public Hitbox itemHitbox;
 
-        public List<Item> itemsInProximity;
 
 
         public float currentSpeed;
@@ -74,10 +72,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             heightRay = 1.1f;
 
-            itemsInProximity = new List<Item>();
-            itemHitbox.Attach("Item");
-            itemHitbox.enterEvent.AddListener((x)=> { itemsInProximity.Add(x.GetComponent<Item>());  });
-            itemHitbox.exitEvent.AddListener((x) => { itemsInProximity.Remove(x.GetComponent<Item>()); });
         }
 
         void Start()
@@ -98,33 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         //Needs to be refined
 
-        void UpdateEquipItem()
-        {
-            if(player.itemHandles.Length > 0)
-            {
-                if (player.itemHandles[0] != null)
-                {
-                    List<Item> pickUpItems = itemsInProximity;
-                    foreach(Item i in player.items)
-                    {
-                        pickUpItems.Remove(i);
-                    }
-                    if(pickUpItems.Count > 0)
-                    {
-                        Debug.Log("Swapping of Item");
-                        player.itemHandles[0].Dettach();
-                        player.itemHandles[0].Attach(pickUpItems[0]);
-
-                    }
-                    else
-                    {
-                        Debug.Log("Dettachment of Item");
-                        player.itemHandles[0].Dettach();
-                    }
-                }
-            }
-        }
-
+        
         public void Move()
         {
 
@@ -147,7 +115,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // Pickup closest item
                 if(Input.GetKeyDown(KeyCode.G))
                 {
-                    UpdateEquipItem();
+                    //INVOKE
+                    player.UpdateEquipItem();
+                }
+
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                // INVOKE
+                // INTERACT WITH ENVIRONMENT (READ TEXT, PRESS BUTTON etc)
                 }
 
                 if (IsGrounded)
@@ -160,10 +135,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 if (Input.GetMouseButtonDown(0))
                 {
+                    //INVOKE
                     player.UseLeft();
                 }else
                 if (Input.GetMouseButtonDown(1))
                 {
+                    //INVOKE
                     player.UseRight();
                 }
             }

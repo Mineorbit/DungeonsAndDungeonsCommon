@@ -6,16 +6,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Shield : Item
     {
-        // Start is called before the first frame update
-        void Start()
+        public override void OnAttach()
         {
-
+            base.OnAttach();
+            transform.localPosition = new Vector3(0.002f, 0, 0);
+            transform.localEulerAngles = new Vector3(0, 180, 0);
         }
-
-        // Update is called once per frame
-        void Update()
+        public void Update()
         {
-
+            //transform.localEulerAngles = new Vector3(0, 180, 0);
         }
     }
 }

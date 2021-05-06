@@ -9,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public int health;
 
-        public Item[] items;
+        public List<Item> items;
         public ItemHandle[] itemHandles;
 
         public EntityBaseAnimator baseAnimator;

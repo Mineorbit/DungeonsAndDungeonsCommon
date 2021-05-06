@@ -250,15 +250,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AddToDynamic(GameObject g)
         {
-            g.transform.position = transform.position;
+            Vector3 position = g.transform.position;
             g.transform.parent = dynamicObjects;
+            g.transform.position = position;
             g.GetComponent<LevelObject>().isDynamic = true;
         }
         public void AddToDynamic(GameObject g, Vector3 position, Quaternion rotation)
         {
+            g.transform.parent = dynamicObjects;
             g.transform.position = position;
             g.transform.rotation = rotation;
-            g.transform.parent = dynamicObjects;
             g.GetComponent<LevelObject>().isDynamic = true;
         }
 

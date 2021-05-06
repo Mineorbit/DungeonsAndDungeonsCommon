@@ -17,6 +17,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         bool hitCooldown = false;
 
+
+        public Hitbox itemHitbox;
+
+        public List<Item> itemsInProximity;
+
         public int localId
         {
             set
@@ -40,6 +45,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnStartRound();
             health = 100;
+        }
+
+
+        public void UpdateEquipItem()
+        {
+            Item toAttach = itemsInProximity.Find((x) => !x.isEquipped);
+            if (toAttach != null)
+            {
+                Debug.Log("Picking up");
+                if (toAttach.GetType() == typeof(Sword))
+                {
+                    GetLeftHandle().Dettach();
+                    GetLeftHandle().Attach(toAttach);
+                }
+                if (toAttach.GetType() == typeof(Shield))
+                {
+                    GetRightHandle().Dettach();
+                    GetRightHandle().Attach(toAttach);
+                }
+            }
+            else
+            {
+                Debug.Log("Trying drop");
+                GetLeftHandle().Dettach();
+                GetRightHandle().Dettach();
+                
+            }
         }
 
 
@@ -80,7 +112,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             // Temporary
             itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
-            items = new Item[itemHandles.Length];
+            items = new List<Item>();
+
+
+            itemsInProximity = new List<Item>();
+            itemHitbox.Attach("Item");
+            itemHitbox.enterEvent.AddListener((x) => { Item i = x.GetComponent<Item>(); if(!itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
+            itemHitbox.exitEvent.AddListener((x) => { Debug.Log(x.name); itemsInProximity.RemoveAll((p)=> p == x.GetComponent<Item>()); });
         }
 
         public virtual bool IsAlive()
