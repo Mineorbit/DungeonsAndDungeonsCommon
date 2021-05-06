@@ -12,13 +12,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool enableNetworking = false;
 
-        public override void OnInit()
+        public virtual void OnInit()
         {
             base.OnInit();
-            Debug.Log("Test");
             if(enableNetworking)
             {
+                
                 levelObjectNetworkHandler = GetComponent<LevelObjectNetworkHandler>();
+                //
+                if(levelObjectNetworkHandler == null)
+                {
+                    levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
+                }
             }
             else
             {
