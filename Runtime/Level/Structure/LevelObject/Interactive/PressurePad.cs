@@ -56,7 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AnimPress()
         {
-            AnimPress();
+            buttonBaseAnimator.Press();
         }
 
         public void AnimUnpress()

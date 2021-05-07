@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1419038311122937236}
   - component: {fileID: 5770273647337507307}
   - component: {fileID: 8523260464767948780}
+  - component: {fileID: 5518454888437054527}
   m_Layer: 10
   m_Name: HeldButton
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   levelObjectDataType: 
   isDynamic: 0
   ActivateWhenInactive: 0
+  levelObjectNetworkHandler: {fileID: 0}
   inBoundWires: []
   outBoundWires: []
   playerStandinghitbox: {fileID: 3210988167443433057}
@@ -69,6 +71,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: -0.5, z: 0}
+--- !u!114 &5518454888437054527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799961556551171886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Identity: 
+  observed: {fileID: 0}
+  observed: {fileID: 0}
 --- !u!1001 &940719653425877597
 PrefabInstance:
   m_ObjectHideFlags: 0
