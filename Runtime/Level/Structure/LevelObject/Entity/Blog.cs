@@ -310,6 +310,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Strike(float damage)
         {
 
+            baseAnimator.Strike();
             Attack((float)damage);
         }
 
@@ -321,7 +322,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             attackHitbox.Activate();
 
-            baseAnimator.Strike();
 
             finishStrikeTimer = TimerManager.StartTimer(0.025f, ()=> { FinishStrike(); });
             
