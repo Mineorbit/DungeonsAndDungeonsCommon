@@ -228,6 +228,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return;
             }
             string path = instance.levelFolder.GetPath();
+            Debug.Log("Looking for local levels in "+path);
             string[] levelFolders = Directory.GetDirectories(path);
             instance.localLevels = new LevelMetaData[levelFolders.Length];
             for(int i = 0;i<levelFolders.Length;i++)
