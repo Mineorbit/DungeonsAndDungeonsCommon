@@ -36,19 +36,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.eulerAngles = new Vector3(0, angle, 0);
         }
 
+        /*
         public void Attack()
         {
             animator.SetTrigger("Strike");
             attackEvent.Invoke();
         }
-        public void Hit()
-        {
-            animator.SetTrigger("Hit");
-        }
-
+        
         public void EndAttack()
         {
             endAttackEvent.Invoke();
         }
+        */
     }
 }

@@ -8,13 +8,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public Entity me;
         public Animator animator;
-        
+
+        public float speed;
 
         // Update is called once per frame
-        void Update()
+        public virtual void Update()
         {
-
+            base.Update();
         }
+
+
+
+        public void Hit()
+        {
+            animator.SetTrigger("Hit");
+        }
+
+
         public void Strike()
         {
             animator.SetTrigger("Strike");

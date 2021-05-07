@@ -52,9 +52,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        void Update()
+        public override void Update()
         {
-            float speed = characterController.velocity.magnitude;
+            base.Update();
+
             if (speed > 0)
             { 
                 forwardDirection =  (forwardDirection + characterController.velocity)/2;
