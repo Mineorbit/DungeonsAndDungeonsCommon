@@ -9657,6 +9657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: 2633396581524973113}
   animator: {fileID: 7589352983227760250}
+  speed: 0
   characterController: {fileID: 6344021777004394327}
   playerController: {fileID: -4485675669329379349}
   footFX: {fileID: 8164085133219797599}
@@ -9799,6 +9800,7 @@ MonoBehaviour:
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []
+  invincible: 0
   colorChanger: {fileID: 0}
   _localId: 0
   speed: 0
@@ -9818,6 +9820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef2390e1f8d75946bbac7d15c4623c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBaseAnimator: {fileID: 700370800949042406}
   controller: {fileID: 0}
   cam: {fileID: 0}
   Speed: 3

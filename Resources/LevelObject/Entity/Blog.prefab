@@ -136,10 +136,11 @@ MonoBehaviour:
   health: 0
   items: []
   itemHandles: []
-  baseAnimator: {fileID: 0}
+  baseAnimator: {fileID: 5603963655004878686}
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []
+  invincible: 0
   enemyController: {fileID: 0}
   viewDistance: 15
   attackDistance: 4
@@ -381,6 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: 736877002971563754}
   animator: {fileID: 7885660916142931459}
+  speed: 0
   speed: 0
   target: {x: 0, y: 0, z: 0}
   attackEvent:

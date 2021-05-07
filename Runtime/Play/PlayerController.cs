@@ -11,6 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         //public static PlayerController currentPlayer;
         Player player;
+        public PlayerBaseAnimator playerBaseAnimator;
         public CharacterController controller;
         public Transform cam;
         float convergenceSpeed = 0.1f;
@@ -171,6 +172,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             UpdateGround();
             StateUpdate();
+
+            playerBaseAnimator.speed = currentSpeed/3;
             Move();
         }
         void StateUpdate()

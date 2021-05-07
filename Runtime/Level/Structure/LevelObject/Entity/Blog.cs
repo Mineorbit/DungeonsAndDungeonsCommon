@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        public BlogBaseAnimator blogAnimator;
+        public new BlogBaseAnimator baseAnimator;
 
         public Hitbox attackHitbox;
 
@@ -98,7 +98,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             FSM.stateAction.Add(BlogState.Idle,()=> {
                 RandomWalk();
-                blogAnimator.target = -enemyController.GetDirection();
+                baseAnimator.target = -enemyController.GetDirection();
 
                 if (enemyController.seenPlayer !=  null)
                 {
@@ -114,7 +114,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     enemyController.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
 
 
-                    blogAnimator.target = -enemyController.GetDirection();
+                    baseAnimator.target = -enemyController.GetDirection();
 
                     if (distanceToTarget < attackDistance+eps)
                     {
@@ -143,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
 
-                blogAnimator.target = dir;
+                baseAnimator.target = dir;
 
                 if (TimerManager.isRunning(circleTimer))
                 {
@@ -170,7 +170,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.stateAction.Add(BlogState.Strike, () => {
 
                 Vector3 dir = transform.position - attackTarget.transform.position;
-                blogAnimator.target = dir;
+                baseAnimator.target = dir;
                 enemyController.GoTo(attackTarget.transform.position);
 
             });
@@ -313,6 +313,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             currentDamage = damage * (1 + 5 * (float)rand.NextDouble());
 
             attackHitbox.Activate();
+
+            baseAnimator.Strike();
 
             finishStrikeTimer = TimerManager.StartTimer(0.025f, ()=> { FinishStrike(); });
             
