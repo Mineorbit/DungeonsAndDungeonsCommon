@@ -37,6 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             yield return new WaitForSeconds(time);
             hitCooldown = false;
+            setMovementStatus(true);
         }
 
         public virtual void setMovementStatus(bool allowedToMove)
@@ -76,7 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void StartHitCooldown()
         {
             hitCooldown = true;
-            StartCoroutine(HitTimer(0.5f));
+            StartCoroutine(HitTimer(1.5f));
         }
 
 
@@ -85,6 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!invincible && !hitCooldown)
             {
                 onAttackEvent.Invoke(hitter);
+                setMovementStatus(false);
                 StartHitCooldown();
                 Debug.Log(hitter.gameObject.name+" HIT "+this.gameObject.name+" AND CAUSED "+damage+" HP DAMAGE");
                 health = health - damage;

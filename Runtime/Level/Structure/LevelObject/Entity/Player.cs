@@ -216,17 +216,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartCoroutine(HitTimer(cooldownTime));
         }
 
-        public virtual void Hit(int damage)
+        public override void Hit(Entity hitter, int damage)
         {
-            if (!hitCooldown)
-            {
-                StartHitCooldown();
-                health = health - damage;
-                if (health == 0)
-                {
-                    Kill();
-                }
-            }
+            base.Hit(hitter,damage);
 
         }
 
@@ -249,7 +241,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int damage = 10;
                 if (damage > 0)
                 {
-                    Hit(damage);
+                    Hit(col.GetComponent<Entity>(), damage);
                 }
             }
         }
