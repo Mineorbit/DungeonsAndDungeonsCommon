@@ -75,6 +75,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+        public override void setMovementStatus(bool allowedToMove)
+        {
+            base.setMovementStatus(allowedToMove);
+            Debug.Log("Stoppinng");
+            enemyController.SetTrackingAbility(allowedToMove);
+        }
+
         void Counter(Entity attacker)
         {
             targetEntity = attacker;
@@ -88,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Entity attackTarget;
 
         TimerManager.Timer circleTimer;
-        float circleTime = 15;
+        float circleTime = 5;
 
         void SetupBlogFSM()
         {
