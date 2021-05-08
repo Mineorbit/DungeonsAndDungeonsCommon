@@ -6,6 +6,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 { 
 public class NetworkManagerHandler : NetworkHandler
 {
+
+        public static void RequestPrepareRound()
+        {
+
+        }
+
+        public static void RequestStartRound()
+        {
+
+        }
+
         [PacketBinding.Binding]
         public static void PrepareRound()
         {
