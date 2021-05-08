@@ -1,8 +1,12 @@
 syntax = "proto3";
 
+
+import "any.proto";
+
 package Game;
 
 
 message LevelObjectAction {
   string ActionName = 2;
+  google.protobuf.Any content = 3;
 }

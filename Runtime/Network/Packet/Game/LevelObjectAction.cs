@@ -24,12 +24,13 @@ namespace Game {
     static LevelObjectActionReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChdMZXZlbE9iamVjdEFjdGlvbi5wcm90bxIER2FtZSInChFMZXZlbE9iamVj",
-            "dEFjdGlvbhISCgpBY3Rpb25OYW1lGAIgASgJYgZwcm90bzM="));
+            "ChdMZXZlbE9iamVjdEFjdGlvbi5wcm90bxIER2FtZRoJYW55LnByb3RvIk4K",
+            "EUxldmVsT2JqZWN0QWN0aW9uEhIKCkFjdGlvbk5hbWUYAiABKAkSJQoHY29u",
+            "dGVudBgDIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5BbnliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.LevelObjectAction), global::Game.LevelObjectAction.Parser, new[]{ "ActionName" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.LevelObjectAction), global::Game.LevelObjectAction.Parser, new[]{ "ActionName", "Content" }, null, null, null, null)
           }));
     }
     #endregion
@@ -66,6 +67,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public LevelObjectAction(LevelObjectAction other) : this() {
       actionName_ = other.actionName_;
+      content_ = other.content_ != null ? other.content_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -85,6 +87,17 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "content" field.</summary>
+    public const int ContentFieldNumber = 3;
+    private global::Google.Protobuf.WellKnownTypes.Any content_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Google.Protobuf.WellKnownTypes.Any Content {
+      get { return content_; }
+      set {
+        content_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as LevelObjectAction);
@@ -99,6 +112,7 @@ namespace Game {
         return true;
       }
       if (ActionName != other.ActionName) return false;
+      if (!object.Equals(Content, other.Content)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -106,6 +120,7 @@ namespace Game {
     public override int GetHashCode() {
       int hash = 1;
       if (ActionName.Length != 0) hash ^= ActionName.GetHashCode();
+      if (content_ != null) hash ^= Content.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -126,6 +141,10 @@ namespace Game {
         output.WriteRawTag(18);
         output.WriteString(ActionName);
       }
+      if (content_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Content);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -139,6 +158,10 @@ namespace Game {
         output.WriteRawTag(18);
         output.WriteString(ActionName);
       }
+      if (content_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Content);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -150,6 +173,9 @@ namespace Game {
       int size = 0;
       if (ActionName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ActionName);
+      }
+      if (content_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Content);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -164,6 +190,12 @@ namespace Game {
       }
       if (other.ActionName.Length != 0) {
         ActionName = other.ActionName;
+      }
+      if (other.content_ != null) {
+        if (content_ == null) {
+          Content = new global::Google.Protobuf.WellKnownTypes.Any();
+        }
+        Content.MergeFrom(other.Content);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -183,6 +215,13 @@ namespace Game {
             ActionName = input.ReadString();
             break;
           }
+          case 26: {
+            if (content_ == null) {
+              Content = new global::Google.Protobuf.WellKnownTypes.Any();
+            }
+            input.ReadMessage(Content);
+            break;
+          }
         }
       }
     #endif
@@ -199,6 +238,13 @@ namespace Game {
             break;
           case 18: {
             ActionName = input.ReadString();
+            break;
+          }
+          case 26: {
+            if (content_ == null) {
+              Content = new global::Google.Protobuf.WellKnownTypes.Any();
+            }
+            input.ReadMessage(Content);
             break;
           }
         }

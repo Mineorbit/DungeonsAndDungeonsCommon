@@ -65,14 +65,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Types: "+ packetType+" "+networkHandlerType);
 
 
-                UnityAction<Packet> handle;
-                if (globalMethodBindings.TryGetValue(new Tuple<Type, Type>(packetType,networkHandlerType), out handle))
+                Type handlerType = networkHandlerType;
+                UnityAction<Packet> handle = null;
+                while (! (globalMethodBindings.TryGetValue(new Tuple<Type, Type>(packetType,handlerType), out handle) || (handlerType == typeof(NetworkHandler))))
                 {
-                    Debug.Log("Handle found "+handle);
-                    handle.Invoke(p);
-                }else
+
+                Debug.Log("Did not find Binding in "+handlerType);
+                handlerType = handlerType.BaseType;
+                Debug.Log("Elevating to " + handlerType);
+                }
+                if(handle != null)
                 {
-                    Debug.Log("No Global Handle for " + packetType + " in " + networkHandlerType + " was found");
+                Debug.Log("Handle found " + handle);
+                handle.Invoke(p);
                 }
         }
 
