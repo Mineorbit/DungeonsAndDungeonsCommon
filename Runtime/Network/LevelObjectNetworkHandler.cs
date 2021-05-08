@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using General;
 using Game;
+using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -19,6 +20,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        // THIS NEEDS TO UNPACK ANY INTO ARGUMENTS FOR DYNAMIC CALL
+        [PacketBinding.Binding]
         public void ProcessAction(Packet p)
         {
 
@@ -36,8 +39,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+        public class ActionParam
+        {
+            internal static ActionParam From<T>(T argument)
+            {
+                throw new NotImplementedException();
+            }
+            public  (string,Google.Protobuf.WellKnownTypes.Any) Pack()
+            {
+                return (null,null);
+            }
+        }
+
         // NOT COMPLETED
-        public void SendAction(string actionName, Dictionary<string, object> argument)
+        // THIS NEEDS TO PACK ARGUMENTS INTO ANY
+        public void SendAction(string actionName, ActionParam argument)
         {
             if (availableActions.Contains(actionName))
             {
@@ -45,9 +62,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     ActionName = actionName
                 };
+                Dictionary<string, Google.Protobuf.WellKnownTypes.Any> arguments = new Dictionary<string, Google.Protobuf.WellKnownTypes.Any>();
+
+                var packedArgument = argument.Pack();
+                
+                arguments.Add(packedArgument.Item1,packedArgument.Item2);
+
+                action.Params.Add(arguments);
                 Marshall(action);
             }
         }
+
 
         // Not yet needed
         /*

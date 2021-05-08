@@ -40,9 +40,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         //This marks a message for transport through network
-        public void Invoke(Action<Dictionary<string, object>> a, Dictionary<string, object> argument)
+        public void Invoke<T>(Action<T> a, T argument)
         {
-            if (levelObjectNetworkHandler != null) levelObjectNetworkHandler.SendAction(a.Method.Name, argument);
+            if (levelObjectNetworkHandler != null) levelObjectNetworkHandler.SendAction(a.Method.Name, LevelObjectNetworkHandler.ActionParam.From(argument));
             if (this.enabled) a.DynamicInvoke(argument);
         }
 

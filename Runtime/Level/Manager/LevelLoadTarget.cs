@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +7,39 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelLoadTarget : NetworkLevelObject
     {
-        // Start is called before the first frame update
+        List<Tuple<int, int>> loadedLocalChunks;
+
         void Start()
         {
 
         }
 
-        // Update is called once per frame
-        void Update()
+
+        void EnableChunkAt(Vector3 position)
+        {
+            if(!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
+            {
+                ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position,createIfNotThere: false));
+                if(chunkData != null)
+                    Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
+            }
+        }
+
+        void StreamChunkIntoCurrentLevelFrom(ChunkData chunkData)
         {
 
+        }
+
+        void DisableChunk()
+        {
+
+        }
+
+        //Overlap between load target zones is a problem
+        void FixedUpdate()
+        {
+            EnableChunkAt(transform.position);
+            EnableChunkAt(transform.position+transform.forward*32);
         }
     }
 }

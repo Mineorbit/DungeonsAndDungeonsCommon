@@ -72,6 +72,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.Disconnect();
             }
         }
+
+        //Factor this out into GameLogic
+
+        
+
         public void OnDestroy()
         {
             Disconnect();
