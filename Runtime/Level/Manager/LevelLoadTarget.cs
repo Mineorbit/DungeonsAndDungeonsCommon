@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelLoadTarget : MonoBehaviour
+namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    // Start is called before the first frame update
-    void Start()
+    public class LevelLoadTarget : NetworkLevelObject
     {
-        
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }
