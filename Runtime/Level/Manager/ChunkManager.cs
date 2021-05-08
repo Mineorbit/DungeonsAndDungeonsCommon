@@ -20,13 +20,59 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int count;
 
         bool ready = false;
-        
+
+
+        public Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
+
+        public enum LoadType { Disk, Net }
+
         void Start()
         {
             Setup();
         }
 
-        
+
+        static SaveManager regionDataLoader = new SaveManager(SaveManager.StorageType.BIN);
+
+        public static void LoadRegion(int regionId, LoadType loadType = LoadType.Disk)
+        {
+            RegionData regionData = LoadRegionData(regionId,loadType: loadType);
+            if (regionData == null) return;
+            foreach (ChunkData chunkData in regionData.chunkDatas.Values)
+            {
+                ChunkManager.LoadChunk(chunkData);
+            }
+            instance.regionLoaded[regionId] = true;
+
+        }
+
+        public static RegionData LoadRegionData(Tuple<int, int> chunkPosition)
+        {
+            Tuple<int, int> regionPosition = GetRegionPosition(chunkPosition);
+            int regionId;
+            if(LevelDataManager.instance.levelData.regions.TryGetValue(regionPosition,out regionId))
+            {
+                return LoadRegionData(regionId);
+            }
+            return null;
+        }
+
+        static RegionData LoadRegionData(int regionId, LoadType loadType = LoadType.Disk)
+        {
+            if (instance.regionLoaded.ContainsKey(regionId) && instance.regionLoaded[regionId]) return null;
+            if (loadType == LoadType.Disk)
+            {
+                string pathToLevel = LevelDataManager.instance.levelFolder.GetPath() + LevelManager.currentLevelMetaData.localLevelId;
+                return regionDataLoader.Load<RegionData>(pathToLevel + "/" + regionId + ".bin");
+            }
+            else
+            {
+                // NOT YET NEEDED
+                return null;
+            }
+        }
+
+
 
         public Dictionary<Tuple<int, int>, RegionData> FetchRegionData()
         {
@@ -66,7 +112,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (chunkPosition.Item1 % regionGranularity, chunkPosition.Item2 % regionGranularity);
         }
 
-        Tuple<int,int> GetRegionPosition(Tuple<int,int> chunkPosition)
+        static Tuple<int,int> GetRegionPosition(Tuple<int,int> chunkPosition)
         {
             int x =  (int)Mathf.Floor((float) chunkPosition.Item1 / (float)regionGranularity);
             int y =  (int)Mathf.Floor((float) chunkPosition.Item2 / (float)regionGranularity);
@@ -94,15 +140,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void Load()
-        {
-
-        }
-
-        public void Save()
-        {
-
-        }
+        
 
         Chunk AddChunk(Tuple<int, int> gridPosition)
         {
@@ -119,12 +157,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
 
-        Vector3 ChunkPositionFromGridPosition(Tuple<int,int> gridPosition)
+        public static Vector3 ChunkPositionFromGridPosition(Tuple<int,int> gridPosition)
         {
             return new Vector3(gridPosition.Item1*chunkGranularity,0,gridPosition.Item2*chunkGranularity) - chunkGranularity / 2 * new Vector3(1, 0, 1);
         }
 
-        Tuple<int,int> GetChunkGridPosition(Vector3 position)
+        public static Tuple<int,int> GetChunkGridPosition(Vector3 position)
         {
             return new Tuple<int, int>((int) Mathf.Round(position.x / chunkGranularity),(int) Mathf.Round(position.z / chunkGranularity));
         }
@@ -136,7 +174,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static Chunk GetChunk(Vector3 position, bool createIfNotThere = true)
         {
-            var chunkGridPosition = instance.GetChunkGridPosition(position);
+            var chunkGridPosition = GetChunkGridPosition(position);
             Chunk result_chunk = null;
             if(instance.chunks != null)
             { 
@@ -150,6 +188,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             }
             return result_chunk;
+        }
+
+        public static void LoadChunk(int chunkId, LoadType loadType = LoadType.Disk)
+        {
+
+        }
+
+
+        public static void LoadChunk(ChunkData chunkData)
+        {
+            List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
+            levelObjectInstances.AddRange(chunkData.levelObjects);
+            foreach (LevelObjectInstanceData i in levelObjectInstances)
+            {
+                LevelManager.currentLevel.Add(i);
+            }
         }
     }
 }

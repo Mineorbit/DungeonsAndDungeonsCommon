@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+
+import "any.proto";
+
+package Game;
+
+
+message ChunkDataContainer{
+	int32 chunkId = 1;
+	bytes data = 2;
+}

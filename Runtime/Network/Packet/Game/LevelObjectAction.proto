@@ -7,6 +7,6 @@ package Game;
 
 
 message LevelObjectAction {
-  string ActionName = 2;
-  google.protobuf.Any content = 3;
+  string ActionName = 1;
+  map <string,google.protobuf.Any> params = 3;
 }

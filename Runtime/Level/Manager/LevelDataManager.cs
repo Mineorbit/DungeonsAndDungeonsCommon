@@ -23,7 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelData levelData;
 
-        Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
+
+
 
         public void Awake()
         {
@@ -39,36 +40,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        static void LoadRegion(int regionId)
-        {
-            if (instance.regionLoaded.ContainsKey(regionId) && instance.regionLoaded[regionId]) return;
-            string pathToLevel = instance.levelFolder.GetPath()+LevelManager.currentLevelMetaData.localLevelId;
-            Debug.Log("Region "+regionId + " loaded at "+pathToLevel);
-            SaveManager c = new SaveManager(SaveManager.StorageType.BIN);
-            RegionData regionData = c.Load<RegionData>(pathToLevel + "/" + regionId + ".bin");
 
-            List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
-
-            foreach (ChunkData chunkData in regionData.chunkDatas.Values)
-            {
-                levelObjectInstances.AddRange(chunkData.levelObjects);
-            }
-
-
-            foreach (LevelObjectInstanceData i in levelObjectInstances)
-            {
-               LevelManager.currentLevel.Add(i);
-            }
-
-            instance.regionLoaded[regionId] = true;
-
-        }
 
         static void LoadAllRegions()
         {
             foreach (int regionId in instance.levelData.regions.Values)
             {
-                LoadRegion(regionId);
+                ChunkManager.LoadRegion(regionId);
             }
         }
 
@@ -85,26 +63,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        void UpdateLiveLevelLoading()
-        {
-            if(LevelManager.currentLevel != null)
-            { 
-            if (LevelManager.currentLevel.loadType == Level.LoadType.All)
-            {
-
-            }
-            else if (LevelManager.currentLevel.loadType == Level.LoadType.Target)
-            {
-
-            }
-            }
-        }
-
-        public void Update()
-        {
-            UpdateLiveLevelLoading();
-        }
-
         // Save immediately false for example in lobby
         public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true, bool saveImmediately = true)
         {
@@ -117,7 +75,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             instance.levelData = new LevelData();
 
-            instance.regionLoaded = new Dictionary<int, bool>();
+            ChunkManager.instance.regionLoaded = new Dictionary<int, bool>();
             if(saveImmediately)
             Save(metaData: true, levelData: false);
         }
@@ -143,7 +101,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             instance.levelData = m.Load<LevelData>(levelDataPath);
 
-            instance.regionLoaded = new Dictionary<int, bool>();
+            ChunkManager.instance.regionLoaded = new Dictionary<int, bool>();
 
 
             LoadAllRegions();
