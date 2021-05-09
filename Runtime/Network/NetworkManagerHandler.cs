@@ -31,14 +31,17 @@ public class NetworkManagerHandler : NetworkHandler
         public static void PrepareRound(Packet p)
         {
             Debug.Log("Saas");
-            LevelDataManager.New(saveImmediately: false);
+            MainCaller.Do(() => { LevelDataManager.New(saveImmediately: false); });
         }
 
 
         [PacketBinding.Binding]
         public static void StartRound(Packet p)
         {
-            PlayerManager.acceptInput = true;
+            MainCaller.Do(() =>
+            {
+                PlayerManager.acceptInput = true;
+            });
         }
     }
 }
