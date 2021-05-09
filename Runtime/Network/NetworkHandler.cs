@@ -64,6 +64,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log("Types: "+ packetType+" "+networkHandlerType);
 
+            foreach(KeyValuePair<Tuple<Type, Type>, UnityAction<Packet>> p in globalMethodBindings)
+            {
+                Debug.Log("BINDING "+p.Key+" "+p.Value.Method.Name);
+            }
 
                 Type handlerType = networkHandlerType;
                 UnityAction<Packet> handle = null;
