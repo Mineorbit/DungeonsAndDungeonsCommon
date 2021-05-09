@@ -136,6 +136,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 List<object> parameters = new List<object>();
                 foreach(KeyValuePair<int,Parameter> k in levelObjectAction.Params)
                 {
+                    Debug.Log("Parameter: "+k.Key+" "+k.Value.Type);
                     ActionParam actionParam = ActionParam.Unpack(new Tuple<int, Parameter>(k.Key,k.Value));
                     parameters.Add(actionParam.data);
                 }
@@ -198,6 +199,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     MemoryStream memoryStream = new MemoryStream();
                     BinaryFormatter bf = new BinaryFormatter();
                     bf.Serialize(memoryStream, inData);
+                    memoryStream.Position = 0;
+                    Debug.Log("Length to send: "+memoryStream.Length);
                     NetLevel.ChunkData chunkData = new NetLevel.ChunkData
                     {
                         ChunkId = inData.chunkId,
