@@ -39,6 +39,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Marshall(this.GetType(),connectLevelObject);
         }
 
+        public static void RequestBind(string failedBindIdentity)
+        {
+            ConnectLevelObjectRequest connectLevelObjectRequest = new ConnectLevelObjectRequest
+            {
+                Identity = failedBindIdentity
+            };
+            Debug.Log("Asking for Bind of "+failedBindIdentity);
+            Marshall(typeof(LevelObjectNetworkHandler),connectLevelObjectRequest,failedBindIdentity);
+        }
+
+        [PacketBinding.Binding]
+        public void OnConnectLevelObjectRequest(Packet p)
+        {
+            ConnectLevelObjectRequest connectLevelObjectRequest;
+            if(p.Content.TryUnpack<ConnectLevelObjectRequest>(out connectLevelObjectRequest))
+            {
+                MainCaller.Do(() =>
+                {
+                    Debug.Log("Processing Rebind Request");
+                    ConnectLevelObject();
+                });
+            }
+        }
+
+
         [PacketBinding.Binding]
         public static void OnConnectLevelObject(Packet p)
         {
@@ -63,6 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     else
                     {
                         Debug.Log("No " + handlerType + " found at " + handlerPosition);
+                        RequestBind(levelObjectConnect.Identity);
                     }
                 }
 

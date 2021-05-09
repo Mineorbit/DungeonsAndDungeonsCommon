@@ -130,6 +130,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
         public static void Marshall(Type sendingHandler,IMessage message)
         {
@@ -138,6 +139,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Type = message.GetType().FullName,
                 Handler = sendingHandler.FullName,
                 Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
+            };
+
+            if (!isOnServer)
+            {
+                NetworkManager.instance.client.WritePacket(packet);
+            }
+            else
+            {
+                Server.instance.WriteAll(packet);
+            }
+        }
+
+        // THIS IS FOR UNIDENTIFIED CALLS ONLY
+        public static void Marshall(Type sendingHandler, IMessage message, string identity)
+        {
+            Packet packet = new Packet
+            {
+                Type = message.GetType().FullName,
+                Handler = sendingHandler.FullName,
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                Identity = identity
             };
 
             if (!isOnServer)
