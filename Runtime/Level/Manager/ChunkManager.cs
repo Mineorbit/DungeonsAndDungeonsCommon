@@ -23,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
-        public Dictionary<int, bool> chunkLoaded = new Dictionary<int, bool>();
+        public Dictionary<long, bool> chunkLoaded = new Dictionary<long, bool>();
 
 
         public enum LoadType { Disk, Net }
