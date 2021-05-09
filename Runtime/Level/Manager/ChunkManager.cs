@@ -207,7 +207,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 LevelManager.currentLevel.Add(i);
             }
-            instance.chunkLoaded.Add(chunkData.chunkId,true);
+                if(!instance.chunkLoaded.ContainsKey(chunkData.chunkId))
+                { 
+                instance.chunkLoaded.Add(chunkData.chunkId,true);
+                }
+                else
+                {
+                    instance.chunkLoaded[chunkData.chunkId] = true;
+                }
             }
         }
     }
