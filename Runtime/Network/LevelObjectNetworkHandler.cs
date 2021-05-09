@@ -173,7 +173,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     NetLevel.ChunkData netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
                     ChunkData outData = new ChunkData();
+                    Debug.Log("DATEN: "+netChunkData.Data.ToByteArray().Length);
                     MemoryStream memoryStream = new MemoryStream(netChunkData.Data.ToByteArray());
+                    memoryStream.Position = 0;
                     BinaryFormatter bf = new BinaryFormatter();
                     actionParam.data = (ChunkData) bf.Deserialize(memoryStream);
                 }
