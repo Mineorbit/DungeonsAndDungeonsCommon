@@ -135,10 +135,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Identity = this.Identity
             };
 
-            if(isOnServer)
+            if(!isOnServer)
             {
                 NetworkManager.instance.client.WritePacket(packet);
             }else
+            {
+                Server.instance.WriteAll(packet);
+            }
+        }
+
+
+        // THIS IS FOR UNIDENTIFIED CALLS ONLY
+        public static void Marshall(Type sendingHandler,IMessage message)
+        {
+            Packet packet = new Packet
+            {
+                Type = message.GetType().FullName,
+                Handler = sendingHandler.FullName,
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
+            };
+
+            if (!isOnServer)
+            {
+                NetworkManager.instance.client.WritePacket(packet);
+            }
+            else
             {
                 Server.instance.WriteAll(packet);
             }
@@ -154,7 +175,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Identity = this.Identity
             };
 
-            if (isOnServer)
+            if (!isOnServer)
             {
                 NetworkManager.instance.client.WritePacket(packet);
             }
