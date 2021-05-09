@@ -42,5 +42,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			SaveManager m = new SaveManager(SaveManager.StorageType.JSON);
 			m.Save(this,path, persistent: false);
         }
+		public static LevelMetaData FromNetData(NetLevel.LevelMetaData netData)
+        {
+			LevelMetaData metaData = new LevelMetaData(netData.FullName);
+			metaData.Description = netData.Description;
+			metaData.localLevelId = netData.LocalLevelId;
+			metaData.uniqueLevelId = netData.UniqueLevelId;
+			metaData.availBlue = netData.AvailBlue;
+			metaData.availGreen = netData.AvailGreen;
+			metaData.availRed = netData.AvailRed;
+			metaData.availYellow = netData.AvailYellow;
+			return metaData;
+        }
     }
 }

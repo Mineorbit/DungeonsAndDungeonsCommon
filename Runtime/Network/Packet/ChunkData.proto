@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+
+package NetLevel;
+
+
+message ChunkData{
+	int32 chunkId = 1;
+	bytes data = 2;
+}

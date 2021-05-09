@@ -24,12 +24,14 @@ namespace State {
     static PrepareRoundReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChJQcmVwYXJlUm91bmQucHJvdG8SBXN0YXRlIh8KDFByZXBhcmVSb3VuZBIP",
-            "CgdtZXNzYWdlGAEgASgJYgZwcm90bzM="));
+            "ChJQcmVwYXJlUm91bmQucHJvdG8SBXN0YXRlGhNMZXZlbE1ldGFEYXRhLnBy",
+            "b3RvIk8KDFByZXBhcmVSb3VuZBIPCgdtZXNzYWdlGAEgASgJEi4KDWxldmVs",
+            "TWV0YURhdGEYAiABKAsyFy5OZXRMZXZlbC5MZXZlbE1ldGFEYXRhYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::NetLevel.LevelMetaDataReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::State.PrepareRound), global::State.PrepareRound.Parser, new[]{ "Message" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::State.PrepareRound), global::State.PrepareRound.Parser, new[]{ "Message", "LevelMetaData" }, null, null, null, null)
           }));
     }
     #endregion
@@ -66,6 +68,7 @@ namespace State {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PrepareRound(PrepareRound other) : this() {
       message_ = other.message_;
+      levelMetaData_ = other.levelMetaData_ != null ? other.levelMetaData_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -85,6 +88,17 @@ namespace State {
       }
     }
 
+    /// <summary>Field number for the "levelMetaData" field.</summary>
+    public const int LevelMetaDataFieldNumber = 2;
+    private global::NetLevel.LevelMetaData levelMetaData_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::NetLevel.LevelMetaData LevelMetaData {
+      get { return levelMetaData_; }
+      set {
+        levelMetaData_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as PrepareRound);
@@ -99,6 +113,7 @@ namespace State {
         return true;
       }
       if (Message != other.Message) return false;
+      if (!object.Equals(LevelMetaData, other.LevelMetaData)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -106,6 +121,7 @@ namespace State {
     public override int GetHashCode() {
       int hash = 1;
       if (Message.Length != 0) hash ^= Message.GetHashCode();
+      if (levelMetaData_ != null) hash ^= LevelMetaData.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -126,6 +142,10 @@ namespace State {
         output.WriteRawTag(10);
         output.WriteString(Message);
       }
+      if (levelMetaData_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(LevelMetaData);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -139,6 +159,10 @@ namespace State {
         output.WriteRawTag(10);
         output.WriteString(Message);
       }
+      if (levelMetaData_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(LevelMetaData);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -150,6 +174,9 @@ namespace State {
       int size = 0;
       if (Message.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      if (levelMetaData_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(LevelMetaData);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -164,6 +191,12 @@ namespace State {
       }
       if (other.Message.Length != 0) {
         Message = other.Message;
+      }
+      if (other.levelMetaData_ != null) {
+        if (levelMetaData_ == null) {
+          LevelMetaData = new global::NetLevel.LevelMetaData();
+        }
+        LevelMetaData.MergeFrom(other.LevelMetaData);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -183,6 +216,13 @@ namespace State {
             Message = input.ReadString();
             break;
           }
+          case 18: {
+            if (levelMetaData_ == null) {
+              LevelMetaData = new global::NetLevel.LevelMetaData();
+            }
+            input.ReadMessage(LevelMetaData);
+            break;
+          }
         }
       }
     #endif
@@ -199,6 +239,13 @@ namespace State {
             break;
           case 10: {
             Message = input.ReadString();
+            break;
+          }
+          case 18: {
+            if (levelMetaData_ == null) {
+              LevelMetaData = new global::NetLevel.LevelMetaData();
+            }
+            input.ReadMessage(LevelMetaData);
             break;
           }
         }

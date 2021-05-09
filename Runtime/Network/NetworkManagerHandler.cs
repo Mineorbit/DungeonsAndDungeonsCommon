@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using General;
 using State;
+using NetLevel;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 { 
@@ -30,8 +31,16 @@ public class NetworkManagerHandler : NetworkHandler
         [PacketBinding.Binding]
         public static void PrepareRound(Packet p)
         {
+            NetLevel.LevelMetaData netData = null;
+            PrepareRound prepareRound;
+            if(p.Content.TryUnpack<PrepareRound>(out prepareRound))
+            {
+                netData = prepareRound.LevelMetaData;
+            }
+
+            LevelMetaData levelMetaData = LevelMetaData.FromNetData(netData);
             Debug.Log("Saas");
-            MainCaller.Do(() => { LevelDataManager.New(saveImmediately: false); });
+            MainCaller.Do(() => { LevelDataManager.New(levelMetaData,saveImmediately: false); });
         }
 
 
