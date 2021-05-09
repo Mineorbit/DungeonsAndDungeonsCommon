@@ -30,6 +30,7 @@ public class NetworkManagerHandler : NetworkHandler
         [PacketBinding.Binding]
         public static void PrepareRound(Packet p)
         {
+            Debug.Log("Saas");
             LevelDataManager.New(saveImmediately: false);
         }
 
