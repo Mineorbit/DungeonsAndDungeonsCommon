@@ -20,7 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             // currently not updated
             if (observed != null)
-                observed.enabled = LevelManager.currentLevel.activated && (!NetworkManager.isConnected || isOnServer); 
+                observed.enabled = (!NetworkManager.isConnected || isOnServer) || LevelManager.currentLevel.activated; 
         }
 
         // CONNECT HERE BASED ON POSITION
