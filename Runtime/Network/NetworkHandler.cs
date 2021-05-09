@@ -36,6 +36,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             isOnServer = Server.instance != null;
             NetworkManager.networkHandlers.Add(this);
             SetupLocalMarshalls();
+            if(isOnServer)
+            Identity = GetInstanceID().ToString();
 
         }
 
