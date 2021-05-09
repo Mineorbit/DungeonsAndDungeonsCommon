@@ -24,6 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 { 
                     Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
                 }
+                loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
             }
         }
 
