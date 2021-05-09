@@ -22,6 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // CONNECT HERE BASED ON POSITION
         public virtual void Start()
         {
+            if(isOnServer)
             ConnectLevelObject();
         }
 
@@ -41,6 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void OnConnectLevelObject(Packet p)
         {
+            Debug.Log("Handling");
 
             float eps = 0.5f;
             Game.ConnectLevelObject levelObjectConnect;
