@@ -133,17 +133,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void SendAction(string actionName)
-        {
-            if(availableActions.Contains(actionName))
-            {
-                LevelObjectAction action = new LevelObjectAction
-                {
-                    ActionName =  actionName
-                };
-                Marshall(action);
-            }
-        }
 
 
         public class ActionParam
@@ -180,12 +169,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
           
+
+        // THIS NEEDS A SAFETY LIST LATER
+
         // NOT COMPLETED
         // THIS NEEDS TO PACK ARGUMENTS INTO ANY
         public void SendAction(string actionName, ActionParam argument)
         {
-            if (availableActions.Contains(actionName))
-            {
                 LevelObjectAction action = new LevelObjectAction
                 {
                     ActionName = actionName
@@ -198,7 +188,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 action.Params.Add(arguments);
                 Marshall(action);
-            }
+        }
+
+
+        public void SendAction(string actionName)
+        {
+            LevelObjectAction action = new LevelObjectAction
+            {
+                ActionName = actionName
+            };
+            Marshall(action);
+
         }
 
 
