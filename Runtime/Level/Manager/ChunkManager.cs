@@ -17,8 +17,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static int regionGranularity = 2;
 
-        public int count;
-
         bool ready = false;
 
 
@@ -153,7 +151,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var c = chunk.GetComponent<Chunk>();
             c.chunkId = GetChunkID(gridPosition);
             chunks.Add(gridPosition,c);
-            chunkLoaded.Add(count,true);
+            chunkLoaded.Add(c.chunkId,true);
             return c;
         }
 
