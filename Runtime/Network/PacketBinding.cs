@@ -84,7 +84,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (withIdentity)
                     {
                         Debug.Log("With Identity");
-                        action = (x) => {  NetworkHandler handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity); Debug.Log("Packet forwarded to "+handler.gameObject.name); Delegate.CreateDelegate(type: typeof(UnityAction<Packet>),handler, methodInfo.Name,true,true).DynamicInvoke(x); };
+                        action = (x) => {
+                            MainCaller.Do(
+                                () => { 
+                                NetworkHandler handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity);
+                                Debug.Log("Packet forwarded to "+handler.gameObject.name); 
+                                Delegate.CreateDelegate(type: typeof(UnityAction<Packet>),handler, methodInfo.Name,true,true).DynamicInvoke(x);
+                                }
+                            );
+                        };
                     }else
                     {
                         Debug.Log("Without Identity");
