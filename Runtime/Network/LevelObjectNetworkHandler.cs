@@ -124,7 +124,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        // NOT YET TESTED
+        // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
         [PacketBinding.Binding]
         public void ProcessAction(Packet p)
         {
@@ -141,9 +141,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     parameters.Add(actionParam.data);
                 }
                 object[] paramObjects = new object[levelObjectAction.Params.Count];
-
-                MainCaller.Do(() => { Debug.Log(levelObjectAction.ActionName+" "+observed+" "+parameters);
+                if(methodInfo != null)
+                { 
+                    MainCaller.Do(() => { Debug.Log(levelObjectAction.ActionName+" "+observed+" "+parameters);
                     methodInfo.Invoke(observed,parameters.ToArray()); });
+                }else
+                {
+                    Debug.Log("The Method with the given name"+levelObjectAction.ActionName+" could not be found, is it private?");
+                }
             }
         }
 
