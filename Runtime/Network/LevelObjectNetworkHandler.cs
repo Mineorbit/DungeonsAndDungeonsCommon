@@ -13,6 +13,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         List<string> availableActions = new List<string>();
 
+
+
         public virtual void Awake()
         {
             observed = GetComponent<LevelObject>();
@@ -26,11 +28,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // CONNECT HERE BASED ON POSITION
         public virtual void Start()
         {
-            if(isOnServer)
-            ConnectLevelObject();
+            if (!isOnServer)
+                StartRequestBind();
         }
 
-        public void ConnectLevelObject()
+        public void ConnectLevelObject(int rn)
         {
             Game.ConnectLevelObject connectLevelObject = new ConnectLevelObject
             {
@@ -38,61 +40,78 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 X = transform.position.x,
                 Y = transform.position.y,
                 Z = transform.position.z,
-                HandlerType = this.GetType().FullName
+                HandlerType = this.GetType().FullName,
+                ResponseNumber = rn
             };
             Marshall(this.GetType(),connectLevelObject);
         }
 
-        public static void RequestBind(string failedBindIdentity)
+
+        static int count = 0;
+        public static Dictionary<int, LevelObjectNetworkHandler> bindRequests = new Dictionary<int, LevelObjectNetworkHandler>();
+        public void StartRequestBind()
         {
             ConnectLevelObjectRequest connectLevelObjectRequest = new ConnectLevelObjectRequest
             {
-                Identity = failedBindIdentity
+                X = transform.position.x,
+                Y = transform.position.y,
+                Z = transform.position.z,
+                HandlerType = this.GetType().FullName,
+                RequestNumber = count
             };
-            Debug.Log("Asking for Bind of "+failedBindIdentity);
-            Marshall(typeof(LevelObjectNetworkHandler),connectLevelObjectRequest,failedBindIdentity);
-        }
 
-        [PacketBinding.Binding]
-        public void OnConnectLevelObjectRequest(Packet p)
-        {
-            ConnectLevelObjectRequest connectLevelObjectRequest;
-            if(p.Content.TryUnpack<ConnectLevelObjectRequest>(out connectLevelObjectRequest))
-            {
-                MainCaller.Do(() =>
-                {
-                    Debug.Log("Processing Rebind Request");
-                    ConnectLevelObject();
-                });
-            }
+            bindRequests.Add(count,this);
+            count++;
+            Marshall(typeof(LevelObjectNetworkHandler), connectLevelObjectRequest);
         }
 
 
         [PacketBinding.Binding]
         public static void OnConnectLevelObject(Packet p)
         {
+            Game.ConnectLevelObject connectLevelObjectResponse;
+            if(p.Content.TryUnpack<Game.ConnectLevelObject>(out connectLevelObjectResponse))
+            {
+                LevelObjectNetworkHandler bindedHandler;
+                if(bindRequests.TryGetValue(connectLevelObjectResponse.ResponseNumber,out bindedHandler))
+                {
+
+                    MainCaller.Do(() =>
+                    {
+                        Debug.Log("Processing Rebind Response");
+                        bindedHandler.Identity = connectLevelObjectResponse.Identity;
+                        bindRequests.Remove(connectLevelObjectResponse.ResponseNumber);
+                    });
+                }
+
+            }
+        }
+
+
+        [PacketBinding.Binding]
+        public static void OnConnectLevelObjectRequest(Packet p)
+        {
             MainCaller.Do(() => {
 
                 Debug.Log("Handling");
                 float eps = 0.025f;
-                Game.ConnectLevelObject levelObjectConnect;
-                if (p.Content.TryUnpack<Game.ConnectLevelObject>(out levelObjectConnect))
+                Game.ConnectLevelObjectRequest levelObjectConnect;
+                if (p.Content.TryUnpack<Game.ConnectLevelObjectRequest>(out levelObjectConnect))
                 {
                     Vector3 handlerPosition = new Vector3(levelObjectConnect.X, levelObjectConnect.Y, levelObjectConnect.Z);
                     Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
-                    NetworkHandler fittingHandler = NetworkManager.networkHandlers.Find((x) => {
+                    LevelObjectNetworkHandler fittingHandler = (LevelObjectNetworkHandler) NetworkManager.networkHandlers.Find((x) => {
                         float distance = (handlerPosition - x.transform.position).magnitude;
                         Debug.Log(x+" "+distance);
                         return x.GetType() == handlerType && distance < eps;
                     });
                     if (fittingHandler != null)
                     {
-                        fittingHandler.Identity = levelObjectConnect.Identity;
+                        fittingHandler.ConnectLevelObject(levelObjectConnect.RequestNumber);
                     }
                     else
                     {
                         Debug.Log("No " + handlerType + " found at " + handlerPosition);
-                        RequestBind(levelObjectConnect.Identity);
                     }
                 }
 

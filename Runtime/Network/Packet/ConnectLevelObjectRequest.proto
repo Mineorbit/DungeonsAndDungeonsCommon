@@ -5,4 +5,9 @@ package game;
 
 message ConnectLevelObjectRequest {
   string Identity = 1;
+  float X = 2;
+  float Y = 3;
+  float Z = 4;
+  string HandlerType = 5;
+  int32 requestNumber = 6;
 }

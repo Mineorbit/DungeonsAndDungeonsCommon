@@ -24,13 +24,14 @@ namespace Game {
     static ConnectLevelObjectReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChhDb25uZWN0TGV2ZWxPYmplY3QucHJvdG8SBGdhbWUiXAoSQ29ubmVjdExl",
+            "ChhDb25uZWN0TGV2ZWxPYmplY3QucHJvdG8SBGdhbWUidAoSQ29ubmVjdExl",
             "dmVsT2JqZWN0EhAKCElkZW50aXR5GAEgASgJEgkKAVgYAiABKAISCQoBWRgD",
-            "IAEoAhIJCgFaGAQgASgCEhMKC0hhbmRsZXJUeXBlGAUgASgJYgZwcm90bzM="));
+            "IAEoAhIJCgFaGAQgASgCEhMKC0hhbmRsZXJUeXBlGAUgASgJEhYKDlJlc3Bv",
+            "bnNlTnVtYmVyGAYgASgFYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.ConnectLevelObject), global::Game.ConnectLevelObject.Parser, new[]{ "Identity", "X", "Y", "Z", "HandlerType" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.ConnectLevelObject), global::Game.ConnectLevelObject.Parser, new[]{ "Identity", "X", "Y", "Z", "HandlerType", "ResponseNumber" }, null, null, null, null)
           }));
     }
     #endregion
@@ -71,6 +72,7 @@ namespace Game {
       y_ = other.y_;
       z_ = other.z_;
       handlerType_ = other.handlerType_;
+      responseNumber_ = other.responseNumber_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -134,6 +136,17 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "ResponseNumber" field.</summary>
+    public const int ResponseNumberFieldNumber = 6;
+    private int responseNumber_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int ResponseNumber {
+      get { return responseNumber_; }
+      set {
+        responseNumber_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ConnectLevelObject);
@@ -152,6 +165,7 @@ namespace Game {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
       if (HandlerType != other.HandlerType) return false;
+      if (ResponseNumber != other.ResponseNumber) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -163,6 +177,7 @@ namespace Game {
       if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
       if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
       if (HandlerType.Length != 0) hash ^= HandlerType.GetHashCode();
+      if (ResponseNumber != 0) hash ^= ResponseNumber.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -199,6 +214,10 @@ namespace Game {
         output.WriteRawTag(42);
         output.WriteString(HandlerType);
       }
+      if (ResponseNumber != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(ResponseNumber);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -228,6 +247,10 @@ namespace Game {
         output.WriteRawTag(42);
         output.WriteString(HandlerType);
       }
+      if (ResponseNumber != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(ResponseNumber);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -251,6 +274,9 @@ namespace Game {
       }
       if (HandlerType.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(HandlerType);
+      }
+      if (ResponseNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ResponseNumber);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -277,6 +303,9 @@ namespace Game {
       }
       if (other.HandlerType.Length != 0) {
         HandlerType = other.HandlerType;
+      }
+      if (other.ResponseNumber != 0) {
+        ResponseNumber = other.ResponseNumber;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -312,6 +341,10 @@ namespace Game {
             HandlerType = input.ReadString();
             break;
           }
+          case 48: {
+            ResponseNumber = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -344,6 +377,10 @@ namespace Game {
           }
           case 42: {
             HandlerType = input.ReadString();
+            break;
+          }
+          case 48: {
+            ResponseNumber = input.ReadInt32();
             break;
           }
         }

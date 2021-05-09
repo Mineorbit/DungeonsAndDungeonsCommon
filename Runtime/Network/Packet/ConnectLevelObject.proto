@@ -9,4 +9,5 @@ message ConnectLevelObject {
   float Y = 3;
   float Z = 4;
   string HandlerType = 5;
+  int32 ResponseNumber = 6;
 }
