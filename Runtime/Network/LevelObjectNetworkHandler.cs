@@ -6,6 +6,8 @@ using Game;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
+using System.Linq;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -122,14 +124,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        // THIS NEEDS TO UNPACK ANY INTO ARGUMENTS FOR DYNAMIC CALL
+        // NOT YET TESTED
         [PacketBinding.Binding]
         public void ProcessAction(Packet p)
         {
             LevelObjectAction levelObjectAction;
             if (p.Content.TryUnpack<LevelObjectAction>(out levelObjectAction))
             {
-            
+                MethodInfo methodInfo = observed.GetType().GetMethod(levelObjectAction.ActionName);
+
+                List<object> parameters = new List<object>();
+                foreach(KeyValuePair<string,Parameter> k in levelObjectAction.Params)
+                {
+                    ActionParam actionParam = ActionParam.Unpack(new Tuple<string, Parameter>(k.Key,k.Value));
+                    parameters.Add(actionParam.data);
+                }
+                object[] paramObjects = new object[levelObjectAction.Params.Count];
+
+                MainCaller.Do(() => { methodInfo.Invoke(observed,parameters.ToArray()); });
             }
         }
 
@@ -137,6 +149,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public class ActionParam
         {
+            public string FieldName;
             public Type type;
             public object data;
             internal static ActionParam From<T>(T argument)
@@ -146,10 +159,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 actionParam.data = argument;
                 return actionParam;
             }
-                public (string, Google.Protobuf.WellKnownTypes.Any) Pack()
+
+
+            public static ActionParam Unpack(Tuple<string,Parameter> data)
+            {
+                ActionParam actionParam = new ActionParam();
+                actionParam.FieldName = data.Item1;
+
+                actionParam.type = Type.GetType(data.Item2.Type);
+
+                if (actionParam.type == typeof(ChunkData))
                 {
+                    NetLevel.ChunkData netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
+                    ChunkData outData = new ChunkData();
+                    MemoryStream memoryStream = new MemoryStream(netChunkData.Data.ToByteArray());
+                    BinaryFormatter bf = new BinaryFormatter();
+                    actionParam.data = (ChunkData) bf.Deserialize(memoryStream);
+                }
+
+
+                return actionParam;
+            }
+
+
+            public (string, Parameter) Pack()
+            {
 
                 Google.Protobuf.WellKnownTypes.Any x = null;
+
+
                 if (type == typeof(ChunkData))
                 {
                     ChunkData inData = (ChunkData)data;
@@ -165,7 +203,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     x = Google.Protobuf.WellKnownTypes.Any.Pack(chunkData);
                 }
 
-                return (type.FullName, x);
+
+                Parameter p = new Parameter
+                {
+                    Type = type.FullName,
+                    Value = x
+
+                };
+                return (FieldName, p);
             }
         }
           
@@ -180,7 +225,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     ActionName = actionName
                 };
-                Dictionary<string, Google.Protobuf.WellKnownTypes.Any> arguments = new Dictionary<string, Google.Protobuf.WellKnownTypes.Any>();
+                Dictionary<string, Parameter> arguments = new Dictionary<string, Parameter>();
 
                 var packedArgument = argument.Pack();
                 
