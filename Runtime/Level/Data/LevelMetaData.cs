@@ -54,5 +54,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			metaData.availYellow = netData.AvailYellow;
 			return metaData;
         }
-    }
+
+		public static NetLevel.LevelMetaData ToNetData(LevelMetaData netData)
+		{
+			NetLevel.LevelMetaData metaData = new NetLevel.LevelMetaData();
+			metaData.FullName = netData.FullName;
+			metaData.Description = netData.Description;
+			metaData.LocalLevelId = netData.localLevelId;
+			metaData.UniqueLevelId = netData.uniqueLevelId;
+			metaData.AvailBlue = netData.availBlue;
+			metaData.AvailGreen = netData.availGreen;
+			metaData.AvailRed = netData.availRed;
+			metaData.AvailYellow = netData.availYellow;
+			return metaData;
+		}
+	}
 }

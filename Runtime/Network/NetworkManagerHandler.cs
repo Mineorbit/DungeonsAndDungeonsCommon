@@ -14,7 +14,8 @@ public class NetworkManagerHandler : NetworkHandler
         {
             PrepareRound prepareRound = new PrepareRound
             {
-                Message = "READY, STEADY"
+                Message = "READY, STEADY",
+                LevelMetaData = LevelMetaData.ToNetData(LevelManager.currentLevelMetaData)
             };
             Marshall(typeof(NetworkManagerHandler), prepareRound);
         }
@@ -37,10 +38,12 @@ public class NetworkManagerHandler : NetworkHandler
             {
                 netData = prepareRound.LevelMetaData;
             }
-
+            if(netData != null)
+            {
             LevelMetaData levelMetaData = LevelMetaData.FromNetData(netData);
-            Debug.Log("Saas");
+            Debug.Log("Prepred");
             MainCaller.Do(() => { LevelDataManager.New(levelMetaData,saveImmediately: false); });
+            }
         }
 
 
