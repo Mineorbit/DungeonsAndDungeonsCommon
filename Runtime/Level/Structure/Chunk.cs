@@ -5,7 +5,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Chunk : MonoBehaviour
     {
-        public int chunkId;
+        public long chunkId;
         void Start()
         {
             gameObject.name = "Chunk " + chunkId;

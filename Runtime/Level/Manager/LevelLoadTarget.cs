@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
             {
-                ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position,createIfNotThere: false));
+                ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position,createIfNotThere: true));
                 if(chunkData != null)
                 { 
                     Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
