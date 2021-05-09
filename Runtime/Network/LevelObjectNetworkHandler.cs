@@ -42,26 +42,32 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void OnConnectLevelObject(Packet p)
         {
+            MainCaller.Do(() => {
+
+                float eps = 0.5f;
+                Game.ConnectLevelObject levelObjectConnect;
+                if (p.Content.TryUnpack<Game.ConnectLevelObject>(out levelObjectConnect))
+                {
+                    Vector3 handlerPosition = new Vector3(levelObjectConnect.X, levelObjectConnect.Y, levelObjectConnect.Z);
+                    Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
+                    NetworkHandler fittingHandler = NetworkManager.networkHandlers.Find((x) => {
+                        float distance = (handlerPosition - x.transform.position).magnitude;
+                        return x.GetType() == handlerType && distance < eps;
+                    });
+                    if (fittingHandler != null)
+                    {
+                        fittingHandler.Identity = levelObjectConnect.Identity;
+                    }
+                    else
+                    {
+                        Debug.Log("No " + handlerType + " found at " + handlerPosition);
+                    }
+                }
+
+            });
             Debug.Log("Handling");
 
-            float eps = 0.5f;
-            Game.ConnectLevelObject levelObjectConnect;
-            if (p.Content.TryUnpack<Game.ConnectLevelObject>(out levelObjectConnect))
-            {
-                Vector3 handlerPosition = new Vector3(levelObjectConnect.X, levelObjectConnect.Y, levelObjectConnect.Z);
-                Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
-                NetworkHandler fittingHandler = NetworkManager.networkHandlers.Find((x) => {
-                    float distance = (handlerPosition - x.transform.position).magnitude;
-                    return x.GetType() == handlerType && distance < eps; 
-                });
-                if(fittingHandler != null)
-                {
-                    fittingHandler.Identity = levelObjectConnect.Identity;
-                }else
-                {
-                    Debug.Log("No "+handlerType+" found at "+handlerPosition);
-                }
-            }
+            
         }
 
 
