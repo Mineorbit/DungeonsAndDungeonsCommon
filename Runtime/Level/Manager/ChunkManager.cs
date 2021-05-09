@@ -147,18 +147,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Chunk AddChunk(Tuple<int, int> gridPosition)
         {
             Setup();
-            count++;
             GameObject chunk = Instantiate(chunkPrefab) as GameObject;
             chunk.transform.parent = LevelManager.currentLevel.transform;
             chunk.transform.position = ChunkPositionFromGridPosition(gridPosition);
             var c = chunk.GetComponent<Chunk>();
-            c.chunkId = count;
+            c.chunkId = GetChunkID(gridPosition);
             chunks.Add(gridPosition,c);
             chunkLoaded.Add(count,true);
             return c;
         }
 
         
+        long GetChunkID(Tuple<int,int> gridPosition)
+        {
+            byte[] x = BitConverter.GetBytes(gridPosition.Item1);
+            byte[] y = BitConverter.GetBytes(gridPosition.Item2);
+            byte[] l = new byte[8];
+            Array.Copy(x,0,l,0,4);
+            Array.Copy(y, 0, l, 4, 4);
+            return BitConverter.ToInt64(l,0);
+        }
 
         public static Vector3 ChunkPositionFromGridPosition(Tuple<int,int> gridPosition)
         {
@@ -180,15 +188,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var chunkGridPosition = GetChunkGridPosition(position);
             Chunk result_chunk = null;
             if(instance.chunks != null)
-            { 
-            if (instance.chunks.TryGetValue(chunkGridPosition,out result_chunk))
             {
-                // chunk was found here eventually something
-            }else
-            {
+                Debug.Log("TEST "+chunkGridPosition);
+                if (instance.chunks.TryGetValue(chunkGridPosition,out result_chunk))
+                {
+                    Debug.Log("TEST2");
+                }
+                else
+                {
                if(createIfNotThere)
                     result_chunk = instance.AddChunk(chunkGridPosition);
-            }
+                }
             }
             return result_chunk;
         }
