@@ -18,8 +18,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed = GetComponent<LevelObject>();
             base.Awake();
 
-
-            observed.enabled = LevelManager.currentLevel.activated && isOnServer; 
+            // currently not updated
+            observed.enabled = LevelManager.currentLevel.activated && (!NetworkManager.isConnected || isOnServer); 
         }
 
         // CONNECT HERE BASED ON POSITION
