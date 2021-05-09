@@ -24,13 +24,14 @@ namespace Game {
     static ConnectLevelObjectRequestReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Ch9Db25uZWN0TGV2ZWxPYmplY3RSZXF1ZXN0LnByb3RvEgRnYW1lIi0KGUNv",
-            "bm5lY3RMZXZlbE9iamVjdFJlcXVlc3QSEAoISWRlbnRpdHkYASABKAliBnBy",
-            "b3RvMw=="));
+            "Ch9Db25uZWN0TGV2ZWxPYmplY3RSZXF1ZXN0LnByb3RvEgRnYW1lInoKGUNv",
+            "bm5lY3RMZXZlbE9iamVjdFJlcXVlc3QSEAoISWRlbnRpdHkYASABKAkSCQoB",
+            "WBgCIAEoAhIJCgFZGAMgASgCEgkKAVoYBCABKAISEwoLSGFuZGxlclR5cGUY",
+            "BSABKAkSFQoNcmVxdWVzdE51bWJlchgGIAEoBWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.ConnectLevelObjectRequest), global::Game.ConnectLevelObjectRequest.Parser, new[]{ "Identity" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.ConnectLevelObjectRequest), global::Game.ConnectLevelObjectRequest.Parser, new[]{ "Identity", "X", "Y", "Z", "HandlerType", "RequestNumber" }, null, null, null, null)
           }));
     }
     #endregion
@@ -67,6 +68,11 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ConnectLevelObjectRequest(ConnectLevelObjectRequest other) : this() {
       identity_ = other.identity_;
+      x_ = other.x_;
+      y_ = other.y_;
+      z_ = other.z_;
+      handlerType_ = other.handlerType_;
+      requestNumber_ = other.requestNumber_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -86,6 +92,61 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "X" field.</summary>
+    public const int XFieldNumber = 2;
+    private float x_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float X {
+      get { return x_; }
+      set {
+        x_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "Y" field.</summary>
+    public const int YFieldNumber = 3;
+    private float y_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Y {
+      get { return y_; }
+      set {
+        y_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "Z" field.</summary>
+    public const int ZFieldNumber = 4;
+    private float z_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Z {
+      get { return z_; }
+      set {
+        z_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "HandlerType" field.</summary>
+    public const int HandlerTypeFieldNumber = 5;
+    private string handlerType_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string HandlerType {
+      get { return handlerType_; }
+      set {
+        handlerType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "requestNumber" field.</summary>
+    public const int RequestNumberFieldNumber = 6;
+    private int requestNumber_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int RequestNumber {
+      get { return requestNumber_; }
+      set {
+        requestNumber_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ConnectLevelObjectRequest);
@@ -100,6 +161,11 @@ namespace Game {
         return true;
       }
       if (Identity != other.Identity) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
+      if (HandlerType != other.HandlerType) return false;
+      if (RequestNumber != other.RequestNumber) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -107,6 +173,11 @@ namespace Game {
     public override int GetHashCode() {
       int hash = 1;
       if (Identity.Length != 0) hash ^= Identity.GetHashCode();
+      if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
+      if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
+      if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
+      if (HandlerType.Length != 0) hash ^= HandlerType.GetHashCode();
+      if (RequestNumber != 0) hash ^= RequestNumber.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -127,6 +198,26 @@ namespace Game {
         output.WriteRawTag(10);
         output.WriteString(Identity);
       }
+      if (X != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(X);
+      }
+      if (Y != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(Y);
+      }
+      if (Z != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(Z);
+      }
+      if (HandlerType.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(HandlerType);
+      }
+      if (RequestNumber != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(RequestNumber);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -140,6 +231,26 @@ namespace Game {
         output.WriteRawTag(10);
         output.WriteString(Identity);
       }
+      if (X != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(X);
+      }
+      if (Y != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(Y);
+      }
+      if (Z != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(Z);
+      }
+      if (HandlerType.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(HandlerType);
+      }
+      if (RequestNumber != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(RequestNumber);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -151,6 +262,21 @@ namespace Game {
       int size = 0;
       if (Identity.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
+      }
+      if (X != 0F) {
+        size += 1 + 4;
+      }
+      if (Y != 0F) {
+        size += 1 + 4;
+      }
+      if (Z != 0F) {
+        size += 1 + 4;
+      }
+      if (HandlerType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(HandlerType);
+      }
+      if (RequestNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(RequestNumber);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -165,6 +291,21 @@ namespace Game {
       }
       if (other.Identity.Length != 0) {
         Identity = other.Identity;
+      }
+      if (other.X != 0F) {
+        X = other.X;
+      }
+      if (other.Y != 0F) {
+        Y = other.Y;
+      }
+      if (other.Z != 0F) {
+        Z = other.Z;
+      }
+      if (other.HandlerType.Length != 0) {
+        HandlerType = other.HandlerType;
+      }
+      if (other.RequestNumber != 0) {
+        RequestNumber = other.RequestNumber;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -184,6 +325,26 @@ namespace Game {
             Identity = input.ReadString();
             break;
           }
+          case 21: {
+            X = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            Y = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            Z = input.ReadFloat();
+            break;
+          }
+          case 42: {
+            HandlerType = input.ReadString();
+            break;
+          }
+          case 48: {
+            RequestNumber = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -200,6 +361,26 @@ namespace Game {
             break;
           case 10: {
             Identity = input.ReadString();
+            break;
+          }
+          case 21: {
+            X = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            Y = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            Z = input.ReadFloat();
+            break;
+          }
+          case 42: {
+            HandlerType = input.ReadString();
+            break;
+          }
+          case 48: {
+            RequestNumber = input.ReadInt32();
             break;
           }
         }

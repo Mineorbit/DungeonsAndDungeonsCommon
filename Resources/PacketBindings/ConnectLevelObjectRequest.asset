@@ -91,11 +91,11 @@ MonoBehaviour:
   - com.mineorbit.dungeonsanddungeonscommon.NetworkManagerHandler
   - com.mineorbit.dungeonsanddungeonscommon.PlayerNetworkHandler
   possibleMethods:
-  - OnConnectLevelObjectRequest
   - OnConnectLevelObject
+  - OnConnectLevelObjectRequest
   - ProcessAction
   PacketType: Game.ConnectLevelObjectRequest
   HandlerType: com.mineorbit.dungeonsanddungeonscommon.LevelObjectNetworkHandler
   BindedMethods:
   - OnConnectLevelObjectRequest
-  withIdentity: 1
+  withIdentity: 0
