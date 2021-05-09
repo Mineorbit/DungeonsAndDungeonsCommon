@@ -134,9 +134,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 MethodInfo methodInfo = observed.GetType().GetMethod(levelObjectAction.ActionName);
 
                 List<object> parameters = new List<object>();
-                foreach(KeyValuePair<string,Parameter> k in levelObjectAction.Params)
+                foreach(KeyValuePair<int,Parameter> k in levelObjectAction.Params)
                 {
-                    ActionParam actionParam = ActionParam.Unpack(new Tuple<string, Parameter>(k.Key,k.Value));
+                    ActionParam actionParam = ActionParam.Unpack(new Tuple<int, Parameter>(k.Key,k.Value));
                     parameters.Add(actionParam.data);
                 }
                 object[] paramObjects = new object[levelObjectAction.Params.Count];
@@ -149,22 +149,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public class ActionParam
         {
-            public string FieldName;
+            public int FieldPlace;
             public Type type;
             public object data;
-            internal static ActionParam From<T>(T argument)
+            internal static ActionParam From<T>(T argument, int fieldPlace = 0)
             {
                 ActionParam actionParam = new ActionParam();
+                actionParam.FieldPlace = fieldPlace;
                 actionParam.type = argument.GetType();
                 actionParam.data = argument;
                 return actionParam;
             }
 
 
-            public static ActionParam Unpack(Tuple<string,Parameter> data)
+            public static ActionParam Unpack(Tuple<int,Parameter> data)
             {
                 ActionParam actionParam = new ActionParam();
-                actionParam.FieldName = data.Item1;
+                actionParam.FieldPlace = data.Item1;
 
                 actionParam.type = Type.GetType(data.Item2.Type);
 
@@ -182,7 +183,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
 
-            public (string, Parameter) Pack()
+            public (int, Parameter) Pack()
             {
 
                 Google.Protobuf.WellKnownTypes.Any x = null;
@@ -210,7 +211,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Value = x
 
                 };
-                return (FieldName, p);
+                return (FieldPlace, p);
             }
         }
           
@@ -225,7 +226,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     ActionName = actionName
                 };
-                Dictionary<string, Parameter> arguments = new Dictionary<string, Parameter>();
+                Dictionary<int, Parameter> arguments = new Dictionary<int, Parameter>();
 
                 var packedArgument = argument.Pack();
                 
