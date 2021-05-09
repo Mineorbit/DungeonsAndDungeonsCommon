@@ -98,4 +98,4 @@ MonoBehaviour:
   HandlerType: com.mineorbit.dungeonsanddungeonscommon.LevelObjectNetworkHandler
   BindedMethods:
   - ProcessAction
-  withIdentity: 0
+  withIdentity: 1
