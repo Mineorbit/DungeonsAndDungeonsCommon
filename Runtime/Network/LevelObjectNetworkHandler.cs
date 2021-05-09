@@ -44,6 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MainCaller.Do(() => {
 
+                Debug.Log("Handling");
                 float eps = 0.5f;
                 Game.ConnectLevelObject levelObjectConnect;
                 if (p.Content.TryUnpack<Game.ConnectLevelObject>(out levelObjectConnect))
@@ -52,6 +53,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
                     NetworkHandler fittingHandler = NetworkManager.networkHandlers.Find((x) => {
                         float distance = (handlerPosition - x.transform.position).magnitude;
+                        Debug.Log(x+" "+distance);
                         return x.GetType() == handlerType && distance < eps;
                     });
                     if (fittingHandler != null)
@@ -65,7 +67,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
             });
-            Debug.Log("Handling");
 
             
         }
