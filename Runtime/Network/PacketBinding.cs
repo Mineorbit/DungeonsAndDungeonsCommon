@@ -73,8 +73,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 bindedMethods = BindedMethods.Select((x) => { return handlerType.GetMethod(x); }).ToList();
             }
 
-            Debug.Log(bindedMethods);
-            Debug.Log(bindedMethods.Count);
             if (bindedMethods != null && bindedMethods.Count > 0)
             {
                 foreach (MethodInfo methodInfo in bindedMethods)
@@ -83,19 +81,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     UnityAction<Packet> action = null;
                     if (withIdentity)
                     {
-                        Debug.Log("With Identity");
                         action = (x) => {
                             MainCaller.Do(
                                 () => { 
                                 NetworkHandler handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity);
-                                Debug.Log("Packet forwarded to "+handler.gameObject.name); 
                                 Delegate.CreateDelegate(type: typeof(UnityAction<Packet>),handler, methodInfo.Name,true,true).DynamicInvoke(x);
                                 }
                             );
                         };
                     }else
                     {
-                        Debug.Log("Without Identity");
                         action = (UnityAction<Packet>) Delegate.CreateDelegate(typeof(UnityAction<Packet>),methodInfo);
                     }
 
