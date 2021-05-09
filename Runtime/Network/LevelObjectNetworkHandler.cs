@@ -70,7 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             MainCaller.Do(() => {
 
                 Debug.Log("Handling");
-                float eps = 0.5f;
+                float eps = 0.025f;
                 Game.ConnectLevelObject levelObjectConnect;
                 if (p.Content.TryUnpack<Game.ConnectLevelObject>(out levelObjectConnect))
                 {
