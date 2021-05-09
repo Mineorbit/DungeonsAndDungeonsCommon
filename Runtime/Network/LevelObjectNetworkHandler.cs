@@ -4,12 +4,14 @@ using UnityEngine;
 using General;
 using Game;
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelObjectNetworkHandler : NetworkHandler
     {
-        public new LevelObject observed;
+        public new NetworkLevelObject observed;
 
         List<string> availableActions = new List<string>();
 
@@ -17,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Awake()
         {
-            observed = GetComponent<LevelObject>();
+            observed = GetComponent<NetworkLevelObject>();
             base.Awake();
 
             // currently not updated
@@ -102,7 +104,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
                     LevelObjectNetworkHandler fittingHandler = (LevelObjectNetworkHandler) NetworkManager.networkHandlers.Find((x) => {
                         float distance = (handlerPosition - x.transform.position).magnitude;
-                        Debug.Log(x+" "+distance);
                         return x.GetType() == handlerType && distance < eps;
                     });
                     if (fittingHandler != null)
@@ -125,7 +126,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void ProcessAction(Packet p)
         {
-
+            LevelObjectAction levelObjectAction;
+            if (p.Content.TryUnpack<LevelObjectAction>(out levelObjectAction))
+            {
+            
+            }
         }
 
         public void SendAction(string actionName)
@@ -143,16 +148,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public class ActionParam
         {
+            public Type type;
+            public object data;
             internal static ActionParam From<T>(T argument)
             {
-                throw new NotImplementedException();
+                ActionParam actionParam = new ActionParam();
+                actionParam.type = argument.GetType();
+                actionParam.data = argument;
+                return actionParam;
             }
-            public  (string,Google.Protobuf.WellKnownTypes.Any) Pack()
-            {
-                return (null,null);
+                public (string, Google.Protobuf.WellKnownTypes.Any) Pack()
+                {
+
+                Google.Protobuf.WellKnownTypes.Any x = null;
+                if (type == typeof(ChunkData))
+                {
+                    ChunkData inData = (ChunkData)data;
+
+                    MemoryStream memoryStream = new MemoryStream();
+                    BinaryFormatter bf = new BinaryFormatter();
+                    bf.Serialize(memoryStream, inData);
+                    NetLevel.ChunkData chunkData = new NetLevel.ChunkData
+                    {
+                        ChunkId = inData.chunkId,
+                        Data = Google.Protobuf.ByteString.FromStream(memoryStream)
+                    };
+                    x = Google.Protobuf.WellKnownTypes.Any.Pack(chunkData);
+                }
+
+                return (type.FullName, x);
             }
         }
-
+          
         // NOT COMPLETED
         // THIS NEEDS TO PACK ARGUMENTS INTO ANY
         public void SendAction(string actionName, ActionParam argument)

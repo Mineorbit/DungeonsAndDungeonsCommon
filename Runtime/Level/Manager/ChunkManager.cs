@@ -23,6 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
+        public Dictionary<int, bool> chunkLoaded = new Dictionary<int, bool>();
+
 
         public enum LoadType { Disk, Net }
 
@@ -152,6 +154,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var c = chunk.GetComponent<Chunk>();
             c.chunkId = count;
             chunks.Add(gridPosition,c);
+            chunkLoaded.Add(count,true);
             return c;
         }
 
@@ -190,19 +193,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return result_chunk;
         }
 
-        public static void LoadChunk(int chunkId, LoadType loadType = LoadType.Disk)
-        {
-
-        }
 
 
         public static void LoadChunk(ChunkData chunkData)
         {
+            bool loaded = false;
+            instance.chunkLoaded.TryGetValue(chunkData.chunkId,out loaded);
+            if(!loaded)
+            { 
             List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
             levelObjectInstances.AddRange(chunkData.levelObjects);
             foreach (LevelObjectInstanceData i in levelObjectInstances)
             {
                 LevelManager.currentLevel.Add(i);
+            }
+            instance.chunkLoaded.Add(chunkData.chunkId,true);
             }
         }
     }

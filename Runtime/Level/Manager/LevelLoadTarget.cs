@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void StreamChunkIntoCurrentLevelFrom(ChunkData chunkData)
         {
-
+            ChunkManager.LoadChunk(chunkData);
         }
 
         void DisableChunk()
