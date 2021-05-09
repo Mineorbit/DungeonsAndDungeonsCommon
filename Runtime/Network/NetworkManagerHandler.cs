@@ -32,6 +32,7 @@ public class NetworkManagerHandler : NetworkHandler
         [PacketBinding.Binding]
         public static void PrepareRound(Packet p)
         {
+            Debug.Log("Preparing Round");
             NetLevel.LevelMetaData netData = null;
             PrepareRound prepareRound;
             if(p.Content.TryUnpack<PrepareRound>(out prepareRound))
