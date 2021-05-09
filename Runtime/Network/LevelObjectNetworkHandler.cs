@@ -19,6 +19,49 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Awake();
         }
 
+        // CONNECT HERE BASED ON POSITION
+        public virtual void Start()
+        {
+            ConnectLevelObject();
+        }
+
+        public void ConnectLevelObject()
+        {
+            Game.ConnectLevelObject connectLevelObject = new ConnectLevelObject
+            {
+                Identity = this.Identity,
+                X = transform.position.x,
+                Y = transform.position.y,
+                Z = transform.position.z,
+                HandlerType = this.GetType().FullName
+            };
+            Marshall(this.GetType(),connectLevelObject);
+        }
+
+        [PacketBinding.Binding]
+        public static void OnConnectLevelObject(Packet p)
+        {
+
+            float eps = 0.0005f;
+            Game.ConnectLevelObject levelObjectConnect;
+            if (p.Content.TryUnpack<Game.ConnectLevelObject>(out levelObjectConnect))
+            {
+                Vector3 handlerPosition = new Vector3(levelObjectConnect.X, levelObjectConnect.Y, levelObjectConnect.Z);
+                Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
+                NetworkHandler fittingHandler = NetworkManager.networkHandlers.Find((x) => {
+                    float distance = (handlerPosition - x.transform.position).magnitude;
+                    return x.GetType() == handlerType && distance < eps; 
+                });
+                if(fittingHandler != null)
+                {
+                    fittingHandler.Identity = levelObjectConnect.Identity;
+                }else
+                {
+                    Debug.Log("No "+handlerType+" found at "+handlerPosition);
+                }
+            }
+        }
+
 
         // THIS NEEDS TO UNPACK ANY INTO ARGUMENTS FOR DYNAMIC CALL
         [PacketBinding.Binding]

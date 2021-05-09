@@ -104,27 +104,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         */
 
 
-        // works only for static objects
-        // Add type check eventually
-        private static void ConnectHandler(Packet connectPackage)
-        {
-            float eps = 0.0005f;
-            LevelObjectConnect levelObjectConnect;
-            if(connectPackage.Content.TryUnpack<LevelObjectConnect>(out levelObjectConnect))
-            {
-                Vector3 handlerPosition = new Vector3(levelObjectConnect.X,levelObjectConnect.Y,levelObjectConnect.Z);
-                foreach(NetworkHandler h in NetworkManager.networkHandlers)
-                {
-                    float distance = (handlerPosition - h.transform.position).magnitude;
-                    if(distance < eps)
-                    {
-                        h.Identity = levelObjectConnect.Identity;
-
-                        return;
-                    }
-                }
-            }
-        }
 
         
 
