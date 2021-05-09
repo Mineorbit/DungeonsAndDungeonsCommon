@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnConnectLevelObject(Packet p)
         {
 
-            float eps = 0.0005f;
+            float eps = 0.5f;
             Game.ConnectLevelObject levelObjectConnect;
             if (p.Content.TryUnpack<Game.ConnectLevelObject>(out levelObjectConnect))
             {
