@@ -29,7 +29,7 @@ namespace Game {
             "Z2xlLnByb3RvYnVmLkFueSKcAQoRTGV2ZWxPYmplY3RBY3Rpb24SEgoKQWN0",
             "aW9uTmFtZRgBIAEoCRIzCgZwYXJhbXMYAyADKAsyIy5HYW1lLkxldmVsT2Jq",
             "ZWN0QWN0aW9uLlBhcmFtc0VudHJ5Gj4KC1BhcmFtc0VudHJ5EgsKA2tleRgB",
-            "IAEoCRIeCgV2YWx1ZRgCIAEoCzIPLkdhbWUuUGFyYW1ldGVyOgI4AWIGcHJv",
+            "IAEoBRIeCgV2YWx1ZRgCIAEoCzIPLkdhbWUuUGFyYW1ldGVyOgI4AWIGcHJv",
             "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
@@ -311,11 +311,11 @@ namespace Game {
 
     /// <summary>Field number for the "params" field.</summary>
     public const int ParamsFieldNumber = 3;
-    private static readonly pbc::MapField<string, global::Game.Parameter>.Codec _map_params_codec
-        = new pbc::MapField<string, global::Game.Parameter>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForMessage(18, global::Game.Parameter.Parser), 26);
-    private readonly pbc::MapField<string, global::Game.Parameter> params_ = new pbc::MapField<string, global::Game.Parameter>();
+    private static readonly pbc::MapField<int, global::Game.Parameter>.Codec _map_params_codec
+        = new pbc::MapField<int, global::Game.Parameter>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::Game.Parameter.Parser), 26);
+    private readonly pbc::MapField<int, global::Game.Parameter> params_ = new pbc::MapField<int, global::Game.Parameter>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, global::Game.Parameter> Params {
+    public pbc::MapField<int, global::Game.Parameter> Params {
       get { return params_; }
     }
 
