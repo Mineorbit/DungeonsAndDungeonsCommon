@@ -25,7 +25,7 @@ namespace NetLevel {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg9DaHVua0RhdGEucHJvdG8SCE5ldExldmVsIioKCUNodW5rRGF0YRIPCgdj",
-            "aHVua0lkGAEgASgFEgwKBGRhdGEYAiABKAxiBnByb3RvMw=="));
+            "aHVua0lkGAEgASgDEgwKBGRhdGEYAiABKAxiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -77,9 +77,9 @@ namespace NetLevel {
 
     /// <summary>Field number for the "chunkId" field.</summary>
     public const int ChunkIdFieldNumber = 1;
-    private int chunkId_;
+    private long chunkId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int ChunkId {
+    public long ChunkId {
       get { return chunkId_; }
       set {
         chunkId_ = value;
@@ -118,7 +118,7 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (ChunkId != 0) hash ^= ChunkId.GetHashCode();
+      if (ChunkId != 0L) hash ^= ChunkId.GetHashCode();
       if (Data.Length != 0) hash ^= Data.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -136,9 +136,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (ChunkId != 0) {
+      if (ChunkId != 0L) {
         output.WriteRawTag(8);
-        output.WriteInt32(ChunkId);
+        output.WriteInt64(ChunkId);
       }
       if (Data.Length != 0) {
         output.WriteRawTag(18);
@@ -153,9 +153,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ChunkId != 0) {
+      if (ChunkId != 0L) {
         output.WriteRawTag(8);
-        output.WriteInt32(ChunkId);
+        output.WriteInt64(ChunkId);
       }
       if (Data.Length != 0) {
         output.WriteRawTag(18);
@@ -170,8 +170,8 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (ChunkId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChunkId);
+      if (ChunkId != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(ChunkId);
       }
       if (Data.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeBytesSize(Data);
@@ -187,7 +187,7 @@ namespace NetLevel {
       if (other == null) {
         return;
       }
-      if (other.ChunkId != 0) {
+      if (other.ChunkId != 0L) {
         ChunkId = other.ChunkId;
       }
       if (other.Data.Length != 0) {
@@ -208,7 +208,7 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            ChunkId = input.ReadInt32();
+            ChunkId = input.ReadInt64();
             break;
           }
           case 18: {
@@ -230,7 +230,7 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            ChunkId = input.ReadInt32();
+            ChunkId = input.ReadInt64();
             break;
           }
           case 18: {

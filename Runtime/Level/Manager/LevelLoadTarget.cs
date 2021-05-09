@@ -7,7 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelLoadTarget : NetworkLevelObject
     {
-        List<Tuple<int, int>> loadedLocalChunks;
+        List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
 
         void Start()
         {
@@ -21,12 +21,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position,createIfNotThere: false));
                 if(chunkData != null)
+                { 
                     Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
+                }
             }
         }
 
         void StreamChunkIntoCurrentLevelFrom(ChunkData chunkData)
         {
+            Debug.Log("Streaming Chunk");
             ChunkManager.LoadChunk(chunkData);
         }
 

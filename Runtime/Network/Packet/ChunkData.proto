@@ -5,6 +5,6 @@ package NetLevel;
 
 
 message ChunkData{
-	int32 chunkId = 1;
+	int64 chunkId = 1;
 	bytes data = 2;
 }
