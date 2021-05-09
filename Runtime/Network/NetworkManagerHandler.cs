@@ -42,7 +42,6 @@ public class NetworkManagerHandler : NetworkHandler
             if(netData != null)
             {
             LevelMetaData levelMetaData = LevelMetaData.FromNetData(netData);
-            Debug.Log("Prepred");
             MainCaller.Do(() => { LevelDataManager.New(levelMetaData,saveImmediately: false); });
             }
         }
