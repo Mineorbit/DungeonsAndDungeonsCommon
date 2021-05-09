@@ -47,7 +47,7 @@ MonoBehaviour:
   levelObjectDataType: 
   isDynamic: 0
   ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: 1990136630320035493}
 --- !u!114 &1990136630320035493
 MonoBehaviour:
   m_ObjectHideFlags: 0
