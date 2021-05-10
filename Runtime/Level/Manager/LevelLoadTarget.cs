@@ -17,14 +17,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void EnableChunkAt(Vector3 position)
         {
-            if(!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
+            if(LevelManager.currentLevel != null)
             {
+                if(!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
+                {
                 ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position,createIfNotThere: true));
                 if(chunkData != null)
                 { 
                     Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
                 }
                 loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
+                }
             }
         }
 
