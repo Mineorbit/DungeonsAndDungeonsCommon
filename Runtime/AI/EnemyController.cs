@@ -8,7 +8,7 @@ using com.mineorbit.dungeonsanddungeonscommon;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class EnemyController : MonoBehaviour
+    public class EnemyController : EntityController
     {
 
         public Enemy me;

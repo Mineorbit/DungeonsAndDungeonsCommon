@@ -7,7 +7,7 @@ using UnityEngine;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
 
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : EntityController
     {
         //public static PlayerController currentPlayer;
         Player player;
@@ -41,6 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public List<float> lastSpeeds = new List<float>();
+
 
         //Setup References for PlayerController and initial values if necessary
         public void Awake()
@@ -159,7 +160,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 movingDirection = new Vector3(0, 0, 0);
             }
-            transform.position = transform.position + ( targetDirection * Speed * Time.deltaTime);
+            controllerPosition = controllerPosition + ( targetDirection * Speed * Time.deltaTime);
         }
 
         
