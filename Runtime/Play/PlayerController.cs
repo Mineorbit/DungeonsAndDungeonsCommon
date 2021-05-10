@@ -37,12 +37,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float currentSpeed;
 
-        int k = 15;
+        int k = 10;
 
 
         public List<float> lastSpeeds = new List<float>();
 
 
+        Vector3 lastPosition;
         //Setup References for PlayerController and initial values if necessary
         public void Awake()
         {
@@ -52,11 +53,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             controller = transform.GetComponent<CharacterController>();
             SetParams();
+            lastPosition = controllerPosition;
         }
 
         void ComputeCurrentSpeed()
         {
-            lastSpeeds.Add(controller.velocity.magnitude);
+            lastSpeeds.Add(((controllerPosition-lastPosition).magnitude)/Time.deltaTime);
             if(lastSpeeds.Count>k)
             {
                 lastSpeeds.RemoveAt(0);
@@ -67,6 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 sum += lastSpeeds[i];
             }
             currentSpeed = sum / k;
+            lastPosition = controllerPosition;
         }
 
         void SetParams()
