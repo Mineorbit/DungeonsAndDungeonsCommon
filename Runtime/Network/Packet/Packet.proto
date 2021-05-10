@@ -9,4 +9,5 @@ message Packet {
   string Handler = 2;
   google.protobuf.Any content = 3;
   string identity = 4;
+  int32 sender = 5;
 }

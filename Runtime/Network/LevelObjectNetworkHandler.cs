@@ -33,7 +33,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Start()
         {
             if (!isOnServer)
-                StartRequestBind();
+                StartRequestBind(this);
         }
 
         public void ConnectLevelObject(int rn)
@@ -53,18 +53,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         static int count = 0;
         public static Dictionary<int, LevelObjectNetworkHandler> bindRequests = new Dictionary<int, LevelObjectNetworkHandler>();
-        public void StartRequestBind()
+        public static void StartRequestBind(LevelObjectNetworkHandler handler)
         {
             ConnectLevelObjectRequest connectLevelObjectRequest = new ConnectLevelObjectRequest
             {
-                X = transform.position.x,
-                Y = transform.position.y,
-                Z = transform.position.z,
-                HandlerType = this.GetType().FullName,
+                X = handler.transform.position.x,
+                Y = handler.transform.position.y,
+                Z = handler.transform.position.z,
+                HandlerType = handler.GetType().FullName,
                 RequestNumber = count
             };
 
-            bindRequests.Add(count,this);
+            bindRequests.Add(count,handler);
             count++;
             Marshall(typeof(LevelObjectNetworkHandler), connectLevelObjectRequest);
         }
@@ -88,6 +88,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     });
                 }
 
+            }
+        }
+
+        [PacketBinding.Binding]
+        public static void OnConnectLevelObjectRequestFail(Packet p)
+        {
+            ConnectLevelObjectFail connectLevelObjectFail;
+            if(p.Content.TryUnpack<ConnectLevelObjectFail>(out connectLevelObjectFail))
+            {
+                LevelObjectNetworkHandler levelObjectNetworkHandler;
+                if(bindRequests.TryGetValue(connectLevelObjectFail.ResponseNumber,out levelObjectNetworkHandler))
+                {
+                    MainCaller.Do(() => { StartRequestBind(levelObjectNetworkHandler); });
+                }
             }
         }
 
@@ -115,6 +129,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     else
                     {
                         Debug.Log("No " + handlerType + " found at " + handlerPosition);
+
+                        ConnectLevelObjectFail connectLevelObjectFail = new ConnectLevelObjectFail { 
+                        HandlerType = levelObjectConnect.HandlerType,
+                        Identity = levelObjectConnect.Identity,
+                        ResponseNumber = levelObjectConnect.RequestNumber
+                        };
+
+                        //THIS NEEDS TO BE FOUND IN PACKET
+                        
+                        int requester = p.Sender;
+                        Marshall(typeof(LevelObjectNetworkHandler), connectLevelObjectFail, requester, levelObjectConnect.Identity);
+                        
                     }
                 }
 

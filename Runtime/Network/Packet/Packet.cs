@@ -24,14 +24,14 @@ namespace General {
     static PacketReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxQYWNrZXQucHJvdG8SB0dlbmVyYWwaCWFueS5wcm90byJgCgZQYWNrZXQS",
+            "CgxQYWNrZXQucHJvdG8SB0dlbmVyYWwaCWFueS5wcm90byJwCgZQYWNrZXQS",
             "DAoEdHlwZRgBIAEoCRIPCgdIYW5kbGVyGAIgASgJEiUKB2NvbnRlbnQYAyAB",
-            "KAsyFC5nb29nbGUucHJvdG9idWYuQW55EhAKCGlkZW50aXR5GAQgASgJYgZw",
-            "cm90bzM="));
+            "KAsyFC5nb29nbGUucHJvdG9idWYuQW55EhAKCGlkZW50aXR5GAQgASgJEg4K",
+            "BnNlbmRlchgFIAEoBWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::General.Packet), global::General.Packet.Parser, new[]{ "Type", "Handler", "Content", "Identity" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::General.Packet), global::General.Packet.Parser, new[]{ "Type", "Handler", "Content", "Identity", "Sender" }, null, null, null, null)
           }));
     }
     #endregion
@@ -71,6 +71,7 @@ namespace General {
       handler_ = other.handler_;
       content_ = other.content_ != null ? other.content_.Clone() : null;
       identity_ = other.identity_;
+      sender_ = other.sender_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -123,6 +124,17 @@ namespace General {
       }
     }
 
+    /// <summary>Field number for the "sender" field.</summary>
+    public const int SenderFieldNumber = 5;
+    private int sender_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Sender {
+      get { return sender_; }
+      set {
+        sender_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Packet);
@@ -140,6 +152,7 @@ namespace General {
       if (Handler != other.Handler) return false;
       if (!object.Equals(Content, other.Content)) return false;
       if (Identity != other.Identity) return false;
+      if (Sender != other.Sender) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -150,6 +163,7 @@ namespace General {
       if (Handler.Length != 0) hash ^= Handler.GetHashCode();
       if (content_ != null) hash ^= Content.GetHashCode();
       if (Identity.Length != 0) hash ^= Identity.GetHashCode();
+      if (Sender != 0) hash ^= Sender.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -182,6 +196,10 @@ namespace General {
         output.WriteRawTag(34);
         output.WriteString(Identity);
       }
+      if (Sender != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Sender);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -207,6 +225,10 @@ namespace General {
         output.WriteRawTag(34);
         output.WriteString(Identity);
       }
+      if (Sender != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Sender);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -227,6 +249,9 @@ namespace General {
       }
       if (Identity.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
+      }
+      if (Sender != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Sender);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -253,6 +278,9 @@ namespace General {
       }
       if (other.Identity.Length != 0) {
         Identity = other.Identity;
+      }
+      if (other.Sender != 0) {
+        Sender = other.Sender;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -287,6 +315,10 @@ namespace General {
             Identity = input.ReadString();
             break;
           }
+          case 40: {
+            Sender = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -318,6 +350,10 @@ namespace General {
           }
           case 34: {
             Identity = input.ReadString();
+            break;
+          }
+          case 40: {
+            Sender = input.ReadInt32();
             break;
           }
         }

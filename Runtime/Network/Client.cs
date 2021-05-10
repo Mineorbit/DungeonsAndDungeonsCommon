@@ -263,7 +263,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             Packet p = General.Packet.Parser.ParseFrom(data);
-
+            p.Sender = localid;
             Type packetType = Type.GetType(p.Type);
 
 
