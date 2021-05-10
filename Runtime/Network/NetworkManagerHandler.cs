@@ -33,7 +33,10 @@ public class NetworkManagerHandler : NetworkHandler
         public static void PrepareRound(Packet p)
         {
             Debug.Log("Preparing Round");
-            NetworkManager.prepareRoundEvent.Invoke();
+            MainCaller.Do(() =>
+            {
+                NetworkManager.prepareRoundEvent.Invoke();
+            });
             NetLevel.LevelMetaData netData = null;
             PrepareRound prepareRound;
             if(p.Content.TryUnpack<PrepareRound>(out prepareRound))
@@ -51,9 +54,9 @@ public class NetworkManagerHandler : NetworkHandler
         [PacketBinding.Binding]
         public static void StartRound(Packet p)
         {
-            NetworkManager.startRoundEvent.Invoke();
             MainCaller.Do(() =>
             {
+                NetworkManager.startRoundEvent.Invoke();
                 PlayerManager.acceptInput = true;
             });
         }
