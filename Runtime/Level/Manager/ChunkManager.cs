@@ -205,24 +205,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void LoadChunk(ChunkData chunkData)
         {
-            bool loaded = false;
-            instance.chunkLoaded.TryGetValue(chunkData.chunkId,out loaded);
-            if(!loaded)
-            { 
             List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
             levelObjectInstances.AddRange(chunkData.levelObjects);
             foreach (LevelObjectInstanceData i in levelObjectInstances)
             {
-                LevelManager.currentLevel.Add(i);
+            LevelManager.currentLevel.Add(i);
             }
-                if(!instance.chunkLoaded.ContainsKey(chunkData.chunkId))
-                { 
-                instance.chunkLoaded.Add(chunkData.chunkId,true);
-                }
-                else
-                {
-                    instance.chunkLoaded[chunkData.chunkId] = true;
-                }
+            if(!instance.chunkLoaded.ContainsKey(chunkData.chunkId))
+            { 
+            instance.chunkLoaded.Add(chunkData.chunkId,true);
+            }
+            else
+            {
+            instance.chunkLoaded[chunkData.chunkId] = true;
             }
         }
     }
