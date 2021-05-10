@@ -56,9 +56,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Update();
 
+            speed = playerController.currentSpeed;
+
+
             if (speed > 0)
             { 
-                forwardDirection =  (forwardDirection + characterController.velocity)/2;
+                forwardDirection =  (forwardDirection + playerController.movingDirection)/2;
             }
 
             //simplify in future to just moving somehow
