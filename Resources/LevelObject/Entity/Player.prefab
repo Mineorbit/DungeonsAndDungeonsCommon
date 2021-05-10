@@ -9831,6 +9831,7 @@ MonoBehaviour:
   locallyControllable: 0
   activated: 1
   IsGrounded: 0
+  takeInput: 1
   doInput: 0
   isMe: 0
   allowedToMove: 1
@@ -9882,9 +9883,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7e2dab68c6a3a46b712ebddbdec2bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Identity: 
+  identified: 0
   observed: {fileID: 0}
   observed: {fileID: 0}
+  isOwner: 0
 --- !u!1 &8164085133219797599
 GameObject:
   m_ObjectHideFlags: 0
@@ -10144,7 +10146,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: df7c40a897a71c9459d347a2a9bda082,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7c40a897a71c9459d347a2a9bda082,
         type: 3}
