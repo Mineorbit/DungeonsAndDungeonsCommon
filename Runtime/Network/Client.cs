@@ -147,7 +147,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(data, 0, result, 4, length);
 
             tcpStream.Write(result, 0, result.Length);
-            Debug.Log("Sent " + p);
 
         }
 
