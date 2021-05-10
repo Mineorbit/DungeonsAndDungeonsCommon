@@ -35,8 +35,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float heightRay = 0.55f;
 
 
-
-
         public float currentSpeed;
 
         int k = 15;
@@ -161,7 +159,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 movingDirection = new Vector3(0, 0, 0);
             }
-            controller.Move(targetDirection * Speed * Time.deltaTime);
+            player.localPosition = transform.position + ( targetDirection * Speed * Time.deltaTime);
         }
 
         
