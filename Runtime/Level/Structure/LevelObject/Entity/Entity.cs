@@ -66,12 +66,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseSelectedHandle()
         {
+            if(handle != null)
             handle.Use();
         }
 
         public void StopUseSelectedHandle()
         {
-            handle.StopUse();
+            if (handle != null)
+                handle.StopUse();
         }
 
         void StartHitCooldown()
