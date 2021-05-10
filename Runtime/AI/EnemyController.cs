@@ -46,6 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Start()
         {
             base.Start();
+
             me = GetComponent<Enemy>();
 
 
@@ -227,6 +228,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateState()
         {
+            Debug.Log(me);
+            Debug.Log(me.FSM);
             me.FSM.ExecuteState();
         }
 

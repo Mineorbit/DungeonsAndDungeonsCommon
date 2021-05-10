@@ -56,11 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
+        
 
         public void TryDamage(GameObject g, float damage)
         {
@@ -111,10 +107,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             FSM.state = state;
         }
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        
     }
 }
