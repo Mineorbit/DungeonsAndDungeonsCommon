@@ -12,7 +12,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 controllerPosition;
         void Start()
         {
+            controllerPosition = transform.position;
+        }
 
+        public void OnSpawn()
+        {
             controllerPosition = transform.position;
         }
 

@@ -8,7 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Enemy : Entity
     {
 
-        public EnemyController enemyController;
+        public new EnemyController controller;
 
 
         public FSM<EnemyState, Enemy.EnemyAction> FSM;
@@ -75,18 +75,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual  void OnEnable()
         {
-            enemyController = GetComponent<EnemyController>();
+            controller = GetComponent<EnemyController>();
             UnityEngine.AI.NavMeshAgent n = GetComponent<UnityEngine.AI.NavMeshAgent>();
             if (n != null) n.enabled = true;
-            enemyController.enabled = true;
+            controller.enabled = true;
         }
         public virtual void OnDisable()
         {
 
-            enemyController = GetComponent<EnemyController>();
+            controller = GetComponent<EnemyController>();
             UnityEngine.AI.NavMeshAgent n = GetComponent<UnityEngine.AI.NavMeshAgent>();
             if (n != null) n.enabled = false;
-            enemyController.enabled = false;
+            controller.enabled = false;
         }
 
 
@@ -95,9 +95,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnInit();
             Debug.Log("TEST2");
 
-            enemyController.seenPlayer = null;
-            enemyController.seenAlly = null;
-            enemyController.lastSeenPlayer = null;
+            controller.seenPlayer = null;
+            controller.seenAlly = null;
+            controller.lastSeenPlayer = null;
         }
 
         

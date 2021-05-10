@@ -131,9 +131,7 @@ public class PlayerManager : MonoBehaviour
 
         Debug.Log("Spawning "+localId+" at "+location);
             MainCaller.Do( () => {
-                players[localId].gameObject.SetActive(true);
-                Debug.Log(players[localId].gameObject);
-                players[localId].gameObject.transform.position = location;
+                players[localId].Spawn(location, new Quaternion(0,0,0,0),true);
             });
         //Move to other class Player eventually
         //Noch HUD Aktivieren

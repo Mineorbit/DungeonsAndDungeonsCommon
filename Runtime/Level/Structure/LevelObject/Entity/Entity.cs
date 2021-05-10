@@ -9,6 +9,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public int health;
 
+        public bool alive;
+
         public List<Item> items;
         public ItemHandle[] itemHandles;
 
@@ -93,7 +95,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitCooldown = true;
             StartCoroutine(HitTimer(1.5f));
         }
-
+        public virtual void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
+        {
+            health = 100;
+            alive = true;
+            gameObject.SetActive(true);
+            transform.position = location;
+            transform.rotation = rotation;
+            controller.OnSpawn();
+        }
 
         public virtual void Hit(Entity hitter,int damage)
         {
