@@ -23,8 +23,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelData levelData;
 
+        public enum LoadType { All, Near };
 
-
+        public LoadType loadType = LoadType.All;
 
         public void Awake()
         {

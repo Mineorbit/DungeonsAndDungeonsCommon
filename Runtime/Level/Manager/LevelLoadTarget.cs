@@ -17,16 +17,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void EnableChunkAt(Vector3 position)
         {
-            if(LevelManager.currentLevel != null)
+            if (LevelDataManager.instance.loadType == LevelDataManager.LoadType.Near) LoadNearChunk(position);
+        }
+
+        public void LoadNearChunk(Vector3 position)
+        {
+            if (LevelManager.currentLevel != null)
             {
-                if(!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
+                if (!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
                 {
-                ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position,createIfNotThere: true));
-                if(chunkData != null)
-                { 
-                    Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
-                }
-                loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
+                    ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position, createIfNotThere: true));
+                    if (chunkData != null)
+                    {
+                        Invoke(StreamChunkIntoCurrentLevelFrom, chunkData);
+                    }
+                    loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                 }
             }
         }
