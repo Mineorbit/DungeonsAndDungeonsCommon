@@ -48,6 +48,34 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        float skipDistance = 1f;
+        public override void Update()
+        {
+            if (NetworkManager.isConnected)
+            {
+
+                //This needs to be replaced by a EntityTeleport (EntitySetBack) packet
+                float distance = (controller.controllerPosition - levelObjectNetworkHandler.networkPosition).magnitude;
+                if (distance < skipDistance)
+                {
+                    transform.position = (controller.controllerPosition + levelObjectNetworkHandler.networkPosition) / 2;
+                }
+                else
+                {
+                    transform.position = levelObjectNetworkHandler.networkPosition;
+                    controller.UpdatePosition(levelObjectNetworkHandler.networkPosition);
+                }
+            }
+            else
+            {
+                transform.position = controller.controllerPosition;
+            }
+
+            base.Update();
+            
+        }
+
+
         public void UpdateEquipItem()
         {
             Item toAttach = itemsInProximity.Find((x) => !x.isEquipped);
