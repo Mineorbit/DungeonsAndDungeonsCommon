@@ -174,6 +174,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+
+        public static void Marshall(Type sendingHandler, IMessage message, int target, string identity)
+        {
+            Packet packet = new Packet
+            {
+                Type = message.GetType().FullName,
+                Handler = sendingHandler.FullName,
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                Identity = identity
+            };
+
+            if (!isOnServer)
+            {
+                NetworkManager.instance.client.WritePacket(packet);
+            }
+            else
+            {
+                if (Server.instance.clients[target] != null)
+                    Server.instance.clients[target].WritePacket(packet);
+            }
+        }
+
+
         public void Marshall(IMessage message, int target)
         {
             Packet packet = new Packet
