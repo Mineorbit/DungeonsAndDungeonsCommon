@@ -110,6 +110,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateLocomotion();
 
             currentSpeed = navMeshAgent.velocity.magnitude;
+
+            controllerPosition = transform.position;
+
             base.Update();
         }
 
