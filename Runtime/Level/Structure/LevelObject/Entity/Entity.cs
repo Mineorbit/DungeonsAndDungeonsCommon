@@ -16,19 +16,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent<Entity> onAttackEvent;
 
+        public new EntityNetworkHandler levelObjectNetworkHandler;
+
+        public EntityController controller;
+
         public bool invincible = false;
 
 
-        // Start is called before the first frame update
         public virtual void Start()
         {
+            controller = GetComponent<EntityController>();
         }
 
 
-        // Update is called once per frame
-        void Update()
+        // this needs to be prettier
+        public virtual void Update()
         {
-
+            if(NetworkManager.isConnected)
+            {
+                transform.position = (controller.controllerPosition + levelObjectNetworkHandler.networkPosition) / 2;
+            }
+            else
+            {
+                transform.position = controller.controllerPosition;
+            }
 
             if(transform.position.y < -8)
             {
