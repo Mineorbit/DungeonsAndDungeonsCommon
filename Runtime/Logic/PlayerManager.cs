@@ -128,12 +128,11 @@ public class PlayerManager : MonoBehaviour
         if (localId > 3 || localId < 0) return;
 
 
-        if (playerControllers[localId] == null) return;
+            Debug.Log("Spawning "+localId+" at "+location);
 
-
-        playerControllers[localId].gameObject.SetActive(true);
+        players[localId].gameObject.SetActive(true);
         //Move to other class Player eventually
-        playerControllers[localId].transform.position = location;
+        players[localId].transform.position = location;
         //Noch HUD Aktivieren
     }
 
