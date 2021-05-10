@@ -9793,15 +9793,16 @@ MonoBehaviour:
   levelObjectDataType: 
   isDynamic: 0
   ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: 7767981043886471032}
   health: 0
+  alive: 0
   items: []
   itemHandles: []
   baseAnimator: {fileID: 700370800949042406}
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: 7767981043886471032}
   controller: {fileID: -4485675669329379349}
   invincible: 0
   colorChanger: {fileID: 0}
