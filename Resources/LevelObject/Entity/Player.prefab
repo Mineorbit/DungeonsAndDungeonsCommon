@@ -9801,6 +9801,8 @@ MonoBehaviour:
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []
+  levelObjectNetworkHandler: {fileID: 0}
+  controller: {fileID: -4485675669329379349}
   invincible: 0
   colorChanger: {fileID: 0}
   _localId: 0
@@ -9821,6 +9823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef2390e1f8d75946bbac7d15c4623c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllerPosition: {x: 0, y: 0, z: 0}
   playerBaseAnimator: {fileID: 700370800949042406}
   controller: {fileID: 0}
   cam: {fileID: 0}
@@ -9883,10 +9886,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7e2dab68c6a3a46b712ebddbdec2bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Identity: 
   identified: 0
   observed: {fileID: 0}
   observed: {fileID: 0}
   isOwner: 0
+  networkPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &8164085133219797599
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,11 +23,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool invincible = false;
 
 
-        public void Start()
-        {
-            controller = GetComponent<EntityController>();
-        }
-
 
         // this needs to be prettier
         public virtual void Update()
