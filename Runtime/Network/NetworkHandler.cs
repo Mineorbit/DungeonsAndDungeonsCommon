@@ -14,7 +14,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkHandler : MonoBehaviour
     {
-        public string Identity;
+
+        string _Identity;
+
+        public string Identity
+        {
+            get
+            {
+                return _Identity;
+            }
+            set
+            {
+                identified = true;
+                _Identity = value;
+            }
+        }
+
+        public bool identified;
 
         public Component observed;
 
