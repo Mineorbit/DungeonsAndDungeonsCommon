@@ -79,18 +79,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             float dist = (transform.position - targetPosition).magnitude;
-            
-            
-            if(isOwner && (dist >= maxInterpolateDist))
+
+            if ((!isOwner || isOnServer) &&(dist < maxInterpolateDist))
+            {
+                transform.position = (transform.position + targetPosition) / 2;
+                transform.rotation = Quaternion.Lerp(targetRotation, transform.rotation, 0.5f);
+            }
+            else
+            if ( !isOnServer && isOwner && (dist >= maxInterpolateDist))
             {
                 transform.position = targetPosition;
                 transform.rotation = targetRotation;
-            }else
-            if(!isOwner)
-            {
-                transform.position = (transform.position + targetPosition)/2;
-                transform.rotation = Quaternion.Lerp(targetRotation,transform.rotation,0.5f);
             }
+            
 
         }
 
