@@ -26,6 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool locallyControllable;
         public bool activated = true;
         public bool IsGrounded;
+        public bool takeInput = true;
         public bool doInput;
         public bool isMe;
         public static bool doSim;
@@ -107,7 +108,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             if(!activated) targetDirection = new Vector3(0, 0, 0);
 
-            if (doInput)
+            if (doInput && takeInput)
             {
                 if (cam != null)
                     targetDirection = Vector3.Normalize(Vector3.ProjectOnPlane(cam.right, transform.up) * Input.GetAxisRaw("Horizontal") + Vector3.ProjectOnPlane(cam.forward, transform.up) * Input.GetAxisRaw("Vertical"));

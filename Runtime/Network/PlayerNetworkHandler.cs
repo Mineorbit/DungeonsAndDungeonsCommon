@@ -15,6 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
+            GetComponent<PlayerController>().enabled = !isOnServer;
         }
 
         public virtual void SetupLocalMarshalls()
