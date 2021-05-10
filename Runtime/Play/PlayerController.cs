@@ -75,8 +75,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        void Start()
+        public override void Start()
         {
+            base.Start();
             player = transform.GetComponent<Player>();
         }
         public Collider col;

@@ -43,8 +43,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //Queue<Vector3> targetPoints = new Queue<Vector3>();
 
         Vector3 currentTarget = new Vector3(0,0,0);
-        void Start()
+        public override void Start()
         {
+            base.Start();
             me = GetComponent<Enemy>();
 
 
