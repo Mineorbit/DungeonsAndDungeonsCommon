@@ -157,12 +157,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             colorChanger.SetColor(8, UnityEngine.Color.Lerp(baseC, UnityEngine.Color.white, 0.75f));
         }
 
-        public virtual void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
-        {
-            health = 100;
-            alive = true;
-            PlayerManager.playerManager.SpawnPlayer(localId, location);
-        }
+        
 
         public override void setMovementStatus(bool allowedToMove)
         {

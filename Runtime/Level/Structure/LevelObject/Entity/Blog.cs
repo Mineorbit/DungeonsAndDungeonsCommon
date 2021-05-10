@@ -45,13 +45,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void RandomWalk()
         {
-            enemyController.SetTrackingAbility(true);
+            controller.SetTrackingAbility(true);
             if (!TimerManager.isRunning(randomWalkTimer))
             {
                 float randomAngle = UnityEngine.Random.Range(0,Mathf.PI);
                 float randomDistance = 6f;
                 Vector3 randomGoal = transform.position+randomDistance*(transform.forward * Mathf.Sin(randomAngle) + transform.right * Mathf.Cos(randomAngle));
-                enemyController.GoTo(randomGoal);
+                controller.GoTo(randomGoal);
                 randomWalkTimer = TimerManager.StartTimer(randomWalkTime,()=> { });
             }
         }
@@ -79,7 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.setMovementStatus(allowedToMove);
             Debug.Log("Stoppinng");
-            enemyController.SetTrackingAbility(allowedToMove);
+            controller.SetTrackingAbility(allowedToMove);
         }
 
         void Counter(Entity attacker)
@@ -105,9 +105,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             FSM.stateAction.Add(BlogState.Idle,()=> {
                 RandomWalk();
-                baseAnimator.target = -enemyController.GetDirection();
+                baseAnimator.target = -controller.GetDirection();
 
-                if (enemyController.seenPlayer !=  null)
+                if (controller.seenPlayer !=  null)
                 {
                     FSM.Move(Enemy.EnemyAction.Engage);
                 }
@@ -118,10 +118,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (targetEntity != null)
                 {
 
-                    enemyController.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
+                    controller.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
 
 
-                    baseAnimator.target = -enemyController.GetDirection();
+                    baseAnimator.target = -controller.GetDirection();
 
                     if (distanceToTarget < attackDistance+eps)
                     {
@@ -144,7 +144,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 dir = transform.position - attackTarget.transform.position;
                 float distanceToTarget = (dir).magnitude;
 
-                if (!enemyController.CheckLineOfSight(attackTarget))
+                if (!controller.CheckLineOfSight(attackTarget))
                 {
                     FSM.Move(Enemy.EnemyAction.Engage);
                 }
@@ -160,7 +160,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         t += Time.deltaTime;
                         Vector3 targetPoint = attackTarget.transform.position + attackDistance * (attackTarget.transform.forward * Mathf.Sin(t) + attackTarget.transform.right * Mathf.Cos(t));
 
-                        enemyController.GoTo(Circle(targetPoint));
+                        controller.GoTo(Circle(targetPoint));
 
 
                         
@@ -178,13 +178,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 Vector3 dir = transform.position - attackTarget.transform.position;
                 baseAnimator.target = dir;
-                enemyController.GoTo(attackTarget.transform.position);
+                controller.GoTo(attackTarget.transform.position);
 
             });
 
 
 
-            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> { forgetPlayer = true; TrackTarget(enemyController.seenPlayer); },Blog.BlogState.Track));
+            FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Idle,Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x)=> { forgetPlayer = true; TrackTarget(controller.seenPlayer); },Blog.BlogState.Track));
             FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Track, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
             FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Disengage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => { StopTrackTarget(); }, Blog.BlogState.Idle));
 
@@ -220,7 +220,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.transitions.Add(new Tuple<Enemy.EnemyState, Enemy.EnemyAction>(BlogState.Attack, Enemy.EnemyAction.Engage), new Tuple<Action<Enemy.EnemyAction>, Enemy.EnemyState>((x) => {
             
                     forgetPlayer = true;
-                TrackTarget(enemyController.seenPlayer); }, Blog.BlogState.Track));
+                TrackTarget(controller.seenPlayer); }, Blog.BlogState.Track));
 
             SetState(BlogState.Idle);
         }
@@ -242,7 +242,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void TrackTarget(Entity target)
         {
-            enemyController.SetTrackingAbility(true, reset:true);
+            controller.SetTrackingAbility(true, reset:true);
             if (target == null)
             {
                 FSM.Move(Enemy.EnemyAction.Disengage);
@@ -261,7 +261,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void StopTrackTarget(bool disableTracking = true)
         {
-            enemyController.SetTrackingAbility(!disableTracking);
+            controller.SetTrackingAbility(!disableTracking);
             targetEntity = null;
         }
 
@@ -299,7 +299,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!TimerManager.isRunning(strikeTimer) && !TimerManager.isRunning(finishStrikeTimer))
             {
                 StopTrackTarget(disableTracking: false);
-                enemyController.GoTo(attackTarget.transform.position);
+                controller.GoTo(attackTarget.transform.position);
                 Debug.Log("Blog trying to Strike");
                 FSM.SetState(BlogState.Strike);
                 strikeTimer = TimerManager.StartTimer((1 + 5 * (float)rand.NextDouble()),()=> { Strike(10); } );
