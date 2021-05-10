@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerPosition: {x: 0, y: 0, z: 0}
-  me: {fileID: 0}
+  me: {fileID: 736877002971563754}
   seenPlayer: {fileID: 0}
   lastSeenPlayer: {fileID: 0}
   seenAlly: {fileID: 0}
@@ -135,6 +135,7 @@ MonoBehaviour:
   ActivateWhenInactive: 0
   levelObjectNetworkHandler: {fileID: 0}
   health: 0
+  alive: 0
   items: []
   itemHandles: []
   baseAnimator: {fileID: 5603963655004878686}
