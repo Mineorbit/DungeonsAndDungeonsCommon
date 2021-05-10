@@ -61,8 +61,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             EntityLocomotion entityLocomotion;
             if(p.Content.TryUnpack<EntityLocomotion>(out entityLocomotion))
             {
-                observed.transform.position = new Vector3(entityLocomotion.X,entityLocomotion.Y,entityLocomotion.Z);
-                observed.transform.rotation = new Quaternion(entityLocomotion.QX,entityLocomotion.QY,entityLocomotion.QZ,entityLocomotion.QW);
+                MainCaller.Do(() => {
+                    observed.transform.position = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
+                    observed.transform.rotation = new Quaternion(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ, entityLocomotion.QW);
+                    });
             }
         }
 
