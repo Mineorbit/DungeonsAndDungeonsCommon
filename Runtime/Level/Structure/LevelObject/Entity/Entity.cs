@@ -25,14 +25,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool invincible = false;
 
 
-
+        float skipDistance = 1f;
         // this needs to be prettier
         public void Update()
         {
             if(NetworkManager.isConnected)
             {
                 Debug.Log(levelObjectNetworkHandler);
+                float distance = (controller.controllerPosition - levelObjectNetworkHandler.networkPosition).magnitude;
+                if(distance<skipDistance)
+                {
                 transform.position = (controller.controllerPosition + levelObjectNetworkHandler.networkPosition) / 2;
+                }
+                else
+                {
+                    transform.position = levelObjectNetworkHandler.networkPosition;
+                    controller.UpdatePosition(levelObjectNetworkHandler.networkPosition);
+                }
             }
             else
             {
