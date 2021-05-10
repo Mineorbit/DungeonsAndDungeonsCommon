@@ -26,6 +26,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int localId;
         public static string userName;
 
+        public static UnityEvent prepareRoundEvent = new UnityEvent();
+        public static UnityEvent   startRoundEvent = new UnityEvent();
+
         // Start is called before the first frame update
         void Start()
         {

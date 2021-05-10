@@ -9,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 { 
 public class NetworkManagerHandler : NetworkHandler
 {
-
+        public new NetworkManager observed;
         public static void RequestPrepareRound()
         {
             PrepareRound prepareRound = new PrepareRound
@@ -33,6 +33,7 @@ public class NetworkManagerHandler : NetworkHandler
         public static void PrepareRound(Packet p)
         {
             Debug.Log("Preparing Round");
+            NetworkManager.prepareRoundEvent.Invoke();
             NetLevel.LevelMetaData netData = null;
             PrepareRound prepareRound;
             if(p.Content.TryUnpack<PrepareRound>(out prepareRound))
@@ -50,6 +51,7 @@ public class NetworkManagerHandler : NetworkHandler
         [PacketBinding.Binding]
         public static void StartRound(Packet p)
         {
+            NetworkManager.startRoundEvent.Invoke();
             MainCaller.Do(() =>
             {
                 PlayerManager.acceptInput = true;
