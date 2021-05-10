@@ -31,7 +31,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(NetworkManager.isConnected)
             {
-                Debug.Log(levelObjectNetworkHandler);
+
+                //This needs to be replaced by a EntityTeleport (EntitySetBack) packet
                 float distance = (controller.controllerPosition - levelObjectNetworkHandler.networkPosition).magnitude;
                 if(distance<skipDistance)
                 {
