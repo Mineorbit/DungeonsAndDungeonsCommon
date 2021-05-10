@@ -86,9 +86,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public override void OnInit()
+        public virtual void OnInit()
         {
             base.OnInit();
+
             Debug.Log("TEST2");
 
             controller.seenPlayer = null;
