@@ -80,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             float dist = (transform.position - targetPosition).magnitude;
 
-            if ((!isOwner || isOnServer) &&(dist < maxInterpolateDist))
+            if ((!isOwner || isOnServer) && (dist < maxInterpolateDist))
             {
                 transform.position = (transform.position + targetPosition) / 2;
                 transform.rotation = Quaternion.Lerp(targetRotation, transform.rotation, 0.5f);
