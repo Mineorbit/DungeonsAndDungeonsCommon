@@ -58,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        public override void OnInit()
+        public virtual void OnInit()
         {
             base.OnInit();
 
