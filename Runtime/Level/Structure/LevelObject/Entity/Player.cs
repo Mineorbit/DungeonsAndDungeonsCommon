@@ -51,9 +51,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         float skipDistance = 1f;
         public override void Update()
         {
-            if (NetworkManager.isConnected)
+            if (NetworkManager.isConnected  && localId != NetworkManager.instance.localId)
             {
-
+                float distance = (transform.position - levelObjectNetworkHandler.networkPosition).magnitude;
+                if (distance < skipDistance)
+                {
+                    transform.position = (transform.position + levelObjectNetworkHandler.networkPosition) / 2;
+                }else
+                {
+                    transform.position = levelObjectNetworkHandler.networkPosition;
+                }
+                /*
                 //This needs to be replaced by a EntityTeleport (EntitySetBack) packet
                 float distance = (controller.controllerPosition - levelObjectNetworkHandler.networkPosition).magnitude;
                 if (distance < skipDistance)
@@ -64,7 +72,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     transform.position = levelObjectNetworkHandler.networkPosition;
                     controller.UpdatePosition(levelObjectNetworkHandler.networkPosition);
-                }
+                }*/
             }
             else
             {
