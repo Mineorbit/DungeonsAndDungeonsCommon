@@ -10,7 +10,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public LevelObjectNetworkHandler levelObjectNetworkHandler;
 
-        public static bool enableNetworking = false;
 
         public virtual void OnInit()
         {
@@ -18,23 +17,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             levelObjectNetworkHandler = GetComponent<LevelObjectNetworkHandler>();
             //
-
-            Debug.Log("TEST "+gameObject.name);
-            if (enableNetworking)
-            {
-                if (levelObjectNetworkHandler == null)
-                {
-                    levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
-                }
-                levelObjectNetworkHandler.enabled = true;
-            }
-            else
-            {
-                if (levelObjectNetworkHandler != null)
-                {
-                    levelObjectNetworkHandler.enabled = false;
-                }
-            }
+            if(levelObjectNetworkHandler == null) 
+                levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
+            
 
         }
 
