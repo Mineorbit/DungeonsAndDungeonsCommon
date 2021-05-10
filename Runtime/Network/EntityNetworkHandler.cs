@@ -66,14 +66,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     transform.position = pos;
                     Quaternion rot = new Quaternion(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ, entityLocomotion.QW);
                     transform.rotation = rot;
-                    Debug.Log("TEST"+pos+" "+rot);
+                    Debug.Log("TEST "+pos+" "+rot);
                 });
             }
         }
 
         private void UpdateLocomotion()
         {
-            if(identified && isOnServer || isOwner)
+            if(identified && (isOnServer || isOwner))
             {
                 Vector3 pos = observed.transform.position;
                 Quaternion rot = observed.transform.rotation;

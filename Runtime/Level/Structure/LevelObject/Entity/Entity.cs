@@ -18,12 +18,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool invincible = false;
 
+        public Vector3 localPosition;
+
+        public Quaternion localRotation;
+
         // Start is called before the first frame update
-        
+        public virtual void Start()
+        {
+        }
+
 
         // Update is called once per frame
         void Update()
         {
+
+            transform.position = (localPosition+transform.position)/2;
+
             if(transform.position.y < -8)
             {
                 Invoke(Kill);
