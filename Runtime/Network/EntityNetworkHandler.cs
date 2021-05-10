@@ -55,6 +55,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateLocomotion();
         }
 
+        Vector3 targetPosition;
+        Quaternion targetRotation;
+
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
@@ -63,12 +66,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 MainCaller.Do(() => {
                     Vector3 pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
-                    transform.position = pos;
+                    targetPosition = pos;
                     Quaternion rot = new Quaternion(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ, entityLocomotion.QW);
-                    transform.rotation = rot;
+                    targetRotation = rot;
                     Debug.Log("TEST "+pos+" "+rot);
                 });
             }
+        }
+
+        float maxInterpolateDist = 5f;
+        public void Update()
+        {
+            float dist = (transform.position - targetPosition).magnitude;
+            if(!isOwner || (dist < maxInterpolateDist))
+            {
+                transform.position = (transform.position + targetPosition) / 2;
+                transform.rotation = Quaternion.Lerp(transform.rotation,targetRotation,0.5f);
+            }else if(!isOwner || (dist >= maxInterpolateDist))
+            {
+                transform.position = targetPosition;
+                transform.rotation = targetRotation;
+            }
+
         }
 
         private void UpdateLocomotion()
