@@ -15,9 +15,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             controllerPosition = transform.position;
         }
 
-        public void OnSpawn()
+        public void OnSpawn(Vector3 location)
         {
-            controllerPosition = transform.position;
+            controllerPosition = location;
         }
 
     }

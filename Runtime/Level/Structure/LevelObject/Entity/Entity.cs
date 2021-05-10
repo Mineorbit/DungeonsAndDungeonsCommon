@@ -102,7 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             gameObject.SetActive(true);
             transform.position = location;
             transform.rotation = rotation;
-            controller.OnSpawn();
+            controller.OnSpawn(location);
         }
 
         public virtual void Hit(Entity hitter,int damage)
