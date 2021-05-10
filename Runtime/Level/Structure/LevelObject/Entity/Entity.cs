@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         // this needs to be prettier
-        public virtual void Update()
+        public void Update()
         {
             if(NetworkManager.isConnected)
             {
