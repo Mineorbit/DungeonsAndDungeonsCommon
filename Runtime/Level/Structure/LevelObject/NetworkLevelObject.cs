@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectNetworkHandler = GetComponent<LevelObjectNetworkHandler>();
             //
             if(levelObjectNetworkHandler == null) 
-                levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
+                //levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
             
 
         }
