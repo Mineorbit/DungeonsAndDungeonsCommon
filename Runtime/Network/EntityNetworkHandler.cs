@@ -62,10 +62,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(p.Content.TryUnpack<EntityLocomotion>(out entityLocomotion))
             {
                 MainCaller.Do(() => {
-                    Debug.Log("TEST");
-                    observed.transform.position = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
-                    observed.transform.rotation = new Quaternion(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ, entityLocomotion.QW);
-                    });
+                    Vector3 pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
+                    transform.position = pos;
+                    Quaternion rot = new Quaternion(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ, entityLocomotion.QW);
+                    transform.rotation = rot;
+                    Debug.Log("TEST"+pos+" "+rot);
+                });
             }
         }
 
