@@ -87,13 +87,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 while (! (globalMethodBindings.TryGetValue(new Tuple<Type, Type>(packetType,handlerType), out handle) || (handlerType == typeof(NetworkHandler))))
                 {
 
-                Debug.Log("Did not find Binding in "+handlerType);
                 handlerType = handlerType.BaseType;
-                Debug.Log("Elevating to " + handlerType);
                 }
                 if(handle != null)
                 {
-                Debug.Log("Handle found " + handle);
                 handle.Invoke(p);
                 }
         }
