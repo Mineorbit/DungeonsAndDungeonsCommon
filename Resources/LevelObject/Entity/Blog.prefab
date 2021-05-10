@@ -133,7 +133,7 @@ MonoBehaviour:
   levelObjectDataType: 
   isDynamic: 0
   ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: 8870155796596675472}
   health: 0
   alive: 0
   items: []
@@ -142,7 +142,7 @@ MonoBehaviour:
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: 8870155796596675472}
   controller: {fileID: 736877002971563755}
   invincible: 0
   controller: {fileID: 736877002971563755}

@@ -31,6 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(NetworkManager.isConnected)
             {
+                Debug.Log(levelObjectNetworkHandler);
                 transform.position = (controller.controllerPosition + levelObjectNetworkHandler.networkPosition) / 2;
             }
             else
