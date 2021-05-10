@@ -159,7 +159,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 movingDirection = new Vector3(0, 0, 0);
             }
-            player.localPosition = transform.position + ( targetDirection * Speed * Time.deltaTime);
+            transform.position = transform.position + ( targetDirection * Speed * Time.deltaTime);
         }
 
         
