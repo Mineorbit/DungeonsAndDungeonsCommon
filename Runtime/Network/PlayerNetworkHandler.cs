@@ -16,6 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Awake();
             observed = GetComponent<Player>();
             GetComponent<PlayerController>().enabled = !isOnServer;
+            isOwner = observed.localId == NetworkManager.instance.localId;
         }
 
         public virtual void SetupLocalMarshalls()
