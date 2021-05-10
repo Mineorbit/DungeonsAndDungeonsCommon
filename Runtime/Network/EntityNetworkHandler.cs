@@ -12,6 +12,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isOwner;
 
         public Vector3 networkPosition;
+        public Quaternion networkRotation;
 
         public virtual void Awake()
         {
@@ -84,15 +85,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if ((!isOwner || isOnServer) && (dist < maxInterpolateDist))
             {
-                networkPosition = (transform.position + targetPosition) / 2;
-                transform.rotation = Quaternion.Lerp(targetRotation, transform.rotation, 0.5f);
+                networkPosition = (networkPosition + targetPosition) / 2;
+                networkRotation = Quaternion.Lerp(targetRotation, networkRotation, 0.5f);
             }
             else
             if ( !isOnServer && isOwner && (dist >= maxInterpolateDist))
             {
 
                 networkPosition = targetPosition;
-                transform.rotation = targetRotation;
+                networkRotation = targetRotation;
             }
             
 

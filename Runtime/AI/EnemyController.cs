@@ -105,11 +105,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             navMeshAgent.SetDestination(currentTarget);
         }
 
-        void Update()
+        public override void Update()
         {
             UpdateLocomotion();
 
             currentSpeed = navMeshAgent.velocity.magnitude;
+            base.Update();
         }
 
 
