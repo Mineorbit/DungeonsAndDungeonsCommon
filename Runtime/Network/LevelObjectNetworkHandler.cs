@@ -143,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 object[] paramObjects = new object[levelObjectAction.Params.Count];
                 if(methodInfo != null)
                 { 
-                    MainCaller.Do(() => { Debug.Log(levelObjectAction.ActionName+" "+observed+" "+parameters);
+                    MainCaller.Do(() => {
                     methodInfo.Invoke(observed,parameters.ToArray()); });
                 }else
                 {
