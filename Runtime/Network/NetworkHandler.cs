@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class NetworkHandler : MonoBehaviour
     {
 
-        string _Identity;
+        public string _Identity;
 
         public string Identity
         {
