@@ -58,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void ComputeCurrentSpeed()
         {
-            lastSpeeds.Add(((controllerPosition-lastPosition).magnitude)/Time.deltaTime);
+            lastSpeeds.Add(((transform.position-lastPosition).magnitude)/Time.deltaTime);
             if(lastSpeeds.Count>k)
             {
                 lastSpeeds.RemoveAt(0);
@@ -69,7 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 sum += lastSpeeds[i];
             }
             currentSpeed = sum / k;
-            lastPosition = controllerPosition;
+            lastPosition = transform.position;
         }
 
         void SetParams()
