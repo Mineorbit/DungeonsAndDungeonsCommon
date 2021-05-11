@@ -126,19 +126,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.udpClient.Connect(( (IPEndPoint) (client.tcpClient.Client.RemoteEndPoint)).Address, port);
         }
 
-        public void WritePacket(IMessage message,bool TCP = true)
-        {
-
-            General.Packet p = new General.Packet
-            {
-                Type = message.GetType().ToString(),
-                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
-            };
-
-            WritePacket(p,TCP: TCP);
-
-        }
-
         public void WritePacket(Packet p, bool TCP = true)
         {
 
@@ -154,17 +141,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
 
-            Debug.Log("Sent: "+p);
-            if(TCP && tcpClient.Connected)
+            Debug.Log("Sent: " + p);
+            if (TCP && tcpClient.Connected)
             {
                 tcpStream.Write(result, 0, result.Length);
             }
             else
             {
-                udpClient.Send(result,0);
+                udpClient.Send(result, 0);
             }
 
         }
+        public void WritePacket(IMessage message,bool TCP = true)
+        {
+            General.Packet p = null;
+            if ((message.GetType() == typeof(Packet)))
+            { 
+                p = new General.Packet
+                {
+                Type = message.GetType().ToString(),
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
+                };
+            }else
+            {
+                p = (Packet) message;
+            }
+            WritePacket(p,TCP: TCP);
+
+        }
+
+        
 
         async Task<byte[]> ReadData(bool TCP = true)
         {
