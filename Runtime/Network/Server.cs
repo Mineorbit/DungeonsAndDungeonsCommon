@@ -134,24 +134,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void WriteAll(IMessage message)
+        public void WriteAll(IMessage message, bool TCP = true)
         {
             for (int i = 0; i < 4; i++)
             {
                 if (clients[i] != null)
                 {
-                    clients[i].WritePacket(message);
+                    clients[i].WritePacket(message, TCP: TCP);
                 }
             }
         }
 
-        public void WriteAll(IMessage message, int except)
+        public void WriteAll(IMessage message, int except, bool TCP = true)
         {
             for (int i = 0; i < 4 && (i != except); i++)
             {
                 if (clients[i] != null)
                 {
-                    clients[i].WritePacket(message);
+                    clients[i].WritePacket(message,TCP: TCP);
                 }
             }
         }
