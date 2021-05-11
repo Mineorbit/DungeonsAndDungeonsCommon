@@ -33,7 +33,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string userName;
         public int localid;
 
-        Semaphore waitingForSpecific = new Semaphore(1,1);
+        Semaphore waitingForTcp = new Semaphore(1,1);
+        Semaphore waitingForUdp = new Semaphore(1, 1);
 
         public NetworkStream tcpStream;
 
@@ -161,7 +162,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         async Task<byte[]> ReadData(bool TCP = true)
         {
-            waitingForSpecific.WaitOne();
+            Debug.Log("Waiting for Data");
+            if(TCP)
+            {
+                waitingForTcp.WaitOne();
+            }else
+            {
+                waitingForUdp.WaitOne();
+            }
             byte[] udpResult;
             byte[] lengthBytes = new byte[4];
             byte[] data = null;
@@ -188,7 +196,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Array.Reverse(data);
             }
-            waitingForSpecific.Release();
+            if(TCP)
+            {
+                waitingForTcp.Release();
+            }
+            else
+            {
+                waitingForUdp.Release();
+            }
             return data;
         }
 
@@ -299,6 +314,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public async Task HandlePackets(bool Tcp)
         {
+
             byte[] data;
             data = await ReadData(TCP: Tcp);
 
