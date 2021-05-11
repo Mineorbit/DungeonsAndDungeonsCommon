@@ -256,17 +256,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This needs to be exited after some kind of timeout
         public async Task Process()
         {
-            adressOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint);
-            int portOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port;
-            udpClient = new UdpClient();
-            try
-            {
-                udpClient.Connect(adressOther.Address, portOther);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+           
 
             Welcome w = new Welcome
             {
@@ -277,9 +267,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(w);
 
-
             MeConnect meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
+
+
+            adressOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint);
+            int portOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port;
+            udpClient = new UdpClient();
+            try
+            {
+                Debug.Log("Connecting on UDP");
+                udpClient.Connect(adressOther.Address, portOther);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
 
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
