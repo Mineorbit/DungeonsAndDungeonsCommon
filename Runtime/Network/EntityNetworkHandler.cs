@@ -80,23 +80,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         float maxInterpolateDist = 5f;
         public void Update()
         {
-
             float dist = (transform.position - targetPosition).magnitude;
 
-            if ((!isOwner || isOnServer) && (dist < maxInterpolateDist))
+            if (!isOwner)
             {
-                networkPosition = (networkPosition + targetPosition) / 2;
-                networkRotation = Quaternion.Lerp(targetRotation, networkRotation, 0.5f);
+                transform.position = (networkPosition + targetPosition) / 2;
+                transform.rotation = Quaternion.Lerp(targetRotation, networkRotation, 0.5f);
             }
-            else
-            if ( !isOnServer && isOwner && (dist >= maxInterpolateDist))
-            {
-
-                networkPosition = targetPosition;
-                networkRotation = targetRotation;
-            }
-            
-
         }
 
         private void UpdateLocomotion()
