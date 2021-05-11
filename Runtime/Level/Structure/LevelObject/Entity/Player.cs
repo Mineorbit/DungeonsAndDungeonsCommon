@@ -51,7 +51,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         float skipDistance = 1f;
         public override void Update()
         {
-            if (NetworkManager.isConnected  && localId != NetworkManager.instance.localId)
+            if (!levelObjectNetworkHandler.isOwner)
             {
                 float distance = (transform.position - levelObjectNetworkHandler.networkPosition).magnitude;
                 if (distance < skipDistance)
@@ -76,7 +76,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                transform.position = controller.controllerPosition;
+                float distance = (transform.position - levelObjectNetworkHandler.networkPosition).magnitude;
+                if (distance > skipDistance)
+                {
+                    transform.position = levelObjectNetworkHandler.networkPosition;
+                    controller.UpdatePosition(transform.position);
+                }
+                else
+                {
+                    transform.position = controller.controllerPosition;
+                }
             }
 
             base.Update();

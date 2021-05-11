@@ -32,7 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        internal void UpdatePosition(Vector3 position)
+        public void UpdatePosition(Vector3 position)
         {
             dirty = true;
             positionUpdate = position;
