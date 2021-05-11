@@ -146,6 +146,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
 
+            Debug.Log("Sent: "+p);
+
             tcpStream.Write(result, 0, result.Length);
 
         }
@@ -266,6 +268,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Type packetType = Type.GetType(p.Type);
 
 
+            Debug.Log("Received: " + p);
 
             UnityAction processPacket = null;
             if (packetType == typeof(MeDisconnect))
