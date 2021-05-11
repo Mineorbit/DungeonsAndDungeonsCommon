@@ -154,6 +154,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
+                Debug.Log("Over "+udpClient);
                 udpClient.Send(result, 0);
             }
 
