@@ -37,7 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public NetworkStream tcpStream;
 
-
+        private TaskCompletionSource<bool> disconnected = new TaskCompletionSource<bool>();
         public override string ToString()
         {
             return "NetworkClient "+userName+" "+localid;
@@ -104,6 +104,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("We disconnected");
             onDisconnectEvent.Invoke();
             Connected = false;
+            disconnected.SetResult(true);
             }
         }
 
@@ -281,12 +282,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartHandle();
             
         }
-        void StartHandle()
+        async void StartHandle()
         {
             Thread handle1Thread = new Thread(new ThreadStart(TcpHandle));
             Thread handle2Thread = new Thread(new ThreadStart(UdpHandle));
             handle1Thread.Start();
             handle2Thread.Start();
+            await disconnected.Task;
         }
 
         void TcpHandle()
