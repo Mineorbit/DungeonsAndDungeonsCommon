@@ -17,6 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Awake()
         {
             base.Awake();
+            isOwner = isOnServer;
         }
 
 
