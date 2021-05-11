@@ -121,7 +121,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void CreateUdpClientForClient(Client client, int port)
         {
-            client.udpClient = new UdpClient(port);
+            IPEndPoint localip = new IPEndPoint(IPAddress.Any, port);
+            client.udpClient = new UdpClient(localip);
         }
 
         public void WritePacket(IMessage message,bool TCP = true)
@@ -258,7 +259,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             adressOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint);
             int portOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port;
             udpClient = new UdpClient();
-            udpClient.Connect(adressOther.Address,portOther);
+            try
+            {
+                udpClient.Connect(adressOther.Address, portOther);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
             Welcome w = new Welcome
             {
                 LocalId = localid
