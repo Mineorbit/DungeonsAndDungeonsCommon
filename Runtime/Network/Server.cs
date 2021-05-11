@@ -70,14 +70,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int i = GetFreeSlot();
             int udpPort = port + 1 + i;
             Debug.Log("Reading on "+ udpPort);
-            UdpClient udClient = new UdpClient(new IPEndPoint(IPAddress.Any, udpPort));
+            UdpClient udClient = new UdpClient(udpPort);
             if (i == -1)
             {
                 tpClient.Close();
             }
             else
             {
-                Client c = new Client(tpClient,udClient,i);
+                Client c = new Client(tpClient,udClient,i,port);
                 clients[i] = c;
                 Thread handleThread = new Thread(new ThreadStart(() =>
                 {
