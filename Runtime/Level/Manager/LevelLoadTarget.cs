@@ -27,6 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void LoadNearChunk(Vector3 position)
         {
+            Debug.Log("Loading near "+position);
             if (LevelManager.currentLevel != null)
             {
                 if (!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
@@ -35,8 +36,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (chunkData != null)
                     {
                         Invoke(StreamChunkIntoCurrentLevelFrom, chunkData);
+                        loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                     }
-                    loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                 }
             }
         }
