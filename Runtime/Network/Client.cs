@@ -198,7 +198,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // int tries; necessary?
         public async Task<T> ReadPacket<T>() where T : IMessage, new()
         {
-            Debug.Log("Waiting for Data");
             byte[] data = await ReadData();
 
             var p = General.Packet.Parser.ParseFrom(data);
@@ -253,7 +252,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(w);
 
-            Debug.Log("Sent "+w);
 
             MeConnect meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
@@ -307,17 +305,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             data = await ReadData(TCP: Tcp);
 
 
-            if (!Connected)
-            {
-                return;
-            }
 
             Packet p = General.Packet.Parser.ParseFrom(data);
             p.Sender = localid;
             Type packetType = Type.GetType(p.Type);
 
 
-            Debug.Log("Received: " + p);
+            Debug.Log("Going to Processing: " + p);
 
             UnityAction processPacket = null;
             if (packetType == typeof(MeDisconnect))
