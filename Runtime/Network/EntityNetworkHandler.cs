@@ -90,12 +90,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        Vector3 lastSentPosition;
+        Quaternion lastSentRotation;
         private void UpdateLocomotion()
         {
             if(identified && (isOnServer || isOwner))
             {
                 Vector3 pos = observed.transform.position;
                 Quaternion rot = observed.transform.rotation;
+                float sendDist = (pos - lastSentPosition).magnitude;
+                if(sendDist>0.5f)
+                {
                 EntityLocomotion entityLocomotion = new EntityLocomotion
                 {
                     X = pos.x,
@@ -108,6 +113,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 };
                 // UDP IS BROKEN THIS NEEDS A FIX LATER
                 Marshall(entityLocomotion,owner,toOrWithout:false,TCP: true);
+                lastSentPosition = pos;
+                }
             }
         }
     }
