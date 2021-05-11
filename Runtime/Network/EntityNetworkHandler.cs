@@ -10,6 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
 
         public bool isOwner;
+        public int owner = -1;
 
         public Vector3 networkPosition;
         public Quaternion networkRotation;
@@ -105,7 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     QZ = rot.z,
                     QW = rot.w
                 };
-                Marshall(entityLocomotion);
+                Marshall(entityLocomotion,owner,toOrWithout:false);
             }
         }
     }

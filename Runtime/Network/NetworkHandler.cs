@@ -206,7 +206,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void Marshall(IMessage message, int target)
+        public void Marshall(IMessage message, int target, bool toOrWithout = true)
         {
             Packet packet = new Packet
             {
@@ -222,8 +222,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
+                if(toOrWithout)
+                { 
                 if(Server.instance.clients[target] != null)
                 Server.instance.clients[target].WritePacket(packet);
+                }
             }
         }
 

@@ -145,6 +145,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public void WriteAll(IMessage message, int except)
+        {
+            for (int i = 0; i < 4 && (i != except); i++)
+            {
+                if (clients[i] != null)
+                {
+                    clients[i].WritePacket(message);
+                }
+            }
+        }
+
         public void StopListen()
         {
             listener.Stop();
