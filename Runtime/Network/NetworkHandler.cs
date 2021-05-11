@@ -226,6 +226,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 { 
                 if(Server.instance.clients[target] != null)
                 Server.instance.clients[target].WritePacket(packet);
+                }else
+                {
+                    Server.instance.WriteAll(packet,target);
                 }
             }
         }
