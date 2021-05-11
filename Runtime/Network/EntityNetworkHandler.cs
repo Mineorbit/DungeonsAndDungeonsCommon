@@ -106,7 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     QZ = rot.z,
                     QW = rot.w
                 };
-                // Marshall(entityLocomotion,owner,toOrWithout:false,TCP: false);
+                Marshall(entityLocomotion,owner,toOrWithout:false,TCP: false);
             }
         }
     }
