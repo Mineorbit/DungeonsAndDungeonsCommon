@@ -26,26 +26,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     activated = true;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.None;
                 }
                 if(value == InstantiateType.Online)
                 {
                     activated = false;
-                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.Near;
+                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.Near;
                 }
                 if (value == InstantiateType.Play)
                 {
                     activated = true;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.Near;
+                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.None;
                 }
                 if (value == InstantiateType.Default)
                 {
                     activated = true;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.Near;
                 }
                 if(value == InstantiateType.Edit)
                 {
                     activated = false;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.None;
                 }
                 _instantiateType = value;
             }
