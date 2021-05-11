@@ -83,9 +83,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         action = (x) => {
                             MainCaller.Do(
-                                () => { 
+                                () => {
                                 NetworkHandler handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity);
-                                Delegate.CreateDelegate(type: typeof(UnityAction<Packet>),handler, methodInfo.Name,true,true).DynamicInvoke(x);
+
+                                    Debug.Log(handler + " doing " + methodInfo.Name);
+                                    Delegate.CreateDelegate(type: typeof(UnityAction<Packet>),handler, methodInfo.Name,true,true).DynamicInvoke(x);
                                 }
                             );
                         };
