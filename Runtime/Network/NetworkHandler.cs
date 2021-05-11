@@ -120,7 +120,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
 
         // eventually type strings are not jet correcty matched
-        public void Marshall(IMessage message)
+        public void Marshall(IMessage message, bool TCP = true)
         {
             Packet packet = new Packet
             {
@@ -132,17 +132,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if(!isOnServer)
             {
-                NetworkManager.instance.client.WritePacket(packet);
+                NetworkManager.instance.client.WritePacket(packet, TCP: TCP);
             }else
             {
-                Server.instance.WriteAll(packet);
+                Server.instance.WriteAll(packet,TCP: TCP);
             }
         }
 
 
 
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
-        public static void Marshall(Type sendingHandler,IMessage message)
+        public static void Marshall(Type sendingHandler,IMessage message, bool TCP = true)
         {
             Packet packet = new Packet
             {
@@ -153,16 +153,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!isOnServer)
             {
-                NetworkManager.instance.client.WritePacket(packet);
+                NetworkManager.instance.client.WritePacket(packet, TCP: TCP);
             }
             else
             {
-                Server.instance.WriteAll(packet);
+                Server.instance.WriteAll(packet, TCP: TCP);
             }
         }
 
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
-        public static void Marshall(Type sendingHandler, IMessage message, string identity)
+        public static void Marshall(Type sendingHandler, IMessage message, string identity, bool TCP = true)
         {
             Packet packet = new Packet
             {
@@ -174,17 +174,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!isOnServer)
             {
-                NetworkManager.instance.client.WritePacket(packet);
+                NetworkManager.instance.client.WritePacket(packet, TCP: TCP);
             }
             else
             {
-                Server.instance.WriteAll(packet);
+                Server.instance.WriteAll(packet, TCP: TCP);
             }
         }
 
 
 
-        public static void Marshall(Type sendingHandler, IMessage message, int target, string identity)
+        public static void Marshall(Type sendingHandler, IMessage message, int target, string identity, bool TCP = true)
         {
             Packet packet = new Packet
             {
@@ -201,12 +201,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 if (Server.instance.clients[target] != null)
-                    Server.instance.clients[target].WritePacket(packet);
+                    Server.instance.clients[target].WritePacket(packet, TCP: TCP);
             }
         }
 
 
-        public void Marshall(IMessage message, int target, bool toOrWithout = true)
+        public void Marshall(IMessage message, int target, bool toOrWithout = true, bool TCP  = true)
         {
             Packet packet = new Packet
             {
@@ -218,17 +218,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!isOnServer)
             {
-                NetworkManager.instance.client.WritePacket(packet);
+                NetworkManager.instance.client.WritePacket(packet, TCP: TCP);
             }
             else
             {
                 if(toOrWithout)
                 { 
                 if(Server.instance.clients[target] != null)
-                Server.instance.clients[target].WritePacket(packet);
+                Server.instance.clients[target].WritePacket(packet, TCP: TCP);
                 }else
                 {
-                    Server.instance.WriteAll(packet,target);
+                    Server.instance.WriteAll(packet,target, TCP: TCP);
                 }
             }
         }

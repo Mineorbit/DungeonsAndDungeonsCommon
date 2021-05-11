@@ -20,7 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public TcpClient tcpClient;
         public UdpClient udpClient;
 
-
+        public IPEndPoint adressOther;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
@@ -75,7 +75,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 Client client = new Client();
 
-                Thread createThread = new Thread(new ThreadStart(() => { CreateTcpClientForClient(client, host, port); client.Connected = true; }));
+                Thread createThread = new Thread(new ThreadStart(() => {
+                    CreateTcpClientForClient(client, host, port);
+                    CreateUdpClientForClient(client,port+1);
+                    client.Connected = true; }));
+
                 createThread.IsBackground = true;
                 createThread.Start();
 
@@ -96,6 +100,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             MainCaller.Do(() => { PlayerManager.playerManager.Remove(localid); });
             tcpStream.Close();
             tcpClient.Close();
+            udpClient.Close();
             Debug.Log("We disconnected");
             onDisconnectEvent.Invoke();
             Connected = false;
@@ -111,14 +116,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.Setup();
         }
 
-        public static void CreateUdpClientForClient(Client client, IPAddress host, int port)
+        public static void CreateUdpClientForClient(Client client, int port)
         {
-            client.tcpClient = new TcpClient(host.ToString(), port);
-            client.tcpClient.SendTimeout = 1000;
+            client.udpClient = new UdpClient(port);
             client.Setup();
         }
 
-        public void WritePacket(IMessage message)
+        public void WritePacket(IMessage message,bool TCP = true)
         {
 
             General.Packet p = new General.Packet
@@ -127,11 +131,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
             };
 
-            WritePacket(p);
+            WritePacket(p,TCP: TCP);
 
         }
 
-        public void WritePacket(Packet p)
+        public void WritePacket(Packet p, bool TCP = true)
         {
 
             byte[] data = p.ToByteArray();
@@ -147,23 +151,41 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(data, 0, result, 4, length);
 
             Debug.Log("Sent: "+p);
-
-            tcpStream.Write(result, 0, result.Length);
+            if(TCP && tcpClient.Connected)
+            {
+                tcpStream.Write(result, 0, result.Length);
+            }else
+            {
+                udpClient.Send(result,result.Length);
+            }
 
         }
 
-        async Task<byte[]> ReadData()
+        async Task<byte[]> ReadData(bool TCP = true)
         {
             waitingForSpecific.WaitOne();
+            byte[] udpResult;
             byte[] lengthBytes = new byte[4];
-            await tcpStream.ReadAsync(lengthBytes, 0, 4);
-            if (BitConverter.IsLittleEndian)
+            byte[] data = null;
+            int length = 0;
+            if (TCP)
             {
-                Array.Reverse(lengthBytes);
+                await tcpStream.ReadAsync(lengthBytes, 0, 4);
+                if (BitConverter.IsLittleEndian)
+                {
+                    Array.Reverse(lengthBytes);
+                }
+                length = BitConverter.ToInt32(lengthBytes, 0);
+                data = new byte[length];
+                await tcpStream.ReadAsync(data, 0, length);
             }
-            int length = BitConverter.ToInt32(lengthBytes, 0);
-            byte[] data = new byte[length];
-            await tcpStream.ReadAsync(data, 0, length);
+            else
+            {
+                udpResult = (await udpClient.ReceiveAsync()).Buffer;
+                Array.Copy(udpResult,4,data,0,udpResult.Length-4);
+            }
+
+
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(data);
@@ -209,12 +231,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
-            Task.Run(HandlePackets);
+            Task.Run(()=> { HandlePackets(Tcp: true); });
+            Task.Run(async() => { await HandlePackets(Tcp: false); });
         }
+
+
 
         // This needs to be exited after some kind of timeout
         public async Task Process()
         {
+            adressOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint);
+            int portOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port;
+            var udpEndpoint = new IPEndPoint(adressOther.Address,portOther+1);
+            udpClient = new UdpClient(udpEndpoint);
 
             Welcome w = new Welcome
             {
@@ -250,15 +279,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 PlayerManager.playerManager.Add(localid, userName, true); 
             });
-            
-            await HandlePackets();
+
+            Task.Run(() => { HandlePackets(Tcp: true); });
+            Task.Run(async () => { await HandlePackets(Tcp: false); });
+
         }
 
-        public async Task HandlePackets()
+        public async Task HandlePackets(bool Tcp)
         {
-            byte[] data = await ReadData();
+            byte[] data;
+            data = await ReadData(TCP: Tcp);
 
-            if(!Connected)
+
+            if (!Connected)
             {
                 return;
             }
@@ -289,7 +322,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             handleThread.Start();
                 //Processing needed
 
-                await HandlePackets();
+            await HandlePackets(Tcp);
         }
     }
 }
