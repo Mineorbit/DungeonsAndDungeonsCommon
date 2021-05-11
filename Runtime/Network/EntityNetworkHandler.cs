@@ -84,8 +84,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!isOwner)
             {
-                transform.position = (networkPosition + targetPosition) / 2;
-                transform.rotation = Quaternion.Lerp(targetRotation, networkRotation, 0.5f);
+                transform.position = (transform.position + targetPosition) / 2;
+                transform.rotation = Quaternion.Lerp(transform.rotation,targetRotation, 0.5f);
             }
         }
 
