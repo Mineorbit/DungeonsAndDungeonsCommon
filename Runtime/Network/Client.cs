@@ -134,6 +134,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             IPEndPoint localip = new IPEndPoint(IPAddress.Any, port);
             client.udpClient = new UdpClient();
+            Debug.Log("Connecting UDP to: "+port);
             client.udpClient.Connect(( (IPEndPoint) (client.tcpClient.Client.RemoteEndPoint)).Address, port);
         }
 
