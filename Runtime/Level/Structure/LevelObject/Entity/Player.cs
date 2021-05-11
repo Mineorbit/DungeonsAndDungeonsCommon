@@ -53,14 +53,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (!levelObjectNetworkHandler.isOwner)
             {
-                float distance = (transform.position - levelObjectNetworkHandler.networkPosition).magnitude;
-                if (distance < skipDistance)
-                {
-                    transform.position = (transform.position + levelObjectNetworkHandler.networkPosition) / 2;
-                }else
-                {
-                    transform.position = levelObjectNetworkHandler.networkPosition;
-                }
+                transform.position = (transform.position + levelObjectNetworkHandler.networkPosition) / 2;
                 /*
                 //This needs to be replaced by a EntityTeleport (EntitySetBack) packet
                 float distance = (controller.controllerPosition - levelObjectNetworkHandler.networkPosition).magnitude;
@@ -76,6 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
+                /*
                 float distance = (transform.position - levelObjectNetworkHandler.networkPosition).magnitude;
                 if (distance > skipDistance)
                 {
@@ -86,6 +80,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     transform.position = controller.controllerPosition;
                 }
+                */
+                transform.position = controller.controllerPosition;
             }
 
             base.Update();
