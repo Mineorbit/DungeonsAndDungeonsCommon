@@ -68,14 +68,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             TcpClient tpClient = await listener.AcceptTcpClientAsync();
             int i = GetFreeSlot();
-            
-            if(i == -1)
+            UdpClient udClient = new UdpClient(new IPEndPoint(IPAddress.Any, port+1+i));
+            if (i == -1)
             {
                 tpClient.Close();
             }
             else
             {
-                Client c = new Client(tpClient,i);
+                Client c = new Client(tpClient,udClient,i);
                 clients[i] = c;
                 Thread handleThread = new Thread(new ThreadStart(() =>
                 {

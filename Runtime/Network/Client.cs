@@ -33,6 +33,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string userName;
         public int localid;
 
+        public int Port;
+
         Semaphore waitingForTcp = new Semaphore(1,1);
         Semaphore waitingForUdp = new Semaphore(1, 1);
 
@@ -48,6 +50,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Connected = true;
             tcpClient = tcpC;
+            tcpStream = tcpClient.GetStream();
+            localid = lId;
+        }
+
+        public Client(TcpClient tcpC,UdpClient udpC, int lId)
+        {
+            Connected = true;
+            tcpClient = tcpC;
+            udpClient = udpC;
             tcpStream = tcpClient.GetStream();
             localid = lId;
         }
@@ -76,9 +87,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 Client client = new Client();
 
+                client.Port = port;
                 Thread createThread = new Thread(new ThreadStart(() => {
                     CreateTcpClientForClient(client, host, port);
-                    CreateUdpClientForClient(client,port+1);
                     client.Connected = true;
                     client.Setup();
                 }));
@@ -244,6 +255,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Welcome w = Task.Run(ReadPacket<Welcome>).Result;
 
             localid = w.LocalId;
+
+
+            CreateUdpClientForClient(this, Port + 1 + localid);
 
             MeConnect meConnect = new MeConnect
             {
