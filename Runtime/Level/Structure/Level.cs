@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Level : MonoBehaviour
     {
 
-        public enum InstantiateType { Default, Test, Online, Edit }
+        public enum InstantiateType { Default, Test, Online, Edit,Play}
 
         static InstantiateType _instantiateType;
 
@@ -32,7 +32,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     activated = false;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.Near;
                 }
-                if(value == InstantiateType.Default)
+                if (value == InstantiateType.Play)
+                {
+                    activated = true;
+                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.Near;
+                }
+                if (value == InstantiateType.Default)
                 {
                     activated = true;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
