@@ -133,7 +133,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void CreateUdpClientForClient(Client client, int port)
         {
             IPEndPoint localip = new IPEndPoint(IPAddress.Any, port);
-            client.udpClient = new UdpClient(localip);
+            client.udpClient = new UdpClient();
             client.udpClient.Connect(( (IPEndPoint) (client.tcpClient.Client.RemoteEndPoint)).Address, port);
         }
 
