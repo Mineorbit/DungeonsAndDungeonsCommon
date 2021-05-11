@@ -106,7 +106,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     QZ = rot.z,
                     QW = rot.w
                 };
-                Marshall(entityLocomotion,owner,toOrWithout:false,TCP: false);
+                // UDP IS BROKEN THIS NEEDS A FIX LATER
+                Marshall(entityLocomotion,owner,toOrWithout:false,TCP: true);
             }
         }
     }
