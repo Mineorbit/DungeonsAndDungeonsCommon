@@ -7,6 +7,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelLoadTarget : NetworkLevelObject
     {
+
+        public enum LoadTargetMode { None, Near };
+
+        public static LoadTargetMode loadTargetMode = LoadTargetMode.Near;
+
         List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
 
         void Start()
@@ -17,7 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void EnableChunkAt(Vector3 position)
         {
-            if (LevelDataManager.instance.loadType == LevelDataManager.LoadType.Near) LoadNearChunk(position);
+            if (loadTargetMode == LoadTargetMode.Near) LoadNearChunk(position);
         }
 
         public void LoadNearChunk(Vector3 position)
