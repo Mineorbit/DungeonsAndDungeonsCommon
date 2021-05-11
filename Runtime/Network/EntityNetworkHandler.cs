@@ -73,7 +73,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     targetPosition = pos;
                     Quaternion rot = new Quaternion(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ, entityLocomotion.QW);
                     targetRotation = rot;
-                    Debug.Log("TEST "+pos+" "+rot);
                 });
             }
         }
