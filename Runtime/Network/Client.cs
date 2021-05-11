@@ -230,9 +230,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
-
-            Task.Run(()=> { HandlePackets(Tcp: true); });
-            Task.Run(async() => { await HandlePackets(Tcp: false); });
+            StartHandle();
         }
 
 
@@ -280,9 +278,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerManager.playerManager.Add(localid, userName, true); 
             });
 
-            Task.Run(() => { HandlePackets(Tcp: true); });
-            Task.Run(async () => { await HandlePackets(Tcp: false); });
+            StartHandle();
+            
+        }
+        void StartHandle()
+        {
+            Thread handle1Thread = new Thread(new ThreadStart(TcpHandle));
+            Thread handle2Thread = new Thread(new ThreadStart(UdpHandle));
+            handle1Thread.Start();
+            handle2Thread.Start();
+        }
 
+        void TcpHandle()
+        {
+            Task.Run(async () => { await HandlePackets(Tcp: true); });
+        }
+
+        void UdpHandle()
+        {
+            Task.Run(async () => { await HandlePackets(Tcp: false); });
         }
 
         public async Task HandlePackets(bool Tcp)
