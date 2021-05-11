@@ -155,7 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void WritePacket(IMessage message,bool TCP = true)
         {
             General.Packet p = null;
-            if ((message.GetType() == typeof(Packet)))
+            if (message.GetType() != typeof(Packet))
             { 
                 p = new General.Packet
                 {
