@@ -119,12 +119,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.tcpClient.SendTimeout = 1000;
             client.tcpStream = client.tcpClient.GetStream();
             IPAddress other = ((IPEndPoint)client.tcpClient.Client.RemoteEndPoint).Address;
-            client.remoteIPUdp = new IPEndPoint(other, port);
+            
         }
 
         public static void CreateUdpClientForClient(Client client)
         {
             client.udpClient = new UdpClient();
+            client.remoteIPUdp = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address, client.Port+1+client.localid);
             Debug.Log("Connecting UDP to: "+ client.remoteIPUdp);
             
             
