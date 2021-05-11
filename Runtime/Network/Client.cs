@@ -270,21 +270,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             MeConnect meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
-
-
-            adressOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint);
-            int portOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port;
-            udpClient = new UdpClient();
-            try
-            {
-                Debug.Log("Connecting on UDP");
-                udpClient.Connect(adressOther.Address, portOther);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
