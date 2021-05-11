@@ -78,7 +78,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Thread createThread = new Thread(new ThreadStart(() => {
                     CreateTcpClientForClient(client, host, port);
                     CreateUdpClientForClient(client,port+1);
-                    client.Connected = true; }));
+                    client.Connected = true;
+                    client.Setup();
+                }));
 
                 createThread.IsBackground = true;
                 createThread.Start();
@@ -114,13 +116,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.tcpClient = new TcpClient(host.ToString(), port);
             client.tcpClient.SendTimeout = 1000;
             client.tcpStream = client.tcpClient.GetStream();
-            client.Setup();
         }
 
         public static void CreateUdpClientForClient(Client client, int port)
         {
             client.udpClient = new UdpClient(port);
-            client.Setup();
         }
 
         public void WritePacket(IMessage message,bool TCP = true)
@@ -155,9 +155,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(TCP && tcpClient.Connected)
             {
                 tcpStream.Write(result, 0, result.Length);
-            }else
-            {
-                udpClient.Send(result,result.Length);
             }
 
         }
@@ -230,7 +227,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
-            Task.Run(async ()=> { await StartHandle(); });
+
+            Task.Run(async () => { await StartHandle(); });
         }
 
 
