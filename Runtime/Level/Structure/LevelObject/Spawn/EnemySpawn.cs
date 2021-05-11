@@ -77,13 +77,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SpawnEnemy()
         {
+            if(!(Level.instantiateType == Level.InstantiateType.Online))
+            { 
             if (spawnedEnemy == null)
             {
+                Debug.Log("spawned enemy");
                 spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, SpawnLocation(), SpawnRotation());
             }
             else
             {
                 LevelManager.currentLevel.AddToDynamic(spawnedEnemy, SpawnLocation(), SpawnRotation());
+            }
             }
         }
 
