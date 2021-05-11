@@ -204,7 +204,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Debug.Log("Reading for UDP");
+                Debug.Log("Reading for UDP on "+remoteIPUdp);
                 udpResult = udpClient.Receive(ref remoteIPUdp);
                 Array.Copy(udpResult,4,data,0,udpResult.Length-4);
             }
