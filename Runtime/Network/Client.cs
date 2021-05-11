@@ -157,6 +157,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 tcpStream.Write(result, 0, result.Length);
             }
+            else
+            {
+                udpClient.Send(result,0);
+            }
 
         }
 
