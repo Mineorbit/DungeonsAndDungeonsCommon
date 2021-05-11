@@ -23,9 +23,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelData levelData;
 
-        public enum LoadType { All, Near };
+        internal enum LoadType { All, Near };
 
-        public LoadType loadType = LoadType.All;
+        internal LoadType loadType = LoadType.All;
 
         public void Awake()
         {
@@ -53,14 +53,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         static void ChangeLevelLoading()
         {
-            Debug.Log("Load Type changed "+ LevelManager.currentLevel.loadType);
-            if (LevelManager.currentLevel.loadType == Level.LoadType.All)
+            if (instance.loadType == LoadType.All)
             {
                 LoadAllRegions();
             }
-            else if (LevelManager.currentLevel.loadType == Level.LoadType.Target)
+            else 
+            if (instance.loadType == LoadType.Near)
             {
-
+                //At least one load Target
             }
         }
 
@@ -86,13 +86,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			New(newMetaData,saveImmediately: saveImmediately);
         }
 		
-		public static void Load(LevelMetaData levelMetaData)
+		public static void Load(LevelMetaData levelMetaData, Level.InstantiateType instantiateType)
         {
             if (levelMetaData == null) return;
 
             LevelManager.Clear();
             LevelManager.currentLevelMetaData = levelMetaData;
             LevelManager.Instantiate();
+            Level.instantiateType = instantiateType;
 
 
 

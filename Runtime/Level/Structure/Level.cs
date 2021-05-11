@@ -9,9 +9,43 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Level : MonoBehaviour
     {
-        public enum LoadType { All, Target };
 
-        public LoadType loadType;
+        public enum InstantiateType { Default, Test, Online, Edit }
+
+        static InstantiateType _instantiateType;
+
+        public static InstantiateType instantiateType
+        {
+            get
+            {
+                return _instantiateType;
+            }
+            set
+            {
+                if(value == InstantiateType.Test)
+                {
+                    activated = true;
+                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                }
+                if(value == InstantiateType.Online)
+                {
+                    activated = false;
+                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.Near;
+                }
+                if(value == InstantiateType.Default)
+                {
+                    activated = true;
+                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                }
+                if(value == InstantiateType.Edit)
+                {
+                    activated = false;
+                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                }
+                _instantiateType = value;
+            }
+        }
+
 
         public Transform dynamicObjects;
 
@@ -26,8 +60,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Dictionary<string, LevelObjectData> levelObjectDatas;
 
         //this needs to be false in network play
-        bool _activated;
-        public bool activated
+        static bool _activated;
+        public static bool activated
         {
             get
             {
@@ -40,9 +74,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        void SetLevelObjectActivity(bool a)
+
+
+        static void SetLevelObjectActivity(bool a)
         {
-            foreach(LevelObject levelObject in transform.GetComponentsInChildren<LevelObject>())
+            if(LevelManager.currentLevel != null)
+            foreach(LevelObject levelObject in LevelManager.currentLevel.transform.GetComponentsInChildren<LevelObject>())
             {
                 levelObject.enabled = a || levelObject.ActivateWhenInactive;
             }
@@ -50,7 +87,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Start()
         {
-            loadType = LoadType.All;
             Setup();
         }
 
@@ -71,7 +107,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Setup();
             GenerateNavigation();
-            loadType = LoadType.Target;
             SetLevelObjectActivity(true);
             StartLevelObjects();
         }
@@ -81,7 +116,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             EndLevelObjects();
             SetLevelObjectActivity(false);
             if (resetDynamic) ClearDynamicObjects();
-            loadType = LoadType.All;
         }
 
         void StartLevelObjects()

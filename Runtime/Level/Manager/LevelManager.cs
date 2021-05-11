@@ -55,8 +55,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void ResetToSaveState()
         {
             LevelMetaData lastMetaData = currentLevelMetaData;
+            Level.InstantiateType lastInstantiateType = Level.instantiateType;
             Clear();
-            LevelDataManager.Load(lastMetaData);
+            LevelDataManager.Load(lastMetaData,lastInstantiateType);
         }
 
         public static void StartRound(bool resetDynamic = true, bool resetStatic = false)
