@@ -231,7 +231,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
-            StartHandle();
+            Task.Run(async ()=> { await StartHandle(); });
         }
 
 
@@ -279,10 +279,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerManager.playerManager.Add(localid, userName, true); 
             });
 
-            StartHandle();
+            await StartHandle();
             
         }
-        async void StartHandle()
+        async Task StartHandle()
         {
             Thread handle1Thread = new Thread(new ThreadStart(TcpHandle));
             Thread handle2Thread = new Thread(new ThreadStart(UdpHandle));
