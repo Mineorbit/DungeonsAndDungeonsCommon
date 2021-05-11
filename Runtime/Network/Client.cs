@@ -257,9 +257,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             adressOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint);
             int portOther = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port;
-            var udpEndpoint = new IPEndPoint(adressOther.Address,portOther+1);
-            udpClient = new UdpClient(udpEndpoint);
-
+            udpClient = new UdpClient();
+            udpClient.Connect(adressOther.Address,portOther);
             Welcome w = new Welcome
             {
                 LocalId = localid
