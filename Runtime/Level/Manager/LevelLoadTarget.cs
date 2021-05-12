@@ -62,7 +62,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.FixedUpdate();
             EnableChunkAt(transform.position);
-            EnableChunkAt(transform.position+transform.forward*32);
+            EnableChunkAt(transform.position + transform.forward * 32);
+            EnableChunkAt(transform.position - transform.forward * 32);
+            EnableChunkAt(transform.position + transform.right * 32);
+            EnableChunkAt(transform.position - transform.right * 32);
         }
     }
 }
