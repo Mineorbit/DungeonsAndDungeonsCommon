@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!isOwner)
             {
                 transform.position = (transform.position + targetPosition) / 2;
-                transform.rotation = Quaternion.Lerp(transform.rotation,targetRotation, 0.5f);
+                transform.localRotation = targetRotation;
             }
         }
 
@@ -97,7 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(identified && (isOnServer || isOwner))
             {
                 Vector3 pos = observed.transform.position;
-                Quaternion rot = observed.transform.rotation;
+                Quaternion rot = observed.transform.localRotation;
                 float sendDist = (pos - lastSentPosition).magnitude;
                 if(sendDist>0.5f)
                 {
