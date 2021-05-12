@@ -50,7 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             MemoryStream memoryStream = new MemoryStream(netChunkData.Data.ToByteArray());
             memoryStream.Position = 0;
             BinaryFormatter bf = new BinaryFormatter();
-            return (ChunkData)bf.Deserialize(memoryStream);
+            return (ChunkData) bf.Deserialize(memoryStream);
         }
 
         public string ToString()
