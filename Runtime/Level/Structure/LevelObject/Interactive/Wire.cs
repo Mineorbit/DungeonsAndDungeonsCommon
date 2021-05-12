@@ -92,11 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             lr.BakeMesh(mesh, true);
             lr.SetWidth(0.4f, 0.4f);
             mc.sharedMesh = mesh;
-            Debug.Log("Rendered mesh ");
-            foreach(var x in mesh.vertices)
-            {
-                Debug.Log(x);
-            }
+
         }
 
         public override void OnStartRound()

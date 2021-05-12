@@ -22,7 +22,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             set
             {
-                if(value == InstantiateType.Test)
+                Debug.Log("Updated Instantiate Type to: "+value);
+                if (value == InstantiateType.Test)
                 {
                     activated = true;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
@@ -36,15 +37,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 if (value == InstantiateType.Play)
                 {
+                    Debug.Log("HOLLLA");
                     activated = true;
-                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.Near;
-                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.None;
+                    LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
+                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.Near;
                 }
                 if (value == InstantiateType.Default)
                 {
                     activated = true;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
-                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.Near;
+                    LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.None;
                 }
                 if(value == InstantiateType.Edit)
                 {
