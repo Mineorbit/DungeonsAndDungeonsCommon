@@ -18,13 +18,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StreamChunk streamChunk;
             if(p.Content.TryUnpack<StreamChunk>(out streamChunk))
             {
-                MainCaller.Do(() => { ChunkManager.LoadChunk(ChunkData.FromNetData(streamChunk.ChunkData)); });
+                MainCaller.Do(() => { ChunkData c = ChunkData.FromNetData(streamChunk.ChunkData);
+                    Debug.Log("Received Chunk "+c);
+                    ChunkManager.LoadChunk(c); });
             }
         }
 
         void StreamChunk(ActionParam chunkParam)
         {
-            NetLevel.ChunkData netChunk = ChunkData.ToNetData((ChunkData) chunkParam.data);
+            ChunkData toSend = (ChunkData)chunkParam.data;
+            Debug.Log("Sending "+toSend);
+            NetLevel.ChunkData netChunk = ChunkData.ToNetData(toSend);
             StreamChunk streamChunk = new StreamChunk
             {
                 ChunkData = netChunk

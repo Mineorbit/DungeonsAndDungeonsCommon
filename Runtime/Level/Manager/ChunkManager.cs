@@ -206,7 +206,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                 List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
                 levelObjectInstances.AddRange(chunkData.levelObjects);
-            
+                Debug.Log("Adding "+levelObjectInstances.Count+" Objects");
                 foreach (LevelObjectInstanceData i in levelObjectInstances)
                 {
                     MainCaller.Do(() =>
