@@ -203,8 +203,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void LoadChunk(ChunkData chunkData, bool immediate = true)
         {
-            
-                List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
+            bool loaded;
+            if (!instance.chunkLoaded.TryGetValue(chunkData.chunkId,out loaded))
+            {
+                if(loaded)
+                {
+                    return;
+                }
+            }
+
+            instance.chunkLoaded.Add(chunkData.chunkId, true);
+            List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
                 levelObjectInstances.AddRange(chunkData.levelObjects);
                 Debug.Log(chunkData.chunkId+" adding "+levelObjectInstances.Count+" Objects");
                 foreach (LevelObjectInstanceData i in levelObjectInstances)
@@ -217,19 +226,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         MainCaller.Do(() =>
                         {
+                         Debug.Log("Adding "+i.ToString());
                          LevelManager.currentLevel.Add(i);
                         });
                     }
                 }
 
-                if (!instance.chunkLoaded.ContainsKey(chunkData.chunkId))
-                {
-                    instance.chunkLoaded.Add(chunkData.chunkId, true);
-                }
-                else
-                {
-                    instance.chunkLoaded[chunkData.chunkId] = true;
-                }
+                
             
         }
     }
