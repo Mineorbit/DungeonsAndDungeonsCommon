@@ -4,6 +4,8 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     [Serializable]
@@ -23,6 +25,32 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log(chunkData.ToString());
             return chunkData;
+        }
+
+        public static NetLevel.ChunkData ToNetData(ChunkData inData)
+        {
+
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(memoryStream, inData);
+            memoryStream.Position = 0;
+            Debug.Log("Length to send: " + memoryStream.Length);
+            NetLevel.ChunkData chunkData = new NetLevel.ChunkData
+            {
+                ChunkId = inData.chunkId,
+                Data = Google.Protobuf.ByteString.FromStream(memoryStream)
+            };
+            return chunkData;
+        }
+
+        public static ChunkData FromNetData(NetLevel.ChunkData netChunkData)
+        {
+            ChunkData outData = new ChunkData();
+            Debug.Log("DATEN: " + netChunkData.Data.ToByteArray().Length);
+            MemoryStream memoryStream = new MemoryStream(netChunkData.Data.ToByteArray());
+            memoryStream.Position = 0;
+            BinaryFormatter bf = new BinaryFormatter();
+            return (ChunkData)bf.Deserialize(memoryStream);
         }
 
         public string ToString()

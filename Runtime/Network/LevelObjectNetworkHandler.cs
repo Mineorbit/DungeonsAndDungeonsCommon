@@ -173,7 +173,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     methodInfo.Invoke(observed,parameters.ToArray()); });
                 }else
                 {
-                    Debug.Log("The Method with the given name"+levelObjectAction.ActionName+" could not be found, is it private?");
+                    Debug.Log("The Method with the given name "+levelObjectAction.ActionName+" could not be found, is it private?");
                 }
             }
         }
@@ -204,13 +204,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (actionParam.type == typeof(ChunkData))
                 {
+
                     NetLevel.ChunkData netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
-                    ChunkData outData = new ChunkData();
-                    Debug.Log("DATEN: "+netChunkData.Data.ToByteArray().Length);
-                    MemoryStream memoryStream = new MemoryStream(netChunkData.Data.ToByteArray());
-                    memoryStream.Position = 0;
-                    BinaryFormatter bf = new BinaryFormatter();
-                    actionParam.data = (ChunkData) bf.Deserialize(memoryStream);
+                    actionParam.data = ChunkData.FromNetData(netChunkData);
                 }
 
 
@@ -226,18 +222,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (type == typeof(ChunkData))
                 {
-                    ChunkData inData = (ChunkData)data;
-
-                    MemoryStream memoryStream = new MemoryStream();
-                    BinaryFormatter bf = new BinaryFormatter();
-                    bf.Serialize(memoryStream, inData);
-                    memoryStream.Position = 0;
-                    Debug.Log("Length to send: "+memoryStream.Length);
-                    NetLevel.ChunkData chunkData = new NetLevel.ChunkData
-                    {
-                        ChunkId = inData.chunkId,
-                        Data = Google.Protobuf.ByteString.FromStream(memoryStream)
-                    };
+                    NetLevel.ChunkData chunkData = ChunkData.ToNetData((ChunkData) data);
                     x = Google.Protobuf.WellKnownTypes.Any.Pack(chunkData);
                 }
 
