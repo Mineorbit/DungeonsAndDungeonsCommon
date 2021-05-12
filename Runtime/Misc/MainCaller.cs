@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static MainCaller instance;
 
-        public void Start()
+        public void Awake()
         {
             if(instance != null)
             {
@@ -28,6 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void startCoroutine(IEnumerator c)
         {
+            Debug.Log(instance);
             instance.StartCoroutine(c);
         }
 
