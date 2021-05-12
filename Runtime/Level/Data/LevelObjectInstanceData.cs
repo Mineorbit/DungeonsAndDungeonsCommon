@@ -16,6 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             locations.Add(new Location(position));
         }
 
+
         [Serializable]
         public struct Location
         {
@@ -141,9 +142,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
 
 
-        public string ToString()
+        public override string ToString()
         {
-            return "Object "+type+" "+x+" "+y+" "+z;
+            return "Level Object Instance "+type+" "+x+" "+y+" "+z;
         }
     }
 }
