@@ -19,7 +19,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // destruction of some dynamic LevelObjects aswell, if Dynamic may not cause the distruction of static LevelObjects (but may involve other dynamic GameObjects ))
         public virtual void OnInit()
         {
-            Debug.Log("TEST3");
             initialized = true;
         }
 

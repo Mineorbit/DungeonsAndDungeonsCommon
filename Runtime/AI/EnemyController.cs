@@ -232,7 +232,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void UpdateState()
         {
-            Debug.Log(me);
             me.FSM.ExecuteState();
         }
 

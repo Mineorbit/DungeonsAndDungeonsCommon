@@ -187,10 +187,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Chunk result_chunk = null;
             if(instance.chunks != null)
             {
-                Debug.Log("TEST "+chunkGridPosition);
                 if (instance.chunks.TryGetValue(chunkGridPosition,out result_chunk))
                 {
-                    Debug.Log("TEST2");
                 }
                 else
                 {
