@@ -42,12 +42,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void Connect(string playerName, Action onConnect)
+        public void Connect(string ip, string playerName, Action onConnect)
         {
             if(!isConnected)
             { 
             userName = playerName;
-            Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
+            Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse(ip), 13565));
             //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
             client = t.Result;
 
