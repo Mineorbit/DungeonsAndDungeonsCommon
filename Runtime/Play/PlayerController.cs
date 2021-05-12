@@ -97,7 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         //Needs to be refined
 
-        
+        Vector3 forwardDirection;
         public void Move()
         {
 
@@ -166,6 +166,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             transform.position = transform.position + ( targetDirection * Speed * Time.deltaTime);
+
+            if (currentSpeed > 0)
+            {
+                forwardDirection = (forwardDirection + movingDirection) / 2;
+            }
+
+            float angleY = 180 + (180 / Mathf.PI) * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
+            
+            transform.parent.eulerAngles = (new Vector3(0, angleY, 0));
         }
 
         

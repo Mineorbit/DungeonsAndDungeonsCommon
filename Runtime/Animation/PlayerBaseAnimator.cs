@@ -59,10 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             speed = playerController.currentSpeed;
 
 
-            if (speed > 0)
-            { 
-                forwardDirection =  (forwardDirection + playerController.movingDirection)/2;
-            }
+            
 
             //simplify in future to just moving somehow
 
@@ -70,11 +67,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 footFX.SetActive((playerController.IsGrounded && playerController.allowedToMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))));
             }
+            animator.SetFloat("Speed", speed);
 
 
-            float angleY = 180 + (180/Mathf.PI) * Mathf.Atan2(forwardDirection.x,forwardDirection.z);
-            animator.SetFloat("Speed",speed);
-            transform.parent.eulerAngles = (new Vector3(0,angleY,0));
         }
     }
 }
