@@ -209,9 +209,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     return;
                 }
+                else
+                {
+                    instance.chunkLoaded[chunkData.chunkId] = true;
+                }
+            }
+            else
+            {
+                instance.chunkLoaded.Add(chunkData.chunkId, true);
             }
 
-            instance.chunkLoaded.Add(chunkData.chunkId, true);
             List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
                 levelObjectInstances.AddRange(chunkData.levelObjects);
                 Debug.Log(chunkData.chunkId+" adding "+levelObjectInstances.Count+" Objects");
