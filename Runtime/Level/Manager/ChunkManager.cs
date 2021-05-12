@@ -151,7 +151,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var c = chunk.GetComponent<Chunk>();
             c.chunkId = GetChunkID(gridPosition);
             chunks.Add(gridPosition,c);
-            chunkLoaded.Add(c.chunkId,true);
             return c;
         }
 
