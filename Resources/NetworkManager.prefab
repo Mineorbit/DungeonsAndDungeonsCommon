@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d39e27a422a259c41ab4c65e23e71bb3, type: 2}
   - {fileID: 11400000, guid: 8cdf5b9fa2f9293439145061293cefc8, type: 2}
   - {fileID: 11400000, guid: 7518b6fdb74f8eb4b88d4e9405567820, type: 2}
+  - {fileID: 11400000, guid: 616bae30591e0a64594a508033b2a1f2, type: 2}
   localId: 0
 --- !u!114 &8630790383658126000
 MonoBehaviour:
@@ -67,5 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672abb7ed6d7b604a8fc298f81cd2d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Identity: 
   identified: 0
+  observed: {fileID: 8630790383658126001}
   observed: {fileID: 8630790383658126001}

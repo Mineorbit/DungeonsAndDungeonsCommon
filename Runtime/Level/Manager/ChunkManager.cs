@@ -207,7 +207,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstances.AddRange(chunkData.levelObjects);
             foreach (LevelObjectInstanceData i in levelObjectInstances)
             {
-            LevelManager.currentLevel.Add(i);
+                MainCaller.Do(() => { LevelManager.currentLevel.Add(i); });
             }
             if(!instance.chunkLoaded.ContainsKey(chunkData.chunkId))
             { 
