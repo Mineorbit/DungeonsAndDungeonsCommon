@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StreamChunk streamChunk;
             if(p.Content.TryUnpack<StreamChunk>(out streamChunk))
             {
-                ChunkManager.LoadChunk(ChunkData.FromNetData(streamChunk.ChunkData));
+                MainCaller.Do(() => { ChunkManager.LoadChunk(ChunkData.FromNetData(streamChunk.ChunkData)); });
             }
         }
 

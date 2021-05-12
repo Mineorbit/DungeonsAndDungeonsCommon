@@ -203,8 +203,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void LoadChunk(ChunkData chunkData)
         {
-            MainCaller.Do(() =>
-            {
+            
                 List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
                 levelObjectInstances.AddRange(chunkData.levelObjects);
             
@@ -224,7 +223,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     instance.chunkLoaded[chunkData.chunkId] = true;
                 }
-            });
             
         }
     }
