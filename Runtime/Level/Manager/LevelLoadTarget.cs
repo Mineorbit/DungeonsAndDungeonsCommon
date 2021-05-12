@@ -22,7 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void EnableChunkAt(Vector3 position)
         {
-            Debug.Log(loadTargetMode);
             if (loadTargetMode == LoadTargetMode.Near)
             {
                 LoadNearChunk(position);

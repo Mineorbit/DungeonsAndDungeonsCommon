@@ -20,7 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 MainCaller.Do(() => { ChunkData c = ChunkData.FromNetData(streamChunk.ChunkData);
                     Debug.Log("Received Chunk "+c);
-                    ChunkManager.LoadChunk(c); });
+                    ChunkManager.LoadChunk(c,immediate: false); });
             }
         }
 

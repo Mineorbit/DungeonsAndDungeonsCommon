@@ -201,7 +201,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        public static void LoadChunk(ChunkData chunkData)
+        public static void LoadChunk(ChunkData chunkData, bool immediate = true)
         {
             
                 List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
@@ -209,10 +209,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Adding "+levelObjectInstances.Count+" Objects");
                 foreach (LevelObjectInstanceData i in levelObjectInstances)
                 {
-                    MainCaller.Do(() =>
+                    if(immediate)
                     {
                         Debug.Log("Adding " + i); LevelManager.currentLevel.Add(i);
-                    });
+                    }
+                    else
+                    {
+                        MainCaller.Do(() =>
+                        {
+                        Debug.Log("Adding " + i); LevelManager.currentLevel.Add(i);
+                        });
+                    }
                 }
 
                 if (!instance.chunkLoaded.ContainsKey(chunkData.chunkId))
