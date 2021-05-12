@@ -39,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position, createIfNotThere: true));
                     if (chunkData != null)
                     {
-                        Invoke(StreamChunkIntoCurrentLevelFrom, chunkData);
+                        Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
                         loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                     }
                 }
@@ -51,6 +51,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Streaming Chunk "+chunkData.chunkId);
             ChunkManager.LoadChunk(chunkData);
         }
+
 
         void DisableChunk()
         {

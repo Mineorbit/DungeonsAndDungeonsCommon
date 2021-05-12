@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8934787826373928275}
   - component: {fileID: 5666117405678453013}
-  - component: {fileID: 1990136630320035493}
+  - component: {fileID: 65087518692296255}
   m_Layer: 0
   m_Name: LevelLoadTarget
   m_TagString: Untagged
@@ -47,8 +47,8 @@ MonoBehaviour:
   levelObjectDataType: 
   isDynamic: 0
   ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 1990136630320035493}
---- !u!114 &1990136630320035493
+  levelObjectNetworkHandler: {fileID: 65087518692296255}
+--- !u!114 &65087518692296255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,9 +57,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1795247442869872954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
+  m_Script: {fileID: 11500000, guid: 172eda2cbee30a9419869230f8f48fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Identity: 
-  observed: {fileID: 0}
-  observed: {fileID: 0}
+  _Identity: 
+  identified: 0
+  observed: {fileID: 5666117405678453013}
+  observed: {fileID: 5666117405678453013}
+  observed: {fileID: 5666117405678453013}
