@@ -23,23 +23,43 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-
+        Queue<Action> todo = new Queue<Action>();
 
         //This marks a message for transport through network
         public void Invoke<T>(Action<T> a, T argument)
         {
             if (this.enabled) a.DynamicInvoke(argument);
-            if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled) levelObjectNetworkHandler.SendAction(a.Method.Name, LevelObjectNetworkHandler.ActionParam.From(argument));
+            if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
+                if( levelObjectNetworkHandler.identified)
+                {
+                levelObjectNetworkHandler.SendAction(a.Method.Name, LevelObjectNetworkHandler.ActionParam.From(argument));
+                }
+                else
+                {
+                    todo.Enqueue(()=> { Invoke(a, argument); });
+                }
             
         }
 
         public void Invoke(Action a)
         {
             if (this.enabled) a.DynamicInvoke();
-            if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled) levelObjectNetworkHandler.SendAction(a.Method.Name);
-            
+            if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
+            if( levelObjectNetworkHandler.identified)
+            {
+                levelObjectNetworkHandler.SendAction(a.Method.Name);
+            }else
+            {
+                    todo.Enqueue(()=> { Invoke(a); });
+            }
         }
 
+
+        public virtual void FixedUpdate()
+        {
+            if(todo.Count>0)
+            todo.Dequeue().Invoke();
+        }
         /*
 
         public void Invoke(Action a)

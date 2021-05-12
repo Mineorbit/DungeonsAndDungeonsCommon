@@ -54,8 +54,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         //Overlap between load target zones is a problem
-        void FixedUpdate()
+        public override void FixedUpdate()
         {
+            base.FixedUpdate();
             EnableChunkAt(transform.position);
             EnableChunkAt(transform.position+transform.forward*32);
         }
