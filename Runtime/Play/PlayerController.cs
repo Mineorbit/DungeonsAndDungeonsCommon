@@ -174,7 +174,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             float angleY = 180 + (180 / Mathf.PI) * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
             
-            transform.parent.eulerAngles = (new Vector3(0, angleY, 0));
+            transform.eulerAngles = (new Vector3(0, angleY, 0));
         }
 
         
