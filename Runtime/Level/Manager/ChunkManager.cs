@@ -203,7 +203,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void LoadChunk(ChunkData chunkData, bool immediate = true)
         {
             bool loaded;
-            if (!instance.chunkLoaded.TryGetValue(chunkData.chunkId,out loaded))
+            if (instance.chunkLoaded.TryGetValue(chunkData.chunkId,out loaded))
             {
                 if(loaded)
                 {
