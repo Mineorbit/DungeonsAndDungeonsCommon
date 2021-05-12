@@ -17,13 +17,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static ChunkData FromChunk(Chunk c)
         {
             ChunkData chunkData = new ChunkData();
-            Debug.Log(c);
             chunkData.chunkId = c.chunkId;
             List<LevelObject> levelObjectsOfChunk = c.GetComponentsInChildren<LevelObject>(includeInactive: true).ToList();
             List<LevelObjectInstanceData> levelObjectInstanceData = levelObjectsOfChunk.Select((x)=> { return (LevelObjectInstanceData) LevelObjectInstanceData.FromInstance(x as dynamic); }).ToList();
             chunkData.levelObjects = levelObjectInstanceData;
 
-            Debug.Log(chunkData.ToString());
             return chunkData;
         }
 
