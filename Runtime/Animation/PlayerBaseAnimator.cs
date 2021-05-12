@@ -74,7 +74,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             float angleY = 180 + (180/Mathf.PI) * Mathf.Atan2(forwardDirection.x,forwardDirection.z);
             animator.SetFloat("Speed",speed);
-            transform.eulerAngles = (new Vector3(0,angleY,0));
+            transform.parent.eulerAngles = (new Vector3(0,angleY,0));
         }
     }
 }
