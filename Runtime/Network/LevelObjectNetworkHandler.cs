@@ -257,7 +257,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         // NOT COMPLETED
         // THIS NEEDS TO PACK ARGUMENTS INTO ANY
-        public void SendAction(string actionName, ActionParam argument)
+        public virtual void SendAction(string actionName, ActionParam argument)
         {
                 LevelObjectAction action = new LevelObjectAction
                 {
