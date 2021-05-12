@@ -61,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         Vector3 targetPosition;
-        Quaternion targetRotation;
+        Vector3 targetRotation;
 
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
@@ -72,7 +72,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 MainCaller.Do(() => {
                     Vector3 pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
                     targetPosition = pos;
-                    Quaternion rot = new Quaternion(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ, entityLocomotion.QW);
+                    Vector3 rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
                     targetRotation = rot;
                 });
             }
@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!isOwner)
             {
                 transform.position = (transform.position + targetPosition) / 2;
-                transform.localRotation = targetRotation;
+                transform.rotation = Quaternion.Euler(targetRotation.x,targetRotation.y,targetRotation.z);
             }
         }
 
@@ -97,7 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(identified && (isOnServer || isOwner))
             {
                 Vector3 pos = observed.transform.position;
-                Quaternion rot = observed.transform.localRotation;
+                Vector3 rot = observed.transform.rotation.eulerAngles;
                 float sendDist = (pos - lastSentPosition).magnitude;
                 if(sendDist>0.5f)
                 {
@@ -108,8 +108,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Z = pos.z,
                     QX = rot.x,
                     QY = rot.y,
-                    QZ = rot.z,
-                    QW = rot.w
+                    QZ = rot.z
                 };
                 // UDP IS BROKEN THIS NEEDS A FIX LATER
                 Marshall(entityLocomotion,owner,toOrWithout:false,TCP: true);

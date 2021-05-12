@@ -30,7 +30,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void LoadNearChunk(Vector3 position)
         {
-            Debug.Log("Loading near "+position);
             if (LevelManager.currentLevel != null)
             {
                 if (!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
