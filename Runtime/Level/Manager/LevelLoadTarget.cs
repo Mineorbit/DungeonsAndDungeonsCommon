@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public enum LoadTargetMode { None, Near };
 
-        public static LoadTargetMode loadTargetMode = LoadTargetMode.Near;
+        public static LoadTargetMode loadTargetMode = LoadTargetMode.None;
 
         List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
 

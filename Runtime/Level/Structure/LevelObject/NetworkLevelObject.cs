@@ -57,6 +57,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void FixedUpdate()
         {
+            //this needs a safety later on to stop stupid behaviour
             if(todo.Count>0)
             todo.Dequeue().Invoke();
         }
