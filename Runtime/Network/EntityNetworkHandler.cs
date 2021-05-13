@@ -2,6 +2,7 @@ using Game;
 using General;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -83,6 +84,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation)
         {
+            //Janky
+            Task.Run(async ()=> { await Level.levelInstantiated.Task; });
             GameObject e = LevelManager.currentLevel.AddDynamic(entityType,position,rotation);
             e.GetComponent<EntityNetworkHandler>().Identity = identity;
         }

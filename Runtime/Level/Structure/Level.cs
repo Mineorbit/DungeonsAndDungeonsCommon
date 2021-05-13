@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -86,6 +86,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public static TaskCompletionSource<bool> levelInstantiated = new TaskCompletionSource<bool>();
+
 
         static void SetLevelObjectActivity(bool a)
         {
@@ -107,6 +109,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             dynamicObjects = transform.Find("Dynamic");
             navGenerator = GetComponent<LevelNavGenerator>();
             createPlayerSpawnList();
+            levelInstantiated.SetResult(true);
         }
 
         public bool PositionOccupied()
