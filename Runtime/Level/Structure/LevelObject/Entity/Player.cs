@@ -255,9 +255,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Kill()
         {
-            health = 0;
-            alive = false;
-            PlayerManager.playerManager.DespawnPlayer(localId);
+            base.Kill();
         }
 
     }
