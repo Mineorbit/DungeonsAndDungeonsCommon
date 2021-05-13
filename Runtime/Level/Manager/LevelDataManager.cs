@@ -97,7 +97,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        public static TaskCompletionSource<bool> levelLoaded = new TaskCompletionSource<bool>();
 
 
 		public static void Load(LevelMetaData levelMetaData, Level.InstantiateType instantiateType)
@@ -126,7 +125,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             levelLoadedEvent.Invoke();
 
-            levelLoaded.SetResult(true);
         }
 
 
