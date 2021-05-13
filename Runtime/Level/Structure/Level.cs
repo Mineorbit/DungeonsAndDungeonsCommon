@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public static SemaphoreSlim levelReady = new SemaphoreSlim(0, 1);
+        public static Semaphore levelReady = new Semaphore(0, 1);
 
         static void SetLevelObjectActivity(bool a)
         {

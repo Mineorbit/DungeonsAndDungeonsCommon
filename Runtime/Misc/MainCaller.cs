@@ -32,11 +32,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance.StartCoroutine(c);
         }
 
+        int maxActions = 10;
         void Update()
         {
-            if (todo.Count > 0)
+            int actions = maxActions;
+            while (todo.Count > 0 && maxActions > 0)
             {
                 todo.Dequeue().Invoke();
+                maxActions--;
             }
         }
     }
