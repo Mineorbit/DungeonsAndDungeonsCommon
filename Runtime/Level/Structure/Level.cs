@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-
+        public static TaskCompletionSource<bool> levelInstantiated = new TaskCompletionSource<bool>();
         static void SetLevelObjectActivity(bool a)
         {
             if(LevelManager.currentLevel != null)
@@ -103,10 +103,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Setup()
         {
+            if(levelInstantiated == null) levelInstantiated = new TaskCompletionSource<bool>();
             Debug.Log("Setting up Level");
             dynamicObjects = transform.Find("Dynamic");
             navGenerator = GetComponent<LevelNavGenerator>();
             createPlayerSpawnList();
+            levelInstantiated.SetResult(true);
+            levelInstantiated = null;
         }
 
         public bool PositionOccupied()
