@@ -69,7 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelObjectData missingPrefab;
 
-        Dictionary<string, LevelObjectData> levelObjectDatas;
+        public Dictionary<string, LevelObjectData> levelObjectDatas;
 
         //this needs to be false in network play
         static bool _activated;

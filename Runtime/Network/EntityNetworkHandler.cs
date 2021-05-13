@@ -38,7 +38,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Quaternion rotation = transform.rotation;
 
             Debug.Log("Entity Create");
-            // CREATE REQUEST
+
+            EntityCreate entityCreate = new EntityCreate
+            {
+                Identity = this.Identity,
+                X = position.x,
+                Y = position.y,
+                Z = position.z,
+                LevelObjectDataType = observed.levelObjectDataType
+            };
+
+            Marshall(entityCreate);
+
         }
 
 
@@ -47,6 +58,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+        [PacketBinding.Binding]
+        public static void HandleCreatePacket(Packet value)
+        {
+            EntityCreate entityCreate;
+            if (value.Content.TryUnpack<EntityCreate>(out entityCreate))
+            {
+                LevelObjectData entityLevelObjectData;
+                if(LevelManager.currentLevel.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,out entityLevelObjectData))
+                {
+                    Vector3 position = new Vector3(entityCreate.X,entityCreate.Y,entityCreate.Z);
+                    OnCreationRequest(entityCreate.Identity,entityLevelObjectData,position,new Quaternion(0,0,0,0));
+                }
+            }
+        }
 
         public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation)
         {
