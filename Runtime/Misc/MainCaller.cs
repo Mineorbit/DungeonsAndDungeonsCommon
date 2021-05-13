@@ -32,7 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance.StartCoroutine(c);
         }
 
-        int maxActions = 10;
+        int maxActions = 5;
         void Update()
         {
             int actions = maxActions;
