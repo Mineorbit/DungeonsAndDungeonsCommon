@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public static TaskCompletionSource<bool> levelInstantiated = new TaskCompletionSource<bool>();
+
         public static void Instantiate()
         {
             if (levelPrefab == null) levelPrefab = Resources.Load("Level") as UnityEngine.Object;
@@ -34,6 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             currentLevel.Setup();
             ChunkManager cm = level.GetComponent<ChunkManager>();
             cm.Setup();
+            levelInstantiated.SetResult(true);
         }
 
 
