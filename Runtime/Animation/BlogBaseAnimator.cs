@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Animator animator;
         public float speed;
 
-        public Vector3 target;
+        public Transform target;
         Vector3 targetInterpolation;
 
         public UnityEvent attackEvent;
@@ -18,8 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void Start()
         {
-            target = transform.forward;
-            targetInterpolation = target;
+            targetInterpolation = transform.parent.forward;
             attackEvent = new UnityEvent();
             endAttackEvent = new UnityEvent();
         }
@@ -29,11 +28,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (animator != null)
                 animator.SetFloat("Speed", speed);
 
-            targetInterpolation = (targetInterpolation + target) / 2;
+            Vector3 targetDirection = new Vector3(0,0,0);
+
+            if(target == null)
+            {
+
+                targetDirection = transform.parent.forward;
+            }else
+            {
+                targetDirection = target.transform.position - transform.parent.position;
+            }
+
+            targetInterpolation = (targetInterpolation + targetDirection) / 2;
 
             float angle = 180 + (180 / Mathf.PI) * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
 
-            //transform.eulerAngles = new Vector3(0, angle, 0);
+            transform.eulerAngles = new Vector3(0, angle, 0);
         }
 
         /*
