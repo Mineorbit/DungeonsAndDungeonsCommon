@@ -54,6 +54,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return data.FindAll(x => x.Buildable).ToArray();
         }
 
+        public static Dictionary<string, LevelObjectData> GetAllByUniqueType()
+        {
+            List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
+            Dictionary<string, LevelObjectData> dict = new Dictionary<string, LevelObjectData>();
+            foreach (LevelObjectData objectData in data)
+            {
+                dict.Add(objectData.uniqueLevelObjectId, objectData);
+            }
+            return dict;
+        }
+
         public static Dictionary<string,LevelObjectData> GetAllBuildableByUniqueType()
         {
             List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));

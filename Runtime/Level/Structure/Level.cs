@@ -69,7 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelObjectData missingPrefab;
 
-        public Dictionary<string, LevelObjectData> levelObjectDatas;
 
         //this needs to be false in network play
         static bool _activated;
@@ -105,8 +104,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Setup()
         {
             Debug.Log("Setting up Level");
-            levelObjectDatas = LevelObjectData.GetAllBuildableByUniqueType();
-            Debug.Log("Found "+levelObjectDatas.Count+" different LevelObjectDatas");
             dynamicObjects = transform.Find("Dynamic");
             navGenerator = GetComponent<LevelNavGenerator>();
             createPlayerSpawnList();
@@ -184,7 +181,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameObject result = null;
             LevelObjectData d;
-            if (levelObjectDatas.TryGetValue(levelObjectInstanceData.type, out d))
+            if (LevelDataManager.levelObjectDatas.TryGetValue(levelObjectInstanceData.type, out d))
             {
                 if(levelObjectInstanceData.locations.Count > 1)
                 {
