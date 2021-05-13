@@ -71,7 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                 
                     LevelObjectData entityLevelObjectData;
-                    if(LevelManager.currentLevel.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,out entityLevelObjectData))
+                    if(LevelDataManager.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,out entityLevelObjectData))
                     {
                     Debug.Log("handling spawning");
                     Vector3 position = new Vector3(entityCreate.X,entityCreate.Y,entityCreate.Z);

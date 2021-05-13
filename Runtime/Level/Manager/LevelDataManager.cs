@@ -23,6 +23,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelData levelData;
 
+
+
+        public static Dictionary<string, LevelObjectData> levelObjectDatas;
+
         internal enum LoadType { All, Near };
 
         internal LoadType loadType = LoadType.All;
@@ -33,6 +37,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Destroy(this);
             }
+
+
+            levelObjectDatas = LevelObjectData.GetAllByUniqueType();
+
             instance = this;
             levelLoadedEvent = new UnityEvent();
             levelListLoadedEvent = new UnityEvent();
