@@ -85,7 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation)
         {
             //Janky
-            Task.Run(async ()=> { await Level.levelInstantiated.Task; });
+            Task.Run(async ()=> { await Level.levelReady.WaitAsync(); });
             GameObject e = LevelManager.currentLevel.AddDynamic(entityType,position,rotation);
             e.GetComponent<EntityNetworkHandler>().Identity = identity;
         }
