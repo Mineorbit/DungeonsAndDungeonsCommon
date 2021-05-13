@@ -2,6 +2,7 @@ using Game;
 using General;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -76,7 +77,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                     Debug.Log("handling spawning");
                     Vector3 position = new Vector3(entityCreate.X,entityCreate.Y,entityCreate.Z);
-                    OnCreationRequest(entityCreate.Identity,entityLevelObjectData,position,new Quaternion(0,0,0,0));
+                        Thread t = new Thread ( new ThreadStart( () => { OnCreationRequest(entityCreate.Identity, entityLevelObjectData, position, new Quaternion(0, 0, 0, 0)); }));
+                        t.IsBackground = true;
+                        t.Start();
                     }
                 }
             });
@@ -85,9 +88,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation)
         {
             //Janky
-            Task.Run(async ()=> { await Level.levelReady.WaitAsync(); });
-            GameObject e = LevelManager.currentLevel.AddDynamic(entityType,position,rotation);
-            e.GetComponent<EntityNetworkHandler>().Identity = identity;
+            Level.levelReady.WaitOne();
+
+            MainCaller.Do(() =>
+            {
+                Debug.Log("Level: " + LevelManager.currentLevel);
+                GameObject e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation);
+                e.GetComponent<EntityNetworkHandler>().Identity = identity;
+            });
         }
 
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE
