@@ -41,8 +41,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 position = transform.position;
             Quaternion rotation = transform.rotation;
 
-            Debug.Log("Entity Create");
-
             EntityCreate entityCreate = new EntityCreate
             {
                 Identity = this.Identity,
@@ -142,6 +140,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Vector3 pos = observed.transform.position;
                 Vector3 rot = observed.transform.rotation.eulerAngles;
+
+                Debug.Log(pos+" "+rot);
+
                 float sendDist = (pos - lastSentPosition).magnitude;
                 if(sendDist>sendDistance)
                 {
@@ -154,6 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     QY = rot.y,
                     QZ = rot.z
                 };
+
                 // UDP IS BROKEN THIS NEEDS A FIX LATER
                 Marshall(entityLocomotion,owner,toOrWithout:false,TCP: true);
                 lastSentPosition = pos;
