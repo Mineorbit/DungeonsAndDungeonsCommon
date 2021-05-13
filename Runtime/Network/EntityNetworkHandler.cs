@@ -61,15 +61,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void HandleCreatePacket(Packet value)
         {
+            
             EntityCreate entityCreate;
             if (value.Content.TryUnpack<EntityCreate>(out entityCreate))
             {
-                LevelObjectData entityLevelObjectData;
-                if(LevelManager.currentLevel.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,out entityLevelObjectData))
+                MainCaller.Do(() =>
                 {
+                    LevelObjectData entityLevelObjectData;
+                    if(LevelManager.currentLevel.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,out entityLevelObjectData))
+                    {
                     Vector3 position = new Vector3(entityCreate.X,entityCreate.Y,entityCreate.Z);
                     OnCreationRequest(entityCreate.Identity,entityLevelObjectData,position,new Quaternion(0,0,0,0));
-                }
+                    }
+                });
             }
         }
 
