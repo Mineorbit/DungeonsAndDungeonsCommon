@@ -98,6 +98,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             controller.OnSpawn(location);
         }
 
+        public virtual void Despawn()
+        {
+            health = 0;
+            alive = false;
+            gameObject.SetActive(false);
+            Debug.Log("Despawning " + this);
+            transform.position = new Vector3(0,0,0);
+            transform.rotation = new Quaternion(0,0,0,0);
+        }
+
+
         public virtual void Hit(Entity hitter,int damage)
         {
             if (!invincible && !hitCooldown)
@@ -121,7 +132,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             // SetState(Enemy.EnemyState.Dead);
             //eventually call
-            LevelManager.currentLevel.RemoveDynamic(this);
+            Despawn();
         }
     }
 }

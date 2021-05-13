@@ -118,8 +118,8 @@ public class PlayerManager : MonoBehaviour
     public void DespawnPlayer(int localId)
     {
         if (localId > 3 || localId < 0) return;
-        if(playerControllers[localId]!= null)
-        playerControllers[localId].gameObject.SetActive(false);
+            if (players[localId] != null)
+                players[localId].Despawn();
 
     }
 

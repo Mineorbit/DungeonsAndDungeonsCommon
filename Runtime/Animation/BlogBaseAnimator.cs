@@ -33,7 +33,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             float angle = 180 + (180 / Mathf.PI) * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
 
-            transform.eulerAngles = new Vector3(0, angle, 0);
+            //transform.eulerAngles = new Vector3(0, angle, 0);
         }
 
         /*
