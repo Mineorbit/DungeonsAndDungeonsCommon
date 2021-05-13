@@ -104,7 +104,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Setup()
         {
+            Debug.Log("Setting up Level");
             levelObjectDatas = LevelObjectData.GetAllBuildableByUniqueType();
+            Debug.Log("Found "+levelObjectDatas.Count+" different LevelObjectDatas");
             dynamicObjects = transform.Find("Dynamic");
             navGenerator = GetComponent<LevelNavGenerator>();
             createPlayerSpawnList();
