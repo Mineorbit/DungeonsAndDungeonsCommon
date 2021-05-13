@@ -39,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (todo.Count > 0 && actions > 0)
             {
                 todo.Dequeue().Invoke();
-                maxActions--;
+                actions--;
             }
         }
     }
