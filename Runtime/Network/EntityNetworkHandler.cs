@@ -12,13 +12,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isOwner;
         public int owner = -1;
 
-        public Vector3 networkPosition;
-        public Quaternion networkRotation;
 
+        Vector3 targetPosition;
+        Vector3 targetRotation;
         public virtual void Awake()
         {
             base.Awake();
             isOwner = isOnServer;
+            targetPosition = transform.position;
+            targetRotation = transform.rotation.eulerAngles;
         }
 
 
@@ -61,20 +63,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void HandleCreatePacket(Packet value)
         {
-            
-            EntityCreate entityCreate;
-            if (value.Content.TryUnpack<EntityCreate>(out entityCreate))
+            MainCaller.Do(() =>
             {
-                MainCaller.Do(() =>
+                Debug.Log("handling spawning");
+                EntityCreate entityCreate;
+                if (value.Content.TryUnpack<EntityCreate>(out entityCreate))
                 {
+                
                     LevelObjectData entityLevelObjectData;
                     if(LevelManager.currentLevel.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,out entityLevelObjectData))
                     {
+                    Debug.Log("handling spawning");
                     Vector3 position = new Vector3(entityCreate.X,entityCreate.Y,entityCreate.Z);
                     OnCreationRequest(entityCreate.Identity,entityLevelObjectData,position,new Quaternion(0,0,0,0));
                     }
-                });
-            }
+                }
+            });
         }
 
         public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position, Quaternion rotation)
@@ -89,8 +93,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateLocomotion();
         }
 
-        Vector3 targetPosition;
-        Vector3 targetRotation;
 
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
