@@ -36,7 +36,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Destroy(this);
             instance = this;
 
-            foreach(PacketBinding p in packetBindings)
+
+            // THIS IS A STUPID PLACE BUT WILL CHANGE LATER
+            Time.fixedDeltaTime = 0.01f;
+
+            foreach (PacketBinding p in packetBindings)
             {
                 p.AddToBinding();
             }

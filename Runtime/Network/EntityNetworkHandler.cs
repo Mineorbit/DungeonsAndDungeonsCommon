@@ -128,12 +128,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!isOwner)
             {
                 transform.position = (transform.position + targetPosition) / 2;
-                transform.rotation = Quaternion.Euler(targetRotation.x,targetRotation.y,targetRotation.z);
+                transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x,targetRotation.y,targetRotation.z),transform.rotation,0.5f);
             }
         }
 
         Vector3 lastSentPosition;
         Quaternion lastSentRotation;
+
+        float sendDistance = 0.05f;
         private void UpdateLocomotion()
         {
             if(identified && (isOnServer || isOwner))
@@ -141,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 pos = observed.transform.position;
                 Vector3 rot = observed.transform.rotation.eulerAngles;
                 float sendDist = (pos - lastSentPosition).magnitude;
-                if(sendDist>0.5f)
+                if(sendDist>sendDistance)
                 {
                 EntityLocomotion entityLocomotion = new EntityLocomotion
                 {
