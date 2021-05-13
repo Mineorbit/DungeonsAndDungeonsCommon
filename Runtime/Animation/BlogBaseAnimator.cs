@@ -39,11 +39,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 targetDirection = target.transform.position - transform.parent.position;
             }
 
-            targetInterpolation = (targetInterpolation + targetDirection) / 2;
+            LookInDirection(targetDirection);
+        }
 
-            float angle = 180 + (180 / Mathf.PI) * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
+
+        public void LookInDirection(Vector3 dir)
+        {
+            targetInterpolation = (targetInterpolation + dir) / 2;
+
+            float angle =  (180 / Mathf.PI) * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
 
             transform.eulerAngles = new Vector3(0, angle, 0);
+
         }
 
         /*
