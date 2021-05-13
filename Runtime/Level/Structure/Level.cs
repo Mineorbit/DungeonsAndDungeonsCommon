@@ -109,7 +109,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             dynamicObjects = transform.Find("Dynamic");
             navGenerator = GetComponent<LevelNavGenerator>();
             createPlayerSpawnList();
-            levelInstantiated.SetResult(true);
+            levelInstantiated.TrySetResult(true);
         }
 
         public bool PositionOccupied()
