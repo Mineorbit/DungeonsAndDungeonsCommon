@@ -15,6 +15,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         static InstantiateType _instantiateType;
 
+
+        bool isSetup = false;
+
         public static InstantiateType instantiateType
         {
             get
@@ -97,18 +100,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void Start()
-        {
-            Setup();
-        }
-
         public void Setup()
         {
-            Debug.Log("Setting up Level");
-            dynamicObjects = transform.Find("Dynamic");
-            navGenerator = GetComponent<LevelNavGenerator>();
-            createPlayerSpawnList();
-            levelReady.Release();
+            if(!isSetup)
+            {
+                isSetup = true;
+                Debug.Log("Setting up Level");
+                dynamicObjects = transform.Find("Dynamic");
+                navGenerator = GetComponent<LevelNavGenerator>();
+                createPlayerSpawnList();
+                levelReady.Release();
+            }
         }
 
         public bool PositionOccupied()
