@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System.IO;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -93,7 +94,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelMetaData newMetaData = GetNewLevelMetaData();
 			New(newMetaData,saveImmediately: saveImmediately);
         }
-		
+
+
+
+        public static TaskCompletionSource<bool> levelLoaded = new TaskCompletionSource<bool>();
+
+
 		public static void Load(LevelMetaData levelMetaData, Level.InstantiateType instantiateType)
         {
             if (levelMetaData == null) return;
@@ -119,6 +125,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevel.GenerateNavigation(force: true);
 
             levelLoadedEvent.Invoke();
+
+            levelLoaded.SetResult(true);
         }
 
 
