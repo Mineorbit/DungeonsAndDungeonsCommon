@@ -81,9 +81,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             { 
             if (spawnedEnemy == null)
             {
-                    Vector3 spawnLocation = SpawnLocation();
-                Debug.Log("spawned enemy "+spawnLocation);
-                spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, spawnLocation, SpawnRotation());
+                Vector3 spawnLocation = SpawnLocation();
+                Quaternion spawnRotation = SpawnRotation();
+                spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, spawnLocation, spawnRotation);
+                spawnedEnemy.GetComponent<Entity>().Spawn(spawnLocation, spawnRotation,true);
             }
             else
             {
