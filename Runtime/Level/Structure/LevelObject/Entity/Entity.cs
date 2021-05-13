@@ -92,6 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             health = 100;
             alive = true;
             gameObject.SetActive(true);
+            Debug.Log("Spawning "+this+" at "+location);
             transform.position = location;
             transform.rotation = rotation;
             controller.OnSpawn(location);
