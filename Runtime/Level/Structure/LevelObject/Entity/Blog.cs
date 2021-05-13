@@ -105,7 +105,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             FSM.stateAction.Add(BlogState.Idle,()=> {
                 RandomWalk();
-                baseAnimator.target = -controller.GetDirection();
+                baseAnimator.target = null;
 
                 if (controller.seenPlayer !=  null)
                 {
@@ -121,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     controller.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
 
 
-                    baseAnimator.target = -controller.GetDirection();
+                    baseAnimator.target = null;
 
                     if (distanceToTarget < attackDistance+eps)
                     {
@@ -150,7 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
 
-                baseAnimator.target = dir;
+                baseAnimator.target = attackTarget.transform;
 
                 if (TimerManager.isRunning(circleTimer))
                 {
@@ -177,7 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.stateAction.Add(BlogState.Strike, () => {
 
                 Vector3 dir = transform.position - attackTarget.transform.position;
-                baseAnimator.target = dir;
+                baseAnimator.target = attackTarget.transform;
                 controller.GoTo(attackTarget.transform.position);
 
             });
