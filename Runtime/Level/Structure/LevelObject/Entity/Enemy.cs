@@ -70,11 +70,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Update()
         {
-            if(NetworkManager.isConnected)
-            {
-                transform.position = levelObjectNetworkHandler.networkPosition;
-                transform.rotation = levelObjectNetworkHandler.networkRotation;
-            }
             base.Update();
         }
 
