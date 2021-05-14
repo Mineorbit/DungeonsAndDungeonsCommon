@@ -67,12 +67,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (!isOnServer)
                 StartRequestBind(this);
-
-
-            this.enabled = NetworkManager.isConnected;
         }
 
-
+        public virtual void Update()
+        {
+            this.enabled = NetworkManager.isConnected;
+        }
 
 
         public void ConnectLevelObject(int rn)
@@ -109,6 +109,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else if (parentNetworkHandler == null)
             {
+                Debug.Log("Connecting " + handler.gameObject.name + " via position");
                 connectLevelObjectRequest = new ConnectLevelObjectRequest
                 {
                     X = handler.transform.position.x,
