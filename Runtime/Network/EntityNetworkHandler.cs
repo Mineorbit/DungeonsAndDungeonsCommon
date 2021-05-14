@@ -28,8 +28,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
 
-        public virtual void Start()
+        public override void Start()
         {
+            base.Start();
             if (isOnServer)
             {
                 RequestCreation();
