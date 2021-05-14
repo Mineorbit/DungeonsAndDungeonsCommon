@@ -151,7 +151,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         int maxSendCount = 15;
         public void FixedUpdate()
         {
-            Debug.Log("UPDATE");
             UpdateOut();
             UpdateIn();
         }
