@@ -67,6 +67,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (!isOnServer)
                 StartRequestBind(this);
+
+
+            this.enabled = NetworkManager.isConnected;
         }
 
 
@@ -95,6 +98,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkHandler parentNetworkHandler = handler.transform.GetComponentInParent<NetworkHandler>();
             if (parentNetworkHandler != null && parentNetworkHandler.identified)
             {
+                Debug.Log("Connecting "+handler.gameObject.name+" via parent");
                 connectLevelObjectRequest = new ConnectLevelObjectRequest
                 {
                     ParentIdentity = parentNetworkHandler.Identity,
