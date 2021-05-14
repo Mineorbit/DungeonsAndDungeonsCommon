@@ -83,6 +83,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        NetworkHandler FindIdentifiedInParents(NetworkHandler h)
+        {
+            NetworkHandler p = h.transform.parent.GetComponentInParent<NetworkHandler>();
+            while(p != null && !p.identified)
+            {
+                p = h.transform.parent.GetComponentInParent<NetworkHandler>();
+            }
+            return p;
+        }
+
         static int count = 0;
         public static Dictionary<int, NetworkHandler> bindRequests = new Dictionary<int, NetworkHandler>();
         public static void StartRequestBind(NetworkHandler handler)
@@ -90,7 +100,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(!handler.identified)
             { 
             ConnectLevelObjectRequest connectLevelObjectRequest = null;
-            NetworkHandler parentNetworkHandler = handler.transform.GetComponentInParent<NetworkHandler>();
+            NetworkHandler parentNetworkHandler = handler.transform.parent.GetComponentInParent<NetworkHandler>();
             Debug.Log(handler+" has "+parentNetworkHandler);
             if (parentNetworkHandler != null && parentNetworkHandler.identified)
             {
