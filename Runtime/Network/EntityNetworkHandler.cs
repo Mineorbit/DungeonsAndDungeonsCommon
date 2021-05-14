@@ -129,7 +129,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Teleport(Vector3 position)
         {
-            transform.position = position;
             teleportPosition = position;
             EntityTeleport entityTeleport = new EntityTeleport
             {
@@ -138,7 +137,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z
             };
 
-            StartCoroutine(TeleportRoutine());
+            movementOverride = true;
+
             Marshall(entityTeleport);
         }
 
@@ -153,44 +153,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(p.Content.TryUnpack<EntityTeleport>(out entityTeleport))
             {
                 teleportPosition = new Vector3(entityTeleport.X,entityTeleport.Y,entityTeleport.Z);
-                StartCoroutine(TeleportRoutine());
+                movementOverride = true;
             }
         }
 
 
         float tpDist = 0.005f;
 
-        // SOME HOW PLAYER  DESPAWNS AFTER CERTAIN TIME
-        IEnumerator TeleportRoutine()
-        {
-
-            movementOverride = true;
-            observed.setMovementStatus(false);
-            Debug.Log("Locking");
-            float dist = (transform.position - teleportPosition).magnitude;
-            while ( dist > tpDist)
-            {
-                Debug.Log(dist);
-                dist = (transform.position - teleportPosition).magnitude;
-                transform.position = teleportPosition;
-                yield return null;
-            }
-            Debug.Log("Finished locking");
-            observed.setMovementStatus(true);
-            movementOverride = false;
-        }
+        
 
 
         float maxInterpolateDist = 5f;
         public void Update()
         {
-            if(!movementOverride)
-            { 
+            if(movementOverride)
+            {
+                targetPosition = teleportPosition;
+                transform.position = teleportPosition;
+                if ((transform.position - teleportPosition).magnitude < tpDist)
+                {
+                    movementOverride = false;
+                }
+            }
+
+            
+
+
             if (!isOwner)
             {
                 transform.position = (transform.position + targetPosition) / 2;
                 transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x,targetRotation.y,targetRotation.z),transform.rotation,0.5f);
-            }
             }
         }
 
