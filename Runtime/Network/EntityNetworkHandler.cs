@@ -138,6 +138,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             };
 
             movementOverride = true;
+            observed.setMovementStatus(false);
 
             Marshall(entityTeleport);
         }
@@ -154,6 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 teleportPosition = new Vector3(entityTeleport.X,entityTeleport.Y,entityTeleport.Z);
                 movementOverride = true;
+                observed.setMovementStatus(false);
             }
         }
 
@@ -173,6 +175,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if ((transform.position - teleportPosition).magnitude < tpDist)
                 {
                     movementOverride = false;
+                    observed.setMovementStatus(true);
                 }
             }
 
