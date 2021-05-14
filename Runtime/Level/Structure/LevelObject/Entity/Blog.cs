@@ -114,6 +114,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
 
             FSM.stateAction.Add(BlogState.Track, () => {
+                if(controller.seenPlayer == null)
+                {
+                    FSM.Move(Enemy.EnemyAction.Disengage);
+                    return;
+                }
+
                 float distanceToTarget = (transform.position - targetEntity.transform.position).magnitude;
                 if (targetEntity != null)
                 {
@@ -134,7 +140,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.stateAction.Add(BlogState.Attack, () => {
 
 
-                if (attackTarget == null )
+                if (attackTarget == null || controller.seenPlayer == null)
                 {
                     FSM.Move(Enemy.EnemyAction.Disengage);
                     return;
