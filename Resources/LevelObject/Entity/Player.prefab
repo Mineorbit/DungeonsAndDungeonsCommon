@@ -9661,6 +9661,21 @@ MonoBehaviour:
   characterController: {fileID: 6344021777004394327}
   playerController: {fileID: -4485675669329379349}
   footFX: {fileID: 8164085133219797599}
+--- !u!114 &7660752851573367012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269609861049974646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74d9931d9f0aa34d9ed3b1b98a16f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Identity: 
+  identified: 0
+  observed: {fileID: 7589352983227760250}
 --- !u!114 &8472775196247414597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9678,21 +9693,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4a9dee20181c964ab50261eca70a24e, type: 2}
   - {fileID: 11400000, guid: 5db9e6e4a036c3848820bcfef31b2c41, type: 2}
   controller: {fileID: -4485675669329379349}
---- !u!114 &7660752851573367012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4269609861049974646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c74d9931d9f0aa34d9ed3b1b98a16f96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Identity: 
-  identified: 0
-  observed: {fileID: 7589352983227760250}
 --- !u!114 &1699927312025447298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9817,6 +9817,12 @@ MonoBehaviour:
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []
+  onSpawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDespawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
   levelObjectNetworkHandler: {fileID: 7767981043886471032}
   controller: {fileID: -4485675669329379349}
   invincible: 0
@@ -9904,10 +9910,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Identity: 
   identified: 0
-  observed: {fileID: 0}
+  observed: {fileID: 6264058479458404003}
   observed: {fileID: 0}
   isOwner: 0
   owner: -1
+  observed: {fileID: 2633396581524973113}
 --- !u!1 &8164085133219797599
 GameObject:
   m_ObjectHideFlags: 0
