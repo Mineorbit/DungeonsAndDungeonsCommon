@@ -69,10 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 StartRequestBind(this);
         }
 
-        public virtual void Update()
-        {
-            this.enabled = NetworkManager.isConnected;
-        }
 
 
         public void ConnectLevelObject(int rn)
@@ -94,6 +90,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static Dictionary<int, NetworkHandler> bindRequests = new Dictionary<int, NetworkHandler>();
         public static void StartRequestBind(NetworkHandler handler)
         {
+            if(!handler.identified)
+            { 
             ConnectLevelObjectRequest connectLevelObjectRequest = null;
             NetworkHandler parentNetworkHandler = handler.transform.GetComponentInParent<NetworkHandler>();
             if (parentNetworkHandler != null && parentNetworkHandler.identified)
@@ -130,6 +128,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bindRequests.Add(count, handler);
             count++;
             Marshall(typeof(LevelObjectNetworkHandler), connectLevelObjectRequest);
+            }
         }
 
 

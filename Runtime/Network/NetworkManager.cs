@@ -59,9 +59,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             localId = client.localid;
 
             isConnected = true;
+                SetNetworkHandlers(isConnected);
             onConnect.Invoke();
             }
 
+        }
+
+        void SetNetworkHandlers(bool v)
+        {
+            foreach(NetworkHandler h in networkHandlers)
+            {
+                h.enabled = v;
+            }
         }
 
         
