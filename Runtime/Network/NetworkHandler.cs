@@ -188,11 +188,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MainCaller.Do(() => {
 
-                Debug.Log("Handling");
                 float eps = 0.25f;
                 Game.ConnectLevelObjectRequest levelObjectConnect;
                 if (p.Content.TryUnpack<Game.ConnectLevelObjectRequest>(out levelObjectConnect))
                 {
+
+                    Debug.Log("Handling "+levelObjectConnect.HandlerType+" "+levelObjectConnect.RequestType);
                     NetworkHandler fittingHandler = null;
                     Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
                     if (levelObjectConnect.RequestType == ConnectLevelObjectRequest.Types.RequestType.ByPosition)
@@ -209,7 +210,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     else if (levelObjectConnect.RequestType == ConnectLevelObjectRequest.Types.RequestType.ByParent)
                     {
                         fittingHandler = (NetworkHandler)NetworkManager.networkHandlers.Find((x) => {
-                            NetworkHandler p = x.GetComponentInParent<NetworkHandler>();
+                            // THIS MIGHT BE JANKY
+                            NetworkHandler p = x.transform.parent.GetComponentInParent<NetworkHandler>();
                             return x.GetType() == handlerType && p.identified && p.Identity
                             == levelObjectConnect.ParentIdentity && !x.identified;
                         });
