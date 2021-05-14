@@ -256,6 +256,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void WritePacket(Packet p, bool TCP = true)
         {
             p.Sender = localid;
+            UnityEngine.Debug.Log("Sending: "+p+" TCP: "+TCP);
             if(TCP)
             {
                 packetOutTCPBuffer.Enqueue(p);
