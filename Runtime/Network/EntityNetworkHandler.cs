@@ -38,7 +38,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             observed.onSpawnEvent.AddListener(Teleport);
+            observed.onSpawnEvent.AddListener((x) => { UpdateState(); });
+            observed.onHitEvent.AddListener(() => { UpdateState(); });
             observed.onDespawnEvent.AddListener(()=> { Teleport(new Vector3(0, 0, 0)); });
+            observed.onDespawnEvent.AddListener(() => { UpdateState(); });
         }
 
         public virtual void RequestCreation()
@@ -125,6 +128,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
+
+        public void UpdateState()
+        {
+            EntityState entityState = new EntityState
+            {
+                Health = observed.health,
+                Active = observed.gameObject.activeSelf
+            };
+            Marshall(entityState);
+        }
+
+        [PacketBinding.Binding]
+        public void OnEntityState(Packet p)
+        {
+            EntityState entityState;
+            if(p.Content.TryUnpack<EntityState>(out entityState))
+            {
+                observed.health = entityState.Health;
+                if(observed.gameObject.activeSelf != entityState.Active)
+                {
+                    observed.gameObject.SetActive(entityState.Active);
+                }
+            }
+        }
+
+
+
         Vector3 teleportPosition;
 
         public void Teleport(Vector3 position)
@@ -144,6 +174,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         bool movementOverride;
+
+
 
 
         [PacketBinding.Binding]

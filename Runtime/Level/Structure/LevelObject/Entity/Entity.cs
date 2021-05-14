@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent<Entity> onAttackEvent;
 
+        public UnityEvent onHitEvent = new UnityEvent();
 
         public UnityEvent<Vector3> onSpawnEvent =  new UnityEvent<Vector3>();
 
@@ -92,6 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitCooldown = true;
             StartCoroutine(HitTimer(1.5f));
         }
+        //EVENTS ALWAYS LAST
         public virtual void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
         {
             health = 100;
@@ -100,9 +102,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Spawning "+this+" at "+location);
             transform.position = location;
             transform.rotation = rotation;
-
-            onSpawnEvent.Invoke(location);
             controller.OnSpawn(location);
+            onSpawnEvent.Invoke(location);
         }
 
         public virtual void Despawn()
@@ -127,6 +128,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log(hitter.gameObject.name+" HIT "+this.gameObject.name+" AND CAUSED "+damage+" HP DAMAGE");
                 health = health - damage;
                 baseAnimator.Hit();
+                onHitEvent.Invoke();
                 if (health <= 0)
                 {
                     Invoke(Kill);
