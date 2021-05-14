@@ -202,7 +202,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         Vector3 handlerPosition = new Vector3(levelObjectConnect.X, levelObjectConnect.Y, levelObjectConnect.Z);
                         fittingHandler = (NetworkHandler)NetworkManager.networkHandlers.Find((x) => {
                             float distance = (handlerPosition - x.transform.position).magnitude;
-                            return x.GetType() == handlerType && distance < eps && !x.identified;
+                            return x.GetType() == handlerType && distance < eps;
                         });
 
 
@@ -213,7 +213,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             // THIS MIGHT BE JANKY
                             NetworkHandler p = x.transform.parent.GetComponentInParent<NetworkHandler>();
                             return x.GetType() == handlerType && p.identified && p.Identity
-                            == levelObjectConnect.ParentIdentity && !x.identified;
+                            == levelObjectConnect.ParentIdentity;
                         });
                     }
 
