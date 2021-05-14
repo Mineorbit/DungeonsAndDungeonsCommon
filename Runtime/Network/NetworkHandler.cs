@@ -76,9 +76,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Game.ConnectLevelObject connectLevelObject = new ConnectLevelObject
             {
                 Identity = this.Identity,
-                X = transform.position.x,
-                Y = transform.position.y,
-                Z = transform.position.z,
                 HandlerType = this.GetType().FullName,
                 ResponseNumber = rn
             };
@@ -94,6 +91,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             { 
             ConnectLevelObjectRequest connectLevelObjectRequest = null;
             NetworkHandler parentNetworkHandler = handler.transform.GetComponentInParent<NetworkHandler>();
+            Debug.Log(handler+" has "+parentNetworkHandler);
             if (parentNetworkHandler != null && parentNetworkHandler.identified)
             {
                 Debug.Log("Connecting "+handler.gameObject.name+" via parent");
@@ -134,6 +132,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void TryAfter()
         {
+            Debug.Log(this+" trying again");
             StartRequestBind(this);
         }
 
