@@ -136,6 +136,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z
             };
 
+            StartCoroutine(TeleportRoutine());
             Marshall(entityTeleport);
         }
 
@@ -160,14 +161,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         float tpDist = 0.005f;
 
+        // SOME HOW PLAYER  DESPAWNS AFTER CERTAIN TIME
         IEnumerator TeleportRoutine()
         {
 
-            while((targetPosition-teleportPosition).magnitude > tpDist)
+            Debug.Log("Locking");
+            float dist = (transform.position - teleportPosition).magnitude;
+            while ( dist > tpDist)
             {
+                Debug.Log(dist);
+                dist = (transform.position - teleportPosition).magnitude;
                 transform.position = teleportPosition;
                 yield return null;
             }
+            Debug.Log("Finished locking");
             observed.setMovementStatus(true);
             movementOverride = false;
         }
