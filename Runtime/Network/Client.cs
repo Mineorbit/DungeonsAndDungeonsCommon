@@ -11,6 +11,7 @@ using System.IO;
 using General;
 using System.Threading;
 using Game;
+using General;
 using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -42,6 +43,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public NetworkStream tcpStream;
 
         private TaskCompletionSource<bool> disconnected = new TaskCompletionSource<bool>();
+
+
+        public static Queue<Packet> packetInBuffer = new Queue<Packet>();
+
+        public static Queue<Packet> packetOutTCPBuffer = new Queue<Packet>();
+
+        public static Queue<Packet> packetOutUDPBuffer = new Queue<Packet>();
+
+
+
+
+
         public override string ToString()
         {
             return "NetworkClient "+userName+" "+localid;
@@ -62,11 +75,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Client()
         {
-
+            NetworkManager.allClients.Add(this);
         }
 
         ~Client()
         {
+            NetworkManager.allClients.Remove(this);
             Disconnect();
         }
 
@@ -132,9 +146,87 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.udpClient.Connect(client.remoteIPUdp);
         }
 
-        public void WritePacket(Packet p, bool TCP = true)
+        int maxReceiveCount = 15;
+        int maxSendCount = 15;
+        public void FixedUpdate()
         {
+            UpdateOut();
+            UpdateIn();
+        }
 
+        void UpdateIn()
+        {
+            int handleCount = maxReceiveCount;
+
+            while(packetInBuffer.Count>0 && handleCount>0)
+            {
+                Packet p = packetInBuffer.Dequeue();
+                HandlePacket(p);
+                handleCount--;
+            }
+
+
+        }
+
+        void HandlePacket(Packet p)
+        {
+            Type packetType = Type.GetType(p.Type);
+
+
+            Debug.Log("Going to Processing: " + p);
+
+            UnityAction processPacket = null;
+            if (packetType == typeof(MeDisconnect))
+            {
+                processPacket = () => {
+                    Disconnect(respond: false);
+                };
+            }
+            else
+            {
+                processPacket = () =>
+                {
+                    NetworkHandler.UnMarshall(p);
+                };
+            }
+
+            Thread handleThread = new Thread(new ThreadStart(processPacket));
+            handleThread.IsBackground = true;
+            handleThread.Start();
+        }
+
+        void UpdateOut()
+        {
+            int tcpSent = 0;
+            int sendCount = maxSendCount;
+            General.PacketCarrier tcpCarrier = new PacketCarrier();
+            while (packetOutTCPBuffer.Count > 0 && sendCount > 0)
+            {
+                Packet p = packetOutTCPBuffer.Dequeue();
+                tcpCarrier.Packets.Add(p);
+                sendCount--;
+                tcpSent++;
+            }
+
+            WriteOut(tcpCarrier);
+
+            sendCount = maxSendCount;
+            General.PacketCarrier udpCarrier = new PacketCarrier();
+            while (packetOutUDPBuffer.Count > 0 && sendCount > 0)
+            {
+                Packet p = packetOutUDPBuffer.Dequeue();
+                udpCarrier.Packets.Add(p);
+                sendCount--;
+                tcpSent++;
+            }
+
+            //WriteOut(tcpCarrier,TCP: false);
+        }
+
+
+
+        public void WriteOut(PacketCarrier p, bool TCP = true)
+        {
             byte[] data = p.ToByteArray();
             int length = data.Length;
             byte[] result = new byte[length + 4];
@@ -154,10 +246,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Debug.Log("Over "+udpClient);
+                Debug.Log("Over " + udpClient);
                 udpClient.Send(result, 0);
             }
 
+        }
+
+        public void WritePacket(Packet p, bool TCP = true)
+        {
+            p.Sender = localid;
+            if(TCP)
+            {
+                packetOutTCPBuffer.Enqueue(p);
+            }
+            else
+            {
+                packetOutUDPBuffer.Enqueue(p);
+            }
         }
         public void WritePacket(IMessage message,bool TCP = true)
         {
@@ -330,6 +435,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Task.Run(async () => { await HandlePackets(Tcp: false); });
         }
 
+
+
+
+
+
         public async Task HandlePackets(bool Tcp)
         {
 
@@ -338,31 +448,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-            Packet p = General.Packet.Parser.ParseFrom(data);
-            p.Sender = localid;
-            Type packetType = Type.GetType(p.Type);
-
-
-            Debug.Log("Going to Processing: " + p);
-
-            UnityAction processPacket = null;
-            if (packetType == typeof(MeDisconnect))
+            PacketCarrier packetCarrier = General.PacketCarrier.Parser.ParseFrom(data);
+            
+            foreach( Packet packet in packetCarrier.Packets)
             {
-                processPacket = () => {
-                    Disconnect(respond: false); 
-                };
-            }else
-            {
-                processPacket = () =>
-                {
-                    NetworkHandler.UnMarshall(p);
-                };
+                packetInBuffer.Enqueue(packet);
             }
-
-            Thread handleThread = new Thread(new ThreadStart(processPacket));
-            handleThread.IsBackground = true;
-            handleThread.Start();
-                //Processing needed
+            
+            //Processing needed
 
             await HandlePackets(Tcp);
         }

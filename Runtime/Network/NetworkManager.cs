@@ -22,6 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public Client client;
 
+        public static List<Client> allClients =  new List<Client>();
 
         public int localId;
         public static string userName;
@@ -63,11 +64,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        public void Update()
-        {
-            if(!isConnected)
-            {
+        
 
+        public void FixedUpdate()
+        {
+            foreach(Client c in allClients)
+            {
+                c.FixedUpdate();
             }
         }
 
