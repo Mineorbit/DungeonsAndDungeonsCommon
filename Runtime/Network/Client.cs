@@ -247,7 +247,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 tcpStream.Write(result, 0, result.Length);
             }
-            else
+            else if(!TCP)
             {
                 Debug.Log("Over " + udpClient);
                 udpClient.Send(result, 0);
@@ -268,6 +268,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 packetOutUDPBuffer.Enqueue(p);
             }
         }
+
         public void WritePacket(IMessage message,bool TCP = true)
         {
             General.Packet p = null;
