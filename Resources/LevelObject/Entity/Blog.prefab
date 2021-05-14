@@ -142,6 +142,12 @@ MonoBehaviour:
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []
+  onSpawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDespawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
   levelObjectNetworkHandler: {fileID: 8870155796596675472}
   controller: {fileID: 736877002971563755}
   invincible: 0
@@ -221,10 +227,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Identity: 
   identified: 0
-  observed: {fileID: 0}
+  observed: {fileID: 987221561569911037}
   observed: {fileID: 0}
   isOwner: 0
   owner: -1
+  observed: {fileID: 736877002971563754}
 --- !u!1 &1070978897087344274
 GameObject:
   m_ObjectHideFlags: 0
