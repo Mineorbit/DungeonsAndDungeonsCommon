@@ -14,6 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isOwner;
         public int owner = -1;
 
+        public new Entity observed;
 
         Vector3 targetPosition;
         Vector3 targetRotation;
@@ -35,6 +36,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 RequestCreation();
             }
+
+            observed.onSpawnEvent.AddListener(Teleport);
+            observed.onDespawnEvent.AddListener(()=> { Teleport(new Vector3(0, 0, 0)); });
         }
 
         public virtual void RequestCreation()
@@ -119,15 +123,66 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+
+
+        public void Teleport(Vector3 position)
+        {
+            transform.position = position;
+            EntityTeleport entityTeleport = new EntityTeleport
+            {
+                X = position.x,
+                Y = position.y,
+                Z = position.z
+            };
+
+            Marshall(entityTeleport);
+        }
+
+        bool movementOverride;
+
+        Vector3 teleportPosition;
+
+        [PacketBinding.Binding]
+        public void OnEntityTeleport(Packet p)
+        {
+            EntityTeleport entityTeleport;
+
+            if(p.Content.TryUnpack<EntityTeleport>(out entityTeleport))
+            {
+                movementOverride = true;
+                observed.setMovementStatus(false);
+                teleportPosition = new Vector3(entityTeleport.X,entityTeleport.Y,entityTeleport.Z);
+                StartCoroutine(TeleportRoutine());
+            }
+        }
+
+
+        float tpDist = 0.005f;
+
+        IEnumerator TeleportRoutine()
+        {
+
+            while((targetPosition-teleportPosition).magnitude > tpDist)
+            {
+                transform.position = teleportPosition;
+                yield return null;
+            }
+            observed.setMovementStatus(true);
+            movementOverride = false;
+        }
+
+
         float maxInterpolateDist = 5f;
         public void Update()
         {
-            float dist = (transform.position - targetPosition).magnitude;
-
+            if(!movementOverride)
+            { 
             if (!isOwner)
             {
                 transform.position = (transform.position + targetPosition) / 2;
                 transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x,targetRotation.y,targetRotation.z),transform.rotation,0.5f);
+            }
             }
         }
 
