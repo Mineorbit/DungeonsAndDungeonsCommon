@@ -42,6 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public static List<Type> loadedTypes = new List<Type>();
+
         // first type in  key (Packet) second (Handler)
         public static Dictionary<Tuple<Type, Type>, UnityAction<Packet>> globalMethodBindings = new Dictionary<Tuple<Type, Type>, UnityAction<Packet>>();
 
