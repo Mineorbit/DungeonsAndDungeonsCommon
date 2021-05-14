@@ -207,9 +207,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 sendCount--;
                 tcpSent++;
             }
-
+            if(tcpSent > 0)
             WriteOut(tcpCarrier);
 
+            int udpSent = 0;
             sendCount = maxSendCount;
             General.PacketCarrier udpCarrier = new PacketCarrier();
             while (packetOutUDPBuffer.Count > 0 && sendCount > 0)
@@ -217,7 +218,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Packet p = packetOutUDPBuffer.Dequeue();
                 udpCarrier.Packets.Add(p);
                 sendCount--;
-                tcpSent++;
+                udpSent++;
             }
 
             //WriteOut(tcpCarrier,TCP: false);
@@ -337,7 +338,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             byte[] data = await ReadData();
 
-            var p = General.Packet.Parser.ParseFrom(data);
+            PacketCarrier packetCarrier = General.PacketCarrier.Parser.ParseFrom(data);
+
+            Packet p = packetCarrier.Packets[0];
             Debug.Log("Received "+p);
             T result;
             if (p.Content.TryUnpack<T>(out result))
