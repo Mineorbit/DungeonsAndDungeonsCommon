@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possiblePacketTypes:
   - General.Packet
+  - General.PacketCarrier
   - State.MeConnect
   - State.MeDisconnect
   - State.PrepareRound
@@ -22,10 +23,15 @@ MonoBehaviour:
   - Game.ConnectLevelObject
   - Game.ConnectLevelObjectFail
   - Game.ConnectLevelObjectRequest
+  - Game.EntityCreate
+  - Game.EntityLocomotion
+  - Game.EntityTeleport
   - Game.Parameter
   - Game.LevelObjectAction
   - Game.PlayerCreate
   - Game.PlayerRemove
+  - Game.PlayerState
+  - Game.StreamChunk
   - NetLevel.ChunkData
   - NetLevel.LevelMetaData
   - Google.Protobuf.IBufferMessage
@@ -88,6 +94,7 @@ MonoBehaviour:
   - Google.Protobuf.Reflection.GeneratedCodeInfo+Types+Annotation
   possibleHandlerTypes:
   - com.mineorbit.dungeonsanddungeonscommon.EntityNetworkHandler
+  - com.mineorbit.dungeonsanddungeonscommon.LevelLoadTargetNetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.LevelObjectNetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.NetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.NetworkManagerHandler
@@ -96,9 +103,8 @@ MonoBehaviour:
   - OnConnectLevelObject
   - OnConnectLevelObjectRequestFail
   - OnConnectLevelObjectRequest
-  - ProcessAction
   PacketType: Game.ConnectLevelObjectFail
-  HandlerType: com.mineorbit.dungeonsanddungeonscommon.LevelObjectNetworkHandler
+  HandlerType: com.mineorbit.dungeonsanddungeonscommon.NetworkHandler
   BindedMethods:
   - OnConnectLevelObjectRequestFail
   withIdentity: 0

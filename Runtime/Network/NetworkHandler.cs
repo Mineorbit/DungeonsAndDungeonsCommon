@@ -61,6 +61,181 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+
+        public virtual void Start()
+        {
+            if (!isOnServer)
+                StartRequestBind(this);
+        }
+
+
+
+
+        public void ConnectLevelObject(int rn)
+        {
+            Game.ConnectLevelObject connectLevelObject = new ConnectLevelObject
+            {
+                Identity = this.Identity,
+                X = transform.position.x,
+                Y = transform.position.y,
+                Z = transform.position.z,
+                HandlerType = this.GetType().FullName,
+                ResponseNumber = rn
+            };
+            Marshall(this.GetType(), connectLevelObject);
+        }
+
+
+        static int count = 0;
+        public static Dictionary<int, NetworkHandler> bindRequests = new Dictionary<int, NetworkHandler>();
+        public static void StartRequestBind(NetworkHandler handler)
+        {
+            ConnectLevelObjectRequest connectLevelObjectRequest = null;
+            NetworkHandler parentNetworkHandler = handler.transform.GetComponentInParent<NetworkHandler>();
+            if (parentNetworkHandler != null && parentNetworkHandler.identified)
+            {
+                connectLevelObjectRequest = new ConnectLevelObjectRequest
+                {
+                    ParentIdentity = parentNetworkHandler.Identity,
+                    HandlerType = handler.GetType().FullName,
+                    RequestNumber = count,
+                    RequestType = ConnectLevelObjectRequest.Types.RequestType.ByParent
+                };
+            }
+            else if (parentNetworkHandler == null)
+            {
+                connectLevelObjectRequest = new ConnectLevelObjectRequest
+                {
+                    X = handler.transform.position.x,
+                    Y = handler.transform.position.y,
+                    Z = handler.transform.position.z,
+                    HandlerType = handler.GetType().FullName,
+                    RequestNumber = count,
+                    RequestType = ConnectLevelObjectRequest.Types.RequestType.ByPosition
+                };
+            }
+            else
+            {
+                handler.Invoke("TryAfter", 2f);
+                return;
+            }
+
+
+            bindRequests.Add(count, handler);
+            count++;
+            Marshall(typeof(LevelObjectNetworkHandler), connectLevelObjectRequest);
+        }
+
+
+        void TryAfter()
+        {
+            StartRequestBind(this);
+        }
+
+
+        [PacketBinding.Binding]
+        public static void OnConnectLevelObject(Packet p)
+        {
+            Game.ConnectLevelObject connectLevelObjectResponse;
+            if (p.Content.TryUnpack<Game.ConnectLevelObject>(out connectLevelObjectResponse))
+            {
+                NetworkHandler bindedHandler;
+                if (bindRequests.TryGetValue(connectLevelObjectResponse.ResponseNumber, out bindedHandler))
+                {
+
+                    MainCaller.Do(() =>
+                    {
+                        Debug.Log("Processing Rebind Response");
+                        bindedHandler.Identity = connectLevelObjectResponse.Identity;
+                        bindRequests.Remove(connectLevelObjectResponse.ResponseNumber);
+                    });
+                }
+
+            }
+        }
+
+        [PacketBinding.Binding]
+        public static void OnConnectLevelObjectRequestFail(Packet p)
+        {
+            ConnectLevelObjectFail connectLevelObjectFail;
+            if (p.Content.TryUnpack<ConnectLevelObjectFail>(out connectLevelObjectFail))
+            {
+                NetworkHandler networkHandler;
+                if (bindRequests.TryGetValue(connectLevelObjectFail.ResponseNumber, out networkHandler))
+                {
+                    MainCaller.Do(() => { StartRequestBind(networkHandler); });
+                }
+            }
+        }
+
+
+        [PacketBinding.Binding]
+        public static void OnConnectLevelObjectRequest(Packet p)
+        {
+            MainCaller.Do(() => {
+
+                Debug.Log("Handling");
+                float eps = 0.25f;
+                Game.ConnectLevelObjectRequest levelObjectConnect;
+                if (p.Content.TryUnpack<Game.ConnectLevelObjectRequest>(out levelObjectConnect))
+                {
+                    NetworkHandler fittingHandler = null;
+                    Type handlerType = Type.GetType(levelObjectConnect.HandlerType);
+                    if (levelObjectConnect.RequestType == ConnectLevelObjectRequest.Types.RequestType.ByPosition)
+                    {
+
+                        Vector3 handlerPosition = new Vector3(levelObjectConnect.X, levelObjectConnect.Y, levelObjectConnect.Z);
+                        fittingHandler = (NetworkHandler)NetworkManager.networkHandlers.Find((x) => {
+                            float distance = (handlerPosition - x.transform.position).magnitude;
+                            return x.GetType() == handlerType && distance < eps && !x.identified;
+                        });
+
+
+                    }
+                    else if (levelObjectConnect.RequestType == ConnectLevelObjectRequest.Types.RequestType.ByParent)
+                    {
+                        fittingHandler = (NetworkHandler)NetworkManager.networkHandlers.Find((x) => {
+                            NetworkHandler p = x.GetComponentInParent<NetworkHandler>();
+                            return x.GetType() == handlerType && p.identified && p.Identity
+                            == levelObjectConnect.ParentIdentity && !x.identified;
+                        });
+                    }
+
+
+                    if (fittingHandler != null)
+                    {
+                        fittingHandler.ConnectLevelObject(levelObjectConnect.RequestNumber);
+                    }
+                    else
+                    {
+                        Debug.Log("No " + handlerType + " found");
+
+                        ConnectLevelObjectFail connectLevelObjectFail = new ConnectLevelObjectFail
+                        {
+                            HandlerType = levelObjectConnect.HandlerType,
+                            ResponseNumber = levelObjectConnect.RequestNumber
+                        };
+
+                        //THIS NEEDS TO BE FOUND IN PACKET
+
+                        int requester = p.Sender;
+                        Marshall(typeof(LevelObjectNetworkHandler), connectLevelObjectFail, requester);
+
+                    }
+                }
+
+            });
+
+
+        }
+
+
+
+
+
+
+
+
         public virtual void SetupLocalMarshalls()
         {
         }
@@ -182,6 +357,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+        public static void Marshall(Type sendingHandler, IMessage message, int target, bool TCP = true)
+        {
+            Packet packet = new Packet
+            {
+                Type = message.GetType().FullName,
+                Handler = sendingHandler.FullName,
+                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
+            };
+
+            if (!isOnServer)
+            {
+                NetworkManager.instance.client.WritePacket(packet, TCP: TCP);
+            }
+            else
+            {
+                if (Server.instance.clients[target] != null)
+                    Server.instance.clients[target].WritePacket(packet, TCP: TCP);
+            }
+        }
 
 
         public static void Marshall(Type sendingHandler, IMessage message, int target, string identity, bool TCP = true)

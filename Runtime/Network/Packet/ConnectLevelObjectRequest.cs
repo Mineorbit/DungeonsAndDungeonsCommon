@@ -24,14 +24,17 @@ namespace Game {
     static ConnectLevelObjectRequestReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Ch9Db25uZWN0TGV2ZWxPYmplY3RSZXF1ZXN0LnByb3RvEgRnYW1lInoKGUNv",
-            "bm5lY3RMZXZlbE9iamVjdFJlcXVlc3QSEAoISWRlbnRpdHkYASABKAkSCQoB",
-            "WBgCIAEoAhIJCgFZGAMgASgCEgkKAVoYBCABKAISEwoLSGFuZGxlclR5cGUY",
-            "BSABKAkSFQoNcmVxdWVzdE51bWJlchgGIAEoBWIGcHJvdG8z"));
+            "Ch9Db25uZWN0TGV2ZWxPYmplY3RSZXF1ZXN0LnByb3RvEgRnYW1lIvEBChlD",
+            "b25uZWN0TGV2ZWxPYmplY3RSZXF1ZXN0EhYKDnBhcmVudElkZW50aXR5GAEg",
+            "ASgJEgkKAVgYAiABKAISCQoBWRgDIAEoAhIJCgFaGAQgASgCEhMKC0hhbmRs",
+            "ZXJUeXBlGAUgASgJEhUKDXJlcXVlc3ROdW1iZXIYBiABKAUSQAoLcmVxdWVz",
+            "dFR5cGUYByABKA4yKy5nYW1lLkNvbm5lY3RMZXZlbE9iamVjdFJlcXVlc3Qu",
+            "UmVxdWVzdFR5cGUiLQoLUmVxdWVzdFR5cGUSDwoLQllfUE9TSVRJT04QABIN",
+            "CglCWV9QQVJFTlQQAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.ConnectLevelObjectRequest), global::Game.ConnectLevelObjectRequest.Parser, new[]{ "Identity", "X", "Y", "Z", "HandlerType", "RequestNumber" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.ConnectLevelObjectRequest), global::Game.ConnectLevelObjectRequest.Parser, new[]{ "ParentIdentity", "X", "Y", "Z", "HandlerType", "RequestNumber", "RequestType" }, null, new[]{ typeof(global::Game.ConnectLevelObjectRequest.Types.RequestType) }, null, null)
           }));
     }
     #endregion
@@ -67,12 +70,13 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ConnectLevelObjectRequest(ConnectLevelObjectRequest other) : this() {
-      identity_ = other.identity_;
+      parentIdentity_ = other.parentIdentity_;
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
       handlerType_ = other.handlerType_;
       requestNumber_ = other.requestNumber_;
+      requestType_ = other.requestType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -81,14 +85,14 @@ namespace Game {
       return new ConnectLevelObjectRequest(this);
     }
 
-    /// <summary>Field number for the "Identity" field.</summary>
-    public const int IdentityFieldNumber = 1;
-    private string identity_ = "";
+    /// <summary>Field number for the "parentIdentity" field.</summary>
+    public const int ParentIdentityFieldNumber = 1;
+    private string parentIdentity_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Identity {
-      get { return identity_; }
+    public string ParentIdentity {
+      get { return parentIdentity_; }
       set {
-        identity_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        parentIdentity_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -147,6 +151,17 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "requestType" field.</summary>
+    public const int RequestTypeFieldNumber = 7;
+    private global::Game.ConnectLevelObjectRequest.Types.RequestType requestType_ = global::Game.ConnectLevelObjectRequest.Types.RequestType.ByPosition;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Game.ConnectLevelObjectRequest.Types.RequestType RequestType {
+      get { return requestType_; }
+      set {
+        requestType_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ConnectLevelObjectRequest);
@@ -160,24 +175,26 @@ namespace Game {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Identity != other.Identity) return false;
+      if (ParentIdentity != other.ParentIdentity) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
       if (HandlerType != other.HandlerType) return false;
       if (RequestNumber != other.RequestNumber) return false;
+      if (RequestType != other.RequestType) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Identity.Length != 0) hash ^= Identity.GetHashCode();
+      if (ParentIdentity.Length != 0) hash ^= ParentIdentity.GetHashCode();
       if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
       if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
       if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
       if (HandlerType.Length != 0) hash ^= HandlerType.GetHashCode();
       if (RequestNumber != 0) hash ^= RequestNumber.GetHashCode();
+      if (RequestType != global::Game.ConnectLevelObjectRequest.Types.RequestType.ByPosition) hash ^= RequestType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -194,9 +211,9 @@ namespace Game {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Identity.Length != 0) {
+      if (ParentIdentity.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Identity);
+        output.WriteString(ParentIdentity);
       }
       if (X != 0F) {
         output.WriteRawTag(21);
@@ -217,6 +234,10 @@ namespace Game {
       if (RequestNumber != 0) {
         output.WriteRawTag(48);
         output.WriteInt32(RequestNumber);
+      }
+      if (RequestType != global::Game.ConnectLevelObjectRequest.Types.RequestType.ByPosition) {
+        output.WriteRawTag(56);
+        output.WriteEnum((int) RequestType);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -227,9 +248,9 @@ namespace Game {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Identity.Length != 0) {
+      if (ParentIdentity.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Identity);
+        output.WriteString(ParentIdentity);
       }
       if (X != 0F) {
         output.WriteRawTag(21);
@@ -251,6 +272,10 @@ namespace Game {
         output.WriteRawTag(48);
         output.WriteInt32(RequestNumber);
       }
+      if (RequestType != global::Game.ConnectLevelObjectRequest.Types.RequestType.ByPosition) {
+        output.WriteRawTag(56);
+        output.WriteEnum((int) RequestType);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -260,8 +285,8 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Identity.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
+      if (ParentIdentity.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ParentIdentity);
       }
       if (X != 0F) {
         size += 1 + 4;
@@ -278,6 +303,9 @@ namespace Game {
       if (RequestNumber != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(RequestNumber);
       }
+      if (RequestType != global::Game.ConnectLevelObjectRequest.Types.RequestType.ByPosition) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) RequestType);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -289,8 +317,8 @@ namespace Game {
       if (other == null) {
         return;
       }
-      if (other.Identity.Length != 0) {
-        Identity = other.Identity;
+      if (other.ParentIdentity.Length != 0) {
+        ParentIdentity = other.ParentIdentity;
       }
       if (other.X != 0F) {
         X = other.X;
@@ -307,6 +335,9 @@ namespace Game {
       if (other.RequestNumber != 0) {
         RequestNumber = other.RequestNumber;
       }
+      if (other.RequestType != global::Game.ConnectLevelObjectRequest.Types.RequestType.ByPosition) {
+        RequestType = other.RequestType;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -322,7 +353,7 @@ namespace Game {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            Identity = input.ReadString();
+            ParentIdentity = input.ReadString();
             break;
           }
           case 21: {
@@ -343,6 +374,10 @@ namespace Game {
           }
           case 48: {
             RequestNumber = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            RequestType = (global::Game.ConnectLevelObjectRequest.Types.RequestType) input.ReadEnum();
             break;
           }
         }
@@ -360,7 +395,7 @@ namespace Game {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            Identity = input.ReadString();
+            ParentIdentity = input.ReadString();
             break;
           }
           case 21: {
@@ -383,10 +418,26 @@ namespace Game {
             RequestNumber = input.ReadInt32();
             break;
           }
+          case 56: {
+            RequestType = (global::Game.ConnectLevelObjectRequest.Types.RequestType) input.ReadEnum();
+            break;
+          }
         }
       }
     }
     #endif
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the ConnectLevelObjectRequest message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static partial class Types {
+      public enum RequestType {
+        [pbr::OriginalName("BY_POSITION")] ByPosition = 0,
+        [pbr::OriginalName("BY_PARENT")] ByParent = 1,
+      }
+
+    }
+    #endregion
 
   }
 
