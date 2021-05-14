@@ -1,7 +1,7 @@
 syntax = "proto3";
 package game;
 
-message PlayerState {
+message EntityState {
 	int32 health = 1;
 	bool active = 2;
 }
