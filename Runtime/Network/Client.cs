@@ -64,6 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Client(TcpClient tcpC,UdpClient udpC, int lId,int port)
         {
+            NetworkManager.allClients.Add(this);
             Connected = true;
             tcpClient = tcpC;
             udpClient = udpC;
@@ -150,6 +151,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         int maxSendCount = 15;
         public void FixedUpdate()
         {
+            Debug.Log("UPDATE");
             UpdateOut();
             UpdateIn();
         }
