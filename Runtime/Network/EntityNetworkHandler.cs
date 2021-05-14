@@ -125,10 +125,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
+        Vector3 teleportPosition;
 
         public void Teleport(Vector3 position)
         {
             transform.position = position;
+            teleportPosition = position;
             EntityTeleport entityTeleport = new EntityTeleport
             {
                 X = position.x,
@@ -142,7 +144,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         bool movementOverride;
 
-        Vector3 teleportPosition;
 
         [PacketBinding.Binding]
         public void OnEntityTeleport(Packet p)
@@ -151,8 +152,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if(p.Content.TryUnpack<EntityTeleport>(out entityTeleport))
             {
-                movementOverride = true;
-                observed.setMovementStatus(false);
                 teleportPosition = new Vector3(entityTeleport.X,entityTeleport.Y,entityTeleport.Z);
                 StartCoroutine(TeleportRoutine());
             }
@@ -165,6 +164,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         IEnumerator TeleportRoutine()
         {
 
+            movementOverride = true;
+            observed.setMovementStatus(false);
             Debug.Log("Locking");
             float dist = (transform.position - teleportPosition).magnitude;
             while ( dist > tpDist)

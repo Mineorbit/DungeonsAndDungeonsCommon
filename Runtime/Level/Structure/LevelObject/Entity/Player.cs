@@ -49,13 +49,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         float skipDistance = 5f;
-        public override void Update()
-        {
-            
-
-            base.Update();
-            
-        }
+        
 
 
         public void UpdateEquipItem()
