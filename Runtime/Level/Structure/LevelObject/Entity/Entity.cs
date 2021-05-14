@@ -18,11 +18,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent<Entity> onAttackEvent;
 
+
+        public UnityEvent<Vector3> onSpawnEvent =  new UnityEvent<Vector3>();
+
+        public UnityEvent onDespawnEvent = new UnityEvent();
+
         public new EntityNetworkHandler levelObjectNetworkHandler;
 
         public EntityController controller;
 
         public bool invincible = false;
+
+        ItemHandle handle;
 
 
         // this needs to be prettier
@@ -49,8 +56,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void setMovementStatus(bool allowedToMove)
         {
         }
-
-        ItemHandle handle;
 
         public void UseHandle(ItemHandle h)
         {
@@ -95,6 +100,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Spawning "+this+" at "+location);
             transform.position = location;
             transform.rotation = rotation;
+
+            onSpawnEvent.Invoke(location);
             controller.OnSpawn(location);
         }
 
@@ -106,6 +113,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Despawning " + this);
             transform.position = new Vector3(0,0,0);
             transform.rotation = new Quaternion(0,0,0,0);
+            onDespawnEvent.Invoke();
         }
 
 
