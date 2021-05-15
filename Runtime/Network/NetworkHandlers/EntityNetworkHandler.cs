@@ -193,10 +193,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 teleportPosition = new Vector3(entityTeleport.X,entityTeleport.Y,entityTeleport.Z);
 
-                if (observed.loadTarget != null) { observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
 
                 movementOverride = true;
                 observed.setMovementStatus(false);
+
+                if (observed.loadTarget != null) { observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
             }
         }
 
