@@ -178,6 +178,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Marshall(entityTeleport);
 
             Task.Run(async () => {
+                Debug.Log("OBSERVED: " + observed.loadTarget);
                 if (observed.loadTarget != null) { await observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
             });
         }
@@ -197,6 +198,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
                 Task.Run(async () => {
+                    Debug.Log("OBSERVED: "+observed.loadTarget);
                     if (observed.loadTarget != null) { await observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
                 });
 

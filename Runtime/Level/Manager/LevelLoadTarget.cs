@@ -62,6 +62,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public async Task WaitForChunkLoaded(Vector3 position)
         {
+
+            Debug.Log("Started WAITING");
             Transform store = target;
             target = null;
             transform.position = position;
