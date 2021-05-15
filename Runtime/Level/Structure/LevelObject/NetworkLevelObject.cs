@@ -28,7 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //This marks a message for transport through network
         public void Invoke<T>(Action<T> a, T argument)
         {
-            if (this.enabled) a.DynamicInvoke(argument);
+            if (Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke(argument);
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
                 if( levelObjectNetworkHandler.identified)
                 {
@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Invoke(Action a)
         {
-            if (this.enabled) a.DynamicInvoke();
+            if (Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke();
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
             if( levelObjectNetworkHandler.identified)
             {
