@@ -81,7 +81,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 });
 
-
+            Debug.Log("Finished Loading");
             target = store;
             });
         }
