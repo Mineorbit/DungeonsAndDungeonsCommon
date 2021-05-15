@@ -87,7 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             yield return new WaitForSeconds(time);
             hitCooldown = false;
-            setMovementStatus(true);
+            Invoke(setMovementStatus,true);
         }
 
         public virtual void setMovementStatus(bool allowedToMove)
@@ -96,33 +96,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseHandle(ItemHandle h)
         {
-            if (h != null)
-            {
-                handle = h;
-                Invoke(UseSelectedHandle);
-            }
+            h.Use();
         }
 
         public void StopUseHandle(ItemHandle h)
         {
-            if (h != null)
-            {
-                handle = h;
-                Invoke(StopUseSelectedHandle);
-            }
+            h.StopUse();
         }
 
-        public void UseSelectedHandle()
-        {
-            if(handle != null)
-            handle.Use();
-        }
-
-        public void StopUseSelectedHandle()
-        {
-            if (handle != null)
-                handle.StopUse();
-        }
 
         void StartHitCooldown()
         {
@@ -159,11 +140,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!invincible && !hitCooldown)
             {
                 onAttackEvent.Invoke(hitter);
-                setMovementStatus(false);
+                Invoke(setMovementStatus,false);
                 StartHitCooldown();
                 Debug.Log(hitter.gameObject.name+" HIT "+this.gameObject.name+" AND CAUSED "+damage+" HP DAMAGE");
                 health = health - damage;
-                baseAnimator.Hit();
+                Invoke(baseAnimator.Hit);
                 onHitEvent.Invoke();
                 if (health <= 0)
                 {

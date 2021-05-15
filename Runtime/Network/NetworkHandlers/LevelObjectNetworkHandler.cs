@@ -91,6 +91,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     NetLevel.ChunkData netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
                     actionParam.data = ChunkData.FromNetData(netChunkData);
                 }
+                else
+                if(actionParam.type == typeof(bool))
+                {
+                    actionParam.data = data.Item2.Value.Unpack<Google.Protobuf.WellKnownTypes.BoolValue>().Value;
+                }
 
 
                 return actionParam;
@@ -108,7 +113,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     NetLevel.ChunkData chunkData = ChunkData.ToNetData((ChunkData) data);
                     x = Google.Protobuf.WellKnownTypes.Any.Pack(chunkData);
                 }
-
+                else 
+                if (type == typeof(bool))
+                {
+                    Google.Protobuf.WellKnownTypes.BoolValue bv = new Google.Protobuf.WellKnownTypes.BoolValue();
+                    bv.Value = (bool) data;
+                    x = Google.Protobuf.WellKnownTypes.Any.Pack(bv);
+                }
 
                 Parameter p = new Parameter
                 {
