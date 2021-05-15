@@ -4899,6 +4899,7 @@ GameObject:
   - component: {fileID: 8138660057824271279}
   - component: {fileID: 8138660057824271266}
   - component: {fileID: 6293152062803739340}
+  - component: {fileID: 8136553566254210471}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Item
@@ -4937,14 +4938,17 @@ MonoBehaviour:
   levelObjectDataType: 
   isDynamic: 0
   ActivateWhenInactive: 0
+  rigidBody: {fileID: 8138660057824271279}
   useTime: 0.6
   owner: {fileID: 0}
   isEquipped: 0
   onUseEvent:
     m_PersistentCalls:
       m_Calls: []
+  onStopUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
   hitboxPrefab: {fileID: 8050238736179481825, guid: 370f61beef14a7949b51b57ddbdc6c6f, type: 3}
-  rigidBody: {fileID: 8138660057824271279}
   effectSystem: {fileID: 2163604777228729686}
   onHitEvent:
     m_PersistentCalls:
@@ -4994,3 +4998,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 57d116ef23492a54c823326e379650af, type: 2}
   - {fileID: 11400000, guid: b9543d08193c4fc4a983663f7945e423, type: 2}
   sword: {fileID: 8138660057824271276}
+--- !u!114 &8136553566254210471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138660057824271278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5f6a18a954cad47b218f2447495320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Identity: 
+  identified: 0
+  observed: {fileID: 0}
+  observed: {fileID: 0}
