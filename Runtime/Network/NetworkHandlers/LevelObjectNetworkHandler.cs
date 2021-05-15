@@ -85,6 +85,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 actionParam.type = Type.GetType(data.Item2.Type);
 
+
+                Debug.Log("Unpacking "+type);
+
                 if (actionParam.type == typeof(ChunkData))
                 {
 
@@ -116,6 +119,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 Google.Protobuf.WellKnownTypes.Any x = null;
 
+
+                Debug.Log("Packing " + type);
 
                 if (type == typeof(ChunkData))
                 {
