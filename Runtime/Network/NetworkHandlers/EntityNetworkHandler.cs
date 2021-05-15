@@ -16,8 +16,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public new Entity observed;
 
-        Vector3 targetPosition;
-        Vector3 targetRotation;
+        public Vector3 targetPosition;
+        public Vector3 targetRotation;
 
         public bool movementOverride;
 
@@ -27,6 +27,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             isOwner = isOnServer;
             targetPosition = transform.position;
             targetRotation = transform.rotation.eulerAngles;
+
+            if(isOnServer)
+            {
+                GetComponent<CharacterController>().enabled = false;
+            }
         }
 
 

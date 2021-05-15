@@ -166,7 +166,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             // THIS IS  JANK BUT WORKS
-            if(player.levelObjectNetworkHandler.isOwner && !player.levelObjectNetworkHandler.movementOverride)
+            if(player.levelObjectNetworkHandler.isOwner && !player.levelObjectNetworkHandler.movementOverride && Level.instantiateType != Level.InstantiateType.Online)
             controller.Move( targetDirection * Speed * Time.deltaTime);
 
 
