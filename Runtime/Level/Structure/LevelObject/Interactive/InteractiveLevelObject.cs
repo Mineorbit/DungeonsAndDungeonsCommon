@@ -27,13 +27,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Activate()
         {
-            
+            Debug.Log(this+" activated");
             if(!activated)
             {
                 activated = true;
                 foreach(var receiver in receivers.Values)
                 {
-                    receiver.Invoke(Activate);
+                    receiver.Invoke(receiver.Activate);
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 activated = false;
                 foreach (var receiver in receivers.Values)
                 {
-                    receiver.Invoke(Deactivate);
+                    receiver.Invoke(receiver.Deactivate);
                 }
             }
         }
