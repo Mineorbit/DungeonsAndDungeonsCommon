@@ -120,8 +120,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // Pickup closest item
                 if(Input.GetKeyDown(KeyCode.G))
                 {
-                    //INVOKE
-                    player.UpdateEquipItem();
+                    
+                    player.Invoke(player.UpdateEquipItem);
                 }
 
                 if (Input.GetKeyDown(KeyCode.G))

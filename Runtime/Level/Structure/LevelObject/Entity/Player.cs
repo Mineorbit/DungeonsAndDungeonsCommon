@@ -18,10 +18,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         bool hitCooldown = false;
 
 
-        public Hitbox itemHitbox;
-
-        public List<Item> itemsInProximity;
-
         public int localId
         {
             set
@@ -74,7 +70,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Trying drop");
                 GetLeftHandle().Dettach();
                 GetRightHandle().Dettach();
-                
             }
         }
 
@@ -102,28 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             colorChanger = gameObject.GetComponent<ColorChanger>();
         }
 
-        public virtual void Start()
-        {
-            SetupItems();
-        }
 
-        void OnEnable()
-        {
-            SetupItems();
-        }
-
-        void SetupItems()
-        {
-            // Temporary
-            itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
-            items = new List<Item>();
-
-
-            itemsInProximity = new List<Item>();
-            itemHitbox.Attach("Item");
-            itemHitbox.enterEvent.AddListener((x) => { Item i = x.GetComponent<Item>(); if(!itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
-            itemHitbox.exitEvent.AddListener((x) => { Debug.Log(x.name); itemsInProximity.RemoveAll((p)=> p == x.GetComponent<Item>()); });
-        }
 
         public virtual bool IsAlive()
         {

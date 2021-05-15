@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: Shield
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6257500645298154876, guid: 7237a5a6b552ec44eb9cf655d2293f13, type: 3}
+  prefab: {fileID: 6116505687544139644, guid: a887bd9f1820cd348a87c90473bd0add, type: 3}
   uniqueLevelObjectId: 48243e1c-4301-44d5-bf8f-f0387bb1487f
   granularity: 1
   name: Shield

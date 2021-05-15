@@ -33,6 +33,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         ItemHandle handle;
 
 
+
+
+        public Hitbox itemHitbox;
+
+        public List<Item> itemsInProximity;
+
+
+
         // this needs to be prettier
         public virtual void Update()
         {
@@ -43,6 +51,34 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Invoke(Kill);
             }
         }
+
+        public virtual void Start()
+        {
+            SetupItems();
+        }
+
+
+
+
+        void SetupItems()
+        {
+            // Temporary
+            itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
+            items = new List<Item>();
+
+
+            itemsInProximity = new List<Item>();
+            if(itemHitbox != null)
+            { 
+            itemHitbox.Attach("Item");
+            itemHitbox.enterEvent.AddListener((x) => { Item i = x.GetComponent<Item>(); if (i.isActiveAndEnabled && !itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
+            itemHitbox.exitEvent.AddListener((x) => { Debug.Log(x.name); itemsInProximity.RemoveAll((p) => p == x.GetComponent<Item>()); });
+            }else
+            {
+                Debug.Log(this+" has no ItemHitBox");
+            }
+        }
+
 
 
         bool hitCooldown = false;
