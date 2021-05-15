@@ -44,6 +44,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public virtual void Awake()
+        {
+            colorChanger = gameObject.GetComponent<ColorChanger>();
+        }
+
+
+
         float skipDistance = 5f;
         
 
@@ -108,11 +115,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (i.handleType == ItemHandle.HandleType.RightHand) return i;
             }
             return null;
-        }
-
-        public virtual void Awake()
-        {
-            colorChanger = gameObject.GetComponent<ColorChanger>();
         }
 
 

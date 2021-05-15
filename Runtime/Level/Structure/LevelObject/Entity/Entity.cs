@@ -11,7 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool alive;
 
-        public List<Item> items;
+        public List<Item> items = new List<Item>();
         public ItemHandle[] itemHandles;
 
         public EntityBaseAnimator baseAnimator;
@@ -37,7 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Hitbox itemHitbox;
 
-        public List<Item> itemsInProximity;
+        public List<Item> itemsInProximity = new List<Item>();
 
 
 
@@ -64,15 +64,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             // Temporary
             itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
-            items = new List<Item>();
 
 
-            itemsInProximity = new List<Item>();
-            if(itemHitbox != null)
-            { 
+            if (itemHitbox != null)
+            {
+            Debug.Log("ITEM HITBOX");
             itemHitbox.Attach("Item");
-                // i.isActiveAndEnabled &&
-            itemHitbox.enterEvent.AddListener((x) => { Item i = x.GetComponent<Item>(); if (!itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
+            itemHitbox.enterEvent.AddListener((x) => { Debug.Log("HANLOOOO :D"); Item i = x.GetComponent<Item>(); if (!itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
             itemHitbox.exitEvent.AddListener((x) => { Debug.Log(x.name); itemsInProximity.RemoveAll((p) => p == x.GetComponent<Item>()); });
             }else
             {
