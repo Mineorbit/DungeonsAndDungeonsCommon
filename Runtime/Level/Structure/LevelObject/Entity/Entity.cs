@@ -71,7 +71,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(itemHitbox != null)
             { 
             itemHitbox.Attach("Item");
-            itemHitbox.enterEvent.AddListener((x) => { Item i = x.GetComponent<Item>(); if (i.isActiveAndEnabled && !itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
+                // i.isActiveAndEnabled &&
+            itemHitbox.enterEvent.AddListener((x) => { Item i = x.GetComponent<Item>(); if (!itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
             itemHitbox.exitEvent.AddListener((x) => { Debug.Log(x.name); itemsInProximity.RemoveAll((p) => p == x.GetComponent<Item>()); });
             }else
             {
