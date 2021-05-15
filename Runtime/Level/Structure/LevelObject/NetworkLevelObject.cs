@@ -26,9 +26,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Queue<Action> todo = new Queue<Action>();
 
         //This marks a message for transport through network
-        public void Invoke<T>(Action<T> a, T argument)
+        public void Invoke<T>(Action<T> a, T argument,bool allowLocal = false)
         {
-            if (Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke(argument);
+            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke(argument);
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
                 if( levelObjectNetworkHandler.identified)
                 {
@@ -41,9 +41,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        public void Invoke(Action a)
+        public void Invoke(Action a, bool allowLocal = false)
         {
-            if (Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke();
+            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke();
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
             if( levelObjectNetworkHandler.identified)
             {

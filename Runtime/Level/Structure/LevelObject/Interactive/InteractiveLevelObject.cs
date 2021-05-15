@@ -27,30 +27,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Activate()
         {
-            if(this.enabled)
-            { 
+            
             if(!activated)
             {
                 activated = true;
                 foreach(var receiver in receivers.Values)
                 {
-                    receiver.Activate();
+                    receiver.Invoke(Activate);
                 }
-            }
             }
         }
         public virtual void Deactivate()
         {
-            if(this.enabled)
-            { 
             if (activated)
             {
                 activated = false;
                 foreach (var receiver in receivers.Values)
                 {
-                    receiver.Deactivate();
+                    receiver.Invoke(Deactivate);
                 }
-            }
             }
         }
 
