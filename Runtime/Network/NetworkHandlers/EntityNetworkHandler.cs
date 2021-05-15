@@ -175,12 +175,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             movementOverride = true;
             observed.setMovementStatus(false);
 
-            Marshall(entityTeleport);
 
             Task.Run(async () => {
-                Debug.Log("OBSERVED: " + observed.loadTarget);
+                MainCaller.Do(() => { Debug.Log("OBSERVED: " + observed.loadTarget); });
                 if (observed.loadTarget != null) { await observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
             });
+
+            Marshall(entityTeleport);
+
         }
 
 
@@ -198,7 +200,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
                 Task.Run(async () => {
-                    Debug.Log("OBSERVED: "+observed.loadTarget);
+                    MainCaller.Do(() => { Debug.Log("OBSERVED: " + observed.loadTarget); });
                     if (observed.loadTarget != null) { await observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
                 });
 
