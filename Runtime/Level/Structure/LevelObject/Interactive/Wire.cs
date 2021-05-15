@@ -45,6 +45,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             this.enabled = true; 
             numberOfPoints = 16;
             lr.positionCount = numberOfPoints;
+
+            SetWire(Level.instantiateType == Level.InstantiateType.Edit);
         }
 
 
@@ -98,20 +100,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             base.OnStartRound();
-            lr.enabled = false;
-            A.gameObject.SetActive(false);
-            B.gameObject.SetActive(false);
-            mc.enabled = false;
-            this.enabled = false;
+            SetWire(false);
         }
         public override void OnEndRound()
         {
             base.OnEndRound();
-            lr.enabled = true;
-            A.gameObject.SetActive(true);
-            B.gameObject.SetActive(true);
-            mc.enabled = true;
-            this.enabled = true;
+            SetWire(true);
+        }
+
+        void SetWire(bool v)
+        {
+
+            lr.enabled = v;
+            A.gameObject.SetActive(v);
+            B.gameObject.SetActive(v);
+            mc.enabled = v;
+            this.enabled = v;
         }
 
         Vector3 start = new Vector3(0,0,0);
