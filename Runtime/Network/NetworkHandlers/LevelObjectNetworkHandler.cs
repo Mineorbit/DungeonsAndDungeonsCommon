@@ -102,6 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                     LevelObjectNetworkHandler h = NetworkHandler.FindByIdentity<LevelObjectNetworkHandler>(identityOfParam);
 
+                    Debug.Log("Matched with Reference: " + identityOfParam+" "+ h.observed);
                     actionParam.data = h.observed;
                 }
 
@@ -134,6 +135,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     LevelObjectNetworkHandler h = ((NetworkLevelObject)data).levelObjectNetworkHandler;
                     Google.Protobuf.WellKnownTypes.StringValue sv = new Google.Protobuf.WellKnownTypes.StringValue();
                     sv.Value = h.Identity;
+                    Debug.Log("Matched with Reference: "+h.Identity);
                     x = Google.Protobuf.WellKnownTypes.Any.Pack(sv);
                 }
 

@@ -232,8 +232,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 pos = observed.transform.position;
                 Vector3 rot = observed.transform.rotation.eulerAngles;
 
-                Debug.Log(pos+" "+rot);
-
                 float sendDist = (pos - lastSentPosition).magnitude;
                 if(sendDist>sendDistance)
                 {
