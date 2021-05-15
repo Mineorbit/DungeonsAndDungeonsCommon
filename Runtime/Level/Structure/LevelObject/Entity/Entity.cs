@@ -32,8 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         ItemHandle handle;
 
-
-
+        public LevelLoadTarget loadTarget;
 
         public Hitbox itemHitbox;
 

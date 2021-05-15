@@ -155,7 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         
-        long GetChunkID(Tuple<int,int> gridPosition)
+        public static long GetChunkID(Tuple<int,int> gridPosition)
         {
             byte[] x = BitConverter.GetBytes(gridPosition.Item1);
             byte[] y = BitConverter.GetBytes(gridPosition.Item2);
