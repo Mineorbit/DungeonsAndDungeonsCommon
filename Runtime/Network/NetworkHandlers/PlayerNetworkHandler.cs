@@ -18,6 +18,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetComponent<PlayerController>().enabled = !isOnServer;
             isOwner = !isOnServer && observed.localId == NetworkManager.instance.localId;
             owner = observed.localId;
+
+            if (isOnServer)
+            {
+                // UNSURE ABOUT THIS MAYBE THIS IS NEEDED
+                GetComponent<CharacterController>().enabled = false;
+            }
         }
 
         public virtual void SetupLocalMarshalls()
