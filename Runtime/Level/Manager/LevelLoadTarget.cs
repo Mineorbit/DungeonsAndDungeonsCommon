@@ -30,7 +30,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(target != null)
             {
-                target.position = transform.position;
+                transform.position = target.position;
             }
         }
 
