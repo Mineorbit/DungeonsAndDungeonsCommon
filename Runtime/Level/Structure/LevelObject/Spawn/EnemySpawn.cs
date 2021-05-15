@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnStartRound()
         {
-            bool full_collider = Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test;
+            bool full_collider = Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test || Level.instantiateType == Level.InstantiateType.Online;
             GetComponent<Collider>().enabled = !full_collider;
             GetComponent<Collider>().isTrigger = full_collider;
             Setup();
@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnEndRound()
         {
-            bool full_collider = Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test;
+            bool full_collider = Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test || Level.instantiateType == Level.InstantiateType.Online;
             GetComponent<Collider>().enabled = !full_collider;
             GetComponent<Collider>().isTrigger = full_collider;
         }
