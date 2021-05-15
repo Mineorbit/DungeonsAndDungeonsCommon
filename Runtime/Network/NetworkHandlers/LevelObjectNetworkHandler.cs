@@ -95,6 +95,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(actionParam.type == typeof(bool))
                 {
                     actionParam.data = data.Item2.Value.Unpack<Google.Protobuf.WellKnownTypes.BoolValue>().Value;
+                }else
+                if(actionParam.type.IsSubclassOf( typeof(NetworkLevelObject)) || actionParam.type == typeof(NetworkLevelObject))
+                {
+                    string identityOfParam = data.Item2.Value.Unpack<Google.Protobuf.WellKnownTypes.StringValue>().Value;
+
+                    LevelObjectNetworkHandler h = NetworkHandler.FindByIdentity<LevelObjectNetworkHandler>(identityOfParam);
+
+                    actionParam.data = h.observed;
                 }
 
 
@@ -119,6 +127,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Google.Protobuf.WellKnownTypes.BoolValue bv = new Google.Protobuf.WellKnownTypes.BoolValue();
                     bv.Value = (bool) data;
                     x = Google.Protobuf.WellKnownTypes.Any.Pack(bv);
+                }
+                else
+                if (type.IsSubclassOf(typeof(NetworkLevelObject)) || type == typeof(NetworkLevelObject))
+                {
+                    LevelObjectNetworkHandler h = ((NetworkLevelObject)data).levelObjectNetworkHandler;
+                    Google.Protobuf.WellKnownTypes.StringValue sv = new Google.Protobuf.WellKnownTypes.StringValue();
+                    sv.Value = h.Identity;
+                    x = Google.Protobuf.WellKnownTypes.Any.Pack(sv);
                 }
 
                 Parameter p = new Parameter
