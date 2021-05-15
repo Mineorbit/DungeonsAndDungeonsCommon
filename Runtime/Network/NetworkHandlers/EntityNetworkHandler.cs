@@ -28,10 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             targetPosition = transform.position;
             targetRotation = transform.rotation.eulerAngles;
 
-            if(isOnServer)
-            {
-                GetComponent<CharacterController>().enabled = false;
-            }
+            
         }
 
 
