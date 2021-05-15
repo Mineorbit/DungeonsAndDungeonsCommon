@@ -69,6 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.position = position;
             long id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
 
+            Debug.Log("ID: "+id);
 
             Debug.Log("Started WAITING");
 
