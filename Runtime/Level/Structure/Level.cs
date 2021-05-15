@@ -109,7 +109,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 dynamicObjects = transform.Find("Dynamic");
                 navGenerator = GetComponent<LevelNavGenerator>();
                 createPlayerSpawnList();
+
+                //Later we should try to switch this to some  sort of future
+                try
+                { 
                 levelReady.Release();
+                }catch(SemaphoreFullException e)
+                {
+                    Debug.Log("Level Readyness was not awaited");
+                }
             }
         }
 

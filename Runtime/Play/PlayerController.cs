@@ -165,7 +165,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 movingDirection = new Vector3(0, 0, 0);
             }
 
-            transform.position = transform.position + ( targetDirection * Speed * Time.deltaTime);
+            // THIS IS  JANK BUT WORKS
+            if(player.levelObjectNetworkHandler.isOwner && !player.levelObjectNetworkHandler.movementOverride)
+            controller.Move( targetDirection * Speed * Time.deltaTime);
+
 
             if (currentSpeed > 0)
             {
