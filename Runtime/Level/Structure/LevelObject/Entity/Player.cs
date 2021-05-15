@@ -47,6 +47,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         float skipDistance = 5f;
         
 
+        public void DettachLeftItem()
+        {
+            GetLeftHandle().Dettach();
+        }
+
+        public void DettachRightItem()
+        {
+            GetRightHandle().Dettach();
+        }
+        public void AttachLeftItem(Item item)
+        {
+            GetLeftHandle().Attach(item);
+        }
+        public void AttachRightItem(Item item)
+        {
+            GetRightHandle().Attach(item);
+        }
+
 
         public void UpdateEquipItem()
         {
@@ -56,20 +74,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Picking up");
                 if (toAttach.GetType() == typeof(Sword))
                 {
-                    Invoke(GetLeftHandle().Dettach);
-                    Invoke(GetLeftHandle().Attach,toAttach);
+                    Invoke(DettachLeftItem);
+                    Invoke(AttachLeftItem,toAttach);
                 }
                 if (toAttach.GetType() == typeof(Shield))
                 {
-                    Invoke(GetRightHandle().Dettach);
-                    Invoke(GetRightHandle().Attach,toAttach);
+                    Invoke(DettachRightItem);
+                    Invoke(AttachRightItem, toAttach);
                 }
             }
             else
             {
                 Debug.Log("Trying drop");
-                Invoke(GetLeftHandle().Dettach);
-                Invoke(GetRightHandle().Dettach);
+                Invoke(DettachLeftItem);
+                Invoke(DettachRightItem);
             }
         }
 
