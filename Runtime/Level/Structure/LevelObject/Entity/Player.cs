@@ -65,8 +65,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             t.IsBackground = true;
             t.Start();
             */
-
-            Task.Run( async () => { if (loadTarget != null) { await loadTarget.WaitForChunkLoaded(location); }  base.Spawn(location, rotation, allowedToMove); });
+            if (loadTarget != null) { loadTarget.WaitForChunkLoaded(location); }  
+            base.Spawn(location, rotation, allowedToMove); 
         }
 
 

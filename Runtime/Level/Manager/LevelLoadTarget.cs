@@ -60,9 +60,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public async Task WaitForChunkLoaded(Vector3 position)
+        public void WaitForChunkLoaded(Vector3 position)
         {
-
+            MainCaller.Do(() => {
             Debug.Log("Started WAITING");
             Transform store = target;
             target = null;
@@ -72,13 +72,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("ID: "+id);
 
             Debug.Log("Started WAITING");
+                Task.Run(async () =>
+                {
+                    while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(id) || !ChunkManager.instance.chunkLoaded[id])
+                    {
+                        Debug.Log("WAITING" + LevelManager.currentLevel == null + " " + !ChunkManager.instance.chunkLoaded.ContainsKey(id) + " " + !ChunkManager.instance.chunkLoaded[id]);
+                        await Task.Delay(100);
+                    }
+                });
 
-            while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(id) || !ChunkManager.instance.chunkLoaded[id])
-            {
-                Debug.Log("WAITING"+ LevelManager.currentLevel == null +" "+ !ChunkManager.instance.chunkLoaded.ContainsKey(id) +" "+ !ChunkManager.instance.chunkLoaded[id]);
-                await Task.Delay(100);
-            }
+
             target = store;
+            });
         }
 
 
