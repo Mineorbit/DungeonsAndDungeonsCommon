@@ -56,20 +56,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Picking up");
                 if (toAttach.GetType() == typeof(Sword))
                 {
-                    GetLeftHandle().Dettach();
-                    GetLeftHandle().Attach(toAttach);
+                    Invoke(GetLeftHandle().Dettach);
+                    Invoke(GetLeftHandle().Attach,toAttach);
                 }
                 if (toAttach.GetType() == typeof(Shield))
                 {
-                    GetRightHandle().Dettach();
-                    GetRightHandle().Attach(toAttach);
+                    Invoke(GetRightHandle().Dettach);
+                    Invoke(GetRightHandle().Attach,toAttach);
                 }
             }
             else
             {
                 Debug.Log("Trying drop");
-                GetLeftHandle().Dettach();
-                GetRightHandle().Dettach();
+                Invoke(GetLeftHandle().Dettach);
+                Invoke(GetRightHandle().Dettach);
             }
         }
 

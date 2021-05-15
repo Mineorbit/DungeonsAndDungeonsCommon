@@ -141,17 +141,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (Input.GetMouseButton(0))
                 {
                     //INVOKE
-                    player.UseLeft();
+                    player.Invoke(player.UseLeft);
                 }else
                 if (Input.GetMouseButton(1))
                 {
                     //INVOKE
-                    player.UseRight();
+                    player.Invoke(player.UseRight);
                 }
                 if (Input.GetMouseButtonUp(1))
                 {
 
-                    player.StopUseRight();
+                    player.Invoke(player.StopUseRight);
                 }
             }
 
