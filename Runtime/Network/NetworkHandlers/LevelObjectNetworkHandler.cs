@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 actionParam.type = Type.GetType(data.Item2.Type);
 
 
-                Debug.Log("Unpacking "+type);
+                Debug.Log("Unpacking "+actionParam.type);
 
                 if (actionParam.type == typeof(ChunkData))
                 {
