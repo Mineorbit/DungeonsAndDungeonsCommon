@@ -60,18 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        static void ChangeLevelLoading()
-        {
-            if (instance.loadType == LoadType.All)
-            {
-                LoadAllRegions();
-            }
-            else 
-            if (instance.loadType == LoadType.Near)
-            {
-                //At least one load Target
-            }
-        }
+        
 
         // Save immediately false for example in lobby
         public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true, bool saveImmediately = true)

@@ -18,6 +18,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         Vector3 targetPosition;
         Vector3 targetRotation;
+
+        public bool movementOverride;
+
         public virtual void Awake()
         {
             base.Awake();
@@ -172,8 +175,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Marshall(entityTeleport);
         }
-
-        bool movementOverride;
 
 
 
