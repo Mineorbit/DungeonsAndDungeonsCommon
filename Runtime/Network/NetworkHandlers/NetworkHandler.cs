@@ -100,7 +100,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(!handler.identified)
             { 
             ConnectLevelObjectRequest connectLevelObjectRequest = null;
-            NetworkHandler parentNetworkHandler = handler.transform.parent.GetComponentInParent<NetworkHandler>();
+            NetworkHandler parentNetworkHandler = null;
+            if(handler.transform.parent != null)
+            parentNetworkHandler = handler.transform.parent.GetComponentInParent<NetworkHandler>();
             Debug.Log(handler+" has "+parentNetworkHandler);
             if (parentNetworkHandler != null && parentNetworkHandler.identified)
             {
