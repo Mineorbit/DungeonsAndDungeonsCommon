@@ -100,11 +100,17 @@ public class PlayerManager : MonoBehaviour
         Vector3 position = GetSpawnLocation(freeLocalId);
 
         LevelObjectData playerLevelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
-            
-        GameObject g = playerLevelObjectData.Create(position,new Quaternion(0,0,0,0),transform);
-        Player player = g.GetComponent<Player>();
+        LevelObjectData loadTargetData = Resources.Load("LevelObjectData/LevelLoadTarget") as LevelObjectData;
+
+        GameObject playerGameObject = playerLevelObjectData.Create(position,new Quaternion(0,0,0,0),transform);
+        GameObject loadTargetGameObject = loadTargetData.Create(position,new Quaternion(0,0,0,0),null);
+
+        LevelLoadTarget loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
+        Player player = playerGameObject.GetComponent<Player>();
+        loadTarget.target = player.transform;
+        player.loadTarget = loadTarget;
         player.enabled = true;
-        PlayerController playerController = g.GetComponent<PlayerController>();
+        PlayerController playerController = playerGameObject.GetComponent<PlayerController>();
 
         playerController.locallyControllable = local;
 

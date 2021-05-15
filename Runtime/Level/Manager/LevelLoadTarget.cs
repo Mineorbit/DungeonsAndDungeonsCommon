@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -14,11 +16,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
 
+        public Transform target;
+
+
+
         void Start()
         {
 
         }
 
+
+        public void Update()
+        {
+            if(target != null)
+            {
+                target.position = transform.position;
+            }
+        }
 
         void EnableChunkAt(Vector3 position)
         {
@@ -41,8 +55,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                     }
                 }
+
             }
         }
+
+
+        public async Task WaitForChunkLoaded(Vector3 position)
+        {
+            Transform store = target;
+            target = null;
+            transform.position = position;
+            long id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
+
+            while (LevelManager.currentLevel == null || ChunkManager.instance.chunkLoaded[id])
+            {
+                await Task.Delay(100);
+            }
+            target = store;
+        }
+
+
 
         public void StreamChunkIntoCurrentLevelFrom(ChunkData chunkData)
         {

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -16,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float speed;
 
         bool hitCooldown = false;
+
 
 
         public int localId
@@ -52,7 +55,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         float skipDistance = 5f;
-        
+
+
+
+        public override void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
+        {
+            /*
+            Thread t = new Thread(new ThreadStart(() => { base.Spawn(location, rotation, allowedToMove); }));
+            t.IsBackground = true;
+            t.Start();
+            */
+
+            Task.Run( async () => { if (loadTarget != null) { await loadTarget.WaitForChunkLoaded(location); }  base.Spawn(location, rotation, allowedToMove); });
+        }
+
 
         public void DettachLeftItem()
         {

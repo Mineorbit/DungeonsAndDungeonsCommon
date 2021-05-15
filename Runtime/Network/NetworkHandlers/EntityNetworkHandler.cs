@@ -170,10 +170,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z
             };
 
+
+
             movementOverride = true;
             observed.setMovementStatus(false);
 
             Marshall(entityTeleport);
+
+            Task.Run(async () => {
+                if (observed.loadTarget != null) { await observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
+            });
         }
 
 
@@ -186,7 +192,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if(p.Content.TryUnpack<EntityTeleport>(out entityTeleport))
             {
+
                 teleportPosition = new Vector3(entityTeleport.X,entityTeleport.Y,entityTeleport.Z);
+
+
+                Task.Run(async () => {
+                    if (observed.loadTarget != null) { await observed.loadTarget.WaitForChunkLoaded(teleportPosition); }
+                });
+
                 movementOverride = true;
                 observed.setMovementStatus(false);
             }
