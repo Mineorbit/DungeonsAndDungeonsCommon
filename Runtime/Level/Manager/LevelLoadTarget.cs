@@ -67,9 +67,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.position = position;
             long id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
 
-            while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(id) || ChunkManager.instance.chunkLoaded[id])
+
+            Debug.Log("Started WAITING");
+
+            while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(id) || !ChunkManager.instance.chunkLoaded[id])
             {
-                Debug.Log("WAITING");
+                Debug.Log("WAITING"+ LevelManager.currentLevel == null +" "+ !ChunkManager.instance.chunkLoaded.ContainsKey(id) +" "+ !ChunkManager.instance.chunkLoaded[id]);
                 await Task.Delay(100);
             }
             target = store;
