@@ -116,10 +116,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 MeDisconnect meDisconnect = new MeDisconnect();
                 WritePacket(typeof(NetworkManagerHandler),meDisconnect);
             }
-            Debug.Log("We disconnected");
-            onDisconnectEvent.Invoke();
+            Debug.Log("Client "+localid+" disconnected");
             Connected = false;
-            disconnected.SetResult(true);
             }
         }
 
@@ -131,6 +129,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             tcpStream.Close();
             tcpClient.Close();
             udpClient.Close();
+            onDisconnectEvent.Invoke();
+            disconnected.SetResult(true);
             }
         }
 
