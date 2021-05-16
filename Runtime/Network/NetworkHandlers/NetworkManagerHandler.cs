@@ -29,6 +29,12 @@ public class NetworkManagerHandler : NetworkHandler
             Marshall(typeof(NetworkManagerHandler),startRound);
         }
 
+        public static void RequestWinRound()
+        {
+            State.WinRound winRound = new State.WinRound();
+            Marshall(typeof(NetworkManagerHandler), winRound);
+        }
+
         [PacketBinding.Binding]
         public static void PrepareRound(Packet p)
         {
