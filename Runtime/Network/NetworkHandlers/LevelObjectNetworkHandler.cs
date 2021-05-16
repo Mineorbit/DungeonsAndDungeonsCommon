@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
         [PacketBinding.Binding]
-        public void ProcessAction(Packet p)
+        public virtual void ProcessAction(Packet p)
         {
             LevelObjectAction levelObjectAction;
             if (p.Content.TryUnpack<LevelObjectAction>(out levelObjectAction))

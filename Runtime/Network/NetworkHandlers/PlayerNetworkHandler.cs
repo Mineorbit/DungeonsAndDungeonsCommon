@@ -38,6 +38,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Server.instance.WriteAll(p);
         }
 
+        [PacketBinding.Binding]
+        public override void ProcessAction(Packet p)
+        {
+
+            if(isOnServer)
+            {
+                Server.instance.WriteAll(p,observed.localId);
+            }
+
+            base.ProcessAction(p);
+        }
+
+
+
         public void OnDestroy()
         {
             if(enabled)
