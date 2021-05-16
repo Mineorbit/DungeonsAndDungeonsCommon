@@ -16,9 +16,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public EntityBaseAnimator baseAnimator;
 
-        public UnityEvent<Entity> onAttackEvent;
+        public UnityEvent<Entity> onHitEvent = new UnityEvent<Entity>();
 
-        public UnityEvent onHitEvent = new UnityEvent();
 
         public UnityEvent<Vector3> onSpawnEvent =  new UnityEvent<Vector3>();
 
@@ -133,19 +132,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public void HitEffect()
+        {
+            baseAnimator.Hit();
+        }
+
         public virtual void Hit(Entity hitter,int damage)
         {
+
+            Invoke(HitEffect);
+
+
             if (Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test)
             {
                 if (!invincible && !hitCooldown)
                 {
-                onAttackEvent.Invoke(hitter);
+                onHitEvent.Invoke(hitter);
                 Invoke(setMovementStatus,false);
                 StartHitCooldown();
                 Debug.Log(hitter.gameObject.name+" HIT "+this.gameObject.name+" AND CAUSED "+damage+" HP DAMAGE");
                 health = health - damage;
-                Invoke(baseAnimator.Hit);
-                onHitEvent.Invoke();
                 
                 if (health <= 0)
                 {
