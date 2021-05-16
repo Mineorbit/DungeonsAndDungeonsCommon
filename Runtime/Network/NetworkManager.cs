@@ -27,8 +27,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int localId;
         public static string userName;
 
+        public static UnityEvent connectEvent = new UnityEvent();
+        public static UnityEvent disconnectEvent = new UnityEvent();
         public static UnityEvent prepareRoundEvent = new UnityEvent();
         public static UnityEvent   startRoundEvent = new UnityEvent();
+        public static UnityEvent winEvent = new UnityEvent();
 
         // Start is called before the first frame update
         void Start()
@@ -53,14 +56,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             { 
             userName = playerName;
             Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse(ip), 13565));
-            //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
-            client = t.Result;
 
-            localId = client.localid;
 
-            isConnected = true;
+
+                t.Wait();
+
+                client = t.Result;
+                localId = client.localid;
+                isConnected = true;
                 SetNetworkHandlers(isConnected);
-            onConnect.Invoke();
+                onConnect.Invoke();
+
+
+                //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
+
             }
 
         }
@@ -83,12 +92,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void Disconnect()
+        public void Disconnect(bool respond = true)
         {
             if(isConnected)
             { 
-            isConnected = false;
-            client.Disconnect();
+                isConnected = false;
+                client.Disconnect(respond: respond);
+                disconnectEvent.Invoke();
             }
         }
 

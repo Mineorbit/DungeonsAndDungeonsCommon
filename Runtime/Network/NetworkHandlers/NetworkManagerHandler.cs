@@ -36,6 +36,26 @@ public class NetworkManagerHandler : NetworkHandler
         }
 
         [PacketBinding.Binding]
+        public static void OnDisconnect(Packet p)
+        {
+            MeDisconnect meDisconnect;
+            if(p.Content.TryUnpack<MeDisconnect>(out meDisconnect))
+            {
+                int localId = p.Sender;
+
+                if(isOnServer)
+                {
+                    Server.instance.clients[localId].Disconnect(respond: false);
+                    PlayerManager.playerManager.Remove(localId);
+                }
+                else {
+                    NetworkManager.instance.Disconnect(respond: false);
+                }
+            }
+        }
+
+
+        [PacketBinding.Binding]
         public static void PrepareRound(Packet p)
         {
             Debug.Log("Preparing Round");
@@ -70,7 +90,7 @@ public class NetworkManagerHandler : NetworkHandler
         [PacketBinding.Binding]
         public static void WinRound(Packet p)
         {
-            MainCaller.Do(() => { Debug.Log("YOU WIN"); });
+            MainCaller.Do(() => { NetworkManager.winEvent.Invoke(); });
         }
     }
 }
