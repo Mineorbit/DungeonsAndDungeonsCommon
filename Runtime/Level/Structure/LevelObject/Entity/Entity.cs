@@ -135,8 +135,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Hit(Entity hitter,int damage)
         {
-            if (!invincible && !hitCooldown)
+            if (Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test)
             {
+                if (!invincible && !hitCooldown)
+                {
                 onAttackEvent.Invoke(hitter);
                 Invoke(setMovementStatus,false);
                 StartHitCooldown();
@@ -144,13 +146,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 health = health - damage;
                 Invoke(baseAnimator.Hit);
                 onHitEvent.Invoke();
+                
                 if (health <= 0)
                 {
                     Invoke(Kill);
                 }
-                //FreezeFramer.freeze(0.0075f);
+                    //FreezeFramer.freeze(0.0075f);
+                }
             }
-
         }
 
         public virtual void Kill()
