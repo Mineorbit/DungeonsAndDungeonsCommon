@@ -68,7 +68,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (itemHitbox != null)
             {
-            Debug.Log("ITEM HITBOX");
+            Debug.Log("ITEM HITBOX for "+this);
             itemHitbox.Attach("Item");
             itemHitbox.enterEvent.AddListener((x) => { Debug.Log("HANLOOOO :D"); Item i = x.GetComponent<Item>(); if (!itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
             itemHitbox.exitEvent.AddListener((x) => { Debug.Log(x.name); itemsInProximity.RemoveAll((p) => p == x.GetComponent<Item>()); });
