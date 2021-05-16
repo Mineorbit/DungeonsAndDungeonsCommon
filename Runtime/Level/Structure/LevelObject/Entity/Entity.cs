@@ -23,6 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent onDespawnEvent = new UnityEvent();
 
+        public UnityEvent<Vector3> onTeleportEvent = new UnityEvent<Vector3>();
+
         public new EntityNetworkHandler levelObjectNetworkHandler;
 
         public EntityController controller;
@@ -114,7 +116,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             alive = true;
             gameObject.SetActive(true);
             Debug.Log("Spawning "+this+" at "+location);
-            transform.position = location;
+            Teleport(location);
             transform.rotation = rotation;
             controller.OnSpawn(location);
             onSpawnEvent.Invoke(location);
@@ -129,6 +131,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.position = new Vector3(0,0,0);
             transform.rotation = new Quaternion(0,0,0,0);
             onDespawnEvent.Invoke();
+        }
+
+
+        public void Teleport(Vector3 position)
+        {
+            transform.position = position;
+            onTeleportEvent.Invoke(position);
         }
 
 
