@@ -95,6 +95,12 @@ public class PlayerManager : MonoBehaviour
     }
 
 
+
+    public static Player GetPlayerById(int localId)
+    {
+            return playerManager.players[localId];
+    }
+
     public void Add(int freeLocalId, string name, bool local)
     {
         Vector3 position = GetSpawnLocation(freeLocalId);
