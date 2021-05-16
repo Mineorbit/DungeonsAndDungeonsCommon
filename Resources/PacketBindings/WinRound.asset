@@ -110,4 +110,4 @@ MonoBehaviour:
   HandlerType: com.mineorbit.dungeonsanddungeonscommon.NetworkManagerHandler
   BindedMethods:
   - WinRound
-  withIdentity: 1
+  withIdentity: 0
