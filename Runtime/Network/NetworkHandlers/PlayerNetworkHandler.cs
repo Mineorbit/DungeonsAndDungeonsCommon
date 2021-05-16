@@ -54,7 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
-            if(enabled)
+            if(Level.instantiateType == Level.InstantiateType.Play)
             RequestRemoval();
         }
 

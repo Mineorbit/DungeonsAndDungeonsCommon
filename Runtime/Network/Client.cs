@@ -176,20 +176,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log("Going to Processing: " + p);
 
-            UnityAction processPacket = null;
-            if (packetType == typeof(MeDisconnect))
+            UnityAction processPacket = () =>
             {
-                processPacket = () => {
-                    Disconnect(respond: false);
-                };
-            }
-            else
-            {
-                processPacket = () =>
-                {
-                    NetworkHandler.UnMarshall(p);
-                };
-            }
+            NetworkHandler.UnMarshall(p);
+            };
 
             Thread handleThread = new Thread(new ThreadStart(processPacket));
             handleThread.IsBackground = true;
