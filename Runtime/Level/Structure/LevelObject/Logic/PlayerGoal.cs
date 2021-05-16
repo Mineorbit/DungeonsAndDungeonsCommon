@@ -35,11 +35,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             int p = PlayerManager.GetPlayerId(other);
             if (p >= 0) playersInside[p] = true;
+            CheckWinCondition();
+        }
+
+        void CheckWinCondition()
+        {
+            if(Level.instantiateType == Level.InstantiateType.Test || Level.instantiateType == Level.InstantiateType.Play)
+            { 
             for (int i = 0; i < 4; i++)
             {
                 if (PlayerManager.GetPlayerById(i) && !playersInside[i]) return;
             }
             GameWinEvent.Invoke();
+            }
         }
 
         void Exit(GameObject other)
