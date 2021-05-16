@@ -62,9 +62,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
 
-            Debug.Log("TEST1");
 
-            onAttackEvent.AddListener((x)=> { Counter(x); });
+            onHitEvent.AddListener((x)=> { Counter(x); });
             rand = new System.Random();
             viewDistance = 5;
 

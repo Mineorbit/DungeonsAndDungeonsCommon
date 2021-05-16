@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             observed.onSpawnEvent.AddListener(Teleport);
             observed.onSpawnEvent.AddListener((x) => { UpdateState(); });
-            observed.onHitEvent.AddListener(() => { UpdateState(); });
+            observed.onHitEvent.AddListener((x) => { UpdateState(); });
             observed.onDespawnEvent.AddListener(()=> { Teleport(new Vector3(0, 0, 0)); });
             observed.onDespawnEvent.AddListener(() => { UpdateState(); });
         }
