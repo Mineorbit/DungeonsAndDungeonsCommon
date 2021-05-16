@@ -111,11 +111,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(Connected)
             { 
+            
             if(respond)
             {
                 MeDisconnect meDisconnect = new MeDisconnect();
                 WritePacket(typeof(NetworkManagerHandler),meDisconnect);
             }
+
+            UpdateOut();
             Debug.Log("Client "+localid+" disconnected");
             Connected = false;
             }
