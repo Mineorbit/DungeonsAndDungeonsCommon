@@ -37,7 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (p >= 0) playersInside[p] = true;
             for (int i = 0; i < 4; i++)
             {
-                if (!playersInside[i]) return;
+                if (PlayerManager.GetPlayerById(i) && !playersInside[i]) return;
             }
             GameWinEvent.Invoke();
         }
