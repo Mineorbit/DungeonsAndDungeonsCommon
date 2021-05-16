@@ -102,6 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(isConnected)
             { 
                 isConnected = false;
+                if(client != null)
                 client.Disconnect(respond: respond);
                 disconnectEvent.Invoke();
             }
