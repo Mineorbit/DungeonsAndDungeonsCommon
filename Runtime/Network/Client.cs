@@ -114,7 +114,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(respond)
             {
                 MeDisconnect meDisconnect = new MeDisconnect();
-                WritePacket(meDisconnect);
+                WritePacket(typeof(NetworkManagerHandler),meDisconnect);
             }
             MainCaller.Do(() => { PlayerManager.playerManager.Remove(localid); });
             tcpStream.Close();
@@ -276,7 +276,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
-        
+        public void WritePacket(Type handler,IMessage message, bool TCP = true)
+        {
+            General.Packet p = null;
+            if (message.GetType() != typeof(Packet))
+            {
+                p = new General.Packet
+                {
+                    Type = message.GetType().ToString(),
+                    Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                    Handler = handler.FullName
+                };
+            }
+            else
+            {
+                p = (Packet)message;
+            }
+            WritePacket(p, TCP: TCP);
+
+        }
+
 
         async Task<byte[]> ReadData(bool TCP = true)
         {
