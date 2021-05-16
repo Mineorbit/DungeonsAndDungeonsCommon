@@ -60,5 +60,11 @@ public class NetworkManagerHandler : NetworkHandler
                 PlayerManager.acceptInput = true;
             });
         }
+
+        [PacketBinding.Binding]
+        public static void WinRound(Packet p)
+        {
+            MainCaller.Do(() => { Debug.Log("YOU WIN"); });
+        }
     }
 }
