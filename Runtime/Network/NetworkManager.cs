@@ -50,28 +50,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        static Action onConnectAction;
         public void Connect(string ip, string playerName, Action onConnect)
         {
             if(!isConnected)
-            { 
+            {
+            onConnectAction = onConnect;
             userName = playerName;
             Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse(ip), 13565));
-
-
-
-                t.Wait();
-
-                client = t.Result;
-                localId = client.localid;
-                isConnected = true;
-                SetNetworkHandlers(isConnected);
-                onConnect.Invoke();
-
+            client = t.Result;
+                client.onConnectEvent.AddListener(OnConnected);
+                
 
                 //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
 
             }
 
+        }
+
+        public  void OnConnected(int id)
+        {
+            localId = id;
+            isConnected = true;
+            SetNetworkHandlers(isConnected);
+            onConnectAction.Invoke();
         }
 
         void SetNetworkHandlers(bool v)

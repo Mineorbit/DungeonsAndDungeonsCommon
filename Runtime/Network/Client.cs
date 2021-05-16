@@ -367,6 +367,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
+
+
             Task.Run(async () => { await StartHandle(); });
         }
 
