@@ -85,7 +85,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Disconnect();
         }
 
-        
+
+
+        bool realClosed = false;
 
         public static async Task<Client> Connect(IPAddress host, int port)
         {
@@ -124,16 +126,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-
         void CloseConnection()
         {
-            if(packetOutUDPBuffer.Count == 0 && packetOutTCPBuffer.Count == 0 && packetInBuffer.Count == 0)
+            if(packetOutUDPBuffer.Count == 0 && packetOutTCPBuffer.Count == 0 && packetInBuffer.Count == 0 && ! realClosed)
             { 
             tcpStream.Close();
             tcpClient.Close();
             udpClient.Close();
             onDisconnectEvent.Invoke();
             disconnected.SetResult(true);
+            realClosed = true;
             }
         }
 
