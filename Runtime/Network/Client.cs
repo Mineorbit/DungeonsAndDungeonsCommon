@@ -116,14 +116,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 MeDisconnect meDisconnect = new MeDisconnect();
                 WritePacket(typeof(NetworkManagerHandler),meDisconnect);
             }
-            MainCaller.Do(() => { PlayerManager.playerManager.Remove(localid); });
-            tcpStream.Close();
-            tcpClient.Close();
-            udpClient.Close();
             Debug.Log("We disconnected");
             onDisconnectEvent.Invoke();
             Connected = false;
             disconnected.SetResult(true);
+            }
+        }
+
+
+        void CloseConnection()
+        {
+            if(packetOutUDPBuffer.Count == 0 && packetOutTCPBuffer.Count == 0 && packetInBuffer.Count == 0)
+            { 
+            tcpStream.Close();
+            tcpClient.Close();
+            udpClient.Close();
             }
         }
 
@@ -153,6 +160,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             UpdateOut();
             UpdateIn();
+            if(!Connected)
+            {
+                CloseConnection();
+            }
         }
 
         void UpdateIn()
@@ -171,6 +182,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void HandlePacket(Packet p)
         {
+
+            Debug.Log("Handling "+p);
+
             Type packetType = Type.GetType(p.Type);
 
 
@@ -246,6 +260,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void WritePacket(Packet p, bool TCP = true)
         {
+            if(Connected)
+            { 
             p.Sender = localid;
             UnityEngine.Debug.Log("Sending: "+p+" TCP: "+TCP);
             if(TCP)
@@ -256,44 +272,44 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 packetOutUDPBuffer.Enqueue(p);
             }
+            }
         }
 
         public void WritePacket(IMessage message,bool TCP = true)
         {
-            General.Packet p = null;
-            if (message.GetType() != typeof(Packet))
-            { 
-                p = new General.Packet
-                {
-                Type = message.GetType().ToString(),
-                Content = Google.Protobuf.WellKnownTypes.Any.Pack(message)
-                };
-            }else
-            {
-                p = (Packet) message;
-            }
-            WritePacket(p,TCP: TCP);
-
+            WritePacket(null,message,TCP: TCP);
         }
 
         public void WritePacket(Type handler,IMessage message, bool TCP = true)
         {
+            
             General.Packet p = null;
             if (message.GetType() != typeof(Packet))
             {
-                p = new General.Packet
+                if (handler == null)
                 {
-                    Type = message.GetType().ToString(),
-                    Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
-                    Handler = handler.FullName
-                };
+                    p = new General.Packet
+                    {
+                        Type = message.GetType().ToString(),
+                        Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                    };
+                }
+                else
+                {
+                    p = new General.Packet
+                    {
+                        Type = message.GetType().ToString(),
+                        Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                        Handler = handler.FullName
+                    };
+                }
+                    
             }
             else
             {
                 p = (Packet)message;
             }
             WritePacket(p, TCP: TCP);
-
         }
 
 
@@ -466,11 +482,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             PacketCarrier packetCarrier = General.PacketCarrier.Parser.ParseFrom(data);
-            
-            foreach( Packet packet in packetCarrier.Packets)
-            {
-                packetInBuffer.Enqueue(packet);
-            }
+
+            if (Connected)
+                foreach ( Packet packet in packetCarrier.Packets)
+                {
+                    packetInBuffer.Enqueue(packet);
+                }
             
             //Processing needed
 
