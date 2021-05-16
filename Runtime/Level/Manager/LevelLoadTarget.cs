@@ -60,7 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void WaitForChunkLoaded(Vector3 position)
+        public void WaitForChunkLoaded(Vector3 position, Action finishAction)
         {
             MainCaller.Do(() => {
             Debug.Log("Started WAITING");
@@ -83,6 +83,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log("Finished Loading");
             target = store;
+
+            MainCaller.Do(finishAction);
             });
         }
 
