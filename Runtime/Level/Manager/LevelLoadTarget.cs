@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void LoadNearChunk(Vector3 position)
+        public void LoadNearChunk(Vector3 position, bool immediate = false)
         {
             if (LevelManager.currentLevel != null)
             {
@@ -51,7 +51,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     ChunkData chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position, createIfNotThere: true));
                     if (chunkData != null)
                     {
+                        if(immediate)
+                        {
+                            Invoke(StreamChunkImmediateIntoCurrentLevelFrom, chunkData);
+                        }
+                        else
+                        { 
                         Invoke(StreamChunkIntoCurrentLevelFrom,chunkData);
+                        }
+
                         loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                     }
                 }
@@ -63,15 +71,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void WaitForChunkLoaded(Vector3 position, Action finishAction)
         {
             MainCaller.Do(() => {
-            Debug.Log("Started WAITING");
-            Transform store = target;
-            target = null;
-            transform.position = position;
-            long id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
-
-            Debug.Log("ID: "+id);
-
-            Debug.Log("Started WAITING");
+                Debug.Log("Started WAITING");
+                Transform store = target;
+                target = null;
+                transform.position = position;
+                long id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
+                Debug.Log("Loading immediately Chunk ID: " + id);
+                LoadNearChunk(position,immediate: true);
                 Task.Run(async () =>
                 {
                     while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(id) || !ChunkManager.instance.chunkLoaded[id])
@@ -88,7 +94,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
-
+        public void StreamChunkImmediateIntoCurrentLevelFrom(ChunkData chunkData)
+        {
+            Debug.Log("Streaming Chunk " + chunkData.chunkId);
+            ChunkManager.LoadChunk(chunkData, immediate: true);
+        }
 
         public void StreamChunkIntoCurrentLevelFrom(ChunkData chunkData)
         {
