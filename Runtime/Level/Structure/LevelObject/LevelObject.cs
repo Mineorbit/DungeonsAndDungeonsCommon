@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelObject : MonoBehaviour
     {
-
         public string levelObjectDataType;
 
-		bool initialized = false;
+        public bool isDynamic;
 
-        public bool isDynamic = false;
+        public bool ActivateWhenInactive;
 
-        public bool ActivateWhenInactive = false;
+        private bool initialized;
 
         // Initializes a LevelObject to its original state
         // It must be assured that this also resets a LevelObject to its Initial State in the Level (If Static that is  self explanatory, might cause
@@ -24,20 +22,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void OnDeInit()
         {
-			initialized = false;
+            initialized = false;
         }
 
-        public virtual void  OnStartRound()
+        public virtual void OnStartRound()
         {
-
         }
 
         public virtual void OnEndRound()
         {
-
         }
-
-
-        
     }
 }

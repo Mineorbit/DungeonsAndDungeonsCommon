@@ -1,34 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class Sword : Item
     {
-        public UnityEngine.Object hitboxPrefab;
-
-        Hitbox hitBox;
-
-        int damage = 20;
-
-
-        Vector3 lastPosition = new Vector3(0, 0, 0);
+        public Object hitboxPrefab;
 
         public ParticleSystem effectSystem;
 
-        float effectThreshhold = 0.05f;
-
         public UnityEvent onHitEvent = new UnityEvent();
 
-        void Start()
+        private bool block;
+
+        private readonly int damage = 20;
+
+        private float effectThreshhold = 0.05f;
+
+        private Hitbox hitBox;
+
+
+        private Vector3 lastPosition = new Vector3(0, 0, 0);
+
+        private readonly float whipeTime = 0.02f;
+
+        private void Start()
         {
             lastPosition = transform.position;
         }
 
-        float whipeTime = 0.02f;
+
+        public void OnDestroy()
+        {
+            Debug.Log("I am being destroyed");
+            if (hitBox != null)
+                Destroy(hitBox.gameObject);
+        }
 
         public override void OnAttach()
         {
@@ -39,38 +46,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitBox.Attach(owner.transform.Find("Model").gameObject, "Enemy", new Vector3(0, 0, -2));
             hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
 
-            hitBox.enterEvent.AddListener((x) => { TryDamage(x); });
+            hitBox.enterEvent.AddListener(x => { TryDamage(x); });
             hitBox.Deactivate();
         }
 
-        bool block = false;
         public override void Use()
         {
-            if(!block)
+            if (!block)
             {
-            block = true;
-            base.Use();
+                block = true;
+                base.Use();
 
-            owner.baseAnimator.Strike();
-            hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
-            hitBox.Activate();
+                owner.baseAnimator.Strike();
+                hitBox.transform.localEulerAngles = new Vector3(0, 135, 90);
+                hitBox.Activate();
 
-            // factor out just like audio component
-            effectSystem.Play();
-            TimerManager.StartTimer(whipeTime,()=> { effectSystem.Stop(); });
+                // factor out just like audio component
+                effectSystem.Play();
+                TimerManager.StartTimer(whipeTime, () => { effectSystem.Stop(); });
             }
         }
 
-        
 
-
-        void TryDamage(GameObject g)
+        private void TryDamage(GameObject g)
         {
-            Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
+            var c = g.GetComponentInParent<Entity>(true);
             if (c != null)
             {
                 onHitEvent.Invoke();
-                c.Hit(this.owner,damage);
+                c.Hit(owner, damage);
             }
         }
 
@@ -86,15 +90,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnDettach()
         {
             base.OnDettach();
-            if(hitBox != null)
-            Destroy(hitBox.gameObject);
-
-        }
-
-
-        public void OnDestroy()
-        {
-            Debug.Log("I am being destroyed");
             if (hitBox != null)
                 Destroy(hitBox.gameObject);
         }

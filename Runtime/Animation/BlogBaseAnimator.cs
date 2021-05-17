@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,37 +5,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class BlogBaseAnimator : EntityBaseAnimator
     {
-        Animator animator;
         public float speed;
 
         public Transform target;
-        Vector3 targetInterpolation;
 
         public UnityEvent attackEvent;
         public UnityEvent endAttackEvent;
+        private Animator animator;
+        private Vector3 targetInterpolation;
 
-        void Start()
+        private void Start()
         {
             targetInterpolation = transform.parent.forward;
             attackEvent = new UnityEvent();
             endAttackEvent = new UnityEvent();
         }
 
-        void Update()
+        private void Update()
         {
             if (animator != null)
                 animator.SetFloat("Speed", speed);
 
-            Vector3 targetDirection = new Vector3(0,0,0);
+            var targetDirection = new Vector3(0, 0, 0);
 
-            if(target == null)
-            {
-
+            if (target == null)
                 targetDirection = transform.parent.forward;
-            }else
-            {
+            else
                 targetDirection = target.transform.position - transform.parent.position;
-            }
 
             LookInDirection(targetDirection);
         }
@@ -47,10 +41,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             targetInterpolation = (targetInterpolation + dir) / 2;
 
-            float angle =  (180 / Mathf.PI) * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
+            var angle = 180 / Mathf.PI * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
 
             transform.eulerAngles = new Vector3(0, angle, 0);
-
         }
 
         /*

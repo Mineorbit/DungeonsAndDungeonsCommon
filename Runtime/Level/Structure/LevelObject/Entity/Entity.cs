@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent<Entity> onHitEvent = new UnityEvent<Entity>();
 
 
-        public UnityEvent<Vector3> onSpawnEvent =  new UnityEvent<Vector3>();
+        public UnityEvent<Vector3> onSpawnEvent = new UnityEvent<Vector3>();
 
         public UnityEvent onDespawnEvent = new UnityEvent();
 
@@ -29,9 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public EntityController controller;
 
-        public bool invincible = false;
-
-        ItemHandle handle;
+        public bool invincible;
 
         public LevelLoadTarget loadTarget;
 
@@ -39,18 +37,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public List<Item> itemsInProximity = new List<Item>();
 
+        private ItemHandle handle;
 
 
-        // this needs to be prettier
-        public virtual void Update()
-        {
-            
-
-            if(transform.position.y < -8)
-            {
-                Invoke(Kill);
-            }
-        }
+        private bool hitCooldown;
 
         public virtual void Start()
         {
@@ -58,9 +48,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        // this needs to be prettier
+        public virtual void Update()
+        {
+            if (transform.position.y < -8) Invoke(Kill);
+        }
 
 
-        void SetupItems()
+        private void SetupItems()
         {
             // Temporary
             itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
@@ -68,25 +63,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (itemHitbox != null)
             {
-            Debug.Log("ITEM HITBOX for "+this);
-            itemHitbox.Attach("Item");
-            itemHitbox.enterEvent.AddListener((x) => { Debug.Log("HANLOOOO :D"); Item i = x.GetComponent<Item>(); if (!itemsInProximity.Contains(i)) itemsInProximity.Add(i); });
-            itemHitbox.exitEvent.AddListener((x) => { Debug.Log(x.name); itemsInProximity.RemoveAll((p) => p == x.GetComponent<Item>()); });
-            }else
+                Debug.Log("ITEM HITBOX for " + this);
+                itemHitbox.Attach("Item");
+                itemHitbox.enterEvent.AddListener(x =>
+                {
+                    Debug.Log("HANLOOOO :D");
+                    var i = x.GetComponent<Item>();
+                    if (!itemsInProximity.Contains(i)) itemsInProximity.Add(i);
+                });
+                itemHitbox.exitEvent.AddListener(x =>
+                {
+                    Debug.Log(x.name);
+                    itemsInProximity.RemoveAll(p => p == x.GetComponent<Item>());
+                });
+            }
+            else
             {
-                Debug.Log(this+" has no ItemHitBox");
+                Debug.Log(this + " has no ItemHitBox");
             }
         }
 
-
-
-        bool hitCooldown = false;
-
-        IEnumerator HitTimer(float time)
+        private IEnumerator HitTimer(float time)
         {
             yield return new WaitForSeconds(time);
             hitCooldown = false;
-            Invoke(setMovementStatus,true);
+            Invoke(setMovementStatus, true);
         }
 
         public virtual void setMovementStatus(bool allowedToMove)
@@ -104,18 +105,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void StartHitCooldown()
+        private void StartHitCooldown()
         {
             hitCooldown = true;
             StartCoroutine(HitTimer(1.5f));
         }
+
         //EVENTS ALWAYS LAST
         public virtual void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
         {
             health = 100;
             alive = true;
             gameObject.SetActive(true);
-            Debug.Log("Spawning "+this+" at "+location);
+            Debug.Log("Spawning " + this + " at " + location);
             Teleport(location);
             transform.rotation = rotation;
             controller.OnSpawn(location);
@@ -128,8 +130,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             alive = false;
             gameObject.SetActive(false);
             Debug.Log("Despawning " + this);
-            transform.position = new Vector3(0,0,0);
-            transform.rotation = new Quaternion(0,0,0,0);
+            transform.position = new Vector3(0, 0, 0);
+            transform.rotation = new Quaternion(0, 0, 0, 0);
             onDespawnEvent.Invoke();
         }
 
@@ -146,29 +148,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             baseAnimator.Hit();
         }
 
-        public virtual void Hit(Entity hitter,int damage)
+        public virtual void Hit(Entity hitter, int damage)
         {
-
             Invoke(HitEffect);
 
 
-            if (Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test)
-            {
+            if (Level.instantiateType == Level.InstantiateType.Play ||
+                Level.instantiateType == Level.InstantiateType.Test)
                 if (!invincible && !hitCooldown)
                 {
-                onHitEvent.Invoke(hitter);
-                Invoke(setMovementStatus,false);
-                StartHitCooldown();
-                Debug.Log(hitter.gameObject.name+" HIT "+this.gameObject.name+" AND CAUSED "+damage+" HP DAMAGE");
-                health = health - damage;
-                
-                if (health <= 0)
-                {
-                    Invoke(Kill);
-                }
+                    onHitEvent.Invoke(hitter);
+                    Invoke(setMovementStatus, false);
+                    StartHitCooldown();
+                    Debug.Log(hitter.gameObject.name + " HIT " + gameObject.name + " AND CAUSED " + damage +
+                              " HP DAMAGE");
+                    health = health - damage;
+
+                    if (health <= 0) Invoke(Kill);
                     //FreezeFramer.freeze(0.0075f);
                 }
-            }
         }
 
         public virtual void Kill()

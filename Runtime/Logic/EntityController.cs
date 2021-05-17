@@ -1,35 +1,30 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class EntityController : MonoBehaviour
     {
-        bool dirty;
-        Vector3 positionUpdate;
-
         public Vector3 controllerPosition;
+        private bool dirty;
+        private Vector3 positionUpdate;
+
         public virtual void Start()
         {
             controllerPosition = transform.position;
         }
 
-        public void OnSpawn(Vector3 location)
-        {
-            controllerPosition = location;
-        }
-
         public virtual void Update()
         {
-            if(dirty)
+            if (dirty)
             {
                 controllerPosition = positionUpdate;
                 dirty = false;
             }
+        }
+
+        public void OnSpawn(Vector3 location)
+        {
+            controllerPosition = location;
         }
 
         public void UpdatePosition(Vector3 position)

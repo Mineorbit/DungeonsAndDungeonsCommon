@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using Google.Protobuf;
+using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -16,10 +16,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static ChunkData FromChunk(Chunk c)
         {
-            ChunkData chunkData = new ChunkData();
+            var chunkData = new ChunkData();
             chunkData.chunkId = c.chunkId;
-            List<LevelObject> levelObjectsOfChunk = c.GetComponentsInChildren<LevelObject>(includeInactive: true).ToList();
-            List<LevelObjectInstanceData> levelObjectInstanceData = levelObjectsOfChunk.Select((x)=> { return (LevelObjectInstanceData) LevelObjectInstanceData.FromInstance(x as dynamic); }).ToList();
+            var levelObjectsOfChunk = c.GetComponentsInChildren<LevelObject>(true).ToList();
+            var levelObjectInstanceData = levelObjectsOfChunk.Select(x =>
+            {
+                return (LevelObjectInstanceData) LevelObjectInstanceData.FromInstance(x as dynamic);
+            }).ToList();
             chunkData.levelObjects = levelObjectInstanceData;
 
             return chunkData;
@@ -27,37 +30,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static NetLevel.ChunkData ToNetData(ChunkData inData)
         {
-
-            MemoryStream memoryStream = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
+            var memoryStream = new MemoryStream();
+            var bf = new BinaryFormatter();
             bf.Serialize(memoryStream, inData);
             memoryStream.Position = 0;
             Debug.Log("Length to send: " + memoryStream.Length);
-            NetLevel.ChunkData chunkData = new NetLevel.ChunkData
+            var chunkData = new NetLevel.ChunkData
             {
                 ChunkId = inData.chunkId,
-                Data = Google.Protobuf.ByteString.FromStream(memoryStream)
+                Data = ByteString.FromStream(memoryStream)
             };
             return chunkData;
         }
 
         public static ChunkData FromNetData(NetLevel.ChunkData netChunkData)
         {
-            ChunkData outData = new ChunkData();
+            var outData = new ChunkData();
             Debug.Log("DATEN: " + netChunkData.Data.ToByteArray().Length);
-            MemoryStream memoryStream = new MemoryStream(netChunkData.Data.ToByteArray());
+            var memoryStream = new MemoryStream(netChunkData.Data.ToByteArray());
             memoryStream.Position = 0;
-            BinaryFormatter bf = new BinaryFormatter();
+            var bf = new BinaryFormatter();
             return (ChunkData) bf.Deserialize(memoryStream);
         }
 
         public string ToString()
         {
-            string r = "Chunk: "+chunkId;
-            foreach(LevelObjectInstanceData d in levelObjects)
-            {
-                r += "\n"+d.ToString();
-            }
+            var r = "Chunk: " + chunkId;
+            foreach (var d in levelObjects) r += "\n" + d;
             return r;
         }
     }

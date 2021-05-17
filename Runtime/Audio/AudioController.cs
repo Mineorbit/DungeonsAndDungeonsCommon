@@ -1,32 +1,29 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class AudioController : MonoBehaviour
     {
-
-
-
         public AudioProfile[] audioProfiles;
-        AudioSource[][] audioSources;
-        int[] currentPlay;
-        void Awake()
+        private AudioSource[][] audioSources;
+        private int[] currentPlay;
+
+        private void Awake()
         {
             audioSources = new AudioSource[audioProfiles.Length][];
             SetupAudioProfiles();
         }
 
-        void SetupAudioProfiles()
+        private void SetupAudioProfiles()
         {
-            int j = 0;
+            var j = 0;
             currentPlay = new int[audioProfiles.Length];
-            foreach (AudioProfile ap in audioProfiles)
+            foreach (var ap in audioProfiles)
             {
                 audioSources[j] = new AudioSource[ap.audioClip.Length];
-                int i = 0;
-                foreach (AudioClip c in ap.audioClip)
+                var i = 0;
+                foreach (var c in ap.audioClip)
                 {
                     audioSources[j][i] = transform.gameObject.AddComponent<AudioSource>();
                     audioSources[j][i].loop = ap.loop;
@@ -37,18 +34,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     audioSources[j][i].clip = ap.audioClip[i];
                     i++;
                 }
+
                 j++;
             }
         }
 
 
-
         public void Blend(int index, float t)
         {
-            audioSources[index][currentPlay[index]].volume = audioProfiles[index].VolumeCoefficient() * ((1 - t) * audioProfiles[index].minVolume + t * audioProfiles[index].maxVolume);
+            audioSources[index][currentPlay[index]].volume = audioProfiles[index].VolumeCoefficient() *
+                                                             ((1 - t) * audioProfiles[index].minVolume +
+                                                              t * audioProfiles[index].maxVolume);
         }
 
-        IEnumerator CrossFader(int indexA, int indexB, float time)
+        private IEnumerator CrossFader(int indexA, int indexB, float time)
         {
             float t = 0;
 
@@ -58,13 +57,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (t < time)
             {
                 t += Time.deltaTime;
-                float fraction = t / time;
+                var fraction = t / time;
 
                 Blend(indexA, 1 - fraction);
                 Blend(indexB, fraction);
 
                 yield return 0;
-
             }
 
             Blend(indexA, 0);
@@ -75,45 +73,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void CrossFade(int indexA, int indexB, float timeForFade)
         {
-            IEnumerator fader = CrossFader(indexA, indexB, timeForFade);
+            var fader = CrossFader(indexA, indexB, timeForFade);
             StartCoroutine(fader);
         }
 
 
-        void prePlay(int index)
+        private void prePlay(int index)
         {
             //Prüfen ob schon läuft
             audioSources[index][currentPlay[index]].mute = false;
         }
+
         public void Play(int index)
         {
             prePlay(index);
-            if (!audioSources[index][currentPlay[index]].isPlaying)
-            {
-                audioSources[index][currentPlay[index]].Play();
-            }
+            if (!audioSources[index][currentPlay[index]].isPlaying) audioSources[index][currentPlay[index]].Play();
         }
+
         public void PlayNext(int index)
         {
             prePlay(index);
-            int nextPlay = (currentPlay[index] + 1) % (audioSources[index].Length);
-            bool clipFinished = audioSources[index][currentPlay[index]].time >= audioSources[index][currentPlay[index]].clip.length;
-            if (!audioSources[index][currentPlay[index]].isPlaying && (clipFinished))
+            var nextPlay = (currentPlay[index] + 1) % audioSources[index].Length;
+            var clipFinished = audioSources[index][currentPlay[index]].time >=
+                               audioSources[index][currentPlay[index]].clip.length;
+            if (!audioSources[index][currentPlay[index]].isPlaying && clipFinished)
             {
-
                 audioSources[index][currentPlay[index]].Stop();
                 audioSources[index][nextPlay].Play();
             }
 
-            if (audioSources[index][currentPlay[index]].isPlaying && (clipFinished))
-            {
-
+            if (audioSources[index][currentPlay[index]].isPlaying && clipFinished)
                 if (audioProfiles[index].overloading)
-                {
                     audioSources[index][nextPlay].Play();
-                }
-
-            }
             currentPlay[index] = nextPlay;
         }
 
@@ -130,19 +121,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             */
         }
+
         public void StopAll(int index)
         {
-            foreach (AudioSource source in audioSources[index])
+            foreach (var source in audioSources[index])
                 source.Stop();
         }
+
         public void StopAll()
         {
-            foreach (AudioSource[] sources in audioSources)
-            {
-                foreach (AudioSource source in sources)
-                    source.Stop();
-            }
+            foreach (var sources in audioSources)
+            foreach (var source in sources)
+                source.Stop();
         }
-
     }
 }

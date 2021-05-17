@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class PressurePad : InteractiveLevelObject
     {
         public Hitbox playerStandinghitbox;
@@ -13,12 +9,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool returnToUnpress;
 
-        bool pressed = false;
-
         public float unpressTime = 5f;
-        TimerManager.Timer unpressTimer;
 
         public ButtonBaseAnimator buttonBaseAnimator;
+
+        private bool pressed;
+        private TimerManager.Timer unpressTimer;
+
+
+        // Update is called once per frame
+        private void Update()
+        {
+        }
 
         public override void OnInit()
         {
@@ -32,10 +34,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buildCollider.enabled = false;
             playerStandinghitbox.Attach("Player");
 
-            playerStandinghitbox.enterEvent.AddListener((x) => { TimerManager.StopTimer(unpressTimer); if(!pressed) Invoke(Activate); });
-            playerStandinghitbox.exitEvent.AddListener((x) => { StartUnpress(); });
-
-
+            playerStandinghitbox.enterEvent.AddListener(x =>
+            {
+                TimerManager.StopTimer(unpressTimer);
+                if (!pressed) Invoke(Activate);
+            });
+            playerStandinghitbox.exitEvent.AddListener(x => { StartUnpress(); });
         }
 
         public override void OnEndRound()
@@ -47,7 +51,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Activate()
         {
-            if(!pressed)
+            if (!pressed)
             {
                 pressed = true;
                 base.Activate();
@@ -65,31 +69,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buttonBaseAnimator.Unpress();
         }
 
-        void StartUnpress()
+        private void StartUnpress()
         {
             if (returnToUnpress && !TimerManager.isRunning(unpressTimer))
-                unpressTimer = TimerManager.StartTimer(unpressTime, ()=> { Invoke(Deactivate); });
+                unpressTimer = TimerManager.StartTimer(unpressTime, () => { Invoke(Deactivate); });
         }
-        
+
 
         public override void Deactivate()
         {
-            if(returnToUnpress)
-            { 
-                if(pressed)
+            if (returnToUnpress)
+                if (pressed)
                 {
                     pressed = false;
                     base.Deactivate();
                     AnimUnpress();
                 }
-            }
-        }
-
-        
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 }

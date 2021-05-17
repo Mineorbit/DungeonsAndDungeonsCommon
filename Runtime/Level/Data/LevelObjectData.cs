@@ -1,25 +1,22 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections.Generic;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/LevelObjectData", order = 1)]
     public class LevelObjectData : Instantiable
     {
-
-
         public string uniqueLevelObjectId;
 
         public float granularity;
 
         public string name;
-		
-		public bool dynamicInstantiable;
-		
-		public bool levelInstantiable;
+
+        public bool dynamicInstantiable;
+
+        public bool levelInstantiable;
 
         public bool ActivateWhenInactive;
 
@@ -31,49 +28,41 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 cursorOffset;
         public Vector3 cursorRotation;
 
-        void OnValidate()
+        private void OnValidate()
         {
 #if UNITY_EDITOR
-            if(uniqueLevelObjectId == "")
+            if (uniqueLevelObjectId == "")
             {
-            uniqueLevelObjectId = System.Guid.NewGuid().ToString();
-            UnityEditor.EditorUtility.SetDirty(this);
+                uniqueLevelObjectId = Guid.NewGuid().ToString();
+                EditorUtility.SetDirty(this);
             }
-            if(Buildable) levelInstantiable = true;
 
-            if(cursorScale == Vector3.zero)
-            {
-            cursorScale = new Vector3(1,1,1);
-            }
+            if (Buildable) levelInstantiable = true;
+
+            if (cursorScale == Vector3.zero) cursorScale = new Vector3(1, 1, 1);
 #endif
         }
 
         public static LevelObjectData[] GetAllBuildable()
         {
-            List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
+            var data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
             return data.FindAll(x => x.Buildable).ToArray();
         }
 
         public static Dictionary<string, LevelObjectData> GetAllByUniqueType()
         {
-            List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
-            Dictionary<string, LevelObjectData> dict = new Dictionary<string, LevelObjectData>();
-            foreach (LevelObjectData objectData in data)
-            {
-                dict.Add(objectData.uniqueLevelObjectId, objectData);
-            }
+            var data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
+            var dict = new Dictionary<string, LevelObjectData>();
+            foreach (var objectData in data) dict.Add(objectData.uniqueLevelObjectId, objectData);
             return dict;
         }
 
-        public static Dictionary<string,LevelObjectData> GetAllBuildableByUniqueType()
+        public static Dictionary<string, LevelObjectData> GetAllBuildableByUniqueType()
         {
-            List<LevelObjectData> data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
+            var data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
             data = data.FindAll(x => x.Buildable);
-            Dictionary<string, LevelObjectData> dict = new Dictionary<string, LevelObjectData>();
-            foreach(LevelObjectData objectData in data)
-            {
-                dict.Add(objectData.uniqueLevelObjectId,objectData);
-            }
+            var dict = new Dictionary<string, LevelObjectData>();
+            foreach (var objectData in data) dict.Add(objectData.uniqueLevelObjectId, objectData);
             return dict;
         }
 
@@ -85,14 +74,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override GameObject Create(Vector3 location, Quaternion rotation, Transform parent)
         {
-
-            GameObject g = base.Create(location, rotation, parent);
-            LevelObject lO = g.GetComponent<LevelObject>();
+            var g = base.Create(location, rotation, parent);
+            var lO = g.GetComponent<LevelObject>();
             lO.levelObjectDataType = uniqueLevelObjectId;
             lO.OnInit();
             return g;
         }
-
     }
-
 }

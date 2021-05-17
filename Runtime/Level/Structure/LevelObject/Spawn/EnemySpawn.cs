@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -10,37 +8,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Vector3 spawnOffset;
 
-        GameObject spawnedEnemy;
+        private readonly int maxSpawnCount = 1;
 
-        int maxSpawnCount = 1;
+        private int spawnCount = 1;
 
-        int spawnCount = 1;
-
-        public override void OnStartRound()
-        {
-            Setup();
-        }
-
-        public override void OnEndRound()
-        {
-
-            SetCollider();
-        }
-
-
-        void SetCollider()
-        {
-            bool full_collider = Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test || Level.instantiateType == Level.InstantiateType.Online;
-            GetComponent<Collider>().enabled = !full_collider;
-            GetComponent<Collider>().isTrigger = full_collider;
-        }
-
-        void Setup()
-        {
-            spawnCount = maxSpawnCount;
-            SetCollider();
-            SpawnEnemy();
-        }
+        private GameObject spawnedEnemy;
 
         //Change to on remove
 
@@ -49,15 +21,40 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RemoveSpawnedEnemy();
         }
 
+        public override void OnStartRound()
+        {
+            Setup();
+        }
 
-        void RemoveSpawnedEnemy()
+        public override void OnEndRound()
+        {
+            SetCollider();
+        }
+
+
+        private void SetCollider()
+        {
+            var full_collider = Level.instantiateType == Level.InstantiateType.Play ||
+                                Level.instantiateType == Level.InstantiateType.Test ||
+                                Level.instantiateType == Level.InstantiateType.Online;
+            GetComponent<Collider>().enabled = !full_collider;
+            GetComponent<Collider>().isTrigger = full_collider;
+        }
+
+        private void Setup()
+        {
+            spawnCount = maxSpawnCount;
+            SetCollider();
+            SpawnEnemy();
+        }
+
+
+        private void RemoveSpawnedEnemy()
         {
             Debug.Log("Trying to Remove");
 
             if (spawnedEnemy != null)
-            {
-                LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>(),physics: false);
-            }
+                LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>(), false);
         }
 
         public override void OnInit()
@@ -73,35 +70,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetCollider();
         }
 
-        Vector3 SpawnLocation()
+        private Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;
         }
 
-        Quaternion SpawnRotation()
+        private Quaternion SpawnRotation()
         {
-
-            Debug.Log(" Set Rotation to "+transform.rotation.eulerAngles);
+            Debug.Log(" Set Rotation to " + transform.rotation.eulerAngles);
             return transform.rotation;
         }
 
         public void SpawnEnemy()
         {
-            if(!(Level.instantiateType == Level.InstantiateType.Online))
-            { 
-            if (spawnedEnemy == null)
+            if (!(Level.instantiateType == Level.InstantiateType.Online))
             {
-                Vector3 spawnLocation = SpawnLocation();
-                Quaternion spawnRotation = SpawnRotation();
-                spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, spawnLocation, spawnRotation);
-                spawnedEnemy.GetComponent<Entity>().Spawn(spawnLocation, spawnRotation,true);
-            }
-            else
-            {
-                LevelManager.currentLevel.AddToDynamic(spawnedEnemy, SpawnLocation(), SpawnRotation());
-            }
+                if (spawnedEnemy == null)
+                {
+                    var spawnLocation = SpawnLocation();
+                    var spawnRotation = SpawnRotation();
+                    spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, spawnLocation, spawnRotation);
+                    spawnedEnemy.GetComponent<Entity>().Spawn(spawnLocation, spawnRotation, true);
+                }
+                else
+                {
+                    LevelManager.currentLevel.AddToDynamic(spawnedEnemy, SpawnLocation(), SpawnRotation());
+                }
             }
         }
-
     }
 }

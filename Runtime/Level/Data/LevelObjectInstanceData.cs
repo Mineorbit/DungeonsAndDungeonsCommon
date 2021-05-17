@@ -1,19 +1,99 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
-using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     [Serializable]
     public class LevelObjectInstanceData
     {
+        public string type;
+
+
+        // the first element will be the primary location of the LevelObject
+        public List<Location> locations;
+        private float q_w;
+
+        private float q_x;
+        private float q_y;
+        private float q_z;
 
         public LevelObjectInstanceData(Vector3 position)
         {
             locations = new List<Location>();
             locations.Add(new Location(position));
+        }
+
+        private float x => locations[0].X;
+
+
+        private float y => locations[0].Y;
+
+        private float z => locations[0].Z;
+
+
+        public Vector3 GetLocation()
+        {
+            return locations[0].ToVector();
+        }
+
+        public Vector3 GetLocation(int i)
+        {
+            if (i < locations.Count)
+                return locations[i].ToVector();
+
+            return locations[0].ToVector();
+        }
+
+        public Quaternion GetRotation()
+        {
+            return new Quaternion(q_x, q_y, q_z, q_w);
+        }
+
+        public void AddLocation(Vector3 position)
+        {
+            locations.Add(new Location(position));
+        }
+
+        public static LevelObjectInstanceData FromInstance(InteractiveLevelObject o)
+        {
+            Debug.Log("Interactive Save");
+            var d = new LevelObjectInstanceData(o.transform.position);
+            var rotation = o.transform.rotation;
+            d.q_x = rotation.x;
+            d.q_y = rotation.y;
+            d.q_z = rotation.z;
+            d.q_w = rotation.w;
+            d.type = o.levelObjectDataType;
+
+
+            foreach (var receiverLocation in o.receivers.Keys)
+            {
+                Debug.Log("Adding ReceiverLocation " + receiverLocation);
+                d.AddLocation(receiverLocation);
+            }
+
+            return d;
+        }
+
+        public static LevelObjectInstanceData FromInstance(LevelObject o)
+        {
+            var d = new LevelObjectInstanceData(o.transform.position);
+            var rotation = o.transform.rotation;
+            d.q_x = rotation.x;
+            d.q_y = rotation.y;
+            d.q_z = rotation.z;
+            d.q_w = rotation.w;
+            d.type = o.levelObjectDataType;
+
+
+            return d;
+        }
+
+
+        public override string ToString()
+        {
+            return "Level Object Instance " + type + " " + x + " " + y + " " + z;
         }
 
 
@@ -38,113 +118,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             public float Y { get; }
             public float Z { get; }
 
-            public override string ToString() => $"({X}, {Y}, {Z})";
-            public Vector3 ToVector() => new Vector3(X,Y,Z);
-        }
-
-        public string type;
-
-
-        // the first element will be the primary location of the LevelObject
-        public List<Location> locations;
-
-        float x
-        {
-            get
+            public override string ToString()
             {
-                return locations[0].X;
-            }
-        }
-
-
-        float y
-        {
-            get
-            {
-                return locations[0].Y;
-            }
-        }
-
-        float z
-        {
-            get
-            {
-                return locations[0].Z;
-            }
-        }
-
-        float q_x;
-        float q_y;
-        float q_z;
-        float q_w;
-
-
-        public Vector3 GetLocation()
-        {
-            return locations[0].ToVector();
-        }
-
-        public Vector3 GetLocation(int i)
-        {
-            if(i < locations.Count)
-            return locations[i].ToVector();
-
-            return locations[0].ToVector();
-        }
-
-        public Quaternion GetRotation()
-        {
-            return new Quaternion(q_x,q_y,q_z,q_w);
-        }
-
-        public void AddLocation(Vector3 position)
-        {
-            locations.Add(new Location(position));
-        }
-
-        public static LevelObjectInstanceData FromInstance(InteractiveLevelObject o)
-        {
-            Debug.Log("Interactive Save");
-            LevelObjectInstanceData d = new LevelObjectInstanceData(o.transform.position);
-            Quaternion rotation = o.transform.rotation;
-            d.q_x = rotation.x;
-            d.q_y = rotation.y;
-            d.q_z = rotation.z;
-            d.q_w = rotation.w;
-            d.type = o.levelObjectDataType;
-
-
-            foreach (Vector3 receiverLocation in o.receivers.Keys)
-            {
-                Debug.Log("Adding ReceiverLocation "+receiverLocation);
-                d.AddLocation(receiverLocation);
+                return $"({X}, {Y}, {Z})";
             }
 
-            return d;
-
-        }
-
-        public static LevelObjectInstanceData FromInstance(LevelObject o)
-        {
-            LevelObjectInstanceData d = new LevelObjectInstanceData(o.transform.position);
-            Quaternion rotation = o.transform.rotation;
-            d.q_x = rotation.x;
-            d.q_y = rotation.y;
-            d.q_z = rotation.z;
-            d.q_w = rotation.w;
-            d.type = o.levelObjectDataType;
-
-
-            return d;
-
-        }
-
-        
-
-
-        public override string ToString()
-        {
-            return "Level Object Instance "+type+" "+x+" "+y+" "+z;
+            public Vector3 ToVector()
+            {
+                return new Vector3(X, Y, Z);
+            }
         }
     }
 }

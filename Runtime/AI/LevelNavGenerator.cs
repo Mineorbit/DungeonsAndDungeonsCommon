@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -8,20 +6,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelNavGenerator : MonoBehaviour
     {
         public NavMeshSurface navMeshSurface;
-        void Start()
+
+        private void Start()
         {
             if (navMeshSurface == null) navMeshSurface = GetComponent<NavMeshSurface>();
-
         }
 
         public void UpdateNavMesh()
         {
             Debug.Log("Building");
-            List<LevelObject> dynObjects = LevelManager.currentLevel.GetAllDynamicLevelObjects(inactive: false);
-            foreach (LevelObject o in dynObjects)
-            {
-                    o.gameObject.SetActive(false);
-            }
+            var dynObjects = LevelManager.currentLevel.GetAllDynamicLevelObjects(false);
+            foreach (var o in dynObjects) o.gameObject.SetActive(false);
 
             if (navMeshSurface == null) navMeshSurface = GetComponent<NavMeshSurface>();
 
@@ -30,10 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Debug.Log("Built surface");
 
-            foreach (LevelObject o in dynObjects)
-            {
-                o.gameObject.SetActive(true);
-            }
+            foreach (var o in dynObjects) o.gameObject.SetActive(true);
         }
     }
 }

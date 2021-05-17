@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using com.mineorbit.dungeonsanddungeonscommon;
-
-namespace com.mineorbit.dungeonsanddungeonscommon
+﻿namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class PlayerAudioController : AudioController
     {
         public PlayerController controller;
-        float walkSoundStrength;
 
-        bool jumped = false;
-        void Update()
+        private bool jumped;
+        private float walkSoundStrength;
+
+        private void Update()
         {
             walkSoundStrength = (walkSoundStrength + controller.currentSpeed) / 2;
             Blend(0, walkSoundStrength);
@@ -26,15 +21,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Play(2);
                 Stop(0);
             }
-            if(!jumped && controller.speedY > 0)
+
+            if (!jumped && controller.speedY > 0)
             {
                 jumped = true;
                 Play(1);
             }
-            if(controller.IsGrounded)
-            {
-                jumped = false;
-            }
+
+            if (controller.IsGrounded) jumped = false;
         }
     }
 }

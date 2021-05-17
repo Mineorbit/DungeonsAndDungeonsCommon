@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -16,7 +14,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Update();
         }
-
 
 
         public void Hit()

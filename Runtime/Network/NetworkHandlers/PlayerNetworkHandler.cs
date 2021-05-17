@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Game;
 using General;
-using System;
+using Google.Protobuf.WellKnownTypes;
+using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class PlayerNetworkHandler : EntityNetworkHandler
     {
-        new Player observed;
+        private new Player observed;
 
         public virtual void Awake()
         {
@@ -20,10 +18,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             owner = observed.localId;
 
             if (isOnServer)
-            {
                 // UNSURE ABOUT THIS MAYBE THIS IS NEEDED
                 GetComponent<CharacterController>().enabled = false;
-            }
+        }
+
+
+        public void OnDestroy()
+        {
+            if (Level.instantiateType == Level.InstantiateType.Play)
+                RequestRemoval();
         }
 
         public virtual void SetupLocalMarshalls()
@@ -33,7 +36,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void RequestCreation()
         {
-            Packet p = GenerateCreationRequest(observed);
+            var p = GenerateCreationRequest(observed);
 
             Server.instance.WriteAll(p);
         }
@@ -41,41 +44,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public override void ProcessAction(Packet p)
         {
-
-            if(isOnServer)
-            {
-                Server.instance.WriteAll(p,observed.localId);
-            }
+            if (isOnServer) Server.instance.WriteAll(p, observed.localId);
 
             base.ProcessAction(p);
         }
 
-
-
-        public void OnDestroy()
-        {
-            if(Level.instantiateType == Level.InstantiateType.Play)
-            RequestRemoval();
-        }
-
         public override void RequestRemoval()
         {
-            Packet p = GenerateRemovalRequest(observed,this);
+            var p = GenerateRemovalRequest(observed, this);
             Server.instance.WriteAll(p);
         }
 
         public static Packet GenerateRemovalRequest(Player p, PlayerNetworkHandler playerNetworkHandler)
         {
-            PlayerRemove playerRemove = new PlayerRemove
+            var playerRemove = new PlayerRemove
             {
                 LocalId = p.localId
             };
 
-            Packet packet = new Packet
+            var packet = new Packet
             {
                 Type = typeof(PlayerRemove).FullName,
                 Handler = typeof(PlayerNetworkHandler).FullName,
-                Content = Google.Protobuf.WellKnownTypes.Any.Pack(playerRemove),
+                Content = Any.Pack(playerRemove),
                 Identity = playerNetworkHandler.Identity
             };
             return packet;
@@ -83,12 +74,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static Packet GenerateCreationRequest(Player p)
         {
-            Vector3 position = p.transform.position;
-            Quaternion rotation = p.transform.rotation;
+            var position = p.transform.position;
+            var rotation = p.transform.rotation;
 
-            PlayerNetworkHandler playerNetworkHandler = p.GetComponent<PlayerNetworkHandler>();
+            var playerNetworkHandler = p.GetComponent<PlayerNetworkHandler>();
 
-            PlayerCreate playerCreate = new PlayerCreate
+            var playerCreate = new PlayerCreate
             {
                 Name = p.name,
                 LocalId = p.localId,
@@ -98,11 +89,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Identity = playerNetworkHandler.Identity
             };
 
-            Packet packet = new Packet
+            var packet = new Packet
             {
                 Type = typeof(PlayerCreate).FullName,
                 Handler = typeof(PlayerNetworkHandler).FullName,
-                Content = Google.Protobuf.WellKnownTypes.Any.Pack(playerCreate)
+                Content = Any.Pack(playerCreate)
             };
             return packet;
         }
@@ -112,15 +103,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void HandleRemovePacket(Packet value)
         {
             PlayerRemove playerRemove;
-            if (value.Content.TryUnpack<PlayerRemove>(out playerRemove))
+            if (value.Content.TryUnpack(out playerRemove))
             {
-                int localIdToRemove = playerRemove.LocalId;
-                Debug.Log("Handling Remove for "+localIdToRemove);
+                var localIdToRemove = playerRemove.LocalId;
+                Debug.Log("Handling Remove for " + localIdToRemove);
 
-                MainCaller.Do(() =>
-                {
-                    PlayerManager.playerManager.Remove(localIdToRemove);
-                });
+                MainCaller.Do(() => { PlayerManager.playerManager.Remove(localIdToRemove); });
             }
         }
 
@@ -128,31 +116,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void HandleCreatePacket(Packet value)
         {
             PlayerCreate playerCreate;
-            if(value.Content.TryUnpack<PlayerCreate>(out playerCreate))
+            if (value.Content.TryUnpack(out playerCreate))
             {
-                Vector3 position = new Vector3(playerCreate.X,playerCreate.Y,playerCreate.Z);
-                OnCreationRequest(playerCreate.Identity,position, new Quaternion(0,0,0,0), playerCreate.LocalId ,playerCreate.Name);
+                var position = new Vector3(playerCreate.X, playerCreate.Y, playerCreate.Z);
+                OnCreationRequest(playerCreate.Identity, position, new Quaternion(0, 0, 0, 0), playerCreate.LocalId,
+                    playerCreate.Name);
             }
         }
 
 
-        public static void OnCreationRequest(string identity, Vector3 position, Quaternion rotation, int localId,string name)
+        public static void OnCreationRequest(string identity, Vector3 position, Quaternion rotation, int localId,
+            string name)
         {
             Debug.Log("Creating player");
 
-            MainCaller.Do(()=> {
+            MainCaller.Do(() =>
+            {
                 PlayerManager.playerManager.Add(localId, name, true);
-                GameObject player = PlayerManager.playerManager.GetPlayer(localId);
+                var player = PlayerManager.playerManager.GetPlayer(localId);
                 player.GetComponent<PlayerNetworkHandler>().Identity = identity;
                 player.GetComponent<PlayerNetworkHandler>().enabled = true;
 
                 if (isOnServer)
-                {
                     //this is just for now and ugly, will fix later
                     Destroy(player.GetComponent<PlayerController>());
-                }
             });
-            
         }
     }
 }

@@ -1,68 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
-using Google.Protobuf;
-using State;
-using System.IO;
-using General;
 using System.Threading;
-using Game;
+using System.Threading.Tasks;
 using General;
+using Google.Protobuf;
+using Google.Protobuf.WellKnownTypes;
+using State;
+using UnityEngine;
 using UnityEngine.Events;
+using Type = System.Type;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Client
     {
-        public TcpClient tcpClient;
-        public UdpClient udpClient;
-
-
-        public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
-        public UnityEvent onDisconnectEvent = new UnityEvent();
-
-
-        public bool isOnServer;
-
-        public bool Connected = false;
-
-        public string userName;
-        public int localid;
-
-        public int Port;
-
-        Semaphore waitingForTcp = new Semaphore(1,1);
-        Semaphore waitingForUdp = new Semaphore(1, 1);
-
-        IPEndPoint remoteIPUdp;
-
-        public NetworkStream tcpStream;
-
-        private TaskCompletionSource<bool> disconnected = new TaskCompletionSource<bool>();
-
-
         public static Queue<Packet> packetInBuffer = new Queue<Packet>();
 
         public static Queue<Packet> packetOutTCPBuffer = new Queue<Packet>();
 
         public static Queue<Packet> packetOutUDPBuffer = new Queue<Packet>();
 
+        public bool Connected;
+
+        private readonly TaskCompletionSource<bool> disconnected = new TaskCompletionSource<bool>();
 
 
+        public bool isOnServer;
+        public int localid;
+
+        private readonly int maxReceiveCount = 15;
+        private readonly int maxSendCount = 15;
 
 
-        public override string ToString()
-        {
-            return "NetworkClient "+userName+" "+localid;
-        }
+        public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
+        public UnityEvent onDisconnectEvent = new UnityEvent();
 
-        
+        public int Port;
 
-        public Client(TcpClient tcpC,UdpClient udpC, int lId,int port)
+
+        private bool realClosed;
+
+        private IPEndPoint remoteIPUdp;
+        public TcpClient tcpClient;
+
+        public NetworkStream tcpStream;
+        public UdpClient udpClient;
+
+        public string userName;
+
+        private readonly Semaphore waitingForTcp = new Semaphore(1, 1);
+        private readonly Semaphore waitingForUdp = new Semaphore(1, 1);
+
+
+        public Client(TcpClient tcpC, UdpClient udpC, int lId, int port)
         {
             NetworkManager.allClients.Add(this);
             Connected = true;
@@ -70,13 +62,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             udpClient = udpC;
             tcpStream = tcpClient.GetStream();
             localid = lId;
-            IPAddress other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
-            remoteIPUdp = new IPEndPoint(other, port+1+lId);
+            var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
+            remoteIPUdp = new IPEndPoint(other, port + 1 + lId);
         }
 
         public Client()
         {
             NetworkManager.allClients.Add(this);
+        }
+
+
+        public override string ToString()
+        {
+            return "NetworkClient " + userName + " " + localid;
         }
 
         ~Client()
@@ -85,147 +83,132 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Disconnect();
         }
 
-
-
-        bool realClosed = false;
-
         public static async Task<Client> Connect(IPAddress host, int port)
         {
+            var client = new Client();
 
-                Client client = new Client();
+            client.Port = port;
+            var createThread = new Thread(() =>
+            {
+                CreateTcpClientForClient(client, host, port);
+                client.Connected = true;
+                client.Setup();
+            });
 
-                client.Port = port;
-                Thread createThread = new Thread(new ThreadStart(() => {
-                    CreateTcpClientForClient(client, host, port);
-                    client.Connected = true;
-                    client.Setup();
-                }));
+            createThread.IsBackground = true;
+            createThread.Start();
 
-                createThread.IsBackground = true;
-                createThread.Start();
 
-                
-
-                return client;
+            return client;
         }
 
         public void Disconnect(bool respond = true)
         {
-            if(Connected)
-            { 
-            
-            if(respond)
+            if (Connected)
             {
-                MeDisconnect meDisconnect = new MeDisconnect();
-                WritePacket(typeof(NetworkManagerHandler),meDisconnect);
-            }
+                if (respond)
+                {
+                    var meDisconnect = new MeDisconnect();
+                    WritePacket(typeof(NetworkManagerHandler), meDisconnect);
+                }
 
-            UpdateOut();
-            Debug.Log("Client "+localid+" disconnected");
-            Connected = false;
+                UpdateOut();
+                Debug.Log("Client " + localid + " disconnected");
+                Connected = false;
             }
         }
 
-        void CloseConnection()
+        private void CloseConnection()
         {
-            if(packetOutUDPBuffer.Count == 0 && packetOutTCPBuffer.Count == 0 && packetInBuffer.Count == 0 && ! realClosed)
-            { 
-            tcpStream.Close();
-            tcpClient.Close();
-            udpClient.Close();
-            onDisconnectEvent.Invoke();
-            disconnected.SetResult(true);
-            realClosed = true;
+            if (packetOutUDPBuffer.Count == 0 && packetOutTCPBuffer.Count == 0 && packetInBuffer.Count == 0 &&
+                !realClosed)
+            {
+                tcpStream.Close();
+                tcpClient.Close();
+                udpClient.Close();
+                onDisconnectEvent.Invoke();
+                disconnected.SetResult(true);
+                realClosed = true;
             }
         }
 
-        //evtl async später
-        public static void CreateTcpClientForClient(Client client,IPAddress host, int port)
+        //evtl async spÃ¤ter
+        public static void CreateTcpClientForClient(Client client, IPAddress host, int port)
         {
             client.tcpClient = new TcpClient(host.ToString(), port);
             client.tcpClient.SendTimeout = 1000;
             client.tcpStream = client.tcpClient.GetStream();
-            IPAddress other = ((IPEndPoint)client.tcpClient.Client.RemoteEndPoint).Address;
-            
+            var other = ((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address;
         }
 
         public static void CreateUdpClientForClient(Client client)
         {
             client.udpClient = new UdpClient();
-            client.remoteIPUdp = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address, client.Port+1+client.localid);
-            Debug.Log("Connecting UDP to: "+ client.remoteIPUdp);
-            
-            
+            client.remoteIPUdp = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,
+                client.Port + 1 + client.localid);
+            Debug.Log("Connecting UDP to: " + client.remoteIPUdp);
+
+
             client.udpClient.Connect(client.remoteIPUdp);
         }
 
-        int maxReceiveCount = 15;
-        int maxSendCount = 15;
         public void FixedUpdate()
         {
             UpdateOut();
             UpdateIn();
-            if(!Connected)
-            {
-                CloseConnection();
-            }
+            if (!Connected) CloseConnection();
         }
 
-        void UpdateIn()
+        private void UpdateIn()
         {
-            int handleCount = maxReceiveCount;
+            var handleCount = maxReceiveCount;
 
-            while(packetInBuffer.Count>0 && handleCount>0)
+            while (packetInBuffer.Count > 0 && handleCount > 0)
             {
-                Packet p = packetInBuffer.Dequeue();
+                var p = packetInBuffer.Dequeue();
                 HandlePacket(p);
                 handleCount--;
             }
-
-
         }
 
-        void HandlePacket(Packet p)
+        private void HandlePacket(Packet p)
         {
+            Debug.Log("Handling " + p);
 
-            Debug.Log("Handling "+p);
-
-            Type packetType = Type.GetType(p.Type);
+            var packetType = Type.GetType(p.Type);
 
 
             Debug.Log("Going to Processing: " + p);
 
-            UnityAction processPacket = () =>
-            {
-            NetworkHandler.UnMarshall(p);
-            };
+            UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
 
-            Thread handleThread = new Thread(new ThreadStart(processPacket));
+            var handleThread = new Thread(new ThreadStart(processPacket));
             handleThread.IsBackground = true;
             handleThread.Start();
         }
 
-        void UpdateOut()
+        private void UpdateOut()
         {
-            int tcpSent = 0;
-            int sendCount = maxSendCount;
-            General.PacketCarrier tcpCarrier = new PacketCarrier();
+            var tcpSent = 0;
+            var sendCount = maxSendCount;
+            var tcpCarrier = new PacketCarrier();
             while (packetOutTCPBuffer.Count > 0 && sendCount > 0)
             {
-                Packet p = packetOutTCPBuffer.Dequeue();
+                var p = packetOutTCPBuffer.Dequeue();
                 tcpCarrier.Packets.Add(p);
                 sendCount--;
                 tcpSent++;
             }
-            if(tcpSent > 0)
-            WriteOut(tcpCarrier);
 
-            int udpSent = 0;
+            if (tcpSent > 0)
+                WriteOut(tcpCarrier);
+
+            var udpSent = 0;
             sendCount = maxSendCount;
-            General.PacketCarrier udpCarrier = new PacketCarrier();
+            var udpCarrier = new PacketCarrier();
             while (packetOutUDPBuffer.Count > 0 && sendCount > 0)
             {
-                Packet p = packetOutUDPBuffer.Dequeue();
+                var p = packetOutUDPBuffer.Dequeue();
                 udpCarrier.Packets.Add(p);
                 sendCount--;
                 udpSent++;
@@ -235,168 +218,134 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
-            byte[] data = p.ToByteArray();
-            int length = data.Length;
-            byte[] result = new byte[length + 4];
-            byte[] lengthBytes = BitConverter.GetBytes(length);
+            var data = p.ToByteArray();
+            var length = data.Length;
+            var result = new byte[length + 4];
+            var lengthBytes = BitConverter.GetBytes(length);
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(lengthBytes);
                 Array.Reverse(data);
             }
+
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
 
             Debug.Log("Sent: " + p);
             if (TCP && tcpClient.Connected)
-            {
                 tcpStream.Write(result, 0, result.Length);
-            }
-            else if(!TCP)
-            {
-                udpClient.Send(result, 0);
-            }
-
+            else if (!TCP) udpClient.Send(result, 0);
         }
 
         public void WritePacket(Packet p, bool TCP = true)
         {
-            if(Connected)
-            { 
-            p.Sender = localid;
-            UnityEngine.Debug.Log("Sending: "+p+" TCP: "+TCP);
-            if(TCP)
+            if (Connected)
             {
-                packetOutTCPBuffer.Enqueue(p);
-            }
-            else
-            {
-                packetOutUDPBuffer.Enqueue(p);
-            }
+                p.Sender = localid;
+                Debug.Log("Sending: " + p + " TCP: " + TCP);
+                if (TCP)
+                    packetOutTCPBuffer.Enqueue(p);
+                else
+                    packetOutUDPBuffer.Enqueue(p);
             }
         }
 
-        public void WritePacket(IMessage message,bool TCP = true)
+        public void WritePacket(IMessage message, bool TCP = true)
         {
-            WritePacket(null,message,TCP: TCP);
+            WritePacket(null, message, TCP);
         }
 
-        public void WritePacket(Type handler,IMessage message, bool TCP = true)
+        public void WritePacket(Type handler, IMessage message, bool TCP = true)
         {
-            
-            General.Packet p = null;
+            Packet p = null;
             if (message.GetType() != typeof(Packet))
             {
                 if (handler == null)
-                {
-                    p = new General.Packet
+                    p = new Packet
                     {
                         Type = message.GetType().ToString(),
-                        Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                        Content = Any.Pack(message)
                     };
-                }
                 else
-                {
-                    p = new General.Packet
+                    p = new Packet
                     {
                         Type = message.GetType().ToString(),
-                        Content = Google.Protobuf.WellKnownTypes.Any.Pack(message),
+                        Content = Any.Pack(message),
                         Handler = handler.FullName
                     };
-                }
-                    
             }
             else
             {
-                p = (Packet)message;
+                p = (Packet) message;
             }
-            WritePacket(p, TCP: TCP);
+
+            WritePacket(p, TCP);
         }
 
 
-        async Task<byte[]> ReadData(bool TCP = true)
+        private async Task<byte[]> ReadData(bool TCP = true)
         {
             Debug.Log("Waiting for Data");
-            if(TCP)
-            {
+            if (TCP)
                 waitingForTcp.WaitOne();
-            }else
-            {
+            else
                 waitingForUdp.WaitOne();
-            }
             byte[] udpResult;
-            byte[] lengthBytes = new byte[4];
+            var lengthBytes = new byte[4];
             byte[] data = null;
-            int length = 0;
+            var length = 0;
             if (TCP)
             {
                 await tcpStream.ReadAsync(lengthBytes, 0, 4);
-                if (BitConverter.IsLittleEndian)
-                {
-                    Array.Reverse(lengthBytes);
-                }
+                if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
                 length = BitConverter.ToInt32(lengthBytes, 0);
                 data = new byte[length];
                 await tcpStream.ReadAsync(data, 0, length);
             }
             else
             {
-                Debug.Log("Reading for UDP on "+remoteIPUdp);
+                Debug.Log("Reading for UDP on " + remoteIPUdp);
                 udpResult = udpClient.Receive(ref remoteIPUdp);
-                Array.Copy(udpResult,4,data,0,udpResult.Length-4);
+                Array.Copy(udpResult, 4, data, 0, udpResult.Length - 4);
             }
 
 
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(data);
-            }
-            if(TCP)
-            {
+            if (BitConverter.IsLittleEndian) Array.Reverse(data);
+            if (TCP)
                 waitingForTcp.Release();
-            }
             else
-            {
                 waitingForUdp.Release();
-            }
             return data;
         }
 
         // int tries; necessary?
         public async Task<T> ReadPacket<T>() where T : IMessage, new()
         {
-            byte[] data = await ReadData();
+            var data = await ReadData();
 
-            PacketCarrier packetCarrier = General.PacketCarrier.Parser.ParseFrom(data);
+            var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
 
-            Packet p = packetCarrier.Packets[0];
-            Debug.Log("Received "+p);
+            var p = packetCarrier.Packets[0];
+            Debug.Log("Received " + p);
             T result;
-            if (p.Content.TryUnpack<T>(out result))
-            {
+            if (p.Content.TryUnpack(out result))
                 return result;
-            }else
-            {
-                //handle packet otherwise?
-                return await ReadPacket<T>();
-            }
+            return await ReadPacket<T>();
         }
-
 
 
         public void Setup()
         {
-            Welcome w = Task.Run(ReadPacket<Welcome>).Result;
+            var w = Task.Run(ReadPacket<Welcome>).Result;
 
             localid = w.LocalId;
 
 
             CreateUdpClientForClient(this);
 
-            MeConnect meConnect = new MeConnect
+            var meConnect = new MeConnect
             {
                 Name = NetworkManager.userName
             };
@@ -407,18 +356,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             onConnectEvent.Invoke(w.LocalId);
 
 
-
             Task.Run(async () => { await StartHandle(); });
         }
-
 
 
         // This needs to be exited after some kind of timeout
         public async Task Process()
         {
-           
-
-            Welcome w = new Welcome
+            var w = new Welcome
             {
                 LocalId = localid
             };
@@ -427,72 +372,63 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(w);
 
-            MeConnect meConnect = await ReadPacket<MeConnect>();
+            var meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
-            MainCaller.Do(()=> {
-
-            //  Send missing players to new connectee
-                for (int id = 0; id <4 && id != localid; id++ )
+            MainCaller.Do(() =>
+            {
+                //  Send missing players to new connectee
+                for (var id = 0; id < 4 && id != localid; id++)
                 {
-                    Player player = PlayerManager.playerManager.players[id];
-                    if(player !=null)
+                    var player = PlayerManager.playerManager.players[id];
+                    if (player != null)
                     {
-                        Packet packet = PlayerNetworkHandler.GenerateCreationRequest(player);
+                        var packet = PlayerNetworkHandler.GenerateCreationRequest(player);
                         WritePacket(packet);
                     }
-
                 }
 
 
-                PlayerManager.playerManager.Add(localid, userName, true); 
+                PlayerManager.playerManager.Add(localid, userName, true);
             });
 
             await StartHandle();
-            
         }
-        async Task StartHandle()
+
+        private async Task StartHandle()
         {
-            Thread handle1Thread = new Thread(new ThreadStart(TcpHandle));
-            Thread handle2Thread = new Thread(new ThreadStart(UdpHandle));
+            var handle1Thread = new Thread(TcpHandle);
+            var handle2Thread = new Thread(UdpHandle);
             handle1Thread.Start();
             handle2Thread.Start();
             await disconnected.Task;
         }
 
-        void TcpHandle()
+        private void TcpHandle()
         {
-            Task.Run(async () => { await HandlePackets(Tcp: true); });
+            Task.Run(async () => { await HandlePackets(true); });
         }
 
-        void UdpHandle()
+        private void UdpHandle()
         {
-            Task.Run(async () => { await HandlePackets(Tcp: false); });
+            Task.Run(async () => { await HandlePackets(false); });
         }
-
-
-
-
 
 
         public async Task HandlePackets(bool Tcp)
         {
-
             byte[] data;
-            data = await ReadData(TCP: Tcp);
+            data = await ReadData(Tcp);
 
 
-
-            PacketCarrier packetCarrier = General.PacketCarrier.Parser.ParseFrom(data);
+            var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
 
             if (Connected)
-                foreach ( Packet packet in packetCarrier.Packets)
-                {
+                foreach (var packet in packetCarrier.Packets)
                     packetInBuffer.Enqueue(packet);
-                }
-            
+
             //Processing needed
 
             await HandlePackets(Tcp);

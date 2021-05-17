@@ -1,25 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class MainCaller : MonoBehaviour
     {
-
         public static MainCaller instance;
+
+        public static Queue<Action> todo = new Queue<Action>();
+
+        private readonly int maxActions = 15;
 
         public void Awake()
         {
-            if(instance != null)
-            {
-                Destroy(this);
-            }
+            if (instance != null) Destroy(this);
             instance = this;
         }
 
-        public static Queue<Action> todo = new Queue<Action>();
+        private void Update()
+        {
+            var actions = maxActions;
+            while (todo.Count > 0 && actions > 0)
+            {
+                todo.Dequeue().Invoke();
+                actions--;
+            }
+        }
 
         public static void Do(Action a)
         {
@@ -30,17 +38,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Debug.Log(instance);
             instance.StartCoroutine(c);
-        }
-
-        int maxActions = 15;
-        void Update()
-        {
-            int actions = maxActions;
-            while (todo.Count > 0 && actions > 0)
-            {
-                todo.Dequeue().Invoke();
-                actions--;
-            }
         }
     }
 }

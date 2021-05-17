@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,8 +5,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelManager : MonoBehaviour
     {
-
-        public static UnityEngine.Object levelPrefab;
+        public static Object levelPrefab;
 
         public static LevelMetaData currentLevelMetaData;
 
@@ -28,12 +24,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void Instantiate()
         {
-            if (levelPrefab == null) levelPrefab = Resources.Load("Level") as UnityEngine.Object;
-            GameObject level = Instantiate(levelPrefab) as GameObject;
+            if (levelPrefab == null) levelPrefab = Resources.Load("Level");
+            var level = Instantiate(levelPrefab) as GameObject;
             level.name = "Level " + currentLevelMetaData.localLevelId;
             currentLevel = level.GetComponent<Level>();
             currentLevel.Setup();
-            ChunkManager cm = level.GetComponent<ChunkManager>();
+            var cm = level.GetComponent<ChunkManager>();
             cm.Setup();
         }
 
@@ -47,37 +43,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Debug.Log("Resetting dynamic LevelObjects");
             if (currentLevel != null)
-            {
                 currentLevel.ResetDynamicState();
-            }
             else Debug.Log("Currently there is no Level instantiated");
         }
 
         public static void ResetToSaveState()
         {
-            LevelMetaData lastMetaData = currentLevelMetaData;
-            Level.InstantiateType lastInstantiateType = Level.instantiateType;
+            var lastMetaData = currentLevelMetaData;
+            var lastInstantiateType = Level.instantiateType;
             Clear();
-            LevelDataManager.Load(lastMetaData,lastInstantiateType);
+            LevelDataManager.Load(lastMetaData, lastInstantiateType);
         }
 
         public static void StartRound(bool resetDynamic = true, bool resetStatic = false)
         {
-                if (resetDynamic)
-                    ResetDynamicObjects();
-                if(resetStatic)
-                    ResetToSaveState();
+            if (resetDynamic)
+                ResetDynamicObjects();
+            if (resetStatic)
+                ResetToSaveState();
             if (currentLevel != null)
             {
                 currentLevel.OnStartRound();
                 levelStartedEvent.Invoke();
             }
-            else Debug.Log("Currently there is no Level instantiated");
+            else
+            {
+                Debug.Log("Currently there is no Level instantiated");
+            }
         }
 
         public static void EndRound(bool resetDynamic = true)
         {
-            currentLevel.OnEndRound(resetDynamic: resetDynamic);
+            currentLevel.OnEndRound(resetDynamic);
             levelEndedEvent.Invoke();
         }
 
@@ -87,7 +84,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (levelObjectData == null && levelObjectData.granularity != 0)
                 g = levelObjectData.granularity;
 
-            return g*(new Vector3(Mathf.Round(exactPosition.x/g), Mathf.Round(exactPosition.y / g), Mathf.Round(exactPosition.z / g)));
+            return g * new Vector3(Mathf.Round(exactPosition.x / g), Mathf.Round(exactPosition.y / g),
+                Mathf.Round(exactPosition.z / g));
         }
 
         public static void Clear()
