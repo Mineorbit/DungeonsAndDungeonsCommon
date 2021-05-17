@@ -1,8 +1,5 @@
 using Game;
 using General;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -16,20 +13,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnStreamChunk(Packet p)
         {
             StreamChunk streamChunk;
-            if(p.Content.TryUnpack<StreamChunk>(out streamChunk))
-            {
-                MainCaller.Do(() => { ChunkData c = ChunkData.FromNetData(streamChunk.ChunkData);
-                    Debug.Log("Received Chunk "+c);
-                    ChunkManager.LoadChunk(c,immediate: false); });
-            }
+            if (p.Content.TryUnpack(out streamChunk))
+                MainCaller.Do(() =>
+                {
+                    var c = ChunkData.FromNetData(streamChunk.ChunkData);
+                    Debug.Log("Received Chunk " + c);
+                    ChunkManager.LoadChunk(c, false);
+                });
         }
 
-        void StreamChunk(ActionParam chunkParam)
+        private void StreamChunk(ActionParam chunkParam)
         {
-            ChunkData toSend = (ChunkData)chunkParam.data;
-            Debug.Log("Sending "+toSend);
-            NetLevel.ChunkData netChunk = ChunkData.ToNetData(toSend);
-            StreamChunk streamChunk = new StreamChunk
+            var toSend = (ChunkData) chunkParam.data;
+            Debug.Log("Sending " + toSend);
+            var netChunk = ChunkData.ToNetData(toSend);
+            var streamChunk = new StreamChunk
             {
                 ChunkData = netChunk
             };
@@ -38,14 +36,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void SendAction(string actionName, ActionParam argument)
         {
-            if(actionName == "StreamChunkIntoCurrentLevelFrom")
-            {
+            if (actionName == "StreamChunkIntoCurrentLevelFrom")
                 StreamChunk(argument);
-            }
             else
-            {
-                base.SendAction(actionName,argument);
-            }
+                base.SendAction(actionName, argument);
         }
     }
 }

@@ -1,13 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/AudioProfile", order = 1)]
     public class AudioProfile : ScriptableObject
     {
-        public enum AudioType { SFX, MUSIC, UI };
+        public enum AudioType
+        {
+            SFX,
+            MUSIC,
+            UI
+        }
+
+
+        public static float SFXVolume = 1;
+
+        public static float MusicVolume = 1;
+
+        public static float UiVolume = 1;
         public AudioType audioType;
         public bool overloading;
         public bool onAwake;
@@ -22,27 +32,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool loop;
         public AudioClip[] audioClip;
 
-
-        public static float SFXVolume = 1;
-
-        public static float MusicVolume = 1;
-
-        public static float UiVolume = 1;
-
         public float VolumeCoefficient()
         {
-            if (audioType == AudioType.SFX)
-            {
-                return SFXVolume;
-            }
-            if (audioType == AudioType.MUSIC)
-            {
-                return MusicVolume;
-            }
-            if (audioType == AudioType.UI)
-            {
-                return UiVolume;
-            }
+            if (audioType == AudioType.SFX) return SFXVolume;
+            if (audioType == AudioType.MUSIC) return MusicVolume;
+            if (audioType == AudioType.UI) return UiVolume;
 
             return 1;
         }

@@ -1,15 +1,11 @@
-﻿
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using com.mineorbit.dungeonsanddungeonscommon;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class EnemyController : EntityController
     {
+        public static float forgetTime = 5f;
 
         public Enemy me;
 
@@ -18,31 +14,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Player lastSeenPlayer;
         public Enemy seenAlly;
 
-
-
-
-
-        float distToTarget = float.MaxValue;
-
-
-
-        Vector3 lastPositionOfPlayer;
-
-
-        NavMeshAgent navMeshAgent;
-
         public float currentSpeed;
-
-
-
-
-        public static float forgetTime = 5f;
-
 
 
         //Queue<Vector3> targetPoints = new Queue<Vector3>();
 
-        Vector3 currentTarget = new Vector3(0,0,0);
+        private Vector3 currentTarget = new Vector3(0, 0, 0);
+
+
+        private float distToTarget = float.MaxValue;
+
+
+        private Vector3 lastPositionOfPlayer;
+
+
+        private NavMeshAgent navMeshAgent;
+
+        private TimerManager.Timer visibilityTimer;
+
         public override void Start()
         {
             base.Start();
@@ -57,13 +46,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetTrackingAbility(true);
         }
 
+        public override void Update()
+        {
+            UpdateLocomotion();
+
+            currentSpeed = navMeshAgent.velocity.magnitude;
+
+            controllerPosition = transform.position;
+
+            base.Update();
+        }
+
+
+        private void FixedUpdate()
+        {
+            UpdateVariables();
+            UpdateState();
+        }
+
 
         public void SetTrackingAbility(bool ability, bool reset = false)
         {
-            if(navMeshAgent != null)
-            { 
-            navMeshAgent.isStopped = !ability;
-            if(reset) navMeshAgent.ResetPath();
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.isStopped = !ability;
+                if (reset) navMeshAgent.ResetPath();
             }
         }
 
@@ -105,31 +112,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             navMeshAgent.SetDestination(currentTarget);
         }
 
-        public override void Update()
+
+        private Player CheckVisiblePlayer()
         {
-            UpdateLocomotion();
-
-            currentSpeed = navMeshAgent.velocity.magnitude;
-
-            controllerPosition = transform.position;
-
-            base.Update();
-        }
-
-
-        Player CheckVisiblePlayer()
-        {
-            float minDist = float.MaxValue;
+            var minDist = float.MaxValue;
             Player minPlayer = null;
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
-                Player p = PlayerManager.playerManager.players[i];
+                var p = PlayerManager.playerManager.players[i];
                 if (p != null)
-                {
                     if (p.IsAlive())
                     {
-                        Vector3 dir = p.transform.position - transform.position;
-                        float dist = dir.magnitude;
+                        var dir = p.transform.position - transform.position;
+                        var dist = dir.magnitude;
 
                         if (Vector3.Dot(transform.forward, dir) > 0 && dist <= me.viewDistance && dist < minDist)
                         {
@@ -137,53 +132,43 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             minDist = dist;
                         }
                     }
-                }
             }
 
-            bool walls = me.seeThroughWalls;
+            var walls = me.seeThroughWalls;
             if (walls ? true : CheckLineOfSight(minPlayer))
-            {
                 return minPlayer;
-            } else
-            {
-                return null;
-            }
-
+            return null;
         }
 
         public bool CheckLineOfSight(Entity target)
         {
             if (target == null) return false;
 
-            int layerMask = 0;
+            var layerMask = 0;
 
             layerMask = ~layerMask;
 
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, target.transform.position - transform.position, out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(transform.position, target.transform.position - transform.position, out hit,
+                Mathf.Infinity, layerMask))
             {
                 if (hit.collider.gameObject.GetComponentInParent<Player>()) return true;
 
                 return false;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
-        TimerManager.Timer visibilityTimer;
-        void UpdateSeenPlayer()
+        private void UpdateSeenPlayer()
         {
-            Player currentViewedPlayer = CheckVisiblePlayer();
-            if(currentViewedPlayer == null)
+            var currentViewedPlayer = CheckVisiblePlayer();
+            if (currentViewedPlayer == null)
             {
                 // start timer for 2 seconds then drop player
-                if(lastSeenPlayer != null)
-                {
-                    if(me.forgetPlayer)
-                    visibilityTimer = TimerManager.StartTimer(forgetTime, () => { this.ForgetPlayer(); });
-                }
+                if (lastSeenPlayer != null)
+                    if (me.forgetPlayer)
+                        visibilityTimer = TimerManager.StartTimer(forgetTime, () => { ForgetPlayer(); });
             }
             else
             {
@@ -195,27 +180,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void ForgetPlayer()
+        private void ForgetPlayer()
         {
             seenPlayer = null;
         }
 
-        void UpdateVariables()
+        private void UpdateVariables()
         {
             UpdateSeenPlayer();
             UpdateDistance();
         }
 
 
-        void FixedUpdate()
-        {
-            UpdateVariables();
-            UpdateState();
-        }
-
-        
-
-        void UpdateDistance()
+        private void UpdateDistance()
         {
             seenAlly = CheckClosestAlley();
             if (seenPlayer != null)
@@ -230,21 +207,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void UpdateState()
+        private void UpdateState()
         {
             me.FSM.ExecuteState();
         }
 
-        
 
-
-
-
-        
-
-        Enemy CheckClosestAlley()
+        private Enemy CheckClosestAlley()
         {
-            float minDist = float.MaxValue;
+            var minDist = float.MaxValue;
             Enemy minEnemy = null;
             /*
             foreach (GameObject g in Level.GetAllEnemies())
@@ -266,7 +237,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             */
             return minEnemy;
         }
-
-        
     }
 }

@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     [Serializable]
@@ -9,6 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public int id;
         public Dictionary<Tuple<int, int>, ChunkData> chunkDatas = new Dictionary<Tuple<int, int>, ChunkData>();
+
         public RegionData(int rid)
         {
             id = rid;
@@ -16,11 +16,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public string ToString()
         {
-            string r = "Region: "+id;
-            foreach (KeyValuePair<Tuple<int,int>,ChunkData> k in chunkDatas)
-            {
-                r += "\n" + k+ " "+k.Value.ToString();
-            }
+            var r = "Region: " + id;
+            foreach (var k in chunkDatas) r += "\n" + k + " " + k.Value.ToString();
             return r;
         }
     }

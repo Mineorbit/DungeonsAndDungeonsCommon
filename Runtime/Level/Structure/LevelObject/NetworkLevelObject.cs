@@ -1,14 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkLevelObject : LevelObject
     {
         public LevelObjectNetworkHandler levelObjectNetworkHandler;
+
+        private readonly Queue<Action> todo = new Queue<Action>();
+
+
+        public virtual void FixedUpdate()
+        {
+            //this needs a safety later on to stop stupid behaviour
+            if (todo.Count > 0)
+                todo.Dequeue().Invoke();
+        }
 
 
         public override void OnInit()
@@ -18,48 +25,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectNetworkHandler = GetComponent<LevelObjectNetworkHandler>();
             //
             //if(levelObjectNetworkHandler == null) 
-                //levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
-            
-
+            //levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
         }
 
-        Queue<Action> todo = new Queue<Action>();
-
         //This marks a message for transport through network
-        public void Invoke<T>(Action<T> a, T argument,bool allowLocal = false)
+        public void Invoke<T>(Action<T> a, T argument, bool allowLocal = false)
         {
-            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke(argument);
+            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play ||
+                Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke(argument);
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
-                if( levelObjectNetworkHandler.identified)
-                {
-                levelObjectNetworkHandler.SendAction(a.Method.Name, LevelObjectNetworkHandler.ActionParam.From(argument));
-                }
+                if (levelObjectNetworkHandler.identified)
+                    levelObjectNetworkHandler.SendAction(a.Method.Name,
+                        LevelObjectNetworkHandler.ActionParam.From(argument));
                 else
-                {
-                    todo.Enqueue(()=> { Invoke(a, argument); });
-                }
-            
+                    todo.Enqueue(() => { Invoke(a, argument); });
         }
 
         public void Invoke(Action a, bool allowLocal = false)
         {
-            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke();
+            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play ||
+                Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke();
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
-            if( levelObjectNetworkHandler.identified)
-            {
-                levelObjectNetworkHandler.SendAction(a.Method.Name);
-            }else
-            {
-                    todo.Enqueue(()=> { Invoke(a); });
-            }
-        }
-
-
-        public virtual void FixedUpdate()
-        {
-            //this needs a safety later on to stop stupid behaviour
-            if(todo.Count>0)
-            todo.Dequeue().Invoke();
+                if (levelObjectNetworkHandler.identified)
+                    levelObjectNetworkHandler.SendAction(a.Method.Name);
+                else
+                    todo.Enqueue(() => { Invoke(a); });
         }
         /*
 
@@ -69,6 +59,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (this.enabled) a.Invoke();
             if (h != null) h.Marshall(a);
         }*/
-
     }
 }

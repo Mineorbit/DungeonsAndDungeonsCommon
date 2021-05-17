@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class CustomEnum
     {
+        public int cardinal;
 
 
         public string Value;
-        public int cardinal;
 
         public CustomEnum(string val, int card = 0)
         {
@@ -26,16 +23,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return cardinal;
         }
+
         public override string ToString()
         {
             return Value;
         }
 
-        public static bool operator == (CustomEnum a, CustomEnum b)
+        public static bool operator ==(CustomEnum a, CustomEnum b)
         {
             return a.cardinal == b.cardinal;
         }
-        public static bool operator != (CustomEnum a, CustomEnum b)
+
+        public static bool operator !=(CustomEnum a, CustomEnum b)
         {
             return a.cardinal != b.cardinal;
         }

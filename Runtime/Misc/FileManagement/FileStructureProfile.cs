@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/FileStructureProfile", order = 1)]
@@ -11,34 +11,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public FileStructureProfile parent;
         public List<FileStructureProfile> subStructures;
 
-        TaskCompletionSource<bool> listReady = new TaskCompletionSource<bool>();
-        
-        void OnEnable()
+        private readonly TaskCompletionSource<bool> listReady = new TaskCompletionSource<bool>();
+
+        private void OnEnable()
         {
             EnterInParent();
         }
-        async void EnterInParent()
+
+        private async void EnterInParent()
         {
             subStructures = new List<FileStructureProfile>();
             listReady.SetResult(true);
             if (parent != null)
             {
-            await parent.listReady.Task;
-            parent.subStructures.Add(this);
+                await parent.listReady.Task;
+                parent.subStructures.Add(this);
             }
         }
 
         public string GetPath()
         {
-            if(parent == null)
-            {
+            if (parent == null)
                 return Application.persistentDataPath + "/" + name + "/";
-            }else
-            {
-                return parent.GetPath() + name + "/";
-            }
+            return parent.GetPath() + name + "/";
         }
-
-       
     }
 }

@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
-
     public class Wire : LevelObject
     {
         public static LevelObjectData wirePreset;
@@ -20,29 +16,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Transform B;
 
-        float t = 0;
-
         public int numberOfPoints = 20;
+
+        private Vector3 start = new Vector3(0, 0, 0);
+
+        private float t;
 
         public void Start()
         {
             lr.SetWidth(0.4f, 0.4f);
         }
+
         public void Update()
         {
-            AnimationCurve curve = new AnimationCurve();
+            var curve = new AnimationCurve();
             t += Time.deltaTime;
-            for(float f = 0;f<1;f+=1f/((float)numberOfPoints))
-            {
-
-                curve.AddKey(f, 0.3f+(0.125f/2)*Mathf.Sin(-8*t + 8 * f));
-            }
+            for (float f = 0; f < 1; f += 1f / numberOfPoints)
+                curve.AddKey(f, 0.3f + 0.125f / 2 * Mathf.Sin(-8 * t + 8 * f));
             lr.widthCurve = curve;
         }
+
+        public void OnDestroy()
+        {
+            if (receiver != null)
+                receiver.inBoundWires.Remove(this);
+            if (sender != null)
+                sender.RemoveReceiver(receiver, this);
+        }
+
         public override void OnInit()
         {
             base.OnInit();
-            this.enabled = true; 
+            enabled = true;
             numberOfPoints = 16;
             lr.positionCount = numberOfPoints;
 
@@ -53,48 +58,41 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static Wire Create(InteractiveLevelObject start, InteractiveLevelObject end, Color color)
         {
             if (wirePreset == null)
-            {
                 wirePreset = Resources.Load<LevelObjectData>("LevelObjectData/Environment/Interactive/Wire");
-            }
 
-            GameObject wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0,0,0), new Quaternion(0, 0, 0, 0));
-            Wire w = wire.GetComponent<Wire>();
+            var wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0, 0, 0),
+                new Quaternion(0, 0, 0, 0));
+            var w = wire.GetComponent<Wire>();
             w.SetSender(start);
             w.SetReceiver(end);
             w.Render();
 
             return w;
-
-
         }
 
         public static Wire CreateDynamic(Vector3 start, Vector3 end, Color color)
         {
             if (wirePreset == null)
-            {
                 wirePreset = Resources.Load<LevelObjectData>("LevelObjectData/Environment/Interactive/Wire");
-            }
 
-            GameObject wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-            Wire w = wire.GetComponent<Wire>();
+            var wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0, 0, 0),
+                new Quaternion(0, 0, 0, 0));
+            var w = wire.GetComponent<Wire>();
             w.SetSenderPosition(start);
             w.SetReceiverPosition(end);
             //w.Render();
 
             return w;
-
-
         }
 
 
         public void Render()
         {
-            Mesh mesh = new Mesh();
+            var mesh = new Mesh();
             lr.SetWidth(1, 1);
             lr.BakeMesh(mesh, true);
             lr.SetWidth(0.4f, 0.4f);
             mc.sharedMesh = mesh;
-
         }
 
         public override void OnStartRound()
@@ -102,23 +100,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnStartRound();
             SetWire(false);
         }
+
         public override void OnEndRound()
         {
             base.OnEndRound();
             SetWire(true);
         }
 
-        void SetWire(bool v)
+        private void SetWire(bool v)
         {
-
             lr.enabled = v;
             A.gameObject.SetActive(v);
             B.gameObject.SetActive(v);
             mc.enabled = v;
-            this.enabled = v;
+            enabled = v;
         }
-
-        Vector3 start = new Vector3(0,0,0);
 
         public void SetSenderPosition(Vector3 s)
         {
@@ -129,13 +125,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SetReceiverPosition(Vector3 r)
         {
-            for(int i = 1; i < numberOfPoints; i++)
+            for (var i = 1; i < numberOfPoints; i++)
             {
-                float t = ((float)i / (float)(numberOfPoints-1));
-                Vector3 pos = (1 - t) * start + t * r;
+                var t = i / (float) (numberOfPoints - 1);
+                var pos = (1 - t) * start + t * r;
                 Debug.Log(pos);
                 lr.SetPosition(i, pos);
             }
+
             B.position = r;
         }
 
@@ -144,18 +141,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             sender = s;
             SetSenderPosition(s.transform.position);
         }
+
         public void SetReceiver(InteractiveLevelObject r)
         {
             receiver = r;
             SetReceiverPosition(r.transform.position);
-        }
-
-        public void OnDestroy()
-        {
-            if (receiver != null)
-                receiver.inBoundWires.Remove(this);
-            if(sender != null)
-                sender.RemoveReceiver(receiver,this);
         }
     }
 }

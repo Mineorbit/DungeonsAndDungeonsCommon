@@ -1,80 +1,71 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class FileManager : MonoBehaviour
     {
-        public FileStructureProfile root;
         public static TaskCompletionSource<bool> foldersCreated;
-        void Awake()
+        public FileStructureProfile root;
+
+        private void Awake()
         {
             Setup();
         }
 
-        void Setup()
+        private void Setup()
         {
-        foldersCreated = new TaskCompletionSource<bool>();
-        foreach (string s in List(root))
-            {
-                createFolder(s);
-            }
+            foldersCreated = new TaskCompletionSource<bool>();
+            foreach (var s in List(root)) createFolder(s);
             foldersCreated.SetResult(true);
         }
 
 
-        string[] List(FileStructureProfile profile)
+        private string[] List(FileStructureProfile profile)
         {
             if (profile == null) return new string[0];
-            string path = "/" + profile.name;
-            List<string> paths = new List<string>();
+            var path = "/" + profile.name;
+            var paths = new List<string>();
             paths.Add(path);
-            foreach (FileStructureProfile fS in profile.subStructures)
+            foreach (var fS in profile.subStructures)
             {
-                string[] subList = List(fS);
-                string[] resultList = new string[subList.Length];
-                int i = 0;
-                foreach (string subpath in subList)
+                var subList = List(fS);
+                var resultList = new string[subList.Length];
+                var i = 0;
+                foreach (var subpath in subList)
                 {
                     resultList[i] = path + subpath;
                     i++;
                 }
+
                 paths.AddRange(resultList);
             }
+
             return paths.ToArray();
         }
 
         public static void deleteFolder(string path)
         {
-            string filePath = Application.persistentDataPath + path;
-            if (Directory.Exists(filePath))
-            {
-                Directory.Delete(filePath, true);
-            }
+            var filePath = Application.persistentDataPath + path;
+            if (Directory.Exists(filePath)) Directory.Delete(filePath, true);
         }
 
         public static void createFolder(string path, bool persistent = true)
         {
-            string filePath = (persistent ? Application.persistentDataPath : "") + path;
+            var filePath = (persistent ? Application.persistentDataPath : "") + path;
 
-            UnityEngine.Debug.Log("Erstelle Ordner: " + filePath);
+            Debug.Log("Erstelle Ordner: " + filePath);
             try
             {
                 if (!Directory.Exists(filePath))
-                {
                     Directory.CreateDirectory(filePath);
-                }
-                else UnityEngine.Debug.Log("Ordner gibt es schon");
-
+                else Debug.Log("Ordner gibt es schon");
             }
             catch (IOException ex)
             {
-                UnityEngine.Debug.Log(ex.Message);
+                Debug.Log(ex.Message);
             }
         }
     }

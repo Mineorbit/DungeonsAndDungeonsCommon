@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -10,11 +8,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Vector3 spawnOffset;
 
-        GameObject spawnedItem;
+        private readonly int maxSpawnCount = 1;
 
-        int maxSpawnCount = 1;
+        private int spawnCount = 1;
 
-        int spawnCount = 1;
+        private GameObject spawnedItem;
+
+        //Change to on remove
+
+        public void OnDestroy()
+        {
+            RemoveSpawnedItem();
+        }
 
         public override void OnStartRound()
         {
@@ -26,14 +31,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetCollider();
         }
 
-        void SetCollider()
+        private void SetCollider()
         {
-            bool full_collider = Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test || Level.instantiateType == Level.InstantiateType.Online;
+            var full_collider = Level.instantiateType == Level.InstantiateType.Play ||
+                                Level.instantiateType == Level.InstantiateType.Test ||
+                                Level.instantiateType == Level.InstantiateType.Online;
             GetComponent<Collider>().enabled = !full_collider;
             GetComponent<Collider>().isTrigger = full_collider;
         }
 
-        void Setup()
+        private void Setup()
         {
             spawnCount = maxSpawnCount;
             SpawnItem();
@@ -41,24 +48,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetCollider();
         }
 
-        //Change to on remove
 
-        public void OnDestroy()
-        {
-            RemoveSpawnedItem();
-        }
-
-        
-
-
-        void RemoveSpawnedItem(bool physics = true)
+        private void RemoveSpawnedItem(bool physics = true)
         {
             Debug.Log("Trying to Remove");
 
-            if (spawnedItem != null)
-            {
-                LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>(), physics: physics);
-            }
+            if (spawnedItem != null) LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>(), physics);
         }
 
         public override void OnInit()
@@ -72,15 +67,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnDeInit();
             SetCollider();
             if (spawnedItem != null && spawnedItem.GetComponent<Item>().isEquipped)
-                RemoveSpawnedItem(physics: false);
+                RemoveSpawnedItem(false);
         }
 
-        Vector3 SpawnLocation()
+        private Vector3 SpawnLocation()
         {
             return transform.position + spawnOffset;
         }
 
-        Quaternion SpawnRotation()
+        private Quaternion SpawnRotation()
         {
             return transform.rotation;
         }
@@ -88,14 +83,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void SpawnItem()
         {
             if (spawnedItem == null)
-            {
-                spawnedItem = LevelManager.currentLevel.AddDynamic( itemToSpawn, SpawnLocation(), SpawnRotation());
-            }
+                spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation());
             else
-            {
                 LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), SpawnRotation());
-            }
         }
-
     }
 }

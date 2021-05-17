@@ -1,25 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class Hitbox : MonoBehaviour
     {
-
         public UnityEvent<GameObject> enterEvent = new UnityEvent<GameObject>();
         public UnityEvent<GameObject> exitEvent = new UnityEvent<GameObject>();
-        
+
         public Collider collider;
 
-        string targetTag;
+        private bool isAttached;
 
-        bool isAttached = false;
+        private string targetTag;
 
-        void Start()
+        private void Start()
         {
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == targetTag)
+            {
+                Debug.Log(other.gameObject.name + " inside");
+                enterEvent.Invoke(other.gameObject);
+            }
+        }
+
+        public void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == targetTag) exitEvent.Invoke(other.gameObject);
         }
 
         public void Attach(string target)
@@ -40,34 +50,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Activate()
         {
             if (isAttached)
-            {
                 collider.enabled = true;
-            }
-            else Debug.Log("Hitbox "+gameObject.name+" was not attached");
+            else Debug.Log("Hitbox " + gameObject.name + " was not attached");
         }
 
         public void Deactivate()
         {
-            if (isAttached)
-            { 
-                collider.enabled = false;
-            }
-        }
-
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == targetTag)
-            {
-                Debug.Log(other.gameObject.name+" inside");
-                enterEvent.Invoke(other.gameObject);
-            }
-        }
-        public void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.tag == targetTag)
-            {
-                exitEvent.Invoke(other.gameObject);
-            }
+            if (isAttached) collider.enabled = false;
         }
     }
 }

@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class Item : NetworkLevelObject
     {
-
         public Rigidbody rigidBody;
 
         public float useTime = 0.25f;
@@ -31,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void OnDettach()
         {
             isEquipped = false;
-            LevelManager.currentLevel.AddToDynamic(this.gameObject);
+            LevelManager.currentLevel.AddToDynamic(gameObject);
 
 
             rigidBody.useGravity = true;
@@ -47,7 +43,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void StopUse()
         {
             onStopUseEvent.Invoke();
-
         }
     }
 }

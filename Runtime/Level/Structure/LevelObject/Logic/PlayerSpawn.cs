@@ -1,20 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
+    public class PlayerSpawn : Spawn
+    {
+        public enum Color
+        {
+            Blue = 0,
+            Red,
+            Green,
+            Yellow
+        }
 
-
-public class PlayerSpawn : Spawn
-{
-
-        public enum Color { Blue = 0, Red, Green, Yellow };
         public Color color;
         public ColorChanger colorChanger;
 
-        UnityEngine.Color GetColor(Color c)
+        private void Start()
         {
-            switch(c)
+        }
+
+
+        // Update is called once per frame
+        private void Update()
+        {
+        }
+
+        private UnityEngine.Color GetColor(Color c)
+        {
+            switch (c)
             {
                 case Color.Blue:
                     return UnityEngine.Color.blue;
@@ -25,31 +36,22 @@ public class PlayerSpawn : Spawn
                 case Color.Yellow:
                     return UnityEngine.Color.yellow;
             }
+
             return UnityEngine.Color.white;
         }
-    public override void OnInit()
-    {
-            if (LevelManager.currentLevel.spawn[(int)color] != null && LevelManager.currentLevel.spawn[(int)color] != this)
-			{
-                LevelManager.currentLevel.Remove(this.gameObject);
-			}else
-			{
-            LevelManager.currentLevel.spawn[(int)color] = this;
-            colorChanger.SetColor(0,GetColor(color));
-			}
-    }
-    
-    void Start()
-    {
-        
-    }
-	
-	
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
 
+        public override void OnInit()
+        {
+            if (LevelManager.currentLevel.spawn[(int) color] != null &&
+                LevelManager.currentLevel.spawn[(int) color] != this)
+            {
+                LevelManager.currentLevel.Remove(gameObject);
+            }
+            else
+            {
+                LevelManager.currentLevel.spawn[(int) color] = this;
+                colorChanger.SetColor(0, GetColor(color));
+            }
+        }
+    }
 }

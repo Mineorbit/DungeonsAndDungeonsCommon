@@ -1,41 +1,41 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Net;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Events;
-using System;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-
     public class NetworkManager : MonoBehaviour
     {
         public static NetworkManager instance;
-
-        public List<PacketBinding> packetBindings = new List<PacketBinding>();
 
         public static List<NetworkHandler> networkHandlers = new List<NetworkHandler>();
 
         public static bool isConnected;
 
-        
-        public Client client;
-
-        public static List<Client> allClients =  new List<Client>();
-
-        public int localId;
+        public static List<Client> allClients = new List<Client>();
         public static string userName;
 
         public static UnityEvent connectEvent = new UnityEvent();
         public static UnityEvent disconnectEvent = new UnityEvent();
         public static UnityEvent prepareRoundEvent = new UnityEvent();
-        public static UnityEvent   startRoundEvent = new UnityEvent();
+        public static UnityEvent startRoundEvent = new UnityEvent();
         public static UnityEvent winEvent = new UnityEvent();
-        public static UnityEvent<Tuple<int,bool>> readyEvent = new UnityEvent<Tuple<int,bool>>();
+        public static UnityEvent<Tuple<int, bool>> readyEvent = new UnityEvent<Tuple<int, bool>>();
+
+        private static Action onConnectAction;
+
+        public List<PacketBinding> packetBindings = new List<PacketBinding>();
+
+        public int localId;
+
+
+        public Client client;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             if (instance != null)
                 Destroy(this);
@@ -45,31 +45,39 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // THIS IS A STUPID PLACE BUT WILL CHANGE LATER
             Time.fixedDeltaTime = 0.01f;
 
-            foreach (PacketBinding p in packetBindings)
-            {
-                p.AddToBinding();
-            }
+            foreach (var p in packetBindings) p.AddToBinding();
         }
 
-        static Action onConnectAction;
+
+        public void FixedUpdate()
+        {
+            foreach (var c in allClients) c.FixedUpdate();
+        }
+
+        //Factor this out into GameLogic
+
+
+        public void OnDestroy()
+        {
+            Disconnect();
+        }
+
         public void Connect(string ip, string playerName, Action onConnect)
         {
-            if(!isConnected)
+            if (!isConnected)
             {
-            onConnectAction = onConnect;
-            userName = playerName;
-            Task<Client> t = Task.Run(async () => await Client.Connect(System.Net.IPAddress.Parse(ip), 13565));
-            client = t.Result;
-            client.onConnectEvent.AddListener(OnConnected);
-                
+                onConnectAction = onConnect;
+                userName = playerName;
+                var t = Task.Run(async () => await Client.Connect(IPAddress.Parse(ip), 13565));
+                client = t.Result;
+                client.onConnectEvent.AddListener(OnConnected);
+
 
                 //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
-
             }
-
         }
 
-        public  void OnConnected(int id)
+        public void OnConnected(int id)
         {
             MainCaller.Do(() =>
             {
@@ -80,42 +88,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
-        void SetNetworkHandlers(bool v)
+        private void SetNetworkHandlers(bool v)
         {
-            foreach(NetworkHandler h in networkHandlers)
-            {
-                h.enabled = v;
-            }
-        }
-
-        
-
-        public void FixedUpdate()
-        {
-            foreach(Client c in allClients)
-            {
-                c.FixedUpdate();
-            }
+            foreach (var h in networkHandlers) h.enabled = v;
         }
 
         public void Disconnect(bool respond = true)
         {
-            if(isConnected)
-            { 
-                isConnected = false;
-                if(client != null)
-                client.Disconnect(respond: respond);
-                disconnectEvent.Invoke();
+            if (!isConnected)
+            {
+                return;
             }
-        }
 
-        //Factor this out into GameLogic
-
-        
-
-        public void OnDestroy()
-        {
-            Disconnect();
+            isConnected = false;
+                if (client != null)
+                    client.Disconnect(respond);
+                disconnectEvent.Invoke();
         }
     }
 }

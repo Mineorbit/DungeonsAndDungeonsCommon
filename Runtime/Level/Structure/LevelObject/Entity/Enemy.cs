@@ -1,72 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.AI;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Enemy : Entity
     {
-
         public new EnemyController controller;
-
-
-        public FSM<EnemyState, Enemy.EnemyAction> FSM;
 
         public float viewDistance = 15;
         public float attackDistance = 4;
 
         // Enemy Properties
 
-        public bool forgetPlayer = false;
+        public bool forgetPlayer;
 
-        public bool seeThroughWalls = false;
+        public bool seeThroughWalls;
         public int damage = 5;
 
 
         public float currentDamage;
 
-        public class EnemyState : CustomEnum
-        {
 
-            public EnemyState(string val, int card) : base(val, card)
-            {
-                Value = val;
-                cardinal = card;
-            }
-
-            public static EnemyState Idle = new EnemyState("Idle",1);
-            public static EnemyState PrepareStrike = new EnemyState("PrepareStrike",2);
-            public static EnemyState Attack = new EnemyState("Attack",3);
-
-        }
-
-
-        public class EnemyAction : CustomEnum
-        {
-            public EnemyAction(string val,int card) : base(val, card)
-            {
-                Value = val;
-                cardinal = card;
-            }
-
-            public static EnemyAction Engage = new EnemyAction("Engage", 1);
-            public static EnemyAction Disengage = new EnemyAction("Disengage", 2);
-            public static EnemyAction Attack = new EnemyAction("Attack", 3);
-            
-        }
-
-        
-
-        public void TryDamage(GameObject g, float damage)
-        {
-            Entity c = g.GetComponentInParent<Entity>(includeInactive: true);
-            if (c != null)
-            {
-                Debug.Log(c.gameObject.name + " hit with " + damage);
-                c.Hit(this, (int)damage);
-            }
-        }
+        public FSM<EnemyState, EnemyAction> FSM;
 
         public override void Update()
         {
@@ -74,20 +29,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public virtual  void OnEnable()
+        public virtual void OnEnable()
         {
             controller = GetComponent<EnemyController>();
-            UnityEngine.AI.NavMeshAgent n = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            var n = GetComponent<NavMeshAgent>();
             if (n != null) n.enabled = true;
             controller.enabled = true;
         }
+
         public virtual void OnDisable()
         {
-
             controller = GetComponent<EnemyController>();
-            UnityEngine.AI.NavMeshAgent n = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            var n = GetComponent<NavMeshAgent>();
             if (n != null) n.enabled = false;
             controller.enabled = false;
+        }
+
+
+        public void TryDamage(GameObject g, float damage)
+        {
+            var c = g.GetComponentInParent<Entity>(true);
+            if (c != null)
+            {
+                Debug.Log(c.gameObject.name + " hit with " + damage);
+                c.Hit(this, (int) damage);
+            }
         }
 
 
@@ -102,7 +68,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             controller.lastSeenPlayer = null;
         }
 
-        
 
         public EnemyState getState()
         {
@@ -113,6 +78,32 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             FSM.state = state;
         }
-        
+
+        public class EnemyState : CustomEnum
+        {
+            public static EnemyState Idle = new EnemyState("Idle", 1);
+            public static EnemyState PrepareStrike = new EnemyState("PrepareStrike", 2);
+            public static EnemyState Attack = new EnemyState("Attack", 3);
+
+            public EnemyState(string val, int card) : base(val, card)
+            {
+                Value = val;
+                cardinal = card;
+            }
+        }
+
+
+        public class EnemyAction : CustomEnum
+        {
+            public static EnemyAction Engage = new EnemyAction("Engage", 1);
+            public static EnemyAction Disengage = new EnemyAction("Disengage", 2);
+            public static EnemyAction Attack = new EnemyAction("Attack", 3);
+
+            public EnemyAction(string val, int card) : base(val, card)
+            {
+                Value = val;
+                cardinal = card;
+            }
+        }
     }
 }
