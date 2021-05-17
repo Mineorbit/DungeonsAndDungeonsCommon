@@ -32,6 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static UnityEvent prepareRoundEvent = new UnityEvent();
         public static UnityEvent   startRoundEvent = new UnityEvent();
         public static UnityEvent winEvent = new UnityEvent();
+        public static UnityEvent<Tuple<int,bool>> readyEvent = new UnityEvent<Tuple<int,bool>>();
 
         // Start is called before the first frame update
         void Start()
