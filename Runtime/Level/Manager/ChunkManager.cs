@@ -22,6 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
         public Dictionary<long, bool> chunkLoaded = new Dictionary<long, bool>();
+        public Dictionary<long, bool> finishedChunkLoaded = new Dictionary<long, bool>();
 
 
         public enum LoadType { Disk, Net }
@@ -221,9 +222,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             List<LevelObjectInstanceData> levelObjectInstances = new List<LevelObjectInstanceData>();
                 levelObjectInstances.AddRange(chunkData.levelObjects);
-                Debug.Log(chunkData.chunkId+" adding "+levelObjectInstances.Count+" Objects");
+                int counter = levelObjectInstances.Count;
+                UnityEngine.Debug.Log(chunkData.chunkId+" adding "+counter+" Objects");
                 foreach (LevelObjectInstanceData i in levelObjectInstances)
                 {
+                    counter--;
                     if(immediate)
                     {
                          LevelManager.currentLevel.Add(i);
@@ -235,6 +238,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                          Debug.Log("Adding "+i.ToString());
                          LevelManager.currentLevel.Add(i);
                         });
+                    }
+
+                    if(counter == 0)
+                    {
+                        if(!instance.finishedChunkLoaded.ContainsKey(chunkData.chunkId))
+                        { 
+                            instance.finishedChunkLoaded.Add(chunkData.chunkId,true);
+                        }
+                        else
+                        {
+                            instance.finishedChunkLoaded[chunkData.chunkId] = true;
+                        }
                     }
                 }
 
