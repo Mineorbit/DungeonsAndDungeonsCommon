@@ -257,7 +257,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else if(!TCP)
             {
-                Debug.Log("Over " + udpClient);
                 udpClient.Send(result, 0);
             }
 
