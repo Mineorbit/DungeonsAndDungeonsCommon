@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 using General;
 using State;
-using NetLevel;
+using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
-{ 
-public class NetworkManagerHandler : NetworkHandler
 {
+    public class NetworkManagerHandler : NetworkHandler
+    {
         public new NetworkManager observed;
+
         public static void RequestPrepareRound()
         {
-            PrepareRound prepareRound = new PrepareRound
+            var prepareRound = new PrepareRound
             {
                 Message = "READY, STEADY",
                 LevelMetaData = LevelMetaData.ToNetData(LevelManager.currentLevelMetaData)
@@ -22,34 +21,41 @@ public class NetworkManagerHandler : NetworkHandler
 
         public static void RequestStartRound()
         {
-            StartRound startRound = new StartRound
+            var startRound = new StartRound
             {
                 Message = "GO"
             };
-            Marshall(typeof(NetworkManagerHandler),startRound);
+            Marshall(typeof(NetworkManagerHandler), startRound);
         }
 
         public static void RequestWinRound()
         {
-            State.WinRound winRound = new State.WinRound();
+            var winRound = new WinRound();
             Marshall(typeof(NetworkManagerHandler), winRound);
+        }
+
+        public static void RequestReadyRound()
+        {
+            var readyRound = new ReadyRound();
+            Marshall(typeof(NetworkManagerHandler), readyRound);
         }
 
         [PacketBinding.Binding]
         public static void OnDisconnect(Packet p)
         {
             MeDisconnect meDisconnect;
-            if(p.Content.TryUnpack<MeDisconnect>(out meDisconnect))
+            if (p.Content.TryUnpack(out meDisconnect))
             {
-                int localId = p.Sender;
+                var localId = p.Sender;
 
-                if(isOnServer)
+                if (isOnServer)
                 {
-                    Server.instance.clients[localId].Disconnect(respond: false);
+                    Server.instance.clients[localId].Disconnect(false);
                     PlayerManager.playerManager.Remove(localId);
                 }
-                else {
-                    NetworkManager.instance.Disconnect(respond: false);
+                else
+                {
+                    NetworkManager.instance.Disconnect(false);
                 }
             }
         }
@@ -59,20 +65,14 @@ public class NetworkManagerHandler : NetworkHandler
         public static void PrepareRound(Packet p)
         {
             Debug.Log("Preparing Round");
-            MainCaller.Do(() =>
-            {
-                NetworkManager.prepareRoundEvent.Invoke();
-            });
+            MainCaller.Do(() => { NetworkManager.prepareRoundEvent.Invoke(); });
             NetLevel.LevelMetaData netData = null;
             PrepareRound prepareRound;
-            if(p.Content.TryUnpack<PrepareRound>(out prepareRound))
+            if (p.Content.TryUnpack(out prepareRound)) netData = prepareRound.LevelMetaData;
+            if (netData != null)
             {
-                netData = prepareRound.LevelMetaData;
-            }
-            if(netData != null)
-            {
-            LevelMetaData levelMetaData = LevelMetaData.FromNetData(netData);
-            MainCaller.Do(() => { LevelDataManager.New(levelMetaData,saveImmediately: false); });
+                var levelMetaData = LevelMetaData.FromNetData(netData);
+                MainCaller.Do(() => { LevelDataManager.New(levelMetaData, saveImmediately: false); });
             }
         }
 
@@ -91,6 +91,14 @@ public class NetworkManagerHandler : NetworkHandler
         public static void WinRound(Packet p)
         {
             MainCaller.Do(() => { NetworkManager.winEvent.Invoke(); });
+        }
+
+        [PacketBinding.Binding]
+        public static void ReadyRound(Packet p)
+        {
+            ReadyRound readyRound;
+            if (p.Content.TryUnpack(out readyRound))
+                NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(readyRound.LocalId, readyRound.Ready));
         }
     }
 }
