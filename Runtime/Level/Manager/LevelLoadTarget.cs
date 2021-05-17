@@ -71,12 +71,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void WaitForChunkLoaded(Vector3 position, Action finishAction)
         {
             MainCaller.Do(() => {
-                Debug.Log("Started WAITING");
                 Transform store = target;
                 target = null;
                 transform.position = position;
                 long id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
-                Debug.Log("Loading immediately Chunk ID: " + id);
                 LoadNearChunk(position,immediate: true);
                 Task.Run(async () =>
                 {
