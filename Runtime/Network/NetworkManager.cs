@@ -15,6 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool isConnected;
 
+
         public static List<Client> allClients = new List<Client>();
         public static string userName;
 
@@ -30,6 +31,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public List<PacketBinding> packetBindings = new List<PacketBinding>();
 
         public int localId;
+        
+        public bool ready;
 
 
         public Client client;
@@ -46,6 +49,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Time.fixedDeltaTime = 0.01f;
 
             foreach (var p in packetBindings) p.AddToBinding();
+            
+            
+            
         }
 
 
@@ -104,6 +110,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (client != null)
                     client.Disconnect(respond);
                 disconnectEvent.Invoke();
+        }
+
+        public void CallReady(bool r)
+        {
+            ready = r;
+            NetworkManagerHandler.RequestReadyRound();
         }
     }
 }
