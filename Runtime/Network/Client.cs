@@ -229,9 +229,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
-            if (TCP && tcpClient.Connected)
+            
+            Debug.Log( "TCP: "+TCP +" Sending: " + p);
+            if (TCP)
             {
-                Debug.Log("Sent: " + p);
                 tcpStream.Write(result, 0, result.Length);
             }
             else if (!TCP) 

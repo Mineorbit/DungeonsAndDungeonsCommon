@@ -77,7 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var t = Task.Run(async () => await Client.Connect(IPAddress.Parse(ip), 13565));
                 
                 client = t.Result;
-                Debug.Log("Set new client"+client);
+                Debug.Log("Set new client "+client);
                 client.onConnectEvent.AddListener(OnConnected);
 
 
