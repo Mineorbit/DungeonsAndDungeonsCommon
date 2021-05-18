@@ -101,11 +101,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ReadyRound readyRound;
             if (p.Content.TryUnpack(out readyRound))
             {
-                NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(readyRound.LocalId, readyRound.Ready));
                 if (isOnServer)
                 {
                     Marshall(typeof(NetworkManagerHandler),readyRound);
                 }
+                NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(readyRound.LocalId, readyRound.Ready));
+                
             }
         }
     }
