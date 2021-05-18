@@ -22,7 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             // currently not updated
             if (observed != null)
-                observed.enabled = !NetworkManager.isConnected || isOnServer && disabled_observed;
+                observed.enabled = !disabled_observed || (!NetworkManager.isConnected || isOnServer);
         }
 
 
