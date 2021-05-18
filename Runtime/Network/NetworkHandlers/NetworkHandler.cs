@@ -46,8 +46,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //Fetch Methods
         public virtual void Awake()
         {
-            enabled = NetworkManager.isConnected;
-            if (!enabled) return;
             isOnServer = Server.instance != null;
             NetworkManager.networkHandlers.Add(this);
 
