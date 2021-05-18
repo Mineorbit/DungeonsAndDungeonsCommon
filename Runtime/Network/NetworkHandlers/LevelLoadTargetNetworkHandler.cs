@@ -8,7 +8,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public new LevelLoadTarget observed;
 
-
+        public override void Awake()
+        {
+            disabled_observed = false;
+            base.Awake();
+        }
+        
+        
         [PacketBinding.Binding]
         public static void OnStreamChunk(Packet p)
         {
