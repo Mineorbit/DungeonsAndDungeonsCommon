@@ -35,6 +35,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetComponent<Collider>().enabled = true;
         }
 
+        public override void OnInit()
+        {
+            base.OnInit();
+            this.gameObject.tag = "Item";
+        }
+        
         public virtual void Use()
         {
             onUseEvent.Invoke();
