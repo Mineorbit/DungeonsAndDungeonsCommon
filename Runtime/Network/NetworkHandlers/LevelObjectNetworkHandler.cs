@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private List<string> availableActions = new List<string>();
 
-
+        public bool disabled_observed = true;
         public virtual void Awake()
         {
             observed = GetComponent<NetworkLevelObject>();
@@ -22,7 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             // currently not updated
             if (observed != null)
-                observed.enabled = !NetworkManager.isConnected || isOnServer;
+                observed.enabled = !NetworkManager.isConnected || isOnServer && disabled_observed;
         }
 
 
