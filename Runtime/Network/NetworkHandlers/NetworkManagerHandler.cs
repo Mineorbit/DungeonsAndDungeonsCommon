@@ -37,6 +37,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void RequestReadyRound()
         {
             var readyRound = new ReadyRound();
+            readyRound.Ready = NetworkManager.instance.ready;
+            readyRound.LocalId = NetworkManager.instance.localId;
             Marshall(typeof(NetworkManagerHandler), readyRound);
         }
 
