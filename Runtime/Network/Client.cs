@@ -105,6 +105,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (Connected)
             {
+                NetworkManager.allClients.Remove(this);
+                if(NetworkManager.instance.client == this) NetworkManager.instance.client = null;
                 if (respond)
                 {
                     var meDisconnect = new MeDisconnect();
