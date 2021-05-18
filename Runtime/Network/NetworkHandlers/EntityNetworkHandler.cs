@@ -209,12 +209,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (p.Content.TryUnpack(out entityTeleport))
                 if (observed.loadTarget != null)
-                    observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
-                    {
-                        teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
-                        movementOverride = true;
-                        observed.setMovementStatus(false);
-                    });
+                    
+                    teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
+            observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
+            {
+                movementOverride = true;
+                observed.setMovementStatus(false);
+            });
         }
 
         private void UpdateLocomotion()
