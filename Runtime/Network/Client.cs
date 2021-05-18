@@ -85,16 +85,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static async Task<Client> Connect(IPAddress host, int port)
         {
-            var client = new Client();
+            Client client = new Client {Port = port};
 
-            client.Port = port;
             var createThread = new Thread(() =>
             {
                 CreateTcpClientForClient(client, host, port);
-                client.Connected = true;
                 client.Setup();
             });
 
+            client.Connected = true;
             createThread.IsBackground = true;
             createThread.Start();
 
@@ -120,8 +119,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void CloseConnection()
         {
-            if (packetOutUDPBuffer.Count == 0 && packetOutTCPBuffer.Count == 0 && packetInBuffer.Count == 0 &&
-                !realClosed)
+            if (packetOutUDPBuffer.Count == 0 && packetOutTCPBuffer.Count == 0 && packetInBuffer.Count == 0 && !realClosed)
             {
                 tcpStream.Close();
                 tcpClient.Close();
@@ -236,7 +234,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Sent: " + p);
                 tcpStream.Write(result, 0, result.Length);
             }
-            else if (!TCP) udpClient.Send(result, 0);
+            else if (!TCP) 
+                udpClient.Send(result, 0);
         }
 
         public void WritePacket(Packet p, bool TCP = true)
