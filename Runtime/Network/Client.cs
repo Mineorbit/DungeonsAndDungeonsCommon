@@ -231,10 +231,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
-
-            Debug.Log("Sent: " + p);
             if (TCP && tcpClient.Connected)
+            {
+                Debug.Log("Sent: " + p);
                 tcpStream.Write(result, 0, result.Length);
+            }
             else if (!TCP) udpClient.Send(result, 0);
         }
 
@@ -243,7 +244,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (Connected)
             {
                 p.Sender = localid;
-                Debug.Log("Sending: " + p + " TCP: " + TCP);
                 if (TCP)
                     packetOutTCPBuffer.Enqueue(p);
                 else
