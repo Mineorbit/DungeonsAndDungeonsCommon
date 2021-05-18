@@ -77,10 +77,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var t = Task.Run(async () => await Client.Connect(IPAddress.Parse(ip), 13565));
                 client = t.Result;
                 client.onConnectEvent.AddListener(OnConnected);
-                client.onConnectEvent.AddListener((x) =>
-                {
-                    networkHandlers = networkHandlers.FindAll((x) => x != null);
-                });
 
 
                 //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
@@ -102,8 +98,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             foreach (var h in networkHandlers) 
                 {
-                if(h!=null)
-                h.enabled = v;
+                    if(h!=null)
+                        h.enabled = v;
                 }
         }
 
