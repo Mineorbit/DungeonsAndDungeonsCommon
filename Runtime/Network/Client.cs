@@ -173,7 +173,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void HandlePacket(Packet p)
         {
-            Debug.Log("Handling " + p);
 
             var packetType = Type.GetType(p.Type);
 
@@ -287,7 +286,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private async Task<byte[]> ReadData(bool TCP = true)
         {
-            Debug.Log("Waiting for Data");
             if (TCP)
                 waitingForTcp.WaitOne();
             else
