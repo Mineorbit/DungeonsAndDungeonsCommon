@@ -111,7 +111,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     WritePacket(typeof(NetworkManagerHandler), meDisconnect);
                 }
 
-                UpdateOut();
+                UpdateOut(all: true);
+                
+                packetInBuffer.Clear();
+                packetOutTCPBuffer.Clear();
+                packetOutUDPBuffer.Clear();
+                CloseConnection();
                 Debug.Log("Client " + localid + " disconnected");
                 Connected = false;
             }
@@ -184,12 +189,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             handleThread.Start();
         }
 
-        private void UpdateOut()
+        private void UpdateOut(bool all = false)
         {
             var tcpSent = 0;
             var sendCount = maxSendCount;
             var tcpCarrier = new PacketCarrier();
-            while (packetOutTCPBuffer.Count > 0 && sendCount > 0)
+            while (packetOutTCPBuffer.Count > 0 && (all || sendCount > 0))
             {
                 var p = packetOutTCPBuffer.Dequeue();
                 tcpCarrier.Packets.Add(p);
@@ -203,8 +208,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var udpSent = 0;
             sendCount = maxSendCount;
             var udpCarrier = new PacketCarrier();
-            while (packetOutUDPBuffer.Count > 0 && sendCount > 0)
-            {
+            while (packetOutUDPBuffer.Count > 0 && (all || sendCount > 0))
+
+        {
                 var p = packetOutUDPBuffer.Dequeue();
                 udpCarrier.Packets.Add(p);
                 sendCount--;
