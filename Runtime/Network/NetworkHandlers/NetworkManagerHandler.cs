@@ -52,8 +52,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (isOnServer)
                 {
-                    Server.instance.clients[localId].Disconnect(false);
+                    if (Server.instance.clients[localId] != null)
+                    {
+                        Server.instance.clients[localId].Disconnect(false);
+                    }
+                    if(PlayerManager.playerManager.GetPlayer(localId) != null)
+                    {
                     PlayerManager.playerManager.Remove(localId);
+                    }
                 }
                 else
                 {
