@@ -152,8 +152,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void CreateUdpClientForClient(Client client)
         {
-            client.receivingUdpClient = new UdpClient(client.Port + 5 + client.localid);
-            client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,client.Port + 5 + client.localid);
+            int p = client.Port + 5 + client.localid;
+            Debug.Log("Creating "+p);
+            client.receivingUdpClient = new UdpClient(p);
+            client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,p);
             client.sendingUdpClient = new UdpClient();
         }
 
