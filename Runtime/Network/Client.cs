@@ -44,9 +44,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private IPEndPoint remote;
         public TcpClient tcpClient;
-
         public NetworkStream tcpStream;
-        public UdpClient udpClient;
+        
+        
+        public UdpClient receivingUdpClient;
+        public UdpClient sendingUdpClient;
 
         public string userName;
 
@@ -54,12 +56,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly Semaphore waitingForUdp = new Semaphore(1, 1);
 
 
-        public Client(TcpClient tcpC, UdpClient udpC, int lId, int port)
+        public Client(TcpClient tcpC, UdpClient receivingUdpC, int lId, int port)
         {
             NetworkManager.allClients.Add(this);
             Connected = true;
             tcpClient = tcpC;
-            udpClient = udpC;
+            receivingUdpClient = receivingUdpC;
+            sendingUdpClient = new UdpClient();
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
@@ -90,6 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var createThread = new Thread(() =>
             {
                 CreateTcpClientForClient(client, host, port);
+                CreateUdpClientForClient(client);
                 client.Setup();
             });
 
@@ -130,7 +134,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 tcpStream.Close();
                 tcpClient.Close();
-                udpClient.Close();
+                receivingUdpClient.Close();
                 onDisconnectEvent.Invoke();
                 disconnected.SetResult(true);
                 realClosed = true;
@@ -148,9 +152,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void CreateUdpClientForClient(Client client)
         {
-            client.udpClient = new UdpClient();
-            client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,
-                client.Port + 1 + client.localid);
+            client.receivingUdpClient = new UdpClient(client.Port + 5 + client.localid);
+            client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,client.Port + 5 + client.localid);
+            client.sendingUdpClient = new UdpClient();
         }
 
         public void FixedUpdate()
@@ -242,8 +246,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 int offset = isOnServer?4:0;
                 IPEndPoint r = new IPEndPoint(remote.Address,remote.Port + offset);
-                udpClient.Send(data, data.Length, r);
-                Debug.Log("Send out UDP "+udpClient+" "+r+" "+data.Length);
+                sendingUdpClient.Send(data, data.Length, r);
+                Debug.Log("Send out UDP "+sendingUdpClient+" "+r+" "+data.Length);
             }
         }
 
@@ -317,11 +321,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Reading for UDP on " + r);
                 if(!isOnServer)
                 {
-                    udpResult = udpClient.Receive(ref r);
+                    udpResult = receivingUdpClient.Receive(ref r);
                 }
                 else
                 {
-                    udpResult = udpClient.Receive(ref remote);
+                    udpResult = receivingUdpClient.Receive(ref remote);
                 }
                 Debug.Log("Received something on udp of length "+udpResult.Length);
                 data = new byte[udpResult.Length];
