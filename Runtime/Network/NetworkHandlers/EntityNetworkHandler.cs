@@ -239,7 +239,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     };
 
                     // UDP IS BROKEN THIS NEEDS A FIX LATER
-                    Marshall(entityLocomotion, owner, false);
+                    Marshall(entityLocomotion, owner, false, false);
                     lastSentPosition = pos;
                 }
             }
