@@ -93,7 +93,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var createThread = new Thread(() =>
             {
                 CreateTcpClientForClient(client, host, port);
-                CreateUdpClientForClient(client);
                 client.Setup();
             });
 
@@ -153,9 +152,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void CreateUdpClientForClient(Client client)
         {
             int p = client.Port + 5 + client.localid;
+            Debug.Log("Creating "+p+" "+client.receivingUdpClient);
             if(client.receivingUdpClient == null)
             {
-                Debug.Log("Creating "+p);
                 client.receivingUdpClient = new UdpClient(p);
                 client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,p);
                 client.sendingUdpClient = new UdpClient();
