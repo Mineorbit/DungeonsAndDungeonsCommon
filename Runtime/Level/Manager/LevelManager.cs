@@ -81,11 +81,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static Vector3 GetGridPosition(Vector3 exactPosition, LevelObjectData levelObjectData)
         {
             float g = 1;
-            if (levelObjectData == null && levelObjectData.granularity != 0)
+            if (levelObjectData != null && levelObjectData.granularity != 0)
                 g = levelObjectData.granularity;
 
-            return g * new Vector3(Mathf.Round(exactPosition.x / g), Mathf.Round(exactPosition.y / g),
+            Vector3 pos = g * new Vector3(Mathf.Round(exactPosition.x / g), Mathf.Round(exactPosition.y / g),
                 Mathf.Round(exactPosition.z / g));
+            //Debug.Log(levelObjectData+" from "+exactPosition+" "+g+" to "+pos);
+            return pos;
         }
 
         public static void Clear()
