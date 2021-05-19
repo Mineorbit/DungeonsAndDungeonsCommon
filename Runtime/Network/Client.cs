@@ -151,11 +151,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.udpClient = new UdpClient();
             client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,
                 client.Port + 1 + client.localid);
-            Debug.Log("Connecting UDP to: " + client.remote);
-
-            client.udpClient.Client.SetSocketOption(
-                SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            //client.udpClient.Connect(client.remote);
         }
 
         public void FixedUpdate()
