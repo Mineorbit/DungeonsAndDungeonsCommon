@@ -248,8 +248,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else if (!TCP)
             {
-                int offset = !isOnServer?-4:0;
-                IPEndPoint r = new IPEndPoint(remote.Address,remote.Port + offset);
+                int offset = !isOnServer?13565+1+localid:13565+5+localid;
+                IPEndPoint r = new IPEndPoint(remote.Address,offset);
                 sendingUdpClient.Send(data, data.Length, r);
                 Debug.Log("Send out UDP "+sendingUdpClient+" "+r+" "+data.Length);
             }
