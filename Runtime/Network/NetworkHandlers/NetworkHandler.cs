@@ -48,6 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             enabled = Level.instantiateType == Level.InstantiateType.Play ||
+                      Level.instantiateType == Level.InstantiateType.Default ||
                       Level.instantiateType == Level.InstantiateType.Online;
             if (!enabled) return;
             isOnServer = Server.instance != null;
