@@ -243,7 +243,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 tcpStream.Write(result, 0, result.Length);
             }
             else if (!TCP)
+            {
                 udpClient.Send(data, data.Length, remote);
+                Debug.Log("Send out UDP "+udpClient+" "+remote+" "+data.Length);
+            }
         }
 
         public void WritePacket(Packet p, bool TCP = true)
