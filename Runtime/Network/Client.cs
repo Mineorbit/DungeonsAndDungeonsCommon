@@ -248,7 +248,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else if (!TCP)
             {
-                int offset = isOnServer?4:0;
+                int offset = !isOnServer?0:-4;
                 IPEndPoint r = new IPEndPoint(remote.Address,remote.Port + offset);
                 sendingUdpClient.Send(data, data.Length, r);
                 Debug.Log("Send out UDP "+sendingUdpClient+" "+r+" "+data.Length);
@@ -320,7 +320,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                int offset = !isOnServer?4:0;
+                int offset = !isOnServer?0:-4;
                 IPEndPoint r = new IPEndPoint(remote.Address,remote.Port + offset);
                 Debug.Log("Reading for UDP on " + r);
                 if(!isOnServer)
