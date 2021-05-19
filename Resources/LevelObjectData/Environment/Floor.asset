@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Floor
   m_EditorClassIdentifier: 
   prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
-  cursorMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   uniqueLevelObjectId: 4b94defe-f8c8-4a56-8c36-542f9add82fe
-  granularity: 4
+  granularity: 1
   name: Floorpiece
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}
