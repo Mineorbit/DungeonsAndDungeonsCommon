@@ -320,7 +320,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                int offset = !isOnServer?0:-4;
+                int offset = !isOnServer?0:4;
                 IPEndPoint r = new IPEndPoint(remote.Address,remote.Port + offset);
                 Debug.Log("Reading for UDP on " + r);
                 if(!isOnServer)
