@@ -49,6 +49,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var i = GetFreeSlot();
             int udpPort = port + 1 + i;
             UdpClient udClient = new UdpClient(udpPort);
+            udClient.Client.SetSocketOption(
+                SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             if (i == -1)
             {
                 tpClient.Close();
