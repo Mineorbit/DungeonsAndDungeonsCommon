@@ -315,7 +315,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int offset = !isOnServer?4:0;
                 IPEndPoint r = new IPEndPoint(remote.Address,remote.Port + offset);
                 Debug.Log("Reading for UDP on " + r);
-                udpResult = udpClient.Receive(ref r);
+                if(!isOnServer)
+                {
+                    udpResult = udpClient.Receive(ref r);
+                }
+                else
+                {
+                    udpResult = udpClient.Receive(ref remote);
+                }
                 Debug.Log("Received something on udp of length "+udpResult.Length);
                 data = new byte[udpResult.Length];
                 Array.Copy(udpResult, 0, data, 0, udpResult.Length);
