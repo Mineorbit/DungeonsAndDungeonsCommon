@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             observed = GetComponent<NetworkLevelObject>();
             base.Awake();
-
+            
             // currently not updated
             if (observed != null)
                 observed.enabled = !disabled_observed || (!NetworkManager.isConnected || isOnServer);

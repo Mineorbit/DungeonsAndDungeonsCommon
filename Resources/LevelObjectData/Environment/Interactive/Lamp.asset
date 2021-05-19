@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: Lamp
   m_EditorClassIdentifier: 
-  prefab: {fileID: 433431058839000012, guid: a55b95c6dc554fb40ad362c7b3b82769, type: 3}
+  prefab: {fileID: 4050017276492842089, guid: 3f32ac060151a6843be8be56925e45ce, type: 3}
   uniqueLevelObjectId: 6f310597-8edb-470d-b5a7-0f1b4cce1142
-  granularity: 1
+  granularity: 0.5
   name: Lamp
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   cursorMesh: {fileID: -5495902117074765545, guid: 8abd70e4d1f5ed54392c0d680ac67e68, type: 3}
-  cursorScale: {x: 1, y: 1, z: 1}
+  cursorScale: {x: 100, y: 100, z: 100}
   cursorOffset: {x: 0, y: 0, z: 0}
-  cursorRotation: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: -90, y: 0, z: 0}

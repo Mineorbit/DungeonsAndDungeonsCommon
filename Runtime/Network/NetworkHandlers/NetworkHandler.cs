@@ -46,9 +46,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //Fetch Methods
         public virtual void Awake()
         {
+
+            enabled = Level.instantiateType == Level.InstantiateType.Play ||
+                      Level.instantiateType == Level.InstantiateType.Online;
+            if (!enabled) return;
             isOnServer = Server.instance != null;
             NetworkManager.networkHandlers.Add(this);
-
+            
+            
+            
             SetupLocalMarshalls();
             if (isOnServer)
                 Identity = GetInstanceID().ToString();
