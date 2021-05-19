@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private bool realClosed;
 
-        private IPEndPoint remoteIPUdp;
+        private IPEndPoint remote;
         public TcpClient tcpClient;
 
         public NetworkStream tcpStream;
@@ -63,7 +63,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
-            remoteIPUdp = new IPEndPoint(other, port + 1 + lId);
+            remote = new IPEndPoint(other, port + 1 + lId);
         }
 
         public Client()
@@ -149,12 +149,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void CreateUdpClientForClient(Client client)
         {
             client.udpClient = new UdpClient();
-            client.remoteIPUdp = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,
+            client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,
                 client.Port + 1 + client.localid);
-            Debug.Log("Connecting UDP to: " + client.remoteIPUdp);
+            Debug.Log("Connecting UDP to: " + client.remote);
 
 
-            client.udpClient.Connect(client.remoteIPUdp);
+            client.udpClient.Connect(client.remote);
         }
 
         public void FixedUpdate()
@@ -211,15 +211,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             sendCount = maxSendCount;
             var udpCarrier = new PacketCarrier();
             while (packetOutUDPBuffer.Count > 0 && (all || sendCount > 0))
-
-        {
+            {
                 var p = packetOutUDPBuffer.Dequeue();
                 udpCarrier.Packets.Add(p);
                 sendCount--;
                 udpSent++;
             }
-
-            //WriteOut(tcpCarrier,TCP: false);
+            if(udpSent > 0)
+                WriteOut(udpCarrier,TCP: false);
         }
 
 
@@ -243,8 +242,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 tcpStream.Write(result, 0, result.Length);
             }
-            else if (!TCP) 
-                udpClient.Send(result, 0);
+            else if (!TCP)
+                udpClient.Send(data, data.Length, remote);
         }
 
         public void WritePacket(Packet p, bool TCP = true)
@@ -312,9 +311,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Debug.Log("Reading for UDP on " + remoteIPUdp);
-                udpResult = udpClient.Receive(ref remoteIPUdp);
-                Array.Copy(udpResult, 4, data, 0, udpResult.Length - 4);
+                Debug.Log("Reading for UDP on " + remote);
+                udpResult = udpClient.Receive(ref remote);
+                Debug.Log("Received something on udp of length"+udpResult.Length);
+                data = new byte[udpResult.Length];
+                Array.Copy(udpResult, 0, data, 0, udpResult.Length);
             }
 
 
