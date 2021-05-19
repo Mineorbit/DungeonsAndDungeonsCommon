@@ -56,6 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 var c = new Client(tpClient, udClient, i, port);
+                c.isOnServer = true;
                 clients[i] = c;
                 var handleThread = new Thread(() =>
                 {
