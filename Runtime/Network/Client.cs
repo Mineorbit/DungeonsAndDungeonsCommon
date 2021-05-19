@@ -154,7 +154,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Connecting UDP to: " + client.remote);
 
 
-            client.udpClient.Connect(client.remote);
+            //client.udpClient.Connect(client.remote);
         }
 
         public void FixedUpdate()
@@ -316,7 +316,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Debug.Log("Reading for UDP on " + remote);
                 udpResult = udpClient.Receive(ref remote);
-                Debug.Log("Received something on udp of length"+udpResult.Length);
+                Debug.Log("Received something on udp of length "+udpResult.Length);
                 data = new byte[udpResult.Length];
                 Array.Copy(udpResult, 0, data, 0, udpResult.Length);
             }
