@@ -40,7 +40,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private ItemHandle handle;
 
 
-        private bool hitCooldown;
+        public int maxHealth = 100;
+
+        internal bool hitCooldown;
+
+        public float hitCooldownTime = 1f;
 
         public virtual void Start()
         {
@@ -67,7 +71,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 itemHitbox.Attach("Item");
                 itemHitbox.enterEvent.AddListener(x =>
                 {
-                    Debug.Log("HANLOOOO :D");
                     var i = x.GetComponent<Item>();
                     if (!itemsInProximity.Contains(i)) itemsInProximity.Add(i);
                 });
@@ -108,13 +111,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StartHitCooldown()
         {
             hitCooldown = true;
-            StartCoroutine(HitTimer(1.5f));
+            StartCoroutine(HitTimer(hitCooldownTime));
         }
 
         //EVENTS ALWAYS LAST
         public virtual void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
         {
-            health = 100;
+            health = maxHealth;
             alive = true;
             gameObject.SetActive(true);
             Debug.Log("Spawning " + this + " at " + location);
