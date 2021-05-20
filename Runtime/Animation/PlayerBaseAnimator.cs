@@ -16,9 +16,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             forwardDirection = new Vector3(0, 0, 0);
         }
 
-        public override void Update()
+        public void Update()
         {
-            base.Update();
 
             speed = playerController.currentSpeed;
 
