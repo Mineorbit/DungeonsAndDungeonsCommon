@@ -119,18 +119,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void TrackingEffect(Entity target)
+        private Entity lastVisualTrack = null;
+
+        
+        public void ChangeTrackedEffect(Entity t)
         {
-            if (target == null)
+            if (t == null)
             {
                 baseAnimator.target = null;
+                lastVisualTrack = null;
             }else
-                baseAnimator.target = target.transform;
+            {
+                baseAnimator.target = t.transform;
+                lastVisualTrack = t;
+            }
         }
+        public void ChangeTrackedEffect()
+        {
+            ChangeTrackedEffect(null);
+        }
+        
+        public void TrackingEffect(Entity target)
+        {
+            if (lastVisualTrack != target)
+                Invoke(ChangeTrackedEffect, target);
+        }
+
+        
         
         public void TrackingEffect()
         {
-            TrackingEffect(null);
+            if(lastVisualTrack != null)
+                Invoke(ChangeTrackedEffect);
         }
         
         
@@ -143,7 +163,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.stateAction.Add(EnemyState.Idle, () =>
             {
                 RandomWalk();
-                Invoke(TrackingEffect);
+                TrackingEffect();
                 if (controller.seenPlayer != null) FSM.Move(EnemyAction.Engage);
             });
 
@@ -161,7 +181,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     controller.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
 
 
-                    Invoke(TrackingEffect);
+                    TrackingEffect();
 
                     if (distanceToTarget < attackDistance + eps) FSM.Move(EnemyAction.Attack);
                 }
@@ -183,7 +203,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (!controller.CheckLineOfSight(attackTarget)) FSM.Move(EnemyAction.Engage);
 
 
-                Invoke(TrackingEffect,attackTarget);
+                TrackingEffect(attackTarget);
 
                 if (TimerManager.isRunning(circleTimer))
                 {
@@ -208,7 +228,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.stateAction.Add(BlogState.Strike, () =>
             {
                 var dir = transform.position - attackTarget.transform.position;
-                Invoke(TrackingEffect,attackTarget);
+                TrackingEffect(attackTarget);
                 controller.GoTo(attackTarget.transform.position);
             });
 
