@@ -275,7 +275,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             base.OnStartRound();
-            health = 100;
+            health = maxHealth;
 
 
             attackHitbox.Attach("Player");
@@ -299,9 +299,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private void Strike(float damage)
+        public void StrikeEffect()
         {
             baseAnimator.Strike();
+        }
+        
+        private void Strike(float damage)
+        {
+            Invoke(StrikeEffect);
             Attack(damage);
         }
 

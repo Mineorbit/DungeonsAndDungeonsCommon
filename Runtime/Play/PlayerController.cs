@@ -115,7 +115,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (!IsGrounded && doSim) speedY -= gravity * Time.deltaTime;
             if (IsGrounded || !doSim) speedY = 0;
-            if (!activated) targetDirection = new Vector3(0, 0, 0);
+            targetDirection = new Vector3(0, 0, 0);
 
             if (doInput && takeInput)
             {

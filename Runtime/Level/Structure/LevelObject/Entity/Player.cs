@@ -26,10 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly bool alive = true;
         private readonly float cooldownTime = 2f;
 
-        private bool hitCooldown;
 
-
-        private float skipDistance = 5f;
 
 
         public int localId
@@ -207,36 +204,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void StopUseRight()
         {
-            Debug.Log("JJJJAAAY");
             var h = GetRightHandle();
             if (h != null)
             {
-                Debug.Log("JJJJAAAY");
                 StopUseHandle(h);
             }
-        }
-
-        private IEnumerator HitTimer(float time)
-        {
-            yield return new WaitForSeconds(time);
-            hitCooldown = false;
-        }
-
-
-        private void StartHitCooldown()
-        {
-            hitCooldown = true;
-            StartCoroutine(HitTimer(cooldownTime));
-        }
-
-        public override void Hit(Entity hitter, int damage)
-        {
-            base.Hit(hitter, damage);
-        }
-
-        public override void Kill()
-        {
-            base.Kill();
         }
     }
 }
