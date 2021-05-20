@@ -26,6 +26,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private TimerManager.Timer finishStrikeTimer;
 
+        private float maxTrackTime = 10f;
+
         private TimerManager.Timer maximumTrackTimer;
 
         private Random rand;
@@ -44,6 +46,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         private Entity targetEntity;
+        
+        
+        public float damageMultiplier = 2;
+        public float baseDamage = 10;
+
+        public float strikeDuration = 0.025f;
+        
 
 
         public override void OnEnable()
@@ -109,6 +118,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.Move(EnemyAction.Attack);
         }
 
+
+        public void TrackingEffect(Entity target)
+        {
+            if (target == null)
+            {
+                baseAnimator.target = null;
+            }else
+                baseAnimator.target = target.transform;
+        }
+        
+        public void TrackingEffect()
+        {
+            TrackingEffect(null);
+        }
+        
+        
         private void SetupBlogFSM()
         {
             Debug.Log("Setup FSM");
@@ -118,8 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.stateAction.Add(EnemyState.Idle, () =>
             {
                 RandomWalk();
-                baseAnimator.target = null;
-
+                Invoke(TrackingEffect);
                 if (controller.seenPlayer != null) FSM.Move(EnemyAction.Engage);
             });
 
@@ -137,7 +161,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     controller.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
 
 
-                    baseAnimator.target = null;
+                    Invoke(TrackingEffect);
 
                     if (distanceToTarget < attackDistance + eps) FSM.Move(EnemyAction.Attack);
                 }
@@ -159,7 +183,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (!controller.CheckLineOfSight(attackTarget)) FSM.Move(EnemyAction.Engage);
 
 
-                baseAnimator.target = attackTarget.transform;
+                Invoke(TrackingEffect,attackTarget);
 
                 if (TimerManager.isRunning(circleTimer))
                 {
@@ -184,7 +208,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FSM.stateAction.Add(BlogState.Strike, () =>
             {
                 var dir = transform.position - attackTarget.transform.position;
-                baseAnimator.target = attackTarget.transform;
+                Invoke(TrackingEffect,attackTarget);
                 controller.GoTo(attackTarget.transform.position);
             });
 
@@ -206,7 +230,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     forgetPlayer = false;
                     attackTarget = targetEntity;
                     StopTrackTarget(false);
-                    Debug.Log("Attacking " + attackTarget.gameObject.name);
                     t = 0;
                     TryStrike();
                 }, EnemyState.Attack));
@@ -217,8 +240,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     forgetPlayer = false;
                     attackTarget = targetEntity;
                     StopTrackTarget(false);
-
-                    Debug.Log("Attacking " + attackTarget.gameObject.name);
                     t = 0;
                     TryStrike();
                 }, EnemyState.Attack));
@@ -230,8 +251,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     forgetPlayer = false;
                     attackTarget = targetEntity;
                     StopTrackTarget(false);
-
-                    Debug.Log("Attacking " + attackTarget.gameObject.name);
                     t = 0;
                     TryStrike();
                 }, EnemyState.Attack));
@@ -253,13 +272,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return targetPoint;
         }
 
-        private void TrackTarget(Entity target)
+        public void TrackTarget(Entity target)
         {
             controller.SetTrackingAbility(true, true);
             if (target == null) FSM.Move(EnemyAction.Disengage);
             targetEntity = target;
 
-            maximumTrackTimer = TimerManager.StartTimer(15f, () =>
+            maximumTrackTimer = TimerManager.StartTimer(maxTrackTime, () =>
             {
                 FSM.Move(EnemyAction.Disengage);
                 if (TimerManager.isRunning(maximumTrackTimer)) TimerManager.StopTimer(maximumTrackTimer);
@@ -294,7 +313,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 controller.GoTo(attackTarget.transform.position);
                 Debug.Log("Blog trying to Strike");
                 FSM.SetState(BlogState.Strike);
-                strikeTimer = TimerManager.StartTimer(1 + 5 * (float) rand.NextDouble(), () => { Strike(10); });
+                strikeTimer = TimerManager.StartTimer(1 + 5 * (float) rand.NextDouble(), () => { Strike(); });
             }
         }
 
@@ -304,20 +323,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             baseAnimator.Strike();
         }
         
-        private void Strike(float damage)
+        private void Strike()
         {
             Invoke(StrikeEffect);
-            Attack(damage);
+            Attack();
         }
 
-        private void Attack(float damage)
+        
+        private void Attack()
         {
-            currentDamage = damage * (1 + 5 * (float) rand.NextDouble());
+            currentDamage = baseDamage * (1 + damageMultiplier * (float) rand.NextDouble());
 
             attackHitbox.Activate();
 
 
-            finishStrikeTimer = TimerManager.StartTimer(0.025f, () => { FinishStrike(); });
+            finishStrikeTimer = TimerManager.StartTimer(strikeDuration, () => { FinishStrike(); });
         }
 
         public void FinishStrike()
