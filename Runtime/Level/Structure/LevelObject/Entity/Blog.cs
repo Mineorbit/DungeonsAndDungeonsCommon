@@ -137,7 +137,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         public void DropTrackedEffect()
         {
-            ChangeTrackedEffect(null);
+            SetTrackedEffect(null);
         }
         
         public void TrackingEffect(Entity target)
