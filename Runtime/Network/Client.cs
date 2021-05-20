@@ -30,8 +30,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isOnServer;
         public int localid;
 
-        private readonly int maxReceiveCount = 15;
-        private readonly int maxSendCount = 15;
+        private readonly int maxReceiveCount = 32;
+        private readonly int maxSendCount = 32;
 
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
