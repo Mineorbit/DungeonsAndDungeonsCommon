@@ -124,6 +124,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void ChangeTrackedEffect(Entity t)
         {
+            Debug.Log("Changing Tracked to: "+t);
             if (t == null)
             {
                 baseAnimator.target = null;
