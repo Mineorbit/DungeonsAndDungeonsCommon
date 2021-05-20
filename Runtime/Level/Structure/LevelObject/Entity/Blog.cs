@@ -122,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private Entity lastVisualTrack = null;
 
         
-        public void ChangeTrackedEffect(Entity t)
+        public void SetTrackedEffect(Entity t)
         {
             Debug.Log("Changing Tracked to: "+t);
             if (t == null)
@@ -135,7 +135,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 lastVisualTrack = t;
             }
         }
-        public void ChangeTrackedEffect()
+        public void DropTrackedEffect()
         {
             ChangeTrackedEffect(null);
         }
@@ -143,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void TrackingEffect(Entity target)
         {
             if (lastVisualTrack != target)
-                Invoke(ChangeTrackedEffect, target);
+                Invoke(SetTrackedEffect, target);
         }
 
         
@@ -151,7 +151,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void TrackingEffect()
         {
             if(lastVisualTrack != null)
-                Invoke(ChangeTrackedEffect);
+                Invoke(DropTrackedEffect);
         }
         
         
