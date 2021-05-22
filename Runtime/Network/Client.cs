@@ -143,7 +143,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //evtl async später
         public static void CreateTcpClientForClient(Client client, IPAddress host, int port)
         {
-            client.tcpClient = new TcpClient(host.ToString(), port);
+            IPAddress ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
+            IPEndPoint ipLocalEndPoint = new IPEndPoint(ipAddress, 13565);
+            client.tcpClient = new TcpClient(ipLocalEndPoint);
+            client.tcpClient.Connect(host.ToString(), port);
             client.tcpClient.SendTimeout = 1000;
             client.tcpStream = client.tcpClient.GetStream();
             var other = ((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address;
@@ -241,7 +244,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             
-            Debug.Log( "TCP: "+TCP +" Sending: " + p);
+            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: " + p+ " over "+remote);
             if (TCP)
             {
                 tcpStream.Write(result, 0, result.Length);
