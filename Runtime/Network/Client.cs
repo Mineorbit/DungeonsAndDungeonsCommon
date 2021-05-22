@@ -155,8 +155,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.writePort = writePort;
             client.receivingUdpClient = new UdpClient(0);
             
-            client.readPort = Int32.Parse(client.receivingUdpClient.ToString());
-            //client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
+            //client.readPort = Int32.Parse(client.receivingUdpClient.ToString());
+            client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
             Debug.Log("ReceivingUdpClient "+client.readPort);
             client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address, writePort);
             
