@@ -149,16 +149,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private int writePort;
+        private int readPort;
         public static void CreateUdpClientForClient(Client client, int writePort)
         {
             client.writePort = writePort;
-            Debug.Log("Creating "+client.receivingUdpClient);
-            if(client.receivingUdpClient == null)
-            {
-                client.receivingUdpClient = new UdpClient(0);
-                client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,
-                    writePort);
-            }
+            client.receivingUdpClient = new UdpClient(0);
+            
+            client.readPort = Int32.Parse(client.receivingUdpClient.ToString());
+            //client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
+            Debug.Log("ReceivingUdpClient "+client.readPort);
+            client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address, writePort);
+            
         }
 
         public void FixedUpdate()
@@ -370,7 +371,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var meConnect = new MeConnect
             {
                 Name = NetworkManager.userName,
-                Udp = ((IPEndPoint)receivingUdpClient.Client.LocalEndPoint).Port
+                Udp = readPort
             };
 
             WritePacket(meConnect);
