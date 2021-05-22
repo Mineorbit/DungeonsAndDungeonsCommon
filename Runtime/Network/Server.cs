@@ -47,8 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var tpClient = await listener.AcceptTcpClientAsync();
             var i = GetFreeSlot();
-            int udpPort = port + 1 + i;
-            UdpClient udClient = new UdpClient(udpPort);
+            UdpClient udClient = new UdpClient();
             UnityEngine.Debug.Log("Got new Connection "+i+" "+tpClient.Client);
             if (i == -1)
             {
