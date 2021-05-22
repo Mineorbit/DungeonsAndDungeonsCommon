@@ -249,7 +249,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else if (!TCP)
             {
                 IPEndPoint r = new IPEndPoint(remote.Address,writePort);
-                Debug.Log(r);
                 receivingUdpClient.Send(data, data.Length, r);
                 Debug.Log("Send out UDP "+r+" "+data.Length);
             }
