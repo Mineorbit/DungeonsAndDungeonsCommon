@@ -370,7 +370,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var meConnect = new MeConnect
             {
                 Name = NetworkManager.userName,
-                Udp = w.Udp
+                Udp = ((IPEndPoint)receivingUdpClient.Client.LocalEndPoint).Port
             };
 
             WritePacket(meConnect);
