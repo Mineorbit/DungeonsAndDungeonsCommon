@@ -64,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
-            remote = new IPEndPoint(other, port + 1 + lId);
+            remote = new IPEndPoint(other, port);
         }
 
         public Client()
@@ -388,7 +388,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
 
-            
+            Debug.Log("Test");
             var w = new Welcome
             {
                 LocalId = localid,
