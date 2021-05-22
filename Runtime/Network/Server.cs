@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private TcpListener listener;
 
-        private readonly IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+        private readonly IPAddress localAddr = IPAddress.Any;
 
         private readonly int port = 13565;
 
