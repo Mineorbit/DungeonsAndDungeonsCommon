@@ -55,17 +55,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly Semaphore waitingForUdp = new Semaphore(1, 1);
 
 
-        public Client(TcpClient tcpC, UdpClient receivingUdpC, int lId, int port)
+        public Client(TcpClient tcpC, int lId, int port)
         {
             NetworkManager.allClients.Add(this);
             Connected = true;
             tcpClient = tcpC;
-            receivingUdpClient = receivingUdpC;
+            receivingUdpClient = new UdpClient();
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
             remote = new IPEndPoint(other, port);
-            Debug.Log("Test");
+            Debug.Log("Finished Setup of Client");
         }
 
         public Client()
@@ -387,9 +387,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This needs to be exited after some kind of timeout
         public async Task Process()
         {
+            
+            Debug.Log("Processing");
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
 
-            Debug.Log("Test");
+            Debug.Log("Test ");
             var w = new Welcome
             {
                 LocalId = localid,
