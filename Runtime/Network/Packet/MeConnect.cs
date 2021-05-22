@@ -24,12 +24,12 @@ namespace State {
     static MeConnectReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg9NZUNvbm5lY3QucHJvdG8SBVN0YXRlIhkKCU1lQ29ubmVjdBIMCgRuYW1l",
-            "GAIgASgJYgZwcm90bzM="));
+            "Cg9NZUNvbm5lY3QucHJvdG8SBVN0YXRlIiYKCU1lQ29ubmVjdBIMCgRuYW1l",
+            "GAEgASgJEgsKA3VkcBgCIAEoBWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::State.MeConnect), global::State.MeConnect.Parser, new[]{ "Name" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::State.MeConnect), global::State.MeConnect.Parser, new[]{ "Name", "Udp" }, null, null, null, null)
           }));
     }
     #endregion
@@ -66,6 +66,7 @@ namespace State {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MeConnect(MeConnect other) : this() {
       name_ = other.name_;
+      udp_ = other.udp_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -75,13 +76,24 @@ namespace State {
     }
 
     /// <summary>Field number for the "name" field.</summary>
-    public const int NameFieldNumber = 2;
+    public const int NameFieldNumber = 1;
     private string name_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Name {
       get { return name_; }
       set {
         name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "udp" field.</summary>
+    public const int UdpFieldNumber = 2;
+    private int udp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Udp {
+      get { return udp_; }
+      set {
+        udp_ = value;
       }
     }
 
@@ -99,6 +111,7 @@ namespace State {
         return true;
       }
       if (Name != other.Name) return false;
+      if (Udp != other.Udp) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -106,6 +119,7 @@ namespace State {
     public override int GetHashCode() {
       int hash = 1;
       if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Udp != 0) hash ^= Udp.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -123,8 +137,12 @@ namespace State {
       output.WriteRawMessage(this);
     #else
       if (Name.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(10);
         output.WriteString(Name);
+      }
+      if (Udp != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Udp);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -136,8 +154,12 @@ namespace State {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (Name.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(10);
         output.WriteString(Name);
+      }
+      if (Udp != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Udp);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -150,6 +172,9 @@ namespace State {
       int size = 0;
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Udp != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Udp);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -165,6 +190,9 @@ namespace State {
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
+      if (other.Udp != 0) {
+        Udp = other.Udp;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -179,8 +207,12 @@ namespace State {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 18: {
+          case 10: {
             Name = input.ReadString();
+            break;
+          }
+          case 16: {
+            Udp = input.ReadInt32();
             break;
           }
         }
@@ -197,8 +229,12 @@ namespace State {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 18: {
+          case 10: {
             Name = input.ReadString();
+            break;
+          }
+          case 16: {
+            Udp = input.ReadInt32();
             break;
           }
         }
