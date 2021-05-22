@@ -60,7 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManager.allClients.Add(this);
             Connected = true;
             tcpClient = tcpC;
-            receivingUdpClient = new UdpClient(0);
+            receivingUdpClient = new UdpClient(port+1+lId);
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
