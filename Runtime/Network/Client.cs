@@ -65,6 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
             remote = new IPEndPoint(other, port);
+            Debug.Log("Test");
         }
 
         public Client()
