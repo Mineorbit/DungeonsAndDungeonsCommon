@@ -60,7 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManager.allClients.Add(this);
             Connected = true;
             tcpClient = tcpC;
-            receivingUdpClient = new UdpClient();
+            receivingUdpClient = new UdpClient(0);
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
@@ -155,7 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Creating "+client.receivingUdpClient);
             if(client.receivingUdpClient == null)
             {
-                client.receivingUdpClient = new UdpClient();
+                client.receivingUdpClient = new UdpClient(0);
                 client.remote = new IPEndPoint(((IPEndPoint) client.tcpClient.Client.RemoteEndPoint).Address,
                     writePort);
             }
@@ -391,7 +391,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log("Processing");
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
 
-            Debug.Log("Test ");
+            Debug.Log("Test "+port);
             var w = new Welcome
             {
                 LocalId = localid,
