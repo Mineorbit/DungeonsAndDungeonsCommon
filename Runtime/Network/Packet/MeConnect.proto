@@ -4,5 +4,6 @@ package State;
 
 
 message MeConnect {
-  string name = 2;
+  string name = 1;
+  int32 udp = 2;
 }
