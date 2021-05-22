@@ -364,7 +364,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             localid = w.LocalId;
 
-
+            Debug.Log("Received Welcome with "+localid+" and "+w.Udp);
             CreateUdpClientForClient(this,w.Udp);
 
             var meConnect = new MeConnect
@@ -386,19 +386,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This needs to be exited after some kind of timeout
         public async Task Process()
         {
+            int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
+
             
             var w = new Welcome
             {
                 LocalId = localid,
-                Udp = ((IPEndPoint)receivingUdpClient.Client.LocalEndPoint).Port
+                Udp = port
             };
 
+            Debug.Log("Receiving with "+port);
             //Send welcome
 
             WritePacket(w);
 
             var meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
+            writePort = meConnect.Udp;
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
