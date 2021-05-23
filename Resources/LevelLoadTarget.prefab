@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8934787826373928275}
   - component: {fileID: 5666117405678453013}
   - component: {fileID: 65087518692296255}
+  - component: {fileID: 6478614247074821173}
   m_Layer: 0
   m_Name: LevelLoadTarget
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   isDynamic: 0
   ActivateWhenInactive: 0
   levelObjectNetworkHandler: {fileID: 65087518692296255}
+  mover: {fileID: 6478614247074821173}
 --- !u!114 &65087518692296255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,4 +66,18 @@ MonoBehaviour:
   identified: 0
   observed: {fileID: 5666117405678453013}
   observed: {fileID: 5666117405678453013}
+  disabled_observed: 1
   observed: {fileID: 5666117405678453013}
+--- !u!114 &6478614247074821173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795247442869872954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee13057690149c4f922a1626f9f0329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}

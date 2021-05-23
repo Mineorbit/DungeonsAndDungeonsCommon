@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Awake()
         {
-            disabled_observed = observed.target.GetComponent<LevelObjectNetworkHandler>().disabled_observed;
+            //disabled_observed = false;
             base.Awake();
         }
         

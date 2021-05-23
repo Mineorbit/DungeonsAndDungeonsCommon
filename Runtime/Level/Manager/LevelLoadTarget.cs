@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static LoadTargetMode loadTargetMode = LoadTargetMode.None;
 
-        public Transform target;
+        public LevelLoadTargetMover mover;
 
         private readonly List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
 
@@ -25,10 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void Update()
-        {
-            if (target != null) transform.position = target.position;
-        }
+       
 
         //Overlap between load target zones is a problem
         public override void FixedUpdate()
@@ -73,8 +70,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MainCaller.Do(() =>
             {
-                var store = target;
-                target = null;
+                var store = mover.target;
+                mover.target = null;
                 transform.position = position;
                 var id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
                 LoadNearChunk(position, true);
@@ -87,7 +84,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 });
 
-                target = store;
+                mover.target = store;
 
                 MainCaller.Do(finishAction);
             });
