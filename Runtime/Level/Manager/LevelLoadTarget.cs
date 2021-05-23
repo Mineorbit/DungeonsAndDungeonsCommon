@@ -70,6 +70,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MainCaller.Do(() =>
             {
+                if(LevelManager.currentLevel != null)
+                {
                 var store = mover.target;
                 mover.target = null;
                 transform.position = position;
@@ -85,7 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 });
 
                 mover.target = store;
-
+                }
                 MainCaller.Do(finishAction);
             });
         }
