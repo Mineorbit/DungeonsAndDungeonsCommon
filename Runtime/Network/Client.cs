@@ -30,8 +30,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isOnServer;
         public int localid;
 
-        private readonly int maxReceiveCount = 1;
-        private readonly int maxSendCount = 1;
+        private readonly int maxReceiveCount = 4;
+        private readonly int maxSendCount = 4;
 
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
@@ -241,7 +241,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             
-            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: over "+remote+" with "+length);
+            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: over with "+length);
             if (TCP)
             {
                 tcpStream.Write(result, 0, result.Length);
