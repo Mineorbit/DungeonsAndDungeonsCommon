@@ -149,6 +149,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void OnEntityLocomotion(Packet p)
         {
             EntityLocomotion entityLocomotion;
+            Debug.Log("Moving "+this+" "+Identity);
             if (p.Content.TryUnpack(out entityLocomotion))
                 MainCaller.Do(() =>
                 {
@@ -220,7 +221,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void UpdateLocomotion()
         {
-            Debug.Log(this+" has "+isOnServer+" "+identified);
             if (identified && (isOnServer || isOwner))
             {
                 var pos = observed.transform.position;
