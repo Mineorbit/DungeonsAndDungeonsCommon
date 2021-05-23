@@ -90,7 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z,
                 Identity = playerNetworkHandler.Identity
             };
-
+            Debug.Log("Creating player: "+playerCreate);
             var packet = new Packet
             {
                 Type = typeof(PlayerCreate).FullName,
@@ -130,7 +130,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnCreationRequest(string identity, Vector3 position, Quaternion rotation, int localId,
             string name)
         {
-            Debug.Log("Creating player");
 
             MainCaller.Do(() =>
             {
