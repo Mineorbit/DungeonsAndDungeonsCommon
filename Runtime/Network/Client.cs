@@ -455,12 +455,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data;
             data = await ReadData(Tcp);
 
-
+            Debug.Log("Parsing "+Tcp);
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
 
-            if (Connected)
-                foreach (var packet in packetCarrier.Packets)
-                    packetInBuffer.Enqueue(packet);
+            foreach (var packet in packetCarrier.Packets)
+                packetInBuffer.Enqueue(packet);
 
             //Processing needed
 
