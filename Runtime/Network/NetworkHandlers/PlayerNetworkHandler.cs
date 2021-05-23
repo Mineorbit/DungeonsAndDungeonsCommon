@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private new Player observed;
 
         
-        public virtual void Awake()
+        public override void Awake()
         {
             base.Awake();
             observed = GetComponent<Player>();

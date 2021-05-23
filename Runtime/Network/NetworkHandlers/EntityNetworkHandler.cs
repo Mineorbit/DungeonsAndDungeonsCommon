@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private readonly float tpDist = 0.005f;
 
-        public virtual void Awake()
+        public override void Awake()
         {
             base.Awake();
             isOwner = isOnServer;
