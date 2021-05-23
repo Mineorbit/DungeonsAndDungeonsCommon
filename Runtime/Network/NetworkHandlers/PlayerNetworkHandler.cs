@@ -13,6 +13,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
+            
+        }
+
+        public virtual void Setup()
+        {
             Debug.Log("PlayerHandler with "+Identity+" and "+observed.localId);
             isOwner = !isOnServer && observed.localId == NetworkManager.instance.localId;
             owner = observed.localId;
@@ -136,8 +141,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 PlayerManager.playerManager.Add(localId, name, true);
                 var player = PlayerManager.playerManager.GetPlayer(localId);
-                player.GetComponent<PlayerNetworkHandler>().Identity = identity;
-                player.GetComponent<PlayerNetworkHandler>().enabled = true;
+                PlayerNetworkHandler h = player.GetComponent<PlayerNetworkHandler>();
+                h.Identity = identity;
+                h.enabled = true;
+                h.Setup();
 
                 if (isOnServer)
                     //this is just for now and ugly, will fix later
