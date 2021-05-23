@@ -23,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 MainCaller.Do(() =>
                 {
                     var c = ChunkData.FromNetData(streamChunk.ChunkData);
-                    Debug.Log("Received Chunk " + c);
+                    Debug.Log("Received Chunk " + c.chunkId+" with "+c.levelObjects.Count);
                     ChunkManager.LoadChunk(c, false);
                 });
         }
@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StreamChunk(ActionParam chunkParam)
         {
             var toSend = (ChunkData) chunkParam.data;
-            Debug.Log("Sending " + toSend);
+            Debug.Log("Sending " + toSend.chunkId);
             var netChunk = ChunkData.ToNetData(toSend);
             var streamChunk = new StreamChunk
             {
