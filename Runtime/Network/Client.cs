@@ -65,7 +65,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
             remote = new IPEndPoint(other, port);
-            Debug.Log("Finished Setup of Client");
         }
 
         public Client()
@@ -98,8 +97,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.Connected = true;
             createThread.IsBackground = true;
             createThread.Start();
-
-
             return client;
         }
 
@@ -114,14 +111,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     var meDisconnect = new MeDisconnect();
                     WritePacket(typeof(NetworkManagerHandler), meDisconnect);
                 }
-
                 UpdateOut(all: true);
-                
                 packetInBuffer.Clear();
                 packetOutTCPBuffer.Clear();
                 packetOutUDPBuffer.Clear();
                 CloseConnection();
-                Debug.Log("Client " + localid + " disconnected");
                 Connected = false;
             }
         }
@@ -153,10 +147,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.writePort = writePort;
             client.receivingUdpClient = new UdpClient(0);
-            
             //client.readPort = Int32.Parse(client.receivingUdpClient.ToString());
             client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
-            Debug.Log("This Client is receiving on "+client.readPort);
             client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
             
         }
@@ -171,7 +163,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void UpdateIn()
         {
             var handleCount = maxReceiveCount;
-
             while (packetInBuffer.Count > 0 && handleCount > 0)
             {
                 var p = packetInBuffer.Dequeue();
@@ -182,14 +173,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void HandlePacket(Packet p)
         {
-
             var packetType = Type.GetType(p.Type);
-
-
-            Debug.Log("Going to Processing: " + p);
-
             UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
-
             var handleThread = new Thread(new ThreadStart(processPacket));
             handleThread.IsBackground = true;
             handleThread.Start();
@@ -239,8 +224,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
-            
-            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: "+p.ToString());
             if (TCP)
             {
                 tcpStream.Write(result, 0, result.Length);
@@ -301,9 +284,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (TCP)
             {
-                Debug.Log("Trying to Lock TCP");
                 waitingForTcp.WaitOne();
-                Debug.Log("Locking TCP");
             }
             else
                 waitingForUdp.WaitOne();
@@ -316,7 +297,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 await tcpStream.ReadAsync(lengthBytes, 0, 4);
                 if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
                 length = BitConverter.ToInt32(lengthBytes, 0);
-                Debug.Log("Received Length: "+length);
                 data = new byte[length];
                 await tcpStream.ReadAsync(data, 0, length);
             }
@@ -336,9 +316,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (TCP)
             {
-                Debug.Log("Trying Unlocking TCP");
                 waitingForTcp.Release();
-                Debug.Log("Unlocking TCP");
             }
             else
                 waitingForUdp.Release();
@@ -353,7 +331,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
 
             var p = packetCarrier.Packets[0];
-            Debug.Log("Received " + p);
             T result;
             if (p.Content.TryUnpack(out result))
                 return result;
@@ -389,10 +366,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public async Task Process()
         {
             
-            Debug.Log("Processing");
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
-
-            Debug.Log("Test "+port);
             var w = new Welcome
             {
                 LocalId = localid,
@@ -456,8 +430,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             data = await ReadData(Tcp);
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
-
-            Debug.Log(Tcp+" received "+packetCarrier.ToString());
             foreach (var packet in packetCarrier.Packets)
                 packetInBuffer.Enqueue(packet);
 
