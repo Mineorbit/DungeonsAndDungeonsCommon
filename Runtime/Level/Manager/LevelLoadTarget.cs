@@ -83,14 +83,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(id) ||
                            !ChunkManager.instance.chunkLoaded[id])
                     {
-                        Debug.Log("WAITING" + LevelManager.currentLevel == null + " " +
-                            !ChunkManager.instance.chunkLoaded.ContainsKey(id) + " " +
-                            !ChunkManager.instance.chunkLoaded[id]);
                         await Task.Delay(100);
                     }
                 });
 
-                Debug.Log("Finished Loading");
                 target = store;
 
                 MainCaller.Do(finishAction);
