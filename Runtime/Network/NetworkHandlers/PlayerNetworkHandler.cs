@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            
+            Debug.Log("PlayerHandler with "+Identity+" and "+observed.localId);
             isOwner = !isOnServer && observed.localId == NetworkManager.instance.localId;
             owner = observed.localId;
             
@@ -120,6 +120,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             PlayerCreate playerCreate;
             if (value.Content.TryUnpack(out playerCreate))
             {
+                Debug.Log("Received playercreation: "+playerCreate);
                 var position = new Vector3(playerCreate.X, playerCreate.Y, playerCreate.Z);
                 OnCreationRequest(playerCreate.Identity, position, new Quaternion(0, 0, 0, 0), playerCreate.LocalId,
                     playerCreate.Name);
