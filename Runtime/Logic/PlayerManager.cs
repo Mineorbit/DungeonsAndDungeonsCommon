@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
             var player = playerGameObject.GetComponent<Player>();
-            loadTarget.target = player.transform;
+            loadTarget.mover.target = player.transform;
             player.loadTarget = loadTarget;
             player.enabled = true;
             var playerController = playerGameObject.GetComponent<PlayerController>();
