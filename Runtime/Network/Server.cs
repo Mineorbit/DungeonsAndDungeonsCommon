@@ -119,12 +119,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void WriteAll(IMessage message, int except, bool TCP = true)
         {
-            for (var i = 0; i < 4 && i != except; i++)
+            for (var i = 0; i < 4; i++)
             {
-                Debug.Log(i+" "+clients[i]);
-                if (clients[i] != null)
+                if (i != except && clients[i] != null)
                 {
-                    Debug.Log("Writing "+message+" to "+i);
                     clients[i].WritePacket(message, TCP);
                 }
             }
