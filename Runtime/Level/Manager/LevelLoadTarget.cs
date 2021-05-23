@@ -66,11 +66,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void WaitForChunkLoaded(Vector3 position, Action finishAction)
+        public void WaitForChunkLoaded(Vector3 position, Action finishAction, bool levelNeeded = true)
         {
             MainCaller.Do(() =>
             {
-                if(LevelManager.currentLevel != null)
+                if(levelNeeded)
                 {
                 var store = mover.target;
                 mover.target = null;
