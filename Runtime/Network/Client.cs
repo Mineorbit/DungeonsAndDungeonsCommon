@@ -16,11 +16,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Client
     {
-        public static Queue<Packet> packetInBuffer = new Queue<Packet>();
+        public Queue<Packet> packetInBuffer = new Queue<Packet>();
 
-        public static Queue<Packet> packetOutTCPBuffer = new Queue<Packet>();
+        public Queue<Packet> packetOutTCPBuffer = new Queue<Packet>();
 
-        public static Queue<Packet> packetOutUDPBuffer = new Queue<Packet>();
+        public Queue<Packet> packetOutUDPBuffer = new Queue<Packet>();
 
         public bool Connected;
 
@@ -242,7 +242,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             
-            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: " + p+ " over "+remote);
+            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: " + p+ " over "+remote+" with "+localid);
             if (TCP)
             {
                 tcpStream.Write(result, 0, result.Length);
