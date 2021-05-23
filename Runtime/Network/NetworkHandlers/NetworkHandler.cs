@@ -402,6 +402,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 else
                 {
+                    Debug.Log("To all except "+target);
                     Server.instance.WriteAll(packet, target, TCP);
                 }
             }
