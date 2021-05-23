@@ -1,3 +1,4 @@
+using System;
 using Game;
 using General;
 using Google.Protobuf.WellKnownTypes;
@@ -26,6 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private bool isSetup = false;
         public virtual void Setup()
         {
+            if(observed != null && identified)
             if(!isSetup)
             { 
             isSetup = true;
@@ -145,6 +147,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public void Update()
+        {
+            Setup();
+        }
 
         public static void OnCreationRequest(string identity, Vector3 position, Quaternion rotation, int localId,
             string name)
