@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly float sendDistance = 0.05f;
 
 
-        private Vector3 teleportPosition;
+        public Vector3 teleportPosition;
 
 
         private readonly float tpDist = 0.005f;
