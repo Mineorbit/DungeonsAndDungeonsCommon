@@ -30,8 +30,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isOnServer;
         public int localid;
 
-        private readonly int maxReceiveCount = 2;
-        private readonly int maxSendCount = 2;
+        private readonly int maxReceiveCount = 1;
+        private readonly int maxSendCount = 1;
 
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
@@ -300,7 +300,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private async Task<byte[]> ReadData(bool TCP = true)
         {
             if (TCP)
+            {
                 waitingForTcp.WaitOne();
+                Debug.Log("Locking TCP");
+            }
             else
                 waitingForUdp.WaitOne();
             byte[] udpResult;
@@ -329,8 +332,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 data = new byte[udpResult.Length];
                 Array.Copy(udpResult, 0, data, 0, udpResult.Length);
             }
+
             if (TCP)
+            {
+                Debug.Log("Unlocking TCP");
                 waitingForTcp.Release();
+            }
             else
                 waitingForUdp.Release();
             return data;
