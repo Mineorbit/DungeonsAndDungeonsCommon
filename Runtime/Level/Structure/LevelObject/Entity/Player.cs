@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public ColorChanger colorChanger;
 
-        public int _localId;
+        public int localId;
 
         public float speed;
 
@@ -27,17 +27,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly float cooldownTime = 2f;
 
 
-
-
-        public int localId
-        {
-            set
-            {
-                _localId = value;
-                changeColor(_localId);
-            }
-            get => _localId;
-        }
 
 
         public virtual void Awake()
