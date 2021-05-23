@@ -241,7 +241,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             
-            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: " + p+ " over "+remote+" with "+localid);
+            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: " + p+ " over "+remote+" with "+length;
             if (TCP)
             {
                 tcpStream.Write(result, 0, result.Length);
@@ -320,7 +320,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Debug.Log("Reading for UDP on " + remote);
                 if(!isOnServer)
                 {
                     udpResult = receivingUdpClient.Receive(ref remote);
@@ -329,7 +328,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     udpResult = receivingUdpClient.Receive(ref remote);
                 }
-                Debug.Log("Received something on udp of length "+udpResult.Length);
                 data = new byte[udpResult.Length];
                 Array.Copy(udpResult, 0, data, 0, udpResult.Length);
             }
@@ -365,7 +363,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             localid = w.LocalId;
 
-            Debug.Log("Received Welcome with "+localid+" and "+w.Udp);
             CreateUdpClientForClient(this,w.Udp);
 
             var meConnect = new MeConnect
