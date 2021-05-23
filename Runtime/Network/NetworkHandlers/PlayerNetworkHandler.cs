@@ -9,16 +9,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         private new Player observed;
 
+        
         public virtual void Awake()
         {
             base.Awake();
             observed = GetComponent<Player>();
-            
+            Setup();
         }
 
+        private bool isSetup = false;
         public virtual void Setup()
         {
-            Debug.Log("PlayerHandler with "+Identity+" and "+observed.localId);
+            if(!isSetup)
+            { 
+            isSetup = true;
+            Debug.Log("Setting up PlayerHandler with "+Identity+" and "+observed.localId);
             isOwner = !isOnServer && observed.localId == NetworkManager.instance.localId;
             owner = observed.localId;
             
@@ -27,6 +32,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (isOnServer)
                 // UNSURE ABOUT THIS MAYBE THIS IS NEEDED
                 GetComponent<CharacterController>().enabled = false;
+            
+            }
         }
 
 
