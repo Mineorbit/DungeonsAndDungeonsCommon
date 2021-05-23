@@ -70,7 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             arguments.Add(packedArgument.Item1, packedArgument.Item2);
 
             action.Params.Add(arguments);
-            Marshall(action);
+            Marshall(action,TCP: false);
         }
 
 
@@ -80,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ActionName = actionName
             };
-            Marshall(action);
+            Marshall(action,TCP: false);
         }
 
 
