@@ -301,6 +301,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (TCP)
             {
+                Debug.Log("Trying to Lock TCP");
                 waitingForTcp.WaitOne();
                 Debug.Log("Locking TCP");
             }
@@ -335,8 +336,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (TCP)
             {
-                Debug.Log("Unlocking TCP");
+                Debug.Log("Trying Unlocking TCP");
                 waitingForTcp.Release();
+                Debug.Log("Unlocking TCP");
             }
             else
                 waitingForUdp.Release();
