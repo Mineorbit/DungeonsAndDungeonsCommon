@@ -52,6 +52,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                       Level.instantiateType == Level.InstantiateType.Online;
             
             if (!enabled) return;
+            Debug.Log("WE ARE ENABLED");
             isOnServer = Server.instance != null;
             NetworkManager.networkHandlers.Add(this);
             
