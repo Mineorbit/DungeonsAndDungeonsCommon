@@ -235,7 +235,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(lengthBytes);
-                Array.Reverse(data);
             }
 
             Array.Copy(lengthBytes, 0, result, 0, 4);
@@ -330,9 +329,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 data = new byte[udpResult.Length];
                 Array.Copy(udpResult, 0, data, 0, udpResult.Length);
             }
-
-
-            if (BitConverter.IsLittleEndian) Array.Reverse(data);
             if (TCP)
                 waitingForTcp.Release();
             else
