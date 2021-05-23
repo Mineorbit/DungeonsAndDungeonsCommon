@@ -240,7 +240,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             
-            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: over with "+length);
+            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: "+p.ToString());
             if (TCP)
             {
                 tcpStream.Write(result, 0, result.Length);
@@ -455,9 +455,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data;
             data = await ReadData(Tcp);
 
-            Debug.Log("Parsing "+Tcp);
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
 
+            Debug.Log(Tcp+" received "+packetCarrier.ToString());
             foreach (var packet in packetCarrier.Packets)
                 packetInBuffer.Enqueue(packet);
 
