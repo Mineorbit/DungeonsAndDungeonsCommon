@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            Setup();
+            if(isOnServer) Setup();
         }
 
         private bool isSetup = false;
