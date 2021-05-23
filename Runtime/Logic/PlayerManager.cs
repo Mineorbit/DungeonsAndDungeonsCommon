@@ -106,6 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             player.localId = freeLocalId;
             players[freeLocalId] = player;
             playerControllers[freeLocalId] = playerController;
+            SpawnPlayer(freeLocalId,position);
         }
 
         public void DespawnPlayer(int localId)
