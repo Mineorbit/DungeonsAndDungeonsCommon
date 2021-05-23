@@ -241,7 +241,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             
-            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: " + p+ " over "+remote+" with "+length;
+            UnityEngine.Debug.Log( "TCP: "+TCP +" Sending: " + p+ " over "+remote+" with "+length);
             if (TCP)
             {
                 tcpStream.Write(result, 0, result.Length);
