@@ -108,7 +108,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MainCaller.Do(() =>
             {
-                Debug.Log("handling spawning");
                 EntityCreate entityCreate;
                 if (value.Content.TryUnpack(out entityCreate))
                 {
@@ -116,7 +115,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (LevelDataManager.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,
                         out entityLevelObjectData))
                     {
-                        Debug.Log("handling spawning");
                         var position = new Vector3(entityCreate.X, entityCreate.Y, entityCreate.Z);
                         var t = new Thread(() =>
                         {
@@ -238,7 +236,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         QY = rot.y,
                         QZ = rot.z
                     };
-
+                    Debug.Log("Sending PlayerData to everyone except "+owner);
                     Marshall(entityLocomotion, owner, false, false);
                     lastSentPosition = pos;
                 }
