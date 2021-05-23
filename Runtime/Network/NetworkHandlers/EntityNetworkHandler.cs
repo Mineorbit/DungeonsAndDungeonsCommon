@@ -220,6 +220,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void UpdateLocomotion()
         {
+            Debug.Log(this+" has "+isOnServer+" "+identified);
             if (identified && (isOnServer || isOwner))
             {
                 var pos = observed.transform.position;

@@ -39,9 +39,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 identified = true;
                 _Identity = value;
+                OnIdentify();
             }
         }
 
+        public virtual void OnIdentify()
+        {
+            
+        }
 
         //Fetch Methods
         public virtual void Awake()
