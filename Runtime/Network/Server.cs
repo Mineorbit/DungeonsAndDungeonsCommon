@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using General;
 using Google.Protobuf;
+using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -120,7 +121,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             for (var i = 0; i < 4 && i != except; i++)
                 if (clients[i] != null)
+                {
+                    Debug.Log("Writing "+message+" to "+i);
                     clients[i].WritePacket(message, TCP);
+                }
+
         }
 
         public void StopListen()
