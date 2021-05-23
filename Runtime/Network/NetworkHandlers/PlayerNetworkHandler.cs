@@ -9,12 +9,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         private new Player observed;
 
+        private string _identity;
+
+        public override void OnIdentify()
+        {
+            base.OnIdentify();
+            Setup();
+        }
         
         public override void Awake()
         {
             base.Awake();
             observed = GetComponent<Player>();
-            if(isOnServer) Setup();
         }
 
         private bool isSetup = false;
