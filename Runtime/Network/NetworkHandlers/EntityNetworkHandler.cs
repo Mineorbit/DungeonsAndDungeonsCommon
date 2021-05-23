@@ -238,7 +238,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         QZ = rot.z
                     };
 
-                    // UDP IS BROKEN THIS NEEDS A FIX LATER
                     Marshall(entityLocomotion, owner, false, false);
                     lastSentPosition = pos;
                 }

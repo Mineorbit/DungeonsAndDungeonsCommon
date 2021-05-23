@@ -13,10 +13,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            GetComponent<PlayerController>().enabled = !isOnServer;
             isOwner = !isOnServer && observed.localId == NetworkManager.instance.localId;
             owner = observed.localId;
-
+            
+            GetComponent<PlayerController>().enabled = !isOnServer && isOwner;
+            
             if (isOnServer)
                 // UNSURE ABOUT THIS MAYBE THIS IS NEEDED
                 GetComponent<CharacterController>().enabled = false;

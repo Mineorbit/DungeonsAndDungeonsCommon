@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Awake()
         {
-            //disabled_observed = false;
+            disabled_observed = true;
             base.Awake();
         }
         
