@@ -74,12 +74,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                 mover.follow = false;
                 transform.position = position;
-                var id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
-                LoadNearChunk(position, true);
+                long chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
                 Task.Run(async () =>
                 {
-                    while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(id) ||
-                           !ChunkManager.instance.chunkLoaded[id])
+                    while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(chunkId) ||
+                           !ChunkManager.instance.chunkLoaded[chunkId])
                     {
                         await Task.Delay(100);
                     }
