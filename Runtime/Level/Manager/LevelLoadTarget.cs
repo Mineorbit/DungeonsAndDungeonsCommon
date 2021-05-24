@@ -19,26 +19,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private readonly List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
 
-
-        private void Start()
-        {
-        }
-
-
-       
+        
 
         //Overlap between load target zones is a problem
         public override void FixedUpdate()
         {
+            base.FixedUpdate();
             if(Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test)
             {
-            base.FixedUpdate();
             EnableChunkAt(transform.position);
             EnableChunkAt(transform.position + transform.forward * 32);
             EnableChunkAt(transform.position - transform.forward * 32);
             EnableChunkAt(transform.position + transform.right * 32);
             EnableChunkAt(transform.position - transform.right * 32);
-            
             }
         }
 
@@ -66,12 +59,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
 
-        public void WaitForChunkLoaded(Vector3 position, Action finishAction, bool levelNeeded = true)
+        public void WaitForChunkLoaded(Vector3 position, Action finishAction)
         {
             MainCaller.Do(() =>
             {
-                if(levelNeeded)
-                {
                 mover.follow = false;
                 transform.position = position;
                 long chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
@@ -80,12 +71,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(chunkId) ||
                            !ChunkManager.instance.chunkLoaded[chunkId])
                     {
+                        Debug.Log("Chunk "+chunkId+" not yet loaded, waiting");
                         await Task.Delay(100);
                     }
                 });
-
                 mover.follow = true;
-                }
                 MainCaller.Do(finishAction);
             });
         }
@@ -103,7 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private void DisableChunk()
+        private void DisableChunkAt(Vector3 position)
         {
         }
     }

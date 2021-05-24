@@ -192,18 +192,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        
+        // Chunk Semantics
+        // Not yet loaded: not in dictionary
+        // Currently loading: in dictionary => false
+        // Currently loaded: in dictionary => true
         public static void LoadChunk(ChunkData chunkData, bool immediate = true)
         {
             bool loaded;
             if (instance.chunkLoaded.TryGetValue(chunkData.chunkId, out loaded))
             {
-                if (loaded)
-                    return;
-                instance.chunkLoaded[chunkData.chunkId] = true;
+                return;
             }
             else
             {
-                instance.chunkLoaded.Add(chunkData.chunkId, true);
+                instance.chunkLoaded.Add(chunkData.chunkId, false);
             }
 
             var levelObjectInstances = new List<LevelObjectInstanceData>();
@@ -213,21 +216,45 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (var i in levelObjectInstances)
             {
                 counter--;
-                if (immediate)
-                    LevelManager.currentLevel.Add(i);
-                else
-                    MainCaller.Do(() =>
-                    {
-                        Debug.Log("Adding " + i);
-                        LevelManager.currentLevel.Add(i);
-                    });
-
+                Action Complete = null;
                 if (counter == 0)
                 {
-                    if (!instance.finishedChunkLoaded.ContainsKey(chunkData.chunkId))
-                        instance.finishedChunkLoaded.Add(chunkData.chunkId, true);
+                    Complete = () =>
+                    {
+                    instance.finishedChunkLoaded[chunkData.chunkId] = true;
+                    };
+                }
+                if (immediate)
+                {
+                    LevelManager.currentLevel.Add(i);
+                    if (Complete != null)
+                    {
+                        Complete.Invoke();
+                    }
+                }
+                else
+                {
+                    if (Complete != null)
+                    {
+                        MainCaller.Do(() =>
+                        {
+                            Debug.Log("Adding " + i);
+                            LevelManager.currentLevel.Add(i);
+                            Complete.Invoke();
+                        }); 
+                    }
                     else
-                        instance.finishedChunkLoaded[chunkData.chunkId] = true;
+                    {
+                        MainCaller.Do(() =>
+                        {
+                            Debug.Log("Adding " + i);
+                            LevelManager.currentLevel.Add(i);
+                        });  
+                    }
+                    
+
+                    
+                
                 }
             }
         }
