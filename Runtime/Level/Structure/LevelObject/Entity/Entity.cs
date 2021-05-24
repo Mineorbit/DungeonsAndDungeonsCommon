@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -95,6 +96,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void setMovementStatus(bool allowedToMove)
         {
+        }
+
+        public virtual void OnDestroy()
+        {
+            Destroy(loadTarget.gameObject);
         }
 
         public void UseHandle(ItemHandle h)

@@ -154,7 +154,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 movingDirection = new Vector3(0, 0, 0);
 
             // THIS IS  JANK BUT WORKS
-            if (player.levelObjectNetworkHandler.isOwner && !player.levelObjectNetworkHandler.movementOverride)
+            if ((Level.instantiateType == Level.InstantiateType.Test) || (Level.instantiateType == Level.InstantiateType.Online))
                 controller.Move(targetDirection * Speed * Time.deltaTime);
 
 

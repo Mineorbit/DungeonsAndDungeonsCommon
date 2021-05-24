@@ -35,8 +35,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
             foreach (var itemHandle in itemHandles) itemHandle.Dettach();
         }
 
