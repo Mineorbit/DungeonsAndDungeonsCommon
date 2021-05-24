@@ -64,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 }
         }
-
+        
 
         public void WaitForChunkLoaded(Vector3 position, Action finishAction, bool levelNeeded = true)
         {
@@ -72,8 +72,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if(levelNeeded)
                 {
-                var store = mover.target;
-                mover.target = null;
+                mover.follow = false;
                 transform.position = position;
                 var id = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
                 LoadNearChunk(position, true);
@@ -86,7 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 });
 
-                mover.target = store;
+                mover.follow = true;
                 }
                 MainCaller.Do(finishAction);
             });

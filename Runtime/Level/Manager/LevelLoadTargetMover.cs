@@ -6,11 +6,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelLoadTargetMover : MonoBehaviour
     {
-
+        public bool follow = true;
         public Transform target;
         public void Update()
         {
-            if (target != null) transform.position = target.position;
+            if (follow && target != null) transform.position = target.position;
         }
     }
 }
