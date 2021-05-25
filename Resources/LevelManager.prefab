@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7921811750445542393}
   - component: {fileID: 7921811750445542392}
   - component: {fileID: 7921811750445542395}
+  - component: {fileID: -8858359743067235123}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -59,3 +60,15 @@ MonoBehaviour:
   localLevels: []
   networkLevels: []
   levelFolder: {fileID: 11400000, guid: b75714cdca5d3d44f82e9e80392a560c, type: 2}
+--- !u!114 &-8858359743067235123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7921811750445542398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce71630b6397d94fb312e42d728235b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
