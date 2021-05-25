@@ -23,10 +23,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         private static readonly SaveManager regionDataLoader = new SaveManager(SaveManager.StorageType.BIN);
-        public Dictionary<long, bool> chunkLoaded = new Dictionary<long, bool>();
 
         public Dictionary<Tuple<int, int>, Chunk> chunks;
-        public Dictionary<long, bool> finishedChunkLoaded = new Dictionary<long, bool>();
+        public static Dictionary<long, bool> chunkLoaded = new Dictionary<long, bool>();
 
         private bool ready;
 
@@ -191,17 +190,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return result_chunk;
         }
 
-        private Queue<Tuple<bool, ChunkData>> loadQueue = new Queue<Tuple<bool, ChunkData>>();
+        private static Queue<Tuple<bool, ChunkData>> loadQueue = new Queue<Tuple<bool, ChunkData>>();
 
 
         public void Update()
         {
             if (LevelManager.currentLevel != null)
             {
-                Debug.Log("TEST");
                 if (loadQueue.Count > 0)
                 {
                     var z = loadQueue.Dequeue();
+                    Debug.Log("Doing "+z);
                     _LoadChunk(z.Item2,z.Item1);
                 }
             }
@@ -216,7 +215,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }else
             {
                 Debug.Log("Added Chunk "+chunkData.chunkId+" to Load List");
-                instance.loadQueue.Enqueue(new Tuple<bool, ChunkData>(immediate,chunkData));
+                loadQueue.Enqueue(new Tuple<bool, ChunkData>(immediate,chunkData));
             }
         }
         
@@ -229,13 +228,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Debug.Log("Loading Chunk "+chunkData.chunkId);
             bool loaded;
-            if (instance.chunkLoaded.TryGetValue(chunkData.chunkId, out loaded))
+            if (chunkLoaded.TryGetValue(chunkData.chunkId, out loaded))
             {
                 return;
             }
             else
             {
-                instance.chunkLoaded.Add(chunkData.chunkId, false);
+                chunkLoaded.Add(chunkData.chunkId, false);
             }
 
             var levelObjectInstances = new List<LevelObjectInstanceData>();
@@ -252,7 +251,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Complete = () =>
                     {
                         Debug.Log("Finished "+chunkData.chunkId);
-                        instance.finishedChunkLoaded[chunkData.chunkId] = true;
+                        chunkLoaded[chunkData.chunkId] = true;
                     };
                 }
                 if (immediate)
