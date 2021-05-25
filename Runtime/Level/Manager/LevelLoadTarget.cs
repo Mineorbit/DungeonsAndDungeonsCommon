@@ -82,7 +82,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void StreamChunkImmediateIntoCurrentLevelFrom(ChunkData chunkData)
         {
-            Debug.Log("Streaming Chunk " + chunkData.chunkId);
+            Debug.Log("Streaming Chunk immediately " + chunkData.chunkId);
             ChunkManager.LoadChunk(chunkData, true);
         }
 
