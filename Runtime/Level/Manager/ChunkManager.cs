@@ -200,7 +200,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (loadQueue.Count > 0)
                 {
                     var z = loadQueue.Dequeue();
-                    Debug.Log("Doing "+z);
                     _LoadChunk(z.Item2,z.Item1);
                 }
             }
