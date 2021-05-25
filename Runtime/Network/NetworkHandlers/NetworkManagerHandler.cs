@@ -56,10 +56,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         Server.instance.clients[localId].Disconnect(false);
                     }
+                    MainCaller.Do(() => {
                     if(PlayerManager.playerManager.GetPlayer(localId) != null)
                     {
-                        MainCaller.Do(() => {PlayerManager.playerManager.Remove(localId);});
+                        PlayerManager.playerManager.Remove(localId);
                     }
+                    });
                 }
                 else
                 {
