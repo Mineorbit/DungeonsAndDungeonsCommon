@@ -199,6 +199,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Currently loaded: in dictionary => true
         public static void LoadChunk(ChunkData chunkData, bool immediate = true)
         {
+            Debug.Log("Loading Chunk "+chunkData.chunkId);
             bool loaded;
             if (instance.chunkLoaded.TryGetValue(chunkData.chunkId, out loaded))
             {
@@ -219,6 +220,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Action Complete = null;
                 if (counter == 0)
                 {
+                    Debug.Log("Adding finish Action for "+chunkData.chunkId);
                     Complete = () =>
                     {
                     instance.finishedChunkLoaded[chunkData.chunkId] = true;
@@ -238,7 +240,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         MainCaller.Do(() =>
                         {
-                            Debug.Log("Adding " + i);
                             LevelManager.currentLevel.Add(i);
                             Complete.Invoke();
                         }); 
