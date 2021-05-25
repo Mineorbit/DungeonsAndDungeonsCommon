@@ -24,28 +24,37 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     var c = ChunkData.FromNetData(streamChunk.ChunkData);
                     Debug.Log("Received Chunk " + c.chunkId+" with "+c.levelObjects.Count);
-                    ChunkManager.LoadChunk(c, false);
+                    ChunkManager.LoadChunk(c, streamChunk.Immediate);
                 });
         }
 
-        private void StreamChunk(ActionParam chunkParam)
+        private void StreamChunk(ActionParam chunkParam, bool immediate = false)
         {
             var toSend = (ChunkData) chunkParam.data;
             Debug.Log("Sending " + toSend.chunkId);
             var netChunk = ChunkData.ToNetData(toSend);
             var streamChunk = new StreamChunk
             {
-                ChunkData = netChunk
+                ChunkData = netChunk,
+                Immediate = immediate
             };
             Marshall(streamChunk);
         }
 
         public override void SendAction(string actionName, ActionParam argument)
         {
-            if (actionName == "StreamChunkIntoCurrentLevelFrom")
-                StreamChunk(argument);
-            else
-                base.SendAction(actionName, argument);
+            switch (actionName)
+            {
+                case "StreamChunkIntoCurrentLevelFrom":
+                    StreamChunk(argument);
+                    break;
+                case "StreamChunkImmediateIntoCurrentLevelFrom":
+                    StreamChunk(argument,immediate: true);
+                    break;
+                default:
+                    base.SendAction(actionName, argument);
+                    break;
+            }
         }
     }
 }

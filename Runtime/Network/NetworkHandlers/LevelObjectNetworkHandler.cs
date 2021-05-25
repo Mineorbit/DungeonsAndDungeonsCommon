@@ -38,7 +38,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var parameters = new List<object>();
                 foreach (var k in levelObjectAction.Params)
                 {
-                    Debug.Log("Parameter: " + k.Key + " " + k.Value.Type);
                     var actionParam = ActionParam.Unpack(new Tuple<int, Parameter>(k.Key, k.Value));
                     parameters.Add(actionParam.data);
                 }

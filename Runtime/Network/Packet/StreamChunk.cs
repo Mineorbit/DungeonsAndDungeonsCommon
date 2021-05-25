@@ -24,13 +24,13 @@ namespace Game {
     static StreamChunkReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChFTdHJlYW1DaHVuay5wcm90bxIEZ2FtZRoPQ2h1bmtEYXRhLnByb3RvIjUK",
+            "ChFTdHJlYW1DaHVuay5wcm90bxIEZ2FtZRoPQ2h1bmtEYXRhLnByb3RvIkgK",
             "C1N0cmVhbUNodW5rEiYKCWNodW5rRGF0YRgBIAEoCzITLk5ldExldmVsLkNo",
-            "dW5rRGF0YWIGcHJvdG8z"));
+            "dW5rRGF0YRIRCglpbW1lZGlhdGUYAiABKAhiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::NetLevel.ChunkDataReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.StreamChunk), global::Game.StreamChunk.Parser, new[]{ "ChunkData" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.StreamChunk), global::Game.StreamChunk.Parser, new[]{ "ChunkData", "Immediate" }, null, null, null, null)
           }));
     }
     #endregion
@@ -67,6 +67,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public StreamChunk(StreamChunk other) : this() {
       chunkData_ = other.chunkData_ != null ? other.chunkData_.Clone() : null;
+      immediate_ = other.immediate_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -86,6 +87,17 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "immediate" field.</summary>
+    public const int ImmediateFieldNumber = 2;
+    private bool immediate_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Immediate {
+      get { return immediate_; }
+      set {
+        immediate_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as StreamChunk);
@@ -100,6 +112,7 @@ namespace Game {
         return true;
       }
       if (!object.Equals(ChunkData, other.ChunkData)) return false;
+      if (Immediate != other.Immediate) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -107,6 +120,7 @@ namespace Game {
     public override int GetHashCode() {
       int hash = 1;
       if (chunkData_ != null) hash ^= ChunkData.GetHashCode();
+      if (Immediate != false) hash ^= Immediate.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -127,6 +141,10 @@ namespace Game {
         output.WriteRawTag(10);
         output.WriteMessage(ChunkData);
       }
+      if (Immediate != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(Immediate);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -140,6 +158,10 @@ namespace Game {
         output.WriteRawTag(10);
         output.WriteMessage(ChunkData);
       }
+      if (Immediate != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(Immediate);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -151,6 +173,9 @@ namespace Game {
       int size = 0;
       if (chunkData_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(ChunkData);
+      }
+      if (Immediate != false) {
+        size += 1 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -168,6 +193,9 @@ namespace Game {
           ChunkData = new global::NetLevel.ChunkData();
         }
         ChunkData.MergeFrom(other.ChunkData);
+      }
+      if (other.Immediate != false) {
+        Immediate = other.Immediate;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -190,6 +218,10 @@ namespace Game {
             input.ReadMessage(ChunkData);
             break;
           }
+          case 16: {
+            Immediate = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -209,6 +241,10 @@ namespace Game {
               ChunkData = new global::NetLevel.ChunkData();
             }
             input.ReadMessage(ChunkData);
+            break;
+          }
+          case 16: {
+            Immediate = input.ReadBool();
             break;
           }
         }
