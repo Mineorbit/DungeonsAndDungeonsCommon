@@ -43,6 +43,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void SendAction(string actionName, ActionParam argument)
         {
+
+            Debug.Log("Doing Action "+actionName);
             switch (actionName)
             {
                 case "StreamChunkIntoCurrentLevelFrom":
