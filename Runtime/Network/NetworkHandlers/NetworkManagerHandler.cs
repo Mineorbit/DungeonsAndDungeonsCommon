@@ -58,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                     if(PlayerManager.playerManager.GetPlayer(localId) != null)
                     {
-                    PlayerManager.playerManager.Remove(localId);
+                        MainCaller.Do(() => {PlayerManager.playerManager.Remove(localId);});
                     }
                 }
                 else
