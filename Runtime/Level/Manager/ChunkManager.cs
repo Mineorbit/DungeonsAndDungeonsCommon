@@ -209,6 +209,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void LoadChunk(ChunkData chunkData, bool immediate = true)
         {
             Debug.Log("Added Chunk to Load List");
+            if (LevelManager.currentLevel != null && immediate)
+            {
+                _LoadChunk(chunkData);
+            }else
             instance.loadQueue.Enqueue(new Tuple<bool, ChunkData>(immediate,chunkData));
         }
         
