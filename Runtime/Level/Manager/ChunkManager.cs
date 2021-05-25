@@ -198,6 +198,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (LevelManager.currentLevel != null)
             {
+                Debug.Log("TEST");
                 if (loadQueue.Count > 0)
                 {
                     var z = loadQueue.Dequeue();
