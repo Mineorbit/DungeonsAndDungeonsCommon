@@ -191,13 +191,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return result_chunk;
         }
 
+        private Queue<Tuple<bool, ChunkData>> loadQueue = new Queue<Tuple<bool, ChunkData>>();
 
+
+        public void Update()
+        {
+            if (LevelManager.currentLevel != null)
+            {
+                if (loadQueue.Count > 0)
+                {
+                    var z = loadQueue.Dequeue();
+                    _LoadChunk(z.Item2,z.Item1);
+                }
+            }
+        }
+
+        public static void LoadChunk(ChunkData chunkData, bool immediate = true)
+        {
+            Debug.Log("Added Chunk to Load List");
+            instance.loadQueue.Enqueue(new Tuple<bool, ChunkData>(immediate,chunkData));
+        }
+        
         
         // Chunk Semantics
         // Not yet loaded: not in dictionary
         // Currently loading: in dictionary => false
         // Currently loaded: in dictionary => true
-        public static void LoadChunk(ChunkData chunkData, bool immediate = true)
+        public static void _LoadChunk(ChunkData chunkData, bool immediate = true)
         {
             Debug.Log("Loading Chunk "+chunkData.chunkId);
             bool loaded;
