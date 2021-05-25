@@ -71,7 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     while (LevelManager.currentLevel == null || !ChunkManager.instance.chunkLoaded.ContainsKey(chunkId) ||
                            !ChunkManager.instance.chunkLoaded[chunkId])
                     {
-                        Debug.Log("Chunk "+chunkId+" not yet loaded, waiting");
+                        Debug.Log("Chunk "+chunkId+" not yet loaded, waiting "+ChunkManager.instance.chunkLoaded[chunkId]);
                         await Task.Delay(100);
                     }
                 });
