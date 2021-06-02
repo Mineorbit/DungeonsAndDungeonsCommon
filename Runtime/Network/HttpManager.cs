@@ -14,10 +14,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Option levelServerURL;
 
         public string baseURL;
-
+        public static HttpManager instance;
     
         private void Start()
         {
+            if(instance != null)
+                Destroy(this);
+            instance = this;
             baseURL = (string) levelServerURL.Value;
         }
 
@@ -130,10 +133,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     }
 
 
-    public void StartUpload()
+    public static void StartUpload(LevelMetaData levelToUpload)
     {
-        var path = AssembleZip("","");
-        StartCoroutine(UploadLevel(null,"path",null));
+        var path = instance.AssembleZip("","");
+        instance.StartCoroutine(instance.UploadLevel(null,"path",null));
     }
 
     private string AssembleZip(string resultPath, string targetPath)
