@@ -7,7 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public static Object levelPrefab;
 
-        public static LevelMetaData currentLevelMetaData;
+        public static NetLevel.LevelMetaData currentLevelMetaData;
 
         public static Level currentLevel;
 
@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (levelPrefab == null) levelPrefab = Resources.Load("Level");
             var level = Instantiate(levelPrefab) as GameObject;
-            level.name = "Level " + currentLevelMetaData.localLevelId;
+            level.name = "Level " + currentLevelMetaData.LocalLevelId;
             currentLevel = level.GetComponent<Level>();
             currentLevel.Setup();
             var cm = level.GetComponent<ChunkManager>();
