@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var prepareRound = new PrepareRound
             {
                 Message = "READY, STEADY",
-                LevelMetaData = LevelMetaData.ToNetData(LevelManager.currentLevelMetaData)
+                LevelMetaData = LevelManager.currentLevelMetaData
             };
             Marshall(typeof(NetworkManagerHandler), prepareRound);
         }
@@ -81,7 +81,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (p.Content.TryUnpack(out prepareRound)) netData = prepareRound.LevelMetaData;
             if (netData != null)
             {
-                var levelMetaData = LevelMetaData.FromNetData(netData);
+                var levelMetaData = netData;
                 MainCaller.Do(() => { LevelDataManager.New(levelMetaData, saveImmediately: false); });
             }
         }

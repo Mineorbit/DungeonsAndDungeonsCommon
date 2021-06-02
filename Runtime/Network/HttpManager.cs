@@ -110,7 +110,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     
     
 
-    private IEnumerator UploadLevel(LevelMetaData levelToUpload,string path, UnityAction<string> action)
+    private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload,string path, UnityAction<string> action)
     {
         var url = baseURL+"/upload";
         
@@ -118,7 +118,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         var fileByte = File.ReadAllBytes(path);
         var form = new WWWForm();
         form.AddField("name", levelToUpload.FullName);
-        form.AddBinaryData("level", fileByte, levelToUpload.uniqueLevelId + ".zip", "application / zip");
+        form.AddBinaryData("level", fileByte, levelToUpload.UniqueLevelId+ ".zip", "application / zip");
 
         action.Invoke("Uploading Level");
         using (var www = UnityWebRequest.Post(url, form))
@@ -133,10 +133,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     }
 
 
-    public static void StartUpload(LevelMetaData levelToUpload)
+    public static void StartUpload(NetLevel.LevelMetaData levelToUpload)
     {
         var path = instance.AssembleZip("","");
         instance.StartCoroutine(instance.UploadLevel(null,"path",null));
+    }
+
+    public static NetLevel.LevelMetaData[] FetchLevelList()
+    {
+        return null;
     }
 
     private string AssembleZip(string resultPath, string targetPath)

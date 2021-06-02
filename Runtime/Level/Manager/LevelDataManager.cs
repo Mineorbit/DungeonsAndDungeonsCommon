@@ -16,8 +16,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static Dictionary<string, LevelObjectData> levelObjectDatas;
 
-        public LevelMetaData[] localLevels;
-        public LevelMetaData[] networkLevels;
+        public NetLevel.LevelMetaData[] localLevels;
+        public NetLevel.LevelMetaData[] networkLevels;
 
         public FileStructureProfile levelFolder;
 
@@ -40,14 +40,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private static void LoadAllRegions()
-        {
-            foreach (var regionId in instance.levelData.regions.Values) ChunkManager.LoadRegion(regionId);
-        }
-
 
         // Save immediately false for example in lobby
-        public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true,
+        public static void New(NetLevel.LevelMetaData levelMetaData, bool instantiateImmediately = true,
             bool saveImmediately = true)
         {
             if (instantiateImmediately)
@@ -71,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public static void Load(LevelMetaData levelMetaData, Level.InstantiateType instantiateType)
+        public static void Load(NetLevel.LevelMetaData levelMetaData, Level.InstantiateType instantiateType)
         {
             if (levelMetaData == null) return;
 
@@ -83,7 +78,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var m = new SaveManager(SaveManager.StorageType.BIN);
 
-            var levelDataPath = instance.levelFolder.GetPath() + levelMetaData.localLevelId + "/Index.json";
+            var levelDataPath = instance.levelFolder.GetPath() + levelMetaData.LocalLevelId + "/Index.json";
 
             instance.levelData = m.Load<LevelData>(levelDataPath);
 
@@ -119,10 +114,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var currentLevelMetaData = LevelManager.currentLevelMetaData;
             if (currentLevelMetaData != null)
             {
-                var folder = instance.levelFolder.GetPath() + currentLevelMetaData.localLevelId;
+                var folder = instance.levelFolder.GetPath() + currentLevelMetaData.LocalLevelId;
                 var metaDataPath = folder + "/MetaData.json";
                 FileManager.createFolder(folder, false);
-                if (metaData) currentLevelMetaData.Save(metaDataPath);
+                if (metaData) SaveLevelMetaData(currentLevelMetaData,metaDataPath);
                 if (levelData) SaveLevelData(folder);
             }
 
@@ -131,18 +126,40 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public static void Delete(LevelMetaData metaData)
+        public static void Delete(NetLevel.LevelMetaData metaData)
         {
             if (metaData == null) return;
-            var levelPath = instance.levelFolder.GetPath() + metaData.localLevelId;
+            var levelPath = instance.levelFolder.GetPath() + metaData.LocalLevelId;
             if (Directory.Exists(levelPath)) Directory.Delete(levelPath, true);
             UpdateLocalLevelList();
         }
 
-        public static LevelMetaData GetNewLevelMetaData()
+        
+        
+        public static NetLevel.LevelMetaData LoadLevelMetaData(string path)
         {
-            var levelMetaData = new LevelMetaData("NewMetaData");
-            levelMetaData.localLevelId = GetFreeLocalId();
+            // Add file safety check
+            var m = new SaveManager(SaveManager.StorageType.JSON);
+            var metaData = m.Load<NetLevel.LevelMetaData>(path);
+            return metaData;
+        }
+
+        public static void SaveLevelMetaData(NetLevel.LevelMetaData metaData,string path)
+        {
+            metaData.AvailBlue = LevelManager.currentLevel.spawn[0] != null;
+            metaData.AvailYellow = LevelManager.currentLevel.spawn[1] != null;
+            metaData.AvailRed = LevelManager.currentLevel.spawn[2] != null;
+            metaData.AvailGreen = LevelManager.currentLevel.spawn[3] != null;
+
+            var m = new SaveManager(SaveManager.StorageType.JSON);
+            m.Save(metaData, path, false);
+        }
+        
+        public static NetLevel.LevelMetaData GetNewLevelMetaData()
+        {
+            var levelMetaData = new NetLevel.LevelMetaData();
+            levelMetaData.FullName = "NewLevelMetaData";
+            levelMetaData.LocalLevelId = GetFreeLocalId();
             return levelMetaData;
         }
 
@@ -151,7 +168,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateLocalLevelList();
             if (instance != null || instance.localLevels != null)
             {
-                var localLevelIds = instance.localLevels.Select(x => x.localLevelId);
+                var localLevelIds = instance.localLevels.Select(x => x.LocalLevelId);
                 var i = 0;
                 while (localLevelIds.Contains(i))
                     i++;
@@ -161,6 +178,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return -1;
         }
 
+        
+        
         public static void UpdateLocalLevelList()
         {
             if (instance == null || instance.levelFolder == null)
@@ -172,12 +191,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var path = instance.levelFolder.GetPath();
             Debug.Log("Looking for local levels in " + path);
             var levelFolders = Directory.GetDirectories(path);
-            instance.localLevels = new LevelMetaData[levelFolders.Length];
+            instance.localLevels = new NetLevel.LevelMetaData[levelFolders.Length];
             for (var i = 0; i < levelFolders.Length; i++)
-                instance.localLevels[i] = LevelMetaData.Load(levelFolders[i] + "/MetaData.json");
+                instance.localLevels[i] = LoadLevelMetaData(levelFolders[i] + "/MetaData.json");
             levelListLoadedEvent.Invoke();
         }
 
+        
+        
+        private static void LoadAllRegions()
+        {
+            foreach (var regionId in instance.levelData.regions.Values) ChunkManager.LoadRegion(regionId);
+        }
+
+        
         internal enum LoadType
         {
             All,
