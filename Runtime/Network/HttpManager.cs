@@ -2,7 +2,10 @@
 using System.Collections;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
+using Google.Protobuf;
+using NetLevel;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -112,7 +115,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload,string path, UnityAction<string> action)
     {
-        var url = baseURL+"/upload";
+        var url = baseURL+"/level/upload";
         
         
         var fileByte = File.ReadAllBytes(path);
@@ -132,17 +135,41 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
     }
 
-
-    public static void StartUpload(NetLevel.LevelMetaData levelToUpload)
+    public LevelMetaData[] levelMetaDatas;
+    private IEnumerator FetchLevelList(UnityEvent<string> reportAction, UnityEvent listUpdatedEvent)
     {
-        var path = instance.AssembleZip("","");
-        instance.StartCoroutine(instance.UploadLevel(null,"path",null));
+        var uri = baseURL+":8000/level/all?proto_resp=true";
+        
+        
+        Debug.Log("Fetching level list from "+uri);
+        
+        reportAction.Invoke("Loading Level List");
+        using (var www = UnityWebRequest.Get(uri))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+                reportAction.Invoke(www.error);
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("Received "+data);
+                LevelMetaDataList list = LevelMetaDataList.Parser.ParseFrom(ByteString.CopyFromUtf8(data));
+                levelMetaDatas = list.Levels.ToArray();
+                Debug.Log("Got list: "+levelMetaDatas.Length);
+                foreach (var x in levelMetaDatas)
+                {
+                    Debug.Log("MetaData: "+x);
+                }
+                listUpdatedEvent.Invoke();
+            }
+            
+            
+            
+        }
     }
 
-    public static NetLevel.LevelMetaData[] FetchLevelList()
-    {
-        return null;
-    }
+
 
     private string AssembleZip(string resultPath, string targetPath)
     {
@@ -156,5 +183,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         });
         return resultPath;
     }
+    
+    
+    
+    public static void StartUpload(NetLevel.LevelMetaData levelToUpload)
+    {
+        var path = instance.AssembleZip("","");
+        instance.StartCoroutine(instance.UploadLevel(null,"path",null));
+    }
+
+    public static void FetchLevelList(UnityEvent listUpdatedEvent)
+    {
+        Debug.Log("Fetching level list");
+        UnityEvent<string> a = new UnityEvent<string>();
+        instance.StartCoroutine(instance.FetchLevelList(a,listUpdatedEvent));
+    }
+    
     }
 }
