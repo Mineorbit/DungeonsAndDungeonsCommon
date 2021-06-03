@@ -139,8 +139,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static NetLevel.LevelMetaData LoadLevelMetaData(string path)
         {
             // Add file safety check
-            var m = new SaveManager(SaveManager.StorageType.JSON);
-            var metaData = m.Load<NetLevel.LevelMetaData>(path);
+            var metaData = ProtoSaveManager.Load<NetLevel.LevelMetaData>(path);
             return metaData;
         }
 
@@ -151,8 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             metaData.AvailRed = LevelManager.currentLevel.spawn[2] != null;
             metaData.AvailGreen = LevelManager.currentLevel.spawn[3] != null;
 
-            var m = new SaveManager(SaveManager.StorageType.JSON);
-            m.Save(metaData, path, false);
+            ProtoSaveManager.Save(path,metaData);
         }
         
         public static NetLevel.LevelMetaData GetNewLevelMetaData()
