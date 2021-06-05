@@ -18,14 +18,54 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public string baseURL;
         public static HttpManager instance;
-    
+
+        public FileStructureProfile compressedLevelFiles;
+        public FileStructureProfile levelFolders;
+
+        private string token;
+
+        class TokenData
+        {
+            public string access_token;
+            string token_type;
+        }
         private void Start()
         {
             if(instance != null)
                 Destroy(this);
             instance = this;
             baseURL = (string) levelServerURL.Value;
+            Login("Max","Muinma319");
         }
+        private IEnumerator LoginRoutine(string username, string password)
+        {
+            var url = baseURL + $":8000/auth/token";
+            var form = new WWWForm();
+            form.AddField("grant_type","");
+            form.AddField("username",username);
+            form.AddField("password",password);
+            form.AddField("scope","");
+            form.AddField("client_id","");
+            form.AddField("client_secret","");
+            using (var www = UnityWebRequest.Post(url, form))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.isNetworkError || www.isHttpError)
+                    Debug.Log(www.error);
+                else
+                {
+                    Debug.Log(www.downloadHandler.text);
+                    TokenData t = JsonUtility.FromJson<TokenData>(www.downloadHandler.text);
+                    token = t.access_token;
+                }
+            }
+        }
+        public void Login(string username, string password)
+        {
+            StartCoroutine(LoginRoutine(username, password));
+        }
+        
 
         class Zip
     {
@@ -115,17 +155,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload,string path, UnityAction<string> action)
     {
-        var url = baseURL+"/level/upload";
+        var url = baseURL+$":8000/level/?proto_resp=true&name={levelToUpload.FullName}&description={levelToUpload.Description}";
         
         
-        var fileByte = File.ReadAllBytes(path);
+        
+        
         var form = new WWWForm();
-        form.AddField("name", levelToUpload.FullName);
-        form.AddBinaryData("level", fileByte, levelToUpload.UniqueLevelId+ ".zip", "application / zip");
+        var fileByte = File.ReadAllBytes(path);
+        form.AddBinaryData("levelFiles", fileByte, levelToUpload.UniqueLevelId+ ".zip", "application / zip");
 
         action.Invoke("Uploading Level");
         using (var www = UnityWebRequest.Post(url, form))
         {
+            www.SetRequestHeader("Authorization",$"Bearer {token}");
+            
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
@@ -188,8 +231,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     
     public static void StartUpload(NetLevel.LevelMetaData levelToUpload)
     {
-        var path = instance.AssembleZip("","");
-        instance.StartCoroutine(instance.UploadLevel(null,"path",null));
+        var path = instance.AssembleZip(instance.compressedLevelFiles.GetPath()+"/"+levelToUpload.LocalLevelId+".zip",instance.levelFolders.GetPath()+"/"+levelToUpload.LocalLevelId);
+        instance.StartCoroutine(instance.UploadLevel(levelToUpload,instance.compressedLevelFiles.GetPath()+"/"+levelToUpload.LocalLevelId+".zip",
+            (x)=>{Debug.Log( "Test "+x);}));
     }
 
     public static void FetchLevelList(UnityEvent listUpdatedEvent)

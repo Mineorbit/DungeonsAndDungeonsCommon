@@ -94,3 +94,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelServerURL: {fileID: 11400000, guid: c5e404e9481c9384f9043df7a7f28254, type: 2}
   baseURL: 
+  compressedLevelFiles: {fileID: 11400000, guid: 516849af024983a46bc462061a4a7cbb, type: 2}
+  levelFolders: {fileID: 11400000, guid: b75714cdca5d3d44f82e9e80392a560c, type: 2}
