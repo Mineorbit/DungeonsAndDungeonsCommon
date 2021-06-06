@@ -166,7 +166,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private string DisassembleZip(string targetPath, string resultPath)
         {
             Debug.Log($"Opening archive from {targetPath} to {resultPath}");
-            ZipFile.ExtractToDirectory(targetPath, resultPath);
+            try
+            {
+                ZipFile.ExtractToDirectory(targetPath, resultPath);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+                throw;
+            }
+
             return resultPath;
         }
 
@@ -207,7 +216,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                 {
                     string savePath = instance.compressedLevelFiles.GetPath() + $"{toDownload.LocalLevelId}.zip";
-                    string levelPath = instance.levelFolders.GetPath() + $"/{toDownload.LocalLevelId}";
+                    string levelPath = instance.levelFolders.GetPath() + $"{toDownload.LocalLevelId}";
 
 
                     Debug.Log("Saving Data to " + savePath);
@@ -222,14 +231,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void DownloadLevel(LevelMetaData metaData)
         {
+            int id = LevelDataManager.GetFreeLocalId();
+            Debug.Log("Test: "+id);
+            metaData.LocalLevelId = id;
+            
             WebClient client = new WebClient();
             string savePath = instance.compressedLevelFiles.GetPath() + $"{metaData.LocalLevelId}.zip";
-            string levelPath = instance.levelFolders.GetPath() + $"/{metaData.LocalLevelId}";
+            string levelPath = instance.levelFolders.GetPath() + $"{metaData.LocalLevelId}";
 
+            FileManager.createFolder(levelPath, persistent: false);
             var uri = instance.baseURL + $":8000/level/download?proto_resp=false&ulid={metaData.UniqueLevelId}";
-
+            LevelDataManager.SaveLevelMetaData(metaData);
             client.DownloadFile(uri, savePath);
-            MainCaller.Do(() => { instance.DisassembleZip(savePath, levelPath); });
+            instance.DisassembleZip(savePath, levelPath);
+            
         }
     }
 }

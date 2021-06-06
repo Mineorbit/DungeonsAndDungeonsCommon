@@ -162,6 +162,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ProtoSaveManager.Save(path,metaData);
         }
         
+        public static void SaveLevelMetaData(NetLevel.LevelMetaData metaData)
+        {
+            string path = instance.levelFolder.GetPath() + "" + metaData.LocalLevelId+"/MetaData.json";
+            SaveLevelMetaData(metaData,path);
+        }
+        
         public static NetLevel.LevelMetaData GetNewLevelMetaData()
         {
             var levelMetaData = new NetLevel.LevelMetaData();
@@ -170,7 +176,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return levelMetaData;
         }
 
-        private static int GetFreeLocalId()
+        public static int GetFreeLocalId()
         {
             UpdateLocalLevelList();
             if (instance != null || instance.localLevels != null)

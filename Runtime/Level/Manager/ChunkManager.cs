@@ -120,6 +120,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (instance != null) Destroy(this);
             instance = this;
 
+            chunkLoaded = new Dictionary<long, bool>();
 
             if (!instance.ready)
             {
