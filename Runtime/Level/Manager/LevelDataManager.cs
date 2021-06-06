@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NetLevel;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -45,6 +46,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void New(NetLevel.LevelMetaData levelMetaData, bool instantiateImmediately = true,
             bool saveImmediately = true)
         {
+            //Moved for now
+            int loc = GetFreeLocalId();
+            Debug.Log("Creating new level"+levelMetaData+" with local id "+loc);
+            levelMetaData.LocalLevelId = loc;
             if (instantiateImmediately)
             {
                 LevelManager.Clear();
@@ -56,16 +61,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             ChunkManager.instance.regionLoaded = new Dictionary<int, bool>();
             if (saveImmediately)
-                Save(true, false);
+                Save(true, false,extraSaveMetaData: levelMetaData);
+            
+            
         }
-
-        public static void New(bool saveImmediately = true)
-        {
-            var newMetaData = GetNewLevelMetaData();
-            New(newMetaData, saveImmediately: saveImmediately);
-        }
-
-
         public static void Load(NetLevel.LevelMetaData levelMetaData, Level.InstantiateType instantiateType)
         {
             if (levelMetaData == null) return;
@@ -93,7 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private static void SaveLevelData(string pathToLevel)
+        static void SaveLevelData(string pathToLevel)
         {
             var regions = ChunkManager.instance.FetchRegionData();
             instance.levelData = new LevelData();
@@ -109,9 +108,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             c.Save(instance.levelData, pathToLevel + "/Index.json", false);
         }
 
-        public static void Save(bool metaData = true, bool levelData = true)
+        public static void Save(bool metaData = true, bool levelData = true, LevelMetaData extraSaveMetaData = null)
         {
             var currentLevelMetaData = LevelManager.currentLevelMetaData;
+            
             if (currentLevelMetaData != null)
             {
                 var folder = instance.levelFolder.GetPath() + currentLevelMetaData.LocalLevelId;
@@ -120,9 +120,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (metaData) SaveLevelMetaData(currentLevelMetaData,metaDataPath);
                 if (levelData) SaveLevelData(folder);
             }
+            
+            if (extraSaveMetaData != null)
+            {
+                var folder = instance.levelFolder.GetPath() + extraSaveMetaData.LocalLevelId;
+                var metaDataPath = folder + "/MetaData.json";
+                FileManager.createFolder(folder, false);
+                if (metaData) SaveLevelMetaData(extraSaveMetaData,metaDataPath);
+            }
 
-
-            UpdateLocalLevelList();
+            //UpdateLocalLevelList();
         }
 
 
@@ -136,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
         
-        public static NetLevel.LevelMetaData LoadLevelMetaData(string path)
+        static NetLevel.LevelMetaData LoadLevelMetaData(string path)
         {
             // Add file safety check
             var metaData = ProtoSaveManager.Load<NetLevel.LevelMetaData>(path);
@@ -145,11 +152,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void SaveLevelMetaData(NetLevel.LevelMetaData metaData,string path)
         {
+            if(LevelManager.currentLevel != null)
+            {
             metaData.AvailBlue = LevelManager.currentLevel.spawn[0] != null;
             metaData.AvailYellow = LevelManager.currentLevel.spawn[1] != null;
             metaData.AvailRed = LevelManager.currentLevel.spawn[2] != null;
             metaData.AvailGreen = LevelManager.currentLevel.spawn[3] != null;
-
+            }
             ProtoSaveManager.Save(path,metaData);
         }
         
@@ -191,7 +200,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var levelFolders = Directory.GetDirectories(path);
             instance.localLevels = new NetLevel.LevelMetaData[levelFolders.Length];
             for (var i = 0; i < levelFolders.Length; i++)
+            {
+                Debug.Log($"Loading {levelFolders[i]}");
                 instance.localLevels[i] = LoadLevelMetaData(levelFolders[i] + "/MetaData.json");
+                
+            }
             levelListLoadedEvent.Invoke();
         }
 

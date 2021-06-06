@@ -11,6 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             using (var input = File.OpenRead(path))
             {
                 t.MergeFrom(input);
+                input.Close();
             }
 
             return t;
@@ -21,6 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             using (var output = File.Create(path))
             {
                 m.WriteTo(output);
+                output.Close();
             }
         }
     }
