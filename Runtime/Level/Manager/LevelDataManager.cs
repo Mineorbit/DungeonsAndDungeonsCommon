@@ -12,13 +12,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static LevelDataManager instance;
 
         public static UnityEvent levelLoadedEvent;
-        public static UnityEvent levelListLoadedEvent;
+        public static UnityEvent levelListUpdatedEvent;
 
 
         public static Dictionary<string, LevelObjectData> levelObjectDatas;
 
-        public NetLevel.LevelMetaData[] localLevels;
-        public NetLevel.LevelMetaData[] networkLevels;
+        public LevelMetaData[] localLevels;
+        public LevelMetaData[] networkLevels;
 
         public FileStructureProfile levelFolder;
 
@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             instance = this;
             levelLoadedEvent = new UnityEvent();
-            levelListLoadedEvent = new UnityEvent();
+            levelListUpdatedEvent = new UnityEvent();
 
             UpdateLocalLevelList();
         }
@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         // Save immediately false for example in lobby
-        public static void New(NetLevel.LevelMetaData levelMetaData, bool instantiateImmediately = true,
+        public static void New(LevelMetaData levelMetaData, bool instantiateImmediately = true,
             bool saveImmediately = true)
         {
             //Moved for now
@@ -126,7 +126,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (metaData) SaveLevelMetaData(extraSaveMetaData,metaDataPath + "/MetaData.json");
             }
 
-            //UpdateLocalLevelList();
+            UpdateLocalLevelList();
         }
 
 
@@ -178,7 +178,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public static NetLevel.LevelMetaData GetNewLevelMetaData()
         {
-            var levelMetaData = new NetLevel.LevelMetaData();
+            var levelMetaData = new LevelMetaData();
             levelMetaData.FullName = "NewLevelMetaData";
             return levelMetaData;
         }
@@ -229,7 +229,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 instance.localLevels[i] = LoadLevelMetaData(levelFolders[i] + "/MetaData.json");
                 
             }
-            levelListLoadedEvent.Invoke();
+            levelListUpdatedEvent.Invoke();
         }
 
         
