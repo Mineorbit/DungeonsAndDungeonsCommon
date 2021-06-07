@@ -47,21 +47,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bool saveImmediately = true)
         {
             //Moved for now
-            int loc = GetFreeLocalId();
-            Debug.Log("Creating new level"+levelMetaData+" with local id "+loc);
-            levelMetaData.LocalLevelId = loc;
+            Debug.Log("Creating new level "+levelMetaData);
             if (instantiateImmediately)
             {
                 LevelManager.Clear();
                 LevelManager.currentLevelMetaData = levelMetaData;
                 LevelManager.Instantiate();
             }
+            
 
             instance.levelData = new LevelData();
 
             ChunkManager.instance.regionLoaded = new Dictionary<int, bool>();
             if (saveImmediately)
-                Save(true, false,extraSaveMetaData: levelMetaData);
+                SaveLevelMetaData(LevelManager.currentLevelMetaData,true);
             
             
         }
@@ -77,8 +76,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var m = new SaveManager(SaveManager.StorageType.BIN);
 
-            var levelDataPath = instance.levelFolder.GetPath() + levelMetaData.LocalLevelId + "/Index.json";
-
+            var levelDataPath = GetLevelPath(levelMetaData) + "/Index.json";
+            Debug.Log("Loading LevelData: "+levelDataPath);
             instance.levelData = m.Load<LevelData>(levelDataPath);
 
             ChunkManager.instance.regionLoaded = new Dictionary<int, bool>();
@@ -114,19 +113,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             if (currentLevelMetaData != null)
             {
-                var folder = instance.levelFolder.GetPath() + currentLevelMetaData.LocalLevelId;
-                var metaDataPath = folder + "/MetaData.json";
-                FileManager.createFolder(folder, false);
-                if (metaData) SaveLevelMetaData(currentLevelMetaData,metaDataPath);
-                if (levelData) SaveLevelData(folder);
+                var metaDataPath = GetLevelPath(currentLevelMetaData);
+                FileManager.createFolder(metaDataPath, false);
+                if (metaData) SaveLevelMetaData(currentLevelMetaData,metaDataPath + "/MetaData.json");
+                if (levelData) SaveLevelData(metaDataPath);
             }
             
             if (extraSaveMetaData != null)
             {
-                var folder = instance.levelFolder.GetPath() + extraSaveMetaData.LocalLevelId;
-                var metaDataPath = folder + "/MetaData.json";
-                FileManager.createFolder(folder, false);
-                if (metaData) SaveLevelMetaData(extraSaveMetaData,metaDataPath);
+                var metaDataPath = GetLevelPath(extraSaveMetaData);
+                FileManager.createFolder(GetLevelPath(extraSaveMetaData), false);
+                if (metaData) SaveLevelMetaData(extraSaveMetaData,metaDataPath + "/MetaData.json");
             }
 
             //UpdateLocalLevelList();
@@ -136,7 +133,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void Delete(NetLevel.LevelMetaData metaData)
         {
             if (metaData == null) return;
-            var levelPath = instance.levelFolder.GetPath() + metaData.LocalLevelId;
+            var levelPath = GetLevelPath(metaData);
             if (Directory.Exists(levelPath)) Directory.Delete(levelPath, true);
             UpdateLocalLevelList();
         }
@@ -162,9 +159,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ProtoSaveManager.Save(path,metaData);
         }
         
-        public static void SaveLevelMetaData(NetLevel.LevelMetaData metaData)
+        public static void SaveLevelMetaData(LevelMetaData metaData, bool newLevel = false)
         {
-            string path = instance.levelFolder.GetPath() + "" + metaData.LocalLevelId+"/MetaData.json";
+            string path = "";
+            if (newLevel)
+            {
+                metaData.LocalLevelId = GetFreeLocalLevelId();
+                string lPath = GetLevelPath(metaData);
+                FileManager.createFolder(lPath,persistent: false);
+                path = lPath+"/MetaData.json";;
+            }
+            else
+            {
+                path = GetLevelPath(metaData)+"/MetaData.json";;
+            }
             SaveLevelMetaData(metaData,path);
         }
         
@@ -172,23 +180,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var levelMetaData = new NetLevel.LevelMetaData();
             levelMetaData.FullName = "NewLevelMetaData";
-            levelMetaData.LocalLevelId = GetFreeLocalId();
             return levelMetaData;
         }
 
-        public static int GetFreeLocalId()
+        public static int GetFreeLocalLevelId()
         {
-            UpdateLocalLevelList();
+            int id = 0;
             if (instance != null || instance.localLevels != null)
             {
                 var localLevelIds = instance.localLevels.Select(x => x.LocalLevelId);
-                var i = 0;
-                while (localLevelIds.Contains(i))
-                    i++;
-                return i;
+                id = 0;
+                while (localLevelIds.Contains(id))
+                    id++;
+            }
+            else
+            {
+                id = -1;
             }
 
-            return -1;
+            return id;
+        }
+        
+
+        public static string GetLevelPath(LevelMetaData levelMetaData)
+        {
+            Debug.Log("GETTING PATH FOR "+levelMetaData);
+            string path = instance.levelFolder.GetPath() + levelMetaData.FullName + ((levelMetaData.LocalLevelId != 0) ? levelMetaData.LocalLevelId.ToString() : "");
+            return path;
         }
 
         

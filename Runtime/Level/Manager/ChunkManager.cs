@@ -59,8 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (instance.regionLoaded.ContainsKey(regionId) && instance.regionLoaded[regionId]) return null;
             if (loadType == LoadType.Disk)
             {
-                var pathToLevel = LevelDataManager.instance.levelFolder.GetPath() +
-                                  LevelManager.currentLevelMetaData.LocalLevelId;
+                var pathToLevel = LevelDataManager.GetLevelPath(LevelManager.currentLevelMetaData);
                 return regionDataLoader.Load<RegionData>(pathToLevel + "/" + regionId + ".bin");
             }
 

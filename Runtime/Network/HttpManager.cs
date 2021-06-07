@@ -231,17 +231,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void DownloadLevel(LevelMetaData metaData)
         {
-            int id = LevelDataManager.GetFreeLocalId();
-            Debug.Log("Test: "+id);
-            metaData.LocalLevelId = id;
-            
             WebClient client = new WebClient();
             string savePath = instance.compressedLevelFiles.GetPath() + $"{metaData.LocalLevelId}.zip";
             string levelPath = instance.levelFolders.GetPath() + $"{metaData.LocalLevelId}";
 
             FileManager.createFolder(levelPath, persistent: false);
             var uri = instance.baseURL + $":8000/level/download?proto_resp=false&ulid={metaData.UniqueLevelId}";
-            LevelDataManager.SaveLevelMetaData(metaData);
+            LevelDataManager.SaveLevelMetaData(metaData, newLevel: true);
             client.DownloadFile(uri, savePath);
             instance.DisassembleZip(savePath, levelPath);
             
