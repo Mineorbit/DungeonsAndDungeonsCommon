@@ -158,16 +158,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             ProtoSaveManager.Save(path,metaData);
         }
-        
+
+
+        public static string SetupNewLevelFolder(LevelMetaData metaData)
+        {
+            
+            metaData.LocalLevelId = GetFreeLocalLevelId();
+            string lPath = GetLevelPath(metaData);
+            FileManager.createFolder(lPath,persistent: false);
+            return lPath;
+        }
         public static void SaveLevelMetaData(LevelMetaData metaData, bool newLevel = false)
         {
             string path = "";
             if (newLevel)
             {
-                metaData.LocalLevelId = GetFreeLocalLevelId();
-                string lPath = GetLevelPath(metaData);
-                FileManager.createFolder(lPath,persistent: false);
-                path = lPath+"/MetaData.json";;
+                path = SetupNewLevelFolder(metaData)+"/MetaData.json";
             }
             else
             {

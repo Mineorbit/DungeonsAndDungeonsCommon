@@ -183,11 +183,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void StartUpload(NetLevel.LevelMetaData levelToUpload)
         {
+            
+            count++;
             var path = instance.AssembleZip(
-                instance.compressedLevelFiles.GetPath() + "" + levelToUpload.LocalLevelId + ".zip",
-                instance.levelFolders.GetPath() + "" + levelToUpload.LocalLevelId);
+                instance.compressedLevelFiles.GetPath() + "" + count + ".zip",
+                LevelDataManager.GetLevelPath(levelToUpload));
             instance.StartCoroutine(instance.UploadLevel(levelToUpload,
-                instance.compressedLevelFiles.GetPath() + "" + levelToUpload.LocalLevelId + ".zip",
+                instance.compressedLevelFiles.GetPath() + "" + count + ".zip",
                 (x) => { Debug.Log("Test " + x); }));
         }
 
@@ -229,15 +231,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        private static int count;
         public static void DownloadLevel(LevelMetaData metaData)
         {
+            count++;
             WebClient client = new WebClient();
-            string savePath = instance.compressedLevelFiles.GetPath() + $"{metaData.LocalLevelId}.zip";
-            string levelPath = instance.levelFolders.GetPath() + $"{metaData.LocalLevelId}";
-
-            FileManager.createFolder(levelPath, persistent: false);
+            string savePath = instance.compressedLevelFiles.GetPath() + $"{count}.zip";
+            string levelPath = LevelDataManager.SetupNewLevelFolder(metaData);
             var uri = instance.baseURL + $":8000/level/download?proto_resp=false&ulid={metaData.UniqueLevelId}";
-            LevelDataManager.SaveLevelMetaData(metaData, newLevel: true);
+            LevelDataManager.SaveLevelMetaData(metaData, levelPath+"/MetaData.json");
             client.DownloadFile(uri, savePath);
             instance.DisassembleZip(savePath, levelPath);
             
