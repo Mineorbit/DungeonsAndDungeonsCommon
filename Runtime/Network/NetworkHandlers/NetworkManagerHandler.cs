@@ -103,6 +103,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (isOnServer)
                 {
+                    
+                    Debug.Log("Sending back");
                     Marshall(typeof(NetworkManagerHandler),lobbyRequest);
                 }
                 NetworkManager.lobbyRequestEvent.Invoke(lobbyRequest);
