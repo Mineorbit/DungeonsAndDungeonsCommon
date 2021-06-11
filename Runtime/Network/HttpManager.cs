@@ -173,7 +173,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             catch (Exception e)
             {
                 Debug.Log(e);
-                throw;
             }
 
             return resultPath;
