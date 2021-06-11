@@ -1,5 +1,6 @@
 using System;
 using General;
+using NetLevel;
 using State;
 using UnityEngine;
 
@@ -34,6 +35,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Marshall(typeof(NetworkManagerHandler), winRound);
         }
 
+        public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
+        {
+            LobbyRequest updateRequest = new LobbyRequest();
+            updateRequest.SelectedLevel = selectedLevel;
+            Marshall(typeof(NetworkManagerHandler), updateRequest);
+        }
+        
         public static void RequestReadyRound()
         {
             var readyRound = new ReadyRound();
@@ -86,6 +94,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+        [PacketBinding.Binding]
+        public static void OnLobbyRequest(Packet p)
+        {
+            LobbyRequest lobbyRequest;
+            if (p.Content.TryUnpack(out lobbyRequest))
+            {
+                if (isOnServer)
+                {
+                    Marshall(typeof(NetworkManagerHandler),lobbyRequest);
+                }
+                NetworkManager.lobbyRequestEvent.Invoke(lobbyRequest);
+            }
+        }
 
         [PacketBinding.Binding]
         public static void StartRound(Packet p)
