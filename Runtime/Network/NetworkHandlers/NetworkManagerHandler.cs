@@ -99,7 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnLobbyRequest(Packet p)
         {
             LobbyRequest lobbyRequest;
-            if (p.Content.TryUnpack(out lobbyRequest))
+            if (p.Content.TryUnpack<LobbyRequest>(out lobbyRequest))
             {
                 if (isOnServer)
                 {
