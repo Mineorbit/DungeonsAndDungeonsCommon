@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using NetLevel;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,6 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static string userName;
 
         public static UnityEvent connectEvent = new UnityEvent();
+        public static UnityEvent<LobbyRequest> lobbyRequestEvent = new UnityEvent<LobbyRequest>();
         public static UnityEvent disconnectEvent = new UnityEvent();
         public static UnityEvent prepareRoundEvent = new UnityEvent();
         public static UnityEvent startRoundEvent = new UnityEvent();
@@ -122,6 +124,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             ready = r;
             NetworkManagerHandler.RequestReadyRound();
+        }
+
+        public void CallSelected(LevelMetaData metaData)
+        {
+            NetworkManagerHandler.RequestLobbyUpdate(metaData);
         }
     }
 }
