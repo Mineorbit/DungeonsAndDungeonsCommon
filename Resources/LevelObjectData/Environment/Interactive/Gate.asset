@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Gate
   m_EditorClassIdentifier: 
   prefab: {fileID: 4924650896210544278, guid: f159be7f38d48e4468488f8a1e54fa1a, type: 3}
-  cursorMesh: {fileID: -3371827001348983477, guid: 4aed910a4223474449fd29553caf367f, type: 3}
   uniqueLevelObjectId: 020bab82-53e2-4501-91b4-e3eddc29b8c1
-  granularity: 3
+  granularity: 1
   name: Gate
   dynamicInstantiable: 1
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: -3371827001348983477, guid: 4aed910a4223474449fd29553caf367f, type: 3}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}
