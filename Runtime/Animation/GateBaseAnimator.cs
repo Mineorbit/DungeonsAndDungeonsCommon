@@ -21,7 +21,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Update()
         {
             // Temporary fix
-            model.SetActive(!open);
+            foreach(Transform c in model.transform)
+            {
+                c.gameObject.SetActive(!open);
+            }
         }
 
         public void Close()
