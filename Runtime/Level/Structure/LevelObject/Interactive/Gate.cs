@@ -26,12 +26,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SetOpen()
         {
+            Debug.Log("Opening Gate");
             gateBaseAnimator.Open();
             collider.enabled = false;
         }
 
         public void SetClosed()
         {
+            Debug.Log("Closing Gate");
             gateBaseAnimator.Close();
             collider.enabled = true;
         }
