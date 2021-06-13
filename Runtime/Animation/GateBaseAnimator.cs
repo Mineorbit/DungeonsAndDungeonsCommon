@@ -9,13 +9,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Open()
         {
             Debug.Log("Open Animation");
-            model.SetActive(false);
+            MainCaller.Do(() => model.SetActive(false));
         }
 
         public void Close()
         {
             Debug.Log("Close Animation");
-            model.SetActive(true);
+            MainCaller.Do(() => model.SetActive(true));
         }
     }
 }
