@@ -19,6 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent<Entity> onHitEvent = new UnityEvent<Entity>();
 
+        public UnityEvent<int> onPointsChangedEvent = new UnityEvent<int>();
 
         public UnityEvent<Vector3> onSpawnEvent = new UnityEvent<Vector3>();
 
@@ -47,6 +48,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float hitCooldownTime = 1f;
 
+        
+        int _points = 0;
+
+        public int points
+        {
+            get
+            {
+                return _points;
+            }
+            set
+            {
+                _points = value;
+                onPointsChangedEvent.Invoke(points);
+            }
+        }
+        
         public virtual void Start()
         {
             SetupItems();
