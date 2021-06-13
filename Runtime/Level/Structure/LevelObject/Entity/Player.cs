@@ -26,8 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly bool alive = true;
         private readonly float cooldownTime = 2f;
 
-
-
+        
 
         public virtual void Awake()
         {

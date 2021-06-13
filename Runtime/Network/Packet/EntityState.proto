@@ -4,4 +4,5 @@ package game;
 message EntityState {
 	int32 health = 1;
 	bool active = 2;
+	int32 points = 3;
 }

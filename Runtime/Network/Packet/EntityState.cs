@@ -24,12 +24,13 @@ namespace Game {
     static EntityStateReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChFFbnRpdHlTdGF0ZS5wcm90bxIEZ2FtZSItCgtFbnRpdHlTdGF0ZRIOCgZo",
-            "ZWFsdGgYASABKAUSDgoGYWN0aXZlGAIgASgIYgZwcm90bzM="));
+            "ChFFbnRpdHlTdGF0ZS5wcm90bxIEZ2FtZSI9CgtFbnRpdHlTdGF0ZRIOCgZo",
+            "ZWFsdGgYASABKAUSDgoGYWN0aXZlGAIgASgIEg4KBnBvaW50cxgDIAEoBWIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.EntityState), global::Game.EntityState.Parser, new[]{ "Health", "Active" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.EntityState), global::Game.EntityState.Parser, new[]{ "Health", "Active", "Points" }, null, null, null, null)
           }));
     }
     #endregion
@@ -67,6 +68,7 @@ namespace Game {
     public EntityState(EntityState other) : this() {
       health_ = other.health_;
       active_ = other.active_;
+      points_ = other.points_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -97,6 +99,17 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "points" field.</summary>
+    public const int PointsFieldNumber = 3;
+    private int points_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Points {
+      get { return points_; }
+      set {
+        points_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as EntityState);
@@ -112,6 +125,7 @@ namespace Game {
       }
       if (Health != other.Health) return false;
       if (Active != other.Active) return false;
+      if (Points != other.Points) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -120,6 +134,7 @@ namespace Game {
       int hash = 1;
       if (Health != 0) hash ^= Health.GetHashCode();
       if (Active != false) hash ^= Active.GetHashCode();
+      if (Points != 0) hash ^= Points.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -144,6 +159,10 @@ namespace Game {
         output.WriteRawTag(16);
         output.WriteBool(Active);
       }
+      if (Points != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(Points);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -161,6 +180,10 @@ namespace Game {
         output.WriteRawTag(16);
         output.WriteBool(Active);
       }
+      if (Points != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(Points);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -175,6 +198,9 @@ namespace Game {
       }
       if (Active != false) {
         size += 1 + 1;
+      }
+      if (Points != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Points);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -192,6 +218,9 @@ namespace Game {
       }
       if (other.Active != false) {
         Active = other.Active;
+      }
+      if (other.Points != 0) {
+        Points = other.Points;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -215,6 +244,10 @@ namespace Game {
             Active = input.ReadBool();
             break;
           }
+          case 24: {
+            Points = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -235,6 +268,10 @@ namespace Game {
           }
           case 16: {
             Active = input.ReadBool();
+            break;
+          }
+          case 24: {
+            Points = input.ReadInt32();
             break;
           }
         }

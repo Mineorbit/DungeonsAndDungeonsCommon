@@ -30,6 +30,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         private readonly float tpDist = 0.005f;
+        
+        
 
         public override void Awake()
         {
@@ -50,6 +52,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed.onHitEvent.AddListener(x => { UpdateState(); });
             observed.onDespawnEvent.AddListener(() => { Teleport(new Vector3(0, 0, 0)); });
             observed.onDespawnEvent.AddListener(() => { UpdateState(); });
+            observed.onPointsChangedEvent.AddListener((x) => {UpdateState();});
         }
 
         public virtual void Update()
@@ -164,7 +167,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var entityState = new EntityState
             {
                 Health = observed.health,
-                Active = observed.gameObject.activeSelf
+                Active = observed.gameObject.activeSelf,
+                Points = observed.points
             };
             Marshall(entityState);
         }
@@ -176,6 +180,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (p.Content.TryUnpack(out entityState))
             {
                 observed.health = entityState.Health;
+                observed.points = entityState.Points;
                 if (observed.gameObject.activeSelf != entityState.Active)
                     observed.gameObject.SetActive(entityState.Active);
             }
