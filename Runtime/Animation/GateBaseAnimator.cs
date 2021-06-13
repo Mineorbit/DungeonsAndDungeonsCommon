@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -13,9 +14,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 open = true;
                 Debug.Log("Open Animation "+model.activeSelf);
-                model.SetActive(false);
                 Debug.Log("Open Animation f "+model.activeSelf);
             }
+        }
+
+        public void Update()
+        {
+            // Temporary fix
+            model.SetActive(!open);
         }
 
         public void Close()
@@ -24,7 +30,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 open = false;
                 Debug.Log("Close Animation"+model.activeSelf);
-                model.SetActive(true);
                 Debug.Log("Close Animation f"+model.activeSelf);
             }
         }
