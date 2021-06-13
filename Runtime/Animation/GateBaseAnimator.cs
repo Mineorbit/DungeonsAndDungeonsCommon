@@ -13,25 +13,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!open)
             {
                 open = true;
+                model.SetActive(false);
                 Debug.Log("Open Animation "+model.activeSelf);
                 Debug.Log("Open Animation f "+model.activeSelf);
             }
         }
 
-        public void Update()
-        {
-            // Temporary fix
-            foreach(Transform c in model.transform)
-            {
-                c.gameObject.SetActive(!open);
-            }
-        }
+        
 
         public void Close()
         {
             if (open)
             {
                 open = false;
+                model.SetActive(true);
                 Debug.Log("Close Animation"+model.activeSelf);
                 Debug.Log("Close Animation f"+model.activeSelf);
             }
