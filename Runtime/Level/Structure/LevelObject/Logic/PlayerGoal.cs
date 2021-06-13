@@ -28,10 +28,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playersInside = new bool[4];
         }
 
+
+        private int pointsForGoalReached = 1000;
         private void Enter(GameObject other)
         {
             var p = PlayerManager.GetPlayerId(other);
             if (p >= 0) playersInside[p] = true;
+            PlayerManager.GetPlayerById(p).points += pointsForGoalReached;
             CheckWinCondition();
         }
 
