@@ -5,17 +5,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class GateBaseAnimator : BaseAnimator
     {
         public GameObject model;
-
+        private bool open = false;
+        
         public void Open()
         {
-            Debug.Log("Open Animation "+model);
-            model.SetActive(false);
+            if (!open)
+            {
+                open = true;
+                Debug.Log("Open Animation "+model);
+                model.SetActive(false);
+            }
         }
 
         public void Close()
         {
-            Debug.Log("Close Animation");
-            model.SetActive(true);
+            if (open)
+            {
+                open = false;
+                Debug.Log("Close Animation");
+                model.SetActive(true);
+            }
         }
     }
 }
