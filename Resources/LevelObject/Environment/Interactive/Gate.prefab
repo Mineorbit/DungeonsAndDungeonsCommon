@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 6498931593991587624}
   - component: {fileID: -6315356682183278751}
   - component: {fileID: -3889575931983887138}
+  - component: {fileID: 7098715700073503541}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -229,7 +230,7 @@ MonoBehaviour:
   inBoundWires: []
   outBoundWires: []
   collider: {fileID: 5230568351884737477}
-  gateBaseAnimator: {fileID: 7982219347092909750}
+  gateBaseAnimator: {fileID: 7098715700073503541}
   navMeshObstacle: {fileID: -6315356682183278751}
 --- !u!208 &-6315356682183278751
 NavMeshObstacle:
@@ -259,9 +260,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Identity: 
+  _Identity: 
+  identified: 0
   observed: {fileID: 0}
   observed: {fileID: 0}
+  disabled_observed: 1
+--- !u!114 &7098715700073503541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924650896210544278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a17b3be73da3dd40a7749623b8ef5d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 8263260763983646358}
 --- !u!1 &6420252443121159005
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +368,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856738501880088313}
-  - component: {fileID: 7982219347092909750}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -377,16 +392,3 @@ Transform:
   m_Father: {fileID: 5700448036526758956}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7982219347092909750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8263260763983646358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a17b3be73da3dd40a7749623b8ef5d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 8263260763983646358}
