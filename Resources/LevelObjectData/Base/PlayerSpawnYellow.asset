@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5418567047946486058, guid: 27fd51849c0e6864699718ded3d33c3e, type: 3}
   uniqueLevelObjectId: da5779f2-03f9-472c-8450-7ccd736f04dc
-  granularity: 2
+  granularity: 1
   name: Yellow Player Spawn
   dynamicInstantiable: 0
   levelInstantiable: 1
+  ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}
