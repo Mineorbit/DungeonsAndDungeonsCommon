@@ -137,6 +137,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     Marshall(typeof(NetworkManagerHandler),readyRound);
                 }
+                Debug.Log("Received Ready round");
                 NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(readyRound.LocalId, readyRound.Ready));
                 
             }

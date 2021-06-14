@@ -19,7 +19,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private readonly List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
 
-        
+
+        public void Start()
+        {
+            LevelManager.levelClearEvent.AddListener(() => { loadedLocalChunks.Clear();});
+        }
 
         //Overlap between load target zones is a problem
         public override void FixedUpdate()
