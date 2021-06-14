@@ -41,11 +41,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartListen();
         }
 
+        private Thread createThread;
         public void StartListen()
         {
             
             listener.Start();
-            var createThread = new Thread(() => { Task.Run(HandleNewConnection); });
+            createThread = new Thread(() => { Task.Run(HandleNewConnection); });
             createThread.IsBackground = true;
             createThread.Start();
         }
@@ -137,6 +138,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void StopListen()
         {
             listener.Stop();
+            createThread.Abort();
         }
     }
 }
