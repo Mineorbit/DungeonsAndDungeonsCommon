@@ -96,7 +96,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Destroy(currentLevel.gameObject);
                 currentLevelMetaData = null;
+                Level.instantiateType = Level.InstantiateType.Default;
             }
+            
         }
     }
 }
