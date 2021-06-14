@@ -13,6 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public static UnityEvent levelStartedEvent;
+        public static UnityEvent levelClearEvent = new UnityEvent();
         public static UnityEvent levelEndedEvent;
 
         public void Start()
@@ -97,6 +98,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Destroy(currentLevel.gameObject);
                 currentLevelMetaData = null;
                 Level.instantiateType = Level.InstantiateType.Default;
+                levelClearEvent.Invoke();
             }
             
         }
