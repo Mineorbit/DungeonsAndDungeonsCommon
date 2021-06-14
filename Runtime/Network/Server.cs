@@ -38,12 +38,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             clients = new Client[4];
             listener = new TcpListener(localAddr, port);
+            StartListen();
+        }
+
+        public void StartListen()
+        {
+            
             listener.Start();
             var createThread = new Thread(() => { Task.Run(HandleNewConnection); });
             createThread.IsBackground = true;
             createThread.Start();
         }
-
+        
         private async Task HandleNewConnection()
         {
             var tpClient = await listener.AcceptTcpClientAsync();
