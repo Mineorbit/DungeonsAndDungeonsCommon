@@ -52,7 +52,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed.onHitEvent.AddListener(x => {Debug.Log("Hit State Update"); UpdateState(); });
             observed.onDespawnEvent.AddListener(() => { Teleport(new Vector3(0, 0, 0)); });
             observed.onDespawnEvent.AddListener(() => {Debug.Log("Despawn State Update"); UpdateState(); });
-            observed.onPointsChangedEvent.AddListener((x) => {Debug.Log("Points changed State Update "+x);UpdateState();});
+            observed.onPointsChangedEvent.AddListener((x) => {
+                if (isOnServer)
+                {
+                    Debug.Log("Points changed State Update " + x);
+                    UpdateState();
+                }
+            });
         }
 
         public virtual void Update()
