@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8390361897316666614, guid: 2cd2f3ae494709a4d8d8fa3ceedab93a, type: 3}
   uniqueLevelObjectId: 65660cf7-ac53-475e-9d9b-64808f703438
-  granularity: 2
+  granularity: 1
   name: Goal
   dynamicInstantiable: 0
   levelInstantiable: 1
