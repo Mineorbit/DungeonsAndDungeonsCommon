@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Walk
   m_EditorClassIdentifier: 
   audioType: 0
-  overloading: 0
+  overloading: 1
   onAwake: 0
   relativePosition: {x: 0, y: 0, z: 0}
   minVolume: 0.0025

@@ -173,10 +173,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             baseAnimator.Hit();
         }
 
+        private int pointsForKill = 100;
+
         public virtual void Hit(Entity hitter, int damage)
         {
             Invoke(HitEffect);
 
+            hitter.points += damage;
 
             if (Level.instantiateType == Level.InstantiateType.Play ||
                 Level.instantiateType == Level.InstantiateType.Test)
@@ -189,7 +192,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                               " HP DAMAGE");
                     health = health - damage;
 
-                    if (health <= 0) Invoke(Kill);
+                    if (health <= 0)
+                    {
+                        Invoke(Kill);
+                        hitter.points += pointsForKill;
+                    }
                     //FreezeFramer.freeze(0.0075f);
                 }
         }
