@@ -47,7 +47,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 //int damage = col.GetComponent<EnemyController>().damage;
                 var damage = 10;
-                if (damage > 0) Hit(col.GetComponent<Entity>(), damage);
+                if (damage > 0)
+                {
+                    Hit(col.GetComponent<Entity>(), damage);
+                }
             }
         }
 
