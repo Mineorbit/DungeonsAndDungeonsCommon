@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -14,6 +15,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private Animator animator;
         private Vector3 targetInterpolation;
 
+        [FormerlySerializedAs("enemyController")] public new EnemyController entityController;
+        
+
         private void Start()
         {
             targetInterpolation = transform.parent.forward;
@@ -23,8 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void Update()
         {
-            if (animator != null)
-                animator.SetFloat("Speed", speed);
+            base.Update();
 
             var targetDirection = new Vector3(0, 0, 0);
 
