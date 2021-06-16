@@ -108,7 +108,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void setMovementStatus(bool allowedToMove)
         {
             base.setMovementStatus(allowedToMove);
-            Debug.Log("Stoppinng");
+            Debug.Log("Stopping");
             controller.SetTrackingAbility(allowedToMove);
         }
 

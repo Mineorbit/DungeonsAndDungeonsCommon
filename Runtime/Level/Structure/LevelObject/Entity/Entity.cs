@@ -48,7 +48,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float hitCooldownTime = 1f;
 
-        
+        public bool movementOverride;
+
         int _points = 0;
 
         public int points
@@ -77,6 +78,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        IEnumerator KickbackRoutine(Vector3 dir, float dist)
+        {
+            float t = 0;
+            Vector3 start = transform.position;
+            while (t<1)
+            {
+                t += Time.deltaTime;
+                transform.position = start + dir * dist * t;
+                yield return new WaitForEndOfFrame();
+            }
+            transform.position = start + dir * dist;
+            setMovementStatus(true);
+        }
+        
+        public void Kickback(Entity attacker, float distance)
+        {
+            setMovementStatus(false);
+            Vector3 direction = (transform.position - attacker.transform.position);
+            direction.Normalize();
+            StartCoroutine(KickbackRoutine(direction,distance));
+        }
+        
+        
         private void SetupItems()
         {
             // Temporary
@@ -113,6 +137,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void setMovementStatus(bool allowedToMove)
         {
+            movementOverride = allowedToMove;
         }
 
         public virtual void OnDestroy()
@@ -196,6 +221,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         Invoke(Kill);
                         hitter.points += pointsForKill;
+                    }
+                    else
+                    {
+                        Kickback(hitter,((float) damage)*0.5f);
                     }
                     //FreezeFramer.freeze(0.0075f);
                 }

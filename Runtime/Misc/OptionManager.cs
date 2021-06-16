@@ -53,7 +53,6 @@ public class OptionManager : MonoBehaviour
         foreach (var o in optionsLoaded)
         {
             var opt = (Option) o;
-            Debug.Log("We found Option "+opt.OptionTag);
             options.Add(opt.OptionTag, opt);
         }
 
@@ -61,9 +60,7 @@ public class OptionManager : MonoBehaviour
 
         foreach (var t in types)
         {
-                Debug.Log("Type: "+t);
                 optionHandlers.Add(t.Name, Activator.CreateInstance(t) as OptionHandler);
-                Debug.Log("Added OptionHandler "+t);
         }
         
         foreach (var opt in options.Values)
