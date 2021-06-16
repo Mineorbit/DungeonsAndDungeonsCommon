@@ -139,7 +139,10 @@ MonoBehaviour:
   items: []
   itemHandles: []
   baseAnimator: {fileID: 5603963655004878686}
-  onAttackEvent:
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onPointsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
   onSpawnEvent:
@@ -148,9 +151,17 @@ MonoBehaviour:
   onDespawnEvent:
     m_PersistentCalls:
       m_Calls: []
+  onTeleportEvent:
+    m_PersistentCalls:
+      m_Calls: []
   levelObjectNetworkHandler: {fileID: 8870155796596675472}
   controller: {fileID: 736877002971563755}
   invincible: 0
+  loadTarget: {fileID: 0}
+  itemHitbox: {fileID: 0}
+  itemsInProximity: []
+  maxHealth: 100
+  hitCooldownTime: 1
   controller: {fileID: 736877002971563755}
   viewDistance: 15
   attackDistance: 4
@@ -162,6 +173,9 @@ MonoBehaviour:
   baseAnimator: {fileID: 5603963655004878686}
   attackHitbox: {fileID: 5945292434564437852}
   attackTarget: {fileID: 0}
+  damageMultiplier: 2
+  baseDamage: 10
+  strikeDuration: 0.025
 --- !u!195 &736877002971563753
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -229,9 +243,14 @@ MonoBehaviour:
   identified: 0
   observed: {fileID: 987221561569911037}
   observed: {fileID: 0}
+  disabled_observed: 1
   isOwner: 0
   owner: -1
   observed: {fileID: 736877002971563754}
+  targetPosition: {x: 0, y: 0, z: 0}
+  targetRotation: {x: 0, y: 0, z: 0}
+  movementOverride: 0
+  teleportPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1070978897087344274
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3810150259432855338}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.1514262, z: 0}
+  m_LocalPosition: {x: -0, y: 1.151426, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5168312931603232716}
@@ -856,14 +875,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8609772339390060557}
-  m_LocalRotation: {x: 0.57407147, y: 0.3533001, z: -0.28712183, w: 0.6805749}
-  m_LocalPosition: {x: -0, y: 0.38155034, z: 0}
+  m_LocalRotation: {x: 0.60889447, y: 0.33779323, z: -0.30521408, w: 0.6496058}
+  m_LocalPosition: {x: -0.00000008405808, y: 0.3815482, z: 0}
   m_LocalScale: {x: 0.99999994, y: 1, z: 1}
   m_Children:
   - {fileID: 8869326295691219590}
   m_Father: {fileID: 2170515426988608609}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 85.774, y: 65.732, z: 11.605}
 --- !u!1001 &8286703355067663200
 PrefabInstance:
   m_ObjectHideFlags: 0
