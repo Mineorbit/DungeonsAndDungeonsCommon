@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using com.mineorbit.dungeonsanddungeonscommon;
 using UnityEngine;
@@ -40,19 +41,31 @@ public class OptionManager : MonoBehaviour
         optionHandlers = new Dictionary<string, OptionHandler>();
         options = new Dictionary<string, Option>();
         var optionsLoaded = Resources.LoadAll("options", typeof(Option));
-        var types = Assembly.GetAssembly(typeof(OptionHandler)).GetTypes();
+        
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
+        List<Type> types = new List<Type>();
+        foreach (var x in assemblies)
+        {
+            types.AddRange(x.GetTypes().ToList().FindAll((t) =>  t.BaseType == typeof(OptionHandler)));
+        }
+        
         foreach (var o in optionsLoaded)
         {
             var opt = (Option) o;
-            Debug.Log(opt.OptionTag);
+            Debug.Log("We found Option "+opt.OptionTag);
             options.Add(opt.OptionTag, opt);
         }
 
-        foreach (var t in types)
-            if (t.BaseType == typeof(OptionHandler))
-                optionHandlers.Add(t.Name, Activator.CreateInstance(t) as OptionHandler);
 
+
+        foreach (var t in types)
+        {
+                Debug.Log("Type: "+t);
+                optionHandlers.Add(t.Name, Activator.CreateInstance(t) as OptionHandler);
+                Debug.Log("Added OptionHandler "+t);
+        }
+        
         foreach (var opt in options.Values)
             if (opt.optionHandlerName != string.Empty)
                 if (optionHandlers.ContainsKey(opt.optionHandlerName))
