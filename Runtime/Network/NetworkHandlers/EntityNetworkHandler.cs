@@ -155,16 +155,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
-            EntityLocomotion entityLocomotion;
-            Debug.Log("Moving "+this+" "+Identity);
-            if (p.Content.TryUnpack(out entityLocomotion))
-                MainCaller.Do(() =>
+            bool takeUpdate = isOnServer ? !movementOverride : true;
+            if(takeUpdate)
+            {
+                observed.movementOverride = true;    
+                EntityLocomotion entityLocomotion;
+                if (p.Content.TryUnpack(out entityLocomotion))
                 {
+                    MainCaller.Do(() =>
+                    {
                     var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
                     targetPosition = pos;
                     var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
                     targetRotation = rot;
-                });
+                    });
+                }
+            }
         }
 
 
@@ -248,7 +254,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         QZ = rot.z
                     };
                     Debug.Log("Sending PlayerData to everyone except "+owner);
-                    Marshall(entityLocomotion, owner, false, false);
+                    if (observed.movementOverride)
+                    {
+                        Marshall(entityLocomotion, TCP: false);
+                    }else
+                    {
+                        Marshall(entityLocomotion, owner,toOrWithout: false, TCP: false);
+                    }
                     lastSentPosition = pos;
                 }
             }

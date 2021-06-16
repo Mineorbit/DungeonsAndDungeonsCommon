@@ -177,6 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void setMovementStatus(bool allowedToMove)
         {
+            base.setMovementStatus(allowedToMove);
             PlayerManager.playerManager.playerControllers[localId].allowedToMove = allowedToMove;
         }
 
