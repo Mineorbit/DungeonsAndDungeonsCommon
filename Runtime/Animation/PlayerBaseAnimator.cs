@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class PlayerBaseAnimator : EntityBaseAnimator
     {
         public CharacterController characterController;
-        public PlayerController playerController;
+        [FormerlySerializedAs("playerController")] public new PlayerController entityController;
         public GameObject footFX;
         private Vector3 forwardDirection;
 
@@ -18,17 +19,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Update()
         {
-
-            speed = playerController.currentSpeed;
-
-
+            base.Update();
             //simplify in future to just moving somehow
 
             if (me == PlayerManager.currentPlayer)
-                footFX.SetActive(playerController.IsGrounded && playerController.allowedToMove &&
+                footFX.SetActive(entityController.IsGrounded && entityController.allowedToMove &&
                                  (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
                                   Input.GetKey(KeyCode.D)));
-            animator.SetFloat("Speed", speed);
         }
 
         public void ChangeitemSetting(int leftSide)

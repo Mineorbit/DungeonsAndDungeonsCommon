@@ -26,10 +26,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float heightRay = 0.55f;
 
 
-        public float currentSpeed;
-
-
-        public List<float> lastSpeeds = new List<float>();
         public Collider col;
         private float convergenceSpeed = 0.1f;
 
@@ -39,10 +35,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private Vector3 forwardDirection;
         private readonly float gravity = 4f;
 
-        private readonly int k = 10;
 
 
-        private Vector3 lastPosition;
 
         //public static PlayerController currentPlayer;
         private Player player;
@@ -58,7 +52,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             controller = transform.GetComponent<CharacterController>();
             SetParams();
-            lastPosition = controllerPosition;
         }
 
         public override void Start()
@@ -78,24 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
         }
 
-        private void FixedUpdate()
-        {
-            ComputeCurrentSpeed();
-        }
-
-        public void OnDisable()
-        {
-        }
-
-        private void ComputeCurrentSpeed()
-        {
-            lastSpeeds.Add((transform.position - lastPosition).magnitude / Time.deltaTime);
-            if (lastSpeeds.Count > k) lastSpeeds.RemoveAt(0);
-            float sum = 0;
-            for (var i = 0; i < lastSpeeds.Count; i++) sum += lastSpeeds[i];
-            currentSpeed = sum / k;
-            lastPosition = transform.position;
-        }
+        
 
         private void SetParams()
         {

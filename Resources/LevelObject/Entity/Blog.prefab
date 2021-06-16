@@ -425,6 +425,7 @@ MonoBehaviour:
   endAttackEvent:
     m_PersistentCalls:
       m_Calls: []
+  enemyController: {fileID: 736877002971563755}
 --- !u!114 &7507218284372381857
 MonoBehaviour:
   m_ObjectHideFlags: 0

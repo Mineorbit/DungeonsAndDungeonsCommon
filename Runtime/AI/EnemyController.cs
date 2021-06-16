@@ -58,8 +58,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private void FixedUpdate()
+        public override void FixedUpdate()
         {
+            base.FixedUpdate();
             UpdateVariables();
             UpdateState();
         }
