@@ -42,7 +42,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Blend(int index, float t)
         {
-            Debug.Log(audioProfiles[index].VolumeCoefficient());
             audioSources[index][currentPlay[index]].volume = audioProfiles[index].VolumeCoefficient() *
                                                              ((1 - t) * audioProfiles[index].minVolume +
                                                               t * audioProfiles[index].maxVolume);
