@@ -78,27 +78,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        IEnumerator KickbackRoutine(Vector3 dir, float dist)
-        {
-            float t = 0;
-            Vector3 start = transform.position;
-            while (t<1)
-            {
-                t += Time.deltaTime;
-                transform.position = start + dir * dist * t;
-                yield return new WaitForEndOfFrame();
-            }
-            transform.position = start + dir * dist;
-            setMovementStatus(true);
-        }
-        
-        public void Kickback(Entity attacker, float distance)
-        {
-            setMovementStatus(false);
-            Vector3 direction = (transform.position - attacker.transform.position);
-            direction.Normalize();
-            StartCoroutine(KickbackRoutine(direction,distance));
-        }
         
         
         private void SetupItems()
@@ -193,18 +172,39 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void HitEffect()
+        private float kickbackTime = 1f;
+        private float kickbackSpeed = 2f;
+        IEnumerator KickbackRoutine(Vector3 dir, float dist)
+        {
+            float t = 0;
+            Vector3 start = transform.position;
+            while (t<kickbackTime)
+            {
+                t += kickbackSpeed * Time.deltaTime;
+                transform.position = start + dir * dist * t;
+                yield return new WaitForEndOfFrame();
+            }
+            transform.position = start + dir * dist;
+        }
+        
+        public void Kickback(Vector3 dir, float distance)
+        {
+            Vector3 direction = dir;
+            direction.Normalize();
+            StartCoroutine(KickbackRoutine(direction,distance));
+        }
+        
+        public void HitEffect(Vector3 dir)
         {
             baseAnimator.Hit();
+            
+            Kickback(dir,2f);
         }
 
         private int pointsForKill = 100;
 
         public virtual void Hit(Entity hitter, int damage)
         {
-            Invoke(HitEffect);
-
-            hitter.points += damage;
 
             if (Level.instantiateType == Level.InstantiateType.Play ||
                 Level.instantiateType == Level.InstantiateType.Test)
@@ -212,6 +212,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     onHitEvent.Invoke(hitter);
                     Invoke(setMovementStatus, false);
+                    
+                    
+                    Invoke(HitEffect,transform.position - hitter.transform.position);
+
+                    hitter.points += damage;
+                    
                     StartHitCooldown();
                     Debug.Log(hitter.gameObject.name + " HIT " + gameObject.name + " AND CAUSED " + damage +
                               " HP DAMAGE");
@@ -221,10 +227,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         Invoke(Kill);
                         hitter.points += pointsForKill;
-                    }
-                    else
-                    {
-                        Kickback(hitter,((float) damage)*0.5f);
                     }
                     //FreezeFramer.freeze(0.0075f);
                 }
