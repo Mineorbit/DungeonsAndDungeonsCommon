@@ -206,7 +206,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         fittingHandler = NetworkManager.networkHandlers.Find(x =>
                         {
                             // THIS MIGHT BE JANKY
-                            var p = x.transform.parent.GetComponentInParent<NetworkHandler>();
+                            NetworkHandler p = null;
+                            if (x.transform.parent != null)
+                            {
+                                p = x.transform.parent.GetComponentInParent<NetworkHandler>();
+                            }
+                            else
+                            {
+                                p = x.transform.GetComponentInParent<NetworkHandler>();
+                            }
                             return x.GetType() == handlerType && p.identified && p.Identity
                                 == levelObjectConnect.ParentIdentity;
                         });
