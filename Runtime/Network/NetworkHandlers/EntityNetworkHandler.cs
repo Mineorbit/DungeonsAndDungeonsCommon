@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 targetPosition;
         public Vector3 targetRotation;
 
-        public bool movementOverride;
+        public bool interpolate;
 
         private Vector3 lastSentPosition;
         private Quaternion lastSentRotation;
@@ -61,21 +61,46 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
+        void ResolveLocomotionBlock()
+        {
+            interpolate = false;
+            blockExists = false;
+            observed.setMovementStatus(true);
+        }
+
+        private Vector3 blockPosition;
+        
+        void SetupLocomotionBlock(Vector3 targetPosition)
+        {
+            interpolate = false;
+            blockExists = true;
+            blockPosition = targetPosition;
+            observed.setMovementStatus(false);
+        }
+
+        private bool blockExists = true;
+        
+        bool LocomotionIsBlocked()
+        {
+            return (blockExists);
+        }
+        
+        
+        bool distanceSmall = (x) => 
+        
         public virtual void Update()
         {
-            if (movementOverride)
+            if (LocomotionIsBlocked())
             {
-                targetPosition = teleportPosition;
-                transform.position = teleportPosition;
-                if ((transform.position - teleportPosition).magnitude < tpDist)
+                targetPosition = blockPosition;
+                if ((transform.position - blockPosition).magnitude < tpDist)
                 {
-                    movementOverride = false;
-                    observed.setMovementStatus(true);
+                    ResolveLocomotionBlock();
                 }
+
             }
 
-
-            if (!isOwner)
+            if (!isOwner && !LocomotionIsBlocked())
             {
                 transform.position = (transform.position + targetPosition) / 2;
                 transform.rotation =
@@ -155,7 +180,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
-            bool takeUpdate = isOnServer ? !movementOverride : true;
+            bool takeUpdate = isOnServer ? !interpolate : true;
             if(takeUpdate)
             {
                 observed.movementOverride = true;    
@@ -198,8 +223,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        
         public void Teleport(Vector3 position)
         {
+            if(isOnServer)
+            {
             teleportPosition = position;
             var entityTeleport = new EntityTeleport
             {
@@ -207,31 +235,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Y = position.y,
                 Z = position.z
             };
-
-
-            movementOverride = true;
-            observed.setMovementStatus(false);
-
-
+            
             if (observed.loadTarget != null)
-                observed.loadTarget.WaitForChunkLoaded(teleportPosition, () => Marshall(entityTeleport));
+                observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
+                {
+                    Marshall(entityTeleport);
+                    SetupLocomotionBlock(teleportPosition);
+                });
+            
+            }
         }
 
 
         [PacketBinding.Binding]
         public void OnEntityTeleport(Packet p)
         {
+            if(!isOnServer)
+            {
             EntityTeleport entityTeleport;
 
             if (p.Content.TryUnpack(out entityTeleport))
                 if (observed.loadTarget != null)
-                    
                     teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
+                observed.Teleport(teleportPosition);
             observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
             {
-                movementOverride = true;
-                observed.setMovementStatus(false);
+                observed.gameObject.SetActive(true);
+                ResolveLocomotionBlock();
             });
+            }
         }
 
         private void UpdateLocomotion()
