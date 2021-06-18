@@ -15,7 +15,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 targetPosition;
         public Vector3 targetRotation;
 
-        public bool interpolate;
 
         private Vector3 lastSentPosition;
         private Quaternion lastSentRotation;
@@ -62,7 +61,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void ResolveLocomotionBlock()
         {
-            interpolate = false;
             blockExists = false;
             observed.setMovementStatus(true);
         }
@@ -71,7 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         void SetupLocomotionBlock(Vector3 targetPosition)
         {
-            interpolate = false;
             blockExists = true;
             blockPosition = targetPosition;
             observed.setMovementStatus(false);
@@ -179,7 +176,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
-            bool takeUpdate = isOnServer ? !interpolate : true;
+            bool takeUpdate = isOnServer ? !blockExists : true;
             if(takeUpdate)
             {
                 observed.movementOverride = true;    
