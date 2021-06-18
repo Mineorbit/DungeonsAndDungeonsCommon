@@ -180,7 +180,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bool takeUpdate = !blockExists;
             if(takeUpdate)
             {
-                observed.movementOverride = true;    
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
@@ -188,6 +187,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                     var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
                     targetPosition = pos;
+                    SetupLocomotionBlock(pos);
                     var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
                     targetRotation = rot;
                     });
@@ -285,12 +285,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         QY = rot.y,
                         QZ = rot.z
                     };
-                    Debug.Log("Sending PlayerData to everyone except "+owner);
                     if (observed.movementOverride)
                     {
                         Marshall(entityLocomotion, TCP: false);
                     }else
                     {
+                        Debug.Log("Sending PlayerData to everyone except "+owner);
                         Marshall(entityLocomotion, owner,toOrWithout: false, TCP: false);
                     }
                     lastSentPosition = pos;
