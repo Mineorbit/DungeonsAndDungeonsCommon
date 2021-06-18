@@ -64,16 +64,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blockExists = false;
             targetPosition = transform.position;
             observed.setMovementStatus(true);
+            Debug.Log("Set Locomotion Block");
+            Debug.Break();
         }
 
         public bool blockExists = false;
         public Vector3 blockPosition;
         
-        void SetupLocomotionBlock(Vector3 targetPosition)
+        void SetupLocomotionBlock(Vector3 bPosition)
         {
             blockExists = true;
-            blockPosition = targetPosition;
+            blockPosition = bPosition;
+            targetPosition = bPosition;
             observed.setMovementStatus(false);
+            Debug.Log("Set Locomotion Block");
+            Debug.Break();
         }
 
         
@@ -90,6 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (LocomotionIsBlocked())
             {
                 targetPosition = blockPosition;
+                transform.position = blockPosition;
                 if ((targetPosition - receivedPosition).magnitude < tpDist)
                 {
                     ResolveLocomotionBlock();
@@ -99,15 +105,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 targetPosition = receivedPosition;
+                if (!isOwner)
+                {
+                    transform.position = (transform.position + targetPosition) / 2;
+                    transform.rotation =
+                        Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z),
+                            transform.rotation, 0.5f);
+                }
             }
 
-            if (!isOwner && !LocomotionIsBlocked())
-            {
-                transform.position = (transform.position + targetPosition) / 2;
-                transform.rotation =
-                    Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z),
-                        transform.rotation, 0.5f);
-            }
+            
         }
 
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE
