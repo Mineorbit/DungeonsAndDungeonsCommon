@@ -249,20 +249,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void OnEntityTeleport(Packet p)
         {
             if(!isOnServer)
-            {
-            EntityTeleport entityTeleport;
+            { 
+                EntityTeleport entityTeleport;
 
-            if (p.Content.TryUnpack(out entityTeleport))
-                if (observed.loadTarget != null)
-                    teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
+                if (p.Content.TryUnpack(out entityTeleport))
+                    if (observed.loadTarget != null)
+                        teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
 
                 SetupLocomotionBlock(teleportPosition);
-            observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
-            {
-                observed.gameObject.SetActive(true);
-                ResolveLocomotionBlock();
-                observed.Teleport(teleportPosition);
-            });
+                observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
+                {
+                    observed.Teleport(teleportPosition);
+                    ResolveLocomotionBlock();
+                });
             }
         }
 
