@@ -62,6 +62,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void ResolveLocomotionBlock()
         {
             blockExists = false;
+            targetPosition = transform.position;
             observed.setMovementStatus(true);
         }
 
@@ -176,7 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
-            bool takeUpdate = isOnServer ? !blockExists : true;
+            bool takeUpdate = !blockExists;
             if(takeUpdate)
             {
                 observed.movementOverride = true;    
