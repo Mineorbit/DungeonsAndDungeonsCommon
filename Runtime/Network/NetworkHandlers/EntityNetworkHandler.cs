@@ -64,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blockExists = false;
             targetPosition = transform.position;
             observed.setMovementStatus(true);
-            Debug.Log("Set Locomotion Block");
+            Debug.Log("Resolve Locomotion Block");
             Debug.Break();
         }
 
