@@ -63,6 +63,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             blockExists = false;
             targetPosition = transform.position;
+            observed.controller.enabled = true;
             observed.setMovementStatus(true);
             Debug.Log("Resolve Locomotion Block");
             Debug.Break();
@@ -76,6 +77,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blockExists = true;
             blockPosition = bPosition;
             targetPosition = bPosition;
+            
+            observed.controller.enabled = false;
             observed.setMovementStatus(false);
             Debug.Log("Set Locomotion Block");
             Debug.Break();

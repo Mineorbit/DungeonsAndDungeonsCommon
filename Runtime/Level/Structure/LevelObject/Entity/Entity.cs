@@ -116,7 +116,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void setMovementStatus(bool allowedToMove)
         {
-            controller.enabled = allowedToMove;
             movementOverride = allowedToMove;
         }
 
