@@ -269,7 +269,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 SetupLocomotionBlock(teleportPosition);
                 observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
+                    Debug.Log("Starting Chunk was loaded");
                     observed.Teleport(teleportPosition);
+                    
                     ResolveLocomotionBlock();
                 });
             }
