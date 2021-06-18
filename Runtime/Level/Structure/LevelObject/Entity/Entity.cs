@@ -169,6 +169,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Teleport(Vector3 position)
         {
             onTeleportEvent.Invoke(position);
+            gameObject.SetActive(false);
+            transform.position = position;
+            loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); });
         }
 
 
