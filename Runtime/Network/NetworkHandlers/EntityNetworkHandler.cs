@@ -255,13 +255,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (p.Content.TryUnpack(out entityTeleport))
                 if (observed.loadTarget != null)
                     teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
-                observed.Teleport(teleportPosition);
 
                 SetupLocomotionBlock(teleportPosition);
             observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
             {
                 observed.gameObject.SetActive(true);
                 ResolveLocomotionBlock();
+                observed.Teleport(teleportPosition);
             });
             }
         }
