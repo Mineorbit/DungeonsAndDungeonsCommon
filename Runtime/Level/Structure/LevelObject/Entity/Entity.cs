@@ -170,8 +170,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             onTeleportEvent.Invoke(position);
             gameObject.SetActive(false);
+            Debug.Log(this+" deactivated for TP");
             transform.position = position;
-            loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); });
+            loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); 
+                Debug.Log(this+" reactivated for TP");});
         }
 
 
