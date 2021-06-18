@@ -65,7 +65,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed.setMovementStatus(true);
         }
 
-        private Vector3 blockPosition;
+        public bool blockExists = false;
+        public Vector3 blockPosition;
         
         void SetupLocomotionBlock(Vector3 targetPosition)
         {
@@ -74,7 +75,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed.setMovementStatus(false);
         }
 
-        private bool blockExists = true;
         
         bool LocomotionIsBlocked()
         {
@@ -232,11 +232,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z
             };
             
+            SetupLocomotionBlock(teleportPosition);
+            
             if (observed.loadTarget != null)
                 observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
                     Marshall(entityTeleport);
-                    SetupLocomotionBlock(teleportPosition);
                 });
             
             }
