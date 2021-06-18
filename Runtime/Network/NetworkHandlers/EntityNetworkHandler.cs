@@ -90,11 +90,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (LocomotionIsBlocked())
             {
                 targetPosition = blockPosition;
-                if ((transform.position - blockPosition).magnitude < tpDist)
+                if ((targetPosition - receivedPosition).magnitude < tpDist)
                 {
                     ResolveLocomotionBlock();
                 }
 
+            }
+            else
+            {
+                targetPosition = receivedPosition;
             }
 
             if (!isOwner && !LocomotionIsBlocked())
@@ -174,25 +178,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        private Vector3 receivedPosition;
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
-            bool takeUpdate = !blockExists;
-            if(takeUpdate)
-            {
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
                     MainCaller.Do(() =>
                     {
                     var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
-                    targetPosition = pos;
+                    receivedPosition = pos;
                     SetupLocomotionBlock(pos);
                     var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
                     targetRotation = rot;
                     });
                 }
-            }
         }
 
 
