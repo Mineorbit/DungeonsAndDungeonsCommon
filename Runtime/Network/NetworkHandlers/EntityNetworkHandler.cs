@@ -86,7 +86,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         
-        bool distanceSmall = (x) => 
         
         public virtual void Update()
         {
