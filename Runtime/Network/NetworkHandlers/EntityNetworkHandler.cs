@@ -29,7 +29,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 teleportPosition;
 
 
-        private readonly float tpDist = 0.005f;
         
         
 
@@ -86,6 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         
+        private readonly float tpDist = 0.005f;
         
         public virtual void Update()
         {
