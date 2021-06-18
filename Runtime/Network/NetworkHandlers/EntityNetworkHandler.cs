@@ -268,7 +268,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void UpdateLocomotion()
         {
-            if (identified && (isOnServer || isOwner))
+            if (identified && (isOnServer || isOwner) && !LocomotionIsBlocked())
             {
                 var pos = observed.transform.position;
                 var rot = observed.transform.rotation.eulerAngles;
