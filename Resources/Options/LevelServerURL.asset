@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b4a401cb09312649b53be78abf3043b, type: 3}
   m_Name: LevelServerURL
   m_EditorClassIdentifier: 
-  defaultValue: http://127.0.0.1
+  defaultValue: http://46.232.248.108
   settingType: 1
   optionHandlerName: 
