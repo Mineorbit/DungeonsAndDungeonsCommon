@@ -256,7 +256,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
                 observed.Teleport(teleportPosition);
 
-                targetPosition = teleportPosition;
+                SetupLocomotionBlock(teleportPosition);
             observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
             {
                 observed.gameObject.SetActive(true);
