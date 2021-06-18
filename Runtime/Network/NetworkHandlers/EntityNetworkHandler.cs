@@ -189,7 +189,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                     var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
                     receivedPosition = pos;
-                    SetupLocomotionBlock(pos);
                     var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
                     targetRotation = rot;
                     });
@@ -288,10 +287,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     };
                     if (observed.movementOverride)
                     {
+                        Debug.Log("Sending Locomotion to everyone");
                         Marshall(entityLocomotion, TCP: false);
                     }else
                     {
-                        Debug.Log("Sending PlayerData to everyone except "+owner);
+                        Debug.Log("Sending Locomotion to everyone except "+owner);
                         Marshall(entityLocomotion, owner,toOrWithout: false, TCP: false);
                     }
                     lastSentPosition = pos;
