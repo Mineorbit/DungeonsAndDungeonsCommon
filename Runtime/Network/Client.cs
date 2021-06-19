@@ -215,6 +215,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        private int g = 0;
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
@@ -226,11 +227,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Array.Reverse(lengthBytes);
             }
             
-            Debug.Log("Sent Length: "+length);
+            g++;
+            Debug.Log($"{g} Sent Length: "+length);
             int i = 0;
             foreach (byte d in lengthBytes)
             {
-                Debug.Log($"Lengthbyte {i}: "+d);
+                Debug.Log($"{g} Lengthbyte {i}: "+d);
                 i++;
             }
             Array.Copy(lengthBytes, 0, result, 0, 4);
@@ -291,6 +293,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        private int g = 0;
         private async Task<byte[]> ReadData(bool TCP = true)
         {
             if (TCP)
@@ -308,12 +311,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 await tcpStream.ReadAsync(lengthBytes, 0, 4);
                 if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
                 length = BitConverter.ToInt32(lengthBytes, 0);
-                
-                Debug.Log("Received Length: "+length);
+                g++;
+                Debug.Log($"{g} Received Length: "+length);
                 int i = 0;
                 foreach (byte d in lengthBytes)
                 {
-                    Debug.Log($"Lengthbyte {i}: "+d);
+                    Debug.Log($"{g} Lengthbyte {i}: "+d);
                     i++;
                 }
                 data = new byte[length];
