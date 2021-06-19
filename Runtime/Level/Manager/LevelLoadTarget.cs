@@ -78,7 +78,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("waiting for chunk Load");
                 if(ChunkManager.chunkLoaded != null)
                 {
-                    Debug.Log("Waiting for chunk load "+ChunkManager.chunkLoaded[cid]);
+                    Debug.Log("Waiting for chunk load "+v);
                 }
                 yield return null;
             }
