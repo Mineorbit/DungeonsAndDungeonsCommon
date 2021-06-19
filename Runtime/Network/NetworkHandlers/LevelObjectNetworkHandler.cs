@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game;
 using General;
 using Google.Protobuf.WellKnownTypes;
+using NetLevel;
 using UnityEngine;
 using Type = System.Type;
 
@@ -112,7 +113,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (actionParam.type == typeof(ChunkData))
                 {
                     var netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
-                    actionParam.data = ChunkData.FromNetData(netChunkData);
+                    actionParam.data = netChunkData;
                 }
                 else if (actionParam.type == typeof(bool))
                 {
@@ -143,7 +144,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (type == typeof(ChunkData))
                 {
-                    var chunkData = ChunkData.ToNetData((ChunkData) data);
+                    ChunkData chunkData = (ChunkData) data;
                     x = Any.Pack(chunkData);
                 }
                 else if (type == typeof(bool))

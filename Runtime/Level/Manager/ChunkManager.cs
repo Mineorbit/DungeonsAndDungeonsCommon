@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using NetLevel;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -21,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static int regionGranularity = 2;
 
-        private static readonly SaveManager regionDataLoader = new SaveManager(SaveManager.StorageType.BIN);
+        private static readonly ProtoSaveManager regionDataLoader = new ProtoSaveManager();
 
         public Dictionary<Tuple<int, int>, Chunk> chunks;
         
@@ -61,7 +63,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var regionData = LoadRegionData(regionId, loadType);
             if (regionData == null) return;
-            foreach (var chunkData in regionData.chunkDatas.Values) LoadChunk(chunkData);
+            foreach (var chunkLocationPair in regionData.ChunkDatas) LoadChunk(chunkLocationPair.Chunk);
             instance.regionLoaded[regionId] = true;
         }
 
@@ -80,7 +82,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (loadType == LoadType.Disk)
             {
                 var pathToLevel = LevelDataManager.GetLevelPath(LevelManager.currentLevelMetaData);
-                return regionDataLoader.Load<RegionData>(pathToLevel + "/" + regionId + ".bin");
+                return ProtoSaveManager.Load<RegionData>(pathToLevel + "/" + regionId + ".bin");
             }
 
             // NOT YET NEEDED
@@ -97,7 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var regionPosition = GetRegionPosition(chunk.Key);
                 var positionInRegion = GetPositionInRegion(chunk.Key);
 
-                var chunkData = ChunkData.FromChunk(chunk.Value);
+                ChunkData chunkData = ChunkManager.ChunkToData(chunk.Value);
 
 
                 Debug.Log("Chunk at " + chunk.Key + " goes to Region " + regionPosition);
@@ -107,13 +109,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (regionData.TryGetValue(regionPosition, out r))
                 {
-                    r.chunkDatas.Add(new Tuple<int, int>(positionInRegion.a, positionInRegion.b), chunkData);
+                    CoordinateChunkPair coordinateChunkPair = new CoordinateChunkPair();
+                    coordinateChunkPair.X = positionInRegion.a;
+                    coordinateChunkPair.Y = positionInRegion.b;
+                    coordinateChunkPair.Chunk = chunkData;
+                    r.ChunkDatas.Add(coordinateChunkPair);
                 }
                 else
                 {
-                    r = new RegionData(rid);
+                    r = new RegionData();
+                    r.Id = rid;
                     rid++;
-                    r.chunkDatas.Add(new Tuple<int, int>(positionInRegion.a, positionInRegion.b), chunkData);
+                    
+                    CoordinateChunkPair coordinateChunkPair = new CoordinateChunkPair();
+                    coordinateChunkPair.X = positionInRegion.a;
+                    coordinateChunkPair.Y = positionInRegion.b;
+                    coordinateChunkPair.Chunk = chunkData;
+                    r.ChunkDatas.Add(coordinateChunkPair);
                     regionData.Add(regionPosition, r);
                 }
             }
@@ -230,11 +242,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (LevelManager.currentLevel != null && immediate)
             {
-                Debug.Log("Loading Chunk "+chunkData.chunkId+" immediately");
+                Debug.Log("Loading Chunk "+chunkData.ChunkId+" immediately");
                 _LoadChunk(chunkData);
             }else
             {
-                Debug.Log("Added Chunk "+chunkData.chunkId+" to Load List");
+                Debug.Log("Added Chunk "+chunkData.ChunkId+" to Load List");
                 loadQueue.Enqueue(new Tuple<bool, ChunkData>(immediate,chunkData));
             }
         }
@@ -257,32 +269,32 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Currently loaded: in dictionary => true
         public static void _LoadChunk(ChunkData chunkData, bool immediate = true)
         {
-            Debug.Log("Loading Chunk "+chunkData.chunkId);
+            Debug.Log("Loading Chunk "+chunkData.ChunkId);
             bool loaded;
-            if (chunkLoaded.TryGetValue(chunkData.chunkId, out loaded))
+            if (chunkLoaded.TryGetValue(chunkData.ChunkId, out loaded))
             {
                 return;
             }
             else
             {
-                chunkLoaded.Add(chunkData.chunkId, false);
+                chunkLoaded.Add(chunkData.ChunkId, false);
             }
 
             var levelObjectInstances = new List<LevelObjectInstanceData>();
-            levelObjectInstances.AddRange(chunkData.levelObjects);
+            levelObjectInstances.AddRange(chunkData.Data.ToList());
             var counter = levelObjectInstances.Count;
-            Debug.Log(chunkData.chunkId + " adding " + counter + " Objects");
+            Debug.Log(chunkData.ChunkId + " adding " + counter + " Objects");
             foreach (var i in levelObjectInstances)
             {
                 counter--;
                 Action Complete = null;
                 if (counter == 0)
                 {
-                    Debug.Log("Adding finish Action for "+chunkData.chunkId);
+                    Debug.Log("Adding finish Action for "+chunkData.ChunkId);
                     Complete = () =>
                     {
-                        GetChunkByID(chunkData.chunkId).finishedLoading = true;
-                        chunkLoaded[chunkData.chunkId] = true;
+                        GetChunkByID(chunkData.ChunkId).finishedLoading = true;
+                        chunkLoaded[chunkData.ChunkId] = true;
                     };
                 }
                 if (immediate)
@@ -317,6 +329,44 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 }
             }
+        }
+
+        public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o)
+        {
+            LevelObjectInstanceData levelObjectInstanceData = InstanceToData((LevelObject) o);
+            levelObjectInstanceData.Locations.AddRange(o.receivers.Select((p) =>
+            {
+                return Util.VectorToLocation(p.Key);
+            }));
+            return levelObjectInstanceData;
+        }
+        
+        public static LevelObjectInstanceData InstanceToData(LevelObject o)
+        {
+            LevelObjectInstanceData levelObjectInstanceData = new LevelObjectInstanceData();
+            Vector3 pos = o.transform.position;
+            Quaternion rot = o.transform.rotation;
+            levelObjectInstanceData.X = pos.x;
+            levelObjectInstanceData.Y = pos.y;
+            levelObjectInstanceData.Z = pos.z;
+            levelObjectInstanceData.GX = rot.x;
+            levelObjectInstanceData.GY = rot.y;
+            levelObjectInstanceData.GZ = rot.z;
+            levelObjectInstanceData.GW = rot.w;
+            levelObjectInstanceData.Type = o.levelObjectDataType;
+            return levelObjectInstanceData;
+        }
+
+        public static ChunkData ChunkToData(Chunk chunk)
+        {
+            ChunkData chunkData = new ChunkData();
+            chunkData.ChunkId = chunk.chunkId;
+            foreach (LevelObject l in chunk.GetComponentsInChildren<LevelObject>(includeInactive: true))
+            {
+                chunkData.Data.Add(InstanceToData(l as dynamic));
+            }
+
+            return chunkData;
         }
     }
 }
