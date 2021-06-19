@@ -7,6 +7,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public long chunkId;
         private readonly float eps = 0.05f;
 
+        public bool finishedLoading = false;
+        
         private void Start()
         {
             gameObject.name = "Chunk " + chunkId;
