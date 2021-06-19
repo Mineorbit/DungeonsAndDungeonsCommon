@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -61,8 +62,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 }
         }
-        
 
+
+        IEnumerator WaitRoutine(long cid,Action finishAction)
+        {
+            while (!ChunkManager.chunkLoaded.ContainsKey(cid) && !ChunkManager.chunkLoaded[cid])
+            {
+                Debug.Log(ChunkManager.chunkLoaded.ContainsKey(cid)+" "+ChunkManager.chunkLoaded[cid]);
+                yield return null;
+            }
+            mover.follow = true;
+            MainCaller.Do(finishAction);  
+        }
+        
         public void WaitForChunkLoaded(Vector3 position, Action finishAction)
         {
             MainCaller.Do(() =>
@@ -70,24 +82,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 mover.follow = false;
                 transform.position = position;
                 long chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
-                Task.Run(async () =>
-                {
-                    bool a = LevelManager.currentLevel == null;
-                    bool b = !ChunkManager.chunkLoaded.ContainsKey(chunkId);
-                    bool c = !ChunkManager.chunkLoaded[chunkId];
-                    Debug.Log(a+" "+b+" "+c);
-                    while (a || b || c)
-                    {
-                        Debug.Log("Chunk "+chunkId+" not yet loaded, waiting "+ChunkManager.chunkLoaded[chunkId]);
-                        await Task.Delay(100);
-                        a = LevelManager.currentLevel == null;
-                        b = !ChunkManager.chunkLoaded.ContainsKey(chunkId);
-                        c = !ChunkManager.chunkLoaded[chunkId];
-                        Debug.Log(a+" "+b+" "+c);
-                    }
-                });
-                mover.follow = true;
-                MainCaller.Do(finishAction);
+                StartCoroutine(WaitRoutine(chunkId,finishAction));
             });
         }
 
