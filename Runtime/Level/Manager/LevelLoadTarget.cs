@@ -69,6 +69,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bool v = false;
             while (!v)
             {
+                
+                Debug.Log("Checking for "+cid);
                 if(ChunkManager.chunkLoaded != null)
                 {
                     Debug.Log("Chunk Dictionary there");

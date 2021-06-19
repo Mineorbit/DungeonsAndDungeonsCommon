@@ -118,8 +118,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (instance != null) Destroy(this);
             instance = this;
 
+            if(chunkLoaded == null)
+            {
             chunkLoaded = new Dictionary<long, bool>();
-
+            }
+            
             if (!instance.ready)
             {
                 chunkPrefab = Resources.Load("Chunk");
