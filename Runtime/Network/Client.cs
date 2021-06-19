@@ -138,6 +138,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.tcpClient = new TcpClient(host.ToString(), port);
             client.tcpClient.SendTimeout = 1000;
+            client.tcpClient.ReceiveBufferSize = 65536;
+            client.tcpClient.SendBufferSize = 65536;
             client.tcpStream = client.tcpClient.GetStream();
         }
 
@@ -147,6 +149,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.writePort = writePort;
             client.receivingUdpClient = new UdpClient(0);
+            client.receivingUdpClient.Client.ReceiveBufferSize = 65536;
+            client.receivingUdpClient.Client.SendBufferSize = 65536;
             //client.readPort = Int32.Parse(client.receivingUdpClient.ToString());
             client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
             client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
