@@ -83,7 +83,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         a = LevelManager.currentLevel == null;
                         b = !ChunkManager.chunkLoaded.ContainsKey(chunkId);
                         c = !ChunkManager.chunkLoaded[chunkId];
-                        Debug.Log(a+" "+b" "+c);
+                        Debug.Log(a+" "+b+" "+c);
                     }
                 });
                 mover.follow = true;
