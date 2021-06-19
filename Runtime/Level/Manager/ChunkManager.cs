@@ -21,14 +21,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static int regionGranularity = 2;
 
-
         private static readonly SaveManager regionDataLoader = new SaveManager(SaveManager.StorageType.BIN);
 
         public Dictionary<Tuple<int, int>, Chunk> chunks;
+        
         public static Dictionary<long, bool> chunkLoaded = new Dictionary<long, bool>();
 
         private bool ready;
-
 
         public Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
 
