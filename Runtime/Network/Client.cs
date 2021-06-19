@@ -293,7 +293,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private int g = 0;
+        private int z = 0;
         private async Task<byte[]> ReadData(bool TCP = true)
         {
             if (TCP)
@@ -311,12 +311,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 await tcpStream.ReadAsync(lengthBytes, 0, 4);
                 if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
                 length = BitConverter.ToInt32(lengthBytes, 0);
-                g++;
-                Debug.Log($"{g} Received Length: "+length);
+                z++;
+                Debug.Log($"{z} Received Length: "+length);
                 int i = 0;
                 foreach (byte d in lengthBytes)
                 {
-                    Debug.Log($"{g} Lengthbyte {i}: "+d);
+                    Debug.Log($"{z} Lengthbyte {i}: "+d);
                     i++;
                 }
                 data = new byte[length];
