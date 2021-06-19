@@ -42,17 +42,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (instance != null) Destroy(this);
             instance = this;
 
+            Reset();
+        }
+
+        public void Reset()
+        {
             if(chunkLoaded == null)
             {
                 chunkLoaded = new Dictionary<long, bool>();
             }
-            
-            if (!instance.ready)
-            {
+            chunkLoaded.Clear();
                 chunkPrefab = Resources.Load("Chunk");
                 chunks = new Dictionary<Tuple<int, int>, Chunk>();
-                instance.ready = true;
-            }
+                
         }
         
         public static void LoadRegion(int regionId, LoadType loadType = LoadType.Disk)
