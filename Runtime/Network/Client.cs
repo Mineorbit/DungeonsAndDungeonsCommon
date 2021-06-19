@@ -225,7 +225,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Array.Reverse(lengthBytes);
             }
-
+            
+            Debug.Log("Sent Length: "+length);
+            int i = 0;
+            foreach (byte d in lengthBytes)
+            {
+                Debug.Log($"Lengthbyte {i}: "+d);
+                i++;
+            }
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             if (TCP)
@@ -301,6 +308,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 await tcpStream.ReadAsync(lengthBytes, 0, 4);
                 if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
                 length = BitConverter.ToInt32(lengthBytes, 0);
+                
+                Debug.Log("Received Length: "+length);
+                int i = 0;
+                foreach (byte d in lengthBytes)
+                {
+                    Debug.Log($"Lengthbyte {i}: "+d);
+                    i++;
+                }
                 data = new byte[length];
                 await tcpStream.ReadAsync(data, 0, length);
             }
