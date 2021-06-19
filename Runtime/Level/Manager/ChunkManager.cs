@@ -161,7 +161,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool ChunkLoaded(long chunkid)
         {
-            return instance.transform.Find("Chunk " + chunkid) != null;
+            return GetChunkByID(chunkid).finishedLoading;
         }
 
         public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int> gridPosition)
@@ -228,7 +228,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 loadQueue.Enqueue(new Tuple<bool, ChunkData>(immediate,chunkData));
             }
         }
-        
+
+
+        public static Chunk GetChunkByID(long id)
+        {
+            foreach (Chunk c in instance.chunks.Values)
+            {
+                if (c.chunkId == id)
+                    return c;
+            }
+
+            return null;
+        }
         
         // Chunk Semantics
         // Not yet loaded: not in dictionary
@@ -260,6 +271,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Debug.Log("Adding finish Action for "+chunkData.chunkId);
                     Complete = () =>
                     {
+                        GetChunkByID(chunkData.chunkId).finishedLoading = true;
                         chunkLoaded[chunkData.chunkId] = true;
                         Debug.Log("Finished "+chunkData.chunkId+" "+chunkLoaded[chunkData.chunkId]);
                     };
