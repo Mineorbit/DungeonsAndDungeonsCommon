@@ -38,7 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 ChunkData = netChunk,
                 Immediate = immediate
             };
-            Marshall(streamChunk, TCP: false);
+            Marshall(streamChunk, TCP: true);
         }
 
         public override void SendAction(string actionName, ActionParam argument)
