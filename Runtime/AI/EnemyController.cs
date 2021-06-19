@@ -52,8 +52,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             currentSpeed = navMeshAgent.velocity.magnitude;
 
-            controllerPosition = transform.position;
-
             base.Update();
         }
 
