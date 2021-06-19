@@ -159,7 +159,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool ChunkLoaded(long chunkid)
         {
-            return instance.transform.Find("Chunk" + chunkid) != null;
+            return instance.transform.Find("Chunk " + chunkid) != null;
         }
 
         public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int> gridPosition)
