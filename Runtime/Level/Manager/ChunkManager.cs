@@ -36,6 +36,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Setup();
         }
 
+        
+        public void Setup()
+        {
+            if (instance != null) Destroy(this);
+            instance = this;
+
+            if(chunkLoaded == null)
+            {
+                chunkLoaded = new Dictionary<long, bool>();
+            }
+            
+            if (!instance.ready)
+            {
+                chunkPrefab = Resources.Load("Chunk");
+                chunks = new Dictionary<Tuple<int, int>, Chunk>();
+                instance.ready = true;
+            }
+        }
+        
         public static void LoadRegion(int regionId, LoadType loadType = LoadType.Disk)
         {
             var regionData = LoadRegionData(regionId, loadType);
@@ -113,23 +132,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return regionPosition;
         }
 
-        public void Setup()
-        {
-            if (instance != null) Destroy(this);
-            instance = this;
-
-            if(chunkLoaded == null)
-            {
-            chunkLoaded = new Dictionary<long, bool>();
-            }
-            
-            if (!instance.ready)
-            {
-                chunkPrefab = Resources.Load("Chunk");
-                chunks = new Dictionary<Tuple<int, int>, Chunk>();
-                instance.ready = true;
-            }
-        }
 
 
         private Chunk AddChunk(Tuple<int, int> gridPosition)
@@ -156,9 +158,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public bool ChunkLoaded(long chunkid)
+        public static bool ChunkLoaded(long chunkid)
         {
-            return transform.Find("Chunk" + chunkid) != null;
+            return instance.transform.Find("Chunk" + chunkid) != null;
         }
 
         public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int> gridPosition)
