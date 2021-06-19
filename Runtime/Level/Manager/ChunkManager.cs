@@ -161,7 +161,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool ChunkLoaded(long chunkid)
         {
-            return GetChunkByID(chunkid).finishedLoading;
+            if (instance == null)
+            {
+                Debug.Log("Instance is null");
+                return false;
+            }else return GetChunkByID(chunkid).finishedLoading;
         }
 
         public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int> gridPosition)
