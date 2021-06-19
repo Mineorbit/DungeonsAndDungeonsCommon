@@ -136,7 +136,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private Chunk AddChunk(Tuple<int, int> gridPosition)
         {
-            Setup();
             var chunk = Instantiate(chunkPrefab) as GameObject;
             chunk.transform.parent = LevelManager.currentLevel.transform;
             chunk.transform.position = ChunkPositionFromGridPosition(gridPosition);
