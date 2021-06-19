@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NetLevel;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -50,7 +51,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (LevelManager.currentLevel != null)
                 if (!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
                 {
-                    var chunkData = ChunkData.FromChunk(ChunkManager.GetChunk(position, true));
+                    var chunkData = ChunkManager.ChunkToData(ChunkManager.GetChunk(position, true));
                     if (chunkData != null)
                     {
                         if (immediate)
@@ -91,13 +92,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void StreamChunkImmediateIntoCurrentLevelFrom(ChunkData chunkData)
         {
-            Debug.Log("Streaming Chunk immediately " + chunkData.chunkId);
+            Debug.Log("Streaming Chunk immediately " + chunkData.ChunkId);
             ChunkManager.LoadChunk(chunkData, true);
         }
 
         public void StreamChunkIntoCurrentLevelFrom(ChunkData chunkData)
         {
-            Debug.Log("Streaming Chunk " + chunkData.chunkId);
+            Debug.Log("Streaming Chunk " + chunkData.ChunkId);
             ChunkManager.LoadChunk(chunkData);
         }
 

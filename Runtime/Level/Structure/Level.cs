@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using NetLevel;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -187,18 +189,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameObject result = null;
             LevelObjectData d;
-            if (LevelDataManager.levelObjectDatas.TryGetValue(levelObjectInstanceData.type, out d))
+            if (LevelDataManager.levelObjectDatas.TryGetValue(levelObjectInstanceData.Type, out d))
             {
-                if (levelObjectInstanceData.locations.Count > 1)
+                if (levelObjectInstanceData.Locations.Count > 1)
                 {
-                    var receiverLocations = levelObjectInstanceData.locations.Select(x => { return x.ToVector(); })
+                    var receiverLocations = levelObjectInstanceData.Locations.ToList().Select(x => { return Util.LocationToVector(x); })
                         .ToList();
-                    result = Add(d, levelObjectInstanceData.GetLocation(), levelObjectInstanceData.GetRotation(),
+                    result = Add(d, new Vector3(levelObjectInstanceData.X,levelObjectInstanceData.Y,levelObjectInstanceData.Z),
+                        new Quaternion(levelObjectInstanceData.GX, levelObjectInstanceData.GY, levelObjectInstanceData.GZ, levelObjectInstanceData.GW),
                         receiverLocations);
                 }
                 else
                 {
-                    result = Add(d, levelObjectInstanceData.GetLocation(), levelObjectInstanceData.GetRotation());
+                    result = Add(d, new Vector3(levelObjectInstanceData.X,levelObjectInstanceData.Y,levelObjectInstanceData.Z),
+                        new Quaternion(levelObjectInstanceData.GX, levelObjectInstanceData.GY, levelObjectInstanceData.GZ, levelObjectInstanceData.GW));
                 }
             }
 

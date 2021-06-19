@@ -100,8 +100,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             foreach (var region in regions)
             {
-                instance.levelData.regions.Add(region.Key, region.Value.id);
-                c.Save(region.Value, pathToLevel + "/" + region.Value.id + ".bin", false);
+                instance.levelData.regions.Add(region.Key, region.Value.Id);
+                ProtoSaveManager.Save( pathToLevel + "/" + region.Value.Id + ".bin", region.Value);
             }
 
             c.Save(instance.levelData, pathToLevel + "/Index.json", false);

@@ -1,5 +1,6 @@
 using Game;
 using General;
+using NetLevel;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -22,20 +23,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (p.Content.TryUnpack(out streamChunk))
                 MainCaller.Do(() =>
                 {
-                    var c = ChunkData.FromNetData(streamChunk.ChunkData);
-                    Debug.Log("Received Chunk " + c.chunkId+" with "+c.levelObjects.Count);
+                    ChunkData c = streamChunk.ChunkData;
+                    Debug.Log("Received Chunk " + c.ChunkId+" with "+c.Data.Count);
                     ChunkManager.LoadChunk(c, streamChunk.Immediate);
                 });
         }
 
         private void StreamChunk(ActionParam chunkParam, bool immediate = false)
         {
-            var toSend = (ChunkData) chunkParam.data;
-            Debug.Log("Sending " + toSend.chunkId);
-            var netChunk = ChunkData.ToNetData(toSend);
+            ChunkData toSend = (ChunkData) chunkParam.data;
+            Debug.Log("Sending " + toSend.ChunkId);
             var streamChunk = new StreamChunk
             {
-                ChunkData = netChunk,
+                ChunkData = toSend,
                 Immediate = immediate
             };
             Marshall(streamChunk, TCP: true);
