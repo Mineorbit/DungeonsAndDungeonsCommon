@@ -70,9 +70,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             v = ChunkManager.ChunkLoaded(cid);
             while (!v)
             {
-                
-                Debug.Log("Checking for "+cid);
-                
                 v = ChunkManager.ChunkLoaded(cid);
                 yield return new WaitForEndOfFrame();
             }

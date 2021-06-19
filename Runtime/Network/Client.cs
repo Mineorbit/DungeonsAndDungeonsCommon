@@ -431,8 +431,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
             foreach (var packet in packetCarrier.Packets)
+            {
+                Debug.Log("Handling: "+packet);
                 packetInBuffer.Enqueue(packet);
-
+            }
             //Processing needed
 
             await HandlePackets(Tcp);
