@@ -67,20 +67,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         IEnumerator WaitRoutine(long cid,Action finishAction)
         {
             bool v = false;
-            if(ChunkManager.chunkLoaded != null)
+            while (!v)
             {
-                ChunkManager.chunkLoaded.TryGetValue(cid, out v);
-                Debug.Log("Waiting for chunk load "+v);
-            }
-            while (ChunkManager.chunkLoaded == null || !ChunkManager.chunkLoaded.TryGetValue(cid,out v) ||
-                   !v)
-            {
-                Debug.Log("waiting for chunk Load");
                 if(ChunkManager.chunkLoaded != null)
                 {
+                    Debug.Log("Chunk Dictionary there");
+                    ChunkManager.chunkLoaded.TryGetValue(cid, out v); 
                     Debug.Log("Waiting for chunk load "+v);
                 }
-                yield return null;
+                else
+                {
+                    Debug.Log("Chunk Dictionary not there");
+                    v = false;
+                }
+                yield return new WaitForEndOfFrame();
             }
             mover.follow = true;
             MainCaller.Do(finishAction);  
