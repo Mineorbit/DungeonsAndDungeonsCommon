@@ -72,11 +72,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 long chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
                 Task.Run(async () =>
                 {
-                    while (LevelManager.currentLevel == null || !ChunkManager.chunkLoaded.ContainsKey(chunkId) ||
-                           !ChunkManager.chunkLoaded[chunkId])
+                    bool a = LevelManager.currentLevel == null;
+                    bool b = !ChunkManager.chunkLoaded.ContainsKey(chunkId);
+                    bool c = !ChunkManager.chunkLoaded[chunkId];
+                    Debug.Log(a+" "+b" "+c);
+                    while (a || b || c)
                     {
                         Debug.Log("Chunk "+chunkId+" not yet loaded, waiting "+ChunkManager.chunkLoaded[chunkId]);
                         await Task.Delay(100);
+                        a = LevelManager.currentLevel == null;
+                        b = !ChunkManager.chunkLoaded.ContainsKey(chunkId);
+                        c = !ChunkManager.chunkLoaded[chunkId];
+                        Debug.Log(a+" "+b" "+c);
                     }
                 });
                 mover.follow = true;
