@@ -72,7 +72,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(ChunkManager.chunkLoaded != null)
                 {
                     Debug.Log("Chunk Dictionary there");
-                    ChunkManager.chunkLoaded.TryGetValue(cid, out v); 
+                    try
+                    {
+                        v = ChunkManager.chunkLoaded[cid];
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e+ " writing default false");
+                        v = false;
+                    }
                     Debug.Log("Waiting for chunk load "+v);
                 }
                 else
@@ -82,6 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 yield return new WaitForEndOfFrame();
             }
+            Debug.Log("Wait for "+cid+" finished");
             mover.follow = true;
             MainCaller.Do(finishAction);  
         }
