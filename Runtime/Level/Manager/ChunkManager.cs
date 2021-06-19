@@ -273,7 +273,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         GetChunkByID(chunkData.chunkId).finishedLoading = true;
                         chunkLoaded[chunkData.chunkId] = true;
-                        Debug.Log("Finished "+chunkData.chunkId+" "+chunkLoaded[chunkData.chunkId]);
                     };
                 }
                 if (immediate)
