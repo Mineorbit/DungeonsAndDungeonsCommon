@@ -155,6 +155,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return BitConverter.ToInt64(l, 0);
         }
 
+
+        public bool ChunkLoaded(long chunkid)
+        {
+            return transform.Find("Chunk" + chunkid) != null;
+        }
+
         public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int> gridPosition)
         {
             return new Vector3(gridPosition.Item1 * chunkGranularity, 0, gridPosition.Item2 * chunkGranularity) -
