@@ -30,8 +30,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             level.name = "Level " + currentLevelMetaData.LocalLevelId;
             currentLevel = level.GetComponent<Level>();
             currentLevel.Setup();
-            var cm = level.GetComponent<ChunkManager>();
-            cm.Setup();
         }
 
 

@@ -67,13 +67,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         IEnumerator WaitRoutine(long cid,Action finishAction)
         {
             bool v = false;
-            v = ChunkManager.instance.ChunkLoaded(cid);
+            v = ChunkManager.ChunkLoaded(cid);
             while (!v)
             {
                 
                 Debug.Log("Checking for "+cid);
                 
-                v = ChunkManager.instance.ChunkLoaded(cid);
+                v = ChunkManager.ChunkLoaded(cid);
                 yield return new WaitForEndOfFrame();
             }
             Debug.Log("Wait for "+cid+" finished");
