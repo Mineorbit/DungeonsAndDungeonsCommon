@@ -75,7 +75,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     bool a = LevelManager.currentLevel == null;
                     bool b = !ChunkManager.chunkLoaded.ContainsKey(chunkId);
                     bool c = !ChunkManager.chunkLoaded[chunkId];
-                    Debug.Log(a+" "+b" "+c);
+                    Debug.Log(a+" "+b+" "+c);
                     while (a || b || c)
                     {
                         Debug.Log("Chunk "+chunkId+" not yet loaded, waiting "+ChunkManager.chunkLoaded[chunkId]);
