@@ -249,8 +249,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Debug.Log("Adding finish Action for "+chunkData.chunkId);
                     Complete = () =>
                     {
-                        Debug.Log("Finished "+chunkData.chunkId);
                         chunkLoaded[chunkData.chunkId] = true;
+                        Debug.Log("Finished "+chunkData.chunkId+" "+chunkLoaded[chunkData.chunkId]);
                     };
                 }
                 if (immediate)
