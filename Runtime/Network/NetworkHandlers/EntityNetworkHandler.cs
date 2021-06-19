@@ -63,10 +63,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             blockExists = false;
             targetPosition = transform.position;
-            observed.controller.enabled = true;
+            observed.controller.enabled = isOnServer? false : true;
             observed.setMovementStatus(true);
             Debug.Log("Resolve Locomotion Block");
-            Debug.Break();
+            //Debug.Break();
         }
 
         public bool blockExists = false;
@@ -78,10 +78,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blockPosition = bPosition;
             targetPosition = bPosition;
             
-            observed.controller.enabled = false;
+            observed.controller.enabled = isOnServer? false : false;
             observed.setMovementStatus(false);
             Debug.Log("Set Locomotion Block");
-            Debug.Break();
+            //Debug.Break();
         }
 
         
