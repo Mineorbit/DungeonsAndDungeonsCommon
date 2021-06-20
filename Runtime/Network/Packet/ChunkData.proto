@@ -9,7 +9,7 @@ float y = 2;
 float z = 3;
 }
 
-message LevelObjectInstanceData{
+message LevelObjectInstance{
 	string type = 1;
 repeated Location locations = 2;
 	float g_w = 3;
@@ -23,8 +23,28 @@ repeated Location locations = 2;
 	
 }
 
+message LevelObjectInstanceData{
+	bytes code = 1;
+repeated Location locations = 2;
+	float g_w = 3;
+	float g_x = 4;
+	float g_y = 5;
+	float g_z = 6;
+
+	float x = 7;
+	float y = 8;
+	float z = 9;
+	
+}
+
+message HuffmanEntry  {
+string type = 1;
+bytes code = 2;
+}
 
 message ChunkData{
 	int64 chunkId = 1;
-	repeated LevelObjectInstanceData data = 2;
+
+	repeated HuffmanEntry huffmanTable = 2;
+	repeated LevelObjectInstanceData data = 3;
 }

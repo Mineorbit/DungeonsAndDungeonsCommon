@@ -25,19 +25,26 @@ namespace NetLevel {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg9DaHVua0RhdGEucHJvdG8SCE5ldExldmVsIisKCExvY2F0aW9uEgkKAXgY",
-            "ASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIqMBChdMZXZlbE9iamVjdElu",
-            "c3RhbmNlRGF0YRIMCgR0eXBlGAEgASgJEiUKCWxvY2F0aW9ucxgCIAMoCzIS",
-            "Lk5ldExldmVsLkxvY2F0aW9uEgsKA2dfdxgDIAEoAhILCgNnX3gYBCABKAIS",
-            "CwoDZ195GAUgASgCEgsKA2dfehgGIAEoAhIJCgF4GAcgASgCEgkKAXkYCCAB",
-            "KAISCQoBehgJIAEoAiJNCglDaHVua0RhdGESDwoHY2h1bmtJZBgBIAEoAxIv",
-            "CgRkYXRhGAIgAygLMiEuTmV0TGV2ZWwuTGV2ZWxPYmplY3RJbnN0YW5jZURh",
-            "dGFiBnByb3RvMw=="));
+            "ASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIp8BChNMZXZlbE9iamVjdElu",
+            "c3RhbmNlEgwKBHR5cGUYASABKAkSJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0",
+            "TGV2ZWwuTG9jYXRpb24SCwoDZ193GAMgASgCEgsKA2dfeBgEIAEoAhILCgNn",
+            "X3kYBSABKAISCwoDZ196GAYgASgCEgkKAXgYByABKAISCQoBeRgIIAEoAhIJ",
+            "CgF6GAkgASgCIqMBChdMZXZlbE9iamVjdEluc3RhbmNlRGF0YRIMCgRjb2Rl",
+            "GAEgASgMEiUKCWxvY2F0aW9ucxgCIAMoCzISLk5ldExldmVsLkxvY2F0aW9u",
+            "EgsKA2dfdxgDIAEoAhILCgNnX3gYBCABKAISCwoDZ195GAUgASgCEgsKA2df",
+            "ehgGIAEoAhIJCgF4GAcgASgCEgkKAXkYCCABKAISCQoBehgJIAEoAiIqCgxI",
+            "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoCRIMCgRjb2RlGAIgASgMInsKCUNo",
+            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgDEiwKDGh1ZmZtYW5UYWJsZRgCIAMo",
+            "CzIWLk5ldExldmVsLkh1ZmZtYW5FbnRyeRIvCgRkYXRhGAMgAygLMiEuTmV0",
+            "TGV2ZWwuTGV2ZWxPYmplY3RJbnN0YW5jZURhdGFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.Location), global::NetLevel.Location.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstanceData), global::NetLevel.LevelObjectInstanceData.Parser, new[]{ "Type", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.ChunkData), global::NetLevel.ChunkData.Parser, new[]{ "ChunkId", "Data" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstance), global::NetLevel.LevelObjectInstance.Parser, new[]{ "Type", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstanceData), global::NetLevel.LevelObjectInstanceData.Parser, new[]{ "Code", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.HuffmanEntry), global::NetLevel.HuffmanEntry.Parser, new[]{ "Type", "Code" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.ChunkData), global::NetLevel.ChunkData.Parser, new[]{ "ChunkId", "HuffmanTable", "Data" }, null, null, null, null)
           }));
     }
     #endregion
@@ -288,15 +295,15 @@ namespace NetLevel {
 
   }
 
-  public sealed partial class LevelObjectInstanceData : pb::IMessage<LevelObjectInstanceData>
+  public sealed partial class LevelObjectInstance : pb::IMessage<LevelObjectInstance>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<LevelObjectInstanceData> _parser = new pb::MessageParser<LevelObjectInstanceData>(() => new LevelObjectInstanceData());
+    private static readonly pb::MessageParser<LevelObjectInstance> _parser = new pb::MessageParser<LevelObjectInstance>(() => new LevelObjectInstance());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<LevelObjectInstanceData> Parser { get { return _parser; } }
+    public static pb::MessageParser<LevelObjectInstance> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -309,14 +316,14 @@ namespace NetLevel {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public LevelObjectInstanceData() {
+    public LevelObjectInstance() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public LevelObjectInstanceData(LevelObjectInstanceData other) : this() {
+    public LevelObjectInstance(LevelObjectInstance other) : this() {
       type_ = other.type_;
       locations_ = other.locations_.Clone();
       gW_ = other.gW_;
@@ -330,8 +337,8 @@ namespace NetLevel {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public LevelObjectInstanceData Clone() {
-      return new LevelObjectInstanceData(this);
+    public LevelObjectInstance Clone() {
+      return new LevelObjectInstance(this);
     }
 
     /// <summary>Field number for the "type" field.</summary>
@@ -434,11 +441,11 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as LevelObjectInstanceData);
+      return Equals(other as LevelObjectInstance);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(LevelObjectInstanceData other) {
+    public bool Equals(LevelObjectInstance other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -601,7 +608,7 @@ namespace NetLevel {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(LevelObjectInstanceData other) {
+    public void MergeFrom(LevelObjectInstance other) {
       if (other == null) {
         return;
       }
@@ -737,6 +744,663 @@ namespace NetLevel {
 
   }
 
+  public sealed partial class LevelObjectInstanceData : pb::IMessage<LevelObjectInstanceData>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<LevelObjectInstanceData> _parser = new pb::MessageParser<LevelObjectInstanceData>(() => new LevelObjectInstanceData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<LevelObjectInstanceData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::NetLevel.ChunkDataReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LevelObjectInstanceData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LevelObjectInstanceData(LevelObjectInstanceData other) : this() {
+      code_ = other.code_;
+      locations_ = other.locations_.Clone();
+      gW_ = other.gW_;
+      gX_ = other.gX_;
+      gY_ = other.gY_;
+      gZ_ = other.gZ_;
+      x_ = other.x_;
+      y_ = other.y_;
+      z_ = other.z_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LevelObjectInstanceData Clone() {
+      return new LevelObjectInstanceData(this);
+    }
+
+    /// <summary>Field number for the "code" field.</summary>
+    public const int CodeFieldNumber = 1;
+    private pb::ByteString code_ = pb::ByteString.Empty;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pb::ByteString Code {
+      get { return code_; }
+      set {
+        code_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "locations" field.</summary>
+    public const int LocationsFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::NetLevel.Location> _repeated_locations_codec
+        = pb::FieldCodec.ForMessage(18, global::NetLevel.Location.Parser);
+    private readonly pbc::RepeatedField<global::NetLevel.Location> locations_ = new pbc::RepeatedField<global::NetLevel.Location>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::NetLevel.Location> Locations {
+      get { return locations_; }
+    }
+
+    /// <summary>Field number for the "g_w" field.</summary>
+    public const int GWFieldNumber = 3;
+    private float gW_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float GW {
+      get { return gW_; }
+      set {
+        gW_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "g_x" field.</summary>
+    public const int GXFieldNumber = 4;
+    private float gX_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float GX {
+      get { return gX_; }
+      set {
+        gX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "g_y" field.</summary>
+    public const int GYFieldNumber = 5;
+    private float gY_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float GY {
+      get { return gY_; }
+      set {
+        gY_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "g_z" field.</summary>
+    public const int GZFieldNumber = 6;
+    private float gZ_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float GZ {
+      get { return gZ_; }
+      set {
+        gZ_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "x" field.</summary>
+    public const int XFieldNumber = 7;
+    private float x_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float X {
+      get { return x_; }
+      set {
+        x_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "y" field.</summary>
+    public const int YFieldNumber = 8;
+    private float y_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Y {
+      get { return y_; }
+      set {
+        y_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "z" field.</summary>
+    public const int ZFieldNumber = 9;
+    private float z_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Z {
+      get { return z_; }
+      set {
+        z_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as LevelObjectInstanceData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(LevelObjectInstanceData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Code != other.Code) return false;
+      if(!locations_.Equals(other.locations_)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GW, other.GW)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GX, other.GX)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GY, other.GY)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GZ, other.GZ)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Code.Length != 0) hash ^= Code.GetHashCode();
+      hash ^= locations_.GetHashCode();
+      if (GW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GW);
+      if (GX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GX);
+      if (GY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GY);
+      if (GZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GZ);
+      if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
+      if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
+      if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Code.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteBytes(Code);
+      }
+      locations_.WriteTo(output, _repeated_locations_codec);
+      if (GW != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(GW);
+      }
+      if (GX != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(GX);
+      }
+      if (GY != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(GY);
+      }
+      if (GZ != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(GZ);
+      }
+      if (X != 0F) {
+        output.WriteRawTag(61);
+        output.WriteFloat(X);
+      }
+      if (Y != 0F) {
+        output.WriteRawTag(69);
+        output.WriteFloat(Y);
+      }
+      if (Z != 0F) {
+        output.WriteRawTag(77);
+        output.WriteFloat(Z);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Code.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteBytes(Code);
+      }
+      locations_.WriteTo(ref output, _repeated_locations_codec);
+      if (GW != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(GW);
+      }
+      if (GX != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(GX);
+      }
+      if (GY != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(GY);
+      }
+      if (GZ != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(GZ);
+      }
+      if (X != 0F) {
+        output.WriteRawTag(61);
+        output.WriteFloat(X);
+      }
+      if (Y != 0F) {
+        output.WriteRawTag(69);
+        output.WriteFloat(Y);
+      }
+      if (Z != 0F) {
+        output.WriteRawTag(77);
+        output.WriteFloat(Z);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Code.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Code);
+      }
+      size += locations_.CalculateSize(_repeated_locations_codec);
+      if (GW != 0F) {
+        size += 1 + 4;
+      }
+      if (GX != 0F) {
+        size += 1 + 4;
+      }
+      if (GY != 0F) {
+        size += 1 + 4;
+      }
+      if (GZ != 0F) {
+        size += 1 + 4;
+      }
+      if (X != 0F) {
+        size += 1 + 4;
+      }
+      if (Y != 0F) {
+        size += 1 + 4;
+      }
+      if (Z != 0F) {
+        size += 1 + 4;
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(LevelObjectInstanceData other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Code.Length != 0) {
+        Code = other.Code;
+      }
+      locations_.Add(other.locations_);
+      if (other.GW != 0F) {
+        GW = other.GW;
+      }
+      if (other.GX != 0F) {
+        GX = other.GX;
+      }
+      if (other.GY != 0F) {
+        GY = other.GY;
+      }
+      if (other.GZ != 0F) {
+        GZ = other.GZ;
+      }
+      if (other.X != 0F) {
+        X = other.X;
+      }
+      if (other.Y != 0F) {
+        Y = other.Y;
+      }
+      if (other.Z != 0F) {
+        Z = other.Z;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Code = input.ReadBytes();
+            break;
+          }
+          case 18: {
+            locations_.AddEntriesFrom(input, _repeated_locations_codec);
+            break;
+          }
+          case 29: {
+            GW = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            GX = input.ReadFloat();
+            break;
+          }
+          case 45: {
+            GY = input.ReadFloat();
+            break;
+          }
+          case 53: {
+            GZ = input.ReadFloat();
+            break;
+          }
+          case 61: {
+            X = input.ReadFloat();
+            break;
+          }
+          case 69: {
+            Y = input.ReadFloat();
+            break;
+          }
+          case 77: {
+            Z = input.ReadFloat();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Code = input.ReadBytes();
+            break;
+          }
+          case 18: {
+            locations_.AddEntriesFrom(ref input, _repeated_locations_codec);
+            break;
+          }
+          case 29: {
+            GW = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            GX = input.ReadFloat();
+            break;
+          }
+          case 45: {
+            GY = input.ReadFloat();
+            break;
+          }
+          case 53: {
+            GZ = input.ReadFloat();
+            break;
+          }
+          case 61: {
+            X = input.ReadFloat();
+            break;
+          }
+          case 69: {
+            Y = input.ReadFloat();
+            break;
+          }
+          case 77: {
+            Z = input.ReadFloat();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class HuffmanEntry : pb::IMessage<HuffmanEntry>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<HuffmanEntry> _parser = new pb::MessageParser<HuffmanEntry>(() => new HuffmanEntry());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<HuffmanEntry> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::NetLevel.ChunkDataReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public HuffmanEntry() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public HuffmanEntry(HuffmanEntry other) : this() {
+      type_ = other.type_;
+      code_ = other.code_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public HuffmanEntry Clone() {
+      return new HuffmanEntry(this);
+    }
+
+    /// <summary>Field number for the "type" field.</summary>
+    public const int TypeFieldNumber = 1;
+    private string type_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Type {
+      get { return type_; }
+      set {
+        type_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "code" field.</summary>
+    public const int CodeFieldNumber = 2;
+    private pb::ByteString code_ = pb::ByteString.Empty;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pb::ByteString Code {
+      get { return code_; }
+      set {
+        code_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as HuffmanEntry);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(HuffmanEntry other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Type != other.Type) return false;
+      if (Code != other.Code) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Type.Length != 0) hash ^= Type.GetHashCode();
+      if (Code.Length != 0) hash ^= Code.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Type.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Type);
+      }
+      if (Code.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteBytes(Code);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Type.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Type);
+      }
+      if (Code.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteBytes(Code);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Type.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Type);
+      }
+      if (Code.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Code);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(HuffmanEntry other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Type.Length != 0) {
+        Type = other.Type;
+      }
+      if (other.Code.Length != 0) {
+        Code = other.Code;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Type = input.ReadString();
+            break;
+          }
+          case 18: {
+            Code = input.ReadBytes();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Type = input.ReadString();
+            break;
+          }
+          case 18: {
+            Code = input.ReadBytes();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class ChunkData : pb::IMessage<ChunkData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -749,7 +1413,7 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::NetLevel.ChunkDataReflection.Descriptor.MessageTypes[2]; }
+      get { return global::NetLevel.ChunkDataReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -767,6 +1431,7 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ChunkData(ChunkData other) : this() {
       chunkId_ = other.chunkId_;
+      huffmanTable_ = other.huffmanTable_.Clone();
       data_ = other.data_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -787,10 +1452,20 @@ namespace NetLevel {
       }
     }
 
+    /// <summary>Field number for the "huffmanTable" field.</summary>
+    public const int HuffmanTableFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::NetLevel.HuffmanEntry> _repeated_huffmanTable_codec
+        = pb::FieldCodec.ForMessage(18, global::NetLevel.HuffmanEntry.Parser);
+    private readonly pbc::RepeatedField<global::NetLevel.HuffmanEntry> huffmanTable_ = new pbc::RepeatedField<global::NetLevel.HuffmanEntry>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::NetLevel.HuffmanEntry> HuffmanTable {
+      get { return huffmanTable_; }
+    }
+
     /// <summary>Field number for the "data" field.</summary>
-    public const int DataFieldNumber = 2;
+    public const int DataFieldNumber = 3;
     private static readonly pb::FieldCodec<global::NetLevel.LevelObjectInstanceData> _repeated_data_codec
-        = pb::FieldCodec.ForMessage(18, global::NetLevel.LevelObjectInstanceData.Parser);
+        = pb::FieldCodec.ForMessage(26, global::NetLevel.LevelObjectInstanceData.Parser);
     private readonly pbc::RepeatedField<global::NetLevel.LevelObjectInstanceData> data_ = new pbc::RepeatedField<global::NetLevel.LevelObjectInstanceData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::NetLevel.LevelObjectInstanceData> Data {
@@ -811,6 +1486,7 @@ namespace NetLevel {
         return true;
       }
       if (ChunkId != other.ChunkId) return false;
+      if(!huffmanTable_.Equals(other.huffmanTable_)) return false;
       if(!data_.Equals(other.data_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -819,6 +1495,7 @@ namespace NetLevel {
     public override int GetHashCode() {
       int hash = 1;
       if (ChunkId != 0L) hash ^= ChunkId.GetHashCode();
+      hash ^= huffmanTable_.GetHashCode();
       hash ^= data_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -840,6 +1517,7 @@ namespace NetLevel {
         output.WriteRawTag(8);
         output.WriteInt64(ChunkId);
       }
+      huffmanTable_.WriteTo(output, _repeated_huffmanTable_codec);
       data_.WriteTo(output, _repeated_data_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -854,6 +1532,7 @@ namespace NetLevel {
         output.WriteRawTag(8);
         output.WriteInt64(ChunkId);
       }
+      huffmanTable_.WriteTo(ref output, _repeated_huffmanTable_codec);
       data_.WriteTo(ref output, _repeated_data_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -867,6 +1546,7 @@ namespace NetLevel {
       if (ChunkId != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(ChunkId);
       }
+      size += huffmanTable_.CalculateSize(_repeated_huffmanTable_codec);
       size += data_.CalculateSize(_repeated_data_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -882,6 +1562,7 @@ namespace NetLevel {
       if (other.ChunkId != 0L) {
         ChunkId = other.ChunkId;
       }
+      huffmanTable_.Add(other.huffmanTable_);
       data_.Add(other.data_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -902,6 +1583,10 @@ namespace NetLevel {
             break;
           }
           case 18: {
+            huffmanTable_.AddEntriesFrom(input, _repeated_huffmanTable_codec);
+            break;
+          }
+          case 26: {
             data_.AddEntriesFrom(input, _repeated_data_codec);
             break;
           }
@@ -924,6 +1609,10 @@ namespace NetLevel {
             break;
           }
           case 18: {
+            huffmanTable_.AddEntriesFrom(ref input, _repeated_huffmanTable_codec);
+            break;
+          }
+          case 26: {
             data_.AddEntriesFrom(ref input, _repeated_data_codec);
             break;
           }

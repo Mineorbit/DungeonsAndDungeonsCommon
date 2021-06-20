@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Google.Protobuf;
 using NetLevel;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -284,7 +286,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstances.AddRange(chunkData.Data.ToList());
             var counter = levelObjectInstances.Count;
             Debug.Log(chunkData.ChunkId + " adding " + counter + " Objects");
-            foreach (var i in levelObjectInstances)
+            foreach (var instanceData in levelObjectInstances)
             {
                 counter--;
                 Action Complete = null;
@@ -297,9 +299,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         chunkLoaded[chunkData.ChunkId] = true;
                     };
                 }
+
+                LevelObjectInstance instance = LevelObjectInstanceDataToLevelObjectInstance(instanceData, chunkData.HuffmanTable.ToList());  
+                
                 if (immediate)
                 {
-                    LevelManager.currentLevel.Add(i);
+                    LevelManager.currentLevel.Add(instance);
                     if (Complete != null)
                     {
                         Complete.Invoke();
@@ -311,7 +316,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         MainCaller.Do(() =>
                         {
-                            LevelManager.currentLevel.Add(i);
+                            LevelManager.currentLevel.Add(instance);
                             Complete.Invoke();
                         }); 
                     }
@@ -319,8 +324,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         MainCaller.Do(() =>
                         {
-                            Debug.Log("Adding " + i);
-                            LevelManager.currentLevel.Add(i);
+                            Debug.Log("Adding " + instance);
+                            LevelManager.currentLevel.Add(instance);
                         });  
                     }
                     
@@ -329,6 +334,128 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 }
             }
+        }
+
+        class HuffNode
+        {
+            public HuffNode l;
+            public HuffNode r;
+            public HuffNode p;
+            public string type = null;
+            public float w = 0;
+
+            int CompareTo(HuffNode other)
+            {
+                if (w <= other.w)
+                {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+
+
+        class PriorityQueue
+        {
+            private List<HuffNode> values = new List<HuffNode>();
+            public void Enqueue(HuffNode d)
+            {
+                values.Add(d);
+                values.Sort();
+            }
+
+            public HuffNode Dequeue()
+            {
+                var v = values.First();
+                values.Remove(v);
+                return v;
+            }
+
+            public int Count()
+            {
+                return values.Count;
+            }
+        }
+        
+        public static List<HuffmanEntry> BuildHuffmanTable(List<LevelObject> levelObjects)
+        {
+            Dictionary<string, float> weights = new Dictionary<string, float>();
+            foreach (LevelObject l in levelObjects)
+            {
+                float freq;
+                if(weights.TryGetValue(l.levelObjectDataType, out freq))
+                {
+                    weights[l.levelObjectDataType] = freq + 1;
+                }else
+                {
+                    weights.Add(l.levelObjectDataType,1);
+                }
+            }
+
+            float count = levelObjects.Count;
+
+            PriorityQueue todo = new PriorityQueue();
+            Dictionary<string, HuffNode> nodes = new Dictionary<string, HuffNode>();
+
+            foreach (var type in weights.Keys)
+            {
+                float weight = weights[type] / count;
+                HuffNode huffNode = new HuffNode();
+                huffNode.type = type;
+                huffNode.w = weight;
+                todo.Enqueue(huffNode);
+                nodes.Add(type,huffNode);
+            }
+
+            while (1 < todo.Count())
+            {
+                var h1 = todo.Dequeue();
+                var h2 = todo.Dequeue();
+                HuffNode huffNode = new HuffNode();
+                huffNode.l = h1;
+                huffNode.r = h2;
+                huffNode.w = h1.w + h2.w;
+                h1.p = huffNode;
+                h2.p = huffNode;
+                todo.Enqueue(huffNode);
+            }
+
+            HuffNode root = todo.Dequeue();
+            List<HuffmanEntry> huffmanEntries = new List<HuffmanEntry>();
+            foreach (var type in weights.Keys)
+            {
+                List<bool> pathToType = BuildPath(nodes[type]);
+                BitArray b = new BitArray(pathToType.ToArray());
+                int numOfBytes = (int) Math.Ceiling((double) pathToType.Count / 8);
+                byte[] bytes = new byte[numOfBytes];
+                b.CopyTo(bytes,0);
+                HuffmanEntry huffmanEntry = new HuffmanEntry();
+                huffmanEntry.Code = ByteString.CopyFrom(bytes);
+                huffmanEntry.Type = type;
+                huffmanEntries.Add(huffmanEntry);
+            }
+
+            return huffmanEntries;
+        }
+
+        private static List<bool> BuildPath(HuffNode node)
+        {
+            List<bool> path = new List<bool>();
+            if(node.p != null)
+            {
+            path = BuildPath(node.p);
+            if (node == node.p.l)
+            {
+                path.Add(true);
+            }
+            else
+            {
+                path.Add(false);
+            }
+            
+            }
+
+            return path;
         }
 
         public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o)
@@ -353,15 +480,74 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstanceData.GY = rot.y;
             levelObjectInstanceData.GZ = rot.z;
             levelObjectInstanceData.GW = rot.w;
-            levelObjectInstanceData.Type = o.levelObjectDataType;
+            levelObjectInstanceData.Code = TypeToCode(o.levelObjectDataType);
             return levelObjectInstanceData;
+        }
+
+        private static List<HuffmanEntry> currentChunkHuffmanTable;
+        public static string CodeToType(ByteString code,  List<HuffmanEntry> huffmanEntries)
+        {
+            foreach (var x in huffmanEntries)
+            {
+                if (x.Code.Equals(code))
+                {
+                    return x.Type;
+                }
+            }
+
+            // HIER SPÄTER Type VON ERROR BLOCK
+            return "";
+        }
+
+        public static string CodeToType(ByteString code)
+        {
+            return CodeToType(code, currentChunkHuffmanTable);
+        }
+
+
+        public static ByteString TypeToCode(string type)
+        {
+            return TypeToCode(type, currentChunkHuffmanTable);
+        }
+        
+        public static ByteString TypeToCode(string type, List<HuffmanEntry> huffmanEntries)
+        {
+            foreach (var x in huffmanEntries)
+            {
+                if (x.Type.Equals(type))
+                {
+                    return x.Code;
+                }
+            }
+
+            // HIER SPÄTER Code VON ERROR BLOCK
+            return ByteString.Empty;
+        }
+
+
+        public static LevelObjectInstance LevelObjectInstanceDataToLevelObjectInstance(LevelObjectInstanceData instanceData, List<HuffmanEntry> huffmanEntries)
+        {
+            LevelObjectInstance levelObjectInstance = new LevelObjectInstance();
+            levelObjectInstance.X = instanceData.X;
+            levelObjectInstance.Y = instanceData.Y;
+            levelObjectInstance.Z = instanceData.Z;
+            levelObjectInstance.GX = instanceData.GX;
+            levelObjectInstance.GY = instanceData.GY;
+            levelObjectInstance.GZ = instanceData.GZ;
+            levelObjectInstance.GW = instanceData.GW;
+            levelObjectInstance.Locations.AddRange( instanceData.Locations);
+            levelObjectInstance.Type = CodeToType(instanceData.Code, huffmanEntries);
+            return levelObjectInstance;
         }
 
         public static ChunkData ChunkToData(Chunk chunk)
         {
+            LevelObject[] instances = chunk.GetComponentsInChildren<LevelObject>(includeInactive: true);
             ChunkData chunkData = new ChunkData();
             chunkData.ChunkId = chunk.chunkId;
-            foreach (LevelObject l in chunk.GetComponentsInChildren<LevelObject>(includeInactive: true))
+            currentChunkHuffmanTable = BuildHuffmanTable(instances.ToList());
+            chunkData.HuffmanTable.AddRange(currentChunkHuffmanTable);
+            foreach (LevelObject l in instances)
             {
                 chunkData.Data.Add(InstanceToData(l as dynamic));
             }

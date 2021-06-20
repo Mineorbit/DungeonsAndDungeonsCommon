@@ -185,24 +185,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public GameObject Add(LevelObjectInstanceData levelObjectInstanceData)
+        public GameObject Add(LevelObjectInstance levelObjectInstance)
         {
             GameObject result = null;
             LevelObjectData d;
-            if (LevelDataManager.levelObjectDatas.TryGetValue(levelObjectInstanceData.Type, out d))
+            if (LevelDataManager.levelObjectDatas.TryGetValue(levelObjectInstance.Type, out d))
             {
-                if (levelObjectInstanceData.Locations.Count > 1)
+                Vector3 pos = new Vector3(levelObjectInstance.X, levelObjectInstance.Y, levelObjectInstance.Z);
+                Quaternion rot = new Quaternion(levelObjectInstance.GX, levelObjectInstance.GY, levelObjectInstance.GZ,
+                    levelObjectInstance.GW);
+                if (levelObjectInstance.Locations.Count > 1)
                 {
-                    var receiverLocations = levelObjectInstanceData.Locations.ToList().Select(x => { return Util.LocationToVector(x); })
+                    var receiverLocations = levelObjectInstance.Locations.ToList().Select(x => { return Util.LocationToVector(x); })
                         .ToList();
-                    result = Add(d, new Vector3(levelObjectInstanceData.X,levelObjectInstanceData.Y,levelObjectInstanceData.Z),
-                        new Quaternion(levelObjectInstanceData.GX, levelObjectInstanceData.GY, levelObjectInstanceData.GZ, levelObjectInstanceData.GW),
-                        receiverLocations);
+                    result = Add(d, pos, rot, receiverLocations);
                 }
                 else
                 {
-                    result = Add(d, new Vector3(levelObjectInstanceData.X,levelObjectInstanceData.Y,levelObjectInstanceData.Z),
-                        new Quaternion(levelObjectInstanceData.GX, levelObjectInstanceData.GY, levelObjectInstanceData.GZ, levelObjectInstanceData.GW));
+                    result = Add(d, pos, rot);
                 }
             }
 
