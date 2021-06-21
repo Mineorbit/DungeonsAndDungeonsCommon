@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: SmallFloor
   m_EditorClassIdentifier: 
   prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
-  uniqueLevelObjectId: af830fa8-67b4-4a69-8094-a6b8391933cd
+  uniqueLevelObjectId: -1768982159
   granularity: 2
   name: Small Floorpiece
   dynamicInstantiable: 0
   levelInstantiable: 1
+  ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}

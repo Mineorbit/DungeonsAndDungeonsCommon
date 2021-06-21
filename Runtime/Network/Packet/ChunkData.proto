@@ -10,7 +10,7 @@ float z = 3;
 }
 
 message LevelObjectInstance{
-	string type = 1;
+	int32 type = 1;
 repeated Location locations = 2;
 	float g_w = 3;
 	float g_x = 4;
@@ -38,7 +38,7 @@ repeated Location locations = 2;
 }
 
 message HuffmanEntry  {
-string type = 1;
+int32 type = 1;
 bytes code = 2;
 }
 

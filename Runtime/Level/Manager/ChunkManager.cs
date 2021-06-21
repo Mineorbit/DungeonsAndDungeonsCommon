@@ -225,6 +225,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return result_chunk;
         }
 
+        public static List<Chunk> GetNeighborhood(Vector3 position)
+        {
+            List<Chunk> neighborhood = new List<Chunk>();
+            var grid = GetChunkGridPosition(position);
+            neighborhood.Add(GetChunkByID(GetChunkID(grid)));
+            Chunk c1 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1 + 1, grid.Item2)));
+            if(c1 != null)
+            neighborhood.Add(c1);
+            Chunk c2 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1 - 1, grid.Item2)));
+            if(c2 != null)
+            neighborhood.Add(c2);
+            Chunk c3 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1, grid.Item2 + 1)));
+            if(c3 != null)
+            neighborhood.Add(c3);
+            Chunk c4 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1, grid.Item2 - 1)));
+            if(c4 != null)
+            neighborhood.Add(c4);
+            Debug.Log("Found in Neighborhood "+neighborhood.Count);
+            return neighborhood;
+        }
+
         private static Queue<Tuple<bool, ChunkData>> loadQueue = new Queue<Tuple<bool, ChunkData>>();
 
 
@@ -253,16 +274,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-
+// WZF PASSIERT HIER
         public static Chunk GetChunkByID(long id)
         {
-            foreach (Chunk c in instance.chunks.Values)
+            Chunk[] chunks = LevelManager.currentLevel.GetComponentsInChildren<Chunk>(includeInactive: true);
+            Chunk result = null;
+            foreach (Chunk c in chunks)
             {
+                Debug.Log("There is Chunk "+c.chunkId+" looking for "+id);
+                if(c != null)
+                {
                 if (c.chunkId == id)
-                    return c;
+                {
+                    Debug.Log("Match bei "+id+" ist Chunk: "+c);
+                    result = c;
+                }
+                }
             }
 
-            return null;
+            return result;
         }
         
         // Chunk Semantics
@@ -295,8 +325,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Debug.Log("Adding finish Action for "+chunkData.ChunkId);
                     Complete = () =>
                     {
-                        GetChunkByID(chunkData.ChunkId).finishedLoading = true;
-                        chunkLoaded[chunkData.ChunkId] = true;
+                        if(chunkData != null)
+                        {
+                            Chunk c = GetChunkByID(chunkData.ChunkId);
+                            if(c != null)
+                            {
+                            c.finishedLoading = true;
+                            
+                            }
+                            else
+                            {
+                                Debug.Log("Chunk was null");
+                            }
+                            
+                            chunkLoaded[chunkData.ChunkId] = true;
+                        }
+                        else
+                        {
+                            Debug.Log("Chunk Data was null");
+                        }
                     };
                 }
 
@@ -304,6 +351,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 if (immediate)
                 {
+                    Debug.Log("Adding "+instance);
                     LevelManager.currentLevel.Add(instance);
                     if (Complete != null)
                     {
@@ -335,16 +383,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
         }
-
         class HuffNode
         {
             public HuffNode l;
             public HuffNode r;
             public HuffNode p;
-            public string type = null;
+            public int type = 0;
             public float w = 0;
 
-            int CompareTo(HuffNode other)
+            public int CompareTo(HuffNode other)
             {
                 if (w <= other.w)
                 {
@@ -353,7 +400,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return 0;
             }
         }
-
+        class HuffNodeComparer : IComparer<HuffNode>
+        {
+            public int Compare(HuffNode x, HuffNode y)
+            {
+                // TODO: Handle x or y being null, or them not having names
+                return x.CompareTo(y);
+            }
+        }
 
         class PriorityQueue
         {
@@ -361,13 +415,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             public void Enqueue(HuffNode d)
             {
                 values.Add(d);
-                values.Sort();
+                values.Sort( new HuffNodeComparer());
             }
-
+            
             public HuffNode Dequeue()
             {
                 var v = values.First();
-                values.Remove(v);
+                values.RemoveAt(0);
                 return v;
             }
 
@@ -379,7 +433,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public static List<HuffmanEntry> BuildHuffmanTable(List<LevelObject> levelObjects)
         {
-            Dictionary<string, float> weights = new Dictionary<string, float>();
+            Dictionary<int, float> weights = new Dictionary<int, float>();
             foreach (LevelObject l in levelObjects)
             {
                 float freq;
@@ -395,11 +449,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             float count = levelObjects.Count;
 
             PriorityQueue todo = new PriorityQueue();
-            Dictionary<string, HuffNode> nodes = new Dictionary<string, HuffNode>();
+            Dictionary<int, HuffNode> nodes = new Dictionary<int, HuffNode>();
 
             foreach (var type in weights.Keys)
             {
+                
                 float weight = weights[type] / count;
+                Debug.Log("Weight: "+type+" "+weight);
                 HuffNode huffNode = new HuffNode();
                 huffNode.type = type;
                 huffNode.w = weight;
@@ -419,7 +475,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 h2.p = huffNode;
                 todo.Enqueue(huffNode);
             }
-
+            
             HuffNode root = todo.Dequeue();
             List<HuffmanEntry> huffmanEntries = new List<HuffmanEntry>();
             foreach (var type in weights.Keys)
@@ -430,7 +486,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 byte[] bytes = new byte[numOfBytes];
                 b.CopyTo(bytes,0);
                 HuffmanEntry huffmanEntry = new HuffmanEntry();
-                huffmanEntry.Code = ByteString.CopyFrom(bytes);
+                ByteString s = ByteString.CopyFrom(bytes);
+                huffmanEntry.Code = s;
                 huffmanEntry.Type = type;
                 huffmanEntries.Add(huffmanEntry);
             }
@@ -485,7 +542,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private static List<HuffmanEntry> currentChunkHuffmanTable;
-        public static string CodeToType(ByteString code,  List<HuffmanEntry> huffmanEntries)
+        public static int CodeToType(ByteString code,  List<HuffmanEntry> huffmanEntries)
         {
             foreach (var x in huffmanEntries)
             {
@@ -496,21 +553,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             // HIER SPÄTER Type VON ERROR BLOCK
-            return "";
+            return 0;
         }
 
-        public static string CodeToType(ByteString code)
+        public static int CodeToType(ByteString code)
         {
             return CodeToType(code, currentChunkHuffmanTable);
         }
 
 
-        public static ByteString TypeToCode(string type)
+        public static ByteString TypeToCode(int type)
         {
             return TypeToCode(type, currentChunkHuffmanTable);
         }
         
-        public static ByteString TypeToCode(string type, List<HuffmanEntry> huffmanEntries)
+        public static ByteString TypeToCode(int type, List<HuffmanEntry> huffmanEntries)
         {
             foreach (var x in huffmanEntries)
             {
@@ -535,7 +592,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstance.GY = instanceData.GY;
             levelObjectInstance.GZ = instanceData.GZ;
             levelObjectInstance.GW = instanceData.GW;
-            levelObjectInstance.Locations.AddRange( instanceData.Locations);
+            levelObjectInstance.Locations.AddRange( instanceData.Locations );
             levelObjectInstance.Type = CodeToType(instanceData.Code, huffmanEntries);
             return levelObjectInstance;
         }

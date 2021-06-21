@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShieldSpawn
   m_EditorClassIdentifier: 
   prefab: {fileID: 7459656127868474107, guid: 0c882f29bb93ece449203ef8f8ff46a3, type: 3}
-  uniqueLevelObjectId: ce42b008-c147-4a66-8133-ad8411166082
+  uniqueLevelObjectId: 9
   granularity: 1
   name: Shield Spawn
   dynamicInstantiable: 0

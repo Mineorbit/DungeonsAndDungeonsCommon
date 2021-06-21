@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlogSpawn
   m_EditorClassIdentifier: 
   prefab: {fileID: 8481799529828780976, guid: 5956cf2b87f14a14580b8173a30d6d56, type: 3}
-  uniqueLevelObjectId: f997296f-9c82-4d07-b308-78a64e70f759
+  uniqueLevelObjectId: 3
   granularity: 1
   name: Blog
   dynamicInstantiable: 0

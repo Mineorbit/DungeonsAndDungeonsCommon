@@ -6,7 +6,7 @@ package Game;
 message EntityCreate {
 
   string Identity = 1;
-  string levelObjectDataType = 2;
+  int32 levelObjectDataType = 2;
   int32 localId = 3;
   
   float X = 4;

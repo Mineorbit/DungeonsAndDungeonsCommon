@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static UnityEvent levelListUpdatedEvent;
 
 
-        public static Dictionary<string, LevelObjectData> levelObjectDatas;
+        public static Dictionary<int, LevelObjectData> levelObjectDatas;
 
         public LevelMetaData[] localLevels;
         public LevelMetaData[] networkLevels;
@@ -31,9 +31,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (instance != null) Destroy(this);
 
 
-            levelObjectDatas = LevelObjectData.GetAllByUniqueType();
 
             instance = this;
+            levelObjectDatas = LevelObjectData.GetAllByUniqueType();
             levelLoadedEvent = new UnityEvent();
             levelListUpdatedEvent = new UnityEvent();
 

@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: Bomb
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  uniqueLevelObjectId: c3d78dea-2b19-44a1-af56-d6e3739ef63b
+  uniqueLevelObjectId: 13
   granularity: 0
   name: 
   dynamicInstantiable: 0
   levelInstantiable: 0
+  ActivateWhenInactive: 0
+  Buildable: 0
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}

@@ -4,7 +4,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelObject : MonoBehaviour
     {
-        public string levelObjectDataType;
+        public int levelObjectDataType;
 
         public bool isDynamic;
 

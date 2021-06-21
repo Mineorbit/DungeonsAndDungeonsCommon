@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: PlayerCheckpoint
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  uniqueLevelObjectId: 6f03aa17-cd58-4031-9b7b-302689cba929
+  uniqueLevelObjectId: -2066831063
   granularity: 0
   name: Checkpoint
   dynamicInstantiable: 0
   levelInstantiable: 1
+  ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}

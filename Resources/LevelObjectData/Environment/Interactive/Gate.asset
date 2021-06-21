@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gate
   m_EditorClassIdentifier: 
   prefab: {fileID: 4924650896210544278, guid: f159be7f38d48e4468488f8a1e54fa1a, type: 3}
-  uniqueLevelObjectId: 020bab82-53e2-4501-91b4-e3eddc29b8c1
+  uniqueLevelObjectId: -402324530
   granularity: 1
   name: Gate
   dynamicInstantiable: 1

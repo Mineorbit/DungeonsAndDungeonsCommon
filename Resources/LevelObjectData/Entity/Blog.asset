@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: Blog
   m_EditorClassIdentifier: 
   prefab: {fileID: 502292555523390023, guid: c772c828a9a43544993c7fa9e2d89285, type: 3}
-  uniqueLevelObjectId: b170ceeb-64d3-4c99-b7c2-d6eca65f6d82
+  uniqueLevelObjectId: -1205852500
   granularity: 1
   name: Blog
   dynamicInstantiable: 1
   levelInstantiable: 0
+  ActivateWhenInactive: 0
+  Buildable: 0
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}
