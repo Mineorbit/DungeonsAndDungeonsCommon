@@ -78,10 +78,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                 () =>
                                 {
                                     var handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity);
-
-                                    Debug.Log(handler + " doing " + methodInfo.Name);
-                                    Delegate.CreateDelegate(typeof(UnityAction<Packet>), handler, methodInfo.Name, true,
-                                        true).DynamicInvoke(x);
+                                    if(handler != null)
+                                    {
+                                        Debug.Log(handler + " doing " + methodInfo.Name);
+                                        Delegate.CreateDelegate(typeof(UnityAction<Packet>), handler, methodInfo.Name, true, true).DynamicInvoke(x);
+                                    
+                                    }
                                 }
                             );
                         };
