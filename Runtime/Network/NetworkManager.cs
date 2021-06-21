@@ -48,7 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             // THIS IS A STUPID PLACE BUT WILL CHANGE LATER
-            Time.fixedDeltaTime = 0.03125f;
+            Time.fixedDeltaTime = 0.02f;
 
             foreach (var p in packetBindings) p.AddToBinding();
             
