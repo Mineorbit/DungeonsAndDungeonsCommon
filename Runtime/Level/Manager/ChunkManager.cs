@@ -277,10 +277,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 // WZF PASSIERT HIER
         public static Chunk GetChunkByID(long id)
         {
-            Chunk[] chunks = LevelManager.currentLevel.GetComponentsInChildren<Chunk>(includeInactive: true);
             Chunk result = null;
-            foreach (Chunk c in chunks)
+            if(LevelManager.currentLevel != null)
             {
+                Chunk[] chunks = LevelManager.currentLevel.GetComponentsInChildren<Chunk>(includeInactive: true);
+
+                foreach (Chunk c in chunks)
+                {
                 Debug.Log("There is Chunk "+c.chunkId+" looking for "+id);
                 if(c != null)
                 {
@@ -290,8 +293,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     result = c;
                 }
                 }
+                }
             }
-
             return result;
         }
         
