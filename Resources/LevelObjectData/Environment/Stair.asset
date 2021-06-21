@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Stair
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  uniqueLevelObjectId: 65cbc58f-2c51-4ee8-b790-6b13e5a267ec
+  uniqueLevelObjectId: 1814747340
   granularity: 0
   name: Stair
   dynamicInstantiable: 0
   levelInstantiable: 1
+  ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}

@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: Boomerang
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  uniqueLevelObjectId: 0dc75b82-49a0-4de7-85cb-536e3a3e514d
+  uniqueLevelObjectId: 4
   granularity: 0
   name: 
   dynamicInstantiable: 0
   levelInstantiable: 0
+  ActivateWhenInactive: 0
+  Buildable: 0
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}

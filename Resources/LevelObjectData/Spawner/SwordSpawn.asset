@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SwordSpawn
   m_EditorClassIdentifier: 
   prefab: {fileID: 8532608643960838078, guid: 65a0a8cf0308cb2449f7702a08f147e1, type: 3}
-  uniqueLevelObjectId: efc022f1-a486-49eb-8980-014611b51604
+  uniqueLevelObjectId: 7
   granularity: 1
   name: Sword
   dynamicInstantiable: 0

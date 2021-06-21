@@ -25,7 +25,7 @@ namespace Game {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChJFbnRpdHlDcmVhdGUucHJvdG8SBEdhbWUibwoMRW50aXR5Q3JlYXRlEhAK",
-            "CElkZW50aXR5GAEgASgJEhsKE2xldmVsT2JqZWN0RGF0YVR5cGUYAiABKAkS",
+            "CElkZW50aXR5GAEgASgJEhsKE2xldmVsT2JqZWN0RGF0YVR5cGUYAiABKAUS",
             "DwoHbG9jYWxJZBgDIAEoBRIJCgFYGAQgASgCEgkKAVkYBSABKAISCQoBWhgG",
             "IAEoAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
@@ -94,12 +94,12 @@ namespace Game {
 
     /// <summary>Field number for the "levelObjectDataType" field.</summary>
     public const int LevelObjectDataTypeFieldNumber = 2;
-    private string levelObjectDataType_ = "";
+    private int levelObjectDataType_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string LevelObjectDataType {
+    public int LevelObjectDataType {
       get { return levelObjectDataType_; }
       set {
-        levelObjectDataType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        levelObjectDataType_ = value;
       }
     }
 
@@ -173,7 +173,7 @@ namespace Game {
     public override int GetHashCode() {
       int hash = 1;
       if (Identity.Length != 0) hash ^= Identity.GetHashCode();
-      if (LevelObjectDataType.Length != 0) hash ^= LevelObjectDataType.GetHashCode();
+      if (LevelObjectDataType != 0) hash ^= LevelObjectDataType.GetHashCode();
       if (LocalId != 0) hash ^= LocalId.GetHashCode();
       if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
       if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
@@ -198,9 +198,9 @@ namespace Game {
         output.WriteRawTag(10);
         output.WriteString(Identity);
       }
-      if (LevelObjectDataType.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(LevelObjectDataType);
+      if (LevelObjectDataType != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(LevelObjectDataType);
       }
       if (LocalId != 0) {
         output.WriteRawTag(24);
@@ -231,9 +231,9 @@ namespace Game {
         output.WriteRawTag(10);
         output.WriteString(Identity);
       }
-      if (LevelObjectDataType.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(LevelObjectDataType);
+      if (LevelObjectDataType != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(LevelObjectDataType);
       }
       if (LocalId != 0) {
         output.WriteRawTag(24);
@@ -263,8 +263,8 @@ namespace Game {
       if (Identity.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
       }
-      if (LevelObjectDataType.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(LevelObjectDataType);
+      if (LevelObjectDataType != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(LevelObjectDataType);
       }
       if (LocalId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(LocalId);
@@ -292,7 +292,7 @@ namespace Game {
       if (other.Identity.Length != 0) {
         Identity = other.Identity;
       }
-      if (other.LevelObjectDataType.Length != 0) {
+      if (other.LevelObjectDataType != 0) {
         LevelObjectDataType = other.LevelObjectDataType;
       }
       if (other.LocalId != 0) {
@@ -325,8 +325,8 @@ namespace Game {
             Identity = input.ReadString();
             break;
           }
-          case 18: {
-            LevelObjectDataType = input.ReadString();
+          case 16: {
+            LevelObjectDataType = input.ReadInt32();
             break;
           }
           case 24: {
@@ -363,8 +363,8 @@ namespace Game {
             Identity = input.ReadString();
             break;
           }
-          case 18: {
-            LevelObjectDataType = input.ReadString();
+          case 16: {
+            LevelObjectDataType = input.ReadInt32();
             break;
           }
           case 24: {

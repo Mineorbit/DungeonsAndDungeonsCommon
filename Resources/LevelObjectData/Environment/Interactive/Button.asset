@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Button
   m_EditorClassIdentifier: 
   prefab: {fileID: 7932103809837258557, guid: 3b0b40ed865f825429204492e2b6ba3c, type: 3}
-  uniqueLevelObjectId: 2055a221-531d-457d-b919-386387e5bcaa
+  uniqueLevelObjectId: 154008271
   granularity: 1
   name: Pressure Button
   dynamicInstantiable: 0
   levelInstantiable: 1
+  ActivateWhenInactive: 0
   Buildable: 1
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}

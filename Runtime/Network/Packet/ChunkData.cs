@@ -26,14 +26,14 @@ namespace NetLevel {
           string.Concat(
             "Cg9DaHVua0RhdGEucHJvdG8SCE5ldExldmVsIisKCExvY2F0aW9uEgkKAXgY",
             "ASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIp8BChNMZXZlbE9iamVjdElu",
-            "c3RhbmNlEgwKBHR5cGUYASABKAkSJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0",
+            "c3RhbmNlEgwKBHR5cGUYASABKAUSJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0",
             "TGV2ZWwuTG9jYXRpb24SCwoDZ193GAMgASgCEgsKA2dfeBgEIAEoAhILCgNn",
             "X3kYBSABKAISCwoDZ196GAYgASgCEgkKAXgYByABKAISCQoBeRgIIAEoAhIJ",
             "CgF6GAkgASgCIqMBChdMZXZlbE9iamVjdEluc3RhbmNlRGF0YRIMCgRjb2Rl",
             "GAEgASgMEiUKCWxvY2F0aW9ucxgCIAMoCzISLk5ldExldmVsLkxvY2F0aW9u",
             "EgsKA2dfdxgDIAEoAhILCgNnX3gYBCABKAISCwoDZ195GAUgASgCEgsKA2df",
             "ehgGIAEoAhIJCgF4GAcgASgCEgkKAXkYCCABKAISCQoBehgJIAEoAiIqCgxI",
-            "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoCRIMCgRjb2RlGAIgASgMInsKCUNo",
+            "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoBRIMCgRjb2RlGAIgASgMInsKCUNo",
             "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgDEiwKDGh1ZmZtYW5UYWJsZRgCIAMo",
             "CzIWLk5ldExldmVsLkh1ZmZtYW5FbnRyeRIvCgRkYXRhGAMgAygLMiEuTmV0",
             "TGV2ZWwuTGV2ZWxPYmplY3RJbnN0YW5jZURhdGFiBnByb3RvMw=="));
@@ -343,12 +343,12 @@ namespace NetLevel {
 
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 1;
-    private string type_ = "";
+    private int type_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Type {
+    public int Type {
       get { return type_; }
       set {
-        type_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        type_ = value;
       }
     }
 
@@ -467,7 +467,7 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Type.Length != 0) hash ^= Type.GetHashCode();
+      if (Type != 0) hash ^= Type.GetHashCode();
       hash ^= locations_.GetHashCode();
       if (GW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GW);
       if (GX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GX);
@@ -492,9 +492,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Type.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Type);
+      if (Type != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Type);
       }
       locations_.WriteTo(output, _repeated_locations_codec);
       if (GW != 0F) {
@@ -534,9 +534,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Type.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Type);
+      if (Type != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Type);
       }
       locations_.WriteTo(ref output, _repeated_locations_codec);
       if (GW != 0F) {
@@ -576,8 +576,8 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Type.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Type);
+      if (Type != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Type);
       }
       size += locations_.CalculateSize(_repeated_locations_codec);
       if (GW != 0F) {
@@ -612,7 +612,7 @@ namespace NetLevel {
       if (other == null) {
         return;
       }
-      if (other.Type.Length != 0) {
+      if (other.Type != 0) {
         Type = other.Type;
       }
       locations_.Add(other.locations_);
@@ -651,8 +651,8 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Type = input.ReadString();
+          case 8: {
+            Type = input.ReadInt32();
             break;
           }
           case 18: {
@@ -701,8 +701,8 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            Type = input.ReadString();
+          case 8: {
+            Type = input.ReadInt32();
             break;
           }
           case 18: {
@@ -1234,12 +1234,12 @@ namespace NetLevel {
 
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 1;
-    private string type_ = "";
+    private int type_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Type {
+    public int Type {
       get { return type_; }
       set {
-        type_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        type_ = value;
       }
     }
 
@@ -1275,7 +1275,7 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Type.Length != 0) hash ^= Type.GetHashCode();
+      if (Type != 0) hash ^= Type.GetHashCode();
       if (Code.Length != 0) hash ^= Code.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1293,9 +1293,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Type.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Type);
+      if (Type != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Type);
       }
       if (Code.Length != 0) {
         output.WriteRawTag(18);
@@ -1310,9 +1310,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Type.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Type);
+      if (Type != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Type);
       }
       if (Code.Length != 0) {
         output.WriteRawTag(18);
@@ -1327,8 +1327,8 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Type.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Type);
+      if (Type != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Type);
       }
       if (Code.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeBytesSize(Code);
@@ -1344,7 +1344,7 @@ namespace NetLevel {
       if (other == null) {
         return;
       }
-      if (other.Type.Length != 0) {
+      if (other.Type != 0) {
         Type = other.Type;
       }
       if (other.Code.Length != 0) {
@@ -1364,8 +1364,8 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Type = input.ReadString();
+          case 8: {
+            Type = input.ReadInt32();
             break;
           }
           case 18: {
@@ -1386,8 +1386,8 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            Type = input.ReadString();
+          case 8: {
+            Type = input.ReadInt32();
             break;
           }
           case 18: {

@@ -45,6 +45,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             get => _instantiateType;
             set
             {
+                if(LevelDataManager.instance != null)
+                {
                 Debug.Log("Updated Instantiate Type to: " + value);
                 if (value == InstantiateType.Test)
                 {
@@ -81,7 +83,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
                     LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.None;
                 }
-
+                
+                }
                 _instantiateType = value;
             }
         }
@@ -194,8 +197,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 pos = new Vector3(levelObjectInstance.X, levelObjectInstance.Y, levelObjectInstance.Z);
                 Quaternion rot = new Quaternion(levelObjectInstance.GX, levelObjectInstance.GY, levelObjectInstance.GZ,
                     levelObjectInstance.GW);
-                if (levelObjectInstance.Locations.Count > 1)
+                if (levelObjectInstance.Locations.Count > 0)
                 {
+                    
                     var receiverLocations = levelObjectInstance.Locations.ToList().Select(x => { return Util.LocationToVector(x); })
                         .ToList();
                     result = Add(d, pos, rot, receiverLocations);
@@ -204,6 +208,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     result = Add(d, pos, rot);
                 }
+            }
+            else
+            {
+                Debug.Log("Could not find LevelObjectData for "+levelObjectInstance.Type);
             }
 
             return result;
@@ -217,7 +225,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var g = Add(levelObjectData, position, rotation);
 
             var interactiveObject = g.GetComponent<InteractiveLevelObject>();
-            foreach (var receiverlocation in receiverLocations) interactiveObject.AddReceiver(receiverlocation);
+            foreach (var receiverlocation in receiverLocations)
+            {
+                Debug.Log("Loading receiver: "+receiverlocation);
+                interactiveObject.AddReceiver(receiverlocation);
+            }
             //TODO
             return g;
         }
@@ -343,9 +355,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelObject GetLevelObjectAt(Vector3 position)
         {
-            var targetChunk = ChunkManager.GetChunk(position, false);
-            if (targetChunk == null) return null;
-            return targetChunk.GetLevelObjectAt(position);
+            LevelObject found = null;
+            // Temporary fix
+            List<Chunk> neighborhood = ChunkManager.GetNeighborhood(position);
+            int i = 0;
+            while (found == null && i < neighborhood.Count)
+            {
+                var targetChunk = neighborhood[i];
+            if (targetChunk != null)
+            {
+                found = targetChunk.GetLevelObjectAt(position);
+            }
+
+            i++;
+            }
+
+            return found;
         }
     }
 }

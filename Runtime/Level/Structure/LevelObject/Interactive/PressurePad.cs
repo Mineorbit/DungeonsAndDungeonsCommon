@@ -17,11 +17,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private TimerManager.Timer unpressTimer;
 
 
-        // Update is called once per frame
-        private void Update()
-        {
-        }
-
         public override void OnInit()
         {
             base.OnInit();

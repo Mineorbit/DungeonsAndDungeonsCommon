@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,8 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AddReceiverDynamic(Vector3 location, InteractiveLevelObject r)
         {
-            Debug.Log("HELLO");
-            Debug.Log("Added receiver at location really" + location);
             if (r != null)
                 if (!receivers.ContainsKey(location))
                 {
@@ -81,24 +80,45 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         // Will try to find receiver at that location, if not found, will drop that receiver
-        private void FindReceivers()
+        private void FindReceivers(Queue<Vector3> locations)
         {
-            while (receiversToAdd.Count > 0)
+            while (locations.Count > 0)
             {
-                var targetLocation = receiversToAdd.Dequeue();
+                var targetLocation = locations.Dequeue();
                 var receiver = LevelManager.currentLevel.GetLevelObjectAt(targetLocation);
                 if (receiver != null)
-                    Debug.Log(gameObject.name + " found " + receiver.gameObject.name + "");
-                if (receiver != null && receiver.GetType().IsSubclassOf(typeof(InteractiveLevelObject)) &&
-                    receiver != this)
                 {
-                    var r = (InteractiveLevelObject) receiver;
-                    Debug.Log("Found " + r);
-                    AddReceiverDynamic(r.transform.position, r);
+                    Debug.Log(gameObject.name + " found " + receiver.gameObject.name);
+                    if (receiver.GetType().IsSubclassOf(typeof(InteractiveLevelObject)) && receiver != this)
+                    {
+                        var r = (InteractiveLevelObject) receiver;
+                        Debug.Log("Found " + r);
+                        AddReceiverDynamic(r.transform.position, r);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Did not find "+targetLocation);
+                    remainingReceivers.Enqueue(targetLocation);   
+                     
                 }
             }
+            // THIS IS JUNK BUT SHOULD WORK
+            Invoke("FindRemainingReceivers",0.01f);
         }
 
+        private Queue<Vector3> remainingReceivers = new Queue<Vector3>();
+        
+        private void FindReceivers()
+        {
+            FindReceivers(receiversToAdd);
+        }
+
+        private void FindRemainingReceivers()
+        {
+            if(remainingReceivers.Count > 0)
+            FindReceivers(remainingReceivers);
+        }
 
         public override void OnInit()
         {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -12,13 +13,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void Start()
         {
             gameObject.name = "Chunk " + chunkId;
+            Debug.Log("Chunk "+chunkId+" created");
+        }
+
+        public void OnDestroy()
+        {
+            Debug.Log("Chunk "+chunkId+" removed");
         }
 
         public LevelObject GetLevelObjectAt(Vector3 position)
         {
-            foreach (Transform child in transform)
+            Debug.Log("Searching for LevelObejct at "+position);
+            foreach (LevelObject child in transform.GetComponentsInChildren<LevelObject>(includeInactive: true))
+            {
+                Debug.Log("Now at "+child);
                 if ((child.transform.position - position).magnitude < eps)
-                    return child.gameObject.GetComponent<LevelObject>();
+                {
+                    Debug.Log("Found "+child);
+                    return child;
+                }
+                
+            }
             return null;
         }
     }
