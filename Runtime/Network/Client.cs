@@ -224,7 +224,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Array.Reverse(lengthBytes);
             }
-            Debug.Log("-> "+p);
+            Debug.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             if (TCP)
@@ -437,7 +437,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
             
-            Debug.Log("<- "+packetCarrier);
+            Debug.Log("<- "+packetCarrier+" "+data.Length);
             
             foreach (var packet in packetCarrier.Packets)
             {
