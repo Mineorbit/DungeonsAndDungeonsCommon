@@ -24,7 +24,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 MainCaller.Do(() =>
                 {
                     ChunkData c = streamChunk.ChunkData;
-                    Debug.Log("Received Chunk " + c.ChunkId+" with "+c.Data.Count);
                     ChunkManager.LoadChunk(c, streamChunk.Immediate);
                 });
         }
@@ -32,7 +31,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StreamChunk(ActionParam chunkParam, bool immediate = false)
         {
             ChunkData toSend = (ChunkData) chunkParam.data;
-            Debug.Log("Sending " + toSend.ChunkId);
             var streamChunk = new StreamChunk
             {
                 ChunkData = toSend,
@@ -44,7 +42,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void SendAction(string actionName, ActionParam argument)
         {
 
-            Debug.Log("Doing Action "+actionName);
             switch (actionName)
             {
                 case "StreamChunkIntoCurrentLevelFrom":
