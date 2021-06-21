@@ -1,4 +1,4 @@
-using System;
+inusing System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -48,7 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             // THIS IS A STUPID PLACE BUT WILL CHANGE LATER
-            Time.fixedDeltaTime = 0.01f;
+            Time.fixedDeltaTime = 0.03125f;
 
             foreach (var p in packetBindings) p.AddToBinding();
             
