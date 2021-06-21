@@ -602,6 +602,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelObject[] instances = chunk.GetComponentsInChildren<LevelObject>(includeInactive: true);
             ChunkData chunkData = new ChunkData();
             chunkData.ChunkId = chunk.chunkId;
+            if(instances.Length > 0)
             currentChunkHuffmanTable = BuildHuffmanTable(instances.ToList());
             chunkData.HuffmanTable.AddRange(currentChunkHuffmanTable);
             foreach (LevelObject l in instances)
