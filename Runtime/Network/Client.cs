@@ -297,11 +297,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var length = 0;
             if (TCP)
             {
-                await tcpStream.ReadAsync(lengthBytes, 0, 4);
+                tcpStream.Read(lengthBytes, 0, 4);
                 if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
                 length = BitConverter.ToInt32(lengthBytes, 0);
-                data = new byte[length];
-                await tcpStream.ReadAsync(data, 0, length);
+                Debug.Log("Received Length: "+length);
+                    data = new byte[length];
+                tcpStream.Read(data, 0, length);
             }
             else
             {
