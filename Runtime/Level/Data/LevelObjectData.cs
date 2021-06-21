@@ -34,8 +34,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void AssignUniqueNumbers()
         {
-            if(uniqueLevelObjectId == 0)
-            uniqueLevelObjectId = GUID.Generate().GetHashCode();
+            if (uniqueLevelObjectId == 0)
+            {
+#if UNITY_EDITOR
+                uniqueLevelObjectId = GUID.Generate().GetHashCode();
+#endif
+            }
         }
         private void OnValidate()
         {
