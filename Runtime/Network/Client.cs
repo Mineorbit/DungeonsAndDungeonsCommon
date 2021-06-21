@@ -151,7 +151,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.receivingUdpClient = new UdpClient(0);
             client.receivingUdpClient.Client.ReceiveBufferSize = 65536;
             client.receivingUdpClient.Client.SendBufferSize = 65536;
-            //client.readPort = Int32.Parse(client.receivingUdpClient.ToString());
             client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
             client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
             
@@ -215,7 +214,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private int g = 0;
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
@@ -226,15 +224,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Array.Reverse(lengthBytes);
             }
-            
-            g++;
-            Debug.Log($"{g} Sent Length: "+length);
-            int i = 0;
-            foreach (byte d in lengthBytes)
-            {
-                Debug.Log($"{g} Lengthbyte {i}: "+d);
-                i++;
-            }
+            Debug.Log("-> "+p);
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
             if (TCP)
@@ -293,7 +283,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private int z = 0;
         private async Task<byte[]> ReadData(bool TCP = true)
         {
             if (TCP)
@@ -311,14 +300,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 await tcpStream.ReadAsync(lengthBytes, 0, 4);
                 if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
                 length = BitConverter.ToInt32(lengthBytes, 0);
-                z++;
-                Debug.Log($"{z} Received Length: "+length);
-                int i = 0;
-                foreach (byte d in lengthBytes)
-                {
-                    Debug.Log($"{z} Lengthbyte {i}: "+d);
-                    i++;
-                }
                 data = new byte[length];
                 await tcpStream.ReadAsync(data, 0, length);
             }
@@ -351,11 +332,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var data = await ReadData();
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
-
-            var p = packetCarrier.Packets[0];
-            T result;
-            if (p.Content.TryUnpack(out result))
-                return result;
+            Debug.Log("<- "+packetCarrier);
+            
+            foreach(var p in packetCarrier.Packets)
+            {
+                T result;
+                if (p.Content.TryUnpack(out result))
+                    return result;
+            }
             return await ReadPacket<T>();
         }
 
@@ -452,8 +436,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             data = await ReadData(Tcp);
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
+            
+            Debug.Log("<- "+packetCarrier);
+            
             foreach (var packet in packetCarrier.Packets)
             {
+                
+                Debug.Log("|| "+packet);
                 packetInBuffer.Enqueue(packet);
             }
             //Processing needed
