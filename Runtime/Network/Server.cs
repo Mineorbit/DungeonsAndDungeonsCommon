@@ -56,7 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var tpClient = await listener.AcceptTcpClientAsync();
             var i = GetFreeSlot();
-            UnityEngine.Debug.Log("Got new Connection "+i+" "+tpClient.Client);
+            Debug.Log("Got new Connection "+i+" "+tpClient.Client);
             if (i == -1)
             {
                 tpClient.Close();
@@ -64,7 +64,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 tpClient.NoDelay = true;
+                Debug.Log("Fast");
                 var c = new Client(tpClient, i, port);
+                Debug.Log("Rast");
                 c.isOnServer = true;
                 clients[i] = c;
                 var handleThread = new Thread(() =>
