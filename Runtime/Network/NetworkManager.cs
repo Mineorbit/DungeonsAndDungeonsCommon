@@ -84,6 +84,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 client = t.Result;
                 Debug.Log("Set new client "+client);
                 client.onConnectEvent.AddListener(OnConnected);
+                client.onConnectEvent.AddListener((x) => { NetworkManager.networkHandlers = new List<NetworkHandler>();});
 
             }
         }
@@ -119,6 +120,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (client != null)
                     client.Disconnect(respond);
                 disconnectEvent.Invoke();
+                
+            KillThreads();
+            PlayerManager.playerManager.Remove(localId);
         }
 
         public void CallReady(bool r)
@@ -134,10 +138,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void KillThreads()
         {
+            Debug.Log("Killing all subthreads");
             foreach (Thread t in threadPool)
             {
                 if(t.IsAlive)
-                t.Abort();
+                    t.Abort();
             }
         }
 
