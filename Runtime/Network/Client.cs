@@ -61,7 +61,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Connected = true;
             tcpClient = tcpC;
             receivingUdpClient = new UdpClient(port+1+lId);
-            receivingUdpClient.Client.NoDelay = true;
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
@@ -150,7 +149,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.writePort = writePort;
             client.receivingUdpClient = new UdpClient(0);
-            client.receivingUdpClient.Client.NoDelay = true;
             client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
             client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
             
@@ -347,7 +345,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             localid = w.LocalId;
 
             CreateUdpClientForClient(this,w.Udp);
-
             var meConnect = new MeConnect
             {
                 Name = NetworkManager.userName,
@@ -367,6 +364,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This needs to be exited after some kind of timeout
         public async Task Process()
         {
+            MainCaller.Do(()=> Debug.Log("Testerfester"));
             
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
             var w = new Welcome
