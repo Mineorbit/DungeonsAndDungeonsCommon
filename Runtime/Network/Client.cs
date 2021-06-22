@@ -436,6 +436,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public async Task HandlePackets(bool Tcp)
         {
+            while(true)
+            {
             byte[] data;
             data = await ReadData(Tcp);
 
@@ -450,8 +452,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 packetInBuffer.Enqueue(packet);
             }
             //Processing needed
-
-            await HandlePackets(Tcp);
+            }
         }
     }
 }
