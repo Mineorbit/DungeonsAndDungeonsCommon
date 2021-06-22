@@ -62,6 +62,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
+                tpClient.NoDelay = true;
                 var c = new Client(tpClient, i, port);
                 c.isOnServer = true;
                 clients[i] = c;
