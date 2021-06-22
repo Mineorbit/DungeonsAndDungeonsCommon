@@ -138,8 +138,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.tcpClient = new TcpClient(host.ToString(), port);
             client.tcpClient.SendTimeout = 1000;
-            client.tcpClient.ReceiveBufferSize = 65536;
-            client.tcpClient.SendBufferSize = 65536;
+            client.tcpClient.NoDelay = true;
             client.tcpStream = client.tcpClient.GetStream();
         }
 
