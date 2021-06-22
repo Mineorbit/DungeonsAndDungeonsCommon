@@ -105,11 +105,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var actionParam = new ActionParam();
                 actionParam.FieldPlace = data.Item1;
 
+                Debug.Log("ActionParam: "+data.Item2.Type);
+                
                 actionParam.type = Type.GetType(data.Item2.Type);
 
 
                 Debug.Log("Unpacking " + actionParam.type);
-
+                if(actionParam.type != null)
+                {
                 if (actionParam.type == typeof(ChunkData))
                 {
                     var netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
@@ -119,8 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     actionParam.data = data.Item2.Value.Unpack<BoolValue>().Value;
                 }
-                else if (actionParam.type.IsSubclassOf(typeof(NetworkLevelObject)) ||
-                         actionParam.type == typeof(NetworkLevelObject))
+                else if (actionParam.type.IsSubclassOf(typeof(NetworkLevelObject)) || actionParam.type == typeof(NetworkLevelObject))
                 {
                     var identityOfParam = data.Item2.Value.Unpack<StringValue>().Value;
 
@@ -129,7 +131,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Debug.Log("Matched with Reference: " + identityOfParam + " " + h.observed);
                     actionParam.data = h.observed;
                 }
-
+                }
+                else
+                {
+                    Debug.Log("Actionparam was not defined "+data.Item2);
+                    Debug.Break();
+                    
+                }
 
                 return actionParam;
             }
