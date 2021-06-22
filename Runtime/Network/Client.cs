@@ -214,7 +214,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 WriteOut(udpCarrier,TCP: false);
         }
 
-
+        public bool useTCP = false;
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
@@ -228,11 +228,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
             Array.Copy(lengthBytes, 0, result, 0, 4);
             Array.Copy(data, 0, result, 4, length);
-            if (TCP)
+            if (TCP && useTCP)
             {
                 tcpStream.Write(result, 0, result.Length);
             }
-            else if (!TCP)
+            else
             {
                 IPEndPoint r = new IPEndPoint(remote.Address,writePort);
                 receivingUdpClient.Send(data, data.Length, r);
