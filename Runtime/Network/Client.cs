@@ -300,9 +300,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 tcpStream.Read(lengthBytes, 0, 4);
                 if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
-                length = BitConverter.ToInt32(lengthBytes, 0);
-                Debug.Log("Received Length: "+length);
-                    data = new byte[length];
+                    length = BitConverter.ToInt32(lengthBytes, 0);
+                data = new byte[length];
                 tcpStream.Read(data, 0, length);
             }
             else
