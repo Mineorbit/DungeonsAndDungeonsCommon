@@ -109,6 +109,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 actionParam.type = Type.GetType(data.Item2.Type);
 
+                if (actionParam.type == null)
+                {
+                    actionParam.type = Type.GetType(data.Item2.Type+", UnityEngine", true);
+                }
 
                 Debug.Log("Unpacking " + actionParam.type);
                 if(actionParam.type != null)
@@ -117,6 +121,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     var netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
                     actionParam.data = netChunkData;
+                }else if (actionParam.type == typeof(Vector3))
+                {
+                    Location l = data.Item2.Value.Unpack<Location>();
+                    actionParam.data = new Vector3(l.X, l.Y, l.Z);
                 }
                 else if (actionParam.type == typeof(bool))
                 {
@@ -160,6 +168,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     var bv = new BoolValue();
                     bv.Value = (bool) data;
                     x = Any.Pack(bv);
+                }else if (type == typeof(Vector3))
+                {
+                    Vector3 v = (Vector3) data;
+                    Location l = new Location();
+                    l.X = v.x;
+                    l.Y = v.y;
+                    l.Z = v.z;
+                    x = Any.Pack(l);
                 }
                 else if (type.IsSubclassOf(typeof(NetworkLevelObject)) || type == typeof(NetworkLevelObject))
                 {
