@@ -26,17 +26,16 @@ namespace NetLevel {
           string.Concat(
             "Cg9DaHVua0RhdGEucHJvdG8SCE5ldExldmVsIisKCExvY2F0aW9uEgkKAXgY",
             "ASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIp8BChNMZXZlbE9iamVjdElu",
-            "c3RhbmNlEgwKBHR5cGUYASABKAUSJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0",
+            "c3RhbmNlEgwKBHR5cGUYASABKBESJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0",
             "TGV2ZWwuTG9jYXRpb24SCwoDZ193GAMgASgCEgsKA2dfeBgEIAEoAhILCgNn",
             "X3kYBSABKAISCwoDZ196GAYgASgCEgkKAXgYByABKAISCQoBeRgIIAEoAhIJ",
             "CgF6GAkgASgCIqMBChdMZXZlbE9iamVjdEluc3RhbmNlRGF0YRIMCgRjb2Rl",
-            "GAEgASgMEiUKCWxvY2F0aW9ucxgCIAMoCzISLk5ldExldmVsLkxvY2F0aW9u",
+            "GAEgASgREiUKCWxvY2F0aW9ucxgCIAMoCzISLk5ldExldmVsLkxvY2F0aW9u",
             "EgsKA2dfdxgDIAEoAhILCgNnX3gYBCABKAISCwoDZ195GAUgASgCEgsKA2df",
             "ehgGIAEoAhIJCgF4GAcgASgCEgkKAXkYCCABKAISCQoBehgJIAEoAiIqCgxI",
-            "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoBRIMCgRjb2RlGAIgASgMInsKCUNo",
-            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgDEiwKDGh1ZmZtYW5UYWJsZRgCIAMo",
-            "CzIWLk5ldExldmVsLkh1ZmZtYW5FbnRyeRIvCgRkYXRhGAMgAygLMiEuTmV0",
-            "TGV2ZWwuTGV2ZWxPYmplY3RJbnN0YW5jZURhdGFiBnByb3RvMw=="));
+            "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoERIMCgRjb2RlGAIgASgRIk0KCUNo",
+            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgDEi8KBGRhdGEYAyADKAsyIS5OZXRM",
+            "ZXZlbC5MZXZlbE9iamVjdEluc3RhbmNlRGF0YWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -44,7 +43,7 @@ namespace NetLevel {
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstance), global::NetLevel.LevelObjectInstance.Parser, new[]{ "Type", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstanceData), global::NetLevel.LevelObjectInstanceData.Parser, new[]{ "Code", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.HuffmanEntry), global::NetLevel.HuffmanEntry.Parser, new[]{ "Type", "Code" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.ChunkData), global::NetLevel.ChunkData.Parser, new[]{ "ChunkId", "HuffmanTable", "Data" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.ChunkData), global::NetLevel.ChunkData.Parser, new[]{ "ChunkId", "Data" }, null, null, null, null)
           }));
     }
     #endregion
@@ -494,7 +493,7 @@ namespace NetLevel {
     #else
       if (Type != 0) {
         output.WriteRawTag(8);
-        output.WriteInt32(Type);
+        output.WriteSInt32(Type);
       }
       locations_.WriteTo(output, _repeated_locations_codec);
       if (GW != 0F) {
@@ -536,7 +535,7 @@ namespace NetLevel {
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (Type != 0) {
         output.WriteRawTag(8);
-        output.WriteInt32(Type);
+        output.WriteSInt32(Type);
       }
       locations_.WriteTo(ref output, _repeated_locations_codec);
       if (GW != 0F) {
@@ -577,7 +576,7 @@ namespace NetLevel {
     public int CalculateSize() {
       int size = 0;
       if (Type != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Type);
+        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Type);
       }
       size += locations_.CalculateSize(_repeated_locations_codec);
       if (GW != 0F) {
@@ -652,7 +651,7 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Type = input.ReadInt32();
+            Type = input.ReadSInt32();
             break;
           }
           case 18: {
@@ -702,7 +701,7 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Type = input.ReadInt32();
+            Type = input.ReadSInt32();
             break;
           }
           case 18: {
@@ -792,12 +791,12 @@ namespace NetLevel {
 
     /// <summary>Field number for the "code" field.</summary>
     public const int CodeFieldNumber = 1;
-    private pb::ByteString code_ = pb::ByteString.Empty;
+    private int code_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString Code {
+    public int Code {
       get { return code_; }
       set {
-        code_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        code_ = value;
       }
     }
 
@@ -916,7 +915,7 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Code.Length != 0) hash ^= Code.GetHashCode();
+      if (Code != 0) hash ^= Code.GetHashCode();
       hash ^= locations_.GetHashCode();
       if (GW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GW);
       if (GX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GX);
@@ -941,9 +940,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Code.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteBytes(Code);
+      if (Code != 0) {
+        output.WriteRawTag(8);
+        output.WriteSInt32(Code);
       }
       locations_.WriteTo(output, _repeated_locations_codec);
       if (GW != 0F) {
@@ -983,9 +982,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Code.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteBytes(Code);
+      if (Code != 0) {
+        output.WriteRawTag(8);
+        output.WriteSInt32(Code);
       }
       locations_.WriteTo(ref output, _repeated_locations_codec);
       if (GW != 0F) {
@@ -1025,8 +1024,8 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Code.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Code);
+      if (Code != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Code);
       }
       size += locations_.CalculateSize(_repeated_locations_codec);
       if (GW != 0F) {
@@ -1061,7 +1060,7 @@ namespace NetLevel {
       if (other == null) {
         return;
       }
-      if (other.Code.Length != 0) {
+      if (other.Code != 0) {
         Code = other.Code;
       }
       locations_.Add(other.locations_);
@@ -1100,8 +1099,8 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Code = input.ReadBytes();
+          case 8: {
+            Code = input.ReadSInt32();
             break;
           }
           case 18: {
@@ -1150,8 +1149,8 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            Code = input.ReadBytes();
+          case 8: {
+            Code = input.ReadSInt32();
             break;
           }
           case 18: {
@@ -1245,12 +1244,12 @@ namespace NetLevel {
 
     /// <summary>Field number for the "code" field.</summary>
     public const int CodeFieldNumber = 2;
-    private pb::ByteString code_ = pb::ByteString.Empty;
+    private int code_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString Code {
+    public int Code {
       get { return code_; }
       set {
-        code_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        code_ = value;
       }
     }
 
@@ -1276,7 +1275,7 @@ namespace NetLevel {
     public override int GetHashCode() {
       int hash = 1;
       if (Type != 0) hash ^= Type.GetHashCode();
-      if (Code.Length != 0) hash ^= Code.GetHashCode();
+      if (Code != 0) hash ^= Code.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1295,11 +1294,11 @@ namespace NetLevel {
     #else
       if (Type != 0) {
         output.WriteRawTag(8);
-        output.WriteInt32(Type);
+        output.WriteSInt32(Type);
       }
-      if (Code.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteBytes(Code);
+      if (Code != 0) {
+        output.WriteRawTag(16);
+        output.WriteSInt32(Code);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1312,11 +1311,11 @@ namespace NetLevel {
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (Type != 0) {
         output.WriteRawTag(8);
-        output.WriteInt32(Type);
+        output.WriteSInt32(Type);
       }
-      if (Code.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteBytes(Code);
+      if (Code != 0) {
+        output.WriteRawTag(16);
+        output.WriteSInt32(Code);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1328,10 +1327,10 @@ namespace NetLevel {
     public int CalculateSize() {
       int size = 0;
       if (Type != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Type);
+        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Type);
       }
-      if (Code.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Code);
+      if (Code != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Code);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1347,7 +1346,7 @@ namespace NetLevel {
       if (other.Type != 0) {
         Type = other.Type;
       }
-      if (other.Code.Length != 0) {
+      if (other.Code != 0) {
         Code = other.Code;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1365,11 +1364,11 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Type = input.ReadInt32();
+            Type = input.ReadSInt32();
             break;
           }
-          case 18: {
-            Code = input.ReadBytes();
+          case 16: {
+            Code = input.ReadSInt32();
             break;
           }
         }
@@ -1387,11 +1386,11 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Type = input.ReadInt32();
+            Type = input.ReadSInt32();
             break;
           }
-          case 18: {
-            Code = input.ReadBytes();
+          case 16: {
+            Code = input.ReadSInt32();
             break;
           }
         }
@@ -1431,7 +1430,6 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ChunkData(ChunkData other) : this() {
       chunkId_ = other.chunkId_;
-      huffmanTable_ = other.huffmanTable_.Clone();
       data_ = other.data_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1450,16 +1448,6 @@ namespace NetLevel {
       set {
         chunkId_ = value;
       }
-    }
-
-    /// <summary>Field number for the "huffmanTable" field.</summary>
-    public const int HuffmanTableFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::NetLevel.HuffmanEntry> _repeated_huffmanTable_codec
-        = pb::FieldCodec.ForMessage(18, global::NetLevel.HuffmanEntry.Parser);
-    private readonly pbc::RepeatedField<global::NetLevel.HuffmanEntry> huffmanTable_ = new pbc::RepeatedField<global::NetLevel.HuffmanEntry>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::NetLevel.HuffmanEntry> HuffmanTable {
-      get { return huffmanTable_; }
     }
 
     /// <summary>Field number for the "data" field.</summary>
@@ -1486,7 +1474,6 @@ namespace NetLevel {
         return true;
       }
       if (ChunkId != other.ChunkId) return false;
-      if(!huffmanTable_.Equals(other.huffmanTable_)) return false;
       if(!data_.Equals(other.data_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1495,7 +1482,6 @@ namespace NetLevel {
     public override int GetHashCode() {
       int hash = 1;
       if (ChunkId != 0L) hash ^= ChunkId.GetHashCode();
-      hash ^= huffmanTable_.GetHashCode();
       hash ^= data_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1517,7 +1503,6 @@ namespace NetLevel {
         output.WriteRawTag(8);
         output.WriteInt64(ChunkId);
       }
-      huffmanTable_.WriteTo(output, _repeated_huffmanTable_codec);
       data_.WriteTo(output, _repeated_data_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1532,7 +1517,6 @@ namespace NetLevel {
         output.WriteRawTag(8);
         output.WriteInt64(ChunkId);
       }
-      huffmanTable_.WriteTo(ref output, _repeated_huffmanTable_codec);
       data_.WriteTo(ref output, _repeated_data_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1546,7 +1530,6 @@ namespace NetLevel {
       if (ChunkId != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(ChunkId);
       }
-      size += huffmanTable_.CalculateSize(_repeated_huffmanTable_codec);
       size += data_.CalculateSize(_repeated_data_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1562,7 +1545,6 @@ namespace NetLevel {
       if (other.ChunkId != 0L) {
         ChunkId = other.ChunkId;
       }
-      huffmanTable_.Add(other.huffmanTable_);
       data_.Add(other.data_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1580,10 +1562,6 @@ namespace NetLevel {
             break;
           case 8: {
             ChunkId = input.ReadInt64();
-            break;
-          }
-          case 18: {
-            huffmanTable_.AddEntriesFrom(input, _repeated_huffmanTable_codec);
             break;
           }
           case 26: {
@@ -1606,10 +1584,6 @@ namespace NetLevel {
             break;
           case 8: {
             ChunkId = input.ReadInt64();
-            break;
-          }
-          case 18: {
-            huffmanTable_.AddEntriesFrom(ref input, _repeated_huffmanTable_codec);
             break;
           }
           case 26: {
