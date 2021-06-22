@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NetLevel;
 using UnityEngine;
@@ -36,7 +37,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public bool ready;
 
-
+        public static List<Thread> threadPool = new List<Thread>();
+        
         public Client client;
 
         // Start is called before the first frame update
@@ -68,6 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void OnDestroy()
         {
             Disconnect();
+            KillThreads();
         }
 
         public void Connect(string ip, string playerName, Action onConnect)
@@ -82,8 +85,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Set new client "+client);
                 client.onConnectEvent.AddListener(OnConnected);
 
-
-                //Task<Client> t = Task.Run(Client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 13565));
             }
         }
 
@@ -129,6 +130,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void CallSelected(LevelMetaData metaData)
         {
             NetworkManagerHandler.RequestLobbyUpdate(metaData);
+        }
+
+        public void KillThreads()
+        {
+            foreach (Thread t in threadPool)
+            {
+                if(t.IsAlive)
+                t.Abort();
+            }
+        }
+
+        public void OnApplicationQuit()
+        {
+            KillThreads();
+        }
+
+        public void OnDisable()
+        {
+            KillThreads();
         }
     }
 }

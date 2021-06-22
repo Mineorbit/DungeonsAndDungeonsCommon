@@ -97,6 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.Connected = true;
             createThread.IsBackground = true;
             createThread.Start();
+            NetworkManager.threadPool.Add(createThread);
             return client;
         }
 
@@ -180,6 +181,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var handleThread = new Thread(new ThreadStart(processPacket));
             handleThread.IsBackground = true;
             handleThread.Start();
+            NetworkManager.threadPool.Add(handleThread);
         }
 
         private void UpdateOut(bool all = false)
@@ -413,7 +415,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private async Task StartHandle()
         {
             var handle1Thread = new Thread(TcpHandle);
+            NetworkManager.threadPool.Add(handle1Thread);
             var handle2Thread = new Thread(UdpHandle);
+            NetworkManager.threadPool.Add(handle2Thread);
             handle1Thread.Start();
             handle2Thread.Start();
             await disconnected.Task;
