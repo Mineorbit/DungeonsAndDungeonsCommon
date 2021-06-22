@@ -214,7 +214,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 WriteOut(udpCarrier,TCP: false);
         }
 
-        public bool useTCP = false;
+        public bool useTCP = true;
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
