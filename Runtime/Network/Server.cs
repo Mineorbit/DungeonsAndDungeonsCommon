@@ -47,6 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             listener.Start();
             createThread = new Thread(() => { Task.Run(HandleNewConnection); });
+            NetworkManager.threadPool.Add(createThread);
             createThread.IsBackground = true;
             createThread.Start();
         }
@@ -75,6 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 });
                 handleThread.IsBackground = true;
                 handleThread.Start();
+                NetworkManager.threadPool.Add(handleThread);
             }
 
             await HandleNewConnection();
