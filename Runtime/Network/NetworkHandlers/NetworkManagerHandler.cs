@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var startRound = new StartRound
             {
             };
-            Marshall(typeof(NetworkManagerHandler), startRound,TCP: false);
+            Marshall(typeof(NetworkManagerHandler), startRound,TCP: true);
         }
 
         public static void RequestWinRound()

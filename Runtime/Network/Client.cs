@@ -214,23 +214,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 WriteOut(udpCarrier,TCP: false);
         }
 
+
+        int tcpBufferSize;
+        
         public bool useTCP = true;
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
-            var length = data.Length;
-            var result = new byte[length + 4];
-            var lengthBytes = BitConverter.GetBytes(length);
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(lengthBytes);
-            }
+            
             Debug.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
-            Array.Copy(lengthBytes, 0, result, 0, 4);
-            Array.Copy(data, 0, result, 4, length);
             if (TCP && useTCP)
             {
-                tcpStream.Write(result, 0, result.Length);
+                tcpStream.Write(data, 0, data.Length);
             }
             else
             {
@@ -283,6 +278,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             WritePacket(p, TCP);
         }
 
+        private int tcpBufferLength = 8192;
 
         private async Task<byte[]> ReadData(bool TCP = true)
         {
@@ -298,11 +294,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var length = 0;
             if (TCP)
             {
-                tcpStream.Read(lengthBytes, 0, 4);
-                if (BitConverter.IsLittleEndian) Array.Reverse(lengthBytes);
-                    length = BitConverter.ToInt32(lengthBytes, 0);
-                data = new byte[length];
-                tcpStream.Read(data, 0, length);
+                byte[] tcpResult = new byte[tcpBufferLength];
+                int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
+                data = new byte[readLength];
+                Array.Copy(tcpResult,data,readLength);
             }
             else
             {
@@ -439,6 +434,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
             byte[] data;
             data = await ReadData(Tcp);
+            
+            // LENGTH IS 0 DISCONNECT
+
+            if (data.Length == 0)
+            {
+                
+            }
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
             
