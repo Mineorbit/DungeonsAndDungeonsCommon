@@ -84,6 +84,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                         Delegate.CreateDelegate(typeof(UnityAction<Packet>), handler, methodInfo.Name, true, true).DynamicInvoke(x);
                                     
                                     }
+                                    else
+                                    {
+                                        Debug.Log("Handler for "+x.Identity+" not found");
+                                    }
                                 }
                             );
                         };

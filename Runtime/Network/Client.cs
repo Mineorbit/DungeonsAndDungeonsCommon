@@ -169,6 +169,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (packetInBuffer.Count > 0 && handleCount > 0)
             {
                 var p = packetInBuffer.Dequeue();
+                Debug.Log("Handling "+p);
                 HandlePacket(p);
                 handleCount--;
             }
@@ -176,7 +177,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void HandlePacket(Packet p)
         {
-            var packetType = Type.GetType(p.Type);
             UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
             var handleThread = new Thread(new ThreadStart(processPacket));
             handleThread.IsBackground = true;

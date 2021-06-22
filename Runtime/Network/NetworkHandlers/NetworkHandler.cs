@@ -48,6 +48,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
+        public void OnDestroy()
+        {
+            NetworkManager.networkHandlers.Remove(this);
+        }
+
         //Fetch Methods
         public virtual void Awake()
         {
@@ -57,7 +62,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                       Level.instantiateType == Level.InstantiateType.Online;
             
             if (!enabled) return;
-            Debug.Log("WE ARE ENABLED");
             isOnServer = Server.instance != null;
             NetworkManager.networkHandlers.Add(this);
             
@@ -270,11 +274,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UnityAction<Packet> handle = null;
             while (!(globalMethodBindings.TryGetValue(new Tuple<Type, Type>(packetType, handlerType), out handle) ||
                      handlerType == typeof(NetworkHandler))) handlerType = handlerType.BaseType;
-            if (handle != null) handle.Invoke(p);
+            if (handle != null)
+            {
+                Debug.Log($"Handle {handle} found, invoking");
+                handle.Invoke(p);
+            }
         }
 
         public static T FindByIdentity<T>(string identity) where T : NetworkHandler
         {
+            Debug.Log("There are: "+ NetworkManager.networkHandlers.Count+" Networkhandlers");
             return (T) NetworkManager.networkHandlers.Find(x => x.Identity == identity);
         }
 
