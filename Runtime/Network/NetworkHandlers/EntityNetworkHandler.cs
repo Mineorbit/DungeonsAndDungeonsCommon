@@ -111,9 +111,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (!isOwner)
                 {
                     transform.position = (transform.position + targetPosition) / 2;
-                    transform.rotation =
-                        Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z),
-                            transform.rotation, 0.5f);
+                    transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
                 }
             }
 
