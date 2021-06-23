@@ -215,13 +215,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         int tcpBufferSize;
         
-        public bool useTCP = true;
+        
+        private bool UDPavailable = false;
+        
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
             
             Debug.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
-            if (TCP && useTCP)
+            if (TCP || !UDPavailable)
             {
                 tcpStream.Write(data, 0, data.Length);
             }
@@ -279,7 +281,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private int tcpBufferLength = 8192;
 
-        private bool UDPavailable = false;
         private async Task<byte[]> ReadData(bool TCP = true)
         {
             if (TCP)
@@ -290,7 +291,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 waitingForUdp.WaitOne();
             var lengthBytes = new byte[4];
             byte[] data = null;
-            if (!UDPavailable || TCP)
+            if ( TCP)
             {
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
