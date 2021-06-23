@@ -216,14 +216,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         int tcpBufferSize;
         
         
-        private bool UDPavailable = false;
         
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
             
             Debug.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
-            if (TCP || !UDPavailable)
+            if (TCP || !NetworkManager.instance.udpAvailable)
             {
                 tcpStream.Write(data, 0, data.Length);
             }
