@@ -299,7 +299,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 byte[] udpResult = new byte[udpBufferLength];
-                var endPoint = ((EndPoint) remote);
+                EndPoint endPoint = ((EndPoint) remote);
+                Debug.Log("Reading from "+endPoint);
                 int readLength = receivingUdpClient.Client.ReceiveFrom(udpResult, ref endPoint);
                 data = new byte[readLength];
                 Array.Copy(udpResult, 0, data, 0, readLength);
