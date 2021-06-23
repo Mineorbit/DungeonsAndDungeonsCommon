@@ -17,7 +17,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static bool isConnected;
 
-
+        public Option useUDPOption;
+        
         public static List<Client> allClients = new List<Client>();
         public static string userName;
 
@@ -44,8 +45,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         // Temporary fix
 
-        public bool udpAvailable;
-
+        public bool useUDP;
+        
         // Start is called before the first frame update
         private void Start()
         {
@@ -58,9 +59,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Time.fixedDeltaTime = 0.03f;
 
             foreach (var p in packetBindings) p.AddToBinding();
-            
-            
-            
+
+            useUDP = (bool) useUDPOption.Value;
+
         }
 
 
@@ -90,7 +91,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Set new client "+client);
                 client.onConnectEvent.AddListener(OnConnected);
                 client.onConnectEvent.AddListener((x) => { NetworkManager.networkHandlers = new List<NetworkHandler>();});
-                client.onConnectEvent.AddListener((x) => { udpAvailable = !client.isOnServer;});
             }
         }
 
