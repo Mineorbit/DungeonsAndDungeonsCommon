@@ -30,7 +30,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void ChangeitemSetting(int leftSide)
         {
-            Debug.Log("Changed Setting");
 
 
             // WE NEED TO DETERMINE ITEM TYPE FROM USED IN FUTURE
@@ -52,7 +51,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void ChangeItemSettingBack(int leftSide)
         {
-            Debug.Log("Changed Setting back");
             if (leftSide == 0)
                 ((Player) me).GetLeftHandle().slot.transform.localEulerAngles = oldAngles;
             else

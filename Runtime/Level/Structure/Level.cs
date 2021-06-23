@@ -47,7 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if(LevelDataManager.instance != null)
                 {
-                Debug.Log("Updated Instantiate Type to: " + value);
+                    GameConsole.Log("Updated Instantiate Type to: " + value);
                 if (value == InstantiateType.Test)
                 {
                     activated = true;

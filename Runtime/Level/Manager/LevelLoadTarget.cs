@@ -74,7 +74,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 v = ChunkManager.ChunkLoaded(cid);
                 yield return new WaitForEndOfFrame();
             }
-            Debug.Log("Wait for "+cid+" finished");
             mover.follow = true;
             MainCaller.Do(finishAction);  
         }
@@ -92,7 +91,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void StreamChunkImmediateIntoCurrentLevelFrom(ChunkData chunkData)
         {
-            Debug.Log("Streaming Chunk immediately " + chunkData.ChunkId);
+            GameConsole.Log("Streaming Chunk immediately " + chunkData.ChunkId);
             ChunkManager.LoadChunk(chunkData, true);
         }
 

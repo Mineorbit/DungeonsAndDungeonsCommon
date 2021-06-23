@@ -22,7 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (other.gameObject.tag == targetTag)
             {
-                Debug.Log(other.gameObject.name + " inside");
                 enterEvent.Invoke(other.gameObject);
             }
         }
@@ -51,7 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (isAttached)
                 collider.enabled = true;
-            else Debug.Log("Hitbox " + gameObject.name + " was not attached");
+            else GameConsole.Log("Hitbox " + gameObject.name + " was not attached");
         }
 
         public void Deactivate()

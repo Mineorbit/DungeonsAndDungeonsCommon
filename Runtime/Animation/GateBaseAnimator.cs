@@ -14,8 +14,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 open = true;
                 model.SetActive(false);
-                Debug.Log("Open Animation "+model.activeSelf);
-                Debug.Log("Open Animation f "+model.activeSelf);
             }
         }
 
@@ -27,8 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 open = false;
                 model.SetActive(true);
-                Debug.Log("Close Animation"+model.activeSelf);
-                Debug.Log("Close Animation f"+model.activeSelf);
             }
         }
     }
