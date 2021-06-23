@@ -227,6 +227,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
+                Debug.Log($"Writing to {remote.Address} : {writePort} ");
                 IPEndPoint r = new IPEndPoint(remote.Address,writePort);
                 receivingUdpClient.Send(data, data.Length, r);
             }
@@ -361,7 +362,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This needs to be exited after some kind of timeout
         public async Task Process()
         {
-            MainCaller.Do(()=> Debug.Log("Testerfester"));
             
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
             var w = new Welcome
@@ -370,7 +370,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Udp = port
             };
             readPort = port;
-            Debug.Log("Receiving with "+readPort);
             //Send welcome
 
             WritePacket(w);
