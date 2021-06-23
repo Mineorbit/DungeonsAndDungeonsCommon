@@ -78,9 +78,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blockPosition = bPosition;
             targetPosition = bPosition;
             
-            observed.controller.enabled = isOnServer? false : false;
+            observed.controller.enabled = isOnServer ? false : false;
             observed.setMovementStatus(false);
-            Debug.Log("Set Locomotion Block");
+            Debug.Log($"Set Locomotion Block for {this}");
             //Debug.Break();
         }
 
@@ -244,11 +244,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetupLocomotionBlock(teleportPosition);
             
             if (observed.loadTarget != null)
+                if(LevelManager.currentLevel != null)
+                {
                 observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
                     Marshall(entityTeleport);
                 });
-            
+                }
+                else
+                {
+                    Marshall(entityTeleport);
+                }
             }
         }
 
