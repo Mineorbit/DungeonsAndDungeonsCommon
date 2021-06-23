@@ -277,6 +277,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private int tcpBufferLength = 8192;
+        private int udpBufferLength = 8192;
 
         private async Task<byte[]> ReadData(bool TCP = true)
         {
@@ -286,10 +287,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
                 waitingForUdp.WaitOne();
-            byte[] udpResult;
             var lengthBytes = new byte[4];
             byte[] data = null;
-            var length = 0;
             if (TCP)
             {
                 byte[] tcpResult = new byte[tcpBufferLength];
@@ -299,16 +298,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                if(!isOnServer)
-                {
-                    udpResult = receivingUdpClient.Receive(ref remote);
-                }
-                else
-                {
-                    udpResult = receivingUdpClient.Receive(ref remote);
-                }
-                data = new byte[udpResult.Length];
-                Array.Copy(udpResult, 0, data, 0, udpResult.Length);
+                byte[] udpResult = new byte[udpBufferLength];
+                var endPoint = ((EndPoint) remote);
+                int readLength = receivingUdpClient.Client.ReceiveFrom(udpResult, ref endPoint);
+                data = new byte[readLength];
+                Array.Copy(udpResult, 0, data, 0, readLength);
             }
 
             if (TCP)
