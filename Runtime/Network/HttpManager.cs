@@ -59,10 +59,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 yield return www.SendWebRequest();
 
                 if (www.isNetworkError || www.isHttpError)
-                    Debug.Log(www.error);
+                    GameConsole.Log(www.error);
                 else
                 {
-                    Debug.Log(www.downloadHandler.text);
+                    GameConsole.Log(www.downloadHandler.text);
                     TokenData t = JsonUtility.FromJson<TokenData>(www.downloadHandler.text);
                     token = t.access_token;
                 }
@@ -110,7 +110,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var uri = baseURL + ":8000/level/all?proto_resp=true";
 
 
-            Debug.Log("Fetching level list from " + uri);
+            GameConsole.Log("Fetching level list from " + uri);
 
             reportAction.Invoke("Loading Level List");
             using (var www = UnityWebRequest.Get(uri))
@@ -122,13 +122,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                 {
                     string data = www.downloadHandler.text;
-                    Debug.Log("Received " + data);
+                    GameConsole.Log("Received " + data);
                     LevelMetaDataList list = LevelMetaDataList.Parser.ParseFrom(ByteString.CopyFromUtf8(data));
                     levelMetaDatas = list.Levels.ToArray();
-                    Debug.Log("Got list: " + levelMetaDatas.Length);
+                    GameConsole.Log("Got list: " + levelMetaDatas.Length);
                     foreach (var x in levelMetaDatas)
                     {
-                        Debug.Log("MetaData: " + x);
+                        GameConsole.Log("MetaData: " + x);
                     }
 
                     listUpdatedEvent.Invoke();

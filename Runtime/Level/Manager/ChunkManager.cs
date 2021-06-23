@@ -284,12 +284,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 foreach (Chunk c in chunks)
                 {
-                Debug.Log("There is Chunk "+c.chunkId+" looking for "+id);
                 if(c != null)
                 {
                 if (c.chunkId == id)
                 {
-                    Debug.Log("Match bei "+id+" ist Chunk: "+c);
                     result = c;
                 }
                 }
@@ -304,7 +302,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Currently loaded: in dictionary => true
         public static void _LoadChunk(ChunkData chunkData, bool immediate = true)
         {
-            Debug.Log("Loading Chunk "+chunkData.ChunkId);
+            GameConsole.Log("Loading Chunk "+chunkData.ChunkId);
             bool loaded;
             if (chunkLoaded.TryGetValue(chunkData.ChunkId, out loaded))
             {

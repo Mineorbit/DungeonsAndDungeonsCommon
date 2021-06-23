@@ -39,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 state = value.Item2;
 
-                Debug.Log($"[{name}] {oldState} -> {inputValue} -> {state}");
+                GameConsole.Log($"[{name}] {oldState} -> {inputValue} -> {state}");
                 value.Item1(inputValue);
             }
             else

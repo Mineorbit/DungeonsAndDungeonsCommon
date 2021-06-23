@@ -36,7 +36,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void startCoroutine(IEnumerator c)
         {
-            Debug.Log(instance);
             instance.StartCoroutine(c);
         }
     }

@@ -55,12 +55,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var filePath = (persistent ? Application.persistentDataPath : "") + path;
 
-            Debug.Log("Erstelle Ordner: " + filePath);
+            GameConsole.Log("Erstelle Ordner: " + filePath);
             try
             {
                 if (!Directory.Exists(filePath))
                     Directory.CreateDirectory(filePath);
-                else Debug.Log("Ordner gibt es schon");
+                else GameConsole.Log("Ordner gibt es schon");
             }
             catch (IOException ex)
             {
