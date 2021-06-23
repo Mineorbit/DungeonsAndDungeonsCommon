@@ -48,7 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed.onTeleportEvent.AddListener(Teleport);
             observed.onSpawnEvent.AddListener(x => {Debug.Log("Spawn State Update"); UpdateState(); });
             observed.onHitEvent.AddListener(x => {Debug.Log("Hit State Update"); UpdateState(); });
-            observed.onDespawnEvent.AddListener(() => { Teleport(new Vector3(0, 0, 0)); });
+            observed.onDespawnEvent.AddListener(() => {});
             observed.onDespawnEvent.AddListener(() => {Debug.Log("Despawn State Update"); UpdateState(); });
             observed.onPointsChangedEvent.AddListener((x) => {
                 if (isOnServer)
@@ -248,11 +248,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                 observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
+                    Debug.Log($"Going out TELEPORT: {entityTeleport}");
                     Marshall(entityTeleport);
                 });
                 }
                 else
                 {
+                    Debug.Log($"Going out TELEPORT: {entityTeleport}");
                     Marshall(entityTeleport);
                 }
             }
