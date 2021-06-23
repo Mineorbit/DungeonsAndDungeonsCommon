@@ -300,7 +300,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 byte[] udpResult = new byte[udpBufferLength];
                 var r = remote;
-                r.Port += localid;
+                r.Port = readPort;
                 EndPoint endPoint = ((EndPoint) r);
                 
                 Debug.Log("Reading from "+endPoint);
@@ -370,8 +370,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 LocalId = localid,
                 Udp = port
             };
-
-            Debug.Log("Receiving with "+port);
+            readPort = port;
+            Debug.Log("Receiving with "+readPort);
             //Send welcome
 
             WritePacket(w);
