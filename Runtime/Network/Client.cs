@@ -339,7 +339,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Setup()
         {
             var w = Task.Run(ReadPacket<Welcome>).Result;
-
             localid = w.LocalId;
 
             CreateUdpClientForClient(this,w.Udp);
