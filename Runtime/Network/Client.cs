@@ -222,7 +222,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var data = p.ToByteArray();
             
             Debug.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
-            if (TCP || !NetworkManager.instance.udpAvailable)
+            if (TCP || !NetworkManager.instance.useUDP)
             {
                 tcpStream.Write(data, 0, data.Length);
             }
