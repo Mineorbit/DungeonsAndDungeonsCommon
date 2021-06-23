@@ -278,8 +278,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private int tcpBufferLength = 8192;
-        private int udpBufferLength = 8192; 
 
+        private bool UDPavailable = false;
         private async Task<byte[]> ReadData(bool TCP = true)
         {
             if (TCP)
@@ -290,7 +290,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 waitingForUdp.WaitOne();
             var lengthBytes = new byte[4];
             byte[] data = null;
-            if (TCP)
+            if (!UDPavailable || TCP)
             {
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
