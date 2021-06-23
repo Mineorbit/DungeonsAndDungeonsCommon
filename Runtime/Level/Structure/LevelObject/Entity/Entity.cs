@@ -168,13 +168,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Teleport(Vector3 position)
         {
+            Debug.Log($"Teleporting {this} to {position}");
             onTeleportEvent.Invoke(position);
             gameObject.SetActive(false);
-            Debug.Log(this+" deactivated for TP");
             transform.position = position;
             if(loadTarget != null)
-            loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); 
-                Debug.Log(this+" reactivated for TP");});
+                loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); });
         }
 
 
