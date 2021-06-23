@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ccffd37f1db4744a159d02740676ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useUDPOption: {fileID: 11400000, guid: 66e9cd1dbdc71824491cd580ac0d4e20, type: 2}
   packetBindings:
   - {fileID: 11400000, guid: 9da9a4f15327934419245d2ad0590c2d, type: 2}
   - {fileID: 11400000, guid: 3db9931f45b3c8c4b99acad20b1847fe, type: 2}
@@ -65,6 +66,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b62a891c3ceae524a96d3debf38beaa8, type: 2}
   localId: 0
   ready: 0
+  useUDP: 0
 --- !u!114 &8630790383658126000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +97,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelServerURL: {fileID: 11400000, guid: c5e404e9481c9384f9043df7a7f28254, type: 2}
   baseURL: 
-  compressedLevelFiles: {fileID: 11400000, guid: 516849af024983a46bc462061a4a7cbb,
-    type: 2}
+  compressedLevelFiles: {fileID: 11400000, guid: 516849af024983a46bc462061a4a7cbb, type: 2}
   levelFolders: {fileID: 11400000, guid: b75714cdca5d3d44f82e9e80392a560c, type: 2}
