@@ -40,6 +40,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static List<Thread> threadPool = new List<Thread>();
         
         public Client client;
+        
+        
+        // Temporary fix
+
+        public bool udpAvailable;
 
         // Start is called before the first frame update
         private void Start()
@@ -85,7 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Set new client "+client);
                 client.onConnectEvent.AddListener(OnConnected);
                 client.onConnectEvent.AddListener((x) => { NetworkManager.networkHandlers = new List<NetworkHandler>();});
-
+                client.onConnectEvent.AddListener((x) => { udpAvailable = !client.isOnServer;});
             }
         }
 
