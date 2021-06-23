@@ -299,9 +299,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                var r = remote;
-                r.Port = readPort;
-                data = receivingUdpClient.Receive(ref r);
+                IPEndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+                data = receivingUdpClient.Receive(ref remote);
             }
 
             if (TCP)
