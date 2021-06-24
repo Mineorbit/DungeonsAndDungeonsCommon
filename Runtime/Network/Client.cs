@@ -145,12 +145,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private int writePort;
-        private int readPort;
         public static void CreateUdpClientForClient(Client client)
         {
             client.receivingUdpClient = new UdpClient(0);
             // client.receivingUdpClient.AllowNatTraversal(true);
-            client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
             client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
             
         }
@@ -229,10 +227,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                if (!isOnServer) writePort = 13565 + localid + 1;
-                GameConsole.Log($"Writing to {remote.Address} : {writePort} ");
-                IPEndPoint r = new IPEndPoint(remote.Address,writePort);
-                receivingUdpClient.Send(data, data.Length, r);
+                GameConsole.Log($"Writing to {remote.ToString()} ");
+                receivingUdpClient.Send(data, data.Length, remote);
             }
         }
 
@@ -300,8 +296,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                IPEndPoint remoteUdp = new IPEndPoint(IPAddress.Any, 0);
-                data = receivingUdpClient.Receive(ref remoteUdp);
+                data = receivingUdpClient.Receive(ref remote);
             }
 
             if (TCP)
@@ -369,7 +364,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 LocalId = localid
             };
-            readPort = port;
             //Send welcome
 
             WritePacket(w);
