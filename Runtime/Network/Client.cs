@@ -57,6 +57,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly Semaphore waitingForUdp = new Semaphore(1, 1);
 
 
+        // SERVER
         public Client(TcpClient tcpC, int lId, int port)
         {
             NetworkManager.allClients.Add(this);
@@ -66,8 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //receivingUdpClient.AllowNatTraversal(true);
             tcpStream = tcpClient.GetStream();
             localid = lId;
-            var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
-            remote = new IPEndPoint(other, port);
+            remote = new IPEndPoint(IPAddress.Any, 0);
         }
 
         public Client()
@@ -228,13 +228,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                GameConsole.Log($"-> UDP: "+p+$" {data.Length} {remote.ToString()}");
                 if(isOnServer)
                 {
+                    GameConsole.Log($"-> UDP C: "+p+$" {data.Length} {remote.ToString()}");
                     receivingUdpClient.Send(data, data.Length, remote);
                 }
                 else
                 {
+                    GameConsole.Log($"-> UDP S: "+p+$" {data.Length} {remote.ToString()}");
                     receivingUdpClient.Send(data, data.Length);
                 }
             }
