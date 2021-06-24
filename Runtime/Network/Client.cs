@@ -150,7 +150,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.receivingUdpClient = new UdpClient();
             client.receivingUdpClient.Connect(client.remoteAddress,13565+1+client.localid);
-            // client.receivingUdpClient.AllowNatTraversal(true);
             client.remote = new IPEndPoint(IPAddress.Any, 0);
 
         }
