@@ -61,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Connected = true;
             tcpClient = tcpC;
             receivingUdpClient = new UdpClient(port+1+lId);
-            receivingUdpClient.AllowNatTraversal(true);
+            //receivingUdpClient.AllowNatTraversal(true);
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
@@ -150,7 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.writePort = writePort;
             client.receivingUdpClient = new UdpClient();
-            client.receivingUdpClient.AllowNatTraversal(true);
+            //client.receivingUdpClient.AllowNatTraversal(true);
             client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
             client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
             
