@@ -371,7 +371,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             WelcomeUnstable  welcomeUnstable = await ReadPacket<WelcomeUnstable>();
-            writePort = welcomeUnstable.UdpPort;
+            GameConsole.Log($"WELCOME: {welcomeUnstable}");
+            
             var meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
             Connected = true;
