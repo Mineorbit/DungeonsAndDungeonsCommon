@@ -24,12 +24,12 @@ namespace State {
     static MeConnectReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg9NZUNvbm5lY3QucHJvdG8SBVN0YXRlIiYKCU1lQ29ubmVjdBIMCgRuYW1l",
-            "GAEgASgJEgsKA3VkcBgCIAEoBWIGcHJvdG8z"));
+            "Cg9NZUNvbm5lY3QucHJvdG8SBVN0YXRlIhkKCU1lQ29ubmVjdBIMCgRuYW1l",
+            "GAEgASgJYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::State.MeConnect), global::State.MeConnect.Parser, new[]{ "Name", "Udp" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::State.MeConnect), global::State.MeConnect.Parser, new[]{ "Name" }, null, null, null, null)
           }));
     }
     #endregion
@@ -66,7 +66,6 @@ namespace State {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MeConnect(MeConnect other) : this() {
       name_ = other.name_;
-      udp_ = other.udp_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -86,17 +85,6 @@ namespace State {
       }
     }
 
-    /// <summary>Field number for the "udp" field.</summary>
-    public const int UdpFieldNumber = 2;
-    private int udp_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Udp {
-      get { return udp_; }
-      set {
-        udp_ = value;
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as MeConnect);
@@ -111,7 +99,6 @@ namespace State {
         return true;
       }
       if (Name != other.Name) return false;
-      if (Udp != other.Udp) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -119,7 +106,6 @@ namespace State {
     public override int GetHashCode() {
       int hash = 1;
       if (Name.Length != 0) hash ^= Name.GetHashCode();
-      if (Udp != 0) hash ^= Udp.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -140,10 +126,6 @@ namespace State {
         output.WriteRawTag(10);
         output.WriteString(Name);
       }
-      if (Udp != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Udp);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -157,10 +139,6 @@ namespace State {
         output.WriteRawTag(10);
         output.WriteString(Name);
       }
-      if (Udp != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Udp);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -172,9 +150,6 @@ namespace State {
       int size = 0;
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
-      }
-      if (Udp != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Udp);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -189,9 +164,6 @@ namespace State {
       }
       if (other.Name.Length != 0) {
         Name = other.Name;
-      }
-      if (other.Udp != 0) {
-        Udp = other.Udp;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -211,10 +183,6 @@ namespace State {
             Name = input.ReadString();
             break;
           }
-          case 16: {
-            Udp = input.ReadInt32();
-            break;
-          }
         }
       }
     #endif
@@ -231,10 +199,6 @@ namespace State {
             break;
           case 10: {
             Name = input.ReadString();
-            break;
-          }
-          case 16: {
-            Udp = input.ReadInt32();
             break;
           }
         }

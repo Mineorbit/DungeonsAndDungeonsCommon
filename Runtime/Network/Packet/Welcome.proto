@@ -3,5 +3,9 @@ package state;
 
 message Welcome {
   int32 localId = 1;
-  int32 udp = 2;
+}
+
+message WelcomeUnstable {
+	string message = 1;
+	int32 udpPort = 2;
 }

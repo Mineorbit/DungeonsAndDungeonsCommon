@@ -146,9 +146,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private int writePort;
         private int readPort;
-        public static void CreateUdpClientForClient(Client client, int writePort)
+        public static void CreateUdpClientForClient(Client client)
         {
-            client.writePort = writePort;
             client.receivingUdpClient = new UdpClient(0);
             // client.receivingUdpClient.AllowNatTraversal(true);
             client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
@@ -336,15 +335,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var w = Task.Run(ReadPacket<Welcome>).Result;
             localid = w.LocalId;
 
-            CreateUdpClientForClient(this,w.Udp);
+            CreateUdpClientForClient(this);
+
+            var welcomeUnstable = new WelcomeUnstable();
+            welcomeUnstable.Message = "TESTMESSAGE";
+            welcomeUnstable.UdpPort = ((IPEndPoint)receivingUdpClient.Client.LocalEndPoint).Port;
+            
+            // CLIENT SENDS FIRST UDP MESSAGE
+            WritePacket(welcomeUnstable);
+            
             var meConnect = new MeConnect
             {
-                Name = NetworkManager.userName,
-                Udp = readPort
+                Name = NetworkManager.userName
             };
 
-            WritePacket(meConnect);
-
+            WritePacket(meConnect,
+                TCP: true);
+            WritePacket();
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
@@ -360,20 +367,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
             var w = new Welcome
             {
-                LocalId = localid,
-                Udp = port
+                LocalId = localid
             };
             readPort = port;
             //Send welcome
 
             WritePacket(w);
 
+
+            WelcomeUnstable  welcomeUnstable = await ReadPacket<WelcomeUnstable>();
+            
             var meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
-            writePort = meConnect.Udp;
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
-
+            
             MainCaller.Do(() =>
             {
                 //  Send missing players to new connectee
