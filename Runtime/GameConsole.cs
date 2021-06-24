@@ -39,6 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void CreateLine(string line)
         {
+        MainCaller.Do(()=> {
             var instantiate = Instantiate(logLine,content) as GameObject;
             instantiate.GetComponentInChildren<TextMeshProUGUI>().text = line;
             q.Enqueue(instantiate);
@@ -46,6 +47,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Destroy(q.Dequeue());
             }
+            
+        });
         }
 
         private bool open = false;
