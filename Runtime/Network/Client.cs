@@ -51,6 +51,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public string userName;
 
+        public IPAddress remoteAddress;
+
         private readonly Semaphore waitingForTcp = new Semaphore(1, 1);
         private readonly Semaphore waitingForUdp = new Semaphore(1, 1);
 
@@ -94,7 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 CreateTcpClientForClient(client, host, port);
                 client.Setup();
             });
-
+            client.remoteAddress = host;
             client.Connected = true;
             createThread.IsBackground = true;
             createThread.Start();
@@ -144,13 +146,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.tcpStream = client.tcpClient.GetStream();
         }
 
-        private int writePort;
         public static void CreateUdpClientForClient(Client client)
         {
-            client.receivingUdpClient = new UdpClient(0);
+            client.receivingUdpClient = new UdpClient();
+            client.receivingUdpClient.Connect(client.remoteAddress,13565+1+client.localid);
             // client.receivingUdpClient.AllowNatTraversal(true);
-            client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
-            
+            client.remote = new IPEndPoint(IPAddress.Any, 0);
+
         }
 
         public void FixedUpdate()
@@ -220,14 +222,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var data = p.ToByteArray();
             
-            GameConsole.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
             if (TCP || !NetworkManager.instance.useUDP)
             {
+                GameConsole.Log($"-> TCP: "+p+$" {data.Length}");
                 tcpStream.Write(data, 0, data.Length);
             }
             else
             {
-                GameConsole.Log($"Writing to {remote.ToString()} ");
+                GameConsole.Log($"-> UDP: "+p+$" {data.Length} {remote.ToString()}");
                 receivingUdpClient.Send(data, data.Length, remote);
             }
         }
