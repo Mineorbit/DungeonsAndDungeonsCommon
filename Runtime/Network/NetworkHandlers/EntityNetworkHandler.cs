@@ -46,14 +46,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (isOnServer) RequestCreation();
 
             observed.onTeleportEvent.AddListener(Teleport);
-            observed.onSpawnEvent.AddListener(x => {Debug.Log("Spawn State Update"); UpdateState(); });
-            observed.onHitEvent.AddListener(x => {Debug.Log("Hit State Update"); UpdateState(); });
+            observed.onSpawnEvent.AddListener(x => {GameConsole.Log("Spawn State Update"); UpdateState(); });
+            observed.onHitEvent.AddListener(x => {GameConsole.Log("Hit State Update"); UpdateState(); });
             observed.onDespawnEvent.AddListener(() => {});
-            observed.onDespawnEvent.AddListener(() => {Debug.Log("Despawn State Update"); UpdateState(); });
+            observed.onDespawnEvent.AddListener(() => {GameConsole.Log("Despawn State Update"); UpdateState(); });
             observed.onPointsChangedEvent.AddListener((x) => {
                 if (isOnServer)
                 {
-                    Debug.Log("Points changed State Update " + x);
+                    GameConsole.Log("Points changed State Update " + x);
                     UpdateState();
                 }
             });
@@ -65,7 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             targetPosition = transform.position;
             observed.controller.enabled = isOnServer? false : true;
             observed.setMovementStatus(true);
-            Debug.Log("Resolve Locomotion Block");
+            GameConsole.Log("Resolve Locomotion Block");
             //Debug.Break();
         }
 
@@ -80,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             observed.controller.enabled = isOnServer ? false : false;
             observed.setMovementStatus(false);
-            Debug.Log($"Set Locomotion Block for {this}");
+            GameConsole.Log($"Set Locomotion Block for {this}");
             //Debug.Break();
         }
 
@@ -179,7 +179,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             MainCaller.Do(() =>
             {
-                Debug.Log("Level: " + LevelManager.currentLevel);
+                GameConsole.Log("Level: " + LevelManager.currentLevel);
                 var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation);
                 e.GetComponent<EntityNetworkHandler>().Identity = identity;
             });
@@ -248,13 +248,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                 observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
-                    Debug.Log($"Going out TELEPORT: {entityTeleport}");
+                    GameConsole.Log($"Sending Teleport: {entityTeleport}");
                     Marshall(entityTeleport);
                 });
                 }
                 else
                 {
-                    Debug.Log($"Going out TELEPORT: {entityTeleport}");
+                    GameConsole.Log($"Sending Teleport: {entityTeleport}");
                     Marshall(entityTeleport);
                 }
             }

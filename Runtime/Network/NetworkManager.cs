@@ -88,7 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var t = Task.Run(async () => await Client.Connect(IPAddress.Parse(ip), 13565));
                 
                 client = t.Result;
-                Debug.Log("Set new client "+client);
+                GameConsole.Log("Set new client "+client);
                 client.onConnectEvent.AddListener(OnConnected);
                 client.onConnectEvent.AddListener((x) => { NetworkManager.networkHandlers = new List<NetworkHandler>();});
             }
@@ -143,11 +143,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void KillThreads()
         {
-            Debug.Log("Killing all subthreads");
             foreach (Thread t in threadPool)
             {
-                if(t.IsAlive)
+                if (t.IsAlive)
+                {
+                    GameConsole.Log($"Killing Subthread {t.Name}");
                     t.Abort();
+                }
             }
         }
 

@@ -61,6 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Connected = true;
             tcpClient = tcpC;
             receivingUdpClient = new UdpClient(port+1+lId);
+            receivingUdpClient.AllowNatTraversal(true);
             tcpStream = tcpClient.GetStream();
             localid = lId;
             var other = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
@@ -75,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override string ToString()
         {
-            return "NetworkClient " + userName + " " + localid;
+            return $"NetworkClient {localid} {userName}";
         }
 
         ~Client()
@@ -149,6 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.writePort = writePort;
             client.receivingUdpClient = new UdpClient();
+            client.receivingUdpClient.AllowNatTraversal(true);
             client.readPort = ((IPEndPoint) client.receivingUdpClient.Client.LocalEndPoint).Port;
             client.remote = (IPEndPoint) client.tcpClient.Client.RemoteEndPoint;
             
@@ -167,7 +169,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (packetInBuffer.Count > 0 && handleCount > 0)
             {
                 var p = packetInBuffer.Dequeue();
-                Debug.Log("Handling "+p);
+                GameConsole.Log("Handling "+p);
                 HandlePacket(p);
                 handleCount--;
             }
@@ -221,14 +223,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var data = p.ToByteArray();
             
-            Debug.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
+            GameConsole.Log($"-> TCP: {TCP}"+p+$" {data.Length}");
             if (TCP || !NetworkManager.instance.useUDP)
             {
                 tcpStream.Write(data, 0, data.Length);
             }
             else
             {
-                Debug.Log($"Writing to {remote.Address} : {writePort} ");
+                GameConsole.Log($"Writing to {remote.Address} : {writePort} ");
                 IPEndPoint r = new IPEndPoint(remote.Address,writePort);
                 receivingUdpClient.Send(data, data.Length, r);
             }
@@ -288,7 +290,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
                 waitingForUdp.WaitOne();
-            var lengthBytes = new byte[4];
             byte[] data = null;
             if ( TCP)
             {
@@ -318,7 +319,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var data = await ReadData();
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
-            Debug.Log("<- "+packetCarrier);
+            GameConsole.Log("<- "+packetCarrier);
             
             foreach(var p in packetCarrier.Packets)
             {
@@ -431,12 +432,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
             
-            Debug.Log("<- "+packetCarrier+" "+data.Length);
+            GameConsole.Log("<- "+packetCarrier+" "+data.Length);
             
             foreach (var packet in packetCarrier.Packets)
             {
                 
-                Debug.Log("|| "+packet);
+                GameConsole.Log("\t| "+packet);
                 packetInBuffer.Enqueue(packet);
             }
             //Processing needed
