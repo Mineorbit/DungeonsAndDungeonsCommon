@@ -54,19 +54,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private async Task HandleNewConnection()
         {
-            var tpClient = await listener.AcceptTcpClientAsync();
+            var tcpClient = await listener.AcceptTcpClientAsync();
             var i = GetFreeSlot();
-            Debug.Log("Got new Connection "+i+" "+tpClient.Client);
+            GameConsole.Log($"Got new Connection {i} {tcpClient.Client}");
             if (i == -1)
             {
-                tpClient.Close();
+                tcpClient.Close();
             }
             else
             {
-                tpClient.NoDelay = true;
-                Debug.Log("Fast");
-                var c = new Client(tpClient, i, port);
-                Debug.Log("Rast");
+                tcpClient.NoDelay = true;
+                var c = new Client(tcpClient, i, port);
                 c.isOnServer = true;
                 clients[i] = c;
                 var handleThread = new Thread(() =>
