@@ -229,7 +229,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 GameConsole.Log($"-> UDP: "+p+$" {data.Length} {remote.ToString()}");
-                receivingUdpClient.Send(data, data.Length, remote);
+                if(isOnServer)
+                {
+                    receivingUdpClient.Send(data, data.Length, remote);
+                }
+                else
+                {
+                    receivingUdpClient.Send(data, data.Length);
+                }
             }
         }
 
