@@ -347,7 +347,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             welcomeUnstable.UdpPort = ((IPEndPoint)receivingUdpClient.Client.LocalEndPoint).Port;
             
             // CLIENT SENDS FIRST UDP MESSAGE
-            WritePacket(welcomeUnstable);
+            // WritePacket(welcomeUnstable);
             
             var meConnect = new MeConnect
             {
@@ -378,8 +378,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             WritePacket(w);
 
 
-            WelcomeUnstable  welcomeUnstable = await ReadPacket<WelcomeUnstable>();
-            GameConsole.Log($"WELCOME: {welcomeUnstable}");
+            // WelcomeUnstable  welcomeUnstable = await ReadPacket<WelcomeUnstable>();
+            // GameConsole.Log($"WELCOME: {welcomeUnstable}");
             
             var meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
