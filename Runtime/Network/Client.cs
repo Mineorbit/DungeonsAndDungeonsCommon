@@ -351,7 +351,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             WritePacket(meConnect,
                 TCP: true);
-            WritePacket();
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
@@ -376,7 +375,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             WelcomeUnstable  welcomeUnstable = await ReadPacket<WelcomeUnstable>();
-            
+            writePort = welcomeUnstable.UdpPort;
             var meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
             Connected = true;
