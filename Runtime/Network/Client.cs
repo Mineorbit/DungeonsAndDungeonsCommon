@@ -300,8 +300,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                IPEndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-                data = receivingUdpClient.Receive(ref remote);
+                IPEndPoint remoteUdp = new IPEndPoint(IPAddress.Any, 0);
+                data = receivingUdpClient.Receive(ref remoteUdp);
             }
 
             if (TCP)
