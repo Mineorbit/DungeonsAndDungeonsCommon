@@ -229,6 +229,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
+                if (!isOnServer) writePort = 13565 + localid + 1;
                 GameConsole.Log($"Writing to {remote.Address} : {writePort} ");
                 IPEndPoint r = new IPEndPoint(remote.Address,writePort);
                 receivingUdpClient.Send(data, data.Length, r);
