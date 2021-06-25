@@ -167,7 +167,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (packetInBuffer.Count > 0 && handleCount > 0)
             {
                 var p = packetInBuffer.Dequeue();
-                GameConsole.Log("Handling "+p);
                 HandlePacket(p);
                 handleCount--;
             }
@@ -223,19 +222,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             if (TCP || !NetworkManager.instance.useUDP)
             {
-                GameConsole.Log($"-> TCP: "+p+$" {data.Length}");
                 tcpStream.Write(data, 0, data.Length);
             }
             else
             {
                 if(isOnServer)
                 {
-                    GameConsole.Log($"-> UDP C: "+p+$" {data.Length} {remote.ToString()}");
                     receivingUdpClient.Send(data, data.Length, remote);
                 }
                 else
                 {
-                    GameConsole.Log($"-> UDP S: "+p+$" {data.Length} {remote.ToString()}");
                     receivingUdpClient.Send(data, data.Length);
                 }
             }
@@ -323,7 +319,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var data = await ReadData();
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
-            GameConsole.Log("<- "+packetCarrier);
             
             foreach(var p in packetCarrier.Packets)
             {
@@ -342,12 +337,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             CreateUdpClientForClient(this);
 
-            var welcomeUnstable = new WelcomeUnstable();
-            welcomeUnstable.Message = "TESTMESSAGE";
-            welcomeUnstable.UdpPort = ((IPEndPoint)receivingUdpClient.Client.LocalEndPoint).Port;
-            
-            // CLIENT SENDS FIRST UDP MESSAGE
-            // WritePacket(welcomeUnstable);
             
             var meConnect = new MeConnect
             {
@@ -444,12 +433,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
             
-            GameConsole.Log("<- "+packetCarrier+" "+data.Length);
             
             foreach (var packet in packetCarrier.Packets)
             {
                 
-                GameConsole.Log("\t| "+packet);
                 packetInBuffer.Enqueue(packet);
             }
             //Processing needed
