@@ -69,7 +69,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (bindedMethods != null && bindedMethods.Count > 0)
                 foreach (var methodInfo in bindedMethods)
                 {
-                    GameConsole.Log("Binding for " + methodInfo.Name);
                     UnityAction<Packet> action = null;
                     if (withIdentity)
                         action = x =>
@@ -80,12 +79,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                     var handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity);
                                     if(handler != null)
                                     {
-                                        GameConsole.Log(handler + " doing " + methodInfo.Name);
                                         Delegate.CreateDelegate(typeof(UnityAction<Packet>), handler, methodInfo.Name, true, true).DynamicInvoke(x);
                                     }
                                     else
                                     {
-                                        GameConsole.Log("Handler for "+x.Identity+" not found");
+                                        // GameConsole.Log("Handler for "+x.Identity+" not found");
                                     }
                                 }
                             );
