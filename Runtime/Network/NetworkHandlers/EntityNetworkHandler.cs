@@ -304,11 +304,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     };
                     if (observed.movementOverride)
                     {
-                        Debug.Log("Sending Locomotion to everyone");
                         Marshall(entityLocomotion, TCP: false);
                     }else
                     {
-                        Debug.Log("Sending Locomotion to everyone except "+owner);
                         Marshall(entityLocomotion, owner,toOrWithout: false, TCP: false);
                     }
                     lastSentPosition = pos;
