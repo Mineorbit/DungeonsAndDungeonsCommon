@@ -103,8 +103,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (isOnServer)
                 {
-                    
-                    Debug.Log("Sending back");
                     Marshall(typeof(NetworkManagerHandler),lobbyRequest);
                 }
                 NetworkManager.lobbyRequestEvent.Invoke(lobbyRequest);
@@ -124,7 +122,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void WinRound(Packet p)
         {
-            MainCaller.Do(() => { NetworkManager.winEvent.Invoke(); });
+            MainCaller.Do(() =>
+            {
+                NetworkManager.winEvent.Invoke();
+                PlayerManager.acceptInput = false;
+            });
         }
 
         [PacketBinding.Binding]
