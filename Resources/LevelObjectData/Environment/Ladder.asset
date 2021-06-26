@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: Lamp
+  m_Name: Ladder
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4050017276492842089, guid: 3f32ac060151a6843be8be56925e45ce, type: 3}
-  uniqueLevelObjectId: 268756754
-  granularity: 0.5
-  name: Lamp
+  prefab: {fileID: 3291323872447875250, guid: 19ecd40b42bc6514da6f1d567b579ab9, type: 3}
+  uniqueLevelObjectId: -620747482
+  granularity: 1
+  name: Ladder
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   cursorMesh: {fileID: 0}
-  cursorScale: {x: 2, y: 2, z: 2}
+  cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}

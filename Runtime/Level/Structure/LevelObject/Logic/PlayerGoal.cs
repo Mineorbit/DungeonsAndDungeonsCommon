@@ -19,8 +19,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             if (LevelManager.currentLevel.goal != null && LevelManager.currentLevel.goal != this)
+            {
                 LevelManager.currentLevel.Remove(gameObject);
-            LevelManager.currentLevel.goal = this;
+                
+            }
+            else
+            {
+                LevelManager.currentLevel.goal = this;
+            }
             hitbox = GetComponentInChildren<Hitbox>();
             hitbox.Attach("Player");
             hitbox.enterEvent.AddListener(x => { Enter(x); });

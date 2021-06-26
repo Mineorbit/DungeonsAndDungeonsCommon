@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -13,10 +15,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual GameObject Create(Vector3 location, Quaternion rotation, Transform parent)
         {
-            var g = Instantiate(prefab) as GameObject;
-            g.transform.SetParent(parent);
-            g.transform.position = location;
-            g.transform.rotation = rotation;
+            GameObject g = null;
+            try
+            {
+                g = Instantiate(prefab) as GameObject;
+                if(parent != null)
+                    g.transform.SetParent(parent);
+                g.transform.position = location;
+                g.transform.rotation = rotation;
+            }
+            catch (Exception e)
+            {
+                DestroyImmediate(g);
+                return null;
+            }
             return g;
         }
 
@@ -25,7 +37,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var g = Instantiate(prefab) as GameObject;
             g.SetActive(true);
-            g.transform.SetParent(parent);
+            
+            if(parent != null)
+                g.transform.SetParent(parent);
             var rt = g.GetComponent<RectTransform>();
             rt.offsetMax = location;
             rt.offsetMin = location;

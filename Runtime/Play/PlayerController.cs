@@ -35,8 +35,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly float gravity = 4f;
 
 
+        public Hitbox climbableHitbox;
 
 
+        public bool inClimbing;
+        
         //public static PlayerController currentPlayer;
         private Player player;
 
@@ -50,6 +53,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             controller = transform.GetComponent<CharacterController>();
+            climbableHitbox.Attach("Climbable");
+            // POSSIBLE PROBLEM WITH INTERSECTIONS
+            climbableHitbox.enterEvent.AddListener((x) =>
+            {
+                inClimbing = true;
+            });
+            climbableHitbox.exitEvent.AddListener((x) =>
+            {
+                if(climbableHitbox.insideCounter == 0)
+                    inClimbing = false;
+            });
             SetParams();
         }
 
@@ -86,9 +100,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             col = hit.collider;
         }
 
+        public float climbDampening = 0.5f;
+
+        public float climbingSpeed = 1f;
         public void Move()
         {
-            if (!IsGrounded && activated) speedY -= gravity * Time.deltaTime;
+            if (!IsGrounded && activated)
+            {
+                if(inClimbing)
+                {
+                    speedY = -gravity * climbDampening;
+                }
+                else
+                {
+                    speedY -= gravity * Time.deltaTime;
+                }
+            }
             if (IsGrounded || !activated) speedY = 0;
             targetDirection = new Vector3(0, 0, 0);
 
@@ -110,6 +137,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     // INTERACT WITH ENVIRONMENT (READ TEXT, PRESS BUTTON etc)
                 }
 
+                // change to angle towards ladder later on
+                if (targetDirection.sqrMagnitude >= 0.01f && inClimbing)
+                {
+                    Debug.Log("CLIMBING");
+                    speedY = climbingSpeed;
+                }
+                
                 if (IsGrounded)
                     if (Input.GetKeyDown(KeyCode.Space))
                         speedY = 1.5f;
