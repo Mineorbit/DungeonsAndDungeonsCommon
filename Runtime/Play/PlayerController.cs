@@ -5,7 +5,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class PlayerController : EntityController
     {
-        public static bool doSim;
         public PlayerBaseAnimator playerBaseAnimator;
         public CharacterController controller;
         public Transform cam;
@@ -89,8 +88,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Move()
         {
-            if (!IsGrounded && doSim) speedY -= gravity * Time.deltaTime;
-            if (IsGrounded || !doSim) speedY = 0;
+            if (!IsGrounded && activated) speedY -= gravity * Time.deltaTime;
+            if (IsGrounded || !activated) speedY = 0;
             targetDirection = new Vector3(0, 0, 0);
 
             if (doInput && takeInput)
@@ -143,7 +142,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void StateUpdate()
         {
-            doSim = true;
             doInput = PlayerManager.acceptInput && allowedToMove && activated &&
                       locallyControllable; //&& !player.lockNetUpdate;
         }
