@@ -262,7 +262,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return null;
         }
 
-        private LevelObject GetTopLevelObject(GameObject g)
+        private static LevelObject GetTopLevelObject(GameObject g)
         {
             LevelObject r = null;
             var p = g;
@@ -294,6 +294,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
         }
+        
 
 
         //These Objects will be dropped on the next Level reset

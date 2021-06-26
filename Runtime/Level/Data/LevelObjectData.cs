@@ -86,8 +86,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(prefab != null)
             {
-            GameObject g = Create(new Vector3(0,0,0), Quaternion.identity,null);
-            g.SetActive(false);
+                GameObject g = null;
+            try
+            {
+                g = Instantiate(prefab) as GameObject;
+                Destroy(g.GetComponent<LevelObject>());
+                g.SetActive(false);
             MeshFilter[] meshFilters = g.GetComponentsInChildren<MeshFilter>(includeInactive: true);
             CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
@@ -102,7 +106,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             cursorMesh = new Mesh();
             cursorMesh.CombineMeshes(combine);
-            DestroyImmediate(g);
+            }
+            catch (Exception e)
+            {
+                if (Application.isPlaying)
+                {
+                  
+                    Destroy(g);
+                }
+                else
+                {
+                    DestroyImmediate(g);  
+                }
+                
+                Console.WriteLine(e);
+                return;
+            }
+            Debug.Log("Removing "+g);
+            if (Application.isPlaying)
+            {
+                Destroy(g);
+            }
+            else
+            {
+                DestroyImmediate(g);  
+            }
             }
         }
 
