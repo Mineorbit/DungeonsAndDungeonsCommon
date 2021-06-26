@@ -276,14 +276,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                      handlerType == typeof(NetworkHandler))) handlerType = handlerType.BaseType;
             if (handle != null)
             {
-                Debug.Log($"Handle {handle} found, invoking");
                 handle.Invoke(p);
             }
         }
 
         public static T FindByIdentity<T>(string identity) where T : NetworkHandler
         {
-            Debug.Log("There are: "+ NetworkManager.networkHandlers.Count+" Networkhandlers");
             return (T) NetworkManager.networkHandlers.Find(x => x.Identity == identity);
         }
 
