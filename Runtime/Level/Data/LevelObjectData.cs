@@ -27,6 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Mesh cursorMesh;
 
+        
         public Vector3 cursorScale;
         public Vector3 cursorOffset;
         public Vector3 cursorRotation;
@@ -40,6 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 uniqueLevelObjectId = GUID.Generate().GetHashCode();
 #endif
             }
+            
         }
         private void OnValidate()
         {
@@ -51,6 +53,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 #endif
         }
 
+        public void OnEnable()
+        {
+            UpdateMesh();
+        }
+
         public static LevelObjectData[] GetAllBuildable()
         {
             var data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
@@ -59,12 +66,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static Dictionary<int, LevelObjectData> GetAllByUniqueType()
         {
-            Debug.Log("TEST A");
             var data = new List<LevelObjectData>(Resources.LoadAll<LevelObjectData>("LevelObjectData"));
-            Debug.Log("TEST D");
             var dict = new Dictionary<int, LevelObjectData>();
             foreach (var objectData in data) dict.Add(objectData.uniqueLevelObjectId, objectData);
-            Debug.Log("TEST B");
             return dict;
         }
 
@@ -78,8 +82,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public void UpdateMesh()
+        {
+            if(prefab != null)
+            {
+            GameObject g = Create(new Vector3(0,0,0), Quaternion.identity,null);
+            g.SetActive(false);
+            MeshFilter[] meshFilters = g.GetComponentsInChildren<MeshFilter>(includeInactive: true);
+            CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+
+            int i = 0;
+            while (i < meshFilters.Length)
+            {
+                combine[i].mesh = meshFilters[i].sharedMesh;
+                combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+                meshFilters[i].gameObject.SetActive(false);
+
+                i++;
+            }
+            cursorMesh = new Mesh();
+            cursorMesh.CombineMeshes(combine);
+            DestroyImmediate(g);
+            }
+        }
+
         public Mesh GetMesh()
         {
+            if (cursorMesh == null)
+            {
+                UpdateMesh();
+            }
             return cursorMesh;
         }
 

@@ -20,7 +20,7 @@ MonoBehaviour:
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
-  cursorMesh: {fileID: -2124705421725058983, guid: 09cd5596fd7aac84a83eb2ee59dfe0d9, type: 3}
+  cursorMesh: {fileID: -5495902117074765545, guid: dacaf4385eee4024fbbf0a5910da4147, type: 3}
   cursorScale: {x: 30, y: 30, z: 30}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: -90, y: 0, z: 0}
