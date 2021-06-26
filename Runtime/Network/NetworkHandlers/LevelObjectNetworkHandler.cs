@@ -105,7 +105,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var actionParam = new ActionParam();
                 actionParam.FieldPlace = data.Item1;
 
-                Debug.Log("ActionParam: "+data.Item2.Type);
                 
                 actionParam.type = Type.GetType(data.Item2.Type);
 
@@ -114,7 +113,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     actionParam.type = Type.GetType(data.Item2.Type+", UnityEngine", true);
                 }
 
-                Debug.Log("Unpacking " + actionParam.type);
                 if(actionParam.type != null)
                 {
                 if (actionParam.type == typeof(ChunkData))

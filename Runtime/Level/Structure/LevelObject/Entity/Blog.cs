@@ -108,7 +108,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void setMovementStatus(bool allowedToMove)
         {
             base.setMovementStatus(allowedToMove);
-            Debug.Log("Stopping");
             controller.SetTrackingAbility(allowedToMove);
         }
 
@@ -124,7 +123,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void SetTrackedEffect(Entity t)
         {
-            Debug.Log("Changing Tracked to: "+t);
             if (t == null)
             {
                 baseAnimator.target = null;
@@ -157,7 +155,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void SetupBlogFSM()
         {
-            Debug.Log("Setup FSM");
             FSM = new FSM<EnemyState, EnemyAction>();
 
 
@@ -220,7 +217,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 else
                 {
-                    Debug.Log("Restarting Timer");
                     circleTimer = TimerManager.StartTimer(circleTime, () => { TryStrike(); });
                 }
             });
@@ -332,7 +328,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 StopTrackTarget(false);
                 controller.GoTo(attackTarget.transform.position);
-                Debug.Log("Blog trying to Strike");
                 FSM.SetState(BlogState.Strike);
                 strikeTimer = TimerManager.StartTimer(1 + 5 * (float) rand.NextDouble(), () => { Strike(); });
             }
@@ -364,7 +359,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void FinishStrike()
         {
             attackHitbox.Deactivate();
-            Debug.Log("Finished Strike");
             targetEntity = attackTarget;
             FSM.Move(BackToAttack);
         }
