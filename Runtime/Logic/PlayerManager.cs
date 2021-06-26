@@ -109,6 +109,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SpawnPlayer(freeLocalId,position);
         }
 
+
+        public void SetPlayerActive(int id, bool a)
+        {
+            if (playerControllers[id] != null)
+            {
+                playerControllers[id].activated = a;
+            }
+        }
+        
+
+        public static void ActivateAllPlayers()
+        {
+            for(int i = 0;i<4;i++) playerManager.SetPlayerActive(i,true);
+        }
+        
+        public static void DeactivateAllPlayers()
+        {
+            for(int i = 0;i<4;i++) playerManager.SetPlayerActive(i,false);
+        }
+        
         public void DespawnPlayer(int localId)
         {
             if (localId > 3 || localId < 0) return;
