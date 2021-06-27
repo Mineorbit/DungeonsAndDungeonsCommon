@@ -328,9 +328,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             };
 
             if (!isOnServer)
-                NetworkManager.instance.client.WritePacket(packet, TCP);
+            {
+                if(NetworkManager.instance.client != null)
+                {
+                    NetworkManager.instance.client.WritePacket(packet, TCP);
+                }
+            }
             else
-                Server.instance.WriteAll(packet, TCP);
+            {
+                if(Server.instance != null)
+                    Server.instance.WriteAll(packet, TCP);
+            }
         }
 
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
