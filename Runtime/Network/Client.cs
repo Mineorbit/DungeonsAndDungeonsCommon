@@ -32,7 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         // THIS DOES NOT YET WORK WHEN INCREASING
-        private readonly int maxReceiveCount = 1;
+        private readonly int maxHandleCount = 32;
         private readonly int maxSendCount = 1;
 
         private int maxPackSize = 8192;
@@ -166,7 +166,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void UpdateIn()
         {
-            var handleCount = maxReceiveCount;
+            var handleCount = maxHandleCount;
             while (packetInBuffer.Count > 0 && handleCount > 0)
             {
                 var p = packetInBuffer.Dequeue();
