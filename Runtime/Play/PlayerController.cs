@@ -169,9 +169,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (currentSpeed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
 
-            var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
+            if (doInput && takeInput)
+            {
+                var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
 
-            transform.eulerAngles = new Vector3(0, angleY, 0);
+                transform.eulerAngles = new Vector3(0, angleY, 0);
+            }
         }
 
         private void StateUpdate()
