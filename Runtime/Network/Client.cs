@@ -30,9 +30,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isOnServer;
         public int localid;
 
-        private readonly int maxReceiveCount = 2;
-        private readonly int maxSendCount = 2;
 
+        // THIS DOES NOT YET WORK WHEN INCREASING
+        private readonly int maxReceiveCount = 1;
+        private readonly int maxSendCount = 1;
+
+        private int maxPackSize = 8192;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
@@ -281,7 +284,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             WritePacket(p, TCP);
         }
 
-        private int tcpBufferLength = 8192;
 
         private async Task<byte[]> ReadData(bool TCP = true)
         {
@@ -294,6 +296,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = null;
             if ( TCP)
             {
+                int tcpBufferLength = maxPackSize * maxSendCount;
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
                 data = new byte[readLength];
