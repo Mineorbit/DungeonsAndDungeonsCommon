@@ -201,8 +201,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             levelObjectConnect.Z);
                         fittingHandler = NetworkManager.networkHandlers.Find(x =>
                         {
-                            var distance = (handlerPosition - x.transform.position).magnitude;
-                            return x.GetType() == handlerType && distance < eps;
+                            if (x != null)
+                            {
+                                var distance = (handlerPosition - x.transform.position).magnitude;
+                                return x.GetType() == handlerType && distance < eps;
+                            }
+                            else
+                                return false;
                         });
                     }
                     else if (levelObjectConnect.RequestType == ConnectLevelObjectRequest.Types.RequestType.ByParent)
@@ -211,6 +216,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         {
                             // THIS MIGHT BE JANKY
                             NetworkHandler p = null;
+                            if(x != null)
+                            {
                             if (x.transform.parent != null)
                             {
                                 p = x.transform.parent.GetComponentInParent<NetworkHandler>();
@@ -221,6 +228,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             }
                             return x.GetType() == handlerType && p.identified && p.Identity
                                 == levelObjectConnect.ParentIdentity;
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         });
                     }
 
