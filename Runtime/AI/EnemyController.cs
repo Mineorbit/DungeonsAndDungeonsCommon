@@ -108,7 +108,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateLocomotion()
         {
-            navMeshAgent.SetDestination(currentTarget);
+            if(navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh)
+                navMeshAgent.SetDestination(currentTarget);
         }
 
 
