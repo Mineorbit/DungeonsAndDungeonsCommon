@@ -70,7 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             arguments.Add(packedArgument.Item1, packedArgument.Item2);
 
             action.Params.Add(arguments);
-            Marshall(action,TCP: true);
+            Marshall(action,TCP: false);
         }
 
 
@@ -80,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ActionName = actionName
             };
-            Marshall(action,TCP: true);
+            Marshall(action,TCP: false);
         }
 
 
@@ -134,14 +134,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                     var h = FindByIdentity<LevelObjectNetworkHandler>(identityOfParam);
 
-                    Debug.Log("Matched with Reference: " + identityOfParam + " " + h.observed);
+                    // Debug.Log("Matched with Reference: " + identityOfParam + " " + h.observed);
                     actionParam.data = h.observed;
                 }
                 }
                 else
                 {
-                    Debug.Log("Actionparam was not defined "+data.Item2);
-                    Debug.Break();
+                    // Debug.Log("Actionparam was not defined "+data.Item2);
+                    // Debug.Break();
                     
                 }
 
@@ -154,7 +154,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Any x = null;
 
 
-                Debug.Log("Packing " + type);
+                // Debug.Log("Packing " + type);
 
                 if (type == typeof(ChunkData))
                 {
