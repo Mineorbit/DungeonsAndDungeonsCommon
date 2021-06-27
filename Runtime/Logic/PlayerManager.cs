@@ -126,7 +126,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public static void DeactivateAllPlayers()
         {
-            for(int i = 0;i<4;i++) playerManager.SetPlayerActive(i,false);
+            if(playerManager != null)
+            for (int i = 0; i < 4; i++)
+            {
+                playerManager.SetPlayerActive(i,false);
+            }
         }
         
         public void DespawnPlayer(int localId)
