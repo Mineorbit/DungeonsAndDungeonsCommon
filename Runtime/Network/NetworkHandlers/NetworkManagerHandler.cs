@@ -66,7 +66,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (p.Content.TryUnpack(out readyLobby))
                 {
                     int localId = p.Sender;
-                    PlayerManager.playerManager.SpawnPlayer(localId, new Vector3(localId*8,6,0));
+                    Vector3 location = new Vector3(localId * 8, 6, 0);
+                    GameConsole.Log($"Teleporting {localId} to {location}");
+                    PlayerManager.playerManager.SpawnPlayer(localId, location);
                 }
             }
         }
