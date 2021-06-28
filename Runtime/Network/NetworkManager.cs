@@ -136,6 +136,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManagerHandler.RequestReadyRound();
         }
 
+        public void CallLobbyReady()
+        {
+            NetworkManagerHandler.RequestReadyLobby();
+        }
+
         public void CallSelected(LevelMetaData metaData)
         {
             NetworkManagerHandler.RequestLobbyUpdate(metaData);

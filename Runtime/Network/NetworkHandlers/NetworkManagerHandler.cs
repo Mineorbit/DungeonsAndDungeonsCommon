@@ -50,6 +50,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Marshall(typeof(NetworkManagerHandler), readyRound);
         }
 
+        public static void RequestReadyLobby()
+        {
+            ReadyLobby readyLobby = new ReadyLobby();
+            readyLobby.Message = "Test";
+            Marshall(typeof(NetworkManagerHandler), readyLobby);
+        }
+
+        [PacketBinding.Binding]
+        public static void OnReadyLobby(Packet p)
+        {
+            if (isOnServer)
+            {
+                ReadyLobby readyLobby;
+                if (p.Content.TryUnpack(out readyLobby))
+                {
+                    int localId = p.Sender;
+                    PlayerManager.playerManager.SpawnPlayer(localId, new Vector3(localId*8,6,0));
+                }
+            }
+        }
+        
         [PacketBinding.Binding]
         public static void OnDisconnect(Packet p)
         {
@@ -82,7 +103,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public static void PrepareRound(Packet p)
         {
-            Debug.Log("Preparing Round");
+            GameConsole.Log("Preparing Round");
             MainCaller.Do(() => { NetworkManager.prepareRoundEvent.Invoke(); });
             NetLevel.LevelMetaData netData = null;
             PrepareRound prepareRound;
@@ -139,7 +160,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     Marshall(typeof(NetworkManagerHandler),readyRound);
                 }
-                Debug.Log("Received Ready round");
+                GameConsole.Log("Received Ready round");
                 NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(readyRound.LocalId, readyRound.Ready));
                 
             }
