@@ -168,7 +168,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Teleport(Vector3 position)
         {
-            if (position == null) return;
             Debug.Log($"Teleporting {this} to {position}");
             onTeleportEvent.Invoke(position);
             gameObject.SetActive(false);

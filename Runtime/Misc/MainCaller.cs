@@ -24,7 +24,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var actions = maxActions;
             while (todo.Count > 0 && actions > 0)
             {
-                todo.Dequeue().Invoke();
+                var x = todo.Dequeue(); 
+                if(x != null)
+                x.Invoke();
                 actions--;
             }
         }
