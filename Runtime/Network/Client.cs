@@ -31,6 +31,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int localid;
 
 
+        public static int sentPacketCarriers;
+        public static int receivedPacketCarriers;
+        public static int handledPackets;
+
         // THIS DOES NOT YET WORK WHEN INCREASING
         private readonly int maxHandleCount = 32;
         private readonly int maxSendCount = 1;
@@ -166,6 +170,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void HandlePacket(Packet p, bool newThread = false)
         {
+            handledPackets++;
             if (newThread)
             {
                 UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
@@ -219,6 +224,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
+            sentPacketCarriers++;
             
             if (TCP || !NetworkManager.instance.useUDP)
             {
@@ -424,7 +430,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 byte[] data;
                 data = await ReadData(Tcp);
-            
+                receivedPacketCarriers++;
             // LENGTH IS 0 DISCONNECT
 
             if (data.Length == 0)
