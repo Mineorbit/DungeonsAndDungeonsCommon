@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEngine.Object logLine;
         public Transform content;
         public CanvasGroup canvasGroup;
-
+        public TextMeshProUGUI infoText;
         public int maxViewable = 500;
         void Awake()
         {
@@ -51,9 +51,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         });
         }
 
+        void UpdateText()
+        {
+            string fps = $"FPS: {(1 / Time.deltaTime)}\n";
+            string appendage = $"Received Packets: {Client.receivedPacketCarriers}\n" +
+                            $"Handled Packets: {Client.handledPackets}\n" +
+                            $"Sent Packets: {Client.sentPacketCarriers}";
+
+            infoText.text = fps + appendage;
+        }
+
         private bool open = false;
         void Update()
         {
+            UpdateText();
             if (Input.GetKeyDown(KeyCode.Backslash))
             {
                 if (open)
