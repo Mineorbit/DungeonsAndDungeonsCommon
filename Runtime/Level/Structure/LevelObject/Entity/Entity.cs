@@ -222,8 +222,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     hitter.points += damage;
                     
                     StartHitCooldown();
-                    GameConsole.Log(hitter.gameObject.name + " HIT " + gameObject.name + " AND CAUSED " + damage +
-                              " HP DAMAGE");
+                    GameConsole.Log($"{hitter.gameObject.name}  HIT  {gameObject.name} AND CAUSED {damage} HP DAMAGE");
                     health = health - damage;
 
                     onHitEvent.Invoke(hitter);
