@@ -140,7 +140,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // change to angle towards ladder later on
                 if (targetDirection.sqrMagnitude >= 0.01f && inClimbing)
                 {
-                    Debug.Log("CLIMBING");
                     speedY = climbingSpeed;
                 }
                 
@@ -156,24 +155,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (Input.GetMouseButtonUp(1)) player.Invoke(player.StopUseRight, true);
             }
 
-            targetDirection.y = speedY;
-            if (targetDirection.sqrMagnitude >= 0.01f)
-                movingDirection = targetDirection;
-            else
-                movingDirection = new Vector3(0, 0, 0);
-
-            // THIS IS  JANK BUT WORKS
-            if ((Level.instantiateType == Level.InstantiateType.Test) || (Level.instantiateType == Level.InstantiateType.Online))
-                controller.Move(targetDirection * Speed * Time.deltaTime);
-
-
-            if (currentSpeed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
-
-            if (doInput && takeInput)
+            if (activated)
             {
-                var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
-
-                transform.eulerAngles = new Vector3(0, angleY, 0);
+                targetDirection.y = speedY;
+                if (targetDirection.sqrMagnitude >= 0.01f)
+                    movingDirection = targetDirection;
+                else
+                    movingDirection = new Vector3(0, 0, 0);
+                controller.Move(targetDirection * Speed * Time.deltaTime);
+            
+                if (currentSpeed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
+                if (doInput && takeInput)
+                {
+                    var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
+                    transform.eulerAngles = new Vector3(0, angleY, 0);
+                }
             }
         }
 

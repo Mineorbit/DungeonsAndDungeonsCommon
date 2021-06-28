@@ -35,10 +35,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             isOwner = !isOnServer && observed.localId == NetworkManager.instance.localId;
             owner = observed.localId;
             
-            GetComponent<PlayerController>().enabled = !isOnServer && isOwner;
+            observed.controller.enabled = !isOnServer && isOwner;
             
             if (isOnServer)
-                // UNSURE ABOUT THIS MAYBE THIS IS NEEDED
                 GetComponent<CharacterController>().enabled = false;
             
             }
@@ -110,7 +109,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z,
                 Identity = playerNetworkHandler.Identity
             };
-            Debug.Log("Creating player: "+playerCreate);
             var packet = new Packet
             {
                 Type = typeof(PlayerCreate).FullName,
@@ -128,7 +126,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (value.Content.TryUnpack(out playerRemove))
             {
                 var localIdToRemove = playerRemove.LocalId;
-                Debug.Log("Handling Remove for " + localIdToRemove);
 
                 MainCaller.Do(() => { PlayerManager.playerManager.Remove(localIdToRemove); });
             }
@@ -140,7 +137,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             PlayerCreate playerCreate;
             if (value.Content.TryUnpack(out playerCreate))
             {
-                Debug.Log("Received playercreation: "+playerCreate);
                 var position = new Vector3(playerCreate.X, playerCreate.Y, playerCreate.Z);
                 OnCreationRequest(playerCreate.Identity, position, new Quaternion(0, 0, 0, 0), playerCreate.LocalId,
                     playerCreate.Name);
@@ -160,15 +156,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             MainCaller.Do(() =>
             {
                 PlayerManager.playerManager.Add(localId, name, true);
-                var player = PlayerManager.playerManager.GetPlayer(localId);
+                GameObject player = PlayerManager.playerManager.GetPlayer(localId);
                 PlayerNetworkHandler h = player.GetComponent<PlayerNetworkHandler>();
                 h.Identity = identity;
                 h.enabled = true;
                 h.Setup();
 
                 if (isOnServer)
-                    //this is just for now and ugly, will fix later
-                    Destroy(player.GetComponent<PlayerController>());
+                    Destroy(h.observed.controller);
             });
         }
     }
