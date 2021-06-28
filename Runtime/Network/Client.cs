@@ -160,21 +160,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void FixedUpdate()
         {
             UpdateOut();
-            UpdateIn();
             if (!Connected) CloseConnection();
         }
 
-        private void UpdateIn()
-        {
-            var handleCount = maxHandleCount;
-            while (packetInBuffer.Count > 0 && handleCount > 0)
-            {
-                var p = packetInBuffer.Dequeue();
-                HandlePacket(p);
-                handleCount--;
-            }
-        }
-
+        
         private void HandlePacket(Packet p)
         {
             UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
@@ -409,6 +398,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             await disconnected.Task;
         }
 
+        // Maybe refactor more here
         private void TcpHandle()
         {
             Task.Run(async () => { await HandlePackets(true); });
@@ -424,8 +414,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             while(true)
             {
-            byte[] data;
-            data = await ReadData(Tcp);
+                byte[] data;
+                data = await ReadData(Tcp);
             
             // LENGTH IS 0 DISCONNECT
 
@@ -439,8 +429,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             foreach (var packet in packetCarrier.Packets)
             {
-                
-                packetInBuffer.Enqueue(packet);
+                HandlePacket(packet);
             }
             //Processing needed
             }
