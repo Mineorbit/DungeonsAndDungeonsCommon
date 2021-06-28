@@ -51,7 +51,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var c = g.GetComponentInParent<Entity>(true);
             if (c != null)
             {
-                Debug.Log(c.gameObject.name + " hit with " + damage);
                 c.Hit(this, (int) damage);
             }
         }
@@ -60,8 +59,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
-
-            Debug.Log("TEST2");
 
             controller.seenPlayer = null;
             controller.seenAlly = null;
