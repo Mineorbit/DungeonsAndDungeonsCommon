@@ -88,7 +88,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (itemHitbox != null)
             {
-                Debug.Log("ITEM HITBOX for " + this);
                 itemHitbox.Attach("Item");
                 itemHitbox.enterEvent.AddListener(x =>
                 {
@@ -103,7 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Debug.Log(this + " has no ItemHitBox");
+                GameConsole.Log(this + " has no ItemHitBox");
             }
         }
 
@@ -146,7 +145,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             health = maxHealth;
             alive = true;
-            Debug.Log("Spawning " + this + " at " + location);
+            GameConsole.Log("Spawning " + this + " at " + location);
             Teleport(location);
             gameObject.SetActive(true);
             transform.rotation = rotation;
@@ -159,7 +158,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             health = 0;
             alive = false;
             gameObject.SetActive(false);
-            Debug.Log("Despawning " + this);
+            GameConsole.Log("Despawning " + this);
             transform.position = new Vector3(0, 0, 0);
             transform.rotation = new Quaternion(0, 0, 0, 0);
             onDespawnEvent.Invoke();
@@ -215,7 +214,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Level.instantiateType == Level.InstantiateType.Test)
                 if (!invincible && !hitCooldown)
                 {
-                    onHitEvent.Invoke(hitter);
                     Invoke(setMovementStatus, false);
                     
                     
@@ -224,14 +222,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     hitter.points += damage;
                     
                     StartHitCooldown();
-                    Debug.Log(hitter.gameObject.name + " HIT " + gameObject.name + " AND CAUSED " + damage +
+                    GameConsole.Log(hitter.gameObject.name + " HIT " + gameObject.name + " AND CAUSED " + damage +
                               " HP DAMAGE");
                     health = health - damage;
 
+                    onHitEvent.Invoke(hitter);
                     if (health <= 0)
                     {
-                        Invoke(Kill);
                         hitter.points += pointsForKill;
+                        Invoke(Kill);
                     }
                     //FreezeFramer.freeze(0.0075f);
                 }
