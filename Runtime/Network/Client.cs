@@ -164,13 +164,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         
-        private void HandlePacket(Packet p)
+        private void HandlePacket(Packet p, bool newThread = false)
         {
-            UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
-            var handleThread = new Thread(new ThreadStart(processPacket));
-            handleThread.IsBackground = true;
-            handleThread.Start();
-            NetworkManager.threadPool.Add(handleThread);
+            if (newThread)
+            {
+                UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
+                var handleThread = new Thread(new ThreadStart(processPacket));
+                handleThread.IsBackground = true;
+                handleThread.Start();
+                NetworkManager.threadPool.Add(handleThread);
+            }
+            else
+            {
+                UnityAction processPacket = () => { NetworkHandler.UnMarshall(p); };
+                processPacket.Invoke();
+            }
         }
 
         private void UpdateOut(bool all = false)
