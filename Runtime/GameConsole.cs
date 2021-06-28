@@ -27,9 +27,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance = this;
         }
 
-        public static void Log(string text)
+        public static void Log(string text, bool inView = true)
         {
-            if(instance != null)
+            if(instance != null  && inView)
             instance.CreateLine("> "+text);
             
             Debug.Log(text);

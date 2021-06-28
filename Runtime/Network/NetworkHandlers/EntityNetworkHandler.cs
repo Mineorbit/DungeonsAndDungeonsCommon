@@ -212,6 +212,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Active = observed.gameObject.activeSelf,
                 Points = observed.points
             };
+            GameConsole.Log("Updated State "+entityState);
             Marshall(entityState);
         }
 
@@ -233,7 +234,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(isOnServer)
             {
-            teleportPosition = position;
+                teleportPosition = position;
             var entityTeleport = new EntityTeleport
             {
                 X = position.x,
