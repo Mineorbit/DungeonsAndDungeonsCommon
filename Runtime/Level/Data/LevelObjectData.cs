@@ -89,6 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameObject g = null;
             try
             {
+                GameConsole.Log($"Instantiating {name}",false);
                 g = Instantiate(prefab) as GameObject;
                 Destroy(g.GetComponent<LevelObject>());
                 g.SetActive(false);

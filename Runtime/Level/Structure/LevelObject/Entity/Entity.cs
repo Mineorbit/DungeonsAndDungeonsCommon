@@ -120,7 +120,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void OnDestroy()
         {
-            Destroy(loadTarget.gameObject);
+            if(loadTarget != null)
+                Destroy(loadTarget.gameObject);
         }
 
         public void UseHandle(ItemHandle h)
