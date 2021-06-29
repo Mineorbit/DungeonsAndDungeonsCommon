@@ -341,9 +341,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!isOnServer)
             {
-                if(NetworkManager.instance.client != null)
+                if (NetworkManager.instance != null)
                 {
-                    NetworkManager.instance.client.WritePacket(packet, TCP);
+                    if (NetworkManager.instance.client != null)
+                    {
+                        NetworkManager.instance.client.WritePacket(packet, TCP);
+                    }
                 }
             }
             else
