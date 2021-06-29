@@ -100,7 +100,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var toAttach = itemsInProximity.Find(x => !x.isEquipped);
             if (toAttach != null)
             {
-                Debug.Log("Picking up");
                 if (toAttach.GetType() == typeof(Sword))
                 {
                     Invoke(DettachLeftItem);
@@ -115,7 +114,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Debug.Log("Trying drop");
                 Invoke(DettachLeftItem);
                 Invoke(DettachRightItem);
             }
