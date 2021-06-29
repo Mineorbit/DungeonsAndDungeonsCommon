@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3789555705667135758}
   - component: {fileID: 3789555705667135757}
   - component: {fileID: 3789555705667135744}
+  - component: {fileID: 3521853809938463265}
   m_Layer: 0
   m_Name: BigSword
   m_TagString: Item
@@ -46,14 +47,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb02ccbee5463ce4784a3a66a97d7170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelObjectDataType: 
+  levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
+  levelObjectNetworkHandler: {fileID: 0}
+  rigidBody: {fileID: 0}
   useTime: 0.25
   owner: {fileID: 0}
   isEquipped: 0
-  hitboxPrefab: {fileID: 5539105604195314118, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
-  rigidBody: {fileID: 0}
+  onUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hitboxPrefab: {fileID: 5539105604195314118, guid: b80dcc02b42b04140a199a6fdca321ca,
+    type: 3}
+  effectSystem: {fileID: 0}
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &3789555705667135757
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83,6 +96,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.76, z: 0.1}
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &3521853809938463265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3789555705667135756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Identity: 
+  identified: 0
+  observed: {fileID: 0}
+  observed: {fileID: 0}
+  disabled_observed: 1
 --- !u!1 &8062914607675648535
 GameObject:
   m_ObjectHideFlags: 0

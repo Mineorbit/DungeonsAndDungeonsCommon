@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2367929392713539500}
   - component: {fileID: 438114723989724579}
   m_Layer: 0
-  m_Name: Shield
+  m_Name: shield
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,9 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18797bbbbcdd10442b8f9a5139efa174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelObjectDataType: 
+  levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
+  levelObjectNetworkHandler: {fileID: 0}
   rigidBody: {fileID: 2367929392713539500}
   useTime: 0.25
   owner: {fileID: 0}
@@ -148,10 +149,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6116505687544139644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a5f6a18a954cad47b218f2447495320, type: 3}
+  m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Identity: 
   identified: 0
   observed: {fileID: 0}
   observed: {fileID: 0}
+  disabled_observed: 1

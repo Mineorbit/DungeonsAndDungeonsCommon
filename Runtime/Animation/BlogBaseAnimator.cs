@@ -6,13 +6,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class BlogBaseAnimator : EntityBaseAnimator
     {
-        public float speed;
 
         public Transform target;
 
         public UnityEvent attackEvent;
         public UnityEvent endAttackEvent;
-        private Animator animator;
         private Vector3 targetInterpolation;
 
         [FormerlySerializedAs("enemyController")] public new EnemyController entityController;
@@ -25,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             endAttackEvent = new UnityEvent();
         }
 
-        private void Update()
+        public override void Update()
         {
             base.Update();
 
