@@ -9875,6 +9875,9 @@ MonoBehaviour:
   heightRay: 0.45
   col: {fileID: 0}
   climbableHitbox: {fileID: 1725967590211030794}
+  inClimbing: 0
+  climbDampening: 0.5
+  climbingSpeed: 1
 --- !u!54 &6975951243435457332
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10191,7 +10194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7c40a897a71c9459d347a2a9bda082, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4
+      value: -0.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7c40a897a71c9459d347a2a9bda082, type: 3}
       propertyPath: m_LocalPosition.z
