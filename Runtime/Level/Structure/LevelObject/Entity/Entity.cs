@@ -125,6 +125,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseHandle(ItemHandle h)
         {
+            GameConsole.Log($"Using {h.slot}");
             h.Use();
         }
 
@@ -167,7 +168,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Teleport(Vector3 position)
         {
-            Debug.Log($"Teleporting {this} to {position}");
+            GameConsole.Log($"Teleporting {this} to {position}");
             onTeleportEvent.Invoke(position);
             gameObject.SetActive(false);
             transform.position = position;
