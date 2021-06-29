@@ -12,12 +12,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private Vector3 oldAngles;
 
-        private void Start()
+        public void Start()
         {
             forwardDirection = new Vector3(0, 0, 0);
         }
 
-        public void Update()
+        public override void Update()
         {
             base.Update();
             //simplify in future to just moving somehow

@@ -13,9 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Player seenPlayer;
         public Player lastSeenPlayer;
         public Enemy seenAlly;
-
-        public float currentSpeed;
-
+        
 
         //Queue<Vector3> targetPoints = new Queue<Vector3>();
 

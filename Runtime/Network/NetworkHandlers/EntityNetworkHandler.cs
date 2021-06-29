@@ -9,9 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public bool isOwner;
         public int owner = -1;
-
-        public new Entity observed;
-
+        
         public Vector3 targetPosition;
         public Vector3 targetRotation;
 
@@ -39,18 +37,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             targetRotation = transform.rotation.eulerAngles;
         }
 
+        public Entity GetObserved()
+        {
+            return (Entity) observed;
+        }
 
         public override void Start()
         {
             base.Start();
             if (isOnServer) RequestCreation();
 
-            observed.onTeleportEvent.AddListener(Teleport);
-            observed.onSpawnEvent.AddListener(x => {GameConsole.Log("Spawn State Update"); UpdateState(); });
-            observed.onHitEvent.AddListener(x => {GameConsole.Log("Hit State Update"); UpdateState(); });
-            observed.onDespawnEvent.AddListener(() => {});
-            observed.onDespawnEvent.AddListener(() => {GameConsole.Log("Despawn State Update"); UpdateState(); });
-            observed.onPointsChangedEvent.AddListener((x) => {
+            GetObserved().onTeleportEvent.AddListener(Teleport);
+            GetObserved().onSpawnEvent.AddListener(x => {GameConsole.Log("Spawn State Update"); UpdateState(); });
+            GetObserved().onHitEvent.AddListener(x => {GameConsole.Log("Hit State Update"); UpdateState(); });
+            GetObserved().onDespawnEvent.AddListener(() => {});
+            GetObserved().onDespawnEvent.AddListener(() => {GameConsole.Log("Despawn State Update"); UpdateState(); });
+            GetObserved().onPointsChangedEvent.AddListener((x) => {
                 if (isOnServer)
                 {
                     GameConsole.Log("Points changed State Update " + x);
@@ -63,8 +65,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             blockExists = false;
             targetPosition = transform.position;
-            observed.controller.enabled = isOnServer? false : true;
-            observed.setMovementStatus(true);
+            GetObserved().controller.enabled = !isOnServer;
+            GetObserved().setMovementStatus(true);
             GameConsole.Log("Resolve Locomotion Block");
             //Debug.Break();
         }
@@ -78,8 +80,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blockPosition = bPosition;
             targetPosition = bPosition;
             
-            observed.controller.enabled = isOnServer ? false : false;
-            observed.setMovementStatus(false);
+            GetObserved().controller.enabled = false;
+            GetObserved().setMovementStatus(false);
             GameConsole.Log($"Set Locomotion Block for {this}");
             //Debug.Break();
         }
@@ -208,9 +210,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var entityState = new EntityState
             {
-                Health = observed.health,
+                Health = GetObserved().health,
                 Active = observed.gameObject.activeSelf,
-                Points = observed.points
+                Points = GetObserved().points
             };
             GameConsole.Log("Updated State "+entityState);
             Marshall(entityState);
@@ -222,8 +224,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             EntityState entityState;
             if (p.Content.TryUnpack(out entityState))
             {
-                observed.health = entityState.Health;
-                observed.points = entityState.Points;
+                GetObserved().health = entityState.Health;
+                GetObserved().points = entityState.Points;
                 if (observed.gameObject.activeSelf != entityState.Active)
                     observed.gameObject.SetActive(entityState.Active);
             }
@@ -244,10 +246,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             SetupLocomotionBlock(teleportPosition);
             
-            if (observed.loadTarget != null)
+            if (GetObserved().loadTarget != null)
                 if(LevelManager.currentLevel != null)
                 {
-                observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
+                    GetObserved().loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
                     GameConsole.Log($"Sending Teleport: {entityTeleport}");
                     Marshall(entityTeleport);
@@ -270,13 +272,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 EntityTeleport entityTeleport;
 
                 if (p.Content.TryUnpack(out entityTeleport))
-                    if (observed.loadTarget != null)
+                    if (GetObserved().loadTarget != null)
                         teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
 
                 SetupLocomotionBlock(teleportPosition);
-                observed.loadTarget.WaitForChunkLoaded(teleportPosition, () =>
+                GetObserved().loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
-                    observed.Teleport(teleportPosition);
+                    GetObserved().Teleport(teleportPosition);
                     ResolveLocomotionBlock();
                 });
             }
@@ -301,7 +303,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         QY = rot.y,
                         QZ = rot.z
                     };
-                    if (observed.movementOverride)
+                    if (GetObserved().movementOverride)
                     {
                         Marshall(entityLocomotion, TCP: false);
                     }else

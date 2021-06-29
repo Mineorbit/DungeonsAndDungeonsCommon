@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float speed;
 
 
-        public void Update()
+        public virtual void Update()
         {
             speed = entityController.currentSpeed;
             if(animator != null)
