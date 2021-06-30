@@ -5,7 +5,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Enemy : Entity
     {
-        public new EnemyController controller;
 
         public float viewDistance = 15;
         public float attackDistance = 4;
@@ -29,6 +28,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public EnemyController GetController()
+        {
+            return (EnemyController) controller;
+        }
+        
         public virtual void OnEnable()
         {
             controller = GetComponent<EnemyController>();
@@ -60,9 +64,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
 
-            controller.seenPlayer = null;
-            controller.seenAlly = null;
-            controller.lastSeenPlayer = null;
+            GetController().seenPlayer = null;
+            GetController().seenAlly = null;
+            GetController().lastSeenPlayer = null;
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -20,7 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float speed;
 
 
-        public string name;
+        public string playerName;
         public Color playerColor;
 
         private readonly bool alive = true;

@@ -102,7 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             playerController.locallyControllable = local;
 
-            player.name = name;
+            player.playerName = name;
             player.localId = freeLocalId;
             players[freeLocalId] = player;
             playerControllers[freeLocalId] = playerController;
