@@ -39,20 +39,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (var itemHandle in itemHandles) itemHandle.Dettach();
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            var col = collision.collider.gameObject;
-            if (col.tag == "Enemy")
-            {
-                //int damage = col.GetComponent<EnemyController>().damage;
-                var damage = 10;
-                if (damage > 0)
-                {
-                    Hit(col.GetComponent<Entity>(), damage);
-                }
-            }
-        }
-
 
         public override void OnStartRound()
         {

@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnStartRound();
             buildCollider.enabled = false;
-            playerStandinghitbox.Attach("Player");
+            playerStandinghitbox.Attach("Entity");
 
             playerStandinghitbox.enterEvent.AddListener(x =>
             {

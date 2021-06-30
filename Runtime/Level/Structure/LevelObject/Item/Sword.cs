@@ -33,7 +33,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Vector3 hitboxRotation = new Vector3(0, 135, 90);
         public void OnDestroy()
         {
-            Debug.Log("I am being destroyed");
             if (hitBox != null)
                 Destroy(hitBox.gameObject);
         }
@@ -44,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.localPosition = holdOffset;
             transform.localEulerAngles = holdRotation;
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
-            hitBox.Attach(owner.transform.Find("Model").gameObject, "Enemy", new Vector3(0, 0, -2));
+            hitBox.Attach(owner.transform.Find("Model").gameObject, "Entity", new Vector3(0, 0, -2));
             hitBox.transform.localEulerAngles = hitboxRotation;
 
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
@@ -72,7 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void TryDamage(GameObject g)
         {
             var c = g.GetComponentInParent<Entity>(true);
-            if (c != null)
+            if (c != null && c != owner)
             {
                 onHitEvent.Invoke();
                 c.Hit(owner, damage);
