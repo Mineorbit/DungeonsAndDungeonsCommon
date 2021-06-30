@@ -7,7 +7,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelLoadTargetNetworkHandler : LevelObjectNetworkHandler
     {
-        public new LevelLoadTarget observed;
 
         public override void Awake()
         {

@@ -11,11 +11,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelObjectNetworkHandler : NetworkHandler
     {
-        public new NetworkLevelObject observed;
 
         private List<string> availableActions = new List<string>();
 
         public bool disabled_observed = true;
+
+
+        public LevelObject GetObserved()
+        {
+            return (LevelObject) observed;
+        }
+        
         public virtual void Awake()
         {
             observed = GetComponent<NetworkLevelObject>();
@@ -23,7 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             // currently not updated
             if (observed != null)
-                observed.enabled = !disabled_observed || (!NetworkManager.isConnected || isOnServer);
+                GetObserved().enabled = !disabled_observed || (!NetworkManager.isConnected || isOnServer);
         }
 
 

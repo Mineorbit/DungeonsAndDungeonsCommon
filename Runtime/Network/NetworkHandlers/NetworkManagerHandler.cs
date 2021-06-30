@@ -9,7 +9,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkManagerHandler : NetworkHandler
     {
-        public new NetworkManager observed;
+
+
+        public NetworkManager GetObserved()
+        {
+            return (NetworkManager) observed;
+        }
+        
         
         public static void RequestPrepareRound()
         {
