@@ -223,13 +223,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7c85636248e4d4a90ee644ae539925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelObjectDataType: 
+  levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: -3889575931983887138}
   inBoundWires: []
   outBoundWires: []
-  collider: {fileID: 5230568351884737477}
+  gateCollider: {fileID: 5230568351884737477}
   gateBaseAnimator: {fileID: 7098715700073503541}
   navMeshObstacle: {fileID: -6315356682183278751}
 --- !u!208 &-6315356682183278751
@@ -262,7 +262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Identity: 
   identified: 0
-  observed: {fileID: 0}
   observed: {fileID: 0}
   disabled_observed: 1
 --- !u!114 &7098715700073503541

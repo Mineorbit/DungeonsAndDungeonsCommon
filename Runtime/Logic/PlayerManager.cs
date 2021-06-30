@@ -154,12 +154,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static int GetPlayerId(GameObject player)
         {
-            if (player.tag == "Player")
+            if (player.tag == "Entity")
             {
                 var p = player.GetComponent<Player>();
+                if(p != null)
+                {
                 for (var i = 0; i < 4; i++)
                     if (p == playerManager.players[i])
                         return i;
+                }
             }
 
             return -1;

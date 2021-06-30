@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e0263349849dc46b29267edffcd334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelObjectDataType: 
+  levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: -4959942066154635380}
   inBoundWires: []
   outBoundWires: []
   playerStandinghitbox: {fileID: 6512620288335343218}
@@ -83,9 +83,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Identity: 
-  observed: {fileID: 0}
-  observed: {fileID: 0}
+  _Identity: 
+  identified: 0
+  observed: {fileID: 2808803964958646776}
+  disabled_observed: 1
 --- !u!1001 &8926374800149297742
 PrefabInstance:
   m_ObjectHideFlags: 0

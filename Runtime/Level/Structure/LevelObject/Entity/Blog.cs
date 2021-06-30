@@ -315,7 +315,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             health = maxHealth;
 
 
-            attackHitbox.Attach("Player");
+            attackHitbox.Attach("Entity");
 
             attackHitbox.enterEvent.AddListener(x => { TryDamage(x, currentDamage); });
 

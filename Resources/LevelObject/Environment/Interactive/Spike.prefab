@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4489509847177546239}
   - component: {fileID: 4489509847177546238}
   - component: {fileID: 237813688821965440}
+  - component: {fileID: -4950567087918973459}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -61,9 +62,25 @@ MonoBehaviour:
   levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 0}
+  levelObjectNetworkHandler: {fileID: -4950567087918973459}
   inBoundWires: []
   outBoundWires: []
+--- !u!114 &-4950567087918973459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489509847177546233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Identity: 
+  identified: 0
+  observed: {fileID: 237813688821965440}
+  disabled_observed: 1
 --- !u!1001 &4489509846425567441
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -50,7 +50,8 @@ MonoBehaviour:
   exitEvent:
     m_PersistentCalls:
       m_Calls: []
-  collider: {fileID: 8387432603789202030}
+  hitboxCollider: {fileID: 8387432603789202030}
+  insideCounter: 0
 --- !u!64 &8387432603789202030
 MeshCollider:
   m_ObjectHideFlags: 0

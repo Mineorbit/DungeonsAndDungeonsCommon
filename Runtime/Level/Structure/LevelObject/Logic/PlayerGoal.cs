@@ -8,7 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static UnityEvent GameWinEvent = new UnityEvent();
 
         public bool[] playersInside;
-        private Hitbox hitbox;
+        public Hitbox hitbox;
 
         // Update is called once per frame
         private void Update()
@@ -28,7 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 LevelManager.currentLevel.goal = this;
             }
             hitbox = GetComponentInChildren<Hitbox>();
-            hitbox.Attach("Player");
+            hitbox.Attach("Entity");
             hitbox.enterEvent.AddListener(x => { Enter(x); });
             hitbox.exitEvent.AddListener(x => { Exit(x); });
             playersInside = new bool[4];
@@ -38,10 +38,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private int pointsForGoalReached = 1000;
         private void Enter(GameObject other)
         {
-            var p = PlayerManager.GetPlayerId(other);
-            if (p >= 0) playersInside[p] = true;
-            PlayerManager.GetPlayerById(p).points += pointsForGoalReached;
-            CheckWinCondition();
+                var p = PlayerManager.GetPlayerId(other);
+                if (p >= 0) playersInside[p] = true;
+                PlayerManager.GetPlayerById(p).points += pointsForGoalReached;
+                CheckWinCondition();
         }
 
         private void CheckWinCondition()
