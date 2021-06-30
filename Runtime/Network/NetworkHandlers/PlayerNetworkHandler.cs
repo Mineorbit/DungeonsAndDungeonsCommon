@@ -121,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         [PacketBinding.Binding]
-        public static void HandleRemovePacket(Packet value)
+        public static void OnPlayerRemove(Packet value)
         {
             PlayerRemove playerRemove;
             if (value.Content.TryUnpack(out playerRemove))
@@ -133,7 +133,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         [PacketBinding.Binding]
-        public static void HandleCreatePacket(Packet value)
+        public static void OnPlayerCreate(Packet value)
         {
             PlayerCreate playerCreate;
             if (value.Content.TryUnpack(out playerCreate))

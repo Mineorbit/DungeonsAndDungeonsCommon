@@ -75,7 +75,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             set
             {
-                if ((string) value != string.Empty)
+                
+                if (value != string.Empty)
                 {
                     if (settingType == SettingType.BOOL) optionValue = Convert.ToBoolean(value);
                     if (settingType == SettingType.INT) optionValue = Convert.ToInt32(value);
@@ -88,7 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
                 if (optionHandler != null) optionHandler.OnValueChanged(optionValue);
-            }
+                }
         }
 
         private void OnEnable()

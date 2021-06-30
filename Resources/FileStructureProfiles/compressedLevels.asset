@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc059edb77fe87648af55313120f7593, type: 3}
   m_Name: compressedLevels
   m_EditorClassIdentifier: 
-  name: compressedLevels
+  fileStructureProfileName: compressedLevels
   parent: {fileID: 11400000, guid: 8b013e29c79a0d3468ab41fa54e92041, type: 2}
   subStructures: []

@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 382386651948371245, guid: 30bff139244ced641b0d89ed372153a7, type: 3}
   uniqueLevelObjectId: -1199888551
   granularity: 1
-  name: Blue Player Spawn
+  levelObjectName: Blue Spawn
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

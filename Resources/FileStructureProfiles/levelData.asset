@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc059edb77fe87648af55313120f7593, type: 3}
   m_Name: levelData
   m_EditorClassIdentifier: 
-  name: levelData
+  fileStructureProfileName: levelData
   parent: {fileID: 11400000, guid: 601aef6a25e7bcf4ca35074f3baef129, type: 2}
-  subStructures: []
+  subStructures:
+  - {fileID: 11400000, guid: 516849af024983a46bc462061a4a7cbb, type: 2}
+  - {fileID: 11400000, guid: b75714cdca5d3d44f82e9e80392a560c, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   uniqueLevelObjectId: -2066831063
   granularity: 0
-  name: Checkpoint
+  levelObjectName: Checkpoint
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
