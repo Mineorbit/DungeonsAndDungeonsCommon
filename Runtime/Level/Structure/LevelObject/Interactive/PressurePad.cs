@@ -40,7 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnEndRound()
         {
             base.OnEndRound();
-            Invoke(Deactivate);
+            Invoke(ForceDeactivate);
             buildCollider.enabled = true;
         }
 
@@ -70,6 +70,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 unpressTimer = TimerManager.StartTimer(unpressTime, () => { Invoke(Deactivate); });
         }
 
+
+        public void ForceDeactivate()
+        {
+            if (pressed)
+            {
+                pressed = false;
+                base.Deactivate();
+                AnimUnpress();
+            }
+        }
 
         public override void Deactivate()
         {

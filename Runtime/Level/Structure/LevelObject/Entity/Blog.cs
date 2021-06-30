@@ -96,7 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnInit();
 
 
-            onHitEvent.AddListener(x => { Counter(x); });
+            onHitEvent.AddListener(x => { if(x.GetType().IsInstanceOfType(typeof(Entity)))  Counter((Entity)x); });
             rand = new Random();
             viewDistance = 5;
 

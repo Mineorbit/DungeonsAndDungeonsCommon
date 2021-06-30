@@ -17,7 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public EntityBaseAnimator baseAnimator;
 
-        public UnityEvent<Entity> onHitEvent = new UnityEvent<Entity>();
+        public UnityEvent<LevelObject> onHitEvent = new UnityEvent<LevelObject>();
 
         public UnityEvent<int> onPointsChangedEvent = new UnityEvent<int>();
 
@@ -213,7 +213,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private int pointsForKill = 100;
 
-        public virtual void Hit(Entity hitter, int damage)
+        public virtual void Hit(LevelObject hitter, int damage)
         {
 
             if (Level.instantiateType == Level.InstantiateType.Play ||
@@ -225,7 +225,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     
                     Invoke(HitEffect,transform.position - hitter.transform.position);
 
-                    hitter.points += damage;
+                    if (hitter.GetType().IsInstanceOfType(typeof(Entity)))
+                    {
+                        ((Entity)hitter).points += damage;
+                    }
                     
                     StartHitCooldown();
                     GameConsole.Log($"{hitter.gameObject.name}  HIT  {gameObject.name} AND CAUSED {damage} HP DAMAGE");
@@ -234,7 +237,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     onHitEvent.Invoke(hitter);
                     if (health <= 0)
                     {
-                        hitter.points += pointsForKill;
+                        if (hitter.GetType().IsInstanceOfType(typeof(Entity)))
+                        {
+                            ((Entity)hitter).points += pointsForKill;
+                        }
                         Invoke(Kill);
                     }
                     //FreezeFramer.freeze(0.0075f);
