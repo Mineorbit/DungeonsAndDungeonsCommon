@@ -29,6 +29,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return Value;
         }
 
+        public bool Equals(CustomEnum customEnum)
+        {
+            return this == customEnum;
+        }
+        
         public static bool operator ==(CustomEnum a, CustomEnum b)
         {
             return a.cardinal == b.cardinal;

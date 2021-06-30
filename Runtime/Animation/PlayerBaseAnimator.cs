@@ -6,7 +6,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class PlayerBaseAnimator : EntityBaseAnimator
     {
         public CharacterController characterController;
-        [FormerlySerializedAs("playerController")] public new PlayerController entityController;
         public GameObject footFX;
         private Vector3 forwardDirection;
 
@@ -17,13 +16,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             forwardDirection = new Vector3(0, 0, 0);
         }
 
+
+        public PlayerController GetController()
+        {
+            return (PlayerController) entityController;
+        }
+        
         public override void Update()
         {
             base.Update();
             //simplify in future to just moving somehow
 
             if (me == PlayerManager.currentPlayer)
-                footFX.SetActive(entityController.IsGrounded && entityController.allowedToMove &&
+                footFX.SetActive(GetController().IsGrounded && GetController().allowedToMove &&
                                  (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
                                   Input.GetKey(KeyCode.D)));
         }

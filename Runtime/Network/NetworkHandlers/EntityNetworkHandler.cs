@@ -137,7 +137,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 X = position.x,
                 Y = position.y,
                 Z = position.z,
-                LevelObjectDataType = observed.levelObjectDataType
+                LevelObjectDataType = GetObserved().levelObjectDataType
             };
 
             Marshall(entityCreate);
