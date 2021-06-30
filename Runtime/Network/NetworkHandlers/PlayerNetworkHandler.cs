@@ -25,7 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private bool isSetup = false;
 
-        public Player GetObserved()
+        public Player GetObservedPlayer()
         {
             return (Player) observed;
         }
@@ -36,11 +36,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(!isSetup)
             { 
             isSetup = true;
-            Debug.Log("Setting up PlayerHandler with "+Identity+" and "+GetObserved().localId);
-            isOwner = !isOnServer && GetObserved().localId == NetworkManager.instance.localId;
-            owner = GetObserved().localId;
+            Debug.Log("Setting up PlayerHandler with "+Identity+" and "+GetObservedPlayer().localId);
+            isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
+            owner = GetObservedPlayer().localId;
             
-            GetObserved().controller.enabled = !isOnServer && isOwner;
+            GetObservedPlayer().controller.enabled = !isOnServer && isOwner;
             
             if (isOnServer)
                 GetComponent<CharacterController>().enabled = false;
@@ -49,20 +49,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void OnDestroy()
+        public override void OnDestroy()
         {
             if (Level.instantiateType == Level.InstantiateType.Play)
                 RequestRemoval();
         }
 
-        public virtual void SetupLocalMarshalls()
-        {
-            base.SetupLocalMarshalls();
-        }
 
         public override void RequestCreation()
         {
-            var p = GenerateCreationRequest(GetObserved());
+            var p = GenerateCreationRequest(GetObservedPlayer());
 
             Server.instance.WriteAll(p);
         }
@@ -70,14 +66,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public override void ProcessAction(Packet p)
         {
-            if (isOnServer) Server.instance.WriteAll(p, GetObserved().localId);
+            if (isOnServer) Server.instance.WriteAll(p, GetObservedPlayer().localId);
 
             base.ProcessAction(p);
         }
 
         public override void RequestRemoval()
         {
-            var p = GenerateRemovalRequest(GetObserved(), this);
+            var p = GenerateRemovalRequest(GetObservedPlayer(), this);
             Server.instance.WriteAll(p);
         }
 
@@ -168,7 +164,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 h.Setup();
 
                 if (isOnServer)
-                    Destroy(h.GetObserved().controller);
+                    Destroy(h.GetObservedPlayer().controller);
             });
         }
     }

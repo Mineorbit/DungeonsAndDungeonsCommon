@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
   uniqueLevelObjectId: -1768982159
   granularity: 2
-  name: Small Floorpiece
+  levelObjectName: Small Floorpiece
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

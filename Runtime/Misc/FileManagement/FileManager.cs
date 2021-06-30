@@ -25,7 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private string[] List(FileStructureProfile profile)
         {
             if (profile == null) return new string[0];
-            var path = "/" + profile.name;
+            var path = "/" + profile.fileStructureProfileName;
             var paths = new List<string>();
             paths.Add(path);
             foreach (var fS in profile.subStructures)

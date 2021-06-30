@@ -1,3 +1,6 @@
+using System;
+using JetBrains.Annotations;
+
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class CustomEnum
@@ -29,19 +32,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return Value;
         }
 
-        public bool Equals(CustomEnum customEnum)
+        public override bool Equals([CanBeNull] System.Object customEnum)
         {
-            return this == customEnum;
+            if (customEnum.GetType() != this.GetType())
+            {
+                return false;
+            }
+            return this.cardinal == ((CustomEnum) customEnum).cardinal;
+        }
+
+        public override int GetHashCode()
+        {
+            return cardinal;
         }
         
         public static bool operator ==(CustomEnum a, CustomEnum b)
         {
-            return a.cardinal == b.cardinal;
+            return a.Equals(b);
         }
 
         public static bool operator !=(CustomEnum a, CustomEnum b)
         {
-            return a.cardinal != b.cardinal;
+            return !a.Equals(b);
         }
     }
 }

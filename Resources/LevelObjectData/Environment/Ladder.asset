@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 3291323872447875250, guid: 19ecd40b42bc6514da6f1d567b579ab9, type: 3}
   uniqueLevelObjectId: -620747482
   granularity: 1
-  name: Ladder
+  levelObjectName: Ladder
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

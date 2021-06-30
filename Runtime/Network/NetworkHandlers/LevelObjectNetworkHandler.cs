@@ -17,16 +17,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool disabled_observed = true;
 
 
-        public LevelObject GetObserved()
+        public virtual LevelObject GetObserved()
         {
             return (LevelObject) observed;
         }
         
-        public virtual void Awake()
+        public override void Awake()
         {
             observed = GetComponent<NetworkLevelObject>();
             base.Awake();
-            
             // currently not updated
             if (observed != null)
                 GetObserved().enabled = !disabled_observed || (!NetworkManager.isConnected || isOnServer);

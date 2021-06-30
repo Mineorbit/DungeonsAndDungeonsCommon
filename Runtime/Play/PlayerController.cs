@@ -25,8 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float heightRay = 0.55f;
 
 
-        public Collider col;
-        private float convergenceSpeed = 0.1f;
 
 
         //Needs to be refined

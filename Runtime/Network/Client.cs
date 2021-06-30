@@ -93,7 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Disconnect();
         }
 
-        public static async Task<Client> Connect(IPAddress host, int port)
+        public static Client Connect(IPAddress host, int port)
         {
             Client client = new Client {Port = port};
 
@@ -287,7 +287,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private async Task<byte[]> ReadData(bool TCP = true)
+        private byte[] ReadData(bool TCP = true)
         {
             if (TCP)
             {
@@ -321,7 +321,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // int tries; necessary?
         public async Task<T> ReadPacket<T>() where T : IMessage, new()
         {
-            var data = await ReadData();
+            var data = ReadData();
 
             var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
             
@@ -414,21 +414,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Maybe refactor more here
         private void TcpHandle()
         {
-            Task.Run(async () => { await HandlePackets(true); });
+            HandlePackets(true);
         }
 
         private void UdpHandle()
         {
-            Task.Run(async () => { await HandlePackets(false); });
+            HandlePackets(false);
         }
 
 
-        public async Task HandlePackets(bool Tcp)
+        public void HandlePackets(bool Tcp)
         {
             while(true)
             {
                 byte[] data;
-                data = await ReadData(Tcp);
+                data = ReadData(Tcp);
                 receivedPacketCarriers++;
             // LENGTH IS 0 DISCONNECT
 

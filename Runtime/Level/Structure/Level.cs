@@ -123,7 +123,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 catch (SemaphoreFullException e)
                 {
-                    Debug.Log("Level Readyness was not awaited");
+                    GameConsole.Log($"Level Readyness was not awaited {e}");
                 }
             }
         }
@@ -243,7 +243,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!levelObjectData.levelInstantiable)
             {
-                Debug.Log(levelObjectData.name + " cannot be created as constant part of Level");
+                Debug.Log(levelObjectData.levelObjectName + " cannot be created as constant part of Level");
                 return null;
             }
 
@@ -308,7 +308,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!levelObjectData.dynamicInstantiable)
             {
-                Debug.Log(levelObjectData.name + " cannot be created dynamically");
+                Debug.Log(levelObjectData.levelObjectName + " cannot be created dynamically");
                 return null;
             }
 

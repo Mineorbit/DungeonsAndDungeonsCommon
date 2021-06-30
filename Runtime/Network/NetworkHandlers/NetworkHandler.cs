@@ -48,7 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        public void OnDestroy()
+        public virtual void OnDestroy()
         {
             NetworkManager.networkHandlers.Remove(this);
         }

@@ -26,6 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             catch (Exception e)
             {
+                GameConsole.Log($"Error: {e}");
                 DestroyImmediate(g);
                 return null;
             }

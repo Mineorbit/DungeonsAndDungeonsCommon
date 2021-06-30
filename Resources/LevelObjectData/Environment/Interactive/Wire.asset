@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 6758271155799333418, guid: 5cbbe904b5e5f594db0368f1cb6e1f51, type: 3}
   uniqueLevelObjectId: -1298514137
   granularity: 1
-  name: Wire
+  levelObjectName: Wire
   dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 1

@@ -4,6 +4,7 @@ using System.Net.Configuration;
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -15,7 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float granularity;
 
-        public string name;
+        public string levelObjectName;
 
         public bool dynamicInstantiable;
 
@@ -89,7 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameObject g = null;
             try
             {
-                GameConsole.Log($"Instantiating {name}",false);
+                GameConsole.Log($"Instantiating {levelObjectName}",false);
                 g = Instantiate(prefab) as GameObject;
                 Destroy(g.GetComponent<LevelObject>());
                 g.SetActive(false);

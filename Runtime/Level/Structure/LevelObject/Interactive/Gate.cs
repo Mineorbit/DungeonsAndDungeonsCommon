@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Gate : InteractiveLevelObject
     {
-        public Collider collider;
+        public Collider gateCollider;
         public GateBaseAnimator gateBaseAnimator;
         public NavMeshObstacle navMeshObstacle;
 
@@ -13,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
             gateBaseAnimator.Close();
-            collider.enabled = true;
+            gateCollider.enabled = true;
             navMeshObstacle.enabled = true;
         }
 
@@ -28,14 +29,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Debug.Log("Opening Gate");
             gateBaseAnimator.Open();
-            collider.enabled = false;
+            gateCollider.enabled = false;
         }
 
         public void SetClosed()
         {
             Debug.Log("Closing Gate");
             gateBaseAnimator.Close();
-            collider.enabled = true;
+            gateCollider.enabled = true;
         }
 
         public override void Deactivate()
