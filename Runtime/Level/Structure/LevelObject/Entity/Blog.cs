@@ -77,14 +77,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void RandomWalk()
         {
-            controller.SetTrackingAbility(true);
+            GetController().SetTrackingAbility(true);
             if (!TimerManager.isRunning(randomWalkTimer))
             {
                 var randomAngle = UnityEngine.Random.Range(0, Mathf.PI);
                 var randomDistance = 6f;
                 var randomGoal = transform.position + randomDistance * (transform.forward * Mathf.Sin(randomAngle) +
                                                                         transform.right * Mathf.Cos(randomAngle));
-                controller.GoTo(randomGoal);
+                GetController().GoTo(randomGoal);
                 randomWalkTimer = TimerManager.StartTimer(randomWalkTime, () => { });
             }
         }
@@ -108,7 +108,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void setMovementStatus(bool allowedToMove)
         {
             base.setMovementStatus(allowedToMove);
-            controller.SetTrackingAbility(allowedToMove);
+            GetController().SetTrackingAbility(allowedToMove);
         }
 
         private void Counter(Entity attacker)
@@ -162,12 +162,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 RandomWalk();
                 TrackingEffect();
-                if (controller.seenPlayer != null) FSM.Move(EnemyAction.Engage);
+                if (GetController().seenPlayer != null) FSM.Move(EnemyAction.Engage);
             });
 
             FSM.stateAction.Add(BlogState.Track, () =>
             {
-                if (controller.seenPlayer == null)
+                if (GetController().seenPlayer == null)
                 {
                     FSM.Move(EnemyAction.Disengage);
                     return;
@@ -176,7 +176,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var distanceToTarget = (transform.position - targetEntity.transform.position).magnitude;
                 if (targetEntity != null)
                 {
-                    controller.GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
+                    GetController().GoTo(targetEntity.transform.position + targetEntity.transform.forward * attackDistance);
 
 
                     TrackingEffect();
@@ -188,7 +188,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             FSM.stateAction.Add(EnemyState.Attack, () =>
             {
-                if (attackTarget == null || controller.seenPlayer == null)
+                if (attackTarget == null || GetController().seenPlayer == null)
                 {
                     FSM.Move(EnemyAction.Disengage);
                     return;
@@ -198,7 +198,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var dir = transform.position - attackTarget.transform.position;
                 var distanceToTarget = dir.magnitude;
 
-                if (!controller.CheckLineOfSight(attackTarget)) FSM.Move(EnemyAction.Engage);
+                if (!GetController().CheckLineOfSight(attackTarget)) FSM.Move(EnemyAction.Engage);
 
 
                 TrackingEffect(attackTarget);
@@ -212,7 +212,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             (attackTarget.transform.forward * Mathf.Sin(t) +
                              attackTarget.transform.right * Mathf.Cos(t));
 
-                        controller.GoTo(Circle(targetPoint));
+                        GetController().GoTo(Circle(targetPoint));
                     }
                 }
                 else
@@ -226,7 +226,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 var dir = transform.position - attackTarget.transform.position;
                 TrackingEffect(attackTarget);
-                controller.GoTo(attackTarget.transform.position);
+                GetController().GoTo(attackTarget.transform.position);
             });
 
 
@@ -234,7 +234,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 new Tuple<Action<EnemyAction>, EnemyState>(x =>
                 {
                     forgetPlayer = true;
-                    TrackTarget(controller.seenPlayer);
+                    TrackTarget(GetController().seenPlayer);
                 }, BlogState.Track));
             FSM.transitions.Add(new Tuple<EnemyState, EnemyAction>(BlogState.Track, EnemyAction.Disengage),
                 new Tuple<Action<EnemyAction>, EnemyState>(x => { StopTrackTarget(); }, EnemyState.Idle));
@@ -276,7 +276,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 new Tuple<Action<EnemyAction>, EnemyState>(x =>
                 {
                     forgetPlayer = true;
-                    TrackTarget(controller.seenPlayer);
+                    TrackTarget(GetController().seenPlayer);
                 }, BlogState.Track));
 
             SetState(EnemyState.Idle);
@@ -291,7 +291,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void TrackTarget(Entity target)
         {
-            controller.SetTrackingAbility(true, true);
+            GetController().SetTrackingAbility(true, true);
             if (target == null) FSM.Move(EnemyAction.Disengage);
             targetEntity = target;
 
@@ -304,7 +304,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void StopTrackTarget(bool disableTracking = true)
         {
-            controller.SetTrackingAbility(!disableTracking);
+            GetController().SetTrackingAbility(!disableTracking);
             targetEntity = null;
         }
 
@@ -327,7 +327,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!TimerManager.isRunning(strikeTimer) && !TimerManager.isRunning(finishStrikeTimer))
             {
                 StopTrackTarget(false);
-                controller.GoTo(attackTarget.transform.position);
+                GetController().GoTo(attackTarget.transform.position);
                 FSM.SetState(BlogState.Strike);
                 strikeTimer = TimerManager.StartTimer(1 + 5 * (float) rand.NextDouble(), () => { Strike(); });
             }

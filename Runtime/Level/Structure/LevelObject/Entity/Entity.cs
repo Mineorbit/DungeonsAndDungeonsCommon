@@ -27,7 +27,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent<Vector3> onTeleportEvent = new UnityEvent<Vector3>();
 
-        public new EntityNetworkHandler levelObjectNetworkHandler;
 
         public EntityController controller;
 
@@ -63,6 +62,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 _points = value;
                 onPointsChangedEvent.Invoke(points);
             }
+        }
+
+        public EntityNetworkHandler GetNetworkHandler()
+        {
+            return (EntityNetworkHandler) levelObjectNetworkHandler;
         }
         
         public virtual void Start()

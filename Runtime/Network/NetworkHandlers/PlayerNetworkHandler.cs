@@ -107,7 +107,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var playerCreate = new PlayerCreate
             {
-                Name = p.name,
+                Name = p.playerName,
                 LocalId = p.localId,
                 X = position.x,
                 Y = position.y,
