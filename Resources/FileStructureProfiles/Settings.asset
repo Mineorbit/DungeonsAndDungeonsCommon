@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc059edb77fe87648af55313120f7593, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  name: Settings
+  fileStructureProfileName: settings
   parent: {fileID: 11400000, guid: 601aef6a25e7bcf4ca35074f3baef129, type: 2}
   subStructures: []

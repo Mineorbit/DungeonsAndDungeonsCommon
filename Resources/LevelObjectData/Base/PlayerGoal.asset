@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 8390361897316666614, guid: 2cd2f3ae494709a4d8d8fa3ceedab93a, type: 3}
   uniqueLevelObjectId: -217442996
   granularity: 1
-  name: Goal
+  levelObjectName: Goal
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

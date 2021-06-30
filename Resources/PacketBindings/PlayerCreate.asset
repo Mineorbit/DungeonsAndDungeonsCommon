@@ -13,13 +13,39 @@ MonoBehaviour:
   m_Name: PlayerCreate
   m_EditorClassIdentifier: 
   possiblePacketTypes:
-  - State.LevelObjectConnect
+  - General.Packet
+  - General.PacketCarrier
   - State.MeConnect
   - State.MeDisconnect
+  - State.PrepareRound
+  - State.ReadyLobby
+  - State.ReadyRound
+  - State.StartRound
   - State.Welcome
-  - General.Packet
+  - State.WelcomeUnstable
+  - State.WinRound
+  - Game.ConnectLevelObject
+  - Game.ConnectLevelObjectFail
+  - Game.ConnectLevelObjectRequest
+  - Game.EntityCreate
+  - Game.EntityLocomotion
+  - Game.EntityState
+  - Game.EntityTeleport
+  - Game.Parameter
   - Game.LevelObjectAction
   - Game.PlayerCreate
+  - Game.PlayerRemove
+  - Game.StreamChunk
+  - NetLevel.Location
+  - NetLevel.LevelObjectInstance
+  - NetLevel.LevelObjectInstanceData
+  - NetLevel.HuffmanEntry
+  - NetLevel.ChunkData
+  - NetLevel.LevelMetaData
+  - NetLevel.LevelMetaDataList
+  - NetLevel.LobbyRequest
+  - NetLevel.CoordinateChunkPair
+  - NetLevel.RegionData
   - Google.Protobuf.IBufferMessage
   - Google.Protobuf.ICustomDiagnosticMessage
   - Google.Protobuf.IExtendableMessage`1
@@ -80,12 +106,20 @@ MonoBehaviour:
   - Google.Protobuf.Reflection.GeneratedCodeInfo+Types+Annotation
   possibleHandlerTypes:
   - com.mineorbit.dungeonsanddungeonscommon.EntityNetworkHandler
+  - com.mineorbit.dungeonsanddungeonscommon.LevelLoadTargetNetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.LevelObjectNetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.NetworkHandler
+  - com.mineorbit.dungeonsanddungeonscommon.NetworkManagerHandler
   - com.mineorbit.dungeonsanddungeonscommon.PlayerNetworkHandler
   possibleMethods:
-  - HandleCreatePacket
+  - ProcessAction
+  - OnPlayerRemove
+  - OnPlayerCreate
+  - OnEntityLocomotion
+  - OnEntityState
+  - OnEntityTeleport
   PacketType: Game.PlayerCreate
   HandlerType: com.mineorbit.dungeonsanddungeonscommon.PlayerNetworkHandler
   BindedMethods:
-  - HandleCreatePacket
+  - OnPlayerCreate
+  withIdentity: 0

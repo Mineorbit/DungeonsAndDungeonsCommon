@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 7356335998683483703, guid: 341e8b264c2483544ac5669c6e4481a5, type: 3}
   uniqueLevelObjectId: 555711218
   granularity: 1
-  name: Green Player Spawn
+  levelObjectName: Green Spawn
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

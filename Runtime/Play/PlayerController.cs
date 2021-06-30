@@ -95,7 +95,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var hit = new RaycastHit();
             IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
-            col = hit.collider;
         }
 
         public float climbDampening = 0.5f;
