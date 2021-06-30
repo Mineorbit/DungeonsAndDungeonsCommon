@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   uniqueLevelObjectId: -1236243656
   granularity: 0
-  name: 
+  levelObjectName: Lever
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

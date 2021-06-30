@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 4489509847177546233, guid: 7325cde9afbb0be49816819ca82f8da2, type: 3}
   uniqueLevelObjectId: 723221514
   granularity: 0.5
-  name: Spike Trap
+  levelObjectName: Spike
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

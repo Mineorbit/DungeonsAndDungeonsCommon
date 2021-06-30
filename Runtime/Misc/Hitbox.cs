@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -8,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent<GameObject> enterEvent = new UnityEvent<GameObject>();
         public UnityEvent<GameObject> exitEvent = new UnityEvent<GameObject>();
 
-        public Collider collider;
+        public Collider hitboxCollider;
 
         private bool isAttached;
 
@@ -55,13 +56,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Activate()
         {
             if (isAttached)
-                collider.enabled = true;
+                hitboxCollider.enabled = true;
             else GameConsole.Log("Hitbox " + gameObject.name + " was not attached");
         }
 
         public void Deactivate()
         {
-            if (isAttached) collider.enabled = false;
+            if (isAttached) hitboxCollider.enabled = false;
         }
     }
 }

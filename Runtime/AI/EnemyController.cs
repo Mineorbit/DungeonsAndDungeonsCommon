@@ -213,7 +213,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private Enemy CheckClosestAlley()
         {
-            var minDist = float.MaxValue;
             Enemy minEnemy = null;
             /*
             foreach (GameObject g in Level.GetAllEnemies())

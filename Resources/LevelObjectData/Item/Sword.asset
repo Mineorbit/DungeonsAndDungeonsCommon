@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 8138660057824271278, guid: 84050714d0d97d942a23cee443e58ee1, type: 3}
   uniqueLevelObjectId: 2
   granularity: 1
-  name: Little Sword
+  levelObjectName: Sword
   dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 0

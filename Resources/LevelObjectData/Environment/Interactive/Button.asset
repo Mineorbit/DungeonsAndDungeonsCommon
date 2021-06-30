@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 7932103809837258557, guid: 3b0b40ed865f825429204492e2b6ba3c, type: 3}
   uniqueLevelObjectId: 154008271
   granularity: 1
-  name: Pressure Button
+  levelObjectName: Button
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

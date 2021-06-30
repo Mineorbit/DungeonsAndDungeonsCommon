@@ -13,9 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Item slot;
         public HandleType handleType;
-
-        private bool dettachNext;
-
+        
         private PlayerController p;
         private Entity player;
 
@@ -28,7 +26,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Attach(Item item)
         {
-            dettachNext = false;
             item.transform.position = transform.position;
             item.transform.localRotation = new Quaternion(0, 0, 0, 0);
             item.transform.parent = transform;

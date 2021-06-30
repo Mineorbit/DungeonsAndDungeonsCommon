@@ -24,8 +24,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string playerName;
         public Color playerColor;
 
-        private readonly bool alive = true;
-        private readonly float cooldownTime = 2f;
 
         
 

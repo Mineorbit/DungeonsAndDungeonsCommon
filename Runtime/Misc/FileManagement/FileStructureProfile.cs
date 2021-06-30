@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/FileStructureProfile", order = 1)]
     public class FileStructureProfile : ScriptableObject
     {
-        public string name;
+        public string fileStructureProfileName;
         public FileStructureProfile parent;
         public List<FileStructureProfile> subStructures;
 
@@ -32,8 +33,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string GetPath()
         {
             if (parent == null)
-                return Application.persistentDataPath + "/" + name + "/";
-            return parent.GetPath() + name + "/";
+                return Application.persistentDataPath + "/" + fileStructureProfileName + "/";
+            return parent.GetPath() + fileStructureProfileName + "/";
         }
     }
 }

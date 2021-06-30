@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 4924650896210544278, guid: f159be7f38d48e4468488f8a1e54fa1a, type: 3}
   uniqueLevelObjectId: -402324530
   granularity: 1
-  name: Gate
+  levelObjectName: Gate
   dynamicInstantiable: 1
   levelInstantiable: 1
   ActivateWhenInactive: 0

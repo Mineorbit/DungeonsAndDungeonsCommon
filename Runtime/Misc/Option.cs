@@ -75,7 +75,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             set
             {
-                if (value != string.Empty)
+                if ((string) value != string.Empty)
                 {
                     if (settingType == SettingType.BOOL) optionValue = Convert.ToBoolean(value);
                     if (settingType == SettingType.INT) optionValue = Convert.ToInt32(value);

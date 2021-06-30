@@ -66,13 +66,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void OnDestroy()
+        public override void OnDestroy()
         {
             TimerManager.StopTimer(strikeTimer);
             TimerManager.StopTimer(finishStrikeTimer);
             TimerManager.StopTimer(circleTimer);
             TimerManager.StopTimer(randomWalkTimer);
             TimerManager.StopTimer(maximumTrackTimer);
+            base.OnDestroy();
         }
 
         private void RandomWalk()

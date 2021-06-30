@@ -55,7 +55,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 yield return www.SendWebRequest();
 
-                if (www.isNetworkError || www.isHttpError)
+                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                     GameConsole.Log(www.error);
                 else
                 {
@@ -93,7 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 yield return www.SendWebRequest();
 
-                if (www.isNetworkError || www.isHttpError)
+                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                     action.Invoke(www.error);
                 else
                     action.Invoke(www.downloadHandler.text);
@@ -114,7 +114,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 yield return www.SendWebRequest();
 
-                if (www.isNetworkError || www.isHttpError)
+                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                     reportAction.Invoke(www.error);
                 else
                 {
@@ -207,7 +207,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 yield return www.SendWebRequest();
 
-                if (www.isNetworkError || www.isHttpError)
+                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                 {
 
                 }

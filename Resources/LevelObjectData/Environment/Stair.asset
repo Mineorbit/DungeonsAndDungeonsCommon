@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   uniqueLevelObjectId: 1814747340
   granularity: 0
-  name: Stair
+  levelObjectName: Stair
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0

@@ -85,9 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 onConnectAction = onConnect;
                 userName = playerName;
-                var t = Task.Run(async () => await Client.Connect(IPAddress.Parse(ip), 13565));
-                
-                client = t.Result;
+                client = Client.Connect(IPAddress.Parse(ip), 13565);
                 GameConsole.Log("Set new client "+client);
                 client.onConnectEvent.AddListener(OnConnected);
                 client.onConnectEvent.AddListener((x) => { NetworkManager.networkHandlers = new List<NetworkHandler>();});

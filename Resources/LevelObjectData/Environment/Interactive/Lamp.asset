@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 4050017276492842089, guid: 3f32ac060151a6843be8be56925e45ce, type: 3}
   uniqueLevelObjectId: 268756754
   granularity: 0.5
-  name: Lamp
+  levelObjectName: Lamp
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
