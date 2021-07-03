@@ -45,7 +45,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void OnIdentify()
         {
-            
         }
 
         public virtual void OnDestroy()
