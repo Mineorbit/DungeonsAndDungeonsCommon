@@ -7,6 +7,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class EntityNetworkHandler : LevelObjectNetworkHandler
     {
+    
+        public bool isSetup = false;
         public bool isOwner;
         public int owner = -1;
         
@@ -23,12 +25,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         
-        
+        public override void OnIdentify()
+        {
+        base.OnIdentify();
+        isOwner = isOnServer;
+        }
 
-        public override void Awake()
+        public virtual void Awake()
         {
             base.Awake();
-            isOwner = isOnServer;
+            
             targetPosition = transform.position;
             targetRotation = transform.rotation.eulerAngles;
         }

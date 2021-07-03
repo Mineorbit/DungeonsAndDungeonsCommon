@@ -23,7 +23,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed = GetComponent<Player>();
         }
 
-        private bool isSetup = false;
 
         public Player GetObservedPlayer()
         {
@@ -35,15 +34,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(observed != null && identified)
             if(!isSetup)
             { 
-            isSetup = true;
-            Debug.Log("Setting up PlayerHandler with "+Identity+" and "+GetObservedPlayer().localId);
             isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
+            Debug.Log("Setting up PlayerHandler with "+Identity+" and "+GetObservedPlayer().localId+" "+isOwner);
             owner = GetObservedPlayer().localId;
             
             GetObservedPlayer().controller.enabled = !isOnServer && isOwner;
             
             if (isOnServer)
                 GetComponent<CharacterController>().enabled = false;
+            
+            isSetup = true;
             
             }
         }
