@@ -16,7 +16,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public ColorChanger colorChanger;
 
-        public int localId;
+	int local_Id;
+
+        public int localId
+        {
+        get {
+        return local_Id;
+        }
+        
+        set {
+        local_Id = value;
+        changeColor(value);
+        }
+       
+        }
 
         public float speed;
 
@@ -32,7 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             colorChanger = gameObject.GetComponent<ColorChanger>();
         }
 
-
+	
         public override void OnDestroy()
         {
             base.OnDestroy();
@@ -152,9 +165,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void setColor(UnityEngine.Color baseC)
         {
-            colorChanger.SetColor(7, baseC);
-            colorChanger.SetColor(2, colorChanger.comp(baseC));
-            colorChanger.SetColor(8, UnityEngine.Color.Lerp(baseC, UnityEngine.Color.white, 0.75f));
+            colorChanger.SetColor(5, baseC);
+            colorChanger.SetColor(0, colorChanger.comp(baseC));
+            colorChanger.SetColor(6, UnityEngine.Color.Lerp(baseC, UnityEngine.Color.white, 0.75f));
         }
 
 
