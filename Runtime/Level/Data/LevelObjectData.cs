@@ -84,6 +84,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateMesh()
         {
+            if(cursorMesh == null)
+            {
             if(prefab != null)
             {
                 GameObject g = null;
@@ -131,6 +133,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 DestroyImmediate(g);  
+            }
             }
             }
         }
