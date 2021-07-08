@@ -50,6 +50,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     players[localId] = GameObject.Find("Player" + localId).GetComponent<Player>();
             }
 
+            for (int i = 0; i < 4; i++)
+            {
+                playerControllers[i].takeInput = localId == i;
+            }
             currentPlayerLocalId = localId;
             currentPlayer = players[currentPlayerLocalId];
         }
