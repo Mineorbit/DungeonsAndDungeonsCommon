@@ -52,7 +52,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             for (int i = 0; i < 4; i++)
             {
-                playerControllers[i].takeInput = localId == i;
+                if(playerControllers[i] != null)
+                {
+                    playerControllers[i].takeInput = localId == i;
+                }
             }
             currentPlayerLocalId = localId;
             currentPlayer = players[currentPlayerLocalId];
