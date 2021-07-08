@@ -242,7 +242,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private static void LoadAllRegions()
         {
-            foreach (var regionId in instance.levelData.regions.Values) ChunkManager.LoadRegion(regionId);
+            if(instance.levelData != null)
+            {
+                foreach (var regionId in instance.levelData.regions.Values) ChunkManager.LoadRegion(regionId);
+            }
+            else
+            {
+                GameConsole.Log("There currently is no LevelData to load");
+            }
         }
 
         
