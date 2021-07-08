@@ -27,12 +27,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance = this;
         }
 
-        public static void Log(string text, bool inView = true)
+        public static void Log(string text, bool inView = true, string channel = "default")
         {
-            if(instance != null  && inView)
-            instance.CreateLine("> "+text);
+            string channelName = $"[{channel}]";
+
+            string output = channelName + " " + text;
             
-            Debug.Log(text);
+            if(instance != null  && inView)
+            instance.CreateLine("> "+output);
+            
+            Debug.Log(output);
         }
 
         private Queue<GameObject> q = new Queue<GameObject>();
