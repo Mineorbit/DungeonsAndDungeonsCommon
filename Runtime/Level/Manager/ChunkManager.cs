@@ -104,7 +104,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 ChunkData chunkData = ChunkManager.ChunkToData(chunk.Value);
 
 
-                Debug.Log("Chunk at " + chunk.Key + " goes to Region " + regionPosition);
+                GameConsole.Log("Chunk at " + chunk.Key + " goes to Region " + regionPosition);
 
 
                 RegionData r;
@@ -177,7 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (instance == null)
             {
-                Debug.Log("Instance is null");
+                GameConsole.Log("Instance is null");
                 return false;
             }
             else
@@ -242,7 +242,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Chunk c4 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1, grid.Item2 - 1)));
             if(c4 != null)
             neighborhood.Add(c4);
-            Debug.Log("Found in Neighborhood "+neighborhood.Count);
+            GameConsole.Log("Found in Neighborhood "+neighborhood.Count);
             return neighborhood;
         }
 
@@ -265,11 +265,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (LevelManager.currentLevel != null && immediate)
             {
-                Debug.Log("Loading Chunk "+chunkData.ChunkId+" immediately");
+                GameConsole.Log("Loading Chunk "+chunkData.ChunkId+" immediately");
                 _LoadChunk(chunkData);
             }else
             {
-                Debug.Log("Added Chunk "+chunkData.ChunkId+" to Load List");
+                GameConsole.Log("Added Chunk "+chunkData.ChunkId+" to Load List");
                 loadQueue.Enqueue(new Tuple<bool, ChunkData>(immediate,chunkData));
             }
         }
@@ -316,14 +316,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var levelObjectInstances = new List<LevelObjectInstanceData>();
             levelObjectInstances.AddRange(chunkData.Data.ToList());
             var counter = levelObjectInstances.Count;
-            Debug.Log(chunkData.ChunkId + " adding " + counter + " Objects");
+            GameConsole.Log(chunkData.ChunkId + " adding " + counter + " Objects");
             foreach (var instanceData in levelObjectInstances)
             {
                 counter--;
                 Action Complete = null;
                 if (counter == 0)
                 {
-                    Debug.Log("Adding finish Action for "+chunkData.ChunkId);
+                    GameConsole.Log("Adding finish Action for "+chunkData.ChunkId);
                     Complete = () =>
                     {
                         if(chunkData != null)
@@ -331,19 +331,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             Chunk c = GetChunkByID(chunkData.ChunkId);
                             if(c != null)
                             {
-                            c.finishedLoading = true;
-                            
+                                c.finishedLoading = true;
                             }
                             else
                             {
-                                Debug.Log("Chunk was null");
+                                GameConsole.Log("Chunk was null");
                             }
                             
                             chunkLoaded[chunkData.ChunkId] = true;
                         }
                         else
                         {
-                            Debug.Log("Chunk Data was null");
+                            GameConsole.Log("Chunk Data was null");
                         }
                     };
                 }
@@ -352,7 +351,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 if (immediate)
                 {
-                    Debug.Log("Adding "+instance);
+                    GameConsole.Log("Adding "+instance);
                     LevelManager.currentLevel.Add(instance);
                     if (Complete != null)
                     {
@@ -373,7 +372,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         MainCaller.Do(() =>
                         {
-                            Debug.Log("Adding " + instance);
+                            GameConsole.Log("Adding " + instance);
                             LevelManager.currentLevel.Add(instance);
                         });  
                     }

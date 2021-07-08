@@ -348,8 +348,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Name = NetworkManager.userName
             };
 
-            WritePacket(meConnect,
-                TCP: true);
+            WritePacket(meConnect, TCP: true);
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
