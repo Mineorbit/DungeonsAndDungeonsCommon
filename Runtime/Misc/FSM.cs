@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Debug.Log($"[{name}] In State {state} existiert kein Übergang für {inputValue}");
+                GameConsole.Log($"[{name}] In State {state} existiert kein Übergang für {inputValue}");
             }
         }
     }
