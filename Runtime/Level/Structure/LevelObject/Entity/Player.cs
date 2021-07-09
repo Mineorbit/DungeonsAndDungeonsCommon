@@ -149,16 +149,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     setColor(UnityEngine.Color.blue);
                     break;
                 case 1:
-                    playerColor = Color.Yellow;
-                    setColor(UnityEngine.Color.yellow);
-                    break;
-                case 2:
                     playerColor = Color.Red;
                     setColor(UnityEngine.Color.red);
                     break;
-                case 3:
+                case 2:
                     playerColor = Color.Green;
                     setColor(UnityEngine.Color.green);
+                    break;
+                case 3:
+                    playerColor = Color.Yellow;
+                    setColor(UnityEngine.Color.yellow);
                     break;
             }
         }
