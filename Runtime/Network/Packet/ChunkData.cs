@@ -34,7 +34,7 @@ namespace NetLevel {
             "EgsKA2dfdxgDIAEoAhILCgNnX3gYBCABKAISCwoDZ195GAUgASgCEgsKA2df",
             "ehgGIAEoAhIJCgF4GAcgASgCEgkKAXkYCCABKAISCQoBehgJIAEoAiIqCgxI",
             "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoERIMCgRjb2RlGAIgASgRIk0KCUNo",
-            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgMEi8KBGRhdGEYAiADKAsyIS5OZXRM",
+            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgJEi8KBGRhdGEYAiADKAsyIS5OZXRM",
             "ZXZlbC5MZXZlbE9iamVjdEluc3RhbmNlRGF0YWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
@@ -1441,9 +1441,9 @@ namespace NetLevel {
 
     /// <summary>Field number for the "chunkId" field.</summary>
     public const int ChunkIdFieldNumber = 1;
-    private pb::ByteString chunkId_ = pb::ByteString.Empty;
+    private string chunkId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString ChunkId {
+    public string ChunkId {
       get { return chunkId_; }
       set {
         chunkId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
@@ -1501,7 +1501,7 @@ namespace NetLevel {
     #else
       if (ChunkId.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteBytes(ChunkId);
+        output.WriteString(ChunkId);
       }
       data_.WriteTo(output, _repeated_data_codec);
       if (_unknownFields != null) {
@@ -1515,7 +1515,7 @@ namespace NetLevel {
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (ChunkId.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteBytes(ChunkId);
+        output.WriteString(ChunkId);
       }
       data_.WriteTo(ref output, _repeated_data_codec);
       if (_unknownFields != null) {
@@ -1528,7 +1528,7 @@ namespace NetLevel {
     public int CalculateSize() {
       int size = 0;
       if (ChunkId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(ChunkId);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ChunkId);
       }
       size += data_.CalculateSize(_repeated_data_codec);
       if (_unknownFields != null) {
@@ -1561,7 +1561,7 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            ChunkId = input.ReadBytes();
+            ChunkId = input.ReadString();
             break;
           }
           case 18: {
@@ -1583,7 +1583,7 @@ namespace NetLevel {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            ChunkId = input.ReadBytes();
+            ChunkId = input.ReadString();
             break;
           }
           case 18: {

@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Dictionary<Tuple<int, int, int>, Chunk> chunks;
         
-        public static Dictionary<byte[], bool> chunkLoaded = new Dictionary<byte[], bool>();
+        public static Dictionary<string, bool> chunkLoaded = new Dictionary<string, bool>();
 
         private bool ready;
 
@@ -55,7 +55,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(chunkLoaded == null)
             {
-                chunkLoaded = new Dictionary<byte[], bool>();
+                chunkLoaded = new Dictionary<string, bool>();
             }
             chunkLoaded.Clear();
                 chunkPrefab = Resources.Load("Chunk");
@@ -168,7 +168,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 	// THIS NEEDS OVERHAUL
 
-        public static byte[] GetChunkID(Tuple<int, int, int> gridPosition)
+        public static string GetChunkID(Tuple<int, int, int> gridPosition)
         {
             var x = BitConverter.GetBytes(gridPosition.Item1);
             var y = BitConverter.GetBytes(gridPosition.Item2);
@@ -177,11 +177,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Array.Copy(x,result,4);
             Array.Copy(y,0,result,4,4);
             Array.Copy(z,0,result,8,4);
-            return result;
+            string id = String.Join("|", result);
+            return id;
         }
 
 
-        public static bool ChunkLoaded(byte[] chunkid)
+        public static bool ChunkLoaded(string chunkid)
         {
             if (instance == null)
             {
@@ -279,7 +280,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 // WZF PASSIERT HIER
-        public static Chunk GetChunkByID(byte[] id)
+        public static Chunk GetChunkByID(string id)
         {
             Chunk result = null;
             if(LevelManager.currentLevel != null)
@@ -308,13 +309,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Loading Chunk "+chunkData.ChunkId);
             bool loaded;
-            if (chunkLoaded.TryGetValue(chunkData.ChunkId.ToByteArray(), out loaded))
+            if (chunkLoaded.TryGetValue(chunkData.ChunkId, out loaded))
             {
                 return;
             }
             else
             {
-                chunkLoaded.Add(chunkData.ChunkId.ToByteArray(), false);
+                chunkLoaded.Add(chunkData.ChunkId, false);
             }
 
             var levelObjectInstances = new List<LevelObjectInstanceData>();
@@ -332,7 +333,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         if(chunkData != null)
                         {
-                            Chunk c = GetChunkByID(chunkData.ChunkId.ToByteArray());
+                            Chunk c = GetChunkByID(chunkData.ChunkId);
                             if(c != null)
                             {
                                 c.finishedLoading = true;
@@ -342,7 +343,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                 GameConsole.Log("Chunk was null");
                             }
                             
-                            chunkLoaded[chunkData.ChunkId.ToByteArray()] = true;
+                            chunkLoaded[chunkData.ChunkId] = true;
                         }
                         else
                         {
@@ -437,7 +438,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             LevelObject[] instances = chunk.GetComponentsInChildren<LevelObject>(includeInactive: true);
             ChunkData chunkData = new ChunkData();
-            chunkData.ChunkId = ByteString.CopyFrom(chunk.chunkId);
+            chunkData.ChunkId = chunk.chunkId;
             foreach (LevelObject l in instances)
             {
                 chunkData.Data.Add(InstanceToData(l as dynamic));
