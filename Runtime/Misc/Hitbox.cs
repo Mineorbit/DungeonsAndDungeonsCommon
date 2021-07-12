@@ -11,13 +11,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Collider hitboxCollider;
 
-        private bool isAttached;
+        public bool isAttached;
 
         public string targetTag;
 
-        private void Start()
-        {
-        }
 
         public int insideCounter = 0;
         public void OnTriggerEnter(Collider other)
