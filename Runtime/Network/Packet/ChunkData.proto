@@ -43,6 +43,6 @@ sint32 code = 2;
 }
 
 message ChunkData{
-	int64 chunkId = 1;
-	repeated LevelObjectInstanceData data = 3;
+	bytes chunkId = 1;
+	repeated LevelObjectInstanceData data = 2;
 }

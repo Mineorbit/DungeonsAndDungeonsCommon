@@ -29,9 +29,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private static readonly ProtoSaveManager regionDataLoader = new ProtoSaveManager();
 
-        public Dictionary<Tuple<short, short, short>, Chunk> chunks;
+        public Dictionary<Tuple<int, int, int>, Chunk> chunks;
         
-        public static Dictionary<long, bool> chunkLoaded = new Dictionary<long, bool>();
+        public static Dictionary<byte[], bool> chunkLoaded = new Dictionary<byte[], bool>();
 
         private bool ready;
 
@@ -55,11 +55,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(chunkLoaded == null)
             {
-                chunkLoaded = new Dictionary<long, bool>();
+                chunkLoaded = new Dictionary<byte[], bool>();
             }
             chunkLoaded.Clear();
                 chunkPrefab = Resources.Load("Chunk");
-                chunks = new Dictionary<Tuple<short, short, short>, Chunk>();
+                chunks = new Dictionary<Tuple<int, int, int>, Chunk>();
                 
         }
         
@@ -71,7 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance.regionLoaded[regionId] = true;
         }
 
-        public static RegionData LoadRegionData(Tuple<short, short, short> chunkPosition)
+        public static RegionData LoadRegionData(Tuple<int, int, int> chunkPosition)
         {
             var regionPosition = GetRegionPosition(chunkPosition);
             int regionId;
@@ -94,9 +94,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public Dictionary<Tuple<short, short, short>, RegionData> FetchRegionData()
+        public Dictionary<Tuple<int, int, int>, RegionData> FetchRegionData()
         {
-            var regionData = new Dictionary<Tuple<short, short, short>, RegionData>();
+            var regionData = new Dictionary<Tuple<int, int, int>, RegionData>();
             var rid = 0;
             foreach (var chunk in chunks)
             {
@@ -116,6 +116,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     CoordinateChunkPair coordinateChunkPair = new CoordinateChunkPair();
                     coordinateChunkPair.X = positionInRegion.a;
                     coordinateChunkPair.Y = positionInRegion.b;
+                    coordinateChunkPair.Z = positionInRegion.c;
                     coordinateChunkPair.Chunk = chunkData;
                     r.ChunkDatas.Add(coordinateChunkPair);
                 }
@@ -128,6 +129,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     CoordinateChunkPair coordinateChunkPair = new CoordinateChunkPair();
                     coordinateChunkPair.X = positionInRegion.a;
                     coordinateChunkPair.Y = positionInRegion.b;
+                    coordinateChunkPair.Z = positionInRegion.c;
                     coordinateChunkPair.Chunk = chunkData;
                     r.ChunkDatas.Add(coordinateChunkPair);
                     regionData.Add(regionPosition, r);
@@ -139,7 +141,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private (int a, int b, int c) GetPositionInRegion(Tuple<int, int, int> chunkPosition)
         {
-            return (chunkPosition.Item1 % regionGranularity, chunkPosition.Item2 % regionGranularity);
+            return (chunkPosition.Item1 % regionGranularity, chunkPosition.Item2 % regionGranularity, chunkPosition.Item3 % regionGranularity);
         }
 
         private static Tuple<int, int, int> GetRegionPosition(Tuple<int, int, int> chunkPosition)
@@ -166,19 +168,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 	// THIS NEEDS OVERHAUL
 
-        public static long GetChunkID(Tuple<int, int, int> gridPosition)
+        public static byte[] GetChunkID(Tuple<int, int, int> gridPosition)
         {
             var x = BitConverter.GetBytes(gridPosition.Item1);
             var y = BitConverter.GetBytes(gridPosition.Item2);
             var z = BitConverter.GetBytes(gridPosition.Item3);
-            var l = new byte[8];
-            Array.Copy(x, 0, l, 0, 4);
-            Array.Copy(y, 0, l, 4, 4);
-            return BitConverter.ToInt64(l, 0);
+            byte[] result = new byte[12];
+            Array.Copy(x,result,4);
+            Array.Copy(y,0,result,4,4);
+            Array.Copy(z,0,result,8,4);
+            return result;
         }
 
 
-        public static bool ChunkLoaded(long chunkid)
+        public static bool ChunkLoaded(byte[] chunkid)
         {
             if (instance == null)
             {
@@ -276,7 +279,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 // WZF PASSIERT HIER
-        public static Chunk GetChunkByID(long id)
+        public static Chunk GetChunkByID(byte[] id)
         {
             Chunk result = null;
             if(LevelManager.currentLevel != null)
@@ -305,13 +308,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Loading Chunk "+chunkData.ChunkId);
             bool loaded;
-            if (chunkLoaded.TryGetValue(chunkData.ChunkId, out loaded))
+            if (chunkLoaded.TryGetValue(chunkData.ChunkId.ToByteArray(), out loaded))
             {
                 return;
             }
             else
             {
-                chunkLoaded.Add(chunkData.ChunkId, false);
+                chunkLoaded.Add(chunkData.ChunkId.ToByteArray(), false);
             }
 
             var levelObjectInstances = new List<LevelObjectInstanceData>();
@@ -329,7 +332,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         if(chunkData != null)
                         {
-                            Chunk c = GetChunkByID(chunkData.ChunkId);
+                            Chunk c = GetChunkByID(chunkData.ChunkId.ToByteArray());
                             if(c != null)
                             {
                                 c.finishedLoading = true;
@@ -339,7 +342,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                 GameConsole.Log("Chunk was null");
                             }
                             
-                            chunkLoaded[chunkData.ChunkId] = true;
+                            chunkLoaded[chunkData.ChunkId.ToByteArray()] = true;
                         }
                         else
                         {
@@ -434,7 +437,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             LevelObject[] instances = chunk.GetComponentsInChildren<LevelObject>(includeInactive: true);
             ChunkData chunkData = new ChunkData();
-            chunkData.ChunkId = chunk.chunkId;
+            chunkData.ChunkId = ByteString.CopyFrom(chunk.chunkId);
             foreach (LevelObject l in instances)
             {
                 chunkData.Data.Add(InstanceToData(l as dynamic));

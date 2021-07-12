@@ -34,7 +34,7 @@ namespace NetLevel {
             "EgsKA2dfdxgDIAEoAhILCgNnX3gYBCABKAISCwoDZ195GAUgASgCEgsKA2df",
             "ehgGIAEoAhIJCgF4GAcgASgCEgkKAXkYCCABKAISCQoBehgJIAEoAiIqCgxI",
             "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoERIMCgRjb2RlGAIgASgRIk0KCUNo",
-            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgDEi8KBGRhdGEYAyADKAsyIS5OZXRM",
+            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgMEi8KBGRhdGEYAiADKAsyIS5OZXRM",
             "ZXZlbC5MZXZlbE9iamVjdEluc3RhbmNlRGF0YWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
@@ -1441,19 +1441,19 @@ namespace NetLevel {
 
     /// <summary>Field number for the "chunkId" field.</summary>
     public const int ChunkIdFieldNumber = 1;
-    private long chunkId_;
+    private pb::ByteString chunkId_ = pb::ByteString.Empty;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long ChunkId {
+    public pb::ByteString ChunkId {
       get { return chunkId_; }
       set {
-        chunkId_ = value;
+        chunkId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     /// <summary>Field number for the "data" field.</summary>
-    public const int DataFieldNumber = 3;
+    public const int DataFieldNumber = 2;
     private static readonly pb::FieldCodec<global::NetLevel.LevelObjectInstanceData> _repeated_data_codec
-        = pb::FieldCodec.ForMessage(26, global::NetLevel.LevelObjectInstanceData.Parser);
+        = pb::FieldCodec.ForMessage(18, global::NetLevel.LevelObjectInstanceData.Parser);
     private readonly pbc::RepeatedField<global::NetLevel.LevelObjectInstanceData> data_ = new pbc::RepeatedField<global::NetLevel.LevelObjectInstanceData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::NetLevel.LevelObjectInstanceData> Data {
@@ -1481,7 +1481,7 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (ChunkId != 0L) hash ^= ChunkId.GetHashCode();
+      if (ChunkId.Length != 0) hash ^= ChunkId.GetHashCode();
       hash ^= data_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1499,9 +1499,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (ChunkId != 0L) {
-        output.WriteRawTag(8);
-        output.WriteInt64(ChunkId);
+      if (ChunkId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteBytes(ChunkId);
       }
       data_.WriteTo(output, _repeated_data_codec);
       if (_unknownFields != null) {
@@ -1513,9 +1513,9 @@ namespace NetLevel {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ChunkId != 0L) {
-        output.WriteRawTag(8);
-        output.WriteInt64(ChunkId);
+      if (ChunkId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteBytes(ChunkId);
       }
       data_.WriteTo(ref output, _repeated_data_codec);
       if (_unknownFields != null) {
@@ -1527,8 +1527,8 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (ChunkId != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(ChunkId);
+      if (ChunkId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(ChunkId);
       }
       size += data_.CalculateSize(_repeated_data_codec);
       if (_unknownFields != null) {
@@ -1542,7 +1542,7 @@ namespace NetLevel {
       if (other == null) {
         return;
       }
-      if (other.ChunkId != 0L) {
+      if (other.ChunkId.Length != 0) {
         ChunkId = other.ChunkId;
       }
       data_.Add(other.data_);
@@ -1560,11 +1560,11 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 8: {
-            ChunkId = input.ReadInt64();
+          case 10: {
+            ChunkId = input.ReadBytes();
             break;
           }
-          case 26: {
+          case 18: {
             data_.AddEntriesFrom(input, _repeated_data_codec);
             break;
           }
@@ -1582,11 +1582,11 @@ namespace NetLevel {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 8: {
-            ChunkId = input.ReadInt64();
+          case 10: {
+            ChunkId = input.ReadBytes();
             break;
           }
-          case 26: {
+          case 18: {
             data_.AddEntriesFrom(ref input, _repeated_data_codec);
             break;
           }
