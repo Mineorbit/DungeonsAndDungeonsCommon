@@ -5,7 +5,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Chunk : MonoBehaviour
     {
-        public byte[] chunkId;
+        public string chunkId;
         private readonly float eps = 0.05f;
 
         public bool finishedLoading = false;

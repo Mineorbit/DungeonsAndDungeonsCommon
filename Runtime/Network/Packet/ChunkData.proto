@@ -43,6 +43,6 @@ sint32 code = 2;
 }
 
 message ChunkData{
-	bytes chunkId = 1;
+	string chunkId = 1;
 	repeated LevelObjectInstanceData data = 2;
 }

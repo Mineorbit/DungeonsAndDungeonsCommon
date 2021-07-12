@@ -65,7 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        IEnumerator WaitRoutine(byte[] cid,Action finishAction)
+        IEnumerator WaitRoutine(string cid,Action finishAction)
         {
             bool v = false;
             v = ChunkManager.ChunkLoaded(cid);
@@ -84,7 +84,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 mover.follow = false;
                 transform.position = position;
-                byte[] chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
+                string chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
                 StartCoroutine(WaitRoutine(chunkId,finishAction));
             });
         }
