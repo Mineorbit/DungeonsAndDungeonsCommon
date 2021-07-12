@@ -38,7 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS DOES NOT YET WORK WHEN INCREASING
         private readonly int maxSendCount = 1;
 
-        private int maxPackSize = 8192;
+        private int maxPackSize = 8192*2;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
