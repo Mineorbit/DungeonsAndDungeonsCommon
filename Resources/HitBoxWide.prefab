@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4541802462330782230}
   - component: {fileID: 6252541044358961491}
-  - component: {fileID: 8387432603789202030}
+  - component: {fileID: 437039659769755116}
+  - component: {fileID: 6254117454395243958}
+  - component: {fileID: 8212718456134376712}
   m_Layer: 0
   m_Name: HitBoxWide
   m_TagString: Untagged
@@ -50,9 +52,27 @@ MonoBehaviour:
   exitEvent:
     m_PersistentCalls:
       m_Calls: []
-  hitboxCollider: {fileID: 8387432603789202030}
+  hitboxCollider: {fileID: 6254117454395243958}
+  isAttached: 0
+  targetTag: 
   insideCounter: 0
---- !u!64 &8387432603789202030
+--- !u!54 &437039659769755116
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8050238736179481825}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &6254117454395243958
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,4 +85,12 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -5495902117074765545, guid: 5af960ccecdc11f4e8d4c9297ca3b117, type: 3}
+  m_Mesh: {fileID: -5495902117074765545, guid: d0f115172c5921b4c9333d4378a36ce4, type: 3}
+--- !u!33 &8212718456134376712
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8050238736179481825}
+  m_Mesh: {fileID: -5495902117074765545, guid: d0f115172c5921b4c9333d4378a36ce4, type: 3}
