@@ -11,6 +11,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class ChunkManager : MonoBehaviour
     {
+    
+    	
         public enum LoadType
         {
             Disk,
@@ -21,13 +23,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static ChunkManager instance;
 
-        public static float chunkGranularity = 16;
+        public static float chunkGranularity = 32;
 
-        public static int regionGranularity = 4;
+        public static int regionGranularity = 2;
 
         private static readonly ProtoSaveManager regionDataLoader = new ProtoSaveManager();
 
-        public Dictionary<Tuple<int, int>, Chunk> chunks;
+        public Dictionary<Tuple<short, short, short>, Chunk> chunks;
         
         public static Dictionary<long, bool> chunkLoaded = new Dictionary<long, bool>();
 
@@ -57,7 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             chunkLoaded.Clear();
                 chunkPrefab = Resources.Load("Chunk");
-                chunks = new Dictionary<Tuple<int, int>, Chunk>();
+                chunks = new Dictionary<Tuple<short, short, short>, Chunk>();
                 
         }
         
@@ -69,7 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance.regionLoaded[regionId] = true;
         }
 
-        public static RegionData LoadRegionData(Tuple<int, int> chunkPosition)
+        public static RegionData LoadRegionData(Tuple<short, short, short> chunkPosition)
         {
             var regionPosition = GetRegionPosition(chunkPosition);
             int regionId;
@@ -92,9 +94,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public Dictionary<Tuple<int, int>, RegionData> FetchRegionData()
+        public Dictionary<Tuple<short, short, short>, RegionData> FetchRegionData()
         {
-            var regionData = new Dictionary<Tuple<int, int>, RegionData>();
+            var regionData = new Dictionary<Tuple<short, short, short>, RegionData>();
             var rid = 0;
             foreach (var chunk in chunks)
             {
@@ -135,22 +137,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return regionData;
         }
 
-        private (int a, int b) GetPositionInRegion(Tuple<int, int> chunkPosition)
+        private (int a, int b, int c) GetPositionInRegion(Tuple<int, int, int> chunkPosition)
         {
             return (chunkPosition.Item1 % regionGranularity, chunkPosition.Item2 % regionGranularity);
         }
 
-        private static Tuple<int, int> GetRegionPosition(Tuple<int, int> chunkPosition)
+        private static Tuple<int, int, int> GetRegionPosition(Tuple<int, int, int> chunkPosition)
         {
             var x = (int) Mathf.Floor(chunkPosition.Item1 / (float) regionGranularity);
             var y = (int) Mathf.Floor(chunkPosition.Item2 / (float) regionGranularity);
-            var regionPosition = new Tuple<int, int>(x, y);
+            var z = (int) Mathf.Floor(chunkPosition.Item3 / (float) regionGranularity);
+            var regionPosition = new Tuple<int, int, int>(x, y, z);
             return regionPosition;
         }
 
 
 
-        private Chunk AddChunk(Tuple<int, int> gridPosition)
+        private Chunk AddChunk(Tuple<int, int, int> gridPosition)
         {
             var chunk = Instantiate(chunkPrefab) as GameObject;
             chunk.transform.parent = LevelManager.currentLevel.transform;
@@ -161,11 +164,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return c;
         }
 
+	// THIS NEEDS OVERHAUL
 
-        public static long GetChunkID(Tuple<int, int> gridPosition)
+        public static long GetChunkID(Tuple<int, int, int> gridPosition)
         {
             var x = BitConverter.GetBytes(gridPosition.Item1);
             var y = BitConverter.GetBytes(gridPosition.Item2);
+            var z = BitConverter.GetBytes(gridPosition.Item3);
             var l = new byte[8];
             Array.Copy(x, 0, l, 0, 4);
             Array.Copy(y, 0, l, 4, 4);
@@ -188,16 +193,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int> gridPosition)
+        public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int, int> gridPosition)
         {
-            return new Vector3(gridPosition.Item1 * chunkGranularity, 0, gridPosition.Item2 * chunkGranularity) -
-                   chunkGranularity / 2 * new Vector3(1, 0, 1);
+            return new Vector3(gridPosition.Item1 * chunkGranularity, gridPosition.Item2 * chunkGranularity, gridPosition.Item3 * chunkGranularity) -
+                   chunkGranularity / 2 * new Vector3(1, 1, 1);
         }
 
-        public static Tuple<int, int> GetChunkGridPosition(Vector3 position)
+        public static Tuple<int, int, int> GetChunkGridPosition(Vector3 position)
         {
-            return new Tuple<int, int>((int) Mathf.Round(position.x / chunkGranularity),
-                (int) Mathf.Round(position.z / chunkGranularity));
+            return new Tuple<int, int, int>((int) Mathf.Round(position.x / chunkGranularity),
+            				(int) Mathf.Round(position.y / chunkGranularity),
+                			(int) Mathf.Round(position.z / chunkGranularity));
         }
 
         private Vector3 GetChunkPosition(Vector3 position)
@@ -229,20 +235,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             List<Chunk> neighborhood = new List<Chunk>();
             var grid = GetChunkGridPosition(position);
-            neighborhood.Add(GetChunkByID(GetChunkID(grid)));
-            Chunk c1 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1 + 1, grid.Item2)));
-            if(c1 != null)
-            neighborhood.Add(c1);
-            Chunk c2 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1 - 1, grid.Item2)));
-            if(c2 != null)
-            neighborhood.Add(c2);
-            Chunk c3 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1, grid.Item2 + 1)));
-            if(c3 != null)
-            neighborhood.Add(c3);
-            Chunk c4 = GetChunkByID(GetChunkID(new Tuple<int, int>(grid.Item1, grid.Item2 - 1)));
-            if(c4 != null)
-            neighborhood.Add(c4);
-            GameConsole.Log("Found in Neighborhood "+neighborhood.Count);
+            
+            for (int i = -1; i<2;i++)
+            	for (int j = -1; j<2;j++)
+            		for (int k = -1; k<2;k++)
+            		{
+            			Chunk neighborChunk = GetChunkByID(GetChunkID(new Tuple<int, int, int>(grid.Item1 + i, grid.Item2 + j,grid.Item3 + k)));
+            			if(neighborChunk != null)
+            				neighborhood.Add(neighborChunk);
+            		}
             return neighborhood;
         }
 
