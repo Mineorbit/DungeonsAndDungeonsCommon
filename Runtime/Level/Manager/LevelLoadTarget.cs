@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelLoadTargetMover mover;
 
-        private readonly List<Tuple<int, int>> loadedLocalChunks = new List<Tuple<int, int>>();
+        private readonly List<Tuple<int, int, int>> loadedLocalChunks = new List<Tuple<int, int, int>>();
 
 
         public void Start()
@@ -65,7 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        IEnumerator WaitRoutine(long cid,Action finishAction)
+        IEnumerator WaitRoutine(byte[] cid,Action finishAction)
         {
             bool v = false;
             v = ChunkManager.ChunkLoaded(cid);
@@ -84,7 +84,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 mover.follow = false;
                 transform.position = position;
-                long chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
+                byte[] chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
                 StartCoroutine(WaitRoutine(chunkId,finishAction));
             });
         }

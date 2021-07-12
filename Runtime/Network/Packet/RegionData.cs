@@ -25,14 +25,14 @@ namespace NetLevel {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChBSZWdpb25EYXRhLnByb3RvEghOZXRMZXZlbBoPQ2h1bmtEYXRhLnByb3Rv",
-            "Ik8KE0Nvb3JkaW5hdGVDaHVua1BhaXISCQoBeBgBIAEoBRIJCgF5GAIgASgF",
-            "EiIKBWNodW5rGAMgASgLMhMuTmV0TGV2ZWwuQ2h1bmtEYXRhIksKClJlZ2lv",
-            "bkRhdGESCgoCaWQYASABKAUSMQoKY2h1bmtEYXRhcxgCIAMoCzIdLk5ldExl",
-            "dmVsLkNvb3JkaW5hdGVDaHVua1BhaXJiBnByb3RvMw=="));
+            "IloKE0Nvb3JkaW5hdGVDaHVua1BhaXISCQoBeBgBIAEoBRIJCgF5GAIgASgF",
+            "EgkKAXoYAyABKAUSIgoFY2h1bmsYBCABKAsyEy5OZXRMZXZlbC5DaHVua0Rh",
+            "dGEiSwoKUmVnaW9uRGF0YRIKCgJpZBgBIAEoBRIxCgpjaHVua0RhdGFzGAIg",
+            "AygLMh0uTmV0TGV2ZWwuQ29vcmRpbmF0ZUNodW5rUGFpcmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::NetLevel.ChunkDataReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.CoordinateChunkPair), global::NetLevel.CoordinateChunkPair.Parser, new[]{ "X", "Y", "Chunk" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.CoordinateChunkPair), global::NetLevel.CoordinateChunkPair.Parser, new[]{ "X", "Y", "Z", "Chunk" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.RegionData), global::NetLevel.RegionData.Parser, new[]{ "Id", "ChunkDatas" }, null, null, null, null)
           }));
     }
@@ -71,6 +71,7 @@ namespace NetLevel {
     public CoordinateChunkPair(CoordinateChunkPair other) : this() {
       x_ = other.x_;
       y_ = other.y_;
+      z_ = other.z_;
       chunk_ = other.chunk_ != null ? other.chunk_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -102,8 +103,19 @@ namespace NetLevel {
       }
     }
 
+    /// <summary>Field number for the "z" field.</summary>
+    public const int ZFieldNumber = 3;
+    private int z_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Z {
+      get { return z_; }
+      set {
+        z_ = value;
+      }
+    }
+
     /// <summary>Field number for the "chunk" field.</summary>
-    public const int ChunkFieldNumber = 3;
+    public const int ChunkFieldNumber = 4;
     private global::NetLevel.ChunkData chunk_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::NetLevel.ChunkData Chunk {
@@ -128,6 +140,7 @@ namespace NetLevel {
       }
       if (X != other.X) return false;
       if (Y != other.Y) return false;
+      if (Z != other.Z) return false;
       if (!object.Equals(Chunk, other.Chunk)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -137,6 +150,7 @@ namespace NetLevel {
       int hash = 1;
       if (X != 0) hash ^= X.GetHashCode();
       if (Y != 0) hash ^= Y.GetHashCode();
+      if (Z != 0) hash ^= Z.GetHashCode();
       if (chunk_ != null) hash ^= Chunk.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -162,8 +176,12 @@ namespace NetLevel {
         output.WriteRawTag(16);
         output.WriteInt32(Y);
       }
+      if (Z != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(Z);
+      }
       if (chunk_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(Chunk);
       }
       if (_unknownFields != null) {
@@ -183,8 +201,12 @@ namespace NetLevel {
         output.WriteRawTag(16);
         output.WriteInt32(Y);
       }
+      if (Z != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(Z);
+      }
       if (chunk_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(Chunk);
       }
       if (_unknownFields != null) {
@@ -201,6 +223,9 @@ namespace NetLevel {
       }
       if (Y != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Y);
+      }
+      if (Z != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Z);
       }
       if (chunk_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Chunk);
@@ -221,6 +246,9 @@ namespace NetLevel {
       }
       if (other.Y != 0) {
         Y = other.Y;
+      }
+      if (other.Z != 0) {
+        Z = other.Z;
       }
       if (other.chunk_ != null) {
         if (chunk_ == null) {
@@ -250,7 +278,11 @@ namespace NetLevel {
             Y = input.ReadInt32();
             break;
           }
-          case 26: {
+          case 24: {
+            Z = input.ReadInt32();
+            break;
+          }
+          case 34: {
             if (chunk_ == null) {
               Chunk = new global::NetLevel.ChunkData();
             }
@@ -279,7 +311,11 @@ namespace NetLevel {
             Y = input.ReadInt32();
             break;
           }
-          case 26: {
+          case 24: {
+            Z = input.ReadInt32();
+            break;
+          }
+          case 34: {
             if (chunk_ == null) {
               Chunk = new global::NetLevel.ChunkData();
             }
