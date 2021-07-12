@@ -29,19 +29,18 @@ namespace NetLevel {
             "c3RhbmNlEgwKBHR5cGUYASABKBESJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0",
             "TGV2ZWwuTG9jYXRpb24SCwoDZ193GAMgASgCEgsKA2dfeBgEIAEoAhILCgNn",
             "X3kYBSABKAISCwoDZ196GAYgASgCEgkKAXgYByABKAISCQoBeRgIIAEoAhIJ",
-            "CgF6GAkgASgCIqMBChdMZXZlbE9iamVjdEluc3RhbmNlRGF0YRIMCgRjb2Rl",
-            "GAEgASgREiUKCWxvY2F0aW9ucxgCIAMoCzISLk5ldExldmVsLkxvY2F0aW9u",
-            "EgsKA2dfdxgDIAEoAhILCgNnX3gYBCABKAISCwoDZ195GAUgASgCEgsKA2df",
-            "ehgGIAEoAhIJCgF4GAcgASgCEgkKAXkYCCABKAISCQoBehgJIAEoAiIqCgxI",
-            "dWZmbWFuRW50cnkSDAoEdHlwZRgBIAEoERIMCgRjb2RlGAIgASgRIk0KCUNo",
-            "dW5rRGF0YRIPCgdjaHVua0lkGAEgASgJEi8KBGRhdGEYAiADKAsyIS5OZXRM",
-            "ZXZlbC5MZXZlbE9iamVjdEluc3RhbmNlRGF0YWIGcHJvdG8z"));
+            "CgF6GAkgASgCInwKF0xldmVsT2JqZWN0SW5zdGFuY2VEYXRhEgwKBGNvZGUY",
+            "ASABKBESJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0TGV2ZWwuTG9jYXRpb24S",
+            "CwoDcm90GAMgASgNEgkKAXgYBCABKA0SCQoBeRgFIAEoDRIJCgF6GAYgASgN",
+            "IioKDEh1ZmZtYW5FbnRyeRIMCgR0eXBlGAEgASgREgwKBGNvZGUYAiABKBEi",
+            "TQoJQ2h1bmtEYXRhEg8KB2NodW5rSWQYASABKAkSLwoEZGF0YRgCIAMoCzIh",
+            "Lk5ldExldmVsLkxldmVsT2JqZWN0SW5zdGFuY2VEYXRhYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.Location), global::NetLevel.Location.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstance), global::NetLevel.LevelObjectInstance.Parser, new[]{ "Type", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstanceData), global::NetLevel.LevelObjectInstanceData.Parser, new[]{ "Code", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstanceData), global::NetLevel.LevelObjectInstanceData.Parser, new[]{ "Code", "Locations", "Rot", "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.HuffmanEntry), global::NetLevel.HuffmanEntry.Parser, new[]{ "Type", "Code" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.ChunkData), global::NetLevel.ChunkData.Parser, new[]{ "ChunkId", "Data" }, null, null, null, null)
           }));
@@ -774,10 +773,7 @@ namespace NetLevel {
     public LevelObjectInstanceData(LevelObjectInstanceData other) : this() {
       code_ = other.code_;
       locations_ = other.locations_.Clone();
-      gW_ = other.gW_;
-      gX_ = other.gX_;
-      gY_ = other.gY_;
-      gZ_ = other.gZ_;
+      rot_ = other.rot_;
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
@@ -810,55 +806,22 @@ namespace NetLevel {
       get { return locations_; }
     }
 
-    /// <summary>Field number for the "g_w" field.</summary>
-    public const int GWFieldNumber = 3;
-    private float gW_;
+    /// <summary>Field number for the "rot" field.</summary>
+    public const int RotFieldNumber = 3;
+    private uint rot_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float GW {
-      get { return gW_; }
+    public uint Rot {
+      get { return rot_; }
       set {
-        gW_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "g_x" field.</summary>
-    public const int GXFieldNumber = 4;
-    private float gX_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float GX {
-      get { return gX_; }
-      set {
-        gX_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "g_y" field.</summary>
-    public const int GYFieldNumber = 5;
-    private float gY_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float GY {
-      get { return gY_; }
-      set {
-        gY_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "g_z" field.</summary>
-    public const int GZFieldNumber = 6;
-    private float gZ_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float GZ {
-      get { return gZ_; }
-      set {
-        gZ_ = value;
+        rot_ = value;
       }
     }
 
     /// <summary>Field number for the "x" field.</summary>
-    public const int XFieldNumber = 7;
-    private float x_;
+    public const int XFieldNumber = 4;
+    private uint x_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float X {
+    public uint X {
       get { return x_; }
       set {
         x_ = value;
@@ -866,10 +829,10 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "y" field.</summary>
-    public const int YFieldNumber = 8;
-    private float y_;
+    public const int YFieldNumber = 5;
+    private uint y_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Y {
+    public uint Y {
       get { return y_; }
       set {
         y_ = value;
@@ -877,10 +840,10 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "z" field.</summary>
-    public const int ZFieldNumber = 9;
-    private float z_;
+    public const int ZFieldNumber = 6;
+    private uint z_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Z {
+    public uint Z {
       get { return z_; }
       set {
         z_ = value;
@@ -902,13 +865,10 @@ namespace NetLevel {
       }
       if (Code != other.Code) return false;
       if(!locations_.Equals(other.locations_)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GW, other.GW)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GX, other.GX)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GY, other.GY)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GZ, other.GZ)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
+      if (Rot != other.Rot) return false;
+      if (X != other.X) return false;
+      if (Y != other.Y) return false;
+      if (Z != other.Z) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -917,13 +877,10 @@ namespace NetLevel {
       int hash = 1;
       if (Code != 0) hash ^= Code.GetHashCode();
       hash ^= locations_.GetHashCode();
-      if (GW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GW);
-      if (GX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GX);
-      if (GY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GY);
-      if (GZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GZ);
-      if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
-      if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
-      if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
+      if (Rot != 0) hash ^= Rot.GetHashCode();
+      if (X != 0) hash ^= X.GetHashCode();
+      if (Y != 0) hash ^= Y.GetHashCode();
+      if (Z != 0) hash ^= Z.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -945,33 +902,21 @@ namespace NetLevel {
         output.WriteSInt32(Code);
       }
       locations_.WriteTo(output, _repeated_locations_codec);
-      if (GW != 0F) {
-        output.WriteRawTag(29);
-        output.WriteFloat(GW);
+      if (Rot != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Rot);
       }
-      if (GX != 0F) {
-        output.WriteRawTag(37);
-        output.WriteFloat(GX);
+      if (X != 0) {
+        output.WriteRawTag(32);
+        output.WriteUInt32(X);
       }
-      if (GY != 0F) {
-        output.WriteRawTag(45);
-        output.WriteFloat(GY);
+      if (Y != 0) {
+        output.WriteRawTag(40);
+        output.WriteUInt32(Y);
       }
-      if (GZ != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(GZ);
-      }
-      if (X != 0F) {
-        output.WriteRawTag(61);
-        output.WriteFloat(X);
-      }
-      if (Y != 0F) {
-        output.WriteRawTag(69);
-        output.WriteFloat(Y);
-      }
-      if (Z != 0F) {
-        output.WriteRawTag(77);
-        output.WriteFloat(Z);
+      if (Z != 0) {
+        output.WriteRawTag(48);
+        output.WriteUInt32(Z);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -987,33 +932,21 @@ namespace NetLevel {
         output.WriteSInt32(Code);
       }
       locations_.WriteTo(ref output, _repeated_locations_codec);
-      if (GW != 0F) {
-        output.WriteRawTag(29);
-        output.WriteFloat(GW);
+      if (Rot != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Rot);
       }
-      if (GX != 0F) {
-        output.WriteRawTag(37);
-        output.WriteFloat(GX);
+      if (X != 0) {
+        output.WriteRawTag(32);
+        output.WriteUInt32(X);
       }
-      if (GY != 0F) {
-        output.WriteRawTag(45);
-        output.WriteFloat(GY);
+      if (Y != 0) {
+        output.WriteRawTag(40);
+        output.WriteUInt32(Y);
       }
-      if (GZ != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(GZ);
-      }
-      if (X != 0F) {
-        output.WriteRawTag(61);
-        output.WriteFloat(X);
-      }
-      if (Y != 0F) {
-        output.WriteRawTag(69);
-        output.WriteFloat(Y);
-      }
-      if (Z != 0F) {
-        output.WriteRawTag(77);
-        output.WriteFloat(Z);
+      if (Z != 0) {
+        output.WriteRawTag(48);
+        output.WriteUInt32(Z);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1028,26 +961,17 @@ namespace NetLevel {
         size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Code);
       }
       size += locations_.CalculateSize(_repeated_locations_codec);
-      if (GW != 0F) {
-        size += 1 + 4;
+      if (Rot != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Rot);
       }
-      if (GX != 0F) {
-        size += 1 + 4;
+      if (X != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(X);
       }
-      if (GY != 0F) {
-        size += 1 + 4;
+      if (Y != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Y);
       }
-      if (GZ != 0F) {
-        size += 1 + 4;
-      }
-      if (X != 0F) {
-        size += 1 + 4;
-      }
-      if (Y != 0F) {
-        size += 1 + 4;
-      }
-      if (Z != 0F) {
-        size += 1 + 4;
+      if (Z != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Z);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1064,25 +988,16 @@ namespace NetLevel {
         Code = other.Code;
       }
       locations_.Add(other.locations_);
-      if (other.GW != 0F) {
-        GW = other.GW;
+      if (other.Rot != 0) {
+        Rot = other.Rot;
       }
-      if (other.GX != 0F) {
-        GX = other.GX;
-      }
-      if (other.GY != 0F) {
-        GY = other.GY;
-      }
-      if (other.GZ != 0F) {
-        GZ = other.GZ;
-      }
-      if (other.X != 0F) {
+      if (other.X != 0) {
         X = other.X;
       }
-      if (other.Y != 0F) {
+      if (other.Y != 0) {
         Y = other.Y;
       }
-      if (other.Z != 0F) {
+      if (other.Z != 0) {
         Z = other.Z;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1107,32 +1022,20 @@ namespace NetLevel {
             locations_.AddEntriesFrom(input, _repeated_locations_codec);
             break;
           }
-          case 29: {
-            GW = input.ReadFloat();
+          case 24: {
+            Rot = input.ReadUInt32();
             break;
           }
-          case 37: {
-            GX = input.ReadFloat();
+          case 32: {
+            X = input.ReadUInt32();
             break;
           }
-          case 45: {
-            GY = input.ReadFloat();
+          case 40: {
+            Y = input.ReadUInt32();
             break;
           }
-          case 53: {
-            GZ = input.ReadFloat();
-            break;
-          }
-          case 61: {
-            X = input.ReadFloat();
-            break;
-          }
-          case 69: {
-            Y = input.ReadFloat();
-            break;
-          }
-          case 77: {
-            Z = input.ReadFloat();
+          case 48: {
+            Z = input.ReadUInt32();
             break;
           }
         }
@@ -1157,32 +1060,20 @@ namespace NetLevel {
             locations_.AddEntriesFrom(ref input, _repeated_locations_codec);
             break;
           }
-          case 29: {
-            GW = input.ReadFloat();
+          case 24: {
+            Rot = input.ReadUInt32();
             break;
           }
-          case 37: {
-            GX = input.ReadFloat();
+          case 32: {
+            X = input.ReadUInt32();
             break;
           }
-          case 45: {
-            GY = input.ReadFloat();
+          case 40: {
+            Y = input.ReadUInt32();
             break;
           }
-          case 53: {
-            GZ = input.ReadFloat();
-            break;
-          }
-          case 61: {
-            X = input.ReadFloat();
-            break;
-          }
-          case 69: {
-            Y = input.ReadFloat();
-            break;
-          }
-          case 77: {
-            Z = input.ReadFloat();
+          case 48: {
+            Z = input.ReadUInt32();
             break;
           }
         }
