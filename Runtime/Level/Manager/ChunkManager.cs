@@ -153,7 +153,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return regionPosition;
         }
 
+        private static char CIDSEP = '|';
 
+        public static Vector3 GetChunkPosition(string chunkID)
+        {
+            string[] s = chunkID.Split(CIDSEP);
+            Vector3 pos = new Vector3(Int32.Parse(s[0]) * chunkGranularity
+                , Int32.Parse(s[1]) * chunkGranularity, Int32.Parse(s[2]) * chunkGranularity);
+            return pos - new Vector3(1, 1, 1)*chunkGranularity/2;
+        }
 
         private Chunk AddChunk(Tuple<int, int, int> gridPosition)
         {
@@ -171,7 +179,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static string GetChunkID(Tuple<int, int, int> gridPosition)
         {
             int[] result = new int[] {gridPosition.Item1,gridPosition.Item2, gridPosition.Item3};
-            string id = String.Join("|", result);
+            string id = String.Join(CIDSEP+"", result);
             return id;
         }
 
@@ -346,7 +354,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     };
                 }
 
-                LevelObjectInstance instance = LevelObjectInstanceDataToLevelObjectInstance(instanceData);  
+                Vector3 chunkPosition = GetChunkPosition(chunkData.ChunkId);
+                LevelObjectInstance instance = LevelObjectInstanceDataToLevelObjectInstance(instanceData, chunkPosition);  
                 
                 if (immediate)
                 {
@@ -384,9 +393,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
        
 
-        public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o)
+        public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o, Chunk c)
         {
-            LevelObjectInstanceData levelObjectInstanceData = InstanceToData((LevelObject) o);
+            LevelObjectInstanceData levelObjectInstanceData = InstanceToData((LevelObject) o, c);
             levelObjectInstanceData.Locations.AddRange(o.receivers.Select((p) =>
             {
                 return Util.VectorToLocation(p.Key);
@@ -394,18 +403,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return levelObjectInstanceData;
         }
         
-        public static LevelObjectInstanceData InstanceToData(LevelObject o)
+        public static LevelObjectInstanceData InstanceToData(LevelObject o, Chunk c)
         {
             LevelObjectInstanceData levelObjectInstanceData = new LevelObjectInstanceData();
-            Vector3 pos = o.transform.position;
+            Vector3 pos = o.transform.position - c.transform.position;
             Quaternion rot = o.transform.rotation;
-            levelObjectInstanceData.X = pos.x;
-            levelObjectInstanceData.Y = pos.y;
-            levelObjectInstanceData.Z = pos.z;
-            levelObjectInstanceData.GX = rot.x;
-            levelObjectInstanceData.GY = rot.y;
-            levelObjectInstanceData.GZ = rot.z;
-            levelObjectInstanceData.GW = rot.w;
+            levelObjectInstanceData.X = (byte) pos.x;
+            levelObjectInstanceData.Y = (byte) pos.y;
+            levelObjectInstanceData.Z = (byte) pos.z;
+            levelObjectInstanceData.Rot = (byte) Mathf.Floor(rot.eulerAngles.y / 90);
             levelObjectInstanceData.Code = o.levelObjectDataType;
             return levelObjectInstanceData;
         }
@@ -413,16 +419,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
 
 
-        public static LevelObjectInstance LevelObjectInstanceDataToLevelObjectInstance(LevelObjectInstanceData instanceData)
+        public static LevelObjectInstance LevelObjectInstanceDataToLevelObjectInstance(LevelObjectInstanceData instanceData, Vector3 offset)
         {
+            Quaternion rot = Quaternion.Euler(0,90*instanceData.Rot,0);
             LevelObjectInstance levelObjectInstance = new LevelObjectInstance();
-            levelObjectInstance.X = instanceData.X;
-            levelObjectInstance.Y = instanceData.Y;
-            levelObjectInstance.Z = instanceData.Z;
-            levelObjectInstance.GX = instanceData.GX;
-            levelObjectInstance.GY = instanceData.GY;
-            levelObjectInstance.GZ = instanceData.GZ;
-            levelObjectInstance.GW = instanceData.GW;
+            levelObjectInstance.X = instanceData.X + offset.x;
+            levelObjectInstance.Y = instanceData.Y + offset.y;
+            levelObjectInstance.Z = instanceData.Z + offset.z;
+            levelObjectInstance.GX = rot.x;
+            levelObjectInstance.GY = rot.y;
+            levelObjectInstance.GZ = rot.z;
+            levelObjectInstance.GW = rot.w;
             levelObjectInstance.Locations.AddRange( instanceData.Locations );
             levelObjectInstance.Type = instanceData.Code;
             return levelObjectInstance;
@@ -435,7 +442,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             chunkData.ChunkId = chunk.chunkId;
             foreach (LevelObject l in instances)
             {
-                chunkData.Data.Add(InstanceToData(l as dynamic));
+                chunkData.Data.Add(InstanceToData(l as dynamic, chunk));
             }
 
             return chunkData;

@@ -26,14 +26,12 @@ repeated Location locations = 2;
 message LevelObjectInstanceData{
 	sint32 code = 1;
 repeated Location locations = 2;
-	float g_w = 3;
-	float g_x = 4;
-	float g_y = 5;
-	float g_z = 6;
 
-	float x = 7;
-	float y = 8;
-	float z = 9;
+	uint32 rot = 3;
+
+	uint32 x = 4;
+	uint32 y = 5;
+	uint32 z = 6;
 	
 }
 

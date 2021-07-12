@@ -64,7 +64,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if (value == InstantiateType.Play)
                 {
-                    Debug.Log("HOLLLA");
                     activated = true;
                     LevelDataManager.instance.loadType = LevelDataManager.LoadType.All;
                     LevelLoadTarget.loadTargetMode = LevelLoadTarget.LoadTargetMode.Near;
