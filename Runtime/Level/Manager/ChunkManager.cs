@@ -170,13 +170,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static string GetChunkID(Tuple<int, int, int> gridPosition)
         {
-            var x = BitConverter.GetBytes(gridPosition.Item1);
-            var y = BitConverter.GetBytes(gridPosition.Item2);
-            var z = BitConverter.GetBytes(gridPosition.Item3);
-            byte[] result = new byte[12];
-            Array.Copy(x,result,4);
-            Array.Copy(y,0,result,4,4);
-            Array.Copy(z,0,result,8,4);
+            int[] result = new int[] {gridPosition.Item1,gridPosition.Item2, gridPosition.Item3};
             string id = String.Join("|", result);
             return id;
         }
