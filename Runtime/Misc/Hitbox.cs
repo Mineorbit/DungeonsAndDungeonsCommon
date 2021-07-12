@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private bool isAttached;
 
-        private string targetTag;
+        public string targetTag;
 
         private void Start()
         {
@@ -22,6 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int insideCounter = 0;
         public void OnTriggerEnter(Collider other)
         {
+        GameConsole.Log(other+" entered "+this);
             if (other.gameObject.tag == targetTag)
             {
                 insideCounter++;
