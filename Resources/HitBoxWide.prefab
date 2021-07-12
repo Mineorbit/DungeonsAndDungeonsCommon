@@ -59,6 +59,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4541802462330782230}
     m_Modifications:
+    - target: {fileID: 510676466787536767, guid: 661f88c79574b89ee9bfa0f3d890a16d, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: d0f115172c5921b4c9333d4378a36ce4, type: 3}
     - target: {fileID: 1211786009727921101, guid: 661f88c79574b89ee9bfa0f3d890a16d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -107,6 +111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitMesh
       objectReference: {fileID: 0}
+    - target: {fileID: 2845988412258903144, guid: 661f88c79574b89ee9bfa0f3d890a16d, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: d0f115172c5921b4c9333d4378a36ce4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 661f88c79574b89ee9bfa0f3d890a16d, type: 3}
 --- !u!4 &3972492416657662996 stripped
