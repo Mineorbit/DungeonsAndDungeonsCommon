@@ -36,7 +36,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static int handledPackets;
 
         // THIS DOES NOT YET WORK WHEN INCREASING
-        private readonly int maxSendCount = 2;
+        private readonly int maxSendCount = 1;
 
         private int maxPackSize = 8192;
 
