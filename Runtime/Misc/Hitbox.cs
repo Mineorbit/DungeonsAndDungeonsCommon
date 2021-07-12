@@ -17,6 +17,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public int insideCounter = 0;
+        
+        public void Start()
+        {
+        
+        }
+        
         public void OnTriggerEnter(Collider other)
         {
         GameConsole.Log(other+" entered "+this);
