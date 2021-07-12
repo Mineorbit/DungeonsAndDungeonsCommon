@@ -15,12 +15,12 @@ MonoBehaviour:
   prefab: {fileID: 502292555523390023, guid: c772c828a9a43544993c7fa9e2d89285, type: 3}
   uniqueLevelObjectId: -1205852500
   granularity: 1
-  name: Blog
+  levelObjectName: 
   dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 0
   Buildable: 0
-  cursorMesh: {fileID: 0}
-  cursorScale: {x: 1, y: 1, z: 1}
+  cursorMesh: {fileID: 2791369629923464968, guid: d13792aa049db6343bd0b3f9488acf8b, type: 3}
+  cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}

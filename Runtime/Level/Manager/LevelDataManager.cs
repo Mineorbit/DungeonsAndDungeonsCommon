@@ -47,7 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bool saveImmediately = true)
         {
             //Moved for now
-            Debug.Log("Creating new level "+levelMetaData);
+            GameConsole.Log("Creating new level "+levelMetaData);
             if (instantiateImmediately)
             {
                 LevelManager.Clear();
@@ -77,7 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var m = new SaveManager(SaveManager.StorageType.BIN);
 
             var levelDataPath = GetLevelPath(levelMetaData) + "/Index.json";
-            Debug.Log("Loading LevelData: "+levelDataPath);
+            GameConsole.Log("Loading LevelData: "+levelDataPath);
             instance.levelData = m.Load<LevelData>(levelDataPath);
 
             ChunkManager.instance.regionLoaded = new Dictionary<int, bool>();
@@ -162,7 +162,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static string SetupNewLevelFolder(LevelMetaData metaData)
         {
-            
             metaData.LocalLevelId = GetFreeLocalLevelId();
             string lPath = GetLevelPath(metaData);
             FileManager.createFolder(lPath,persistent: false);
@@ -210,7 +209,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static string GetLevelPath(LevelMetaData levelMetaData)
         {
-            Debug.Log("GETTING PATH FOR "+levelMetaData);
             string path = instance.levelFolder.GetPath() + levelMetaData.FullName + ((levelMetaData.LocalLevelId != 0) ? levelMetaData.LocalLevelId.ToString() : "");
             return path;
         }
@@ -221,17 +219,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (instance == null || instance.levelFolder == null)
             {
-                Debug.Log("Level Folder not set for LevelDataManager or instance not set");
+                GameConsole.Log("Level Folder not set for LevelDataManager or instance not set");
                 return;
             }
 
             var path = instance.levelFolder.GetPath();
-            Debug.Log("Looking for local levels in " + path);
+            GameConsole.Log("Looking for local levels in " + path);
             var levelFolders = Directory.GetDirectories(path);
             instance.localLevels = new NetLevel.LevelMetaData[levelFolders.Length];
             for (var i = 0; i < levelFolders.Length; i++)
             {
-                Debug.Log($"Loading {levelFolders[i]}");
+                GameConsole.Log($"Loading {levelFolders[i]}");
                 instance.localLevels[i] = LoadLevelMetaData(levelFolders[i] + "/MetaData.json");
                 
             }
@@ -242,7 +240,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private static void LoadAllRegions()
         {
-            foreach (var regionId in instance.levelData.regions.Values) ChunkManager.LoadRegion(regionId);
+            if(instance.levelData != null)
+            {
+                foreach (var regionId in instance.levelData.regions.Values) ChunkManager.LoadRegion(regionId);
+            }
+            else
+            {
+                GameConsole.Log("There currently is no LevelData to load");
+            }
         }
 
         

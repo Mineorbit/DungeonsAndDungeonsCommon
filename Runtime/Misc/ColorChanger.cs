@@ -17,7 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SetColor(int i, Color c)
         {
-            Debug.Log("Setting color to" + c);
+            GameConsole.Log("Setting color to" + c);
             m[i].SetColor("_BaseColor", c);
         }
 

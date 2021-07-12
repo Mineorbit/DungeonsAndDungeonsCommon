@@ -91,7 +91,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 
                 float weight = weights[type] / count;
-                Debug.Log("Weight: "+type+" "+weight);
+                GameConsole.Log("Weight: "+type+" "+weight);
                 HuffNode huffNode = new HuffNode();
                 huffNode.type = type;
                 huffNode.w = weight;
