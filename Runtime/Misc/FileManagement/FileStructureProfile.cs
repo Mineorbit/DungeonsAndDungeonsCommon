@@ -32,7 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string GetPath()
         {
             if (parent == null)
-                return Application.persistentDataPath + "/" + fileStructureProfileName + "/";
+                return Application.persistentDataPath +"/";
             string path = parent.GetPath() + fileStructureProfileName;
             FileManager.createFolder(path, false);
             return path + "/";;

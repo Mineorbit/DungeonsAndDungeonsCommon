@@ -162,10 +162,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private string DisassembleZip(string targetPath, string resultPath)
         {
-            Debug.Log($"Opening archive from {targetPath} to {resultPath}");
+            GameConsole.Log($"Opening archive from {targetPath} to {resultPath}");
             try
             {
-                ZipFile.ExtractToDirectory(targetPath, resultPath);
+                using (FileStream zipToOpen = new FileStream(targetPath, FileMode.Open))
+                {
+                    using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
+                    {
+                        foreach (ZipArchiveEntry zipArchiveEntry in archive.Entries)
+                        {
+                            string path = Path.Combine(resultPath,zipArchiveEntry.FullName);
+                            GameConsole.Log($"Extracting {path}");
+                            zipArchiveEntry.ExtractToFile(path,true);
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
