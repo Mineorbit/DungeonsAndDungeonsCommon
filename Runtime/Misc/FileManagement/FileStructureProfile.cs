@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (parent == null)
                 return Application.persistentDataPath + "/" + fileStructureProfileName + "/";
             string path = fileStructureProfileName+parent.GetPath() + fileStructureProfileName + "/";
-            FileManager.createFolder(path);
+            FileManager.createFolder(path, false);
             return path;
         }
     }
