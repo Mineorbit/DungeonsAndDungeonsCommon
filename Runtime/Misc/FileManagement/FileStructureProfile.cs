@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -34,7 +33,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (parent == null)
                 return Application.persistentDataPath + "/" + fileStructureProfileName + "/";
-            return parent.GetPath() + fileStructureProfileName + "/";
+            string path = fileStructureProfileName+parent.GetPath() + fileStructureProfileName + "/";
+            FileManager.createFolder(path);
+            return path;
         }
     }
 }
