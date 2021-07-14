@@ -88,7 +88,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void HandleReset()
         {
-            GameConsole.Log("Freecheck "+this);
             (this as dynamic).ResetState();
         }
 
@@ -96,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Resetting "+this);
             base.OnEndRound();
-            Invoke(HandleReset);
+            Invoke(HandleReset, allowLocal:true);
         }
         
         // Will try to find receiver at that location, if not found, will drop that receiver
@@ -137,14 +136,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void FindRemainingReceivers()
         {
             if(remainingReceivers.Count > 0)
-            FindReceivers(remainingReceivers);
+                FindReceivers(remainingReceivers);
         }
 
         public override void OnInit()
         {
             base.OnInit();
-
-
             FindReceivers();
         }
     }
