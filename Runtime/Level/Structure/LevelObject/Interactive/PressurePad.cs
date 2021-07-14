@@ -66,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public override void ResetState()
+        public new void ResetState()
         {
             base.ResetState();
             GameConsole.Log("We are HERE "+this);
