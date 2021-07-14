@@ -87,6 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnEndRound()
         {
+            GameConsole.Log("Resetting "+this);
             base.OnEndRound();
             Invoke(Reset);
         }

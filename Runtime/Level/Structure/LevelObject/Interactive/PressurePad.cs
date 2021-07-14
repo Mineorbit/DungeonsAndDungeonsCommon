@@ -68,12 +68,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Reset()
         {
-            if (pressed)
-            {
-                pressed = false;
-                base.Deactivate();
-                AnimUnpress();
-            }
+            base.Reset();
+            pressed = false;
+            base.Deactivate();
+            AnimUnpress();
             buildCollider.enabled = true;
         }
 
