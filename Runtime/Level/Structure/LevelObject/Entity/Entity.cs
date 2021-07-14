@@ -74,11 +74,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetupItems();
         }
 
+		float killHeight = -8f;
 
         // this needs to be prettier
         public virtual void Update()
         {
-            if (transform.position.y < -8) Invoke(Kill);
+            if (transform.position.y < -killHeight) Invoke(Kill);
         }
 
 
@@ -207,8 +208,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             baseAnimator.Hit();
             Vector3 dir = transform.position - hitPosition;
-            
-            EffectCaster.HitFX(hitPosition+0.05f*dir);
+            dir.Normalize();
+            EffectCaster.HitFX(transform.position+0.5f*dir);
             Kickback(dir,2f);
         }
 
