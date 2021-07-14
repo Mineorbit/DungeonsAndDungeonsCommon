@@ -80,14 +80,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public virtual void ResetState()
+        public void ResetState()
         {
-            GameConsole.Log("Resetting "+this);
+            
         }
 
 
         public void HandleReset()
         {
+            GameConsole.Log("Resetting "+this);
             (this as dynamic).ResetState();
         }
 
