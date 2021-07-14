@@ -66,13 +66,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public override void Reset()
+        public override void ResetState()
         {
-            base.Reset();
-            GameConsole.Log("We are HERE");
-            pressed = false;
-            base.Deactivate();
-            AnimUnpress();
+            base.ResetState();
+            GameConsole.Log("We are HERE "+this);
+            bool retToUnp = returnToUnpress;
+            returnToUnpress = true;
+            Deactivate();
+            returnToUnpress = retToUnp;
+            // Factor out into parent eventually
             buildCollider.enabled = true;
         }
 
