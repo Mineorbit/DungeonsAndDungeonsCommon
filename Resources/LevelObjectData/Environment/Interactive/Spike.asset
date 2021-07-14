@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4489509847177546233, guid: 7325cde9afbb0be49816819ca82f8da2, type: 3}
   uniqueLevelObjectId: 723221514
-  granularity: 0.5
+  granularity: 1
   levelObjectName: Spike
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   cursorMesh: {fileID: 0}
-  cursorScale: {x: 2, y: 2, z: 2}
+  cursorScale: {x: 4, y: 4, z: 4}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
