@@ -80,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void ResetState()
+        public virtual void ResetState()
         {
             
         }
@@ -88,7 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void HandleReset()
         {
-            GameConsole.Log("Resetting "+this);
+            GameConsole.Log("Freecheck "+this);
             (this as dynamic).ResetState();
         }
 
