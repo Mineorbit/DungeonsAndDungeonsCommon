@@ -69,6 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Reset()
         {
             base.Reset();
+            GameConsole.Log("We are HERE");
             pressed = false;
             base.Deactivate();
             AnimUnpress();
