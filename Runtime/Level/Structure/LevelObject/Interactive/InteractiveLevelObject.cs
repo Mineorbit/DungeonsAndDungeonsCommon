@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Activate()
         {
-            Debug.Log(this + " activated");
+            GameConsole.Log(this + " activated");
             if (!activated)
             {
                 activated = true;
@@ -61,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AddReceiver(Vector3 location)
         {
-            Debug.Log("Adding Receiver at " + location);
+            GameConsole.Log("Adding Receiver at " + location);
             if (!(receivers.ContainsKey(location) || receiversToAdd.Contains(location)))
                 receiversToAdd.Enqueue(location);
             FindReceivers();
@@ -79,6 +79,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
         }
 
+
+        public virtual void Reset()
+        {
+            
+        }
+
+        public override void OnEndRound()
+        {
+            base.OnEndRound();
+            Invoke(Reset);
+        }
+        
         // Will try to find receiver at that location, if not found, will drop that receiver
         private void FindReceivers(Queue<Vector3> locations)
         {
@@ -88,17 +100,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var receiver = LevelManager.currentLevel.GetLevelObjectAt(targetLocation);
                 if (receiver != null)
                 {
-                    Debug.Log(gameObject.name + " found " + receiver.gameObject.name);
+                    GameConsole.Log(gameObject.name + " found " + receiver.gameObject.name);
                     if (receiver.GetType().IsSubclassOf(typeof(InteractiveLevelObject)) && receiver != this)
                     {
                         var r = (InteractiveLevelObject) receiver;
-                        Debug.Log("Found " + r);
+                        GameConsole.Log("Found " + r);
                         AddReceiverDynamic(r.transform.position, r);
                     }
                 }
                 else
                 {
-                    Debug.Log("Did not find "+targetLocation);
+                    GameConsole.Log("Did not find "+targetLocation);
                     remainingReceivers.Enqueue(targetLocation);   
                      
                 }

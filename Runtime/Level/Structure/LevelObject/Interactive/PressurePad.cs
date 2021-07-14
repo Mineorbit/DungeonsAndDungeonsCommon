@@ -37,12 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playerStandinghitbox.exitEvent.AddListener(x => { StartUnpress(); });
         }
 
-        public override void OnEndRound()
-        {
-            base.OnEndRound();
-            Invoke(ForceDeactivate);
-            buildCollider.enabled = true;
-        }
+        
 
         public override void Activate()
         {
@@ -71,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void ForceDeactivate()
+        public override void Reset()
         {
             if (pressed)
             {
@@ -79,6 +74,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 base.Deactivate();
                 AnimUnpress();
             }
+            buildCollider.enabled = true;
         }
 
         public override void Deactivate()
