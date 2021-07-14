@@ -100,7 +100,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 });
                 itemHitbox.exitEvent.AddListener(x =>
                 {
-                    Debug.Log(x.name);
                     itemsInProximity.RemoveAll(p => p == x.GetComponent<Item>());
                 });
             }
@@ -204,9 +203,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartCoroutine(KickbackRoutine(direction,distance));
         }
         
-        public void HitEffect(Vector3 dir)
+        public void HitEffect(Vector3 hitPosition)
         {
             baseAnimator.Hit();
+            EffectCaster.HitFX(hitPosition);
+            Vector3 dir = transform.position - hitPosition;
             
             Kickback(dir,2f);
         }
@@ -221,9 +222,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (!invincible && !hitCooldown)
                 {
                     Invoke(setMovementStatus, false);
-                    
-                    
-                    Invoke(HitEffect,transform.position - hitter.transform.position);
+                    Invoke(HitEffect,hitter.transform.position);
 
                     if (hitter.GetType().IsInstanceOfType(typeof(Entity)))
                     {
