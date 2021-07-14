@@ -79,7 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // this needs to be prettier
         public virtual void Update()
         {
-            if (transform.position.y < -killHeight) Invoke(Kill);
+            if (transform.position.y < killHeight) Invoke(Kill);
         }
 
 
