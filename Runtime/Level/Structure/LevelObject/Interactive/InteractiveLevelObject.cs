@@ -88,7 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void HandleReset()
         {
-            (this as dynamic).Reset();
+            (this as dynamic).ResetState();
         }
 
         public override void OnEndRound()
