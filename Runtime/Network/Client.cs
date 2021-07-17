@@ -38,7 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS DOES NOT YET WORK WHEN INCREASING
         private readonly int maxSendCount = 1;
 
-        private int maxPackSize = 8192;
+        private int maxPackSize = 4*8192;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
@@ -148,7 +148,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             client.tcpClient = new TcpClient(host.ToString(), port);
             client.tcpClient.SendTimeout = 1000;
-            client.tcpClient.NoDelay = true;
             client.tcpStream = client.tcpClient.GetStream();
         }
 
@@ -227,6 +226,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             if (TCP || !NetworkManager.instance.useUDP)
             {
+                GameConsole.Log("Sent length: "+data.Length);
                 tcpStream.Write(data, 0, data.Length);
             }
             else
