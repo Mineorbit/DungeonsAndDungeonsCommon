@@ -13,8 +13,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public ButtonBaseAnimator buttonBaseAnimator;
 
-        private bool pressed;
-        private TimerManager.Timer unpressTimer;
+        public bool pressed;
+        public TimerManager.Timer unpressTimer;
 
 
         public override void OnInit()
