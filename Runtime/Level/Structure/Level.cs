@@ -357,20 +357,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             LevelObject found = null;
             // Temporary fix
-            List<Chunk> neighborhood = ChunkManager.GetNeighborhood(position);
+            Chunk[] neighborhood = ChunkManager.GetNeighborhood(position);
             int i = 0;
-            while (found == null && i < neighborhood.Count)
+            foreach(Chunk targetChunk in neighborhood)
             {
-                var targetChunk = neighborhood[i];
+                
             if (targetChunk != null)
             {
                 found = targetChunk.GetLevelObjectAt(position);
+                if (found != null)
+                {
+                    return found;
+                }
+            }
+            
             }
 
-            i++;
-            }
-
-            return found;
+            return null;
         }
     }
 }

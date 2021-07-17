@@ -61,13 +61,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AddReceiver(Vector3 location)
         {
-            if (!(Level.instantiateType == Level.InstantiateType.Play ||
-                  Level.instantiateType == Level.InstantiateType.Test))
-            {
-                GameConsole.Log("Not in right mode to add receivers");
-                return;
-            }
-            
             GameConsole.Log("Adding Receiver at " + location);
             if (!(receivers.ContainsKey(location) || receiversToAdd.Contains(location)))
                 receiversToAdd.Enqueue(location);
@@ -75,14 +68,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         public void AddReceiverDynamic(Vector3 location, InteractiveLevelObject r)
-        {
-            
-            if (!(Level.instantiateType == Level.InstantiateType.Play ||
-                  Level.instantiateType == Level.InstantiateType.Test))
-            {
-                GameConsole.Log("Not in right mode to add receivers");
-                return;
-            }    
+        {   
             if (r != null)
                 if (!receivers.ContainsKey(location))
                 {
@@ -115,13 +101,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Will try to find receiver at that location, if not found, will drop that receiver
         private void FindReceivers(Queue<Vector3> locations)
         {
-
-            if (!(Level.instantiateType == Level.InstantiateType.Play ||
-                  Level.instantiateType == Level.InstantiateType.Test))
-            {
-                GameConsole.Log("Not in right mode to add receivers");
-                return;
-            }
             while (locations.Count > 0)
             {
                 var targetLocation = locations.Dequeue();
@@ -143,8 +122,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                      
                 }
             }
-            // THIS IS JUNK BUT SHOULD WORK
-            Invoke("FindRemainingReceivers",0.01f);
         }
 
         private Queue<Vector3> remainingReceivers = new Queue<Vector3>();
@@ -157,13 +134,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void FindRemainingReceivers()
         {
-            if (!(Level.instantiateType == Level.InstantiateType.Play ||
-                  Level.instantiateType == Level.InstantiateType.Test))
-            {
-                GameConsole.Log("Not in right mode to add receivers");
-                return;
-            }
-            
             if(remainingReceivers.Count > 0)
                 FindReceivers(remainingReceivers);
         }
@@ -171,6 +141,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
+            
+            ChunkManager.onChunkLoaded.AddListener(FindRemainingReceivers);
             FindReceivers();
         }
     }
