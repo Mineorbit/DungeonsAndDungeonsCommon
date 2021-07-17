@@ -191,13 +191,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void StartUpload(NetLevel.LevelMetaData levelToUpload)
         {
             
+            
             count++;
             var path = instance.AssembleZip(
                 instance.compressedLevelFiles.GetPath() + "" + count + ".zip",
                 LevelDataManager.GetLevelPath(levelToUpload));
+            
+            
+            GameConsole.Log("Uploading "+levelToUpload+" "+LevelDataManager.GetLevelPath(levelToUpload));
             instance.StartCoroutine(instance.UploadLevel(levelToUpload,
                 instance.compressedLevelFiles.GetPath() + "" + count + ".zip",
-                (x) => { Debug.Log("Test " + x); }));
+                (x) => { GameConsole.Log(x); }));
         }
 
         public static void FetchLevelList(UnityEvent listUpdatedEvent)
