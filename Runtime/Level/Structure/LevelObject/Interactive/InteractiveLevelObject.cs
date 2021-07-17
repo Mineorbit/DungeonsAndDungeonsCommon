@@ -104,6 +104,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (locations.Count > 0)
             {
                 var targetLocation = locations.Dequeue();
+
+                GameConsole.Log("Trying to find " + targetLocation);
                 var receiver = LevelManager.currentLevel.GetLevelObjectAt(targetLocation);
                 if (receiver != null)
                 {
