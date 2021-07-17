@@ -38,7 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS DOES NOT YET WORK WHEN INCREASING
         private readonly int maxSendCount = 1;
 
-        private int maxPackSize = 2*8192;
+        private int maxPackSize = 8192;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
@@ -302,6 +302,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
                 data = new byte[readLength];
+                GameConsole.Log("Received: "+data.Length+" bytes");
                 Array.Copy(tcpResult,data,readLength);
             }
             else
