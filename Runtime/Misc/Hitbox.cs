@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -25,19 +26,32 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag(targetTag))
+            try
             {
-                insideCounter++;
-                enterEvent.Invoke(other.gameObject);
-            }
+                if (other.gameObject.CompareTag(targetTag))
+                {
+                    insideCounter++;
+                    enterEvent.Invoke(other.gameObject);
+                }
+            }catch (Exception e)
+            {
+                GameConsole.Log(e.ToString());
+            } 
         }
 
         public void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.CompareTag(targetTag))
+            try
             {
-                insideCounter--;
-                exitEvent.Invoke(other.gameObject);
+                if (other.gameObject.CompareTag(targetTag))
+                {
+                    insideCounter--;
+                    exitEvent.Invoke(other.gameObject);
+                }
+            }
+            catch (Exception e)
+            {
+                GameConsole.Log(e.ToString());
             }
         }
 
