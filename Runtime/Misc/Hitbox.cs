@@ -25,8 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnTriggerEnter(Collider other)
         {
-        GameConsole.Log(other+" entered "+this);
-            if (other.gameObject.tag == targetTag)
+            if (other.gameObject.CompareTag(targetTag))
             {
                 insideCounter++;
                 enterEvent.Invoke(other.gameObject);
@@ -35,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.tag == targetTag)
+            if (other.gameObject.CompareTag(targetTag))
             {
                 insideCounter--;
                 exitEvent.Invoke(other.gameObject);
