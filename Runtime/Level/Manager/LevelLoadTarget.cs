@@ -34,10 +34,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test)
             {
             EnableChunkAt(transform.position);
-            EnableChunkAt(transform.position + transform.forward * 32);
-            EnableChunkAt(transform.position - transform.forward * 32);
-            EnableChunkAt(transform.position + transform.right * 32);
-            EnableChunkAt(transform.position - transform.right * 32);
+            EnableChunkAt(transform.position + transform.forward * ChunkManager.chunkGranularity);
+            EnableChunkAt(transform.position - transform.forward * ChunkManager.chunkGranularity);
+            EnableChunkAt(transform.position + transform.right * ChunkManager.chunkGranularity);
+            EnableChunkAt(transform.position - transform.right * ChunkManager.chunkGranularity);
             }
         }
 
