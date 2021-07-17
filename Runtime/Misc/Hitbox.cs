@@ -28,11 +28,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             try
             {
-                if (other.gameObject.CompareTag(targetTag))
-                {
-                    insideCounter++;
-                    enterEvent.Invoke(other.gameObject);
-                }
+                if(!String.IsNullOrEmpty(targetTag))
+                    if (other.gameObject.CompareTag(targetTag))
+                    {
+                        insideCounter++;
+                        enterEvent.Invoke(other.gameObject);
+                    }
             }catch (Exception e)
             {
                 GameConsole.Log(e.ToString());
@@ -43,11 +44,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             try
             {
-                if (other.gameObject.CompareTag(targetTag))
-                {
-                    insideCounter--;
-                    exitEvent.Invoke(other.gameObject);
-                }
+                if(String.IsNullOrEmpty(targetTag))
+                    if (other.gameObject.CompareTag(targetTag))
+                    {
+                        insideCounter--;
+                        exitEvent.Invoke(other.gameObject);
+                    }
             }
             catch (Exception e)
             {
