@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var fileByte = File.ReadAllBytes(path);
             form.AddBinaryData("levelFiles", fileByte, levelToUpload.UniqueLevelId + ".zip", "application / zip");
 
-            action.Invoke("Uploading Level");
+            action.Invoke("Uploading Level to "+url);
             using (var www = UnityWebRequest.Post(url, form))
             {
                 www.SetRequestHeader("Authorization", $"Bearer {token}");
