@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NetLevel;
+using PlasticGui.Help.NewVersions;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -27,17 +28,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.levelClearEvent.AddListener(() => { loadedLocalChunks.Clear();});
         }
 
+        private int radius = 2;
         //Overlap between load target zones is a problem
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             if(Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test)
             {
-            EnableChunkAt(transform.position);
-            EnableChunkAt(transform.position + transform.forward * ChunkManager.chunkGranularity);
-            EnableChunkAt(transform.position - transform.forward * ChunkManager.chunkGranularity);
-            EnableChunkAt(transform.position + transform.right * ChunkManager.chunkGranularity);
-            EnableChunkAt(transform.position - transform.right * ChunkManager.chunkGranularity);
+            for(int i = - radius;i<=radius;i++)
+                for(int j = - radius; j<=radius;j++)
+                    for (int k = -radius; k <= radius; k++)
+                    {
+                        EnableChunkAt(transform.position+ChunkManager.chunkGranularity*(new Vector3(i,j,k)));
+                    }
+                
             }
         }
 
