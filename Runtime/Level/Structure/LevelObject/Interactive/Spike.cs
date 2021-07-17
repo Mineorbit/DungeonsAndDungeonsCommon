@@ -34,11 +34,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
         }
+
+        public override void OnInit()
+        {
+            base.OnInit();
+            buildCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
+        }
+
         public override void OnEndRound()
         {
             base.OnEndRound();
             Invoke(Deactivate);
-            buildCollider.enabled = false;
         }
         
         public override void Activate()
