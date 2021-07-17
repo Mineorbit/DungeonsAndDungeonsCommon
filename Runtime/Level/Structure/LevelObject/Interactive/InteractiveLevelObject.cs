@@ -134,6 +134,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void FindRemainingReceivers()
         {
+            GameConsole.Log("Trying to find remaining Receivers");
             if(remainingReceivers.Count > 0)
                 FindReceivers(remainingReceivers);
         }
