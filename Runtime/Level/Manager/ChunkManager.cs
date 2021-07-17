@@ -296,13 +296,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 foreach (Chunk c in chunks)
                 {
-                if(c != null)
-                {
-                if (c.chunkId == id)
-                {
-                    result = c;
-                }
-                }
+                    if(c != null)
+                    {
+                        if (c.chunkId == id)
+                        {
+                            result = c;
+                        }
+                    }
                 }
             }
             return result;
@@ -328,14 +328,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var levelObjectInstances = new List<LevelObjectInstanceData>();
             levelObjectInstances.AddRange(chunkData.Data.ToList());
             var counter = levelObjectInstances.Count;
-            GameConsole.Log(chunkData.ChunkId + " adding " + counter + " Objects");
             foreach (var instanceData in levelObjectInstances)
             {
                 counter--;
                 Action Complete = null;
                 if (counter == 0)
                 {
-                    GameConsole.Log("Adding finish Action for "+chunkData.ChunkId);
                     Complete = () =>
                     {
                         if(chunkData != null)
@@ -366,7 +364,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 if (immediate)
                 {
-                    GameConsole.Log("Adding "+instance);
                     LevelManager.currentLevel.Add(instance);
                     if (Complete != null)
                     {
@@ -387,7 +384,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         MainCaller.Do(() =>
                         {
-                            GameConsole.Log("Adding " + instance);
                             LevelManager.currentLevel.Add(instance);
                         });  
                     }
