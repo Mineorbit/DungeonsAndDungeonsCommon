@@ -23,13 +23,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelObject GetLevelObjectAt(Vector3 position)
         {
-            Debug.Log("Searching for LevelObejct at "+position);
             foreach (LevelObject child in transform.GetComponentsInChildren<LevelObject>(includeInactive: true))
             {
-                Debug.Log("Now at "+child);
                 if ((child.transform.position - position).magnitude < eps)
                 {
-                    Debug.Log("Found "+child);
                     return child;
                 }
                 
