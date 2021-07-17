@@ -23,10 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         //this needs to be false in network play
         private static bool _activated;
-
-        public static Semaphore levelReady = new Semaphore(0, 1);
-
-
+        
         public Transform dynamicObjects;
 
         public PlayerSpawn[] spawn;
@@ -114,19 +111,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 dynamicObjects = transform.Find("Dynamic");
                 navGenerator = GetComponent<LevelNavGenerator>();
                 createPlayerSpawnList();
-
-                //Later we should try to switch this to some  sort of future
-                try
-                {
-                    levelReady.Release();
-                }
-                catch (SemaphoreFullException e)
-                {
-                    GameConsole.Log($"Level Readyness was not awaited {e}");
-                }
+                CreateEnqueuedEntities();
             }
         }
 
+        public static Queue<Action> entityCreation = new Queue<Action>();
+        public void CreateEnqueuedEntities()
+        {
+            while (entityCreation.Count>0)
+            {
+                entityCreation.Dequeue().DynamicInvoke();
+            }
+        }
         public bool PositionOccupied()
         {
             return false;
