@@ -5,6 +5,7 @@ using System.Linq;
 using Google.Protobuf;
 using NetLevel;
 using UnityEngine;
+using UnityEngine.Events;
 using Object = UnityEngine.Object;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -36,7 +37,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private bool ready;
 
         public Dictionary<int, bool> regionLoaded = new Dictionary<int, bool>();
-
+        
+        public static UnityEvent onChunkLoaded = new UnityEvent();
+        
         private void Start()
         {
             Setup();
@@ -237,19 +240,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return result_chunk;
         }
 
-        public static List<Chunk> GetNeighborhood(Vector3 position)
+        public static Chunk[] GetNeighborhood(Vector3 position)
         {
-            List<Chunk> neighborhood = new List<Chunk>();
+            Chunk[] neighborhood = new Chunk[27];
             var grid = GetChunkGridPosition(position);
-            
+            int c = 0;
             for (int i = -1; i<2;i++)
             	for (int j = -1; j<2;j++)
             		for (int k = -1; k<2;k++)
             		{
             			Chunk neighborChunk = GetChunkByID(GetChunkID(new Tuple<int, int, int>(grid.Item1 + i, grid.Item2 + j,grid.Item3 + k)));
-            			if(neighborChunk != null)
-            				neighborhood.Add(neighborChunk);
-            		}
+                        if (neighborChunk != null)
+                            neighborhood[c] = neighborChunk;
+
+                        c++;
+                    }
             return neighborhood;
         }
 
@@ -346,6 +351,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             }
                             
                             chunkLoaded[chunkData.ChunkId] = true;
+                            onChunkLoaded.Invoke();
+                            
                         }
                         else
                         {
