@@ -105,23 +105,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 var targetLocation = locations.Dequeue();
 
-                GameConsole.Log("Trying to find " + targetLocation);
                 var receiver = LevelManager.currentLevel.GetLevelObjectAt(targetLocation);
                 if (receiver != null)
                 {
-                    GameConsole.Log(gameObject.name + " found " + receiver.gameObject.name);
                     if (receiver.GetType().IsSubclassOf(typeof(InteractiveLevelObject)) && receiver != this)
                     {
                         var r = (InteractiveLevelObject) receiver;
-                        GameConsole.Log("Found " + r);
                         AddReceiverDynamic(r.transform.position, r);
                     }
                 }
                 else
                 {
-                    GameConsole.Log("Did not find "+targetLocation);
-                    remainingReceivers.Enqueue(targetLocation);   
-                     
+                    remainingReceivers.Enqueue(targetLocation);
                 }
             }
         }
@@ -137,13 +132,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Trying to find remaining Receivers");
             if(remainingReceivers.Count > 0)
-                FindReceivers(remainingReceivers);
+                FindReceivers(new Queue<Vector3>(remainingReceivers));
         }
 
         public override void OnInit()
         {
             base.OnInit();
-            
             ChunkManager.onChunkLoaded.AddListener(FindRemainingReceivers);
             FindReceivers();
         }
