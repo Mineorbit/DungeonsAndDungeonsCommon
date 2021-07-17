@@ -178,15 +178,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position,
             Quaternion rotation)
         {
-            //Janky
-            Level.levelReady.WaitOne();
-
-            MainCaller.Do(() =>
+            System.Action todo = () => MainCaller.Do(() =>
             {
                 GameConsole.Log("Level: " + LevelManager.currentLevel);
                 var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation);
                 e.GetComponent<EntityNetworkHandler>().Identity = identity;
             });
+            if (LevelManager.currentLevel != null)
+            {
+                todo.DynamicInvoke();
+            }
+            else
+            {
+                Level.entityCreation.Enqueue(todo);
+            }
+            
         }
 
 
