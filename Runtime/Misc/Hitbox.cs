@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             try
             {
-                if(String.IsNullOrEmpty(targetTag))
+                if(!String.IsNullOrEmpty(targetTag))
                     if (other.gameObject.CompareTag(targetTag))
                     {
                         insideCounter--;
