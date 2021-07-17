@@ -130,7 +130,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void FindReceivers()
         {
-            if(Level.instantiateType == Level.InstantiateType.Play||Level.instantiateType == Level.InstantiateType.Test)
                 FindReceivers(receiversToAdd);
         }
 
