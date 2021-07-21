@@ -6,7 +6,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class HitFXAudioController : AudioController
     {
-    	public void Hit()
+    	public void Start()
     	{
     	Play(0);
     	}
