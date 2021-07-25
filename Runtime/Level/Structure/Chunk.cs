@@ -13,12 +13,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void Start()
         {
             gameObject.name = "Chunk " + chunkId;
-            Debug.Log("Chunk "+chunkId+" created");
+            GameConsole.Log("Chunk "+chunkId+" created");
         }
 
         public void OnDestroy()
         {
-            Debug.Log("Chunk "+chunkId+" removed");
+            GameConsole.Log("Chunk "+chunkId+" removed");
         }
 
         public LevelObject GetLevelObjectAt(Vector3 position)
