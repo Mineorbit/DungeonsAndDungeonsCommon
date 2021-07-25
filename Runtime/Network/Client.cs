@@ -302,7 +302,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
                 data = new byte[readLength];
-                GameConsole.Log($"Received:  {readLength} bytes");
+                // GameConsole.Log($"Received:  {readLength} bytes");
                 Array.Copy(tcpResult,data,readLength);
             }
             else
