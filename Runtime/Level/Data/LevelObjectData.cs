@@ -125,7 +125,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Console.WriteLine(e);
                 return;
             }
-            Debug.Log("Removing "+g);
+            GameConsole.Log("Removing "+g);
             if (Application.isPlaying)
             {
                 Destroy(g);
