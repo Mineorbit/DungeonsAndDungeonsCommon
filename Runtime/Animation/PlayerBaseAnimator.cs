@@ -27,6 +27,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
             //simplify in future to just moving somehow
 
+	    if(GetController().speedY > 0 && GetController().inClimbing)
+	    {
+		
+	    }
+	    if(GetController().IsGrounded && Input.GetKeyDown(KeyCode.Space))
+	    {
+	    	animator.SetTrigger("Jump");
+	    }
             if (me == PlayerManager.currentPlayer)
                 footFX.SetActive(GetController().IsGrounded && GetController().allowedToMove &&
                                  (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
