@@ -103,7 +103,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.16666667
-        value: {x: 18.404, y: -173.173, z: -52.678}
+        value: {x: 26.135, y: -172.782, z: -51.65}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -128,7 +128,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.16666667
-        value: {x: -22.389, y: 172.992, z: 64.867}
+        value: {x: -34.13, y: 169.815, z: 69.476}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -969,7 +969,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: 18.404
+        value: 26.135
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -997,7 +997,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: -173.173
+        value: -172.782
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1025,7 +1025,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: -52.678
+        value: -51.65
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1137,7 +1137,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: -22.389
+        value: -34.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1165,7 +1165,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: 172.992
+        value: 169.815
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1193,7 +1193,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: 64.867
+        value: 69.476
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1245,7 +1245,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: character/abdomen/pelvis.R
+    path: character/torso/shoulder.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1255,7 +1255,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: character/abdomen/pelvis.R
+    path: character/torso/shoulder.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1265,7 +1265,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: character/abdomen/pelvis.R
+    path: character/torso/shoulder.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1305,7 +1305,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: character/abdomen/pelvis.L
+    path: character/abdomen/pelvis.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1315,7 +1315,17 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: character/abdomen/pelvis.L
+    path: character/abdomen/pelvis.R
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: character/abdomen/pelvis.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1334,18 +1344,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: character/torso/shoulder.R
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: character/torso/shoulder.R
+    path: character/abdomen/pelvis.L
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1355,7 +1355,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: character/torso/shoulder.R
+    path: character/abdomen/pelvis.L
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
