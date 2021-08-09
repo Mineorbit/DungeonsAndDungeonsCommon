@@ -42,6 +42,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private Player player;
 
         private float turnSmoothVel;
+        
+        public bool movementInputOnFrame = false;
 
         //Setup References for PlayerController and initial values if necessary
         public void Awake()
@@ -162,7 +164,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 controller.Move(targetDirection * Speed * Time.deltaTime);
             
                 if (currentSpeed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
-                if (doInput && takeInput)
+                if (doInput && takeInput && movementInputOnFrame)
                 {
                     var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
                     transform.eulerAngles = new Vector3(0, angleY, 0);
@@ -174,6 +176,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             doInput = PlayerManager.acceptInput && allowedToMove && activated &&
                       locallyControllable; //&& !player.lockNetUpdate;
+                      
+            movementInputOnFrame = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
+                                  Input.GetKey(KeyCode.D));
         }
     }
 }
