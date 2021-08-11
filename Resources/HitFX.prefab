@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3143064075671898930}
   - component: {fileID: 3143064075671898931}
   - component: {fileID: 6352610497663496610}
+  - component: {fileID: 2799426306156816365}
   m_Layer: 0
   m_Name: HitFX
   m_TagString: Untagged
@@ -4903,6 +4904,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioProfiles:
   - {fileID: 11400000, guid: b9543d08193c4fc4a983663f7945e423, type: 2}
+--- !u!114 &2799426306156816365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3143064075671898928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f13b302bdc50c561aa5d8490ca68007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystem: {fileID: 3143064075671898930}
 --- !u!1 &3143064076258321132
 GameObject:
   m_ObjectHideFlags: 0

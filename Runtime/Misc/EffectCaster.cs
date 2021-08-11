@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public static EffectCaster instance;
         public UnityEngine.Object hitFX;
-
+	public Queue<HitFX> hitEffects = new Queue<HitFX>();
         public void Awake()
         {
             if (instance != null)
@@ -19,12 +19,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             instance = this;
+            for(int i = 0;i<4;i++)
+            {
+            	Create();
+            }
         }
-
+        
+        public void Create()
+        {
+        HitFX effect = (Instantiate(instance.hitFX ,Vector3.zero,Quaternion.identity) as GameObject).GetComponent<HitFX>();
+        effect.Despawn();
+        hitEffects.Enqueue(effect);
+        }
+	
         public static void HitFX(Vector3 position)
         {
-            GameObject effect = Instantiate(instance.hitFX ,position,Quaternion.identity) as GameObject;
-            TimerManager.StartTimer(2f, () => { Destroy(effect); });
+        	HitFX effect = instance.hitEffects.Dequeue();
+        	effect.Spawn(position);
+            	TimerManager.StartTimer(2f, () => { effect.Despawn(); instance.hitEffects.Enqueue(effect);});
         }
     }
 }
