@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateGround()
         {
-            var mask = 1 << 10 + 1 << 11;
+            var mask = 1 << 10 | 1 << 11;
             var hit = new RaycastHit();
             IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
