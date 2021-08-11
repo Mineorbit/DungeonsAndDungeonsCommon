@@ -26,6 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
+	public float jumpingSpeed = 1.75f;
 
         //Needs to be refined
 
@@ -91,6 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             heightRay = 1.1f;
         }
 
+
         public void UpdateGround()
         {
             var mask = 1 << 10;
@@ -144,7 +146,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 if (IsGrounded)
                     if (Input.GetKeyDown(KeyCode.Space))
-                        speedY = 1.5f;
+                        speedY = jumpingSpeed;
                 if (Input.GetMouseButton(0))
                     //INVOKE
                     player.Invoke(player.UseLeft, true);
