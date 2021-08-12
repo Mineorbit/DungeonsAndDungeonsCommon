@@ -27,10 +27,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void OnIdentify()
         {
+        	GameConsole.Log("Added Identity "+Identity);
         	identifiedLevelObjects.Add(Identity,this);
         }
 
-	
+	public void OnDestroy()
+	{
+		RemoveFromIdentified();
+	}
+
+	public void RemoveFromIdentified()
+	{
+		if(identifiedLevelObjects.ContainsKey(Identity))
+		identifiedLevelObjects.Remove(Identity);
+	}
 
 	public void Identify()
 	{
@@ -63,6 +73,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 todo.Dequeue().Invoke();
         }
 
+        public override void OnDeInit()
+        {
+            base.OnDeInit();
+            RemoveFromIdentified();
+            
+        }
 
         public override void OnInit()
         {
