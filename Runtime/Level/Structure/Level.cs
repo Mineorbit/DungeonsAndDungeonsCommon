@@ -193,14 +193,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Quaternion rot = new Quaternion(levelObjectInstance.GX, levelObjectInstance.GY, levelObjectInstance.GZ,levelObjectInstance.GW);
                 result = Add(d, pos, rot);
                 
-                InteractiveLevelObject interactiveObject = result.GetComponent<InteractiveLevelObject>();
-                if(interactiveObject != null)
+                NetworkLevelObject networkLevelObject = result.GetComponent<InteractiveLevelObject>();
+                
+                if(networkLevelObject != null)
                 {
-                GameConsole.Log("Interactive found "+result);
+                	networkLevelObject.Identity = levelObjectInstance.Identity;
+                }
+                
+                InteractiveLevelObject interactiveLevelObject = result.GetComponent<InteractiveLevelObject>();
+                if(interactiveLevelObject != null)
+                {
                 	foreach(int identity in levelObjectInstance.Receivers)
                 	{
-                		GameConsole.Log("Adding "+identity);
-                		interactiveObject.AddReceiver(identity);
+                		GameConsole.Log("Adding Receiver "+identity);
+                		interactiveLevelObject.AddReceiver(identity);
                 	}
                 }
             }
