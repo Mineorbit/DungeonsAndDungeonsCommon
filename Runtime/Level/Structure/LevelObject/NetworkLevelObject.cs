@@ -30,16 +30,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         }
 
-	public void Start()
-	{
-	Identify();
-	}
+	
 
 	public void Identify()
 	{
                 if(!identified)
                 	Identity = GetInstanceID();
 	}
+	
         public virtual void FixedUpdate()
         {
             //this needs a safety later on to stop stupid behaviour
@@ -53,6 +51,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnInit();
 
             levelObjectNetworkHandler = GetComponent<LevelObjectNetworkHandler>();
+            
+	    Identify();
             //
             //if(levelObjectNetworkHandler == null) 
             //levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
