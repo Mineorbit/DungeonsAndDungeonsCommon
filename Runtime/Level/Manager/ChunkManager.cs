@@ -401,7 +401,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelObjectInstanceData levelObjectInstanceData = InstanceToData((LevelObject) o, c);
             // THIS IS NOT GOOD AND MUST BE REPLACED LATER ON
             levelObjectInstanceData.Identity = o.Identity;
-            // levelObjectInstanceData.Receivers =
+             levelObjectInstanceData.Receivers.AddRange(o.receivers.Keys);
             return levelObjectInstanceData;
         }
         
