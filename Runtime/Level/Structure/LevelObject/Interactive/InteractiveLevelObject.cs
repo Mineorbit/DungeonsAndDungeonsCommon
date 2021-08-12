@@ -65,7 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             FindReceivers();
         }
 
-        void AddReceiverDynamic(int identity, InteractiveLevelObject receiver)
+        public void AddReceiverDynamic(int identity, InteractiveLevelObject receiver)
         {   
             if (receiver != null)
                 if (!receivers.ContainsKey(identity))
