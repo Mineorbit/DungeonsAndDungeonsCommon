@@ -110,6 +110,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Debug.Log("Setting up Level");
                 dynamicObjects = transform.Find("Dynamic");
                 navGenerator = GetComponent<LevelNavGenerator>();
+                NetworkLevelObject.identifiedLevelObjects.Clear();
                 createPlayerSpawnList();
                 CreateEnqueuedEntities();
             }
