@@ -25,7 +25,7 @@ namespace Game {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChJQbGF5ZXJDcmVhdGUucHJvdG8SBEdhbWUiYAoMUGxheWVyQ3JlYXRlEhAK",
-            "CElkZW50aXR5GAEgASgJEgwKBG5hbWUYAiABKAkSDwoHbG9jYWxJZBgDIAEo",
+            "CElkZW50aXR5GAEgASgFEgwKBG5hbWUYAiABKAkSDwoHbG9jYWxJZBgDIAEo",
             "BRIJCgFYGAQgASgCEgkKAVkYBSABKAISCQoBWhgGIAEoAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
@@ -37,11 +37,7 @@ namespace Game {
 
   }
   #region Messages
-  public sealed partial class PlayerCreate : pb::IMessage<PlayerCreate>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
+  public sealed partial class PlayerCreate : pb::IMessage<PlayerCreate> {
     private static readonly pb::MessageParser<PlayerCreate> _parser = new pb::MessageParser<PlayerCreate>(() => new PlayerCreate());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -82,12 +78,12 @@ namespace Game {
 
     /// <summary>Field number for the "Identity" field.</summary>
     public const int IdentityFieldNumber = 1;
-    private string identity_ = "";
+    private int identity_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Identity {
+    public int Identity {
       get { return identity_; }
       set {
-        identity_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        identity_ = value;
       }
     }
 
@@ -171,7 +167,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Identity.Length != 0) hash ^= Identity.GetHashCode();
+      if (Identity != 0) hash ^= Identity.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (LocalId != 0) hash ^= LocalId.GetHashCode();
       if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
@@ -190,12 +186,9 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (Identity.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Identity);
+      if (Identity != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Identity);
       }
       if (Name.Length != 0) {
         output.WriteRawTag(18);
@@ -220,47 +213,13 @@ namespace Game {
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Identity.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Identity);
-      }
-      if (Name.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Name);
-      }
-      if (LocalId != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(LocalId);
-      }
-      if (X != 0F) {
-        output.WriteRawTag(37);
-        output.WriteFloat(X);
-      }
-      if (Y != 0F) {
-        output.WriteRawTag(45);
-        output.WriteFloat(Y);
-      }
-      if (Z != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(Z);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Identity.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
+      if (Identity != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Identity);
       }
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
@@ -288,7 +247,7 @@ namespace Game {
       if (other == null) {
         return;
       }
-      if (other.Identity.Length != 0) {
+      if (other.Identity != 0) {
         Identity = other.Identity;
       }
       if (other.Name.Length != 0) {
@@ -311,55 +270,14 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Identity = input.ReadString();
-            break;
-          }
-          case 18: {
-            Name = input.ReadString();
-            break;
-          }
-          case 24: {
-            LocalId = input.ReadInt32();
-            break;
-          }
-          case 37: {
-            X = input.ReadFloat();
-            break;
-          }
-          case 45: {
-            Y = input.ReadFloat();
-            break;
-          }
-          case 53: {
-            Z = input.ReadFloat();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 10: {
-            Identity = input.ReadString();
+          case 8: {
+            Identity = input.ReadInt32();
             break;
           }
           case 18: {
@@ -385,7 +303,6 @@ namespace Game {
         }
       }
     }
-    #endif
 
   }
 

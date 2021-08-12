@@ -16,6 +16,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool disabled_observed = true;
 
+	public static Dictionary<int,LevelObjectNetworkHandler> identifiedNetworkHandlers = new Dictionary<int,LevelObjectNetworkHandler>();
+	
+	public static LevelObjectNetworkHandler FindByIdentity(int id)
+	{
+		LevelObjectNetworkHandler networkHandler;
+		if(identifiedNetworkHandlers.TryGetValue(id, out networkHandler))
+		{
+		return networkHandler;
+		}
+		else
+		return null;
+	}
+
 
         public virtual LevelObject GetObserved()
         {
@@ -76,7 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             arguments.Add(packedArgument.Item1, packedArgument.Item2);
 
             action.Params.Add(arguments);
-            Marshall(action,TCP: true);
+            Marshall(((NetworkLevelObject)observed).Identity,action,TCP: true);
         }
 
 
@@ -86,7 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ActionName = actionName
             };
-            Marshall(action,TCP: true);
+            Marshall(((NetworkLevelObject)observed).Identity,action,TCP: true);
         }
 
 
@@ -136,9 +149,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 else if (actionParam.type.IsSubclassOf(typeof(NetworkLevelObject)) || actionParam.type == typeof(NetworkLevelObject))
                 {
-                    var identityOfParam = data.Item2.Value.Unpack<StringValue>().Value;
+                    int identityOfParam = data.Item2.Value.Unpack<Int32Value>().Value;
 
-                    var h = FindByIdentity<LevelObjectNetworkHandler>(identityOfParam);
+                    var h = FindByIdentity(identityOfParam);
 
                     // Debug.Log("Matched with Reference: " + identityOfParam + " " + h.observed);
                     actionParam.data = h.observed;
@@ -154,7 +167,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return actionParam;
             }
 
-
+	
+	
             public (int, Parameter) Pack()
             {
                 Any x = null;
@@ -183,10 +197,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 else if (type.IsSubclassOf(typeof(NetworkLevelObject)) || type == typeof(NetworkLevelObject))
                 {
-                    var h = ((NetworkLevelObject) data).levelObjectNetworkHandler;
-                    var sv = new StringValue();
-                    sv.Value = h.Identity;
-                    Debug.Log("Matched with Reference: " + h.Identity);
+                    Int32Value sv = new Int32Value();
+                    sv.Value = ((NetworkLevelObject) data).Identity;
+                    GameConsole.Log("Matched with Reference: " + sv.Value);
                     x = Any.Pack(sv);
                 }
 

@@ -8,19 +8,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class PlayerNetworkHandler : EntityNetworkHandler
     {
-
-        private string _identity;
-
-        public override void OnIdentify()
-        {
-            base.OnIdentify();
-            Setup();
-        }
         
         public override void Awake()
         {
             base.Awake();
             observed = GetComponent<Player>();
+            Setup();
         }
 
 
@@ -31,11 +24,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void Setup()
         {
-            if(observed != null && identified)
+            if(observed != null && ((NetworkLevelObject)observed).identified)
             if(!isSetup)
             { 
             isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
-            Debug.Log("Setting up PlayerHandler with "+Identity+" and "+GetObservedPlayer().localId+" "+isOwner);
+            GameConsole.Log("Setting up PlayerHandler with "+((NetworkLevelObject)observed).Identity+" and "+GetObservedPlayer().localId+" "+isOwner);
             owner = GetObservedPlayer().localId;
             
             GetObservedPlayer().controller.enabled = !isOnServer && isOwner;
@@ -89,7 +82,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Type = typeof(PlayerRemove).FullName,
                 Handler = typeof(PlayerNetworkHandler).FullName,
                 Content = Any.Pack(playerRemove),
-                Identity = playerNetworkHandler.Identity
+                Identity = p.Identity
             };
             return packet;
         }
@@ -108,7 +101,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 X = position.x,
                 Y = position.y,
                 Z = position.z,
-                Identity = playerNetworkHandler.Identity
+                Identity = p.Identity
             };
             var packet = new Packet
             {
@@ -150,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Setup();
         }
 
-        public static void OnCreationRequest(string identity, Vector3 position, Quaternion rotation, int localId,
+        public static void OnCreationRequest(int identity, Vector3 position, Quaternion rotation, int localId,
             string name)
         {
 
@@ -159,7 +152,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerManager.playerManager.Add(localId, name, true);
                 GameObject player = PlayerManager.playerManager.GetPlayer(localId);
                 PlayerNetworkHandler h = player.GetComponent<PlayerNetworkHandler>();
-                h.Identity = identity;
+                player.GetComponent<Player>().Identity = identity;
                 h.enabled = true;
                 h.Setup();
 

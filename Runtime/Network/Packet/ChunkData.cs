@@ -25,22 +25,22 @@ namespace NetLevel {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg9DaHVua0RhdGEucHJvdG8SCE5ldExldmVsIisKCExvY2F0aW9uEgkKAXgY",
-            "ASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIp8BChNMZXZlbE9iamVjdElu",
-            "c3RhbmNlEgwKBHR5cGUYASABKBESJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0",
-            "TGV2ZWwuTG9jYXRpb24SCwoDZ193GAMgASgCEgsKA2dfeBgEIAEoAhILCgNn",
-            "X3kYBSABKAISCwoDZ196GAYgASgCEgkKAXgYByABKAISCQoBeRgIIAEoAhIJ",
-            "CgF6GAkgASgCInwKF0xldmVsT2JqZWN0SW5zdGFuY2VEYXRhEgwKBGNvZGUY",
-            "ASABKBESJQoJbG9jYXRpb25zGAIgAygLMhIuTmV0TGV2ZWwuTG9jYXRpb24S",
-            "CwoDcm90GAMgASgNEgkKAXgYBCABKA0SCQoBeRgFIAEoDRIJCgF6GAYgASgN",
-            "IioKDEh1ZmZtYW5FbnRyeRIMCgR0eXBlGAEgASgREgwKBGNvZGUYAiABKBEi",
-            "TQoJQ2h1bmtEYXRhEg8KB2NodW5rSWQYASABKAkSLwoEZGF0YRgCIAMoCzIh",
-            "Lk5ldExldmVsLkxldmVsT2JqZWN0SW5zdGFuY2VEYXRhYgZwcm90bzM="));
+            "ASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIp0BChNMZXZlbE9iamVjdElu",
+            "c3RhbmNlEgwKBHR5cGUYASABKBESCwoDZ193GAIgASgCEgsKA2dfeBgDIAEo",
+            "AhILCgNnX3kYBCABKAISCwoDZ196GAUgASgCEgkKAXgYBiABKAISCQoBeRgH",
+            "IAEoAhIJCgF6GAggASgCEhAKCGlkZW50aXR5GAkgASgFEhEKCXJlY2VpdmVy",
+            "cxgKIAMoBSJ6ChdMZXZlbE9iamVjdEluc3RhbmNlRGF0YRIMCgRjb2RlGAEg",
+            "ASgREgsKA3JvdBgCIAEoDRIJCgF4GAMgASgNEgkKAXkYBCABKA0SCQoBehgF",
+            "IAEoDRIQCghpZGVudGl0eRgGIAEoBRIRCglyZWNlaXZlcnMYByADKAUiKgoM",
+            "SHVmZm1hbkVudHJ5EgwKBHR5cGUYASABKBESDAoEY29kZRgCIAEoESJNCglD",
+            "aHVua0RhdGESDwoHY2h1bmtJZBgBIAEoCRIvCgRkYXRhGAIgAygLMiEuTmV0",
+            "TGV2ZWwuTGV2ZWxPYmplY3RJbnN0YW5jZURhdGFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.Location), global::NetLevel.Location.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstance), global::NetLevel.LevelObjectInstance.Parser, new[]{ "Type", "Locations", "GW", "GX", "GY", "GZ", "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstanceData), global::NetLevel.LevelObjectInstanceData.Parser, new[]{ "Code", "Locations", "Rot", "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstance), global::NetLevel.LevelObjectInstance.Parser, new[]{ "Type", "GW", "GX", "GY", "GZ", "X", "Y", "Z", "Identity", "Receivers" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.LevelObjectInstanceData), global::NetLevel.LevelObjectInstanceData.Parser, new[]{ "Code", "Rot", "X", "Y", "Z", "Identity", "Receivers" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.HuffmanEntry), global::NetLevel.HuffmanEntry.Parser, new[]{ "Type", "Code" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetLevel.ChunkData), global::NetLevel.ChunkData.Parser, new[]{ "ChunkId", "Data" }, null, null, null, null)
           }));
@@ -49,11 +49,7 @@ namespace NetLevel {
 
   }
   #region Messages
-  public sealed partial class Location : pb::IMessage<Location>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
+  public sealed partial class Location : pb::IMessage<Location> {
     private static readonly pb::MessageParser<Location> _parser = new pb::MessageParser<Location>(() => new Location());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -160,9 +156,6 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
       if (X != 0F) {
         output.WriteRawTag(13);
         output.WriteFloat(X);
@@ -178,29 +171,7 @@ namespace NetLevel {
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (X != 0F) {
-        output.WriteRawTag(13);
-        output.WriteFloat(X);
-      }
-      if (Y != 0F) {
-        output.WriteRawTag(21);
-        output.WriteFloat(Y);
-      }
-      if (Z != 0F) {
-        output.WriteRawTag(29);
-        output.WriteFloat(Z);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -239,9 +210,6 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -262,42 +230,11 @@ namespace NetLevel {
           }
         }
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 13: {
-            X = input.ReadFloat();
-            break;
-          }
-          case 21: {
-            Y = input.ReadFloat();
-            break;
-          }
-          case 29: {
-            Z = input.ReadFloat();
-            break;
-          }
-        }
-      }
-    }
-    #endif
 
   }
 
-  public sealed partial class LevelObjectInstance : pb::IMessage<LevelObjectInstance>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
+  public sealed partial class LevelObjectInstance : pb::IMessage<LevelObjectInstance> {
     private static readonly pb::MessageParser<LevelObjectInstance> _parser = new pb::MessageParser<LevelObjectInstance>(() => new LevelObjectInstance());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -323,7 +260,6 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public LevelObjectInstance(LevelObjectInstance other) : this() {
       type_ = other.type_;
-      locations_ = other.locations_.Clone();
       gW_ = other.gW_;
       gX_ = other.gX_;
       gY_ = other.gY_;
@@ -331,6 +267,8 @@ namespace NetLevel {
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
+      identity_ = other.identity_;
+      receivers_ = other.receivers_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -350,18 +288,8 @@ namespace NetLevel {
       }
     }
 
-    /// <summary>Field number for the "locations" field.</summary>
-    public const int LocationsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::NetLevel.Location> _repeated_locations_codec
-        = pb::FieldCodec.ForMessage(18, global::NetLevel.Location.Parser);
-    private readonly pbc::RepeatedField<global::NetLevel.Location> locations_ = new pbc::RepeatedField<global::NetLevel.Location>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::NetLevel.Location> Locations {
-      get { return locations_; }
-    }
-
     /// <summary>Field number for the "g_w" field.</summary>
-    public const int GWFieldNumber = 3;
+    public const int GWFieldNumber = 2;
     private float gW_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float GW {
@@ -372,7 +300,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "g_x" field.</summary>
-    public const int GXFieldNumber = 4;
+    public const int GXFieldNumber = 3;
     private float gX_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float GX {
@@ -383,7 +311,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "g_y" field.</summary>
-    public const int GYFieldNumber = 5;
+    public const int GYFieldNumber = 4;
     private float gY_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float GY {
@@ -394,7 +322,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "g_z" field.</summary>
-    public const int GZFieldNumber = 6;
+    public const int GZFieldNumber = 5;
     private float gZ_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float GZ {
@@ -405,7 +333,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "x" field.</summary>
-    public const int XFieldNumber = 7;
+    public const int XFieldNumber = 6;
     private float x_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float X {
@@ -416,7 +344,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "y" field.</summary>
-    public const int YFieldNumber = 8;
+    public const int YFieldNumber = 7;
     private float y_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float Y {
@@ -427,7 +355,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "z" field.</summary>
-    public const int ZFieldNumber = 9;
+    public const int ZFieldNumber = 8;
     private float z_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float Z {
@@ -435,6 +363,27 @@ namespace NetLevel {
       set {
         z_ = value;
       }
+    }
+
+    /// <summary>Field number for the "identity" field.</summary>
+    public const int IdentityFieldNumber = 9;
+    private int identity_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Identity {
+      get { return identity_; }
+      set {
+        identity_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "receivers" field.</summary>
+    public const int ReceiversFieldNumber = 10;
+    private static readonly pb::FieldCodec<int> _repeated_receivers_codec
+        = pb::FieldCodec.ForInt32(82);
+    private readonly pbc::RepeatedField<int> receivers_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<int> Receivers {
+      get { return receivers_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -451,7 +400,6 @@ namespace NetLevel {
         return true;
       }
       if (Type != other.Type) return false;
-      if(!locations_.Equals(other.locations_)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GW, other.GW)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GX, other.GX)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(GY, other.GY)) return false;
@@ -459,6 +407,8 @@ namespace NetLevel {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
+      if (Identity != other.Identity) return false;
+      if(!receivers_.Equals(other.receivers_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -466,7 +416,6 @@ namespace NetLevel {
     public override int GetHashCode() {
       int hash = 1;
       if (Type != 0) hash ^= Type.GetHashCode();
-      hash ^= locations_.GetHashCode();
       if (GW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GW);
       if (GX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GX);
       if (GY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(GY);
@@ -474,6 +423,8 @@ namespace NetLevel {
       if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
       if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
       if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
+      if (Identity != 0) hash ^= Identity.GetHashCode();
+      hash ^= receivers_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -487,89 +438,47 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
       if (Type != 0) {
         output.WriteRawTag(8);
         output.WriteSInt32(Type);
       }
-      locations_.WriteTo(output, _repeated_locations_codec);
       if (GW != 0F) {
-        output.WriteRawTag(29);
+        output.WriteRawTag(21);
         output.WriteFloat(GW);
       }
       if (GX != 0F) {
-        output.WriteRawTag(37);
+        output.WriteRawTag(29);
         output.WriteFloat(GX);
       }
       if (GY != 0F) {
-        output.WriteRawTag(45);
+        output.WriteRawTag(37);
         output.WriteFloat(GY);
       }
       if (GZ != 0F) {
-        output.WriteRawTag(53);
+        output.WriteRawTag(45);
         output.WriteFloat(GZ);
       }
       if (X != 0F) {
-        output.WriteRawTag(61);
+        output.WriteRawTag(53);
         output.WriteFloat(X);
       }
       if (Y != 0F) {
-        output.WriteRawTag(69);
+        output.WriteRawTag(61);
         output.WriteFloat(Y);
       }
       if (Z != 0F) {
-        output.WriteRawTag(77);
+        output.WriteRawTag(69);
         output.WriteFloat(Z);
       }
+      if (Identity != 0) {
+        output.WriteRawTag(72);
+        output.WriteInt32(Identity);
+      }
+      receivers_.WriteTo(output, _repeated_receivers_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Type != 0) {
-        output.WriteRawTag(8);
-        output.WriteSInt32(Type);
-      }
-      locations_.WriteTo(ref output, _repeated_locations_codec);
-      if (GW != 0F) {
-        output.WriteRawTag(29);
-        output.WriteFloat(GW);
-      }
-      if (GX != 0F) {
-        output.WriteRawTag(37);
-        output.WriteFloat(GX);
-      }
-      if (GY != 0F) {
-        output.WriteRawTag(45);
-        output.WriteFloat(GY);
-      }
-      if (GZ != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(GZ);
-      }
-      if (X != 0F) {
-        output.WriteRawTag(61);
-        output.WriteFloat(X);
-      }
-      if (Y != 0F) {
-        output.WriteRawTag(69);
-        output.WriteFloat(Y);
-      }
-      if (Z != 0F) {
-        output.WriteRawTag(77);
-        output.WriteFloat(Z);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -577,7 +486,6 @@ namespace NetLevel {
       if (Type != 0) {
         size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Type);
       }
-      size += locations_.CalculateSize(_repeated_locations_codec);
       if (GW != 0F) {
         size += 1 + 4;
       }
@@ -599,6 +507,10 @@ namespace NetLevel {
       if (Z != 0F) {
         size += 1 + 4;
       }
+      if (Identity != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Identity);
+      }
+      size += receivers_.CalculateSize(_repeated_receivers_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -613,7 +525,6 @@ namespace NetLevel {
       if (other.Type != 0) {
         Type = other.Type;
       }
-      locations_.Add(other.locations_);
       if (other.GW != 0F) {
         GW = other.GW;
       }
@@ -635,14 +546,15 @@ namespace NetLevel {
       if (other.Z != 0F) {
         Z = other.Z;
       }
+      if (other.Identity != 0) {
+        Identity = other.Identity;
+      }
+      receivers_.Add(other.receivers_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -653,100 +565,50 @@ namespace NetLevel {
             Type = input.ReadSInt32();
             break;
           }
-          case 18: {
-            locations_.AddEntriesFrom(input, _repeated_locations_codec);
-            break;
-          }
-          case 29: {
+          case 21: {
             GW = input.ReadFloat();
             break;
           }
-          case 37: {
-            GX = input.ReadFloat();
-            break;
-          }
-          case 45: {
-            GY = input.ReadFloat();
-            break;
-          }
-          case 53: {
-            GZ = input.ReadFloat();
-            break;
-          }
-          case 61: {
-            X = input.ReadFloat();
-            break;
-          }
-          case 69: {
-            Y = input.ReadFloat();
-            break;
-          }
-          case 77: {
-            Z = input.ReadFloat();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 8: {
-            Type = input.ReadSInt32();
-            break;
-          }
-          case 18: {
-            locations_.AddEntriesFrom(ref input, _repeated_locations_codec);
-            break;
-          }
           case 29: {
-            GW = input.ReadFloat();
-            break;
-          }
-          case 37: {
             GX = input.ReadFloat();
             break;
           }
-          case 45: {
+          case 37: {
             GY = input.ReadFloat();
             break;
           }
-          case 53: {
+          case 45: {
             GZ = input.ReadFloat();
             break;
           }
-          case 61: {
+          case 53: {
             X = input.ReadFloat();
             break;
           }
-          case 69: {
+          case 61: {
             Y = input.ReadFloat();
             break;
           }
-          case 77: {
+          case 69: {
             Z = input.ReadFloat();
+            break;
+          }
+          case 72: {
+            Identity = input.ReadInt32();
+            break;
+          }
+          case 82:
+          case 80: {
+            receivers_.AddEntriesFrom(input, _repeated_receivers_codec);
             break;
           }
         }
       }
     }
-    #endif
 
   }
 
-  public sealed partial class LevelObjectInstanceData : pb::IMessage<LevelObjectInstanceData>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
+  public sealed partial class LevelObjectInstanceData : pb::IMessage<LevelObjectInstanceData> {
     private static readonly pb::MessageParser<LevelObjectInstanceData> _parser = new pb::MessageParser<LevelObjectInstanceData>(() => new LevelObjectInstanceData());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -772,11 +634,12 @@ namespace NetLevel {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public LevelObjectInstanceData(LevelObjectInstanceData other) : this() {
       code_ = other.code_;
-      locations_ = other.locations_.Clone();
       rot_ = other.rot_;
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
+      identity_ = other.identity_;
+      receivers_ = other.receivers_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -796,18 +659,8 @@ namespace NetLevel {
       }
     }
 
-    /// <summary>Field number for the "locations" field.</summary>
-    public const int LocationsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::NetLevel.Location> _repeated_locations_codec
-        = pb::FieldCodec.ForMessage(18, global::NetLevel.Location.Parser);
-    private readonly pbc::RepeatedField<global::NetLevel.Location> locations_ = new pbc::RepeatedField<global::NetLevel.Location>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::NetLevel.Location> Locations {
-      get { return locations_; }
-    }
-
     /// <summary>Field number for the "rot" field.</summary>
-    public const int RotFieldNumber = 3;
+    public const int RotFieldNumber = 2;
     private uint rot_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Rot {
@@ -818,7 +671,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "x" field.</summary>
-    public const int XFieldNumber = 4;
+    public const int XFieldNumber = 3;
     private uint x_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint X {
@@ -829,7 +682,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "y" field.</summary>
-    public const int YFieldNumber = 5;
+    public const int YFieldNumber = 4;
     private uint y_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Y {
@@ -840,7 +693,7 @@ namespace NetLevel {
     }
 
     /// <summary>Field number for the "z" field.</summary>
-    public const int ZFieldNumber = 6;
+    public const int ZFieldNumber = 5;
     private uint z_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Z {
@@ -848,6 +701,27 @@ namespace NetLevel {
       set {
         z_ = value;
       }
+    }
+
+    /// <summary>Field number for the "identity" field.</summary>
+    public const int IdentityFieldNumber = 6;
+    private int identity_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Identity {
+      get { return identity_; }
+      set {
+        identity_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "receivers" field.</summary>
+    public const int ReceiversFieldNumber = 7;
+    private static readonly pb::FieldCodec<int> _repeated_receivers_codec
+        = pb::FieldCodec.ForInt32(58);
+    private readonly pbc::RepeatedField<int> receivers_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<int> Receivers {
+      get { return receivers_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -864,11 +738,12 @@ namespace NetLevel {
         return true;
       }
       if (Code != other.Code) return false;
-      if(!locations_.Equals(other.locations_)) return false;
       if (Rot != other.Rot) return false;
       if (X != other.X) return false;
       if (Y != other.Y) return false;
       if (Z != other.Z) return false;
+      if (Identity != other.Identity) return false;
+      if(!receivers_.Equals(other.receivers_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -876,11 +751,12 @@ namespace NetLevel {
     public override int GetHashCode() {
       int hash = 1;
       if (Code != 0) hash ^= Code.GetHashCode();
-      hash ^= locations_.GetHashCode();
       if (Rot != 0) hash ^= Rot.GetHashCode();
       if (X != 0) hash ^= X.GetHashCode();
       if (Y != 0) hash ^= Y.GetHashCode();
       if (Z != 0) hash ^= Z.GetHashCode();
+      if (Identity != 0) hash ^= Identity.GetHashCode();
+      hash ^= receivers_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -894,65 +770,35 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
       if (Code != 0) {
         output.WriteRawTag(8);
         output.WriteSInt32(Code);
       }
-      locations_.WriteTo(output, _repeated_locations_codec);
       if (Rot != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(16);
         output.WriteUInt32(Rot);
       }
       if (X != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(24);
         output.WriteUInt32(X);
       }
       if (Y != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteUInt32(Y);
       }
       if (Z != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(40);
         output.WriteUInt32(Z);
       }
+      if (Identity != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(Identity);
+      }
+      receivers_.WriteTo(output, _repeated_receivers_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Code != 0) {
-        output.WriteRawTag(8);
-        output.WriteSInt32(Code);
-      }
-      locations_.WriteTo(ref output, _repeated_locations_codec);
-      if (Rot != 0) {
-        output.WriteRawTag(24);
-        output.WriteUInt32(Rot);
-      }
-      if (X != 0) {
-        output.WriteRawTag(32);
-        output.WriteUInt32(X);
-      }
-      if (Y != 0) {
-        output.WriteRawTag(40);
-        output.WriteUInt32(Y);
-      }
-      if (Z != 0) {
-        output.WriteRawTag(48);
-        output.WriteUInt32(Z);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -960,7 +806,6 @@ namespace NetLevel {
       if (Code != 0) {
         size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Code);
       }
-      size += locations_.CalculateSize(_repeated_locations_codec);
       if (Rot != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Rot);
       }
@@ -973,6 +818,10 @@ namespace NetLevel {
       if (Z != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Z);
       }
+      if (Identity != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Identity);
+      }
+      size += receivers_.CalculateSize(_repeated_receivers_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -987,7 +836,6 @@ namespace NetLevel {
       if (other.Code != 0) {
         Code = other.Code;
       }
-      locations_.Add(other.locations_);
       if (other.Rot != 0) {
         Rot = other.Rot;
       }
@@ -1000,14 +848,15 @@ namespace NetLevel {
       if (other.Z != 0) {
         Z = other.Z;
       }
+      if (other.Identity != 0) {
+        Identity = other.Identity;
+      }
+      receivers_.Add(other.receivers_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -1018,76 +867,38 @@ namespace NetLevel {
             Code = input.ReadSInt32();
             break;
           }
-          case 18: {
-            locations_.AddEntriesFrom(input, _repeated_locations_codec);
-            break;
-          }
-          case 24: {
+          case 16: {
             Rot = input.ReadUInt32();
             break;
           }
-          case 32: {
-            X = input.ReadUInt32();
-            break;
-          }
-          case 40: {
-            Y = input.ReadUInt32();
-            break;
-          }
-          case 48: {
-            Z = input.ReadUInt32();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 8: {
-            Code = input.ReadSInt32();
-            break;
-          }
-          case 18: {
-            locations_.AddEntriesFrom(ref input, _repeated_locations_codec);
-            break;
-          }
           case 24: {
-            Rot = input.ReadUInt32();
-            break;
-          }
-          case 32: {
             X = input.ReadUInt32();
             break;
           }
-          case 40: {
+          case 32: {
             Y = input.ReadUInt32();
             break;
           }
-          case 48: {
+          case 40: {
             Z = input.ReadUInt32();
+            break;
+          }
+          case 48: {
+            Identity = input.ReadInt32();
+            break;
+          }
+          case 58:
+          case 56: {
+            receivers_.AddEntriesFrom(input, _repeated_receivers_codec);
             break;
           }
         }
       }
     }
-    #endif
 
   }
 
-  public sealed partial class HuffmanEntry : pb::IMessage<HuffmanEntry>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
+  public sealed partial class HuffmanEntry : pb::IMessage<HuffmanEntry> {
     private static readonly pb::MessageParser<HuffmanEntry> _parser = new pb::MessageParser<HuffmanEntry>(() => new HuffmanEntry());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1180,9 +991,6 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
       if (Type != 0) {
         output.WriteRawTag(8);
         output.WriteSInt32(Type);
@@ -1194,25 +1002,7 @@ namespace NetLevel {
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Type != 0) {
-        output.WriteRawTag(8);
-        output.WriteSInt32(Type);
-      }
-      if (Code != 0) {
-        output.WriteRawTag(16);
-        output.WriteSInt32(Code);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -1245,9 +1035,6 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -1264,38 +1051,11 @@ namespace NetLevel {
           }
         }
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 8: {
-            Type = input.ReadSInt32();
-            break;
-          }
-          case 16: {
-            Code = input.ReadSInt32();
-            break;
-          }
-        }
-      }
-    }
-    #endif
 
   }
 
-  public sealed partial class ChunkData : pb::IMessage<ChunkData>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
+  public sealed partial class ChunkData : pb::IMessage<ChunkData> {
     private static readonly pb::MessageParser<ChunkData> _parser = new pb::MessageParser<ChunkData>(() => new ChunkData());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1387,9 +1147,6 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
       if (ChunkId.Length != 0) {
         output.WriteRawTag(10);
         output.WriteString(ChunkId);
@@ -1398,22 +1155,7 @@ namespace NetLevel {
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ChunkId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ChunkId);
-      }
-      data_.WriteTo(ref output, _repeated_data_codec);
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -1442,9 +1184,6 @@ namespace NetLevel {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -1461,30 +1200,7 @@ namespace NetLevel {
           }
         }
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 10: {
-            ChunkId = input.ReadString();
-            break;
-          }
-          case 18: {
-            data_.AddEntriesFrom(ref input, _repeated_data_codec);
-            break;
-          }
-        }
-      }
-    }
-    #endif
 
   }
 

@@ -399,10 +399,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o, Chunk c)
         {
             LevelObjectInstanceData levelObjectInstanceData = InstanceToData((LevelObject) o, c);
-            levelObjectInstanceData.Locations.AddRange(o.receivers.Select((p) =>
-            {
-                return Util.VectorToLocation(p.Key);
-            }));
+            // THIS IS NOT GOOD AND MUST BE REPLACED LATER ON
+            levelObjectInstanceData.Identity = o.Identity;
+            // levelObjectInstanceData.Receivers =
             return levelObjectInstanceData;
         }
         
@@ -433,7 +432,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstance.GY = rot.y;
             levelObjectInstance.GZ = rot.z;
             levelObjectInstance.GW = rot.w;
-            levelObjectInstance.Locations.AddRange( instanceData.Locations );
+            levelObjectInstance.Identity = instanceData.Identity;
+            levelObjectInstance.Receivers.AddRange(instanceData.Receivers);
             levelObjectInstance.Type = instanceData.Code;
             return levelObjectInstance;
         }

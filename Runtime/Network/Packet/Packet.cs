@@ -26,7 +26,7 @@ namespace General {
           string.Concat(
             "CgxQYWNrZXQucHJvdG8SB0dlbmVyYWwaCWFueS5wcm90byJwCgZQYWNrZXQS",
             "DAoEdHlwZRgBIAEoCRIPCgdIYW5kbGVyGAIgASgJEiUKB2NvbnRlbnQYAyAB",
-            "KAsyFC5nb29nbGUucHJvdG9idWYuQW55EhAKCGlkZW50aXR5GAQgASgJEg4K",
+            "KAsyFC5nb29nbGUucHJvdG9idWYuQW55EhAKCGlkZW50aXR5GAQgASgFEg4K",
             "BnNlbmRlchgFIAEoBWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
@@ -38,11 +38,7 @@ namespace General {
 
   }
   #region Messages
-  public sealed partial class Packet : pb::IMessage<Packet>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
+  public sealed partial class Packet : pb::IMessage<Packet> {
     private static readonly pb::MessageParser<Packet> _parser = new pb::MessageParser<Packet>(() => new Packet());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -115,12 +111,12 @@ namespace General {
 
     /// <summary>Field number for the "identity" field.</summary>
     public const int IdentityFieldNumber = 4;
-    private string identity_ = "";
+    private int identity_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Identity {
+    public int Identity {
       get { return identity_; }
       set {
-        identity_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        identity_ = value;
       }
     }
 
@@ -162,7 +158,7 @@ namespace General {
       if (Type.Length != 0) hash ^= Type.GetHashCode();
       if (Handler.Length != 0) hash ^= Handler.GetHashCode();
       if (content_ != null) hash ^= Content.GetHashCode();
-      if (Identity.Length != 0) hash ^= Identity.GetHashCode();
+      if (Identity != 0) hash ^= Identity.GetHashCode();
       if (Sender != 0) hash ^= Sender.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -177,9 +173,6 @@ namespace General {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
       if (Type.Length != 0) {
         output.WriteRawTag(10);
         output.WriteString(Type);
@@ -192,9 +185,9 @@ namespace General {
         output.WriteRawTag(26);
         output.WriteMessage(Content);
       }
-      if (Identity.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Identity);
+      if (Identity != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Identity);
       }
       if (Sender != 0) {
         output.WriteRawTag(40);
@@ -203,37 +196,7 @@ namespace General {
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
-    #endif
     }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Type.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Type);
-      }
-      if (Handler.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Handler);
-      }
-      if (content_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(Content);
-      }
-      if (Identity.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Identity);
-      }
-      if (Sender != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(Sender);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -247,8 +210,8 @@ namespace General {
       if (content_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Content);
       }
-      if (Identity.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Identity);
+      if (Identity != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Identity);
       }
       if (Sender != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Sender);
@@ -276,7 +239,7 @@ namespace General {
         }
         Content.MergeFrom(other.Content);
       }
-      if (other.Identity.Length != 0) {
+      if (other.Identity != 0) {
         Identity = other.Identity;
       }
       if (other.Sender != 0) {
@@ -287,9 +250,6 @@ namespace General {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -311,45 +271,8 @@ namespace General {
             input.ReadMessage(Content);
             break;
           }
-          case 34: {
-            Identity = input.ReadString();
-            break;
-          }
-          case 40: {
-            Sender = input.ReadInt32();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 10: {
-            Type = input.ReadString();
-            break;
-          }
-          case 18: {
-            Handler = input.ReadString();
-            break;
-          }
-          case 26: {
-            if (content_ == null) {
-              Content = new global::Google.Protobuf.WellKnownTypes.Any();
-            }
-            input.ReadMessage(Content);
-            break;
-          }
-          case 34: {
-            Identity = input.ReadString();
+          case 32: {
+            Identity = input.ReadInt32();
             break;
           }
           case 40: {
@@ -359,7 +282,6 @@ namespace General {
         }
       }
     }
-    #endif
 
   }
 

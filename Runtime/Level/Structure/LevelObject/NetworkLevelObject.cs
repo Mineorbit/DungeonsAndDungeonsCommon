@@ -9,7 +9,37 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private readonly Queue<Action> todo = new Queue<Action>();
 
+	
+        public int _Identity;
 
+        public bool identified;
+
+	public int Identity
+        {
+            get => _Identity;
+            set
+            {
+                identified = true;
+                _Identity = value;
+                OnIdentify();
+            }
+        }
+        
+        public virtual void OnIdentify()
+        {
+        
+        }
+
+	public void Start()
+	{
+	Identify();
+	}
+
+	public void Identify()
+	{
+                if(!identified)
+                	Identity = GetInstanceID();
+	}
         public virtual void FixedUpdate()
         {
             //this needs a safety later on to stop stupid behaviour
@@ -34,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (allowLocal || Level.instantiateType == Level.InstantiateType.Play ||
                 Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke(argument);
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
-                if (levelObjectNetworkHandler.identified)
+                if (identified)
                     levelObjectNetworkHandler.SendAction(a.Method.Name,
                         LevelObjectNetworkHandler.ActionParam.From(argument));
                 else
@@ -46,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (allowLocal || Level.instantiateType == Level.InstantiateType.Play ||
                 Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke();
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
-                if (levelObjectNetworkHandler.identified)
+                if (identified)
                     levelObjectNetworkHandler.SendAction(a.Method.Name);
                 else
                     todo.Enqueue(() => { Invoke(a); });

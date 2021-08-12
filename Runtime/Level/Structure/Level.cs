@@ -190,19 +190,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (LevelDataManager.levelObjectDatas.TryGetValue(levelObjectInstance.Type, out d))
             {
                 Vector3 pos = new Vector3(levelObjectInstance.X, levelObjectInstance.Y, levelObjectInstance.Z);
-                Quaternion rot = new Quaternion(levelObjectInstance.GX, levelObjectInstance.GY, levelObjectInstance.GZ,
-                    levelObjectInstance.GW);
-                if (levelObjectInstance.Locations.Count > 0)
-                {
-                    
-                    var receiverLocations = levelObjectInstance.Locations.ToList().Select(x => { return Util.LocationToVector(x); })
-                        .ToList();
-                    result = Add(d, pos, rot, receiverLocations);
-                }
-                else
-                {
-                    result = Add(d, pos, rot);
-                }
+                Quaternion rot = new Quaternion(levelObjectInstance.GX, levelObjectInstance.GY, levelObjectInstance.GZ,levelObjectInstance.GW);
+                result = Add(d, pos, rot);
             }
             else
             {
@@ -210,23 +199,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
             return result;
-        }
-
-        // These Objects will be stored in the Chunks and are permanent Information
-        // For Interactive Objects only
-        public GameObject Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation,
-            List<Vector3> receiverLocations)
-        {
-            var g = Add(levelObjectData, position, rotation);
-
-            var interactiveObject = g.GetComponent<InteractiveLevelObject>();
-            foreach (var receiverlocation in receiverLocations)
-            {
-                Debug.Log("Loading receiver: "+receiverlocation);
-                interactiveObject.AddReceiver(receiverlocation);
-            }
-            //TODO
-            return g;
         }
 
 

@@ -24,19 +24,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 teleportPosition;
 
 
-        
-        public override void OnIdentify()
-        {
-        base.OnIdentify();
-        isOwner = isOnServer;
-        }
-
         public virtual void Awake()
         {
-            base.Awake();
+            	base.Awake();
             
-            targetPosition = transform.position;
-            targetRotation = transform.rotation.eulerAngles;
+            	targetPosition = transform.position;
+            	targetRotation = transform.rotation.eulerAngles;
+        	isOwner = isOnServer;
         }
 
         public Entity GetObservedEntity()
@@ -44,9 +38,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (Entity) observed;
         }
 
-        public override void Start()
+        public virtual void Start()
         {
-            base.Start();
             if (isOnServer) RequestCreation();
 
             GetObservedEntity().onTeleportEvent.AddListener(Teleport);
@@ -135,7 +128,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var entityCreate = new EntityCreate
             {
-                Identity = Identity,
+                Identity = ((NetworkLevelObject)observed).Identity,
                 X = position.x,
                 Y = position.y,
                 Z = position.z,
@@ -175,14 +168,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
-        public static void OnCreationRequest(string identity, LevelObjectData entityType, Vector3 position,
+        public static void OnCreationRequest(int identity, LevelObjectData entityType, Vector3 position,
             Quaternion rotation)
         {
             System.Action todo = () => MainCaller.Do(() =>
             {
                 GameConsole.Log("Level: " + LevelManager.currentLevel);
                 var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation);
-                e.GetComponent<EntityNetworkHandler>().Identity = identity;
+                e.GetComponent<Entity>().Identity = identity;
             });
             if (LevelManager.currentLevel != null)
             {
@@ -294,7 +287,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void UpdateLocomotion()
         {
-            if (identified && (isOnServer || isOwner) && !LocomotionIsBlocked())
+            if (((NetworkLevelObject)observed).identified && (isOnServer || isOwner) && !LocomotionIsBlocked())
             {
                 var pos = observed.transform.position;
                 var rot = observed.transform.rotation.eulerAngles;
@@ -316,7 +309,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         Marshall(entityLocomotion, TCP: false);
                     }else
                     {
-                        Marshall(entityLocomotion, owner,toOrWithout: false, TCP: false);
+                        Marshall(((NetworkLevelObject)observed).Identity,entityLocomotion, owner,toOrWithout: false, TCP: false);
                     }
                     lastSentPosition = pos;
                 }
