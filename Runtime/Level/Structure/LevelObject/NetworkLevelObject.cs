@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void OnIdentify()
         {
-        
+        	identifiedLevelObjects.Add(Identity,this);
         }
 
 	
@@ -37,7 +37,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(!identified)
                 {
                 	Identity = GetInstanceID();
-  		identifiedLevelObjects.Add(Identity,this);
   		}              	
                 
 	}

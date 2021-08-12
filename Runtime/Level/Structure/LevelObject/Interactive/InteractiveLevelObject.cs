@@ -102,8 +102,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int N = receiversToAdd.Count;
             for (int i = 0; i<N;i++)
             {
-            
             	int receiverIdentity = receiversToAdd.Dequeue();
+            	
+            	GameConsole.Log("Trying to add Receiver for real");
                 NetworkLevelObject receiver = NetworkLevelObject.FindByIdentity(receiverIdentity);
                 	
                 	if(receiver != null)
