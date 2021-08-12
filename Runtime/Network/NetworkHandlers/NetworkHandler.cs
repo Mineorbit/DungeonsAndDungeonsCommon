@@ -119,24 +119,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!isOnServer)
                 NetworkManager.instance.client.WritePacket(packet, TCP);
             else
-                Server.instance.WriteAll(packet, TCP);
+                Server.instance.WriteAll(identity,packet, TCP);
         }
         
-        public void Marshall(IMessage message, bool TCP = true)
-        {
-            var packet = new Packet
-            {
-                Type = message.GetType().FullName,
-                Handler = GetType().FullName,
-                Content = Any.Pack(message)
-            };
-
-            if (!isOnServer)
-                NetworkManager.instance.client.WritePacket(packet, TCP);
-            else
-                Server.instance.WriteAll(packet, TCP);
-        }
-
 
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
         public static void Marshall(Type sendingHandler, IMessage message, bool TCP = true)
@@ -154,14 +139,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     if (NetworkManager.instance.client != null)
                     {
-                        NetworkManager.instance.client.WritePacket(packet, TCP);
+                        NetworkManager.instance.client.WritePacket(0,packet, TCP);
                     }
                 }
             }
             else
             {
                 if(Server.instance != null)
-                    Server.instance.WriteAll(packet, TCP);
+                    Server.instance.WriteAll(0,packet, TCP);
             }
         }
 
@@ -177,9 +162,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             };
 
             if (!isOnServer)
-                NetworkManager.instance.client.WritePacket(packet, TCP);
+                NetworkManager.instance.client.WritePacket(identity,packet, TCP);
             else
-                Server.instance.WriteAll(packet, TCP);
+                Server.instance.WriteAll(identity,packet, TCP);
         }
 
 
@@ -226,30 +211,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void Marshall(int Identity, IMessage message, int target, bool toOrWithout = true, bool TCP = true)
+        public void Marshall(int identity, IMessage message, int target, bool toOrWithout = true, bool TCP = true)
         {
             var packet = new Packet
             {
                 Type = message.GetType().ToString(),
                 Handler = GetType().ToString(),
                 Content = Any.Pack(message),
-                Identity = Identity
+                Identity = identity
             };
 
             if (!isOnServer)
             {
-                NetworkManager.instance.client.WritePacket(packet, TCP);
+                NetworkManager.instance.client.WritePacket(identity,packet, TCP);
             }
             else
             {
                 if (toOrWithout)
                 {
                     if (Server.instance.clients[target] != null)
-                        Server.instance.clients[target].WritePacket(packet, TCP);
+                        Server.instance.clients[target].WritePacket(identity,packet, TCP);
                 }
                 else
                 {
-                    Server.instance.WriteAll(packet, target, TCP);
+                    Server.instance.WriteAll(identity,packet, target, TCP);
                 }
             }
         }

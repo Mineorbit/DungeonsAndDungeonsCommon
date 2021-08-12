@@ -53,13 +53,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var p = GenerateCreationRequest(GetObservedPlayer());
 
-            Server.instance.WriteAll(p);
+            Server.instance.WriteAll(0,p);
         }
 
         [PacketBinding.Binding]
         public override void ProcessAction(Packet p)
         {
-            if (isOnServer) Server.instance.WriteAll(p, GetObservedPlayer().localId);
+            if (isOnServer) Server.instance.WriteAll(GetObservedPlayer().Identity,p, GetObservedPlayer().localId);
 
             base.ProcessAction(p);
         }
@@ -67,7 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void RequestRemoval()
         {
             var p = GenerateRemovalRequest(GetObservedPlayer(), this);
-            Server.instance.WriteAll(p);
+            Server.instance.WriteAll(0,p);
         }
 
         public static Packet GenerateRemovalRequest(Player p, PlayerNetworkHandler playerNetworkHandler)

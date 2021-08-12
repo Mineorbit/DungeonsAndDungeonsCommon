@@ -135,7 +135,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 LevelObjectDataType = GetObservedEntity().levelObjectDataType
             };
 
-            Marshall(entityCreate);
+            Marshall(0,entityCreate);
         }
 
 
@@ -216,7 +216,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Points = GetObservedEntity().points
             };
             GameConsole.Log("Updated State "+entityState);
-            Marshall(entityState);
+            Marshall(((NetworkLevelObject) observed).Identity,entityState);
         }
 
         [PacketBinding.Binding]
@@ -253,13 +253,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GetObservedEntity().loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
                     GameConsole.Log($"Sending Teleport: {entityTeleport}");
-                    Marshall(entityTeleport);
+                    Marshall(((NetworkLevelObject) observed).Identity,entityTeleport);
                 });
                 }
                 else
                 {
                     GameConsole.Log($"Sending Teleport: {entityTeleport}");
-                    Marshall(entityTeleport);
+                    Marshall(((NetworkLevelObject) observed).Identity,entityTeleport);
                 }
             }
         }
@@ -306,7 +306,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     };
                     if (GetObservedEntity().movementOverride)
                     {
-                        Marshall(entityLocomotion, TCP: false);
+                        Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false);
                     }else
                     {
                         Marshall(((NetworkLevelObject)observed).Identity,entityLocomotion, owner,toOrWithout: false, TCP: false);
