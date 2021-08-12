@@ -196,8 +196,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 InteractiveLevelObject interactiveObject = result.GetComponent<InteractiveLevelObject>();
                 if(interactiveObject != null)
                 {
+                GameConsole.Log("Interactive found "+result);
                 	foreach(int identity in levelObjectInstance.Receivers)
+                	{
+                		GameConsole.Log("Adding "+identity);
                 		interactiveObject.AddReceiver(identity);
+                	}
                 }
             }
             else
