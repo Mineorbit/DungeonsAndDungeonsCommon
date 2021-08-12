@@ -12,11 +12,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private bool activated;
 
 
-        public Dictionary<Vector3, InteractiveLevelObject>
-            receivers = new Dictionary<Vector3, InteractiveLevelObject>();
-
-
-        private readonly Queue<Vector3> receiversToAdd = new Queue<Vector3>();
+        public Dictionary<int, InteractiveLevelObject>
+            receivers = new Dictionary<int, InteractiveLevelObject>();
 
         public virtual void OnDestroy()
         {
@@ -49,7 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (receivers.ContainsValue(o))
             {
-                var k = new Vector3(0, 0, 0);
+                var k = 0;
                 foreach (var receiver in receivers)
                     if (receiver.Value == o)
                         k = receiver.Key;
@@ -58,24 +55,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             outBoundWires.Remove(wireToO);
         }
-
-        public void AddReceiver(Vector3 location)
+	
+	Queue<int> receiversToAdd = new Queue<int>();
+        public void AddReceiver(int identity)
         {
-            GameConsole.Log("Adding Receiver at " + location);
-            if (!(receivers.ContainsKey(location) || receiversToAdd.Contains(location)))
-                receiversToAdd.Enqueue(location);
+            GameConsole.Log("Adding Receiver " + identity);
+            if (!(receivers.ContainsKey(identity)))
+                receiversToAdd.Enqueue(identity);
             FindReceivers();
         }
 
-        public void AddReceiverDynamic(Vector3 location, InteractiveLevelObject r)
+        void AddReceiverDynamic(int identity, InteractiveLevelObject receiver)
         {   
-            if (r != null)
-                if (!receivers.ContainsKey(location))
+            if (receiver != null)
+                if (!receivers.ContainsKey(identity))
                 {
-                    receivers.Add(location, r);
-                    var line = Wire.Create(this, r, Color.black);
+                    receivers.Add(identity, receiver);
+                    var line = Wire.Create(this, receiver, Color.black);
                     outBoundWires.Add(line);
-                    r.inBoundWires.Add(line);
+                    receiver.inBoundWires.Add(line);
                 }
         }
 
@@ -99,46 +97,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         // Will try to find receiver at that location, if not found, will drop that receiver
-        private void FindReceivers(Queue<Vector3> locations)
+        private void FindReceivers()
         {
-            while (locations.Count > 0)
+            int N = receiversToAdd.Count;
+            for (int i = 0; i<N;i++)
             {
-                var targetLocation = locations.Dequeue();
-
-                var receiver = LevelManager.currentLevel.GetLevelObjectAt(targetLocation);
-                if (receiver != null)
-                {
-                    if (receiver.GetType().IsSubclassOf(typeof(InteractiveLevelObject)) && receiver != this)
-                    {
+            
+            	int receiverIdentity = receiversToAdd.Dequeue();
+                NetworkLevelObject receiver = NetworkLevelObject.FindByIdentity(receiverIdentity);
+                	
+                	if(receiver != null)
+                	{
                         var r = (InteractiveLevelObject) receiver;
-                        AddReceiverDynamic(r.transform.position, r);
-                    }
-                }
-                else
-                {
-                    remainingReceivers.Enqueue(targetLocation);
-                }
+                        AddReceiverDynamic(receiverIdentity, r);
+                        }else
+                        {
+                        receiversToAdd.Enqueue(receiverIdentity);
+                        }
             }
         }
 
-        private Queue<Vector3> remainingReceivers = new Queue<Vector3>();
         
-        private void FindReceivers()
-        {
-                FindReceivers(receiversToAdd);
-        }
-
-        private void FindRemainingReceivers()
-        {
-            GameConsole.Log("Trying to find remaining Receivers");
-            if(remainingReceivers.Count > 0)
-                FindReceivers(new Queue<Vector3>(remainingReceivers));
-        }
-
         public override void OnInit()
         {
             base.OnInit();
-            ChunkManager.onChunkLoaded.AddListener(FindRemainingReceivers);
+            ChunkManager.onChunkLoaded.AddListener(FindReceivers);
             FindReceivers();
         }
     }

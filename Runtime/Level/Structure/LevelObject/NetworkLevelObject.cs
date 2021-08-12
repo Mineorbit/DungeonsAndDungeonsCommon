@@ -35,7 +35,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	public void Identify()
 	{
                 if(!identified)
+                {
                 	Identity = GetInstanceID();
+  		identifiedLevelObjects.Add(Identity,this);
+  		}              	
+                
+	}
+	
+	
+	
+	public static Dictionary<int,NetworkLevelObject> identifiedLevelObjects = new Dictionary<int,NetworkLevelObject>();
+	
+	public static NetworkLevelObject FindByIdentity(int id)
+	{
+		NetworkLevelObject networkLevelObject;
+		if(identifiedLevelObjects.TryGetValue(id, out networkLevelObject))
+		{
+		return networkLevelObject;
+		}
+		else
+		return null;
 	}
 	
         public virtual void FixedUpdate()

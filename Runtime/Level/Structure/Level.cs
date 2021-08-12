@@ -192,6 +192,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 pos = new Vector3(levelObjectInstance.X, levelObjectInstance.Y, levelObjectInstance.Z);
                 Quaternion rot = new Quaternion(levelObjectInstance.GX, levelObjectInstance.GY, levelObjectInstance.GZ,levelObjectInstance.GW);
                 result = Add(d, pos, rot);
+                
+                InteractiveLevelObject interactiveObject = result.GetComponent<InteractiveLevelObject>();
+                if(interactiveObject != null)
+                {
+                	foreach(int identity in levelObjectInstance.Receivers)
+                		interactiveObject.AddReceiver(identity);
+                }
             }
             else
             {

@@ -78,10 +78,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                 {
                                 	//x.Identity;
                                int identity = x.Identity;
-                                    LevelObjectNetworkHandler handler = LevelObjectNetworkHandler.FindByIdentity(identity);
-                                    if(handler != null)
+                                    NetworkLevelObject networkLevelObject = NetworkLevelObject.FindByIdentity(identity);
+                                    if(networkLevelObject != null)
                                     {
-                                        Delegate.CreateDelegate(typeof(UnityAction<Packet>), handler, methodInfo.Name, true, true).DynamicInvoke(x);
+                                        Delegate.CreateDelegate(typeof(UnityAction<Packet>), networkLevelObject.GetComponent<LevelObjectNetworkHandler>(), methodInfo.Name, true, true).DynamicInvoke(x);
                                     }
                                     else
                                     {

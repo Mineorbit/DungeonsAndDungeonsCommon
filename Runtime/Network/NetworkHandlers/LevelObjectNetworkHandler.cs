@@ -16,18 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool disabled_observed = true;
 
-	public static Dictionary<int,LevelObjectNetworkHandler> identifiedNetworkHandlers = new Dictionary<int,LevelObjectNetworkHandler>();
 	
-	public static LevelObjectNetworkHandler FindByIdentity(int id)
-	{
-		LevelObjectNetworkHandler networkHandler;
-		if(identifiedNetworkHandlers.TryGetValue(id, out networkHandler))
-		{
-		return networkHandler;
-		}
-		else
-		return null;
-	}
 
 
         public virtual LevelObject GetObserved()
@@ -151,10 +140,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     int identityOfParam = data.Item2.Value.Unpack<Int32Value>().Value;
 
-                    var h = FindByIdentity(identityOfParam);
+                    var h = NetworkLevelObject.FindByIdentity(identityOfParam);
 
                     // Debug.Log("Matched with Reference: " + identityOfParam + " " + h.observed);
-                    actionParam.data = h.observed;
+                    actionParam.data = h;
                 }
                 }
                 else
