@@ -5,7 +5,7 @@ package Game;
 
 message PlayerCreate {
 
-  string Identity = 1;
+  int32 Identity = 1;
   string name = 2;
   int32 localId = 3;
   

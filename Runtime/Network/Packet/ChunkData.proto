@@ -11,28 +11,27 @@ float z = 3;
 
 message LevelObjectInstance{
 	sint32 type = 1;
-repeated Location locations = 2;
-	float g_w = 3;
-	float g_x = 4;
-	float g_y = 5;
-	float g_z = 6;
+	float g_w = 2;
+	float g_x = 3;
+	float g_y = 4;
+	float g_z = 5;
 
-	float x = 7;
-	float y = 8;
-	float z = 9;
+	float x = 6;
+	float y = 7;
+	float z = 8;
+	int32 identity = 9;
+	repeated int32 receivers = 10;
 	
 }
 
 message LevelObjectInstanceData{
 	sint32 code = 1;
-repeated Location locations = 2;
-
-	uint32 rot = 3;
-
-	uint32 x = 4;
-	uint32 y = 5;
-	uint32 z = 6;
-	
+	uint32 rot = 2;
+	uint32 x = 3;
+	uint32 y = 4;
+	uint32 z = 5;
+	int32 identity = 6;
+	repeated int32 receivers = 7;
 }
 
 message HuffmanEntry  {

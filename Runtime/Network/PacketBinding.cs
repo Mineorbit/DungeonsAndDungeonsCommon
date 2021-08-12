@@ -76,14 +76,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             MainCaller.Do(
                                 () =>
                                 {
-                                    var handler = NetworkHandler.FindByIdentity<NetworkHandler>(x.Identity);
+                                	//x.Identity;
+                               int identity = x.Identity;
+                                    LevelObjectNetworkHandler handler = LevelObjectNetworkHandler.FindByIdentity(identity);
                                     if(handler != null)
                                     {
                                         Delegate.CreateDelegate(typeof(UnityAction<Packet>), handler, methodInfo.Name, true, true).DynamicInvoke(x);
                                     }
                                     else
                                     {
-                                        // GameConsole.Log("Handler for "+x.Identity+" not found");
+                                        GameConsole.Log("Handler for "+x.Identity+" not found");
                                     }
                                 }
                             );
