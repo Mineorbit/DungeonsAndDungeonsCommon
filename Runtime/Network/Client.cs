@@ -119,7 +119,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (respond)
                 {
                     var meDisconnect = new MeDisconnect();
-                    WritePacket(0,typeof(NetworkManagerHandler), meDisconnect);
+                    Packet packet = new Packet
+            		{
+                	Type = meDisconnect.GetType().FullName,
+                	Handler = sendingHandler.FullName,
+                		Content = Any.Pack(meDisconnect)
+            		};
+                    WritePacket(packet);
                 }
                 UpdateOut(all: true);
                 packetInBuffer.Clear();
@@ -252,40 +258,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                     packetOutUDPBuffer.Enqueue(p);
             }
-        }
-
-        public void WritePacket(int identity, IMessage message, bool TCP = true)
-        {
-            WritePacket(identity,null, message, TCP);
-        }
-
-        public void WritePacket(int identity, Type handler, IMessage message, bool TCP = true)
-        {
-            Packet p = null;
-            if (message.GetType() != typeof(Packet))
-            {
-                if (handler == null)
-                    p = new Packet
-                    {
-                        Type = message.GetType().ToString(),
-                        Content = Any.Pack(message),
-                        Identity = identity
-                    };
-                else
-                    p = new Packet
-                    {
-                        Type = message.GetType().ToString(),
-                        Content = Any.Pack(message),
-                        Handler = handler.FullName,
-                        Identity = identity
-                    };
-            }
-            else
-            {
-                p = (Packet) message;
-            }
-
-            WritePacket(p, TCP);
         }
 
 

@@ -112,28 +112,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-
-        public void WriteAll(int identity,Packet p)
+        public void WriteAll(Packet message, bool TCP = true)
         {
             for (var i = 0; i < 4; i++)
                 if (clients[i] != null)
-                    clients[i].WritePacket(identity,p);
+                    clients[i].WritePacket(message, TCP);
         }
 
-        public void WriteAll(int identity, IMessage message, bool TCP = true)
-        {
-            for (var i = 0; i < 4; i++)
-                if (clients[i] != null)
-                    clients[i].WritePacket(identity,message, TCP);
-        }
-
-        public void WriteAll(int identity,IMessage message, int except, bool TCP = true)
+        public void WriteToAllExcept(Packet message, int except, bool TCP = true)
         {
             for (var i = 0; i < 4; i++)
             {
                 if (i != except && clients[i] != null)
                 {
-                    clients[i].WritePacket(identity,message, TCP);
+                    clients[i].WritePacket(message, TCP);
                 }
             }
         }

@@ -119,14 +119,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!isOnServer)
                 NetworkManager.instance.client.WritePacket(packet, TCP);
             else
-                Server.instance.WriteAll(identity,packet, TCP);
+                Server.instance.WriteAll(packet, TCP);
         }
         
 
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
         public static void Marshall(Type sendingHandler, IMessage message, bool TCP = true)
         {
-            var packet = new Packet
+            Packet packet = new Packet
             {
                 Type = message.GetType().FullName,
                 Handler = sendingHandler.FullName,
@@ -139,14 +139,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     if (NetworkManager.instance.client != null)
                     {
-                        NetworkManager.instance.client.WritePacket(0,packet, TCP);
+                        NetworkManager.instance.client.WritePacket(packet, TCP);
                     }
                 }
             }
             else
             {
                 if(Server.instance != null)
-                    Server.instance.WriteAll(0,packet, TCP);
+                    Server.instance.WriteAll(packet, TCP);
             }
         }
 
