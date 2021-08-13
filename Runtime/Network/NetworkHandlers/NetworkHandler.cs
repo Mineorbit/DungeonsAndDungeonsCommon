@@ -162,9 +162,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             };
 
             if (!isOnServer)
-                NetworkManager.instance.client.WritePacket(identity,packet, TCP);
+                NetworkManager.instance.client.WritePacket(packet, TCP);
             else
-                Server.instance.WriteAll(identity,packet, TCP);
+                Server.instance.WriteAll(packet, TCP);
         }
 
 
@@ -223,18 +223,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!isOnServer)
             {
-                NetworkManager.instance.client.WritePacket(identity,packet, TCP);
+                NetworkManager.instance.client.WritePacket(packet, TCP);
             }
             else
             {
                 if (toOrWithout)
                 {
                     if (Server.instance.clients[target] != null)
-                        Server.instance.clients[target].WritePacket(identity,packet, TCP);
+                        Server.instance.clients[target].WritePacket(packet, TCP);
                 }
                 else
                 {
-                    Server.instance.WriteAll(identity,packet, target, TCP);
+                    Server.instance.WriteToAllExcept(packet, target, TCP);
                 }
             }
         }

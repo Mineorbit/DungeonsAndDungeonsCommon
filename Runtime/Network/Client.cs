@@ -122,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Packet packet = new Packet
             		{
                 	Type = meDisconnect.GetType().FullName,
-                	Handler = sendingHandler.FullName,
+                	Handler = typeof(NetworkManagerHandler).FullName,
                 		Content = Any.Pack(meDisconnect)
             		};
                     WritePacket(packet);
@@ -322,8 +322,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Name = NetworkManager.userName
             };
-
-            WritePacket(0,meConnect, TCP: true);
+            Packet packet = new Packet
+            {
+                Type = meConnect.GetType().FullName,
+                Content = Any.Pack(meConnect)
+            };
+            WritePacket(packet, TCP: true);
             Connected = true;
             onConnectEvent.Invoke(w.LocalId);
 
@@ -342,8 +346,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 LocalId = localid
             };
             //Send welcome
-
-            WritePacket(0,w);
+            Packet packet = new Packet
+            {
+                Type = w.GetType().FullName,
+                Content = Any.Pack(w)
+            };
+            WritePacket(packet);
 
 
             // WelcomeUnstable  welcomeUnstable = await ReadPacket<WelcomeUnstable>();
@@ -362,8 +370,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     var player = PlayerManager.playerManager.players[id];
                     if (player != null)
                     {
-                        var packet = PlayerNetworkHandler.GenerateCreationRequest(player);
-                        WritePacket(0,packet);
+                        Packet packet = PlayerNetworkHandler.GenerateCreationRequest(player);
+                        WritePacket(packet);
                     }
                 }
 
