@@ -364,7 +364,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             MainCaller.Do(() =>
             {
-                //  Send missing players to new connectee
+                //  Send all current players to new connectee
                 for (var id = 0; id < 4 && id != localid; id++)
                 {
                     var player = PlayerManager.playerManager.players[id];
@@ -376,7 +376,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
 
-                PlayerManager.playerManager.Add(localid, userName, true);
+                PlayerManager.playerManager.Add(localid, userName, true,null);
             });
 
             await StartHandle();
