@@ -136,12 +136,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartLevelObjects();
         }
 
+        public void OnDestroy()
+        {
+            ResetIdentitifiedObjects();
+        }
+
         public void OnEndRound(bool resetDynamic = true)
         {
             EndLevelObjects();
             SetLevelObjectActivity(false);
             if (resetDynamic) ClearDynamicObjects();
-            ResetIdentitifiedObjects();
         }
 
         private void StartLevelObjects()
