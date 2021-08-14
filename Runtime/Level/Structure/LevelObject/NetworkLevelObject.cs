@@ -12,7 +12,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	
         public int _Identity;
 
-        public bool identified;
+        public bool identified = false;
 
 	public int Identity
         {
@@ -27,14 +27,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	            }
 	            else
 	            {
-		            GameConsole.Log($"{this} is allready identified with {_Identity}");
+		            GameConsole.Log($"{this} is already identified with {_Identity}");
 	            }
             }
         }
         
         public virtual void OnIdentify()
         {
-        	GameConsole.Log($"Added Identity {Identity}");
+        	GameConsole.Log($"Adding Identity {Identity} to Look Up Table");
             
             if(!identifiedLevelObjects.ContainsKey(Identity))
             {
@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-	            GameConsole.Log($"List allready had Identity {Identity}");
+	            GameConsole.Log($"List already had Identity {Identity}");
             }
         }
 
@@ -54,15 +54,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	public void RemoveFromIdentified()
 	{
 		if(identifiedLevelObjects.ContainsKey(Identity))
-		identifiedLevelObjects.Remove(Identity);
+			identifiedLevelObjects.Remove(Identity);
 	}
 
 	public void Identify()
 	{
-                if(!identified)
-                {
-                	Identity = GetInstanceID();
-  				}
+		int newID =  = GetInstanceID();
+		GameConsole.Log($"Assigning {this} ID: {newID}");
+		Identity = newID;
 	}
 	
 	
