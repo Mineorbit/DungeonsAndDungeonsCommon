@@ -23,12 +23,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	            {
 					identified = true;
 					_Identity = value;
-					OnIdentify();
 	            }
 	            else
 	            {
 		            GameConsole.Log($"{this} is already identified with {_Identity}");
 	            }
+	            OnIdentify();
             }
         }
         
