@@ -364,6 +364,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             MainCaller.Do(() =>
             {
+                // THIS SHOULD BE REWORKED SUCH THAT EACH ENTITY NETWORKHANDLER ON CONNECTION OF A NEW PLAYER SENDS ITS
+                // OWN CREATION REQUEST
                 //  Send all current players to new connectee
                 for (var id = 0; id < 4 && id != localid; id++)
                 {
