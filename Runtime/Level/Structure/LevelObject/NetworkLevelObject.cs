@@ -19,16 +19,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             get => _Identity;
             set
             {
-                identified = true;
-                _Identity = value;
-                OnIdentify();
+	            if(!identified)
+	            {
+					identified = true;
+					_Identity = value;
+					OnIdentify();
+	            }
+	            else
+	            {
+		            GameConsole.Log($"{this} is allready identified with {_Identity}");
+	            }
             }
         }
         
         public virtual void OnIdentify()
         {
-        	GameConsole.Log("Added Identity "+Identity);
-        	identifiedLevelObjects.Add(Identity,this);
+        	GameConsole.Log($"Added Identity {Identity}");
+            
+            if(!identifiedLevelObjects.ContainsKey(Identity))
+            {
+        		identifiedLevelObjects.Add(Identity,this);
+            }
+            else
+            {
+	            GameConsole.Log($"List allready had Identity {Identity}");
+            }
         }
 
 	public void OnDestroy()
