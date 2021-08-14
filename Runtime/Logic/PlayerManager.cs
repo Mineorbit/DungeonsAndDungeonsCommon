@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var loadTargetData = Resources.Load("LevelObjectData/LevelLoadTarget") as LevelObjectData;
 
             var playerGameObject = playerLevelObjectData.Create(position, new Quaternion(0, 0, 0, 0), transform,identity);
-            var loadTargetGameObject = loadTargetData.Create(position, new Quaternion(0, 0, 0, 0));
+            var loadTargetGameObject = loadTargetData.Create(position, new Quaternion(0, 0, 0, 0),null);
 
             var loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
             var player = playerGameObject.GetComponent<Player>();
