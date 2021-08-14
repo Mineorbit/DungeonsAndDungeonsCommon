@@ -47,8 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(!identified)
                 {
                 	Identity = GetInstanceID();
-  		}              	
-                
+  				}
 	}
 	
 	
@@ -76,7 +75,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnDeInit()
         {
             base.OnDeInit();
-            RemoveFromIdentified();
             
         }
 
@@ -86,7 +84,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             levelObjectNetworkHandler = GetComponent<LevelObjectNetworkHandler>();
             
-	    Identify();
+			Identify();
             //
             //if(levelObjectNetworkHandler == null) 
             //levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();

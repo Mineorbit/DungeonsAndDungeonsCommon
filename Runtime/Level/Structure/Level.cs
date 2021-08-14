@@ -190,7 +190,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void ResetIdentitifiedObjects()
         {
-            NetworkLevelObject.identifiedLevelObjects.Clear();
+            // NetworkLevelObject.identifiedLevelObjects.Clear();
+            // foreach ()
+            // THIS IS STOLEN FROM STACKOVERFLOW AN SHOULD BE REPLACED
+            var goneValues = NetworkLevelObject.identifiedLevelObjects.Where(pair => pair.Value == null)
+                .Select(pair => pair.Key)
+                .ToList();
+            foreach (var goneValue in goneValues)
+            {
+                NetworkLevelObject.identifiedLevelObjects.Remove(goneValue);
+            }
         }
         
         public GameObject Add(LevelObjectInstance levelObjectInstance)
