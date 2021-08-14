@@ -141,6 +141,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             EndLevelObjects();
             SetLevelObjectActivity(false);
             if (resetDynamic) ClearDynamicObjects();
+            ResetIdentitifiedObjects();
         }
 
         private void StartLevelObjects()
@@ -183,6 +184,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public void ResetIdentitifiedObjects()
+        {
+            NetworkLevelObject.identifiedLevelObjects.Clear();
+        }
+        
         public GameObject Add(LevelObjectInstance levelObjectInstance)
         {
             GameObject result = null;
