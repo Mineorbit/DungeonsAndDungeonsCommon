@@ -33,6 +33,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return g;
         }
 
+	public virtual GameObject Create(Vector3 location, Quaternion rotation, Transform parent,Util.Optional<int> identity)
+        {
+            return Create(location,rotation,parent);
+        }
+
         // For UI
         public virtual GameObject Create(Vector2 location, Transform parent)
         {
