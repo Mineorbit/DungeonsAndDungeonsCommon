@@ -248,21 +248,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var chunk = ChunkManager.GetChunk(position);
             if (chunk != null)
             {
-                var g = levelObjectData.Create(position, rotation, chunk.transform);
+                var g = levelObjectData.Create(position, rotation, chunk.transform,identity);
                 LevelObject levelObject = g.GetComponent<LevelObject>();
                 levelObject.enabled = activated || levelObjectData.ActivateWhenInactive;
                 levelObject.isDynamic = levelObjectData.dynamicInstantiable;
                 levelObject.ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
-
-                if (identity != null && identity.IsSet())
-                {
-                    
-                        NetworkLevelObject networkLevelObject = g.GetComponent<NetworkLevelObject>();
-                        if (networkLevelObject != null)
-                        {
-                        networkLevelObject.Identity = identity.Get();
-                        }
-                }
                 
                 navigationUpdateNeeded = true;
                 return g;
@@ -321,21 +311,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return null;
             }
 
-            GameObject created = levelObjectData.Create(position, rotation, dynamicObjects);
+            GameObject created = levelObjectData.Create(position, rotation, dynamicObjects,identity);
             LevelObject levelObject = created.GetComponent<LevelObject>();
             levelObject.enabled = activated || levelObjectData.ActivateWhenInactive;
             levelObject.isDynamic = levelObjectData.dynamicInstantiable;
             levelObject.ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
             
-            if (identity != null && identity.IsSet())
-            {
-                    
-                NetworkLevelObject networkLevelObject = created.GetComponent<NetworkLevelObject>();
-                if (networkLevelObject != null)
-                {
-                    networkLevelObject.Identity = identity.Get();
-                }
-            }
+            
             
             return created;
         }

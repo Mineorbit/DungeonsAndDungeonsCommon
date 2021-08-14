@@ -147,11 +147,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return cursorMesh;
         }
 
-        public override GameObject Create(Vector3 location, Quaternion rotation, Transform parent)
+        public override GameObject Create(Vector3 location, Quaternion rotation, Transform parent,Util.Optional<int> identity)
         {
             var g = base.Create(location, rotation, parent);
             var lO = g.GetComponent<LevelObject>();
             lO.levelObjectDataType = uniqueLevelObjectId;
+            
+            if (identity != null && identity.IsSet())
+            {
+                    
+                NetworkLevelObject networkLevelObject = g.GetComponent<NetworkLevelObject>();
+                if (networkLevelObject != null)
+                {
+                    networkLevelObject.Identity = identity.Get();
+                }else
+                {
+                GameConsole.Log("Tried to pre set identity {identity.Get()} but {g} is not a NetworkLevelObject");
+                }
+            }
+            
             lO.OnInit();
             return g;
         }
