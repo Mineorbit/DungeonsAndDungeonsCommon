@@ -10,6 +10,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Util
     {
+
+
+        public class Optional<T>
+        {
+            private bool set = false;
+            private T value;
+
+            public void Set(T v)
+            {
+                set = true;
+                value = v;
+            }
+
+            public bool IsSet()
+            {
+                return set;
+            }
+            
+            public T Get()
+            {
+                return value;
+            }
+        }
         
         public static Func<Location, Vector3> LocationToVector = (l) => { return new Vector3(l.X, l.Y, l.Z);};
         public static Func<Vector3, Location> VectorToLocation = (v) => { var l = new Location();

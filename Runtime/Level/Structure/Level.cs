@@ -210,15 +210,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Vector3 pos = new Vector3(levelObjectInstance.X, levelObjectInstance.Y, levelObjectInstance.Z);
                 Quaternion rot = new Quaternion(levelObjectInstance.GX, levelObjectInstance.GY, levelObjectInstance.GZ,levelObjectInstance.GW);
-                result = Add(d, pos, rot);
-                
-                NetworkLevelObject networkLevelObject = result.GetComponent<InteractiveLevelObject>();
-                
-                if(networkLevelObject != null)
-                {
-                	networkLevelObject.Identity = levelObjectInstance.Identity;
-                }
-                
+                Util.Optional<int> id = new Util.Optional<int>();
+                id.Set(levelObjectInstance.Identity);
+                result = Add(d, pos, rot, id);
+
                 InteractiveLevelObject interactiveLevelObject = result.GetComponent<InteractiveLevelObject>();
                 if(interactiveLevelObject != null)
                 {
@@ -236,13 +231,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             return result;
         }
-
-
+        
+        
         // These Objects will be stored in the Chunks and are permanent Information
-        public GameObject Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
+        public GameObject Add(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation, Util.Optional<int> identity)
         {
             if (levelObjectData == null || levelObjectData.prefab == null)
-                return Add(missingPrefab, position, rotation);
+                return Add(missingPrefab, position, rotation,identity);
 
             if (!levelObjectData.levelInstantiable)
             {
@@ -254,10 +249,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (chunk != null)
             {
                 var g = levelObjectData.Create(position, rotation, chunk.transform);
-                g.GetComponent<LevelObject>().enabled = activated || levelObjectData.ActivateWhenInactive;
-                g.GetComponent<LevelObject>().isDynamic = levelObjectData.dynamicInstantiable;
-                g.GetComponent<LevelObject>().ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
+                LevelObject levelObject = g.GetComponent<LevelObject>();
+                levelObject.enabled = activated || levelObjectData.ActivateWhenInactive;
+                levelObject.isDynamic = levelObjectData.dynamicInstantiable;
+                levelObject.ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
 
+                if (identity != null && identity.IsSet())
+                {
+                    
+                        NetworkLevelObject networkLevelObject = g.GetComponent<NetworkLevelObject>();
+                        if (networkLevelObject != null)
+                        {
+                        networkLevelObject.Identity = identity.Get();
+                        }
+                }
+                
                 navigationUpdateNeeded = true;
                 return g;
             }
@@ -301,11 +307,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         //These Objects will be dropped on the next Level reset
-        public GameObject AddDynamic(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation)
+        public GameObject AddDynamic(LevelObjectData levelObjectData, Vector3 position, Quaternion rotation, Util.Optional<int> identity)
         {
             if (levelObjectData == null || levelObjectData.prefab == null)
             {
-                var g = AddDynamic(missingPrefab, position, rotation);
+                var g = AddDynamic(missingPrefab, position, rotation, identity);
                 return g;
             }
 
@@ -315,11 +321,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return null;
             }
 
-            Debug.Log(rotation.eulerAngles);
-            var created = levelObjectData.Create(position, rotation, dynamicObjects);
-            created.GetComponent<LevelObject>().enabled = activated || levelObjectData.ActivateWhenInactive;
-            created.GetComponent<LevelObject>().isDynamic = levelObjectData.dynamicInstantiable;
-            created.GetComponent<LevelObject>().ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
+            GameObject created = levelObjectData.Create(position, rotation, dynamicObjects);
+            LevelObject levelObject = created.GetComponent<LevelObject>();
+            levelObject.enabled = activated || levelObjectData.ActivateWhenInactive;
+            levelObject.isDynamic = levelObjectData.dynamicInstantiable;
+            levelObject.ActivateWhenInactive = levelObjectData.ActivateWhenInactive;
+            
+            if (identity != null && identity.IsSet())
+            {
+                    
+                NetworkLevelObject networkLevelObject = created.GetComponent<NetworkLevelObject>();
+                if (networkLevelObject != null)
+                {
+                    networkLevelObject.Identity = identity.Get();
+                }
+            }
+            
             return created;
         }
 

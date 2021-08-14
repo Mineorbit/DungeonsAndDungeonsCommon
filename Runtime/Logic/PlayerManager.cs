@@ -87,7 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return playerManager.players[localId];
         }
 
-        public void Add(int freeLocalId, string name, bool local)
+        public void Add(int freeLocalId, string name, bool local, Optional<int> identity)
         {
             var position = GetSpawnLocation(freeLocalId);
 
@@ -102,6 +102,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             loadTarget.mover.target = player.transform;
             player.loadTarget = loadTarget;
             player.enabled = true;
+            
+            if (identity != null && identity.IsSet())
+            {
+                player.Identity = identity.Get();
+            }
+            
             var playerController = playerGameObject.GetComponent<PlayerController>();
 
             playerController.locallyControllable = local;
