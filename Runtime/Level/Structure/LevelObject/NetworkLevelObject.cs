@@ -59,7 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 	public void Identify()
 	{
-		int newID =  = GetInstanceID();
+		int newID = GetInstanceID();
 		GameConsole.Log($"Assigning {this} ID: {newID}");
 		Identity = newID;
 	}
