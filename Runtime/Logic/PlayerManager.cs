@@ -87,7 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return playerManager.players[localId];
         }
 
-        public void Add(int freeLocalId, string name, bool local, Optional<int> identity)
+        public void Add(int freeLocalId, string name, bool local, Util.Optional<int> identity)
         {
             var position = GetSpawnLocation(freeLocalId);
 

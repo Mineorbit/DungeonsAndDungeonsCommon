@@ -30,7 +30,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             	targetPosition = transform.position;
             	targetRotation = transform.rotation.eulerAngles;
-        	isOwner = isOnServer;
+        		isOwner = isOnServer;
         }
 
         public Entity GetObservedEntity()
@@ -40,6 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Start()
         {
+			// Request the creation of this entity on the client side
             if (isOnServer) RequestCreation();
 
             GetObservedEntity().onTeleportEvent.AddListener(Teleport);
