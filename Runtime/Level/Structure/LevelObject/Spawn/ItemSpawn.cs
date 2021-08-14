@@ -83,7 +83,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void SpawnItem()
         {
             if (spawnedItem == null)
-                spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation());
+                spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation(),null);
             else
                 LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), SpawnRotation());
         }

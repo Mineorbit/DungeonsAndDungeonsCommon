@@ -89,7 +89,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     var spawnLocation = SpawnLocation();
                     var spawnRotation = SpawnRotation();
-                    spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, spawnLocation, spawnRotation);
+                    Util.Optional<int> id = new Util.Optional<int>();
+                    spawnedEnemy = LevelManager.currentLevel.AddDynamic(EnemyToSpawn, spawnLocation, spawnRotation,id);
                     spawnedEnemy.GetComponent<Entity>().Spawn(spawnLocation, spawnRotation, true);
                 }
                 else

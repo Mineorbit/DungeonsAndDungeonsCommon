@@ -149,10 +149,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             MainCaller.Do(() =>
             {
-                PlayerManager.playerManager.Add(localId, name, true);
+				Util.Optional<int> id = new Util.Optional<int>();
+				id.Set(identity);
+                PlayerManager.playerManager.Add(localId, name, true, id);
                 GameObject player = PlayerManager.playerManager.GetPlayer(localId);
                 PlayerNetworkHandler h = player.GetComponent<PlayerNetworkHandler>();
-                player.GetComponent<Player>().Identity = identity;
                 h.enabled = true;
                 h.Setup();
 

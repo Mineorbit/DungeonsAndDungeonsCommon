@@ -61,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 wirePreset = Resources.Load<LevelObjectData>("LevelObjectData/Environment/Interactive/Wire");
 
             var wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0, 0, 0),
-                new Quaternion(0, 0, 0, 0));
+                new Quaternion(0, 0, 0, 0),null);
             var w = wire.GetComponent<Wire>();
             w.SetSender(start);
             w.SetReceiver(end);
@@ -76,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 wirePreset = Resources.Load<LevelObjectData>("LevelObjectData/Environment/Interactive/Wire");
 
             var wire = LevelManager.currentLevel.AddDynamic(wirePreset, new Vector3(0, 0, 0),
-                new Quaternion(0, 0, 0, 0));
+                new Quaternion(0, 0, 0, 0),null);
             var w = wire.GetComponent<Wire>();
             w.SetSenderPosition(start);
             w.SetReceiverPosition(end);
