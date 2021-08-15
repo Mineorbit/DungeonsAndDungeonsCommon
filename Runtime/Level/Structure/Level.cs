@@ -213,7 +213,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
 
 				Util.Optional<int> id = new Util.Optional<int>();
-				if(instance.Identity != 0)
+				if(levelObjectInstance.Identity != 0)
                 	id.Set(levelObjectInstance.Identity);
                 result = Add(d, pos, rot, id);
 
