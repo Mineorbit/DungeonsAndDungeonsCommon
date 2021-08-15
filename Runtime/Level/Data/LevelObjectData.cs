@@ -162,7 +162,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     networkLevelObject.Identity = identity.Get();
                 }else
                 {
-                GameConsole.Log("Tried to pre set identity {identity.Get()} but {g} is not a NetworkLevelObject");
+                GameConsole.Log($"Tried to pre set identity {identity.Get()} but {g} is not a NetworkLevelObject");
                 }
             }
             
