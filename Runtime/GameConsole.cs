@@ -69,7 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Update()
         {
             UpdateText();
-            if (Input.GetKeyDown(KeyCode.Backslash))
+            if (Input.GetKeyDown(KeyCode.Plus))
             {
                 if (open)
                 {
