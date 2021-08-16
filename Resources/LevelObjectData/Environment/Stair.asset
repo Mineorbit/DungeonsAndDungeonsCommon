@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: Stair
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 1371749207896881988, guid: 474352130ecd75f21b3dff2a5ba1e4af, type: 3}
   uniqueLevelObjectId: 1814747340
-  granularity: 0
+  granularity: 1
   levelObjectName: Stair
   dynamicInstantiable: 0
   levelInstantiable: 1
