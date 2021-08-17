@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4293169141831346155, guid: 474352130ecd75f21b3dff2a5ba1e4af, type: 3}
   uniqueLevelObjectId: 1814747340
-  granularity: 0.5
+  granularity: 1
   levelObjectName: Stair
   dynamicInstantiable: 0
   levelInstantiable: 1
