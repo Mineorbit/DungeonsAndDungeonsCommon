@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: SmallFloor
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
+  prefab: {fileID: 6609789266140736945, guid: db70cc7fc27e4c0bc8ca12cd574af2a1, type: 3}
   uniqueLevelObjectId: -1768982159
   granularity: 1
   levelObjectName: Small Floorpiece
