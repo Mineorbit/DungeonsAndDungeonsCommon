@@ -393,9 +393,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 }
             }
+            
         }
        
-
+       float storageMultiplier = 2f;
+	
         public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o, Chunk c)
         {
             LevelObjectInstanceData levelObjectInstanceData = InstanceToData((LevelObject) o, c);
@@ -408,7 +410,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static LevelObjectInstanceData InstanceToData(LevelObject o, Chunk c)
         {
             LevelObjectInstanceData levelObjectInstanceData = new LevelObjectInstanceData();
-            Vector3 pos = o.transform.position - c.transform.position;
+            Vector3 pos = storageMultiplier*(o.transform.position - c.transform.position);
             Quaternion rot = o.transform.rotation;
             levelObjectInstanceData.X = (byte) pos.x;
             levelObjectInstanceData.Y = (byte) pos.y;
@@ -425,9 +427,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Quaternion rot = Quaternion.Euler(0,90*instanceData.Rot,0);
             LevelObjectInstance levelObjectInstance = new LevelObjectInstance();
-            levelObjectInstance.X = instanceData.X + offset.x;
-            levelObjectInstance.Y = instanceData.Y + offset.y;
-            levelObjectInstance.Z = instanceData.Z + offset.z;
+            levelObjectInstance.X = (1/storageMultiplier)*(instanceData.X) + offset.x;
+            levelObjectInstance.Y = (1/storageMultiplier)*(instanceData.Y) + offset.y;
+            levelObjectInstance.Z = (1/storageMultiplier)*(instanceData.Z) + offset.z;
             levelObjectInstance.GX = rot.x;
             levelObjectInstance.GY = rot.y;
             levelObjectInstance.GZ = rot.z;
