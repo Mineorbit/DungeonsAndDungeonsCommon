@@ -21,6 +21,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return (PlayerController) entityController;
         }
+
+        public void RaiseShield()
+        {
+            animator.SetTrigger("RaiseShield");
+        }
         
         public override void Update()
         {
