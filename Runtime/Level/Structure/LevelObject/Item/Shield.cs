@@ -20,12 +20,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Use();
             owner.invincible = true;
+            ((PlayerBaseAnimator)owner.baseAnimator).RaiseShield();
+            owner.Invoke(owner.setMovementStatus, false);
         }
 
         public override void StopUse()
         {
             base.StopUse();
             owner.invincible = false;
+            owner.Invoke(owner.setMovementStatus, true);
         }
     }
 }
