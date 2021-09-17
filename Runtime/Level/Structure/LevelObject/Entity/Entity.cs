@@ -209,6 +209,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             baseAnimator.Hit();
             Vector3 dir = transform.position - hitPosition;
             dir.Normalize();
+            // FOR NOW ONLY MANIPULATE ON PLANE
+            dir.y = 0;
             EffectCaster.HitFX(transform.position+0.5f*dir);
             Kickback(dir,2f);
         }
