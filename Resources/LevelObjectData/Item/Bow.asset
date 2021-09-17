@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  uniqueLevelObjectId: 65607ca5-5d80-4354-8540-f96c3785af82
+  prefab: {fileID: 8300353135756219044, guid: 1309e87ea9fa295449928422ce2b0516, type: 3}
+  uniqueLevelObjectId: 65607
   granularity: 0
-  name: 
-  dynamicInstantiable: 0
+  levelObjectName: Bow
+  dynamicInstantiable: 1
   levelInstantiable: 0
+  ActivateWhenInactive: 0
+  Buildable: 0
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 1, y: 1, z: 1}
+  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}
