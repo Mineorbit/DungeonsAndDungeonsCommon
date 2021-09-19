@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5107289802724265130}
   m_Layer: 0
   m_Name: Bow
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,3 +95,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4786fc195f528da45b223962d649b1e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelObjectDataType: 0
+  isDynamic: 0
+  ActivateWhenInactive: 0
+  levelObjectNetworkHandler: {fileID: 0}
+  _Identity: 0
+  identified: 0
+  rigidBody: {fileID: 0}
+  useTime: 0.25
+  owner: {fileID: 0}
+  isEquipped: 0
+  onUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
