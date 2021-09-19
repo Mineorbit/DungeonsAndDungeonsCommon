@@ -15,6 +15,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent onUseEvent = new UnityEvent();
         public UnityEvent onStopUseEvent = new UnityEvent();
 
+
+        public enum Side
+        {
+            Left,
+            Right
+        }
+
+        public Side equipSide;
         public virtual void OnAttach()
         {
             isEquipped = true;
