@@ -98,16 +98,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var toAttach = itemsInProximity.Find(x => !x.isEquipped);
             if (toAttach != null)
             {
-                if (toAttach.GetType() == typeof(Sword))
+                if (toAttach.equipSide == Item.Side.Left)
                 {
                     Invoke(DettachLeftItem);
                     Invoke(AttachLeftItem, toAttach);
-                }
-
-                if (toAttach.GetType() == typeof(Shield))
+                }else
+                if (toAttach.equipSide == Item.Side.Right)
                 {
                     Invoke(DettachRightItem);
                     Invoke(AttachRightItem, toAttach);
+                }
+                else
+                {
+                    GameConsole.Log("Item cannot be equipped due to side setting");
                 }
             }
             else
