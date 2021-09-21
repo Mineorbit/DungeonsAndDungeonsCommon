@@ -161,13 +161,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     //INVOKE
                     player.Invoke(player.UseRight, true);
 
-                //  ROTATION FOR AIMING BOW
-                if (Input.GetMouseButton(0) && player.aiming)
-                {
-                    Vector3 lookDir = cam.forward;
-                    lookDir.y = 0;
-                    transform.rotation = Quaternion.LookRotation(lookDir);
-                }
+                
                 
             }
 
@@ -181,6 +175,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 controller.Move(targetDirection * Speed * Time.deltaTime);
             
                 if (currentSpeed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
+                
+                //  ROTATION FOR AIMING BOW
+                if (Input.GetMouseButton(0) && player.aiming)
+                {
+                    Vector3 lookDir = -cam.forward;
+                    lookDir.y = 0;
+                    transform.rotation = Quaternion.LookRotation(lookDir);
+                }else
                 if (doInput && takeInput && movementInputOnFrame)
                 {
                     var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
