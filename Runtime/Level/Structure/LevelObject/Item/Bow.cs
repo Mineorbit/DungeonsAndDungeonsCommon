@@ -36,7 +36,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public LevelObjectData arrow;
         public void Shoot()
         {
-            LevelManager.currentLevel.AddDynamic(arrow,transform.position,Quaternion.identity, null);
+            LevelManager.currentLevel.AddDynamic(arrow,transform.position,Quaternion.Euler(new Vector3(0,0,90)), null);
         }
     }
 }
