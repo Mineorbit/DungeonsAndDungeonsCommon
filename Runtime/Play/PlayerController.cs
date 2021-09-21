@@ -122,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (doInput && takeInput)
             {
-                if (cam != null)
+                if (cam != null && allowedToMove)
                     targetDirection =
                         Vector3.Normalize(
                             Vector3.ProjectOnPlane(cam.right, transform.up) * Input.GetAxisRaw("Horizontal") +
@@ -183,7 +183,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void StateUpdate()
         {
-            doInput = PlayerManager.acceptInput && allowedToMove && activated &&
+            doInput = PlayerManager.acceptInput  && activated &&
                       locallyControllable; //&& !player.lockNetUpdate;
                       
             movementInputOnFrame = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
