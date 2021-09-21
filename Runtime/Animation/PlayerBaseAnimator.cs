@@ -47,6 +47,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                   Input.GetKey(KeyCode.D)));
         }
 
+
+        public void StartAim()
+        {
+            animator.SetBool("Aim", true);
+        }
+
+        public void StopAim()
+        {
+            animator.SetBool("Aim", false);
+        }
+        
+        
         public void ChangeitemSetting(int leftSide)
         {
 
