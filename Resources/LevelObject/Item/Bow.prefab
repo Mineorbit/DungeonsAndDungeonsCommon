@@ -115,6 +115,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   equipSide: 0
+  arrow: {fileID: 11400000, guid: 2608f4aea7469b6408c88f29807ce9f5, type: 2}
 --- !u!65 &6375996486498693413
 BoxCollider:
   m_ObjectHideFlags: 0
