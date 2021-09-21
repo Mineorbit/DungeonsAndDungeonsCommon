@@ -193,7 +193,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (h != null) UseHandle(h);
         }
 
-
+        public void StopUseLeft()
+        {
+            var h = GetLeftHandle();
+            if (h != null)
+            {
+                StopUseHandle(h);
+            }
+        }
+        
         public void StopUseRight()
         {
             var h = GetRightHandle();
