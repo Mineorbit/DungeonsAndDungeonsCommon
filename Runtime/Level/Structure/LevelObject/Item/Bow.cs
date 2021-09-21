@@ -41,7 +41,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public LevelObjectData arrow;
         public void Shoot()
         {
-            LevelManager.currentLevel.AddDynamic(arrow,transform.position,Quaternion.LookRotation(Camera.main.transform.forward), new Util.Optional<int>());
+            GameObject arrow = LevelManager.currentLevel.AddDynamic(arrow,transform.position,Quaternion.Euler(new Vector3(0,0,90))* Quaternion.LookRotation(Camera.main.transform.forward), new Util.Optional<int>());
+            arrow.GetComponent<Arrow>().shootingBow = this;
         }
     }
 }
