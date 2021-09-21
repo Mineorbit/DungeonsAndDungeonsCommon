@@ -24,6 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void StopUse()
         {
+            GameConsole.Log("STOP USE");
             base.StopUse();
             transform.localEulerAngles = new Vector3(0, 0, 0);
             ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
