@@ -17,6 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Use();
             owner.invincible = true;
+            transform.localEulerAngles = new Vector3(0, 110, 85);
             ((PlayerBaseAnimator)owner.baseAnimator).StartAim();
             owner.Invoke(owner.setMovementStatus, false);
         }
@@ -24,6 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void StopUse()
         {
             base.StopUse();
+            transform.localEulerAngles = new Vector3(0, 0, 0);
             ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
             owner.Invoke(owner.setMovementStatus, true);
         }
