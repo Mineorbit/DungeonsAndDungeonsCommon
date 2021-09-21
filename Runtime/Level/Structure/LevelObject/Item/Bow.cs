@@ -25,12 +25,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void StopUse()
         {
-            GameConsole.Log("STOP USE");
             base.StopUse();
             transform.localEulerAngles = new Vector3(0, 0, 0);
             ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
             ((Player)owner).aiming = false;
             owner.Invoke(owner.setMovementStatus, true);
+            Invoke(Shoot,true);
+        }
+
+        public LevelObjectData arrow;
+        public void Shoot()
+        {
+            LevelManager.currentLevel.AddDynamic(arrow,transform.position,Quaternion.identity, null);
         }
     }
 }
