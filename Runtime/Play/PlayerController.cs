@@ -164,7 +164,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 //  ROTATION FOR AIMING BOW
                 if (Input.GetMouseButton(0) && player.aiming)
                 {
-                    transform.eulerAngles = transform.eulerAngles + new Vector3(0, Input.GetAxis("Mouse X"), 0);
+                    transform.eulerAngles = transform.eulerAngles + 25*Time.deltaTime*new Vector3(0, Input.GetAxis("Mouse X"), 0);
                 }
                 
             }
