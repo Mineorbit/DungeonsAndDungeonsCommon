@@ -176,12 +176,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                 if (currentSpeed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
                 
-                //  ROTATION FOR AIMING BOW
+                //  ROTATION FOR AIMING BOW MAGIC NUMBER
                 if (Input.GetMouseButton(0) && player.aiming)
                 {
                     Vector3 lookDir = -cam.forward;
                     lookDir.y = 0;
-                    transform.rotation = Quaternion.AngleAxis(5, Vector3.up)*Quaternion.LookRotation(lookDir);
+                    transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
                 }else
                 if (doInput && takeInput && movementInputOnFrame)
                 {
