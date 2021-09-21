@@ -6,7 +6,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Arrow : Entity
     {
-        private Bow shootingBow;
+        public Bow shootingBow;
         // Start is called before the first frame update
         public Hitbox hitBox;
         void Start()
@@ -31,14 +31,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS SHOULD BE FIXED
         public void OnColliderEnter(Collider other)
         {
-            if(other.transform.GetComponentInParent<Bow>() != shootingBow)
+            if(other.transform.GetComponentInParent<Bow>() != shootingBow || other.transform.GetComponentInChildren<Bow>() != shootingBow )
                 Destroy(gameObject);
         }
         
         
         void FixedUpdate()
         {
-            transform.position += 0.005f*transform.forward;
+            transform.position += 0.05f*transform.forward;
         }
     }
 }
