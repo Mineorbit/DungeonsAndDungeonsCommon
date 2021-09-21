@@ -181,7 +181,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     Vector3 lookDir = -cam.forward;
                     lookDir.y = 0;
-                    transform.rotation = Quaternion.LookRotation(lookDir);
+                    transform.rotation = Quaternion.AngleAxis(5, Vector3.up)*Quaternion.LookRotation(lookDir);
                 }else
                 if (doInput && takeInput && movementInputOnFrame)
                 {
