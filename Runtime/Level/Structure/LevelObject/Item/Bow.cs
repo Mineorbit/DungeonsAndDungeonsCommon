@@ -23,10 +23,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             owner.Invoke(owner.setMovementStatus, false);
         }
 
+        void ResetHolding()
+        {
+            
+            transform.localEulerAngles = new Vector3(0, 0, 0);
+        }
         public override void StopUse()
         {
             base.StopUse();
-            transform.localEulerAngles = new Vector3(0, 0, 0);
+            Invoke("ResetHolding",1f);
             ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
             ((Player)owner).aiming = false;
             owner.Invoke(owner.setMovementStatus, true);
