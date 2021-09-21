@@ -147,16 +147,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (IsGrounded)
                     if (Input.GetKeyDown(KeyCode.Space))
                         speedY = jumpingSpeed;
+                
+                
+                if (Input.GetMouseButtonUp(0)) player.Invoke(player.StopUseLeft, true);
+                else
+                if (Input.GetMouseButtonUp(1)) player.Invoke(player.StopUseRight, true);
+                else
                 if (Input.GetMouseButton(0))
                     //INVOKE
                     player.Invoke(player.UseLeft, true);
-                else if (Input.GetMouseButton(1))
+                else 
+                if (Input.GetMouseButton(1))
                     //INVOKE
                     player.Invoke(player.UseRight, true);
                 
-                if (Input.GetMouseButtonUp(0)) player.Invoke(player.StopUseLeft, true);
-
-                if (Input.GetMouseButtonUp(1)) player.Invoke(player.StopUseRight, true);
             }
 
             if (activated)
