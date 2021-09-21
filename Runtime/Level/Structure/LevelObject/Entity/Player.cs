@@ -38,6 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Color playerColor;
 
 
+        public bool aiming;
         
 
         public virtual void Awake()
