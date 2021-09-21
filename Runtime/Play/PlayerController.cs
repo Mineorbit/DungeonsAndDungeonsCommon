@@ -164,7 +164,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 //  ROTATION FOR AIMING BOW
                 if (Input.GetMouseButton(0) && player.aiming)
                 {
-                    transform.eulerAngles = transform.eulerAngles + 25*Time.deltaTime*new Vector3(0, Input.GetAxis("Mouse X"), 0);
+                    Vector3 lookDir = cam.forward;
+                    lookDir.y = 0;
+                    transform.rotation = Quaternion.LookRotation(lookDir);
                 }
                 
             }
