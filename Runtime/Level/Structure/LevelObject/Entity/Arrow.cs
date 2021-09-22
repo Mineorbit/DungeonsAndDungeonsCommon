@@ -11,12 +11,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Hitbox hitBox;
         void Start()
         {
+            hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
         }
         private void TryDamage(GameObject g)
         {
             var c = g.GetComponentInParent<Entity>(true);
-            if (c != null)
+            if (c != null && c.GetComponentInChildren<Bow>() != shootingBow)
             {
                 //onHitEvent.Invoke();
                 c.Hit(this, 20);
