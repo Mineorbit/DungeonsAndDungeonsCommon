@@ -39,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         void FixedUpdate()
         {
-            transform.position += 0.05f*transform.up;
+            transform.position += 0.1f*transform.up;
         }
     }
 }
