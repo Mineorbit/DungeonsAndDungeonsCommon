@@ -45,7 +45,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.5, z: 0.1}
+  m_Size: {x: 0.1, y: 0.1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3970649384900687767
 Rigidbody:
@@ -109,6 +109,7 @@ MonoBehaviour:
   maxHealth: 100
   hitCooldownTime: 1
   movementOverride: 0
+  shootingBow: {fileID: 0}
   hitBox: {fileID: 5254828240742234081}
 --- !u!1 &4365948571353269756
 GameObject:
@@ -215,7 +216,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4676530776307335740}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
@@ -225,7 +226,7 @@ Transform:
   - {fileID: 2390887780768672932}
   m_Father: {fileID: 3499347391299817587}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &5335767512321066965
 GameObject:
   m_ObjectHideFlags: 0
