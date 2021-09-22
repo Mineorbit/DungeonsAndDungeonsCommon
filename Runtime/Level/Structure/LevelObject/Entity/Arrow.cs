@@ -21,6 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 //onHitEvent.Invoke();
                 c.Hit(this, 20);
+                Destroy(gameObject);
             }
         }
         // Update is called once per frame
@@ -39,7 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         void FixedUpdate()
         {
-            transform.position += 0.1f*transform.forward;
+            transform.position += 0.2f*transform.forward;
         }
     }
 }
