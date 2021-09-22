@@ -24,7 +24,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void RaiseShield()
         {
-            animator.SetTrigger("RaiseShield");
+            animator.SetBool("RaiseShield",true);
+        }
+
+        public void LowerShield()
+        {
+            animator.SetBool("RaiseShield",false);
         }
         
         public override void Update()

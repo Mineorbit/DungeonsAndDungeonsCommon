@@ -15,12 +15,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.localPosition = new Vector3(0.002f, 0, 0);
             transform.localEulerAngles = new Vector3(0, 180, 0);
         }
-
+        
+        // EFFECT NOT YET MIRRORED
+        public void RaiseShieldEffect()
+        {
+            ((PlayerBaseAnimator)owner.baseAnimator).RaiseShield();
+        }
+        public void LowerShieldEffect()
+        {
+            ((PlayerBaseAnimator)owner.baseAnimator).LowerShield();
+        }
         public override void Use()
         {
             base.Use();
             owner.invincible = true;
-            ((PlayerBaseAnimator)owner.baseAnimator).RaiseShield();
+            Invoke(RaiseShieldEffect,true);
             owner.Invoke(owner.setMovementStatus, false);
         }
 
@@ -28,6 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.StopUse();
             owner.invincible = false;
+            Invoke(LowerShieldEffect,true);
             owner.Invoke(owner.setMovementStatus, true);
         }
     }
