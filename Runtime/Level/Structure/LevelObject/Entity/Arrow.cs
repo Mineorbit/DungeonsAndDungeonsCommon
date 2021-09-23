@@ -48,13 +48,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Quaternion GetAimDirection()
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-
+            
             RaycastHit hit;
             int mask = LayerMask.NameToLayer("HitBox");
             mask = ~mask;
             Physics.Raycast(ray.origin, ray.direction, out hit, distance,mask);
 
             Vector3 target = hit.point;
+            Debug.DrawLine(Camera.main.transform.position,target);
             Vector3 dir = target - transform.position;
             Debug.DrawRay(transform.position,dir*5f,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
