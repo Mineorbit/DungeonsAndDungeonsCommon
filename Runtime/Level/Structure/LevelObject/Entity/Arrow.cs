@@ -62,7 +62,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 target = ray.GetPoint(distance);
             }
-
+            GameConsole.Log($"WE WANT TO HIT HERE: {target}");
             Debug.DrawLine(Camera.main.transform.position,target,Color.green);
             Vector3 dir = target - start;
             Debug.DrawRay(transform.position,dir*5f,Color.green,200);
