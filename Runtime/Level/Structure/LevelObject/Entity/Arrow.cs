@@ -41,7 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private bool flying = false;
         private float distance = 5;
-        private flaot aimDistance = 20;
+        private float aimDistance = 20;
         
         private float speed = 0.2f;
         private float maxFlyingTime = 10f;
