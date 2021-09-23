@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS SHOULD BE FIXED
         public void OnColliderEnter(Collider other)
         {
-            if (other.transform.GetComponentInParent<Bow>() != shootingBow ||
+            if (other.transform.GetComponentInParent<Bow>() == null ||
                 other.transform.GetComponentInChildren<Bow>() != shootingBow)
             {
                 flying = false;
@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool shotArrow = false;
         private bool flying = false;
         
-        private float speed = 0.2f;
+        private float speed = 0.5f;
         private float maxFlyingTime = 10f;
 
         private Vector3 lastTarget;
@@ -51,7 +51,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Vector3 target = Player.GetTargetPoint();
             //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
-            GameConsole.Log($"WE WANT TO HIT HERE: {target}");
             Vector3 dir = target - transform.position;
             lastTarget = target;
             Debug.DrawLine(transform.position,target,Color.green,200);
