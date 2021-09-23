@@ -41,8 +41,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool shotArrow = false;
         private bool flying = false;
-        private float distance = 5;
-        private float aimDistance = 20;
         
         private float speed = 0.2f;
         private float maxFlyingTime = 10f;
@@ -51,27 +49,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         Quaternion GetAimDirection()
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-            
-            Vector3 start = ray.GetPoint((Camera.main.transform.position-shootingBow.transform.position).magnitude); 
-            RaycastHit hit;
-            int mask = LayerMask.NameToLayer("HitBox");
-            GameConsole.Log("MASK: "+mask);
-            int realmask = ~mask;
-            GameConsole.Log("MASK: "+realmask);
-            Vector3 target;
-            
-            Debug.DrawRay(start,ray.direction*5f,Color.red,200);
-            if (Physics.Raycast(start, ray.direction, out hit, aimDistance, realmask))
-            {
-                 target = hit.point;
-                 GameConsole.Log(hit.collider.gameObject.name);
-            }
-            else
-            {
-                target = start+ray.direction*distance;
-            }
-
+            Vector3 target = Player.GetTargetPoint();
             //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
             Vector3 dir = target - transform.position;
@@ -80,6 +58,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
+
+        
         public LevelObjectData test;
         
         public void Shoot()
