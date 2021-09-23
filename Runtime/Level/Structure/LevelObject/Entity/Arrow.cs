@@ -100,7 +100,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
         }
 
-        void OnDrawGizmosSelected()
+        void OnDrawGizmos()
         {
             Gizmos.DrawSphere(transform.position,0.5f);
             Gizmos.DrawSphere(lastTarget,0.5f);
