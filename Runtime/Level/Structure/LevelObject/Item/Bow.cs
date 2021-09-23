@@ -42,6 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Shoot()
         {
             currentArrow.Shoot();
+            currentArrow = null;
         }
 
         public Arrow currentArrow;
