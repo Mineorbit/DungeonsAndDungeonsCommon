@@ -52,7 +52,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RaycastHit hit;
             int mask = LayerMask.NameToLayer("HitBox");
             mask = ~mask;
-            Physics.Raycast(ray.origin, ray.direction, out hit,mask, distance);
+            Physics.Raycast(ray.origin, ray.direction, out hit, distance,mask);
 
             Vector3 target = hit.point;
             Vector3 dir = target - transform.position;
