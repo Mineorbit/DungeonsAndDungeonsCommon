@@ -49,10 +49,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public LevelObjectData arrow;
         public void CreateArrow()
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-            GameObject arrowObject = LevelManager.currentLevel.AddDynamic(arrow,transform.position, Quaternion.LookRotation(ray.direction), new Util.Optional<int>());
-            currentArrow = arrowObject.GetComponent<Arrow>();
-            currentArrow.shootingBow = this;
+            if(currentArrow == null)
+            {
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+                GameObject arrowObject = LevelManager.currentLevel.AddDynamic(arrow,transform.position, Quaternion.LookRotation(ray.direction), new Util.Optional<int>());
+                currentArrow = arrowObject.GetComponent<Arrow>();
+                currentArrow.shootingBow = this;
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Hitbox hitBox;
         void Start()
         {
+            transform.parent = shootingBow.transform;
         }
         private void TryDamage(GameObject g)
         {
@@ -35,6 +36,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private bool flying = false;
         public void Shoot()
         {
+            transform.parent = LevelManager.currentLevel.dynamicObjects;
             flying = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
