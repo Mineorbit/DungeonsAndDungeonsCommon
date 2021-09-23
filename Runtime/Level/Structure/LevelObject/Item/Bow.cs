@@ -52,8 +52,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(currentArrow == null)
             {
-                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-                GameObject arrowObject = LevelManager.currentLevel.AddDynamic(arrow,transform.position, Quaternion.LookRotation(ray.direction), new Util.Optional<int>());
+                GameObject arrowObject = LevelManager.currentLevel.AddDynamic(arrow,transform.position, Quaternion.LookRotation(Vector3.forward), new Util.Optional<int>());
                 currentArrow = arrowObject.GetComponent<Arrow>();
                 currentArrow.shootingBow = this;
             }

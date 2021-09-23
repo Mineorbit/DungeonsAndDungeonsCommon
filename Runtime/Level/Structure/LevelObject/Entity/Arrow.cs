@@ -12,6 +12,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Start()
         {
             transform.parent = shootingBow.transform;
+            transform.rotation = Quaternion.identity;
         }
         private void TryDamage(GameObject g)
         {
@@ -38,14 +39,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private float speed = 0.2f;
         private float maxFlyingTime = 5f;
-        public void Shoot()
+
+        Quaternion GetAimDirection()
         {
-            transform.parent = LevelManager.currentLevel.dynamicObjects;
-            
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             Vector3 target = ray.GetPoint(distance);
             Vector3 dir = target - transform.position;
-            transform.rotation = Quaternion.LookRotation(dir,Vector3.up);
+            return Quaternion.LookRotation(dir,Vector3.up);
+        }
+        
+        public void Shoot()
+        {
+            transform.parent = LevelManager.currentLevel.dynamicObjects;
+
+            transform.rotation = GetAimDirection();
             flying = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
