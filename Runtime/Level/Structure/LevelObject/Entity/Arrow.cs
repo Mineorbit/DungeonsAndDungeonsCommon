@@ -70,6 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
+            Gizmos.DrawSphere(target,1);
             Vector3 dir = target - transform.position;
             Debug.DrawLine(transform.position,dir,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
@@ -95,6 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void Update()
         {
+            Gizmos.DrawSphere(transform.position,1);
         }
 
         void FixedUpdate()
