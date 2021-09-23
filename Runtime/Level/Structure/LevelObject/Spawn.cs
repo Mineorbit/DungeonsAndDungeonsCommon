@@ -5,14 +5,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public override void OnInit()
         {
-            SetCollider();
             base.OnInit();
+            SetCollider();
         }
-
+        
         public override void OnDeInit()
         {
-            SetCollider();
             base.OnDeInit();
+            SetCollider();
         }
         public void SetCollider()
         {
