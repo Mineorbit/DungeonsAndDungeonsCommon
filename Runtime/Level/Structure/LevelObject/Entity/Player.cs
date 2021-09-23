@@ -59,7 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int realmask = ~mask;
             Vector3 target;
             
-            Debug.DrawRay(start,ray.direction*5f,Color.red,200);
+            Debug.DrawRay(start,ray.direction*5f,UnityEngine.Color.red,200);
             if (Physics.Raycast(start, ray.direction, out hit, aimDistance, realmask))
             {
                 target = hit.point;
