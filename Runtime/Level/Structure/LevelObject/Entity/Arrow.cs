@@ -74,7 +74,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
             Vector3 dir = target - transform.position;
             lastTarget = target;
-            Debug.DrawLine(transform.position,dir,Color.green,200);
+            Debug.DrawLine(transform.position,target,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
