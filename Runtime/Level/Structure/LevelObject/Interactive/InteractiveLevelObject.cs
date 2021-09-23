@@ -24,7 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Activate()
         {
-            GameConsole.Log(this + " activated");
+            GameConsole.Log( $"{this} activated");
             if (!activated)
             {
                 activated = true;

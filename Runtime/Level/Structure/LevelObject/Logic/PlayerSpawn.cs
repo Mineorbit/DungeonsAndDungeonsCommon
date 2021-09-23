@@ -13,15 +13,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Color color;
         public ColorChanger colorChanger;
 
-        private void Start()
-        {
-        }
-
-
-        // Update is called once per frame
-        private void Update()
-        {
-        }
 
         private UnityEngine.Color GetColor(Color c)
         {
@@ -42,6 +33,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnInit()
         {
+            base.OnInit();
             if (LevelManager.currentLevel.spawn[(int) color] != null &&
                 LevelManager.currentLevel.spawn[(int) color] != this)
             {

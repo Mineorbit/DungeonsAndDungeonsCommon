@@ -31,14 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SetCollider();
         }
 
-        private void SetCollider()
-        {
-            var full_collider = Level.instantiateType == Level.InstantiateType.Play ||
-                                Level.instantiateType == Level.InstantiateType.Test ||
-                                Level.instantiateType == Level.InstantiateType.Online;
-            GetComponent<Collider>().enabled = !full_collider;
-            GetComponent<Collider>().isTrigger = full_collider;
-        }
+        
 
         private void Setup()
         {
@@ -65,7 +58,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnDeInit()
         {
             base.OnDeInit();
-            SetCollider();
             if (spawnedItem != null && spawnedItem.GetComponent<Item>().isEquipped)
                 RemoveSpawnedItem(false);
         }
