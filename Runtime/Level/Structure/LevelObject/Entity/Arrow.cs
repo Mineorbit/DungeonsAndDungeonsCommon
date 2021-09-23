@@ -47,6 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         Quaternion GetAimDirection()
         {
+            Vector3 start = shootingBow.transform.position;
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             
             RaycastHit hit;
@@ -55,8 +56,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Physics.Raycast(ray.origin, ray.direction, out hit, distance,mask);
 
             Vector3 target = hit.point;
-            Debug.DrawLine(Camera.main.transform.position,target);
-            Vector3 dir = target - transform.position;
+            Debug.DrawLine(Camera.main.transform.position,target,Color.green);
+            Vector3 dir = target - start;
             Debug.DrawRay(transform.position,dir*5f,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
