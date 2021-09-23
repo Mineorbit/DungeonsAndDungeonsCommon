@@ -53,9 +53,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RaycastHit hit;
             int mask = LayerMask.NameToLayer("HitBox");
             mask = ~mask;
-            Physics.Raycast(ray.origin, ray.direction, out hit, distance,mask);
+            Vector3 target;
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, distance, mask))
+            {
+                 target = hit.point;
+            }
+            else
+            {
+                target = ray.GetPoint(distance);
+            }
 
-            Vector3 target = hit.point;
             Debug.DrawLine(Camera.main.transform.position,target,Color.green);
             Vector3 dir = target - start;
             Debug.DrawRay(transform.position,dir*5f,Color.green,200);
