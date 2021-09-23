@@ -13,6 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Start()
         {
             transform.parent = shootingBow.transform;
+            transform.localPosition = new Vector3(0, 0, 0);
             transform.localRotation = Quaternion.identity;
         }
         private void TryDamage(GameObject g)
@@ -22,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 //onHitEvent.Invoke();
                 c.Hit(this, 20);
-                Destroy(gameObject);
+                Drop();
             }
         }
         
@@ -32,7 +33,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (other.transform.GetComponentInParent<Bow>() != shootingBow ||
                 other.transform.GetComponentInChildren<Bow>() != shootingBow)
-                Drop();
+            {
+                flying = false;
+                Invoke("Drop",15f);
+            }
         }
 
         private bool flying = false;
@@ -44,7 +48,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         Quaternion GetAimDirection()
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-            Vector3 target = ray.GetPoint(distance);
+
+            RaycastHit hit;
+            Physics.Raycast(ray.origin, ray.direction, out hit, distance);
+
+            Vector3 target = hit.point;
             Vector3 dir = target - transform.position;
             return Quaternion.LookRotation(dir,Vector3.up);
         }
@@ -64,13 +72,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             LevelManager.currentLevel.RemoveDynamic(this, true);
         }
-
+        
         private void Update()
         {
-            if (!flying)
-            {
-                transform.localRotation = Quaternion.identity;
-            }
         }
 
         void FixedUpdate()
