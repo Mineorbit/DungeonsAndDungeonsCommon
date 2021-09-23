@@ -64,6 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (Physics.Raycast(start, ray.direction, out hit, aimDistance, realmask))
             {
                  target = hit.point;
+                 GameConsole.Log(hit.collider.gameObject.name);
             }
             else
             {
