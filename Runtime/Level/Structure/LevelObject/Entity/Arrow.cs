@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Start()
         {
             transform.parent = shootingBow.transform;
-            transform.rotation = Quaternion.identity;
+            transform.localRotation = Quaternion.identity;
         }
         private void TryDamage(GameObject g)
         {
@@ -63,7 +64,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             LevelManager.currentLevel.RemoveDynamic(this, true);
         }
-        
+
+        private void Update()
+        {
+            if (!flying)
+            {
+                transform.localRotation = Quaternion.identity;
+            }
+        }
+
         void FixedUpdate()
         {
             if(flying)
