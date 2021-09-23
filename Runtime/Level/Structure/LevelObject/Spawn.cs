@@ -10,6 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         public void SetCollider()
         {
+            GameConsole.Log($"Setting Collider for {gameObject.name}");
             var full_collider = Level.instantiateType == Level.InstantiateType.Play ||
                                 Level.instantiateType == Level.InstantiateType.Test ||
                                 Level.instantiateType == Level.InstantiateType.Online;
