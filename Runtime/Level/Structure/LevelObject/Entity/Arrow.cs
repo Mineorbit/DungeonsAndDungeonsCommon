@@ -70,8 +70,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
-            Debug.DrawLine(Camera.main.transform.position,target,Color.green,200);
             Vector3 dir = target - transform.position;
+            Debug.DrawLine(transform.position,dir,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
