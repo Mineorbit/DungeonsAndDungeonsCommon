@@ -11,8 +11,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Hitbox hitBox;
         void Start()
         {
-            hitBox.Attach("Entity");
-            hitBox.enterEvent.AddListener(x => { TryDamage(x); });
         }
         private void TryDamage(GameObject g)
         {
@@ -24,23 +22,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Destroy(gameObject);
             }
         }
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        
 
         // THIS SHOULD BE FIXED
         public void OnColliderEnter(Collider other)
         {
-            if(other.transform.GetComponentInParent<Bow>() != shootingBow || other.transform.GetComponentInChildren<Bow>() != shootingBow )
-                Destroy(gameObject);
+            if (other.transform.GetComponentInParent<Bow>() != shootingBow ||
+                other.transform.GetComponentInChildren<Bow>() != shootingBow)
+                Drop()
+        }
+
+        private bool flying = false;
+        public void Shoot()
+        {
+            flying = true;
+            hitBox.Attach("Entity");
+            hitBox.enterEvent.AddListener(x => { TryDamage(x); });
+            Invoke("Drop",maxFlyingTime);
+        }
+
+        public void Drop()
+        {
+            LevelManager.currentLevel.RemoveDynamic(this, true);
         }
         
-        
+        private float speed = 0.2f;
+        private float maxFlyingTime = 5f;
         void FixedUpdate()
         {
-            transform.position += 0.2f*transform.forward;
+            if(flying)
+            {
+                transform.position += speed*transform.forward;
+            }
         }
     }
 }
