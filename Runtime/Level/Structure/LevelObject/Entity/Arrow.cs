@@ -72,7 +72,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
-            Gizmos.DrawSphere(target,1);
             Vector3 dir = target - transform.position;
             lastTarget = target;
             Debug.DrawLine(transform.position,dir,Color.green,200);
@@ -103,8 +102,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         void OnDrawGizmosSelected()
         {
-            Gizmos.DrawSphere(transform.position,1);
-            Gizmos.DrawSphere(lastTarget,1);
+            Gizmos.DrawSphere(transform.position,0.5f);
+            Gizmos.DrawSphere(lastTarget,0.5f);
         }
 
         void FixedUpdate()
