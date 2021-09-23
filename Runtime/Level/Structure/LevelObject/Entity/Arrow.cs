@@ -46,6 +46,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private float speed = 0.2f;
         private float maxFlyingTime = 10f;
 
+        private Vector3 lastTarget;
+        
         Quaternion GetAimDirection()
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
@@ -72,6 +74,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
             Gizmos.DrawSphere(target,1);
             Vector3 dir = target - transform.position;
+            lastTarget = target;
             Debug.DrawLine(transform.position,dir,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
@@ -96,7 +99,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void Update()
         {
+        }
+
+        void OnDrawGizmosSelected()
+        {
             Gizmos.DrawSphere(transform.position,1);
+            Gizmos.DrawSphere(lastTarget,1);
         }
 
         void FixedUpdate()
