@@ -41,6 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private bool flying = false;
         private float distance = 5;
+        private flaot aimDistance = 20;
         
         private float speed = 0.2f;
         private float maxFlyingTime = 10f;
@@ -54,7 +55,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int mask = LayerMask.NameToLayer("HitBox");
             mask = ~mask;
             Vector3 target;
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, distance, mask))
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, aimDistance, mask))
             {
                  target = hit.point;
             }
