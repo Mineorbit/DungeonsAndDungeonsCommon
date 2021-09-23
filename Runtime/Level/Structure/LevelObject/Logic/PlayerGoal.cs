@@ -14,10 +14,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void Update()
         {
         }
-
+        
+        public void SetCollider()
+        {
+            var full_collider = Level.instantiateType == Level.InstantiateType.Play ||
+                                Level.instantiateType == Level.InstantiateType.Test ||
+                                Level.instantiateType == Level.InstantiateType.Online;
+            GetComponent<Collider>().enabled = !full_collider;
+            GetComponent<Collider>().isTrigger = full_collider;
+        }
+        
         // Start is called before the first frame update
         public override void OnInit()
         {
+            base.OnInit();
             if (LevelManager.currentLevel.goal != null && LevelManager.currentLevel.goal != this)
             {
                 LevelManager.currentLevel.Remove(gameObject);
@@ -27,6 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 LevelManager.currentLevel.goal = this;
             }
+            SetCollider();
             hitbox = GetComponentInChildren<Hitbox>();
             hitbox.Attach("Entity");
             hitbox.enterEvent.AddListener(x => { Enter(x); });
