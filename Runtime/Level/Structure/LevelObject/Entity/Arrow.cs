@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -34,9 +35,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private bool flying = false;
+        private float distance = 15;
+        
+        private float speed = 0.2f;
+        private float maxFlyingTime = 5f;
         public void Shoot()
         {
             transform.parent = LevelManager.currentLevel.dynamicObjects;
+            
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            Vector3 target = ray.GetPoint(distance);
+            Vector3 dir = target - transform.position;
+            transform.rotation = Quaternion.LookRotation(dir,Vector3.up);
             flying = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
@@ -48,8 +58,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevel.RemoveDynamic(this, true);
         }
         
-        private float speed = 0.2f;
-        private float maxFlyingTime = 5f;
         void FixedUpdate()
         {
             if(flying)
