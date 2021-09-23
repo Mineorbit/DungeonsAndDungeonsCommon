@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5207118323614420857}
   - component: {fileID: 2414390317603050556}
   - component: {fileID: 9113984198096561190}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hitboxCollider: {fileID: 9113984198096561190}
+  isAttached: 0
+  targetTag: 
   insideCounter: 0
 --- !u!65 &9113984198096561190
 BoxCollider:
