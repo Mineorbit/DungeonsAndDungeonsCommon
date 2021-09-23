@@ -54,6 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Vector3 target = hit.point;
             Vector3 dir = target - transform.position;
+            Debug.DrawRay(transform.position,dir,Color.green);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
         
