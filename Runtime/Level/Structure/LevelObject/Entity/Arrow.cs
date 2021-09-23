@@ -68,7 +68,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 target = start+ray.direction*distance;
             }
 
-            LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
+            //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
             Debug.DrawLine(Camera.main.transform.position,target,Color.green,200);
             Vector3 dir = target - transform.position;
