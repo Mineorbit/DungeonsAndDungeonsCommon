@@ -55,6 +55,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int mask = LayerMask.NameToLayer("HitBox");
             mask = ~mask;
             Vector3 target;
+            
+            Debug.DrawRay(start,ray.direction*5f,Color.red,200);
             if (Physics.Raycast(start, ray.direction, out hit, aimDistance, mask))
             {
                  target = hit.point;
@@ -68,7 +70,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
             Debug.DrawLine(Camera.main.transform.position,target,Color.green,200);
             Vector3 dir = target - transform.position;
-            Debug.DrawRay(transform.position,dir*5f,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
