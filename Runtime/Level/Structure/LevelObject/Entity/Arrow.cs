@@ -29,7 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (other.transform.GetComponentInParent<Bow>() != shootingBow ||
                 other.transform.GetComponentInChildren<Bow>() != shootingBow)
-                Drop()
+                Drop();
         }
 
         private bool flying = false;
