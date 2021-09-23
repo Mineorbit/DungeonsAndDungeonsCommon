@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private float distance = 5;
         
         private float speed = 0.2f;
-        private float maxFlyingTime = 5f;
+        private float maxFlyingTime = 10f;
 
         Quaternion GetAimDirection()
         {
@@ -63,7 +63,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 target = ray.GetPoint(distance);
             }
             GameConsole.Log($"WE WANT TO HIT HERE: {target}");
-            Debug.DrawLine(Camera.main.transform.position,target,Color.green);
+            Debug.DrawLine(Camera.main.transform.position,target,Color.green,200);
             Vector3 dir = target - start;
             Debug.DrawRay(transform.position,dir*5f,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
