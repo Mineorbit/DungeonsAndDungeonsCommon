@@ -21,6 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((PlayerBaseAnimator)owner.baseAnimator).StartAim();
             ((Player)owner).aiming = true;
             owner.Invoke(owner.setMovementStatus, false);
+            Invoke(CreateArrow,true);
         }
 
         void ResetHolding()
@@ -38,12 +39,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Invoke(Shoot,true);
         }
 
-        public LevelObjectData arrow;
         public void Shoot()
+        {
+            currentArrow.Shoot();
+        }
+
+        public Arrow currentArrow;
+        
+        public LevelObjectData arrow;
+        public void CreateArrow()
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             GameObject arrowObject = LevelManager.currentLevel.AddDynamic(arrow,transform.position, Quaternion.LookRotation(ray.direction), new Util.Optional<int>());
-            arrowObject.GetComponent<Arrow>().shootingBow = this;
+            currentArrow = arrowObject.GetComponent<Arrow>();
+            currentArrow.shootingBow = this;
         }
     }
 }
