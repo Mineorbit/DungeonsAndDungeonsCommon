@@ -39,6 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public bool shotArrow = false;
         private bool flying = false;
         private float distance = 5;
         private float aimDistance = 20;
@@ -87,6 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             transform.rotation = GetAimDirection();
             flying = true;
+            shotArrow = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
             Invoke("Drop",maxFlyingTime);
@@ -97,8 +99,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevel.RemoveDynamic(this, true);
         }
         
+        
+        
         private void Update()
         {
+            if (!shotArrow)
+            {
+                transform.rotation = GetAimDirection();
+            }
         }
 
         void OnDrawGizmos()
