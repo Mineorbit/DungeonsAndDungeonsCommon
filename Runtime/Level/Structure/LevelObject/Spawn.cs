@@ -14,6 +14,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnDeInit();
             SetCollider();
         }
+        
+        public override void OnStartRound()
+        {
+            SetCollider();
+        }
+
+        public override void OnEndRound()
+        {
+            SetCollider();
+        }
+        
         public void SetCollider()
         {
             GameConsole.Log($"Setting Collider for {gameObject.name} {Level.instantiateType}");
