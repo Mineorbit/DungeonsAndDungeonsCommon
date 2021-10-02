@@ -109,8 +109,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
         }
 
-        public void FixedUpdate()
+        public override void FixedUpdate()
         {
+            base.FixedUpdate();
             CheckInputs();
         }
 
