@@ -9665,6 +9665,7 @@ MonoBehaviour:
   speed: 0
   characterController: {fileID: 6344021777004394327}
   footFX: {fileID: 8164085133219797599}
+  runDust: []
 --- !u!114 &8472775196247414597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9829,11 +9830,12 @@ MonoBehaviour:
   maxHealth: 100
   hitCooldownTime: 1
   movementOverride: 0
+  lastSpeeds: []
+  speed: 0
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   colorChanger: {fileID: 0}
   isGrounded: 0
-  heightRay: 1.5
-  speed: 0
+  heightRay: 1.1
   playerName: 
   playerColor: 0
   aiming: 0
@@ -9850,6 +9852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSpeed: 0
+  entity: {fileID: 0}
   lastSpeeds: []
   playerBaseAnimator: {fileID: 700370800949042406}
   controller: {fileID: 0}
@@ -9860,7 +9863,6 @@ MonoBehaviour:
   speedY: 0
   locallyControllable: 0
   activated: 1
-  IsGrounded: 0
   takeInput: 1
   doInput: 0
   isMe: 0
