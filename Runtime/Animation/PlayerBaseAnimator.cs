@@ -42,12 +42,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	    {
 		
 	    }
-	    if(GetController().IsGrounded && Input.GetKeyDown(KeyCode.Space))
+	    if(((Player) me).isGrounded && Input.GetKeyDown(KeyCode.Space))
 	    {
 	    	animator.SetTrigger("Jump");
 	    }
             if (me == PlayerManager.currentPlayer)
-                footFX.SetActive(GetController().IsGrounded && GetController().allowedToMove &&
+                footFX.SetActive(((Player) me).isGrounded && GetController().allowedToMove &&
                                  (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
                                   Input.GetKey(KeyCode.D)));
         }

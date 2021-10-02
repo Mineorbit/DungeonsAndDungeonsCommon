@@ -17,7 +17,7 @@
         {
             walkSoundStrength = (walkSoundStrength + controller.currentSpeed) / 2;
             Blend(0, walkSoundStrength);
-            if (controller.IsGrounded && controller.currentSpeed > 0)
+            if (((Player) controller.entity).isGrounded && controller.currentSpeed > 0)
             {
                 Play(0);
             }
@@ -32,7 +32,7 @@
                 Play(1);
             }
 
-            if (controller.IsGrounded) jumped = false;
+            if (((Player) controller.entity).isGrounded) jumped = false;
         }
     }
 }

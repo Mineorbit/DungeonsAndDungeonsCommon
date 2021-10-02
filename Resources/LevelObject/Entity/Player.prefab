@@ -9749,7 +9749,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.5
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &6344021777004394327
@@ -9769,7 +9769,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: -0.15, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-5235130854568027560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9829,7 +9829,10 @@ MonoBehaviour:
   maxHealth: 100
   hitCooldownTime: 1
   movementOverride: 0
+  aimRotation: {x: 0, y: 0, z: 0, w: 0}
   colorChanger: {fileID: 0}
+  isGrounded: 0
+  heightRay: 1.5
   speed: 0
   playerName: 
   playerColor: 0
@@ -9862,7 +9865,6 @@ MonoBehaviour:
   doInput: 0
   isMe: 0
   allowedToMove: 1
-  heightRay: 0.45
   jumpingSpeed: 1.75
   climbableHitbox: {fileID: 1725967590211030794}
   inClimbing: 0
