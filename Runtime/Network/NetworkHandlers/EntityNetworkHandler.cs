@@ -204,6 +204,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     receivedPosition = pos;
                     var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
                     targetRotation = rot;
+                    ((Player) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
+                        entityLocomotion.AimZ, entityLocomotion.AimW);
                     });
                 }
         }
