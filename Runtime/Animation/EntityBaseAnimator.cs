@@ -15,7 +15,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Update()
         {
-            speed = entityController.currentSpeed;
             if(animator != null)
                 animator.SetFloat("Speed", speed);
         }
