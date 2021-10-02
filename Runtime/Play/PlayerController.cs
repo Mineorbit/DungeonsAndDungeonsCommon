@@ -17,7 +17,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool locallyControllable;
         public bool activated = true;
-        public bool IsGrounded;
         public bool takeInput = true;
         public bool doInput;
         public bool isMe;
@@ -106,8 +105,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Update()
         {
             StateUpdate();
-
-            playerBaseAnimator.speed = currentSpeed / 3;
             Move();
             base.Update();
         }
@@ -130,7 +127,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float climbingSpeed = 1f;
         public void Move()
         {
-            if (!IsGrounded && activated)
+            if (!((Player) entity).isGrounded && activated)
             {
                 if(inClimbing)
                 {
@@ -141,7 +138,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     speedY -= gravity * Time.deltaTime;
                 }
             }
-            if (IsGrounded || !activated) speedY = 0;
+            if (((Player) entity).isGrounded || !activated) speedY = 0;
             targetDirection = new Vector3(0, 0, 0);
 
             if (doInput && takeInput)
@@ -170,7 +167,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     speedY = climbingSpeed;
                 }
                 
-                if (IsGrounded)
+                if (((Player) entity).isGrounded)
                     if (Input.GetKeyDown(KeyCode.Space))
                         speedY = jumpingSpeed;
                 

@@ -82,8 +82,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (transform.position.y < killHeight) Invoke(Kill);
         }
 
+    public virtual  void FixedUpdate()
+    {
+        ComputeCurrentSpeed();
+    }
 
+    private Vector3 lastPosition;
         
+    private readonly int k = 10;
+        
+    public List<float> lastSpeeds = new List<float>();
+    
+    public float currentSpeed;
+    private void ComputeCurrentSpeed()
+    {
+    lastSpeeds.Add((transform.position - lastPosition).magnitude / Time.deltaTime);
+    if (lastSpeeds.Count > k) lastSpeeds.RemoveAt(0);
+    float sum = 0;
+        for (var i = 0; i < lastSpeeds.Count; i++) sum += lastSpeeds[i];
+    currentSpeed = sum / k;
+    lastPosition = transform.position;
+    }
         
         private void SetupItems()
         {

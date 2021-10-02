@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -111,9 +112,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void FixedUpdate()
         {
+            base.FixedUpdate();
             UpdateGround();
         }
-        
+
+        public void Update()
+        {
+            baseAnimator.speed = currentSpeed / 3;
+        }
 
         public void UpdateEquipItem()
         {

@@ -10,6 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public float currentSpeed;
 
+        public Entity entity;
 
         private Vector3 lastPosition;
         
@@ -19,7 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Start()
         {
-            
+            entity = GetComponent<Entity>();
             lastPosition = transform.position;
         }
 
@@ -37,19 +38,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void FixedUpdate()
         {
-            ComputeCurrentSpeed();
         }
 
-        private void ComputeCurrentSpeed()
-        {
-            lastSpeeds.Add((transform.position - lastPosition).magnitude / Time.deltaTime);
-            if (lastSpeeds.Count > k) lastSpeeds.RemoveAt(0);
-            float sum = 0;
-            for (var i = 0; i < lastSpeeds.Count; i++) sum += lastSpeeds[i];
-            currentSpeed = sum / k;
-            lastPosition = transform.position;
-        }
-        
-        
+
     }
 }
