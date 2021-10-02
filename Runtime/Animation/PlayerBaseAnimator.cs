@@ -39,22 +39,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void StartDust()
         {
-            if (!playingDust)
-            {
-                playingDust = true;
-                runDust[0].Play();
-                runDust[1].Play();
-            }
+            footFX.SetActive(true);
         }
 
         private void StopDust()
         {
-            if (playingDust)
-            {
-                playingDust = false;
-                runDust[0].Stop();
-                runDust[1].Stop();
-            }
+            
+            footFX.SetActive(false);
         }
         
         public override void Update()
@@ -71,15 +62,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	    {
 	    	animator.SetTrigger("Jump");
 	    }
+
         if (speed > 0 && ((Player) me).isGrounded)
             StartDust();
         else
             StopDust();
-        
-            if (me == PlayerManager.currentPlayer)
-                footFX.SetActive(((Player) me).isGrounded && GetController().allowedToMove &&
-                                 (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
-                                  Input.GetKey(KeyCode.D)));
         }
 
 
