@@ -11,5 +11,9 @@ message EntityLocomotion {
   float QY = 5;
   float QZ = 6;
   float QW = 7;
+  float aimX = 8;
+  float aimY = 9;
+  float aimZ = 10;
+  float aimW = 11;
   
 }

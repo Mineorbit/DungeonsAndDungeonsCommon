@@ -24,14 +24,15 @@ namespace Game {
     static EntityLocomotionReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChZFbnRpdHlMb2NvbW90aW9uLnByb3RvEgRHYW1lImMKEEVudGl0eUxvY29t",
-            "b3Rpb24SCQoBWBgBIAEoAhIJCgFZGAIgASgCEgkKAVoYAyABKAISCgoCUVgY",
-            "BCABKAISCgoCUVkYBSABKAISCgoCUVoYBiABKAISCgoCUVcYByABKAJiBnBy",
-            "b3RvMw=="));
+            "ChZFbnRpdHlMb2NvbW90aW9uLnByb3RvEgRHYW1lIpsBChBFbnRpdHlMb2Nv",
+            "bW90aW9uEgkKAVgYASABKAISCQoBWRgCIAEoAhIJCgFaGAMgASgCEgoKAlFY",
+            "GAQgASgCEgoKAlFZGAUgASgCEgoKAlFaGAYgASgCEgoKAlFXGAcgASgCEgwK",
+            "BGFpbVgYCCABKAISDAoEYWltWRgJIAEoAhIMCgRhaW1aGAogASgCEgwKBGFp",
+            "bVcYCyABKAJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.EntityLocomotion), global::Game.EntityLocomotion.Parser, new[]{ "X", "Y", "Z", "QX", "QY", "QZ", "QW" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.EntityLocomotion), global::Game.EntityLocomotion.Parser, new[]{ "X", "Y", "Z", "QX", "QY", "QZ", "QW", "AimX", "AimY", "AimZ", "AimW" }, null, null, null, null)
           }));
     }
     #endregion
@@ -46,19 +47,23 @@ namespace Game {
     private static readonly pb::MessageParser<EntityLocomotion> _parser = new pb::MessageParser<EntityLocomotion>(() => new EntityLocomotion());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<EntityLocomotion> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::Game.EntityLocomotionReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public EntityLocomotion() {
       OnConstruction();
     }
@@ -66,6 +71,7 @@ namespace Game {
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public EntityLocomotion(EntityLocomotion other) : this() {
       x_ = other.x_;
       y_ = other.y_;
@@ -74,10 +80,15 @@ namespace Game {
       qY_ = other.qY_;
       qZ_ = other.qZ_;
       qW_ = other.qW_;
+      aimX_ = other.aimX_;
+      aimY_ = other.aimY_;
+      aimZ_ = other.aimZ_;
+      aimW_ = other.aimW_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public EntityLocomotion Clone() {
       return new EntityLocomotion(this);
     }
@@ -86,6 +97,7 @@ namespace Game {
     public const int XFieldNumber = 1;
     private float x_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float X {
       get { return x_; }
       set {
@@ -97,6 +109,7 @@ namespace Game {
     public const int YFieldNumber = 2;
     private float y_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float Y {
       get { return y_; }
       set {
@@ -108,6 +121,7 @@ namespace Game {
     public const int ZFieldNumber = 3;
     private float z_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float Z {
       get { return z_; }
       set {
@@ -119,6 +133,7 @@ namespace Game {
     public const int QXFieldNumber = 4;
     private float qX_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float QX {
       get { return qX_; }
       set {
@@ -130,6 +145,7 @@ namespace Game {
     public const int QYFieldNumber = 5;
     private float qY_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float QY {
       get { return qY_; }
       set {
@@ -141,6 +157,7 @@ namespace Game {
     public const int QZFieldNumber = 6;
     private float qZ_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float QZ {
       get { return qZ_; }
       set {
@@ -152,6 +169,7 @@ namespace Game {
     public const int QWFieldNumber = 7;
     private float qW_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float QW {
       get { return qW_; }
       set {
@@ -159,12 +177,62 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "aimX" field.</summary>
+    public const int AimXFieldNumber = 8;
+    private float aimX_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AimX {
+      get { return aimX_; }
+      set {
+        aimX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "aimY" field.</summary>
+    public const int AimYFieldNumber = 9;
+    private float aimY_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AimY {
+      get { return aimY_; }
+      set {
+        aimY_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "aimZ" field.</summary>
+    public const int AimZFieldNumber = 10;
+    private float aimZ_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AimZ {
+      get { return aimZ_; }
+      set {
+        aimZ_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "aimW" field.</summary>
+    public const int AimWFieldNumber = 11;
+    private float aimW_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AimW {
+      get { return aimW_; }
+      set {
+        aimW_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
       return Equals(other as EntityLocomotion);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Equals(EntityLocomotion other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -179,10 +247,15 @@ namespace Game {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(QY, other.QY)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(QZ, other.QZ)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(QW, other.QW)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AimX, other.AimX)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AimY, other.AimY)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AimZ, other.AimZ)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AimW, other.AimW)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
       if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
@@ -192,6 +265,10 @@ namespace Game {
       if (QY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(QY);
       if (QZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(QZ);
       if (QW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(QW);
+      if (AimX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AimX);
+      if (AimY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AimY);
+      if (AimZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AimZ);
+      if (AimW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AimW);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -199,11 +276,13 @@ namespace Game {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void WriteTo(pb::CodedOutputStream output) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
@@ -236,6 +315,22 @@ namespace Game {
         output.WriteRawTag(61);
         output.WriteFloat(QW);
       }
+      if (AimX != 0F) {
+        output.WriteRawTag(69);
+        output.WriteFloat(AimX);
+      }
+      if (AimY != 0F) {
+        output.WriteRawTag(77);
+        output.WriteFloat(AimY);
+      }
+      if (AimZ != 0F) {
+        output.WriteRawTag(85);
+        output.WriteFloat(AimZ);
+      }
+      if (AimW != 0F) {
+        output.WriteRawTag(93);
+        output.WriteFloat(AimW);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -244,6 +339,7 @@ namespace Game {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (X != 0F) {
         output.WriteRawTag(13);
@@ -273,6 +369,22 @@ namespace Game {
         output.WriteRawTag(61);
         output.WriteFloat(QW);
       }
+      if (AimX != 0F) {
+        output.WriteRawTag(69);
+        output.WriteFloat(AimX);
+      }
+      if (AimY != 0F) {
+        output.WriteRawTag(77);
+        output.WriteFloat(AimY);
+      }
+      if (AimZ != 0F) {
+        output.WriteRawTag(85);
+        output.WriteFloat(AimZ);
+      }
+      if (AimW != 0F) {
+        output.WriteRawTag(93);
+        output.WriteFloat(AimW);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -280,6 +392,7 @@ namespace Game {
     #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
       if (X != 0F) {
@@ -303,6 +416,18 @@ namespace Game {
       if (QW != 0F) {
         size += 1 + 4;
       }
+      if (AimX != 0F) {
+        size += 1 + 4;
+      }
+      if (AimY != 0F) {
+        size += 1 + 4;
+      }
+      if (AimZ != 0F) {
+        size += 1 + 4;
+      }
+      if (AimW != 0F) {
+        size += 1 + 4;
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -310,6 +435,7 @@ namespace Game {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(EntityLocomotion other) {
       if (other == null) {
         return;
@@ -335,10 +461,23 @@ namespace Game {
       if (other.QW != 0F) {
         QW = other.QW;
       }
+      if (other.AimX != 0F) {
+        AimX = other.AimX;
+      }
+      if (other.AimY != 0F) {
+        AimY = other.AimY;
+      }
+      if (other.AimZ != 0F) {
+        AimZ = other.AimZ;
+      }
+      if (other.AimW != 0F) {
+        AimW = other.AimW;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(pb::CodedInputStream input) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       input.ReadRawMessage(this);
@@ -377,6 +516,22 @@ namespace Game {
             QW = input.ReadFloat();
             break;
           }
+          case 69: {
+            AimX = input.ReadFloat();
+            break;
+          }
+          case 77: {
+            AimY = input.ReadFloat();
+            break;
+          }
+          case 85: {
+            AimZ = input.ReadFloat();
+            break;
+          }
+          case 93: {
+            AimW = input.ReadFloat();
+            break;
+          }
         }
       }
     #endif
@@ -384,6 +539,7 @@ namespace Game {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -417,6 +573,22 @@ namespace Game {
           }
           case 61: {
             QW = input.ReadFloat();
+            break;
+          }
+          case 69: {
+            AimX = input.ReadFloat();
+            break;
+          }
+          case 77: {
+            AimY = input.ReadFloat();
+            break;
+          }
+          case 85: {
+            AimZ = input.ReadFloat();
+            break;
+          }
+          case 93: {
+            AimW = input.ReadFloat();
             break;
           }
         }

@@ -214,6 +214,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             EffectCaster.HitFX(transform.position+0.5f*dir);
             Kickback(dir,2f);
         }
+        
+        public Quaternion aimRotation;
+
+        
+        
+        public Quaternion GetAimRotation()
+        {
+            return aimRotation;
+        }
+        
+
 
         private int pointsForKill = 100;
 

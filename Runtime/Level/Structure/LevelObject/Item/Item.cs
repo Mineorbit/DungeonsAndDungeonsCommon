@@ -58,5 +58,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             onStopUseEvent.Invoke();
         }
+        //QUICK FIX
+        public virtual void StopUse(Quaternion arg)
+        {
+            onStopUseEvent.Invoke();
+        }
     }
 }

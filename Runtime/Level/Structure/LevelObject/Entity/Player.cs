@@ -31,6 +31,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
        
         }
 
+        public bool isGrounded;
+        
+        public float heightRay = 1.1f;
+        
         public float speed;
 
 
@@ -46,34 +50,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             colorChanger = gameObject.GetComponent<ColorChanger>();
         }
 
-	
-        private static float distance = 5;
-        private static float aimDistance = 20;
-        public static Vector3 GetTargetPoint()
+        public void UpdateGround()
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-            
-            Vector3 start = ray.GetPoint((Camera.main.transform.position-PlayerManager.currentPlayer.transform.position).magnitude); 
-            RaycastHit hit;
-            int mask = LayerMask.NameToLayer("HitBox");
-            int realmask = ~mask;
-            Vector3 target;
-            
-            Debug.DrawRay(start,ray.direction*5f,UnityEngine.Color.red,200);
-            if (Physics.Raycast(start, ray.direction, out hit, aimDistance, realmask))
-            {
-                target = hit.point;
-                GameConsole.Log(hit.collider.gameObject.name);
-            }
-            else
-            {
-                target = start+ray.direction*distance;
-            }
-
-            return target;
+            var mask = 1 << 10 | 1 << 11;
+            var hit = new RaycastHit();
+            isGrounded =  Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay,
+                mask, QueryTriggerInteraction.Ignore);
         }
-
         
+        public bool IsGrounded()
+        {
+            return isGrounded;
+        }
         
         public override void OnDestroy()
         {
@@ -121,6 +109,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetRightHandle().Attach(item);
         }
 
+        public void FixedUpdate()
+        {
+            UpdateGround();
+        }
+        
 
         public void UpdateEquipItem()
         {
@@ -239,5 +232,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 StopUseHandle(h);
             }
         }
+        
     }
 }
