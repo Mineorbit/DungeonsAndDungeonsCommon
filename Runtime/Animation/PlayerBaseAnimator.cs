@@ -8,12 +8,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public CharacterController characterController;
         public GameObject footFX;
         private Vector3 forwardDirection;
+        public ParticleSystem[] runDust;
 
         private Vector3 oldAngles;
 
         public void Start()
         {
             forwardDirection = new Vector3(0, 0, 0);
+            runDust = transform.Find("Particles").Find("Running").GetComponentsInChildren<ParticleSystem>();
         }
 
 
@@ -31,6 +33,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             animator.SetBool("RaiseShield",false);
         }
+
+
+        private bool playingDust = false;
+        
+        private void StartDust()
+        {
+            if (!playingDust)
+            {
+                playingDust = true;
+                runDust[0].Play();
+                runDust[1].Play();
+            }
+        }
+
+        private void StopDust()
+        {
+            if (playingDust)
+            {
+                playingDust = false;
+                runDust[0].Stop();
+                runDust[1].Stop();
+            }
+        }
         
         public override void Update()
         {
@@ -46,6 +71,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	    {
 	    	animator.SetTrigger("Jump");
 	    }
+        if (speed > 0 && ((Player) me).isGrounded)
+            StartDust();
+        else
+            StopDust();
+        
             if (me == PlayerManager.currentPlayer)
                 footFX.SetActive(((Player) me).isGrounded && GetController().allowedToMove &&
                                  (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||

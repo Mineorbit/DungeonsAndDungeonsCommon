@@ -34,9 +34,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool isGrounded;
         
-        public float heightRay = 1.1f;
+        public float heightRay;
         
-        public float speed;
 
 
         public string playerName;
@@ -118,7 +117,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Update()
         {
-            baseAnimator.speed = currentSpeed / 3;
+            baseAnimator.speed = speed / 3;
         }
 
         public void UpdateEquipItem()
