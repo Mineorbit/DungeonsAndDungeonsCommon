@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PlasticGui.WorkspaceWindow;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -22,7 +23,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isMe;
         public bool allowedToMove = true;
 
-        public float heightRay = 0.55f;
+
+        private static float distance = 5;
+        private static float aimDistance = 20;
+
+
 
 
 
@@ -33,6 +38,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private Vector3 forwardDirection;
         private readonly float gravity = 4f;
 
+
+        public static Vector3 GetTargetPoint()
+        {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            
+            Vector3 start = ray.GetPoint((Camera.main.transform.position-PlayerManager.currentPlayer.transform.position).magnitude); 
+            RaycastHit hit;
+            int mask = LayerMask.NameToLayer("HitBox");
+            int realmask = ~mask;
+            Vector3 target;
+            
+            Debug.DrawRay(start,ray.direction*5f,UnityEngine.Color.red,200);
+            if (Physics.Raycast(start, ray.direction, out hit, aimDistance, realmask))
+            {
+                target = hit.point;
+                GameConsole.Log(hit.collider.gameObject.name);
+            }
+            else
+            {
+                target = start+ray.direction*distance;
+            }
+
+            return target;
+        }
 
         public Hitbox climbableHitbox;
 
@@ -65,7 +94,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(climbableHitbox.insideCounter == 0)
                     inClimbing = false;
             });
-            SetParams();
         }
 
         public override void Start()
@@ -77,7 +105,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Update()
         {
-            UpdateGround();
             StateUpdate();
 
             playerBaseAnimator.speed = currentSpeed / 3;
@@ -87,19 +114,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
 
-        private void SetParams()
+
+        Quaternion GetAimDirection()
         {
-            heightRay = 1.1f;
+            Vector3 target = GetTargetPoint();
+            Vector3 dir = target - transform.position;
+            Debug.DrawLine(transform.position,target,Color.green,200);
+            return Quaternion.LookRotation(dir,Vector3.up);
         }
 
-
-        public void UpdateGround()
-        {
-            var mask = 1 << 10 | 1 << 11;
-            var hit = new RaycastHit();
-            IsGrounded = controller.isGrounded || Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay,
-                mask, QueryTriggerInteraction.Ignore);
-        }
+        
 
         public float climbDampening = 0.5f;
 
@@ -128,7 +152,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             Vector3.ProjectOnPlane(cam.right, transform.up) * Input.GetAxisRaw("Horizontal") +
                             Vector3.ProjectOnPlane(cam.forward, transform.up) * Input.GetAxisRaw("Vertical"));
 
-
+                
+                
+                
                 // Pickup closest item
                 if (Input.GetKeyDown(KeyCode.G)) player.Invoke(player.UpdateEquipItem);
 
@@ -167,6 +193,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (activated)
             {
+                player.aimRotation = GetAimDirection();
+                
                 targetDirection.y = speedY;
                 if (targetDirection.sqrMagnitude >= 0.01f)
                     movingDirection = targetDirection;

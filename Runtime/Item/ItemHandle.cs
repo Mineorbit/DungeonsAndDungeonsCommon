@@ -89,5 +89,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 slot.StopUse();
             player.setMovementStatus(true);
         }
+        //currently for bow
+        public void StopUse(Quaternion arg)
+        {
+            if (slot != null)
+                slot.StopUse(arg);
+            player.setMovementStatus(true);
+        }
     }
 }

@@ -36,12 +36,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
             ((Player)owner).aiming = false;
             owner.Invoke(owner.setMovementStatus, true);
-            Invoke(Shoot,true);
+            Invoke<UnityEngine.Quaternion>(Shoot,owner.GetAimRotation(),true);
         }
 
-        public void Shoot()
+        public void Shoot(Quaternion aimRotation)
         {
-            currentArrow.Shoot();
+            currentArrow.Shoot(aimRotation);
             currentArrow = null;
         }
 

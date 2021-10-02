@@ -293,7 +293,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 var pos = observed.transform.position;
                 var rot = observed.transform.rotation.eulerAngles;
-
+                var aim = ((Entity) observed).aimRotation;
                 var sendDist = (pos - lastSentPosition).magnitude;
                 if (sendDist > sendDistance)
                 {
@@ -304,7 +304,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         Z = pos.z,
                         QX = rot.x,
                         QY = rot.y,
-                        QZ = rot.z
+                        QZ = rot.z,
+                        AimX = aim.x,
+                        AimY = aim.y,
+                        AimZ = aim.z,
+                        AimW = aim.w
                     };
                     if (GetObservedEntity().movementOverride)
                     {

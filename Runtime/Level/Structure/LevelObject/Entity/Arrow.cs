@@ -49,7 +49,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         Quaternion GetAimDirection()
         {
-            Vector3 target = Player.GetTargetPoint();
+            Vector3 target = PlayerController.GetTargetPoint();
             //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
             Vector3 dir = target - transform.position;
             lastTarget = target;
@@ -61,11 +61,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public LevelObjectData test;
         
-        public void Shoot()
+        public void Shoot(Quaternion aimDirection)
         {
             transform.parent = LevelManager.currentLevel.dynamicObjects;
 
-            transform.rotation = GetAimDirection();
+            transform.rotation = aimDirection;
             flying = true;
             shotArrow = true;
             hitBox.Attach("Entity");
