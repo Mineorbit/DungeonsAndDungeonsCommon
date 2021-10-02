@@ -112,11 +112,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void FixedUpdate()
         {
             base.FixedUpdate();
-            UpdateGround();
         }
 
         public void Update()
         {
+            UpdateGround();
             baseAnimator.speed = speed / 3;
         }
 
