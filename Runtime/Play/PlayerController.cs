@@ -109,7 +109,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
         }
 
-        
+        public void FixedUpdate()
+        {
+            CheckInputs();
+        }
 
 
         Quaternion GetAimDirection()
@@ -120,27 +123,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
-        
 
-        public float climbDampening = 0.5f;
 
-        public float climbingSpeed = 1f;
-        public void Move()
+        public void CheckInputs()
         {
-            if (!((Player) entity).isGrounded && activated)
-            {
-                if(inClimbing)
-                {
-                    speedY = -gravity * climbDampening;
-                }
-                else
-                {
-                    speedY -= gravity * Time.deltaTime;
-                }
-            }
-            if (((Player) entity).isGrounded || !activated) speedY = 0;
-            targetDirection = new Vector3(0, 0, 0);
-
             if (doInput && takeInput)
             {
                 if (cam != null && allowedToMove)
@@ -187,6 +173,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 
             }
+        }
+        
+        public float climbDampening = 0.5f;
+
+        public float climbingSpeed = 1f;
+        public void Move()
+        {
+            if (!((Player) entity).isGrounded && activated)
+            {
+                if(inClimbing)
+                {
+                    speedY = -gravity * climbDampening;
+                }
+                else
+                {
+                    speedY -= gravity * Time.deltaTime;
+                }
+            }
+            if (((Player) entity).isGrounded || !activated) speedY = 0;
+            targetDirection = new Vector3(0, 0, 0);
+
+            
 
             if (activated)
             {
@@ -201,7 +209,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                 if ( entity.speed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
                 
-                //  ROTATION FOR AIMING BOW MAGIC NUMBER
+                //  ROTATION FOR AIMING BOW MAGIC NUMBER YET TO BE REDISTRIBUTED
                 if (Input.GetMouseButton(0) && player.aiming)
                 {
                     Vector3 lookDir = -cam.forward;
