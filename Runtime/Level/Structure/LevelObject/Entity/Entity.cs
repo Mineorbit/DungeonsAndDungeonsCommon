@@ -93,14 +93,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
     public List<float> lastSpeeds = new List<float>();
     
-    public float currentSpeed;
+    public float speed;
     private void ComputeCurrentSpeed()
     {
     lastSpeeds.Add((transform.position - lastPosition).magnitude / Time.deltaTime);
     if (lastSpeeds.Count > k) lastSpeeds.RemoveAt(0);
     float sum = 0;
         for (var i = 0; i < lastSpeeds.Count; i++) sum += lastSpeeds[i];
-    currentSpeed = sum / k;
+    speed = sum / k;
     lastPosition = transform.position;
     }
         
