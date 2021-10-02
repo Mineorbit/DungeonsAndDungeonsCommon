@@ -199,7 +199,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     movingDirection = new Vector3(0, 0, 0);
                 controller.Move(targetDirection * Speed * Time.deltaTime);
             
-                if (currentSpeed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
+                if ( entity.speed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
                 
                 //  ROTATION FOR AIMING BOW MAGIC NUMBER
                 if (Input.GetMouseButton(0) && player.aiming)
