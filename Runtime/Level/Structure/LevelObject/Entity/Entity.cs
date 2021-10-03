@@ -201,12 +201,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private float kickbackTime = 1f;
+        private float kickbackDist = 1f;
         private float kickbackSpeed = 0.125f;
         IEnumerator KickbackRoutine(Vector3 dir, float dist)
         {
             float t = 0;
             Vector3 start = transform.position;
+            float kickbackTime = kickbackDist / kickbackSpeed;
             while (t<kickbackTime)
             {
                 t += kickbackSpeed * Time.deltaTime;
