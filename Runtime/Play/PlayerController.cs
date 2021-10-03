@@ -47,7 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int realmask = ~mask;
             Vector3 target;
             
-            Debug.DrawRay(start,ray.direction*5f,UnityEngine.Color.red,200);
+            // Debug.DrawRay(start,ray.direction*5f,UnityEngine.Color.red,200);
             if (Physics.Raycast(start, ray.direction, out hit, aimDistance, realmask))
             {
                 target = hit.point;
@@ -128,11 +128,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void MoveFixed()
         {
             
+            if (!((Player) entity).isGrounded && activated)
+            {
+                if(inClimbing)
+                {
+                    speedY = -gravity * climbDampening;
+                }
+                else
+                {
+                    speedY -= gravity * Time.deltaTime;
+                }
+            }
+            
             if (((Player) entity).isGrounded || !activated) speedY = 0;
             
             if (activated)
             {
                 
+                if (((Player) entity).isGrounded)
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        speedY = jumpingSpeed;
+                
+                
+                // change to angle towards ladder later on
+                if (targetDirection.sqrMagnitude >= 0.01f && inClimbing)
+                {
+                    speedY = climbingSpeed;
+                }
                 
                 player.aimRotation = GetAimDirection();
                 
@@ -144,6 +166,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 controller.Move(targetDirection * Speed * Time.deltaTime);
             
                 if ( entity.speed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
+                
+                
                 
                 //  ROTATION FOR AIMING BOW MAGIC NUMBER YET TO BE REDISTRIBUTED
                 if (aimMode && player.aiming)
@@ -167,19 +191,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float climbingSpeed = 1f;
         public void Move()
         {
-            if (!((Player) entity).isGrounded && activated)
-            {
-                if(inClimbing)
-                {
-                    speedY = -gravity * climbDampening;
-                }
-                else
-                {
-                    speedY -= gravity * Time.deltaTime;
-                }
-            }
-
-            
             targetDirection = new Vector3(0, 0, 0);
             
             if (doInput && takeInput)
@@ -203,15 +214,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     // INTERACT WITH ENVIRONMENT (READ TEXT, PRESS BUTTON etc)
                 }
 
-                // change to angle towards ladder later on
-                if (targetDirection.sqrMagnitude >= 0.01f && inClimbing)
-                {
-                    speedY = climbingSpeed;
-                }
                 
-                if (((Player) entity).isGrounded)
-                    if (Input.GetKeyDown(KeyCode.Space))
-                        speedY = jumpingSpeed;
                 
                 
                 if (Input.GetMouseButtonUp(0)) player.Invoke(player.StopUseLeft, true);
