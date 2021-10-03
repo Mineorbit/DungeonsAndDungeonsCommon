@@ -130,7 +130,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             
             if (((Player) entity).isGrounded || !activated) speedY = 0;
-            targetDirection = new Vector3(0, 0, 0);
             
             if (activated)
             {
@@ -181,6 +180,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
 
+            
+            targetDirection = new Vector3(0, 0, 0);
             
             if (doInput && takeInput)
             {
