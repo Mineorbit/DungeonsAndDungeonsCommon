@@ -50,8 +50,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             colorChanger = gameObject.GetComponent<ColorChanger>();
         }
 
+
+        private bool lastGrounded = false;
+
         public void UpdateGround()
         {
+            lastGrounded = isGrounded;
             var mask = 1 << 10 | 1 << 11;
             var hit = new RaycastHit();
             bool raycast =  Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay,
@@ -122,7 +126,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GetController().movingDirection = new Vector3(0, 0, 0);
                 GetController().controller.Move(GetController().targetDirection * GetController().Speed * Time.deltaTime);
 
-                if (isGrounded || !GetController().activated)
+                if ((!lastGrounded && isGrounded) || !GetController().activated)
                 {
                     GetController().speedY = 0;
                     GameConsole.Log("HIT THE FLOOR");
