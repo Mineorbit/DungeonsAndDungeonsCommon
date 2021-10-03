@@ -211,10 +211,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (t<kickbackTime)
             {
                 t += Time.deltaTime;
-                controller.controller.Move(kickbackSpeed*kickbackSpeed*dir);
+                controller.controller.Move(kickbackSpeed*dir);
                 yield return new WaitForEndOfFrame();
             }
-            transform.position = start + dir * dist;
         }
         
         public void Kickback(Vector3 dir, float distance)
