@@ -202,7 +202,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         private float kickbackTime = 1f;
-        private float kickbackSpeed = 2f;
+        private float kickbackSpeed = 0.25f;
         IEnumerator KickbackRoutine(Vector3 dir, float dist)
         {
             float t = 0;
@@ -210,7 +210,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (t<kickbackTime)
             {
                 t += kickbackSpeed * Time.deltaTime;
-                controller.controller.Move(dir);
+                controller.controller.Move(kickbackSpeed*dir);
                 yield return new WaitForEndOfFrame();
             }
             transform.position = start + dir * dist;
