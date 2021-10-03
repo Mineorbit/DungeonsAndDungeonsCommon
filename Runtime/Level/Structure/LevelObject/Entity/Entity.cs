@@ -207,10 +207,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             float t = 0;
             Vector3 start = transform.position;
-            float kickbackTime = kickbackSpeed / kickbackDist;
+            float kickbackTime =  kickbackDist / kickbackSpeed;
             while (t<kickbackTime)
             {
-                t += kickbackSpeed * Time.deltaTime;
+                t += Time.deltaTime;
                 controller.controller.Move(kickbackSpeed*kickbackSpeed*dir);
                 yield return new WaitForEndOfFrame();
             }
