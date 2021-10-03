@@ -130,7 +130,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     GetController().speedY = 0;
                     GameConsole.Log("HIT THE FLOOR");
-                    Debug.Break();
+                    //Debug.Break();
                 }
                 
                 if ( speed > 0) GetController().forwardDirection = (GetController().forwardDirection + GetController().movingDirection) / 2;
