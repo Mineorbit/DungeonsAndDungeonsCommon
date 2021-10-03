@@ -60,6 +60,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             isGrounded = controllerResult;
         }
         
+        
+        
+        
+        
+        
         public bool IsGrounded()
         {
             return isGrounded;
@@ -78,6 +83,71 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             health = 100;
         }
 
+
+        PlayerController GetController()
+        {
+            return (PlayerController) controller;
+        }
+        
+        
+        
+        public bool aimMode = false;
+        public void MoveFixed()
+        {
+            
+            if (!isGrounded && GetController().activated)
+            {
+                if(GetController().inClimbing)
+                {
+                    GetController().speedY = -GetController().gravity * GetController().climbDampening;
+                }
+                else
+                {
+                    GetController().speedY -= GetController().gravity * Time.deltaTime;
+                }
+            }
+            
+            
+            if (GetController().activated)
+            {
+                
+                
+                // change to angle towards ladder later on
+                if (GetController().targetDirection.sqrMagnitude >= 0.01f && GetController().inClimbing)
+                {
+                    GetController().speedY = GetController().climbingSpeed;
+                }
+                
+                aimRotation = GetController().GetAimDirection();
+                
+                GetController().targetDirection.y = GetController().speedY;
+                if (GetController().targetDirection.sqrMagnitude >= 0.01f)
+                    GetController().movingDirection = GetController().targetDirection;
+                else
+                    GetController().movingDirection = new Vector3(0, 0, 0);
+                GetController().controller.Move(GetController().targetDirection * GetController().Speed * Time.deltaTime);
+            
+                if (isGrounded || !GetController().activated) GetController().speedY = 0;
+                
+                if ( speed > 0) GetController().forwardDirection = (GetController().forwardDirection + GetController().movingDirection) / 2;
+                
+                
+                
+                //  ROTATION FOR AIMING BOW MAGIC NUMBER YET TO BE REDISTRIBUTED
+                if (aimMode && aiming)
+                {
+                    Vector3 lookDir = -GetController().cam.forward;
+                    lookDir.y = 0;
+                    transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
+                }else
+                if (GetController().doInput && GetController().takeInput && GetController().movementInputOnFrame)
+                {
+                    var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(GetController().forwardDirection.x, GetController().forwardDirection.z);
+                    transform.eulerAngles = new Vector3(0, angleY, 0);
+                }
+            }
+        }
+        
 
         public override void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
         {
@@ -115,6 +185,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.FixedUpdate();
             UpdateGround();
+            MoveFixed();
         }
 
         public void Update()
