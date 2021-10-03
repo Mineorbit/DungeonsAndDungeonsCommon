@@ -207,7 +207,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             float t = 0;
             Vector3 start = transform.position;
-            float kickbackTime = kickbackDist / kickbackSpeed;
+            float kickbackTime = kickbackSpeed / kickbackDist;
             while (t<kickbackTime)
             {
                 t += kickbackSpeed * Time.deltaTime;
