@@ -9835,7 +9835,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   colorChanger: {fileID: 0}
   isGrounded: 0
-  heightRay: 1.1
+  heightRay: 1.15
   playerName: 
   playerColor: 0
   aiming: 0
