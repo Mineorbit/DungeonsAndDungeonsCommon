@@ -9835,7 +9835,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   colorChanger: {fileID: 0}
   isGrounded: 0
-  heightRay: 1.175
+  heightRay: 1.1
   playerName: 
   playerColor: 0
   aiming: 0
@@ -9851,11 +9851,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef2390e1f8d75946bbac7d15c4623c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   currentSpeed: 0
   entity: {fileID: 0}
   lastSpeeds: []
   playerBaseAnimator: {fileID: 700370800949042406}
-  controller: {fileID: 0}
   cam: {fileID: 0}
   Speed: 3
   targetDirection: {x: 0, y: 0, z: 0}
