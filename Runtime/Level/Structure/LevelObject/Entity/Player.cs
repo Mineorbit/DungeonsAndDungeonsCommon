@@ -60,11 +60,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             isGrounded = controllerResult || raycast;
         }
         
-        
-        
-        
-        
-        
         public bool IsGrounded()
         {
             return isGrounded;

@@ -9835,10 +9835,11 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   colorChanger: {fileID: 0}
   isGrounded: 0
-  heightRay: 1.1195
+  heightRay: 1.12
   playerName: 
   playerColor: 0
   aiming: 0
+  aimMode: 0
 --- !u!114 &-4485675669329379349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9868,6 +9869,7 @@ MonoBehaviour:
   isMe: 0
   allowedToMove: 1
   jumpingSpeed: 1.75
+  forwardDirection: {x: 0, y: 0, z: 0}
   climbableHitbox: {fileID: 1725967590211030794}
   inClimbing: 0
   movementInputOnFrame: 0
