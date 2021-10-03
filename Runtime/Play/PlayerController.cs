@@ -140,14 +140,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
             
-            if (((Player) entity).isGrounded || !activated) speedY = 0;
             
             if (activated)
             {
-                
-                if (((Player) entity).isGrounded)
-                    if (Input.GetKeyDown(KeyCode.Space))
-                        speedY = jumpingSpeed;
                 
                 
                 // change to angle towards ladder later on
@@ -165,6 +160,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     movingDirection = new Vector3(0, 0, 0);
                 controller.Move(targetDirection * Speed * Time.deltaTime);
             
+                if (((Player) entity).isGrounded || !activated) speedY = 0;
+                
                 if ( entity.speed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
                 
                 
@@ -202,6 +199,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             Vector3.ProjectOnPlane(cam.forward, transform.up) * Input.GetAxisRaw("Vertical"));
 
                 
+                
+                if (((Player) entity).isGrounded)
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        speedY = jumpingSpeed;
                 
                 aimMode = Input.GetMouseButton(0);
                 
