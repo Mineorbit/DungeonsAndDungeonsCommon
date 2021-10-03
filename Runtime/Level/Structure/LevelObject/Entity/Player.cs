@@ -57,7 +57,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bool raycast =  Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
             bool controllerResult = ((PlayerController) controller).controller.isGrounded;
-            isGrounded = controllerResult;
+            isGrounded = controllerResult || raycast;
         }
         
         
