@@ -7,7 +7,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class PlayerController : EntityController
     {
         public PlayerBaseAnimator playerBaseAnimator;
-        public CharacterController controller;
         public Transform cam;
         public float Speed = 3f;
         public Vector3 targetDirection;

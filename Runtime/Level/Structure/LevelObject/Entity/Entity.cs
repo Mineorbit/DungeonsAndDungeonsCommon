@@ -210,7 +210,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (t<kickbackTime)
             {
                 t += kickbackSpeed * Time.deltaTime;
-                transform.position = start + dir * dist * t;
+                controller.controller.Move(dir);
                 yield return new WaitForEndOfFrame();
             }
             transform.position = start + dir * dist;

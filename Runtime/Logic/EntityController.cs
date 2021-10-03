@@ -7,6 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         private bool dirty;
         
+        public CharacterController controller;
         
         public float currentSpeed;
 
