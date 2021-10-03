@@ -121,8 +121,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                     GetController().movingDirection = new Vector3(0, 0, 0);
                 GetController().controller.Move(GetController().targetDirection * GetController().Speed * Time.deltaTime);
-            
-                if (isGrounded || !GetController().activated) GetController().speedY = 0;
+
+                if (isGrounded || !GetController().activated)
+                {
+                    GetController().speedY = 0;
+                    GameConsole.Log("HIT THE FLOOR");
+                    Debug.Break();
+                }
                 
                 if ( speed > 0) GetController().forwardDirection = (GetController().forwardDirection + GetController().movingDirection) / 2;
                 
