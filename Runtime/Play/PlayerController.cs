@@ -129,8 +129,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void MoveFixed()
         {
             
+            if (((Player) entity).isGrounded || !activated) speedY = 0;
+            targetDirection = new Vector3(0, 0, 0);
+            
             if (activated)
             {
+                
+                
                 player.aimRotation = GetAimDirection();
                 
                 targetDirection.y = speedY;
@@ -175,8 +180,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     speedY -= gravity * Time.deltaTime;
                 }
             }
-            if (((Player) entity).isGrounded || !activated) speedY = 0;
-            targetDirection = new Vector3(0, 0, 0);
 
             
             if (doInput && takeInput)
