@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         private void TryDamage(GameObject g)
         {
+            GameConsole.Log($"Trying to hit {g}");
             var c = g.GetComponentInParent<Entity>(true);
             if (c != null && c.GetComponentInChildren<Bow>() != shootingBow)
             {
@@ -31,7 +32,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS SHOULD BE FIXED
         public void OnColliderEnter(Collider other)
         {
-            GameConsole.Log($"The Arrow hit {other.gameObject}");
             if (other.transform.GetComponentInParent<Bow>() == null ||
                 other.transform.GetComponentInChildren<Bow>() != shootingBow)
             {
