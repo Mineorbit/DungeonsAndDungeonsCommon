@@ -31,6 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS SHOULD BE FIXED
         public void OnColliderEnter(Collider other)
         {
+            GameConsole.Log($"The Arrow hit {other.gameObject}");
             if (other.transform.GetComponentInParent<Bow>() == null ||
                 other.transform.GetComponentInChildren<Bow>() != shootingBow)
             {
@@ -53,7 +54,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
             Vector3 dir = target - transform.position;
             lastTarget = target;
-            Debug.DrawLine(transform.position,target,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
