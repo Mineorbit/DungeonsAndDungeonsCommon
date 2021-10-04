@@ -16,7 +16,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Use()
         {
             base.Use();
-            owner.invincible = true;
             transform.localEulerAngles = new Vector3(0, 110, 85);
             ((PlayerBaseAnimator)owner.baseAnimator).StartAim();
             ((Player)owner).aiming = true;
