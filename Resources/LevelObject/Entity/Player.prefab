@@ -9835,7 +9835,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   colorChanger: {fileID: 0}
   isGrounded: 0
-  heightRay: 1.1
+  heightRay: 1.15
   playerName: 
   playerColor: 0
   aiming: 0
@@ -10012,8 +10012,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 6.6249294, z: 1}
-  m_Center: {x: 0, y: -2.8124647, z: 0}
+  m_Size: {x: 1, y: 6.385597, z: 1}
+  m_Center: {x: 0, y: -2.9321308, z: 0}
 --- !u!1001 &3488014829510651882
 PrefabInstance:
   m_ObjectHideFlags: 0
