@@ -9750,7 +9750,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!143 &6344021777004394327
@@ -9764,7 +9764,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
+  m_Height: 1.7
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -9835,7 +9835,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   colorChanger: {fileID: 0}
   isGrounded: 0
-  heightRay: 1.2
+  heightRay: 1.1
   playerName: 
   playerColor: 0
   aiming: 0
@@ -9905,7 +9905,7 @@ NavMeshObstacle:
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.1, z: 0}
   m_TimeToStationary: 0.5
 --- !u!114 &7767981043886471032
 MonoBehaviour:
