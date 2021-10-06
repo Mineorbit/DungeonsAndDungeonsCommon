@@ -25,20 +25,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Setup()
         {
             if(observed != null && ((NetworkLevelObject)observed).identified)
-            if(!isSetup)
-            { 
-            isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
-            GameConsole.Log("Setting up PlayerHandler with "+((NetworkLevelObject)observed).Identity+" and "+GetObservedPlayer().localId+" "+isOwner);
-            owner = GetObservedPlayer().localId;
+                if(!isSetup)
+                {   
+                    isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
+                    GameConsole.Log("Setting up PlayerHandler with "+((NetworkLevelObject)observed).Identity+" and "+GetObservedPlayer().localId+" "+isOwner);
+                    owner = GetObservedPlayer().localId;
+                    GetObservedPlayer().controller.enabled = !isOnServer && isOwner;
+                    if (isOnServer)
+                        GetComponent<CharacterController>().enabled = false;
             
-            GetObservedPlayer().controller.enabled = !isOnServer && isOwner;
+                    isSetup = true;
             
-            if (isOnServer)
-                GetComponent<CharacterController>().enabled = false;
-            
-            isSetup = true;
-            
-            }
+                }
         }
 
 

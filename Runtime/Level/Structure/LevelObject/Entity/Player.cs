@@ -117,7 +117,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GetController().speedY = GetController().climbingSpeed;
                 }
                 
-                aimRotation = GetController().GetAimDirection();
                 
                 GetController().targetDirection.y = GetController().speedY;
                 if (GetController().targetDirection.sqrMagnitude >= 0.01f)

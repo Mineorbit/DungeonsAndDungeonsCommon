@@ -125,7 +125,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                GameConsole.Log(this + " has no ItemHitBox");
+                GameConsole.Log($"{this} has no ItemHitBox");
             }
         }
 
