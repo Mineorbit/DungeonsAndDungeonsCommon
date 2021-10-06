@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class Item : NetworkLevelObject
+    public class Item : Entity
     {
         public Rigidbody rigidBody;
 

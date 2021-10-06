@@ -67,7 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private Quaternion SpawnRotation()
         {
-            Debug.Log(" Set Rotation to " + transform.rotation.eulerAngles);
+            GameConsole.Log($"Set Rotation to {transform.rotation.eulerAngles}");
             return transform.rotation;
         }
 

@@ -128,7 +128,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if ((!lastGrounded && isGrounded) || !GetController().activated)
                 {
                     GetController().speedY = 0;
-                    GameConsole.Log("HIT THE FLOOR");
                     //Debug.Break();
                 }
                 

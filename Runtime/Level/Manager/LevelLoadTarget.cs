@@ -34,12 +34,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.FixedUpdate();
             if(Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test)
             {
-            for(int i = - radius;i<=radius;i++)
-                for(int j = - radius; j<=radius;j++)
-                    for (int k = -radius; k <= radius; k++)
-                    {
-                        EnableChunkAt(transform.position+ChunkManager.chunkGranularity*(new Vector3(i,j,k)));
-                    }
+                for(int i = - radius;i<=radius;i++)
+                    for(int j = - radius; j<=radius;j++)
+                        for (int k = -radius; k <= radius; k++)
+                        {
+                            EnableChunkAt(transform.position+ChunkManager.chunkGranularity*(new Vector3(i,j,k)));
+                        }
                 
             }
         }

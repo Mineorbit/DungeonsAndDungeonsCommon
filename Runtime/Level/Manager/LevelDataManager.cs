@@ -151,10 +151,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(LevelManager.currentLevel != null)
             {
-            metaData.AvailBlue = LevelManager.currentLevel.spawn[0] != null;
-            metaData.AvailYellow = LevelManager.currentLevel.spawn[1] != null;
-            metaData.AvailRed = LevelManager.currentLevel.spawn[2] != null;
-            metaData.AvailGreen = LevelManager.currentLevel.spawn[3] != null;
+                metaData.AvailBlue = LevelManager.currentLevel.spawn[0] != null;
+                metaData.AvailYellow = LevelManager.currentLevel.spawn[1] != null;
+                metaData.AvailRed = LevelManager.currentLevel.spawn[2] != null;
+                metaData.AvailGreen = LevelManager.currentLevel.spawn[3] != null;
             }
             ProtoSaveManager.Save(path,metaData);
         }
