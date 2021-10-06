@@ -146,6 +146,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 ((Player) entity).aimMode = Input.GetMouseButton(0);
                 
+                ((Player) entity).aimRotation = GetAimDirection();
                 // Pickup closest item
                 if (Input.GetKeyDown(KeyCode.G)) player.Invoke(player.UpdateEquipItem);
 
