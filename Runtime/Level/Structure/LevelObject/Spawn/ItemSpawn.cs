@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void RemoveSpawnedItem(bool physics = true)
         {
-            Debug.Log("Trying to Remove");
+            GameConsole.Log("Trying to Remove");
 
             if (spawnedItem != null) LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>(), physics);
         }
@@ -74,10 +74,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SpawnItem()
         {
-            if (spawnedItem == null)
-                spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation(),null);
-            else
-                LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), SpawnRotation());
+            if (!(Level.instantiateType == Level.InstantiateType.Online))
+            {
+                if (spawnedItem == null)
+                    spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation(),null);
+                else
+                    LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), SpawnRotation());
+            }
         }
     }
 }
