@@ -36,11 +36,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public readonly float gravity = 4f;
 
 
-        public static Vector3 GetTargetPoint()
+        public Vector3 GetTargetPoint()
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             
-            Vector3 start = ray.GetPoint((Camera.main.transform.position-PlayerManager.currentPlayer.transform.position).magnitude); 
+            Vector3 start = ray.GetPoint((Camera.main.transform.position-transform.position).magnitude); 
             RaycastHit hit;
             int mask = LayerMask.NameToLayer("HitBox");
             int realmask = ~mask;
