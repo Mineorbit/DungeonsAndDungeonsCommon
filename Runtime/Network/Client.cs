@@ -234,8 +234,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (debugNetwork)
             {
                 string r = TCP ? "TCP" : "UDP";
-                var x = TCP ? remote : udpRemote;
-                GameConsole.Log($"Sending to {x} {data.Length} bytes via {r}");
+                GameConsole.Log($"Sending to {remote} {data.Length} bytes via {r}");
             }
             if (TCP || !NetworkManager.instance.useUDP)
             {
@@ -245,7 +244,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if(isOnServer)
                 {
-                    receivingUdpClient.Send(data, data.Length, remote);
+                    try
+                    {
+                        // ADDRESS SOMEHOW NOT WORKING
+                        receivingUdpClient.Send(data, data.Length, remote);
+                    }
+                    catch (
+                        Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                     //receivingUdpClient.Send(data, data.Length);
                 }
                 else
