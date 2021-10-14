@@ -2,7 +2,7 @@
 {
     public class PlayerAudioController : AudioController
     {
-        public PlayerController controller;
+        public Player player;
 
         private bool jumped;
         private float walkSoundStrength;
@@ -15,9 +15,9 @@
 
         private void Update()
         {
-            walkSoundStrength = (walkSoundStrength + controller.currentSpeed) / 2;
+            walkSoundStrength = (walkSoundStrength + player.speed) / 2;
             Blend(0, walkSoundStrength);
-            if (((Player) controller.entity).isGrounded && controller.currentSpeed > 0)
+            if ((player).isGrounded && player.speed > 0)
             {
                 Play(0);
             }
@@ -26,13 +26,13 @@
                 Stop(0);
             }
 
-            if (!jumped && controller.speedY > 0)
+            if (!jumped && player.jumping)
             {
                 jumped = true;
                 Play(1);
             }
 
-            if (((Player) controller.entity).isGrounded) jumped = false;
+            if (((Player) player).isGrounded) jumped = false;
         }
     }
 }
