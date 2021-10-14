@@ -222,17 +222,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         int tcpBufferSize;
-        
-        
+
+        private bool debugNetwork = true;
         
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
             var data = p.ToByteArray();
             sentPacketCarriers++;
-            
+            if(debugNetwork)
+                GameConsole.Log($"Sending to {remote} {data.Length} bytes");
             if (TCP || !NetworkManager.instance.useUDP)
             {
-                GameConsole.Log("Sent length: "+data.Length);
                 tcpStream.Write(data, 0, data.Length);
             }
             else
