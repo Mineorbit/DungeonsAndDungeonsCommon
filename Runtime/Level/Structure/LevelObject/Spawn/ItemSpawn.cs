@@ -74,7 +74,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SpawnItem()
         {
-            if (!(Level.instantiateType == Level.InstantiateType.Online))
+            if (Level.instantiateType != Level.InstantiateType.Online)
             {
                 if (spawnedItem == null)
                     spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation(),null);
