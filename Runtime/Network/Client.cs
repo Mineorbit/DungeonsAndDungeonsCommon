@@ -157,6 +157,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             client.tcpStream = client.tcpClient.GetStream();
         }
 
+        private IPEndPoint remoteAccess;
         public static void CreateUdpClientForClient(Client client)
         {
             client.receivingUdpClient = new UdpClient();
@@ -232,7 +233,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (debugNetwork)
             {
                 string r = TCP ? "TCP" : "UDP";
-                GameConsole.Log($"Sending to {tcpClient.Client.RemoteEndPoint} {data.Length} bytes via {r}");
+                GameConsole.Log($"Sending to {remote} {data.Length} bytes via {r}");
             }
             if (TCP || !NetworkManager.instance.useUDP)
             {
@@ -242,8 +243,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if(isOnServer)
                 {
-                    //receivingUdpClient.Send(data, data.Length, remote);
-                    receivingUdpClient.Send(data, data.Length);
+                    receivingUdpClient.Send(data, data.Length, remote);
+                    //receivingUdpClient.Send(data, data.Length);
                 }
                 else
                 {
