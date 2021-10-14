@@ -142,8 +142,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 if (((Player) entity).isGrounded)
                     if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        player.jumping = true;
                         speedY = jumpingSpeed;
-                
+                    }
                 ((Player) entity).aimMode = Input.GetMouseButton(0);
                 
                 ((Player) entity).aimRotation = GetAimDirection();

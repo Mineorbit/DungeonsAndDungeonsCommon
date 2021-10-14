@@ -43,7 +43,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public bool aiming;
-        
+
+        public bool jumping;
 
         public virtual void Awake()
         {
@@ -128,6 +129,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if ((!lastGrounded && isGrounded) || !GetController().activated)
                 {
                     GetController().speedY = 0;
+                    jumping = true;
                     //Debug.Break();
                 }
                 
