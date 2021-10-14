@@ -296,6 +296,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
+                if(debugNetwork)
+                    GameConsole.Log($"Receiving from {remote}");
                 data = receivingUdpClient.Receive(ref remote);
             }
 
