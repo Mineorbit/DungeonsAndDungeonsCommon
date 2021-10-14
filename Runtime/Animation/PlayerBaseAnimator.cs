@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Start()
         {
             forwardDirection = new Vector3(0, 0, 0);
-            runDust = transform.Find("Particles").Find("Running").GetComponentsInChildren<ParticleSystem>();
+            runDust = transform.Find("FootFX").GetComponentsInChildren<ParticleSystem>();
         }
 
 
