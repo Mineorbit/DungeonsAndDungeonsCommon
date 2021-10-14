@@ -70,6 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Connected = true;
             tcpClient = tcpC;
             receivingUdpClient = new UdpClient(port+1+lId);
+            receivingUdpClient.Connect(((IPEndPoint)tcpC.Client.RemoteEndPoint).Address,port+1+lId);
             //receivingUdpClient.AllowNatTraversal(true);
             tcpStream = tcpClient.GetStream();
             localid = lId;
@@ -242,7 +243,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if(isOnServer)
                 {
-                    // receivingUdpClient.Send(data, data.Length, remote);
+                    //receivingUdpClient.Send(data, data.Length, remote);
                     receivingUdpClient.Send(data, data.Length);
                 }
                 else
