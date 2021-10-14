@@ -9682,7 +9682,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec7965c5338dbb548b982bf9033bf5bb, type: 2}
   - {fileID: 11400000, guid: e4a9dee20181c964ab50261eca70a24e, type: 2}
   - {fileID: 11400000, guid: 5db9e6e4a036c3848820bcfef31b2c41, type: 2}
-  controller: {fileID: -4485675669329379349}
+  player: {fileID: 2633396581524973113}
 --- !u!114 &1699927312025447298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9839,6 +9839,7 @@ MonoBehaviour:
   playerName: 
   playerColor: 0
   aiming: 0
+  jumping: 0
   aimMode: 0
 --- !u!114 &-4485675669329379349
 MonoBehaviour:
