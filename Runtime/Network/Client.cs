@@ -229,8 +229,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var data = p.ToByteArray();
             sentPacketCarriers++;
-            if(debugNetwork)
-                GameConsole.Log($"Sending to {remote} {data.Length} bytes");
+            if (debugNetwork)
+            {
+                string r = TCP ? "TCP" : "UDP";
+                GameConsole.Log($"Sending to {remote} {data.Length} bytes via {r}");
+            }
             if (TCP || !NetworkManager.instance.useUDP)
             {
                 tcpStream.Write(data, 0, data.Length);
