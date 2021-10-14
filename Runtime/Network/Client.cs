@@ -346,7 +346,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
             
-            receivingUdpClient.Connect(((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address,port+1+localid);
+            //receivingUdpClient.Connect(((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address,port+1+localid);
             var w = new Welcome
             {
                 LocalId = localid
