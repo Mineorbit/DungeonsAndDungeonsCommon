@@ -70,7 +70,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Connected = true;
             tcpClient = tcpC;
             receivingUdpClient = new UdpClient(port+1+lId);
-            receivingUdpClient.Connect(((IPEndPoint)tcpC.Client.RemoteEndPoint).Address,port+1+lId);
             //receivingUdpClient.AllowNatTraversal(true);
             tcpStream = tcpClient.GetStream();
             localid = lId;
@@ -233,7 +232,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (debugNetwork)
             {
                 string r = TCP ? "TCP" : "UDP";
-                GameConsole.Log($"Sending to {remote} {data.Length} bytes via {r}");
+                GameConsole.Log($"Sending to {tcpClient.Client.RemoteEndPoint} {data.Length} bytes via {r}");
             }
             if (TCP || !NetworkManager.instance.useUDP)
             {
@@ -346,6 +345,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             
             int port = ((IPEndPoint) receivingUdpClient.Client.LocalEndPoint).Port;
+            
+            receivingUdpClient.Connect(((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address,port+1+localid);
             var w = new Welcome
             {
                 LocalId = localid
