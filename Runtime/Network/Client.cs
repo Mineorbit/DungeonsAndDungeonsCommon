@@ -245,7 +245,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if(isOnServer)
                 {
-                    receivingUdpClient.Send(data, data.Length, udpRemote);
+                    receivingUdpClient.Send(data, data.Length, remote);
                     //receivingUdpClient.Send(data, data.Length);
                 }
                 else
