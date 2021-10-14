@@ -138,8 +138,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             Marshall(0,entityCreate);
         }
-
-
+        
         public virtual void RequestRemoval()
         {
         }
@@ -189,7 +188,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             
         }
-
 
         private Vector3 receivedPosition;
         [PacketBinding.Binding]
