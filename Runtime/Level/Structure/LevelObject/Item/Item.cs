@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void OnAttach()
         {
             isEquipped = true;
-            owner = GetComponentInParent<Entity>();
+            owner = transform.parent.GetComponentInParent<Entity>();
             rigidBody.useGravity = false;
             rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;

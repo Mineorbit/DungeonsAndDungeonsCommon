@@ -73,7 +73,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SpawnEnemy()
         {
-            if (!(Level.instantiateType == Level.InstantiateType.Online))
+            if (Level.instantiateType != Level.InstantiateType.Online)
             {
                 if (spawnedEnemy == null)
                 {
