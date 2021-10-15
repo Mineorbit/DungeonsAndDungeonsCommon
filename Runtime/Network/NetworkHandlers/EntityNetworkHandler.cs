@@ -194,6 +194,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
+            // THIS IS A TEMP
+            if(owner == NetworkManager.instance.localId)
+            {
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
@@ -207,6 +210,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         entityLocomotion.AimZ, entityLocomotion.AimW);
                     });
                 }
+                
+            }
         }
 
 
