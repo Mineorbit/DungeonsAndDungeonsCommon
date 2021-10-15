@@ -290,7 +290,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void UpdateLocomotion()
         {
-            if (((NetworkLevelObject)observed).identified && (isOnServer || isOwner) && !LocomotionIsBlocked())
+            if (((NetworkLevelObject)observed).identified && (isOnServer || isOwner)  && (owner == NetworkManager.instance.localId) && !LocomotionIsBlocked())
             {
                 var pos = observed.transform.position;
                 var rot = observed.transform.rotation.eulerAngles;
