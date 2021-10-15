@@ -119,6 +119,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE
         private void FixedUpdate()
         {
+            isOwner = owner == NetworkManager.instance.localId;
             UpdateLocomotion();
         }
 
