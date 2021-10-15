@@ -195,7 +195,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void OnEntityLocomotion(Packet p)
         {
             // THIS IS A TEMP
-            if(owner == NetworkManager.instance.localId)
+            if(owner != NetworkManager.instance.localId)
             {
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
