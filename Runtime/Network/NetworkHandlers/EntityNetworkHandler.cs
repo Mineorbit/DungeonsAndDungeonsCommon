@@ -24,6 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 teleportPosition;
 
         public bool transmitPosition = true;
+        public bool interpolatePosition = true;
 
         public virtual void Awake()
         {
@@ -107,7 +108,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 targetPosition = receivedPosition;
-                if (owner != NetworkManager.instance.localId)
+                if (owner != NetworkManager.instance.localId && interpolatePosition)
                 {
                     transform.position = (transform.position + targetPosition) / 2;
                     transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
