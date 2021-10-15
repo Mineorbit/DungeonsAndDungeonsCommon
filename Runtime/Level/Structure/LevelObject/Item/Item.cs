@@ -14,6 +14,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public UnityEvent onUseEvent = new UnityEvent();
         public UnityEvent onStopUseEvent = new UnityEvent();
+        public UnityEvent onAttachEvent = new UnityEvent();
+        public UnityEvent onDettachEvent = new UnityEvent();
 
 
         public enum Side
@@ -30,6 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidBody.useGravity = false;
             rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
+            onAttachEvent.Invoke();
         }
 
         public virtual void OnDettach()
@@ -41,6 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidBody.useGravity = true;
             rigidBody.isKinematic = false;
             GetComponent<Collider>().enabled = true;
+            onDettachEvent.Invoke();
         }
 
         public override void OnInit()
