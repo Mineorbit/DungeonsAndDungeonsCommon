@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5685123741534298768}
   - component: {fileID: 6127289237547034610}
   - component: {fileID: 2367929392713539500}
-  - component: {fileID: 438114723989724579}
+  - component: {fileID: -6233154806205614055}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Item
@@ -66,6 +66,37 @@ MonoBehaviour:
   levelObjectNetworkHandler: {fileID: 0}
   _Identity: 0
   identified: 0
+  health: 0
+  alive: 0
+  items: []
+  itemHandles: []
+  baseAnimator: {fileID: 0}
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onPointsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onSpawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDespawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onTeleportEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  controller: {fileID: 0}
+  invincible: 0
+  loadTarget: {fileID: 0}
+  itemHitbox: {fileID: 0}
+  itemsInProximity: []
+  maxHealth: 100
+  hitCooldownTime: 1
+  movementOverride: 0
+  lastSpeeds: []
+  speed: 0
+  aimRotation: {x: 0, y: 0, z: 0, w: 0}
   rigidBody: {fileID: 2367929392713539500}
   useTime: 0.25
   owner: {fileID: 0}
@@ -74,6 +105,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onStopUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAttachEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDettachEvent:
     m_PersistentCalls:
       m_Calls: []
   equipSide: 1
@@ -93,7 +130,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &438114723989724579
+--- !u!114 &-6233154806205614055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,11 +139,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6116505687544139644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a84f5e5ab9057741a6f127f47b47526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   observed: {fileID: 0}
   disabled_observed: 1
+  isSetup: 0
+  isOwner: 0
+  owner: -1
+  targetPosition: {x: 0, y: 0, z: 0}
+  targetRotation: {x: 0, y: 0, z: 0}
+  teleportPosition: {x: 0, y: 0, z: 0}
+  blockExists: 0
+  blockPosition: {x: 0, y: 0, z: 0}
+  receivedPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &1180454918657549767
 PrefabInstance:
   m_ObjectHideFlags: 0
