@@ -176,8 +176,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
 				Util.Optional<int> id = new Util.Optional<int>();
 				id.Set(identity);
-                GameConsole.Log($"Spawning Entity {entityType}:{identity} on Network Request");
+                GameConsole.Log($"Spawning Entity {entityType}:{identity} at {position} on Network Request");
                 var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation, id);
+                e.GetComponent<EntityNetworkHandler>().receivedPosition = position;
+                e.GetComponent<EntityNetworkHandler>().targetPosition = position;
+                e.GetComponent<EntityNetworkHandler>().targetRotation = rotation.eulerAngles;
             });
             if (LevelManager.currentLevel != null)
             {
@@ -205,7 +208,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     receivedPosition = pos;
                     var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
                     targetRotation = rot;
-                    ((Player) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
+                    ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
                         entityLocomotion.AimZ, entityLocomotion.AimW);
                     });
                 }
