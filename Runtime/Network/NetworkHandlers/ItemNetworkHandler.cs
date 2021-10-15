@@ -9,11 +9,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Start()
         {
             base.Start();
-            transmitPosition = false;
+            transmitPosition = true;
+            interpolatePosition = true;
             GetObservedItem().onAttachEvent.AddListener(() => { owner = ((Player) GetObservedItem().owner).localId; 
-                transmitPosition = false;});
+                transmitPosition = false;
+                interpolatePosition = false;
+            });
             GetObservedItem().onDettachEvent.AddListener(() => { owner = -1; 
-                transmitPosition = true;});
+                transmitPosition = true;
+                interpolatePosition = true;});
 
         }
 
