@@ -210,12 +210,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         entityLocomotion.AimZ, entityLocomotion.AimW);
                     });
                 }
-                else
-                {
-                    receivedPosition = transform.position;
-                    targetRotation = transform.rotation.eulerAngles;
-                }
-                
+            }
+            else
+            {
+                receivedPosition = transform.position;
+                targetRotation = transform.rotation.eulerAngles;
             }
         }
 
