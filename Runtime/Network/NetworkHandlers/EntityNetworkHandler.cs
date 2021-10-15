@@ -173,9 +173,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             System.Action todo = () => MainCaller.Do(() =>
             {
-                GameConsole.Log("Level: " + LevelManager.currentLevel);
 				Util.Optional<int> id = new Util.Optional<int>();
 				id.Set(identity);
+                GameConsole.Log($"Spawning Entity {entityType}:{identity} on Network Request");
                 var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation, id);
             });
             if (LevelManager.currentLevel != null)
