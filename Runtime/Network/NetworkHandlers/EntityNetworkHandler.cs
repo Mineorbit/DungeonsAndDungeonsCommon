@@ -89,7 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         
-        private readonly float tpDist = 0.05f;
+        public readonly float tpDist = 0.075f;
         
         public virtual void Update()
         {
