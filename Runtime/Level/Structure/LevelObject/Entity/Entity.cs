@@ -211,7 +211,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (t<kickbackTime)
             {
                 t += Time.deltaTime;
-                controller.controller.Move(0.1f*kickbackSpeed*dir);
+                controller.controller.Move(0.05f*kickbackSpeed*dir);
                 yield return new WaitForEndOfFrame();
             }
         }
