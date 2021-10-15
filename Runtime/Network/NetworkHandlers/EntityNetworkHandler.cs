@@ -189,7 +189,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        private Vector3 receivedPosition;
+        public Vector3 receivedPosition;
+        
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
