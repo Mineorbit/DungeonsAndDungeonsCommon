@@ -23,6 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Vector3 teleportPosition;
 
+        public bool transmitPosition = true;
 
         public virtual void Awake()
         {
@@ -295,7 +296,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void UpdateLocomotion()
         {
-            if (((NetworkLevelObject)observed).identified && (isOnServer || isOwner)  && (owner == NetworkManager.instance.localId) && !LocomotionIsBlocked())
+            if (transmitPosition&&((NetworkLevelObject)observed).identified && (isOnServer || isOwner)  && (owner == NetworkManager.instance.localId) && !LocomotionIsBlocked())
             {
                 var pos = observed.transform.position;
                 var rot = observed.transform.rotation.eulerAngles;
