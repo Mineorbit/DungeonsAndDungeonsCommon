@@ -106,7 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 targetPosition = receivedPosition;
-                if (!isOwner)
+                if (owner != NetworkManager.instance.localId)
                 {
                     transform.position = (transform.position + targetPosition) / 2;
                     transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
@@ -195,8 +195,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void OnEntityLocomotion(Packet p)
         {
             // THIS IS A TEMP
-            if(owner != NetworkManager.instance.localId)
-            {
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
@@ -210,12 +208,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         entityLocomotion.AimZ, entityLocomotion.AimW);
                     });
                 }
-            }
-            else
-            {
-                receivedPosition = transform.position;
-                targetRotation = transform.rotation.eulerAngles;
-            }
         }
 
 
