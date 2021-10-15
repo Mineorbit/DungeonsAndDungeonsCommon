@@ -10,8 +10,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Start();
             transmitPosition = false;
-            GetObservedItem().onAttachEvent.AddListener(() => { owner = ((Player) GetObservedItem().owner).localId;});
-            GetObservedItem().onDettachEvent.AddListener(() => { owner = -1;});
+            GetObservedItem().onAttachEvent.AddListener(() => { owner = ((Player) GetObservedItem().owner).localId; 
+                transmitPosition = false;});
+            GetObservedItem().onDettachEvent.AddListener(() => { owner = -1; 
+                transmitPosition = true;});
 
         }
 
