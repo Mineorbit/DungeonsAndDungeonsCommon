@@ -9,6 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Start()
         {
             base.Start();
+            transmitPosition = false;
             GetObservedItem().onAttachEvent.AddListener(() => { owner = ((Player) GetObservedItem().owner).localId;});
             GetObservedItem().onDettachEvent.AddListener(() => { owner = -1;});
 
