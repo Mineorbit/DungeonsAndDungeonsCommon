@@ -8,12 +8,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             //transform.localEulerAngles = new Vector3(0, 180, 0);
         }
+        
+        Vector3 holdOffset = new Vector3(0.002f, 0, 0);
+        private Vector3 backOffset = new Vector3(-0.005f, 0, 0);
+        Vector3 holdAngles = new Vector3(0, 180, 0);
+        private Vector3 backAngles = new Vector3(-90,0,0);
 
         public override void OnAttach()
         {
             base.OnAttach();
-            transform.localPosition = new Vector3(0.002f, 0, 0);
-            transform.localEulerAngles = new Vector3(0, 180, 0);
+            SetAttachmentPosition();
+        }
+        public override void SetAttachmentPosition()
+        {
+            transform.localPosition = itemHandle.Back ? backOffset : holdOffset;
+            transform.localEulerAngles = itemHandle.Back ? backAngles : holdAngles;
         }
         
         // EFFECT NOT YET MIRRORED
