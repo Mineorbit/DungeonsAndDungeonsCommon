@@ -261,34 +261,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public ItemHandle GetLeftHandHandle()
         {
-            foreach (var i in itemHandles)
-                if (i.handleType == ItemHandle.HandleType.LeftHand)
-                    return i;
-            return null;
+            return itemHandles[0];
         }
 
         public ItemHandle GetRightHandHandle()
         {
-            foreach (var i in itemHandles)
-                if (i.handleType == ItemHandle.HandleType.RightHand)
-                    return i;
-            return null;
+            return itemHandles[1];
         }
         
         public ItemHandle GetLeftBackHandle()
         {
-            foreach (var i in itemHandles.Reverse())
-                if (i.handleType == ItemHandle.HandleType.LeftHand)
-                    return i;
-            return null;
+            return itemHandles[2];
         }
 
         public ItemHandle GetRightBackHandle()
         {
-            foreach (var i in itemHandles.Reverse())
-                if (i.handleType == ItemHandle.HandleType.RightHand)
-                    return i;
-            return null;
+            return itemHandles[3];
         }
 
 
