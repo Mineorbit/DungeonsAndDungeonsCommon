@@ -83,6 +83,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public bool Empty()
+        {
+            return slot = null;
+        }
+        
         public void StopUse()
         {
             if (slot != null)

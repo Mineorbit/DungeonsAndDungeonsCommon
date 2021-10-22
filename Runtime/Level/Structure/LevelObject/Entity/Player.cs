@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -41,6 +42,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string playerName;
         public Color playerColor;
 
+        
+        public bool aimMode = false;
 
         public bool aiming;
 
@@ -90,8 +93,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         
-        
-        public bool aimMode = false;
         public void MoveFixed()
         {
             
@@ -165,25 +166,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void DettachLeftItem()
-        {
-            GetLeftHandle().Dettach();
-        }
-
-        public void DettachRightItem()
-        {
-            GetRightHandle().Dettach();
-        }
-
-        public void AttachLeftItem(Item item)
-        {
-            GetLeftHandle().Attach(item);
-        }
-
-        public void AttachRightItem(Item item)
-        {
-            GetRightHandle().Attach(item);
-        }
 
         public void FixedUpdate()
         {
@@ -204,12 +186,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (toAttach.equipSide == Item.Side.Left)
                 {
-                    Invoke(DettachLeftItem);
                     Invoke(AttachLeftItem, toAttach);
                 }else
                 if (toAttach.equipSide == Item.Side.Right)
                 {
-                    Invoke(DettachRightItem);
                     Invoke(AttachRightItem, toAttach);
                 }
                 else
@@ -219,13 +199,67 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Invoke(DettachLeftItem);
-                Invoke(DettachRightItem);
+                Invoke(DettachLeftHandItem);
+                Invoke(DettachRightHandItem);
+                Invoke(DettachLeftBackItem);
+                Invoke(DettachRightBackItem);
             }
         }
 
+        public void DettachLeftHandItem()
+        {
+            GetLeftHandHandle().Dettach();
+        }
 
-        public ItemHandle GetLeftHandle()
+        public void DettachRightHandItem()
+        {
+            GetRightHandHandle().Dettach();
+        }
+        public void DettachLeftBackItem()
+        {
+            GetLeftBackHandle().Dettach();
+        }
+
+        public void DettachRightBackItem()
+        {
+            GetRightBackHandle().Dettach();
+        }
+
+        public void AttachLeftItem(Item item)
+        {
+            if(GetLeftHandHandle().Empty())
+            {
+                GetLeftHandHandle().Attach(item);
+            }
+            else if(GetLeftBackHandle().Empty())
+            {
+                GetLeftBackHandle().Attach(item);
+            }
+            else
+            {
+                GetLeftBackHandle().Dettach();
+                GetLeftBackHandle().Attach(item);
+            }
+        }
+
+        public void AttachRightItem(Item item)
+        {
+            if(GetRightHandHandle().Empty())
+            {
+                GetRightHandHandle().Attach(item);
+            }
+            else if(GetRightBackHandle().Empty())
+            {
+                GetRightBackHandle().Attach(item);
+            }
+            else
+            {
+                GetRightBackHandle().Dettach();
+                GetRightBackHandle().Attach(item);
+            }
+        }
+
+        public ItemHandle GetLeftHandHandle()
         {
             foreach (var i in itemHandles)
                 if (i.handleType == ItemHandle.HandleType.LeftHand)
@@ -233,9 +267,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return null;
         }
 
-        public ItemHandle GetRightHandle()
+        public ItemHandle GetRightHandHandle()
         {
             foreach (var i in itemHandles)
+                if (i.handleType == ItemHandle.HandleType.RightHand)
+                    return i;
+            return null;
+        }
+        
+        public ItemHandle GetLeftBackHandle()
+        {
+            foreach (var i in itemHandles.Reverse())
+                if (i.handleType == ItemHandle.HandleType.LeftHand)
+                    return i;
+            return null;
+        }
+
+        public ItemHandle GetRightBackHandle()
+        {
+            foreach (var i in itemHandles.Reverse())
                 if (i.handleType == ItemHandle.HandleType.RightHand)
                     return i;
             return null;
