@@ -28,7 +28,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        Vector3 holdOffset = new Vector3(0, 0.00181f, 0);
+        //Vector3 holdOffset = new Vector3(0, 0.00181f, 0);
+        private Vector3 holdOffset = new Vector3(0, 0, 0);
         Vector3 holdRotation = new Vector3(0, -75, 90f);
         Vector3 hitboxRotation = new Vector3(0, 135, 90);
         public void OnDestroy()
