@@ -9898,8 +9898,8 @@ MonoBehaviour:
   itemHandles:
   - {fileID: 1699927312025447298}
   - {fileID: 8314455628288435980}
-  - {fileID: 1699927312025447298}
-  - {fileID: 8314455628288435980}
+  - {fileID: 3208842586953591850}
+  - {fileID: 1695626577721149575}
   baseAnimator: {fileID: 700370800949042406}
   onHitEvent:
     m_PersistentCalls:
