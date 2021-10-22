@@ -42,6 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnAttach()
         {
             base.OnAttach();
+            transform.localEulerAngles = holdRotation;
             SetAttachmentPosition();
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
             hitBox.Attach(owner.transform.Find("Model").gameObject, "Entity", new Vector3(0, 0, -2));
@@ -53,14 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void SetAttachmentPosition()
         {
-            if (back)
-            {
-                transform.localPosition = holdOffset;
-            }
-            else
-            {
-                transform.localPosition = backOffset;
-            }
+                transform.localPosition = Handle.back ? backOffset : holdOffset;
         }
     
         public override void Use()

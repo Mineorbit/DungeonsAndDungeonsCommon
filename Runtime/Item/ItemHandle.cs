@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             item.transform.parent = transform;
             slot = item;
             if (!player.items.Contains(item)) player.items.Add(item);
-            slot.back = Back;
+            item.itemHandle = this;
             slot.OnAttach();
         }
 
@@ -47,6 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     new Quaternion(0, 0, 0, 0));
                 player.items.Remove(slot);
                 slot.OnDettach();
+                slot.itemHandle = null;
                 slot = null;
             }
         }
