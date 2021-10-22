@@ -130,7 +130,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if ((!lastGrounded && isGrounded) || !GetController().activated)
                 {
                     GetController().speedY = 0;
-                    jumping = true;
+                    jumping = false;
                     //Debug.Break();
                 }
                 
