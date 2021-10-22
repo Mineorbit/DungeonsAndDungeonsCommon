@@ -158,8 +158,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     // INTERACT WITH ENVIRONMENT (READ TEXT, PRESS BUTTON etc)
                 }
 
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    player.Invoke(player.SwapLeft,true);
+                }
                 
-                
+                if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    player.Invoke(player.SwapRight,true);
+                }
                 
                 if (Input.GetMouseButtonUp(0)) player.Invoke(player.StopUseLeft, true);
                 else
