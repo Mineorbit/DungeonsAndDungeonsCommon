@@ -337,19 +337,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseLeft()
         {
-            var h = GetLeftHandle();
+            var h = GetLeftHandHandle();
             if (h != null) UseHandle(h);
         }
 
         public void UseRight()
         {
-            var h = GetRightHandle();
+            var h = GetRightHandHandle();
             if (h != null) UseHandle(h);
         }
 
         public void StopUseLeft()
         {
-            var h = GetLeftHandle();
+            var h = GetLeftHandHandle();
             if (h != null)
             {
                 StopUseHandle(h);
@@ -358,7 +358,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void StopUseRight()
         {
-            var h = GetRightHandle();
+            var h = GetRightHandHandle();
             if (h != null)
             {
                 StopUseHandle(h);

@@ -89,25 +89,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (leftSide == 0)
             {
-                oldAngles = ((Player) me).GetLeftHandle().slot.transform.localEulerAngles;
+                oldAngles = ((Player) me).GetLeftHandHandle().slot.transform.localEulerAngles;
 
-                ((Player) me).GetLeftHandle().slot.transform.localEulerAngles = new Vector3(0, 0, 0);
+                ((Player) me).GetLeftHandHandle().slot.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
             else
             {
-                oldAngles = ((Player) me).GetRightHandle().transform.localEulerAngles;
+                oldAngles = ((Player) me).GetRightHandHandle().transform.localEulerAngles;
 
 
-                ((Player) me).GetRightHandle().slot.transform.localEulerAngles = new Vector3(0, 0, 0);
+                ((Player) me).GetRightHandHandle().slot.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
         }
 
         public void ChangeItemSettingBack(int leftSide)
         {
             if (leftSide == 0)
-                ((Player) me).GetLeftHandle().slot.transform.localEulerAngles = oldAngles;
+                ((Player) me).GetLeftHandHandle().slot.transform.localEulerAngles = oldAngles;
             else
-                ((Player) me).GetRightHandle().slot.transform.localEulerAngles = oldAngles;
+                ((Player) me).GetRightHandHandle().slot.transform.localEulerAngles = oldAngles;
         }
     }
 }
