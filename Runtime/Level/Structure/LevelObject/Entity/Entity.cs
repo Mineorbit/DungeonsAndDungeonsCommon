@@ -13,6 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool alive;
 
         public List<Item> items = new List<Item>();
+        
         public ItemHandle[] itemHandles;
 
         public EntityBaseAnimator baseAnimator;
@@ -106,8 +107,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void SetupItems()
         {
-            // Temporary
-            itemHandles = gameObject.GetComponentsInChildren<ItemHandle>();
 
 
             if (itemHitbox != null)
