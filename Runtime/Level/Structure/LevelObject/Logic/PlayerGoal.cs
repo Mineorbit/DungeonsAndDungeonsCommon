@@ -10,6 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool[] playersInside;
         public Hitbox hitbox;
 
+        public Collider collider;
         // Update is called once per frame
         private void Update()
         {
@@ -20,8 +21,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var full_collider = Level.instantiateType == Level.InstantiateType.Play ||
                                 Level.instantiateType == Level.InstantiateType.Test ||
                                 Level.instantiateType == Level.InstantiateType.Online;
-            GetComponent<Collider>().enabled = !full_collider;
-            GetComponent<Collider>().isTrigger = full_collider;
+            collider.enabled = !full_collider;
+            collider.isTrigger = full_collider;
+        }
+        
+        
+        public override void OnStartRound()
+        {
+            SetCollider();
+        }
+
+        public override void OnEndRound()
+        {
+            SetCollider();
         }
         
         // Start is called before the first frame update

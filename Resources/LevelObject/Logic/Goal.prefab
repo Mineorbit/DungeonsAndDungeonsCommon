@@ -102,6 +102,7 @@ MonoBehaviour:
   ActivateWhenInactive: 0
   playersInside: 
   hitbox: {fileID: 0}
+  collider: {fileID: 9193898230414839886}
 --- !u!65 &9193898230414839886
 BoxCollider:
   m_ObjectHideFlags: 0
