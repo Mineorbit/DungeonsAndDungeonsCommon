@@ -259,6 +259,34 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        
+
+        public void SwapLeft()
+        {
+            if (!GetLeftHandHandle().Empty() && !GetLeftBackHandle().Empty())
+            {
+                Item a = GetLeftBackHandle().slot;
+                Item b = GetLeftHandHandle().slot;
+                GetLeftBackHandle().Dettach();
+                GetLeftHandHandle().Dettach();
+                GetLeftHandHandle().Attach(a);
+                GetLeftBackHandle().Attach(b);
+            }
+        }
+
+        public void SwapRight()
+        {
+            if (!GetRightHandHandle().Empty() && !GetRightBackHandle().Empty())
+            {
+                Item a = GetRightBackHandle().slot;
+                Item b = GetRightHandHandle().slot;
+                GetRightBackHandle().Dettach();
+                GetRightHandHandle().Dettach();
+                GetRightHandHandle().Attach(a);
+                GetRightBackHandle().Attach(b);
+            }
+        }
+        
         public ItemHandle GetLeftHandHandle()
         {
             return itemHandles[0];
@@ -285,6 +313,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return alive;
         }
 
+        
         public void changeColor(int id)
         {
             switch (id)
