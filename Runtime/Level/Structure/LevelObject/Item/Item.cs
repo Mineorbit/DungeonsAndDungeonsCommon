@@ -17,7 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent onAttachEvent = new UnityEvent();
         public UnityEvent onDettachEvent = new UnityEvent();
 
-        public bool back = false;
+        public ItemHandle itemHandle;
         
         public enum Side
         {
