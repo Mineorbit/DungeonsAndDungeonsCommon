@@ -28,8 +28,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        //Vector3 holdOffset = new Vector3(0, 0.00181f, 0);
-        private Vector3 holdOffset = new Vector3(0, 0, 0);
+        Vector3 holdOffset = new Vector3(0, 0.00181f, 0);
+        Vector3 backOffset = new Vector3(0.02f, 0.00181f, 0);
+        //private Vector3 holdOffset = new Vector3(0, 0, 0);
         Vector3 holdRotation = new Vector3(0, -75, 90f);
         Vector3 hitboxRotation = new Vector3(0, 135, 90);
         public void OnDestroy()
@@ -41,8 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnAttach()
         {
             base.OnAttach();
-            transform.localPosition = holdOffset;
-            transform.localEulerAngles = holdRotation;
+            SetAttachmentPosition();
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
             hitBox.Attach(owner.transform.Find("Model").gameObject, "Entity", new Vector3(0, 0, -2));
             hitBox.transform.localEulerAngles = hitboxRotation;
@@ -51,6 +51,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitBox.Deactivate();
         }
 
+        public override void SetAttachmentPosition()
+        {
+            if (back)
+            {
+                transform.localPosition = holdOffset;
+            }
+            else
+            {
+                transform.localPosition = backOffset;
+            }
+        }
+    
         public override void Use()
         {
             if (!block)

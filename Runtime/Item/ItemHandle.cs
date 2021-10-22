@@ -11,12 +11,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RightHand
         }
 
+        public bool Back = false;
+        
         public Item slot;
         public HandleType handleType;
         
         private PlayerController p;
         private Entity player;
 
+        
         private void Start()
         {
             p = GetComponentInParent<PlayerController>();
@@ -31,6 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             item.transform.parent = transform;
             slot = item;
             if (!player.items.Contains(item)) player.items.Add(item);
+            slot.back = Back;
             slot.OnAttach();
         }
 
