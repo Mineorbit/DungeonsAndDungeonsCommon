@@ -17,12 +17,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent onAttachEvent = new UnityEvent();
         public UnityEvent onDettachEvent = new UnityEvent();
 
-
+        public bool back = false;
+        
         public enum Side
         {
             Left,
             Right
         }
+        
 
         public Side equipSide;
         public virtual void OnAttach()
@@ -33,6 +35,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
             onAttachEvent.Invoke();
+        }
+
+        public virtual void SetAttachmentPosition()
+        {
+            
         }
 
         public virtual void OnDettach()
