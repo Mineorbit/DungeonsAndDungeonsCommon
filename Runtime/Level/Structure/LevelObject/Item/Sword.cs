@@ -54,7 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void SetAttachmentPosition()
         {
-                transform.localPosition = Handle.back ? backOffset : holdOffset;
+                transform.localPosition = itemHandle.Back ? backOffset : holdOffset;
         }
     
         public override void Use()
