@@ -145,6 +145,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 NetworkManager.startRoundEvent.Invoke();
                 PlayerManager.acceptInput = true;
+                PlayerManager.SetPlayerActive(NetworkManager.instance.localId,true);
             });
         }
 

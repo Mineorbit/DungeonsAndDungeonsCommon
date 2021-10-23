@@ -125,6 +125,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GetController().movingDirection = GetController().targetDirection;
                 else
                     GetController().movingDirection = new Vector3(0, 0, 0);
+                
+                
+                
                 GetController().controller.Move(GetController().targetDirection * GetController().Speed * Time.deltaTime);
 
                 if ((!lastGrounded && isGrounded) || !GetController().activated)
