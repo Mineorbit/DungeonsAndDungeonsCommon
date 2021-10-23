@@ -42,6 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(currentArrow!=null)
             {
+                GameConsole.Log($"Shooting towards {aimRotation.eulerAngles}");
                 currentArrow.Shoot(aimRotation);
                 currentArrow = null;
             }
