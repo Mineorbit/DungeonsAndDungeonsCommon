@@ -75,7 +75,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Drop()
         {
-            Despawn();
+            LevelManager.currentLevel.RemoveDynamic(this, true);
         }
         
         
