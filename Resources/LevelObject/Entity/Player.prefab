@@ -9962,7 +9962,7 @@ MonoBehaviour:
   movingDirection: {x: 0, y: 0, z: 0}
   speedY: 0
   locallyControllable: 0
-  activated: 1
+  activated: 0
   takeInput: 1
   doInput: 0
   isMe: 0
