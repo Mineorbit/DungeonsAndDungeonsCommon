@@ -16,10 +16,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 targetRotation;
 
 
-        private Vector3 lastSentPosition;
-        private Quaternion lastSentRotation;
+        public Vector3 lastSentPosition;
+        public Quaternion lastSentRotation;
 
-        private readonly float sendDistance = 0.05f;
+        public readonly float sendDistance = 0.05f;
 
         public Vector3 teleportPosition;
 
@@ -305,16 +305,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return (isOnServer || owner == NetworkManager.instance.localId);
         }
+
+        public float sendAngle = 0.05f;
+        
+        public virtual bool SendNecessary()
+        {
+            var pos = observed.transform.position;
+            var rot = observed.transform.rotation;
+            var sendDist = (pos - lastSentPosition).magnitude;
+            var sendRotAngle = Quaternion.Angle(rot, lastSentRotation);
+            return sendDist > sendDistance || sendRotAngle > sendAngle;
+        }
+
+        public Quaternion lastSentAimRotation;
         
         private void UpdateLocomotion()
         {
             if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && !LocomotionIsBlocked())
             {
                 var pos = observed.transform.position;
+                var r = observed.transform.rotation;
                 var rot = observed.transform.rotation.eulerAngles;
                 var aim = ((Entity) observed).aimRotation;
-                var sendDist = (pos - lastSentPosition).magnitude;
-                if (sendDist > sendDistance)
+                if (SendNecessary())
                 {
                     var entityLocomotion = new EntityLocomotion
                     {
@@ -337,6 +350,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         Marshall(((NetworkLevelObject)observed).Identity,entityLocomotion, owner,toOrWithout: false, TCP: false);
                     }
                     lastSentPosition = pos;
+                    lastSentRotation = r;
+                    lastSentAimRotation = aim;
                 }
             }
         }
