@@ -35,7 +35,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
             ((Player)owner).aiming = false;
             owner.Invoke(owner.setMovementStatus, true);
-            Invoke<UnityEngine.Quaternion>(Shoot,owner.GetAimRotation(),false,true);
+            
+            GameConsole.Log($"Shooting towards {owner.GetAimRotation().eulerAngles} call");
+            Invoke(Shoot,owner.GetAimRotation(),false,true);
         }
 
         public void Shoot(Quaternion aimRotation)
