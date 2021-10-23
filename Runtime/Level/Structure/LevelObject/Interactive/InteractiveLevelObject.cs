@@ -93,7 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Resetting "+this);
             base.OnEndRound();
-            Invoke(HandleReset, allowLocal:true);
+            Invoke(HandleReset, doLocal:true, doServer: false);
         }
         
         // Will try to find receiver at that location, if not found, will drop that receiver

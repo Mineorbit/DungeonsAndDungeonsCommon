@@ -99,14 +99,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
         }
         //This marks a message for transport through network
-
+		// It will allways be called when the level is  in test mode (see  edit mode -> edit mode)
+		// but in real multiplayer only depending on the conditionals
         public bool CallOnThisSide(bool doLocal, bool doServer)
         {
-	        return doLocal && (Level.instantiateType == Level.InstantiateType.Online ||
-	                           Level.instantiateType == Level.InstantiateType.Test)
-		        || doServer && Level.instantiateType == Level.InstantiateType.Play;
+	        return Level.instantiateType == Level.InstantiateType.Test ||
+	               doLocal && (Level.instantiateType == Level.InstantiateType.Online)
+	               || doServer && Level.instantiateType == Level.InstantiateType.Play;
         }
-        public void Invoke<T>(Action<T> a, T argument, bool doLocal = false, bool doServer = true)
+        public void Invoke<T>(Action<T> a, T argument, bool doLocal = true, bool doServer = true)
         {
 	        if (CallOnThisSide(doLocal,doServer))
 	        {
@@ -124,7 +125,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        }
         }
 
-        public void Invoke(Action a, bool doLocal = false, bool doServer = true)
+        public void Invoke(Action a, bool doLocal = true, bool doServer = true)
         {
 	        if (CallOnThisSide(doLocal,doServer))
 	        {
