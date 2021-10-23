@@ -91,12 +91,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return (PlayerController) controller;
         }
-        
+
+        public bool ApplyMovement = true;
         
         public void MoveFixed()
         {
             
-            if (!isGrounded && GetController().activated)
+            if (!isGrounded)
             {
                 if(GetController().inClimbing)
                 {
@@ -109,7 +110,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             
             
-            if (GetController().activated)
+            if (ApplyMovement)
             {
                 
                 
@@ -130,7 +131,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 GetController().controller.Move(GetController().targetDirection * GetController().Speed * Time.deltaTime);
 
-                if ((!lastGrounded && isGrounded) || !GetController().activated)
+                if ((!lastGrounded && isGrounded))
                 {
                     GetController().speedY = 0;
                     jumping = false;

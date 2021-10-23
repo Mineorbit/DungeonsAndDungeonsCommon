@@ -32,10 +32,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     owner = GetObservedPlayer().localId;
                     GetObservedPlayer().controller.enabled = !isOnServer && isOwner;
                     if (isOnServer)
+                    {
                         GetComponent<CharacterController>().enabled = false;
-            
+                    }
+                    GetObservedPlayer().ApplyMovement = isOwner;
+                    
                     isSetup = true;
-            
                 }
         }
 
