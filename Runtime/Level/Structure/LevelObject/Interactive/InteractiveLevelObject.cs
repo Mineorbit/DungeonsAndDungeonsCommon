@@ -111,10 +111,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 	{
                         var r = (InteractiveLevelObject) receiver;
                         AddReceiverDynamic(receiverIdentity, r);
-                        }else
-                        {
+                    }else
+                    {
                         receiversToAdd.Enqueue(receiverIdentity);
-                        }
+                    }
             }
         }
 

@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 onConnectAction = onConnect;
                 userName = playerName;
                 client = Client.Connect(IPAddress.Parse(ip), 13565);
-                GameConsole.Log("Set new client "+client);
+                GameConsole.Log($"Set new client {client}");
                 client.onConnectEvent.AddListener(OnConnected);
                 client.onConnectEvent.AddListener((x) => { NetworkManager.networkHandlers = new List<NetworkHandler>();});
             }
@@ -106,10 +106,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void SetNetworkHandlers(bool v)
         {
             foreach (var h in networkHandlers) 
-                {
-                    if(h!=null)
-                        h.enabled = v;
-                }
+            {
+                if(h!=null)
+                    h.enabled = v;
+            }
         }
 
         public void Disconnect(bool respond = true)
