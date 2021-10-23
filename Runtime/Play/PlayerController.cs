@@ -172,11 +172,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                 if (Input.GetMouseButtonUp(1)) player.Invoke(player.StopUseRight, true);
                 else 
-                if (Input.GetMouseButton(1))
+                if (Input.GetMouseButtonDown(1))
                     //INVOKE
                     player.Invoke(player.UseRight, true);
                 else
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButtonDown(0))
                     //INVOKE
                     player.Invoke(player.UseLeft, true);
 
