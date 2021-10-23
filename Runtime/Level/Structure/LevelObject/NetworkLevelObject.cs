@@ -98,37 +98,48 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //if(levelObjectNetworkHandler == null) 
             //levelObjectNetworkHandler = gameObject.AddComponent<LevelObjectNetworkHandler>();
         }
-
         //This marks a message for transport through network
-        public void Invoke<T>(Action<T> a, T argument, bool doLocal = false, bool allowLocal = true)
+
+        public bool CallOnThisSide(bool doLocal, bool doServer)
         {
-	        if (allowLocal && (doLocal || Level.instantiateType == Level.InstantiateType.Play ||
-	                           Level.instantiateType == Level.InstantiateType.Test))
+	        return doLocal && (Level.instantiateType == Level.InstantiateType.Online ||
+	                           Level.instantiateType == Level.InstantiateType.Test)
+		        || doServer && Level.instantiateType == Level.InstantiateType.Play;
+        }
+        public void Invoke<T>(Action<T> a, T argument, bool doLocal = false, bool doServer = true)
+        {
+	        if (CallOnThisSide(doLocal,doServer))
 	        {
 		        GameConsole.Log($"Calling {a.Method.Name} locally");
 		        a.DynamicInvoke(argument);
 	        }
-            if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
-                if (identified)
-                    levelObjectNetworkHandler.SendAction(a.Method.Name,
+	        if(levelObjectNetworkHandler.CallActionOnOther(doLocal,doServer))
+	        {
+				if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
+					if (identified)
+						levelObjectNetworkHandler.SendAction(a.Method.Name,
                         LevelObjectNetworkHandler.ActionParam.From(argument));
-                else
-                    todo.Enqueue(() => { Invoke(a, argument); });
+					else
+						todo.Enqueue(() => { Invoke(a, argument); });
+	        }
         }
 
-        public void Invoke(Action a, bool doLocal = false, bool allowLocal = true)
+        public void Invoke(Action a, bool doLocal = false, bool doServer = true)
         {
-	        if (allowLocal && (doLocal || Level.instantiateType == Level.InstantiateType.Play ||
-	                           Level.instantiateType == Level.InstantiateType.Test))
+	        if (CallOnThisSide(doLocal,doServer))
 	        {
 		        GameConsole.Log($"Calling {a.Method.Name} locally");
 		        a.DynamicInvoke();
 	        }
-            if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
-                if (identified)
-                    levelObjectNetworkHandler.SendAction(a.Method.Name);
-                else
-                    todo.Enqueue(() => { Invoke(a); });
+
+	        if (levelObjectNetworkHandler.CallActionOnOther(doLocal, doServer))
+	        {
+		        if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
+			        if (identified)
+				        levelObjectNetworkHandler.SendAction(a.Method.Name);
+			        else
+				        todo.Enqueue(() => { Invoke(a); });
+	        }
         }
         /*
 
