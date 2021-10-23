@@ -115,18 +115,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void SetPlayerActive(int id, bool a)
+        public static void SetPlayerActive(int id, bool a)
         {
-            if (playerControllers[id] != null)
+            if (playerManager.playerControllers[id] != null)
             {
-                playerControllers[id].activated = a;
+                playerManager.playerControllers[id].activated = a;
             }
         }
         
 
         public static void ActivateAllPlayers()
         {
-            for(int i = 0;i<4;i++) playerManager.SetPlayerActive(i,true);
+            for(int i = 0;i<4;i++) PlayerManager.SetPlayerActive(i,true);
         }
         
         public static void DeactivateAllPlayers()
@@ -134,7 +134,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(playerManager != null)
                 for (int i = 0; i < 4; i++)
                 {
-                    playerManager.SetPlayerActive(i,false);
+                    PlayerManager.SetPlayerActive(i,false);
                 }
         }
         
@@ -164,9 +164,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var p = player.GetComponent<Player>();
                 if(p != null)
                 {
-                for (var i = 0; i < 4; i++)
-                    if (p == playerManager.players[i])
-                        return i;
+                    for (var i = 0; i < 4; i++)
+                        if (p == playerManager.players[i])
+                            return i;
                 }
             }
 

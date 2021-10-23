@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public bool locallyControllable;
-        public bool activated = true;
+        public bool activated = false;
         public bool takeInput = true;
         public bool doInput;
         public bool isMe;
