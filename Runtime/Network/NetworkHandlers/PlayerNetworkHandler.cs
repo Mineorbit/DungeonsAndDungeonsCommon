@@ -41,6 +41,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
         }
 
+        public override bool SendNecessary()
+        {
+            var pos = observed.transform.position;
+            var rot = observed.transform.rotation;
+            var aim = ((Entity) observed).aimRotation;
+            var sendDist = (pos - lastSentPosition).magnitude;
+            var sendRotAngle = Quaternion.Angle(rot, lastSentRotation);
+            var sendAimRotAngle = Quaternion.Angle(aim, lastSentAimRotation);
+            return sendDist > sendDistance || sendRotAngle > sendAngle || sendAimRotAngle > sendAngle;
+        }
 
         public override void OnDestroy()
         {
