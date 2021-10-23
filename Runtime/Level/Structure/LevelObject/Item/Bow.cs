@@ -21,7 +21,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((Player)owner).aiming = true;
             owner.Invoke(owner.setMovementStatus, false);
             Invoke(CreateArrow,false,true);
-            //CreateArrow();
         }
 
         void ResetHolding()
