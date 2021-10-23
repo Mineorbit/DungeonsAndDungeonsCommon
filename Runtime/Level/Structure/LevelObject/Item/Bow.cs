@@ -40,8 +40,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Shoot(Quaternion aimRotation)
         {
-            currentArrow.Shoot(aimRotation);
-            currentArrow = null;
+            if(currentArrow!=null)
+            {
+                currentArrow.Shoot(aimRotation);
+                currentArrow = null;
+            }
         }
 
         public Arrow currentArrow;
@@ -51,6 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(currentArrow == null)
             {
+                GameConsole.Log("Creating Arrow");
                 GameObject arrowObject = LevelManager.currentLevel.AddDynamic(arrow,transform.position, Quaternion.LookRotation(Vector3.forward), new Util.Optional<int>());
                 currentArrow = arrowObject.GetComponent<Arrow>();
                 currentArrow.shootingBow = this;
