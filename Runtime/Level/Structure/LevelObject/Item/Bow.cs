@@ -20,8 +20,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((PlayerBaseAnimator)owner.baseAnimator).StartAim();
             ((Player)owner).aiming = true;
             owner.Invoke(owner.setMovementStatus, false);
-            //Invoke(CreateArrow,true);
-            CreateArrow();
+            Invoke(CreateArrow,false);
+            //CreateArrow();
         }
 
         void ResetHolding()
