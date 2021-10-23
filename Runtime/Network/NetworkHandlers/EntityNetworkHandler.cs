@@ -2,6 +2,7 @@ using System.Threading;
 using Game;
 using General;
 using UnityEngine;
+using Google.Protobuf.WellKnownTypes;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -57,6 +58,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     UpdateState();
                 }
             });
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (Level.instantiateType == Level.InstantiateType.Play)
+                RequestRemoval();
         }
 
         void ResolveLocomotionBlock()
@@ -150,8 +158,37 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void RequestRemoval()
         {
+            Packet p = GenerateRemovalRequest();
+            Server.instance.WriteAll(p);
         }
 
+        public Packet GenerateRemovalRequest()
+        {
+            var entityRemove = new EntityRemove
+            {
+                Identity = GetObservedEntity().Identity
+            };
+
+            var packet = new Packet
+            {
+                Type = typeof(PlayerRemove).FullName,
+                Handler = typeof(PlayerNetworkHandler).FullName,
+                Content = Any.Pack(entityRemove),
+                Identity = GetObservedEntity().Identity
+            };
+            return packet;
+        }
+        
+        [PacketBinding.Binding]
+        public void OnEntityRemove(Packet value)
+        {
+            EntityRemove entityRemove;
+            if (value.Content.TryUnpack(out entityRemove))
+            {
+                MainCaller.Do(() => { LevelManager.currentLevel.RemoveDynamic(GetObservedEntity()); });
+            }
+        }
+        
         [PacketBinding.Binding]
         public static void HandleCreatePacket(Packet value)
         {
