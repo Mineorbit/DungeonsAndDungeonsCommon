@@ -73,10 +73,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		NetworkLevelObject networkLevelObject;
 		if(identifiedLevelObjects.TryGetValue(id, out networkLevelObject))
 		{
-		return networkLevelObject;
+			return networkLevelObject;
 		}
 		else
-		return null;
+			return null;
 	}
 	
         public virtual void FixedUpdate()
@@ -100,10 +100,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         //This marks a message for transport through network
-        public void Invoke<T>(Action<T> a, T argument, bool allowLocal = false)
+        public void Invoke<T>(Action<T> a, T argument, bool doLocal = false, bool allowLocal = true)
         {
-            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play ||
-                Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke(argument);
+	        if (allowLocal && (doLocal || Level.instantiateType == Level.InstantiateType.Play ||
+	                           Level.instantiateType == Level.InstantiateType.Test))
+	        {
+		        a.DynamicInvoke(argument);
+	        }
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
                 if (identified)
                     levelObjectNetworkHandler.SendAction(a.Method.Name,
@@ -112,10 +115,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     todo.Enqueue(() => { Invoke(a, argument); });
         }
 
-        public void Invoke(Action a, bool allowLocal = false)
+        public void Invoke(Action a, bool doLocal = false, bool allowLocal = true)
         {
-            if (allowLocal || Level.instantiateType == Level.InstantiateType.Play ||
-                Level.instantiateType == Level.InstantiateType.Test) a.DynamicInvoke();
+	        if (allowLocal && (doLocal || Level.instantiateType == Level.InstantiateType.Play ||
+	                           Level.instantiateType == Level.InstantiateType.Test))
+	        {
+		        a.DynamicInvoke();
+	        }
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
                 if (identified)
                     levelObjectNetworkHandler.SendAction(a.Method.Name);
