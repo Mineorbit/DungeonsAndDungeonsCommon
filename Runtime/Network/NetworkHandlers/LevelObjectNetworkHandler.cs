@@ -36,7 +36,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool CallActionOnOther(bool localCond, bool serverCond)
         {
-            return (!isOnServer || serverCond) && (isOnServer || localCond);
+            if (NetworkManager.instance.localId == -1)
+            {
+                return localCond;
+            }
+            else
+            {
+                return serverCond;
+            }
+            
         }
         
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
