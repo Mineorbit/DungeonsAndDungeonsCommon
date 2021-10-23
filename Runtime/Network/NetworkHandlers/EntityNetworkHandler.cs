@@ -301,9 +301,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public virtual bool WantsToTransmit()
+        {
+            return (isOnServer || owner == NetworkManager.instance.localId);
+        }
+        
         private void UpdateLocomotion()
         {
-            if (transmitPosition&&((NetworkLevelObject)observed).identified && (isOnServer || isOwner)  && (owner == NetworkManager.instance.localId) && !LocomotionIsBlocked())
+            if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && !LocomotionIsBlocked())
             {
                 var pos = observed.transform.position;
                 var rot = observed.transform.rotation.eulerAngles;

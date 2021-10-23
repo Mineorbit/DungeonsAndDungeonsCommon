@@ -21,6 +21,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
 
+        public override bool WantsToTransmit()
+        {
+            return owner == NetworkManager.instance.localId;
+        }
+        
         public Item GetObservedItem()
         {
             return (Item) GetObservedEntity();
