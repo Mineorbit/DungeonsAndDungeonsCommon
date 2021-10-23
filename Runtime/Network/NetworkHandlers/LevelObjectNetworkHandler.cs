@@ -34,6 +34,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public bool CallActionOnOther(bool localCond, bool serverCond)
+        {
+            return (!isOnServer || serverCond) && (isOnServer || localCond);
+        }
+        
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
         [PacketBinding.Binding]
         public virtual void ProcessAction(Packet p)
