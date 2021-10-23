@@ -182,7 +182,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             health = 0;
             alive = false;
             gameObject.SetActive(false);
-            GameConsole.Log("Despawning " + this);
+            GameConsole.Log($"Despawning { this}");
             transform.position = new Vector3(0, 0, 0);
             transform.rotation = new Quaternion(0, 0, 0, 0);
             onDespawnEvent.Invoke();

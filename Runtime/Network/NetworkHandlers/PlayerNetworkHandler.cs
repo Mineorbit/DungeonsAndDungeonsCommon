@@ -52,11 +52,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return sendDist > sendDistance || sendRotAngle > sendAngle || sendAimRotAngle > sendAngle;
         }
 
-        public override void OnDestroy()
-        {
-            if (Level.instantiateType == Level.InstantiateType.Play)
-                RequestRemoval();
-        }
+        
 
 
         public override void RequestCreation()
