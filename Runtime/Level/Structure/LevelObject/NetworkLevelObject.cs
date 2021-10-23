@@ -105,6 +105,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        if (allowLocal && (doLocal || Level.instantiateType == Level.InstantiateType.Play ||
 	                           Level.instantiateType == Level.InstantiateType.Test))
 	        {
+		        GameConsole.Log($"Calling {a} locally");
 		        a.DynamicInvoke(argument);
 	        }
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
@@ -120,6 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        if (allowLocal && (doLocal || Level.instantiateType == Level.InstantiateType.Play ||
 	                           Level.instantiateType == Level.InstantiateType.Test))
 	        {
+		        GameConsole.Log($"Calling {a} locally");
 		        a.DynamicInvoke();
 	        }
             if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
