@@ -123,28 +123,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 if(actionParam.type != null)
                 {
-                if (actionParam.type == typeof(ChunkData))
-                {
-                    var netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
-                    actionParam.data = netChunkData;
-                }else if (actionParam.type == typeof(Vector3))
-                {
-                    Location l = data.Item2.Value.Unpack<Location>();
-                    actionParam.data = new Vector3(l.X, l.Y, l.Z);
-                }
-                else if (actionParam.type == typeof(bool))
-                {
-                    actionParam.data = data.Item2.Value.Unpack<BoolValue>().Value;
-                }
-                else if (actionParam.type.IsSubclassOf(typeof(NetworkLevelObject)) || actionParam.type == typeof(NetworkLevelObject))
-                {
-                    int identityOfParam = data.Item2.Value.Unpack<Int32Value>().Value;
+                    if (actionParam.type == typeof(ChunkData))
+                    {
+                        var netChunkData = data.Item2.Value.Unpack<NetLevel.ChunkData>();
+                        actionParam.data = netChunkData;
+                    }else if (actionParam.type == typeof(Vector3))
+                    {
+                        Location l = data.Item2.Value.Unpack<Location>();
+                        actionParam.data = new Vector3(l.X, l.Y, l.Z);
+                    }
+                    else if (actionParam.type == typeof(bool))
+                    {
+                        actionParam.data = data.Item2.Value.Unpack<BoolValue>().Value;
+                    }
+                    else if (actionParam.type.IsSubclassOf(typeof(NetworkLevelObject)) || actionParam.type == typeof(NetworkLevelObject))
+                    {
+                        int identityOfParam = data.Item2.Value.Unpack<Int32Value>().Value;
 
-                    var h = NetworkLevelObject.FindByIdentity(identityOfParam);
+                        var h = NetworkLevelObject.FindByIdentity(identityOfParam);
 
-                    // Debug.Log("Matched with Reference: " + identityOfParam + " " + h.observed);
-                    actionParam.data = h;
-                }
+                        // Debug.Log("Matched with Reference: " + identityOfParam + " " + h.observed);
+                        actionParam.data = h;
+                    }
                 }
                 else
                 {
