@@ -381,10 +381,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     };
                     if (GetObservedEntity().movementOverride)
                     {
-                        Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false);
+                        Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
                     }else
                     {
-                        Marshall(((NetworkLevelObject)observed).Identity,entityLocomotion, owner,toOrWithout: false, TCP: false);
+                        Marshall(((NetworkLevelObject)observed).Identity,entityLocomotion, owner,toOrWithout: false, TCP: false,true);
                     }
                     lastSentPosition = pos;
                     lastSentRotation = r;

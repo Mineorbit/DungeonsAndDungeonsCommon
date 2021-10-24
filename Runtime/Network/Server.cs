@@ -119,13 +119,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     clients[i].WritePacket(message, TCP);
         }
 
-        public void WriteToAllExcept(Packet message, int except, bool TCP = true)
+        public void WriteToAllExcept(Packet message, int except, bool TCP = true, bool overrideSame = true)
         {
             for (var i = 0; i < 4; i++)
             {
                 if (i != except && clients[i] != null)
                 {
-                    clients[i].WritePacket(message, TCP);
+                    clients[i].WritePacket(message, TCP, overrideSame);
                 }
             }
         }

@@ -106,7 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         // eventually type strings are not jet correcty matched
-        public void Marshall(int identity,IMessage message, bool TCP = true)
+        public void Marshall(int identity,IMessage message, bool TCP = true, bool overrideSame = false)
         {
             var packet = new Packet
             {
@@ -124,7 +124,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
 
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
-        public static void Marshall(Type sendingHandler, IMessage message, bool TCP = true)
+        public static void Marshall(Type sendingHandler, IMessage message, bool TCP = true, bool overrideSame = false)
         {
             Packet packet = new Packet
             {
@@ -151,7 +151,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
-        public static void Marshall(Type sendingHandler, int identity, IMessage message, bool TCP = true)
+        public static void Marshall(Type sendingHandler, int identity, IMessage message, bool TCP = true, bool overrideSame = false)
         {
             var packet = new Packet
             {
@@ -168,7 +168,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public static void Marshall(Type sendingHandler, IMessage message, int target, bool TCP = true)
+        public static void Marshall(Type sendingHandler, IMessage message, int target, bool TCP = true, bool overrideSame = false)
         {
             var packet = new Packet
             {
@@ -189,7 +189,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public static void Marshall(Type sendingHandler, IMessage message, int target, int identity, bool TCP = true)
+        public static void Marshall(Type sendingHandler, IMessage message, int target, int identity, bool TCP = true, bool overrideSame = false)
         {
             var packet = new Packet
             {
@@ -211,7 +211,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void Marshall(int identity, IMessage message, int target, bool toOrWithout = true, bool TCP = true)
+        public void Marshall(int identity, IMessage message, int target, bool toOrWithout = true, bool TCP = true, bool overrideSame = false)
         {
             var packet = new Packet
             {
@@ -223,18 +223,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (!isOnServer)
             {
-                NetworkManager.instance.client.WritePacket(packet, TCP);
+                NetworkManager.instance.client.WritePacket(packet, TCP,overrideSame);
             }
             else
             {
                 if (toOrWithout)
                 {
                     if (Server.instance.clients[target] != null)
-                        Server.instance.clients[target].WritePacket(packet, TCP);
+                        Server.instance.clients[target].WritePacket(packet, TCP,overrideSame);
                 }
                 else
                 {
-                    Server.instance.WriteToAllExcept(packet, target, TCP);
+                    Server.instance.WriteToAllExcept(packet, target, TCP,overrideSame);
                 }
             }
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -263,15 +264,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void WritePacket(Packet p, bool TCP = true)
+        public void WritePacket(Packet p, bool TCP = true, bool overrideSame = true)
         {
             if (Connected)
             {
                 p.Sender = localid;
                 if (TCP)
+                {
+                    if (overrideSame)
+                    {
+                        packetOutTCPBuffer =
+                            new Queue<Packet>(packetOutTCPBuffer.Where((x) => (x.Identity == p.Identity) && (x.Type == p.Type)));
+                    }
                     packetOutTCPBuffer.Enqueue(p);
+                }
                 else
+                {
+                    if (overrideSame)
+                    {
+                        packetOutUDPBuffer =
+                            new Queue<Packet>(packetOutUDPBuffer.Where((x) => (x.Identity == p.Identity) && (x.Type == p.Type)));
+                    }
                     packetOutUDPBuffer.Enqueue(p);
+                }
             }
         }
 
