@@ -36,16 +36,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((Player)owner).aiming = false;
             owner.Invoke(owner.setMovementStatus, true);
             
-            GameConsole.Log($"Shooting towards {owner.GetAimRotation().eulerAngles} call");
-            Invoke(Shoot,owner.GetAimRotation(),false,true);
+            //GameConsole.Log($"Shooting towards {owner.GetAimRotation().eulerAngles} call");
+            Invoke(Shoot,false,true);
         }
 
-        public void Shoot(Quaternion aimRotation)
+        public void Shoot()
         {
             if(currentArrow!=null)
             {
-                GameConsole.Log($"Shooting towards {aimRotation.eulerAngles}");
-                currentArrow.Shoot(aimRotation);
+                GameConsole.Log($"Shooting towards {owner.aimRotation.eulerAngles}");
+                currentArrow.Shoot(owner.aimRotation);
                 currentArrow = null;
             }
         }
