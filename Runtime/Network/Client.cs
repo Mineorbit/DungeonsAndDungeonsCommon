@@ -264,7 +264,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void WritePacket(Packet p, bool TCP = true, bool overrideSame = true)
+        public void WritePacket(Packet p, bool TCP = true, bool overrideSame = false)
         {
             if (Connected)
             {
@@ -274,7 +274,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (overrideSame)
                     {
                         packetOutTCPBuffer =
-                            new Queue<Packet>(packetOutTCPBuffer.Where((x) => (x.Identity == p.Identity) && (x.Type == p.Type)));
+                            new Queue<Packet>(packetOutTCPBuffer.Where((x) => (x.Identity != p.Identity) && (x.Type != p.Type)));
                     }
                     packetOutTCPBuffer.Enqueue(p);
                 }
@@ -283,7 +283,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (overrideSame)
                     {
                         packetOutUDPBuffer =
-                            new Queue<Packet>(packetOutUDPBuffer.Where((x) => (x.Identity == p.Identity) && (x.Type == p.Type)));
+                            new Queue<Packet>(packetOutUDPBuffer.Where((x) => (x.Identity != p.Identity) && (x.Type != p.Type)));
                     }
                     packetOutUDPBuffer.Enqueue(p);
                 }
