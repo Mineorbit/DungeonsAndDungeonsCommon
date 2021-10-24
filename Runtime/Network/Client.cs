@@ -225,7 +225,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         int tcpBufferSize;
 
-        private bool debugNetwork = true;
+        private bool debugNetwork = false;
         
         public void WriteOut(PacketCarrier p, bool TCP = true)
         {
