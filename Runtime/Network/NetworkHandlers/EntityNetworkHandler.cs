@@ -171,8 +171,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var packet = new Packet
             {
-                Type = typeof(PlayerRemove).FullName,
-                Handler = typeof(PlayerNetworkHandler).FullName,
+                Type = typeof(EntityRemove).FullName,
+                Handler = typeof(EntityNetworkHandler).FullName,
                 Content = Any.Pack(entityRemove),
                 Identity = GetObservedEntity().Identity
             };
