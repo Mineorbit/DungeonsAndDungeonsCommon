@@ -50,11 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         Quaternion GetAimDirection()
         {
-            Vector3 target = ((PlayerController)shootingBow.owner.controller).GetTargetPoint();
-            //LevelManager.currentLevel.AddDynamic(test, target, Quaternion.identity, null);
-            Vector3 dir = target - transform.position;
-            lastTarget = target;
-            return Quaternion.LookRotation(dir,Vector3.up);
+            return shootingBow.owner.GetAimRotation();
         }
 
 
