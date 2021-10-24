@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string output = channelName + " " + text;
             
             if(instance != null  && inView)
-            instance.CreateLine("> "+output);
+                instance.CreateLine("> "+output);
             
             Debug.Log(output);
         }
@@ -69,7 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Update()
         {
             UpdateText();
-            if (Input.GetKeyDown(KeyCode.Plus))
+            if (Input.GetKeyDown(KeyCode.Equals))
             {
                 if (open)
                 {
