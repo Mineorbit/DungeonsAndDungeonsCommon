@@ -9860,7 +9860,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 1.7
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 50
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -9939,6 +9939,7 @@ MonoBehaviour:
   aimMode: 0
   aiming: 0
   jumping: 0
+  ApplyMovement: 1
 --- !u!114 &-4485675669329379349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10025,12 +10026,16 @@ MonoBehaviour:
   owner: -1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0}
+  lastSentPosition: {x: 0, y: 0, z: 0}
+  lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
   teleportPosition: {x: 0, y: 0, z: 0}
   transmitPosition: 1
   interpolatePosition: 1
   blockExists: 0
   blockPosition: {x: 0, y: 0, z: 0}
   receivedPosition: {x: 0, y: 0, z: 0}
+  sendAngle: 0.05
+  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8164085133219797599
 GameObject:
   m_ObjectHideFlags: 0
