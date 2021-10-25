@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8969908153608872657, guid: 7f300bb48dd55cc499bd9f58ffda8805, type: 3}
   uniqueLevelObjectId: -1147057284
-  granularity: 1
+  granularity: 0.5
   levelObjectName: Slope
   dynamicInstantiable: 0
   levelInstantiable: 1
