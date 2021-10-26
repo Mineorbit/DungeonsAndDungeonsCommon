@@ -91,7 +91,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     private Vector3 lastPosition;
         
-    private readonly int k = 10;
+    private readonly int k = 4;
         
     public List<float> lastSpeeds = new List<float>();
     
