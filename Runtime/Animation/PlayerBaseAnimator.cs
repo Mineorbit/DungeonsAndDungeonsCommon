@@ -52,7 +52,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Update();
             //simplify in future to just moving somehow
-	    animator.SetFloat("SpeedY",GetController().speedY);
+	    animator.SetFloat("SpeedY", ((Player) me).speedDirection.y);
 	    animator.SetBool("Grounded",((Player) me).isGrounded);	
 	    if(GetController().speedY > 0 && GetController().inClimbing)
 	    {
