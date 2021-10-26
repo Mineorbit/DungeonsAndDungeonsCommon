@@ -46,7 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             isEquipped = false;
             LevelManager.currentLevel.AddToDynamic(gameObject);
-
+    
 
             rigidBody.useGravity = true;
             rigidBody.isKinematic = false;
