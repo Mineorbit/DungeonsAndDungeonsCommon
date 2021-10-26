@@ -11,9 +11,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Start();
             transmitPosition = true;
             interpolatePosition = true;
-            GetObservedItem().rigidBody.isKinematic = true;
-            GetObservedItem().rigidBody.useGravity = false;
-            GetObservedItem().rigidBody.detectCollisions = false;
+            GetObservedItem().rigidBody.isKinematic = !isOnServer;
+            GetObservedItem().rigidBody.useGravity = isOnServer;
+            GetObservedItem().rigidBody.detectCollisions = isOnServer;
             
             GetObservedItem().onAttachEvent.AddListener(() => { owner = ((Player) GetObservedItem().owner).localId; 
                 transmitPosition = false;
