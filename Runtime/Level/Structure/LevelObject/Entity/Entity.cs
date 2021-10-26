@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -94,14 +95,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
     public List<float> lastSpeeds = new List<float>();
     
+    public List<Vector3> lastSpeedDirections = new List<Vector3>();
     public float speed;
+
+    public Vector3 speedDirection;
     private void ComputeCurrentSpeed()
     {
     lastSpeeds.Add((transform.position - lastPosition).magnitude / Time.deltaTime);
+    lastSpeedDirections.Add(transform.position-lastPosition);
+    
     if (lastSpeeds.Count > k) lastSpeeds.RemoveAt(0);
+    if (lastSpeedDirections.Count > k) lastSpeedDirections.RemoveAt(0);
     float sum = 0;
         for (var i = 0; i < lastSpeeds.Count; i++) sum += lastSpeeds[i];
     speed = sum / k;
+
+    speedDirection = new Vector3(lastSpeedDirections.Average(x => x.x), lastSpeedDirections.Average(x => x.y),
+        lastSpeedDirections.Average(x => x.z));
+    
     lastPosition = transform.position;
     }
         
