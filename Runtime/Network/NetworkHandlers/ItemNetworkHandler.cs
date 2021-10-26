@@ -18,10 +18,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetObservedItem().onAttachEvent.AddListener(() => { owner = ((Player) GetObservedItem().owner).localId; 
                 transmitPosition = false;
                 interpolatePosition = false;
+                GetObservedItem().rigidBody.isKinematic = !isOnServer;
+                GetObservedItem().rigidBody.useGravity = isOnServer;
+                GetObservedItem().rigidBody.detectCollisions = isOnServer;
             });
+            
             GetObservedItem().onDettachEvent.AddListener(() => { owner = -1; 
                 transmitPosition = true;
-                interpolatePosition = true;});
+                interpolatePosition = true;
+                GetObservedItem().rigidBody.isKinematic = !isOnServer;
+                GetObservedItem().rigidBody.useGravity = isOnServer;
+                GetObservedItem().rigidBody.detectCollisions = isOnServer;
+            });
 
         }
 
