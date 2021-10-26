@@ -58,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	    {
 		
 	    }
-	    if(((Player) me).isGrounded && Input.GetKeyDown(KeyCode.Space))
+	    if(((Player) me).isGrounded && ((Player) me).speedDirection.y > 0)
 	    {
 	    	animator.SetTrigger("Jump");
 	    }
