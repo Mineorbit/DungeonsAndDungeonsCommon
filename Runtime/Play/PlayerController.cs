@@ -204,13 +204,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
     */
+        private float eps = 0.05f;
         private void StateUpdate()
         {
             doInput = PlayerManager.acceptInput  && activated &&
                       locallyControllable; //&& !player.lockNetUpdate;
                       
-            movementInputOnFrame = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
-                                  Input.GetKey(KeyCode.D));
+            movementInputOnFrame = (inputDirection.magnitude > eps);
         }
     }
 }
