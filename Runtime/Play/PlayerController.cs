@@ -103,7 +103,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Update()
         {
             StateUpdate();
-            Move();
+            //Move();
             base.Update();
         }
 
@@ -134,24 +134,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector2 inputDirection;
         public void OnMovementInput(InputAction.CallbackContext context)
         {
-            inputDirection = context.ReadValue<Vector2>();
+            if (doInput && takeInput)
+            {
+                inputDirection = context.ReadValue<Vector2>();
+                if (cam != null && allowedToMove)
+                    targetDirection =
+                        Vector3.Normalize(
+                            Vector3.ProjectOnPlane(cam.right, transform.up) * inputDirection.x +
+                            Vector3.ProjectOnPlane(cam.forward, transform.up) * inputDirection.y);
+            }
         }
         
         public float climbDampening = 0.5f;
 
         public float climbingSpeed = 1f;
+        /*
         public void Move()
         {
             targetDirection = new Vector3(0, 0, 0);
             
             if (doInput && takeInput)
             {
-                if (cam != null && allowedToMove)
-                    targetDirection =
-                        Vector3.Normalize(
-                            Vector3.ProjectOnPlane(cam.right, transform.up) * inputDirection.x +
-                            Vector3.ProjectOnPlane(cam.forward, transform.up) * inputDirection.y);
-
+                
                 
                 
                 if (((Player) entity).isGrounded)
@@ -199,7 +203,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
         }
-
+    */
         private void StateUpdate()
         {
             doInput = PlayerManager.acceptInput  && activated &&
