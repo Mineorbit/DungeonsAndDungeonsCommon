@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -121,7 +122,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        
+        public void OnLeftUse(InputAction.CallbackContext context)
+        {
+            
+        }
+        public void OnRightUse(InputAction.CallbackContext context)
+        {
+            
+        }
+
+        private Vector2 inputDirection;
+        public void OnMovementInput(InputAction.CallbackContext context)
+        {
+            inputDirection = context.ReadValue<Vector2>();
+        }
         
         public float climbDampening = 0.5f;
 
@@ -135,8 +149,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (cam != null && allowedToMove)
                     targetDirection =
                         Vector3.Normalize(
-                            Vector3.ProjectOnPlane(cam.right, transform.up) * Input.GetAxisRaw("Horizontal") +
-                            Vector3.ProjectOnPlane(cam.forward, transform.up) * Input.GetAxisRaw("Vertical"));
+                            Vector3.ProjectOnPlane(cam.right, transform.up) * inputDirection.x +
+                            Vector3.ProjectOnPlane(cam.forward, transform.up) * inputDirection.y);
 
                 
                 
