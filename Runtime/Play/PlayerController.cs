@@ -134,9 +134,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector2 inputDirection;
         public void OnMovementInput(InputAction.CallbackContext context)
         {
+            inputDirection = context.ReadValue<Vector2>();
             if (doInput && takeInput)
             {
-                inputDirection = context.ReadValue<Vector2>();
                 if (cam != null && allowedToMove)
                     targetDirection =
                         Vector3.Normalize(
