@@ -124,7 +124,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnLeftUse(InputAction.CallbackContext context)
         {
-            
+            GameConsole.Log("USE LEFT");
         }
         public void OnRightUse(InputAction.CallbackContext context)
         {
