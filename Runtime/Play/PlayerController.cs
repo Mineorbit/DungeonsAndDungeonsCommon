@@ -131,7 +131,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        private Vector2 inputDirection;
+        public Vector2 inputDirection;
         public void OnMovementInput(InputAction.CallbackContext context)
         {
             inputDirection = context.ReadValue<Vector2>();
