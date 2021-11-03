@@ -103,7 +103,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Update()
         {
             StateUpdate();
-            //Move();
+            Move();
             base.Update();
         }
 
@@ -124,13 +124,73 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnLeftUse(InputAction.CallbackContext context)
         {
-            GameConsole.Log("USE LEFT");
+            if (doInput && takeInput)
+            {
+                player.Invoke(player.UseLeft, true,true);
+            }
         }
+        
         public void OnRightUse(InputAction.CallbackContext context)
         {
-            
+            if (doInput && takeInput)
+            {
+                player.Invoke(player.UseRight, true,true);
+            }
+        }
+        
+        public void OnStopLeftUse(InputAction.CallbackContext context) 
+        {
+            if (doInput && takeInput)
+            {
+                player.Invoke(player.StopUseLeft, true);
+            }
+        }
+                
+        public void OnStopRightUse(InputAction.CallbackContext context)
+        {
+            if (doInput && takeInput)
+            { 
+                player.Invoke(player.StopUseRight, true);
+            }
         }
 
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (doInput && takeInput)
+            {
+                if (((Player) entity).isGrounded)
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        player.jumping = true;
+                        speedY = jumpingSpeed;
+                    }
+            }
+        }
+
+        public void OnSwapLeft(InputAction.CallbackContext context)
+        {
+            if (doInput && takeInput)
+            {
+                player.Invoke(player.SwapLeft,true);
+            }
+        }
+        
+        public void OnSwapRight(InputAction.CallbackContext context)
+        {
+            if (doInput && takeInput)
+            {
+                player.Invoke(player.SwapRight,true);
+            }
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (doInput && takeInput)
+            {
+                player.Invoke(player.UpdateEquipItem, false, true);
+            }
+        }
+        
         public Vector2 inputDirection;
         public void OnMovementInput(InputAction.CallbackContext context)
         {
@@ -148,7 +208,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float climbDampening = 0.5f;
 
         public float climbingSpeed = 1f;
-        /*
+        
         public void Move()
         {
             targetDirection = new Vector3(0, 0, 0);
@@ -157,6 +217,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 
                 
+                ((Player) entity).aimMode = Input.GetMouseButton(0);
+                
+                ((Player) entity).aimRotation = GetAimDirection();
+                /*
                 
                 if (((Player) entity).isGrounded)
                     if (Input.GetKeyDown(KeyCode.Space))
@@ -164,9 +228,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         player.jumping = true;
                         speedY = jumpingSpeed;
                     }
-                ((Player) entity).aimMode = Input.GetMouseButton(0);
-                
-                ((Player) entity).aimRotation = GetAimDirection();
                 // Pickup closest item
                 if (Input.GetKeyDown(KeyCode.G)) player.Invoke(player.UpdateEquipItem,false,true);
 
@@ -198,12 +259,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     //INVOKE
                     player.Invoke(player.UseLeft, true,true);
 
-                
+                */
                 
             }
 
         }
-    */
+    
         private float eps = 0.05f;
         private void StateUpdate()
         {
