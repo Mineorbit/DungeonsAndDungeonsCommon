@@ -210,9 +210,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float climbingSpeed = 1f;
         
         public void Move()
-        {
-            targetDirection = new Vector3(0, 0, 0);
-            
+        {   
             if (doInput && takeInput)
             {
                 
