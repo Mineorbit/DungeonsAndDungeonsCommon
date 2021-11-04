@@ -221,7 +221,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 
                 
-                ((Player) entity).aimMode = Input.GetMouseButton(0);
+                // ((Player) entity).aimMode = Input.GetMouseButton(0);
                 
                 ((Player) entity).aimRotation = GetAimDirection();
                 
