@@ -159,7 +159,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput)
             {
                 if (((Player) entity).isGrounded)
-                    if (Input.GetKeyDown(KeyCode.Space))
                     {
                         player.jumping = true;
                         speedY = jumpingSpeed;
