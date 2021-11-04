@@ -159,10 +159,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput)
             {
                 if (((Player) entity).isGrounded)
-                    {
+                {
                         player.jumping = true;
                         speedY = jumpingSpeed;
-                    }
+                }
             }
         }
 
@@ -189,18 +189,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 player.Invoke(player.UpdateEquipItem, false, true);
             }
         }
+
+        public void OnJump()
+        {
+            if (doInput && takeInput)
+            {
+                if (((Player) entity).isGrounded)
+                {
+                    player.jumping = true;
+                    speedY = jumpingSpeed;
+                }
+            }
+        }
         
         public Vector2 inputDirection;
         public void OnMovementInput(InputAction.CallbackContext context)
         {
-            inputDirection = context.ReadValue<Vector2>();
             if (doInput && takeInput)
             {
-                if (cam != null && allowedToMove)
-                    targetDirection =
-                        Vector3.Normalize(
-                            Vector3.ProjectOnPlane(cam.right, transform.up) * inputDirection.x +
-                            Vector3.ProjectOnPlane(cam.forward, transform.up) * inputDirection.y);
+                inputDirection = context.ReadValue<Vector2>();
             }
         }
         
@@ -217,14 +224,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 ((Player) entity).aimMode = Input.GetMouseButton(0);
                 
                 ((Player) entity).aimRotation = GetAimDirection();
+                
+                if (cam != null && allowedToMove)
+                    targetDirection =
+                        Vector3.Normalize(
+                            Vector3.ProjectOnPlane(cam.right, transform.up) * inputDirection.x +
+                            Vector3.ProjectOnPlane(cam.forward, transform.up) * inputDirection.y);
                 /*
                 
-                if (((Player) entity).isGrounded)
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        player.jumping = true;
-                        speedY = jumpingSpeed;
-                    }
+                
                 // Pickup closest item
                 if (Input.GetKeyDown(KeyCode.G)) player.Invoke(player.UpdateEquipItem,false,true);
 
