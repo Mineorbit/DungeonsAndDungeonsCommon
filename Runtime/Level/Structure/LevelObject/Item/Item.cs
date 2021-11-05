@@ -59,6 +59,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnInit();
             this.gameObject.tag = "Item";
         }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            GameConsole.Log("Removing this");
+            Debug.Break();
+        }
         
         public virtual void Use()
         {
