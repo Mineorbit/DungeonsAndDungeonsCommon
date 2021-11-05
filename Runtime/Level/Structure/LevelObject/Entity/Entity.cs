@@ -81,11 +81,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // this needs to be prettier
         public virtual void Update()
         {
-            if (transform.position.y < killHeight) Invoke(Kill);
         }
 
     public virtual  void FixedUpdate()
     {
+        if (transform.position.y < killHeight) Invoke(Kill,true,true);
         ComputeCurrentSpeed();
     }
 
