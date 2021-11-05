@@ -127,6 +127,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput)
             {
                 player.Invoke(player.UseLeft, true,true);
+                ((Player) entity).aimMode = true;
             }
         }
         
@@ -135,6 +136,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput)
             {
                 player.Invoke(player.UseRight, true,true);
+                ((Player) entity).aimMode = false;
             }
         }
         
@@ -220,8 +222,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput)
             {
                 
-                
-                // ((Player) entity).aimMode = Input.GetMouseButton(0);
                 
                 ((Player) entity).aimRotation = GetAimDirection();
                 
