@@ -63,8 +63,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnDestroy()
         {
             base.OnDestroy();
-            GameConsole.Log("Removing this");
-            Debug.Break();
+            //GameConsole.Log("Removing this");
+            //Debug.Break();
         }
         
         public virtual void Use()
