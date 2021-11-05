@@ -66,11 +66,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private bool open = false;
-        void Update()
+
+        public static void ToggleConsole()
         {
-            UpdateText();
-            if (Input.GetKeyDown(KeyCode.Equals))
-            {
+            instance.Toggle();
+        }
+
+        public void Toggle()
+        {
                 if (open)
                 {
                     canvasGroup.alpha = 0;
@@ -85,7 +88,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     canvasGroup.blocksRaycasts = true;
                     open = true;
                 }
-            }
+        }
+        
+        void Update()
+        {
+            UpdateText();
+            
         }
     }
 }
