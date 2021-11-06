@@ -157,7 +157,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
         public void OnStopRightUse(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && usingLeftItem)
+            if (doInput && takeInput && usingRightItem)
             { 
                 player.Invoke(player.StopUseRight, true);
                 usingRightItem = false;
