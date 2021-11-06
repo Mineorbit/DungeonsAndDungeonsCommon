@@ -16,9 +16,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Yellow
         }
 
+        
+        public bool usingLeftItem = false;
+
+        
+        public bool usingRightItem = false;
+        
         public ColorChanger colorChanger;
 
-	int local_Id;
+	    int local_Id;
 
         public int localId
         {
@@ -360,12 +366,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var h = GetLeftHandHandle();
             if (h != null) UseHandle(h);
+            if (h.slot != null) usingLeftItem = true;
         }
 
         public void UseRight()
         {
             var h = GetRightHandHandle();
             if (h != null) UseHandle(h);
+            if (h.slot != null) usingRightItem = true;
         }
 
         public void StopUseLeft()
@@ -374,6 +382,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (h != null)
             {
                 StopUseHandle(h);
+                if (h.slot != null) usingLeftItem = false;
             }
         }
         
@@ -383,6 +392,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (h != null)
             {
                 StopUseHandle(h);
+                if (h.slot != null) usingRightItem = false;
             }
         }
         
