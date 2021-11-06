@@ -346,7 +346,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float sendAngle = 0.05f;
 
         private int timeStep = 0;
-        private int minSend = 1024;
+        private int minSend = 16;
         public virtual bool SendNecessary()
         {
             var pos = observed.transform.position;
