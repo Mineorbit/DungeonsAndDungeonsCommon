@@ -121,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
-        private bool usingItem = false;
+        public bool usingItem = false;
 
         public void OnLeftUse(InputAction.CallbackContext context)
         {
