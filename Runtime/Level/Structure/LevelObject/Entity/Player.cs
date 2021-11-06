@@ -190,11 +190,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (toAttach.equipSide == Item.Side.Left)
                 {
-                    Invoke(AttachLeftItem, toAttach);
+                    Invoke(AttachLeftItem, toAttach,true,true);
                 }else
                 if (toAttach.equipSide == Item.Side.Right)
                 {
-                    Invoke(AttachRightItem, toAttach);
+                    Invoke(AttachRightItem, toAttach,true,true);
                 }
                 else
                 {
@@ -203,10 +203,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                Invoke(DettachLeftHandItem);
-                Invoke(DettachRightHandItem);
-                Invoke(DettachLeftBackItem);
-                Invoke(DettachRightBackItem);
+                Invoke(DettachLeftHandItem,true,true);
+                Invoke(DettachRightHandItem,true,true);
+                Invoke(DettachLeftBackItem,true,true);
+                Invoke(DettachRightBackItem,true,true);
             }
         }
 
