@@ -121,44 +121,49 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
+        private bool usingItem = false;
 
         public void OnLeftUse(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput&&!usingItem)
             {
                 player.Invoke(player.UseLeft, true,true);
                 ((Player) entity).aimMode = true;
+                usingItem = true;
             }
         }
         
         public void OnRightUse(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput&&!usingItem)
             {
                 player.Invoke(player.UseRight, true,true);
                 ((Player) entity).aimMode = false;
+                usingItem = true;
             }
         }
         
         public void OnStopLeftUse(InputAction.CallbackContext context) 
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput && usingItem)
             {
                 player.Invoke(player.StopUseLeft, true);
+                usingItem = false;
             }
         }
                 
         public void OnStopRightUse(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput && usingItem)
             { 
                 player.Invoke(player.StopUseRight, true);
+                usingItem = false;
             }
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput && !usingItem)
             {
                 if (((Player) entity).isGrounded)
                 {
@@ -170,7 +175,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnSwapLeft(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput && !usingItem)
             {
                 player.Invoke(player.SwapLeft,true);
             }
@@ -178,7 +183,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnSwapRight(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput && !usingItem)
             {
                 player.Invoke(player.SwapRight,true);
             }
@@ -186,7 +191,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput && !usingItem)
             {
                 player.Invoke(player.UpdateEquipItem, false, true);
             }
@@ -194,7 +199,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnJump()
         {
-            if (doInput && takeInput)
+            if (doInput && takeInput && !usingItem)
             {
                 if (((Player) entity).isGrounded)
                 {
@@ -225,11 +230,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 ((Player) entity).aimRotation = GetAimDirection();
                 
-                if (cam != null && allowedToMove)
-                    targetDirection =
-                        Vector3.Normalize(
+                if(!usingItem)
+                {
+                    if (cam != null && allowedToMove)
+                        targetDirection =
+                            Vector3.Normalize(
                             Vector3.ProjectOnPlane(cam.right, transform.up) * inputDirection.x +
                             Vector3.ProjectOnPlane(cam.forward, transform.up) * inputDirection.y);
+                }
+                else
+                {
+                    targetDirection = Vector3.zero;
+                }
                 /*
                 
                 
