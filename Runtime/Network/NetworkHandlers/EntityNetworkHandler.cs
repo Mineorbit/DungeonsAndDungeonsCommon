@@ -358,14 +358,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void UpdateLocomotion()
         {
-            if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && !LocomotionIsBlocked())
+            if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && !LocomotionIsBlocked() && SendNecessary())
             {
                 var pos = observed.transform.position;
                 var r = observed.transform.rotation;
                 var rot = observed.transform.rotation.eulerAngles;
                 var aim = ((Entity) observed).aimRotation;
-                if (SendNecessary())
-                {
                     var entityLocomotion = new EntityLocomotion
                     {
                         X = pos.x,
@@ -389,7 +387,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     lastSentPosition = pos;
                     lastSentRotation = r;
                     lastSentAimRotation = aim;
-                }
             }
         }
     }
