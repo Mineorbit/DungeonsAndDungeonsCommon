@@ -246,7 +246,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             // THIS IS A TEMP
                 EntityLocomotion entityLocomotion;
-                if (p.Content.TryUnpack(out entityLocomotion))
+                if (p.Content.TryUnpack(out entityLocomotion) && !LocomotionIsBlocked())
                 {
                     MainCaller.Do(() =>
                     {
