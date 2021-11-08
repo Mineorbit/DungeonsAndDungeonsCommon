@@ -10,7 +10,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
     
         public bool isSetup = false;
-        public bool isOwner;
         public int owner = -1;
         
         public Vector3 targetPosition;
@@ -33,7 +32,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             	targetPosition = transform.position;
             	targetRotation = transform.rotation.eulerAngles;
-        		isOwner = isOnServer;
         }
 
         public Entity GetObservedEntity()
@@ -41,10 +39,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (Entity) observed;
         }
 
+        
+        
+        public bool IsOwner()
+        {
+            return NetworkManager.instance.localId == owner;
+        }
+
+        
         public virtual void Start()
         {
 			// Request the creation of this entity on the client side
             if (isOnServer) RequestCreation();
+            
+            
+            GetObservedEntity().ApplyMovement = IsOwner();
 
             GetObservedEntity().onTeleportEvent.AddListener(Teleport);
             GetObservedEntity().onSpawnEvent.AddListener(x => {GameConsole.Log("Spawn State Update"); UpdateState(); });
@@ -72,7 +81,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void ResolveLocomotionBlock()
         {
             targetPosition = transform.position;
-            GetObservedEntity().ApplyMovement = true;
+            GetObservedEntity().ApplyMovement = IsOwner();
             GetObservedEntity().controller.enabled = !isOnServer;
             GetObservedEntity().setMovementStatus(true);
             GameConsole.Log("Resolve Locomotion Block");
@@ -141,7 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE
         private void FixedUpdate()
         {
-            isOwner = owner == NetworkManager.instance.localId;
+            //isOwner = owner == NetworkManager.instance.localId;
             UpdateLocomotion();
         }
 

@@ -27,15 +27,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(observed != null && ((NetworkLevelObject)observed).identified)
                 if(!isSetup)
                 {   
-                    isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
-                    GameConsole.Log($"Setting up PlayerHandler with {((NetworkLevelObject)observed).Identity} and {GetObservedPlayer().localId} {isOwner}");
+                    // isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
+                    GameConsole.Log($"Setting up PlayerHandler with {((NetworkLevelObject)observed).Identity} and {GetObservedPlayer().localId} Is Owner: {IsOwner()}");
                     owner = GetObservedPlayer().localId;
-                    GetObservedPlayer().controller.enabled = !isOnServer && isOwner;
+                    GetObservedPlayer().controller.enabled = !isOnServer && IsOwner();
                     if (isOnServer)
                     {
                         GetComponent<CharacterController>().enabled = false;
                     }
-                    GetObservedPlayer().ApplyMovement = isOwner;
                     
                     isSetup = true;
                 }

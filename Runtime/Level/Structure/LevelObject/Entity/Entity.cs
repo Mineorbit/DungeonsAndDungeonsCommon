@@ -249,6 +249,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Kickback(dir,2f);
         }
         
+        // ApplyMovement controls whether entity should have local simulation movement appliance or not
         public bool ApplyMovement = true;
         
         public Quaternion aimRotation;
