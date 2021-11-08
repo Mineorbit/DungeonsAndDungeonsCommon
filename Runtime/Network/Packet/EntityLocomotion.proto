@@ -15,5 +15,5 @@ message EntityLocomotion {
   float aimY = 9;
   float aimZ = 10;
   float aimW = 11;
-  
+  uint64 locomotionId = 12;
 }

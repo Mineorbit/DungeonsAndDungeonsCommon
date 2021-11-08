@@ -67,23 +67,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 RequestRemoval();
         }
 
+        private int locomotionBlocks = 0;
+        
         void ResolveLocomotionBlock()
         {
-            blockExists = false;
             targetPosition = transform.position;
             GetObservedEntity().ApplyMovement = true;
             GetObservedEntity().controller.enabled = !isOnServer;
             GetObservedEntity().setMovementStatus(true);
             GameConsole.Log("Resolve Locomotion Block");
+            locomotionBlocks--;
             //Debug.Break();
         }
 
-        public bool blockExists = false;
         public Vector3 blockPosition;
         
         void SetupLocomotionBlock(Vector3 bPosition)
         {
-            blockExists = true;
+            locomotionBlocks++;
             blockPosition = bPosition;
             targetPosition = bPosition;
             GetObservedEntity().ApplyMovement = false;
@@ -96,23 +97,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         bool LocomotionIsBlocked()
         {
-            return (blockExists);
+            return (locomotionBlocks>0);
         }
         
         
         public readonly float tpDist = 0.075f;
-        
+
+
+
         public virtual void Update()
         {
             if (LocomotionIsBlocked())
             {
                 targetPosition = blockPosition;
                 transform.position = blockPosition;
+                
+                /*
                 if ((targetPosition - receivedPosition).magnitude < tpDist)
                 {
                     ResolveLocomotionBlock();
                 }
-
+                */
             }
             else
             {
@@ -239,8 +244,34 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        public Vector3 receivedPosition;
+        public void CreateTeleportationCompletion()
+        {
+            var teleportationCompletion = new EntityTeleportComplete
+            {
+                LastLocomotionId = locomotionID
+            };
+            Marshall(((NetworkLevelObject) observed).Identity,teleportationCompletion);
+        }
+
+        private ulong lastTeleportLocomotionID;
         
+        [PacketBinding.Binding]
+        public void EntityTeleportComplete(Packet value)
+        {
+            MainCaller.Do(() =>
+            {
+                EntityTeleportComplete entityTeleportComplete;
+                if (value.Content.TryUnpack(out entityTeleportComplete))
+                {
+                    lastTeleportLocomotionID = entityTeleportComplete.LastLocomotionId;
+                    ResolveLocomotionBlock();
+                }
+            });
+        }
+        
+        public Vector3 receivedPosition;
+
+        private ulong lastReceivedLocomotion;
         [PacketBinding.Binding]
         public void OnEntityLocomotion(Packet p)
         {
@@ -248,15 +279,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion) && !LocomotionIsBlocked())
                 {
-                    MainCaller.Do(() =>
+                    if(entityLocomotion.LocomotionId>lastReceivedLocomotion && entityLocomotion.LocomotionId >lastTeleportLocomotionID)
                     {
-                    var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
-                    receivedPosition = pos;
-                    var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
-                    targetRotation = rot;
-                    ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
-                        entityLocomotion.AimZ, entityLocomotion.AimW);
-                    });
+                        lastReceivedLocomotion = entityLocomotion.LocomotionId;
+                        MainCaller.Do(() =>
+                        {
+                        var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
+                        receivedPosition = pos;
+                        var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
+                        targetRotation = rot;
+                        ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
+                            entityLocomotion.AimZ, entityLocomotion.AimW);
+                        });
+                    }
                 }
         }
 
@@ -319,6 +354,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        
         [PacketBinding.Binding]
         public void OnEntityTeleport(Packet p)
         {
@@ -336,6 +372,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GetObservedEntity().Teleport(teleportPosition);
                     ResolveLocomotionBlock();
                 });
+                CreateTeleportationCompletion();
             }
         }
 
@@ -365,7 +402,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         public Quaternion lastSentAimRotation;
-        
+        private ulong locomotionID;
         private void UpdateLocomotion()
         {
             if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && !LocomotionIsBlocked() && SendNecessary())
@@ -385,8 +422,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         AimX = aim.x,
                         AimY = aim.y,
                         AimZ = aim.z,
-                        AimW = aim.w
+                        AimW = aim.w,
+                        LocomotionId = locomotionID
                     };
+                    locomotionID++;
                     if (GetObservedEntity().movementOverride)
                     {
                         Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
