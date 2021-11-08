@@ -4,7 +4,6 @@ using Game;
 using General;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
-using PlasticGui.WorkspaceWindow;
 using UnityEngine;
 using UnityEngine.Events;
 using Type = System.Type;
