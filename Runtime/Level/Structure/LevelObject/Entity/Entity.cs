@@ -85,8 +85,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     public virtual  void FixedUpdate()
     {
-        if (transform.position.y < killHeight) Invoke(Kill,true,true);
+        if(Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) PerformSim();
         ComputeCurrentSpeed();
+    }
+
+    public void PerformSim()
+    {
+        if (transform.position.y < killHeight) Kill();
     }
 
     private Vector3 lastPosition;

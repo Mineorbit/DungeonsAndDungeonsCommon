@@ -6,4 +6,5 @@ package General;
 
 message PacketCarrier {
 	repeated General.Packet packets = 1;
+	int32 packetCarrier = 2;
 }
