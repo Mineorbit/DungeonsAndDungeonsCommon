@@ -24,15 +24,15 @@ namespace Game {
     static EntityLocomotionReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChZFbnRpdHlMb2NvbW90aW9uLnByb3RvEgRHYW1lIpsBChBFbnRpdHlMb2Nv",
+            "ChZFbnRpdHlMb2NvbW90aW9uLnByb3RvEgRHYW1lIrEBChBFbnRpdHlMb2Nv",
             "bW90aW9uEgkKAVgYASABKAISCQoBWRgCIAEoAhIJCgFaGAMgASgCEgoKAlFY",
             "GAQgASgCEgoKAlFZGAUgASgCEgoKAlFaGAYgASgCEgoKAlFXGAcgASgCEgwK",
             "BGFpbVgYCCABKAISDAoEYWltWRgJIAEoAhIMCgRhaW1aGAogASgCEgwKBGFp",
-            "bVcYCyABKAJiBnByb3RvMw=="));
+            "bVcYCyABKAISFAoMbG9jb21vdGlvbklkGAwgASgEYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.EntityLocomotion), global::Game.EntityLocomotion.Parser, new[]{ "X", "Y", "Z", "QX", "QY", "QZ", "QW", "AimX", "AimY", "AimZ", "AimW" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.EntityLocomotion), global::Game.EntityLocomotion.Parser, new[]{ "X", "Y", "Z", "QX", "QY", "QZ", "QW", "AimX", "AimY", "AimZ", "AimW", "LocomotionId" }, null, null, null, null)
           }));
     }
     #endregion
@@ -84,6 +84,7 @@ namespace Game {
       aimY_ = other.aimY_;
       aimZ_ = other.aimZ_;
       aimW_ = other.aimW_;
+      locomotionId_ = other.locomotionId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -225,6 +226,18 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "locomotionId" field.</summary>
+    public const int LocomotionIdFieldNumber = 12;
+    private ulong locomotionId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong LocomotionId {
+      get { return locomotionId_; }
+      set {
+        locomotionId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -251,6 +264,7 @@ namespace Game {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AimY, other.AimY)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AimZ, other.AimZ)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AimW, other.AimW)) return false;
+      if (LocomotionId != other.LocomotionId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -269,6 +283,7 @@ namespace Game {
       if (AimY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AimY);
       if (AimZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AimZ);
       if (AimW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AimW);
+      if (LocomotionId != 0UL) hash ^= LocomotionId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -331,6 +346,10 @@ namespace Game {
         output.WriteRawTag(93);
         output.WriteFloat(AimW);
       }
+      if (LocomotionId != 0UL) {
+        output.WriteRawTag(96);
+        output.WriteUInt64(LocomotionId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -385,6 +404,10 @@ namespace Game {
         output.WriteRawTag(93);
         output.WriteFloat(AimW);
       }
+      if (LocomotionId != 0UL) {
+        output.WriteRawTag(96);
+        output.WriteUInt64(LocomotionId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -427,6 +450,9 @@ namespace Game {
       }
       if (AimW != 0F) {
         size += 1 + 4;
+      }
+      if (LocomotionId != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LocomotionId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -472,6 +498,9 @@ namespace Game {
       }
       if (other.AimW != 0F) {
         AimW = other.AimW;
+      }
+      if (other.LocomotionId != 0UL) {
+        LocomotionId = other.LocomotionId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -532,6 +561,10 @@ namespace Game {
             AimW = input.ReadFloat();
             break;
           }
+          case 96: {
+            LocomotionId = input.ReadUInt64();
+            break;
+          }
         }
       }
     #endif
@@ -589,6 +622,10 @@ namespace Game {
           }
           case 93: {
             AimW = input.ReadFloat();
+            break;
+          }
+          case 96: {
+            LocomotionId = input.ReadUInt64();
             break;
           }
         }

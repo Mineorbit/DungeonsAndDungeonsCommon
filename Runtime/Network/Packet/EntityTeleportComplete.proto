@@ -1,0 +1,6 @@
+syntax = "proto3";
+package game;
+
+message EntityTeleportComplete {
+	uint64 lastLocomotionId = 1;
+}
