@@ -24,37 +24,46 @@ namespace General {
     static PacketReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxQYWNrZXQucHJvdG8SB0dlbmVyYWwaCWFueS5wcm90byJwCgZQYWNrZXQS",
-            "DAoEdHlwZRgBIAEoCRIPCgdIYW5kbGVyGAIgASgJEiUKB2NvbnRlbnQYAyAB",
-            "KAsyFC5nb29nbGUucHJvdG9idWYuQW55EhAKCGlkZW50aXR5GAQgASgFEg4K",
-            "BnNlbmRlchgFIAEoBWIGcHJvdG8z"));
+            "CgxQYWNrZXQucHJvdG8SB0dlbmVyYWwaCWFueS5wcm90byKIAQoGUGFja2V0",
+            "EgwKBHR5cGUYASABKAkSDwoHSGFuZGxlchgCIAEoCRIlCgdjb250ZW50GAMg",
+            "ASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueRIQCghpZGVudGl0eRgEIAEoBRIO",
+            "CgZzZW5kZXIYBSABKAUSFgoOcGFja2V0SWRlbnRpdHkYBiABKAViBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::General.Packet), global::General.Packet.Parser, new[]{ "Type", "Handler", "Content", "Identity", "Sender" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::General.Packet), global::General.Packet.Parser, new[]{ "Type", "Handler", "Content", "Identity", "Sender", "PacketIdentity" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Messages
-  public sealed partial class Packet : pb::IMessage<Packet> {
+  public sealed partial class Packet : pb::IMessage<Packet>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
     private static readonly pb::MessageParser<Packet> _parser = new pb::MessageParser<Packet>(() => new Packet());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<Packet> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::General.PacketReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public Packet() {
       OnConstruction();
     }
@@ -62,16 +71,19 @@ namespace General {
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public Packet(Packet other) : this() {
       type_ = other.type_;
       handler_ = other.handler_;
       content_ = other.content_ != null ? other.content_.Clone() : null;
       identity_ = other.identity_;
       sender_ = other.sender_;
+      packetIdentity_ = other.packetIdentity_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public Packet Clone() {
       return new Packet(this);
     }
@@ -80,6 +92,7 @@ namespace General {
     public const int TypeFieldNumber = 1;
     private string type_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Type {
       get { return type_; }
       set {
@@ -91,6 +104,7 @@ namespace General {
     public const int HandlerFieldNumber = 2;
     private string handler_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Handler {
       get { return handler_; }
       set {
@@ -102,6 +116,7 @@ namespace General {
     public const int ContentFieldNumber = 3;
     private global::Google.Protobuf.WellKnownTypes.Any content_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Google.Protobuf.WellKnownTypes.Any Content {
       get { return content_; }
       set {
@@ -113,6 +128,7 @@ namespace General {
     public const int IdentityFieldNumber = 4;
     private int identity_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int Identity {
       get { return identity_; }
       set {
@@ -124,6 +140,7 @@ namespace General {
     public const int SenderFieldNumber = 5;
     private int sender_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int Sender {
       get { return sender_; }
       set {
@@ -131,12 +148,26 @@ namespace General {
       }
     }
 
+    /// <summary>Field number for the "packetIdentity" field.</summary>
+    public const int PacketIdentityFieldNumber = 6;
+    private int packetIdentity_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PacketIdentity {
+      get { return packetIdentity_; }
+      set {
+        packetIdentity_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
       return Equals(other as Packet);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Equals(Packet other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -149,10 +180,12 @@ namespace General {
       if (!object.Equals(Content, other.Content)) return false;
       if (Identity != other.Identity) return false;
       if (Sender != other.Sender) return false;
+      if (PacketIdentity != other.PacketIdentity) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
       if (Type.Length != 0) hash ^= Type.GetHashCode();
@@ -160,6 +193,7 @@ namespace General {
       if (content_ != null) hash ^= Content.GetHashCode();
       if (Identity != 0) hash ^= Identity.GetHashCode();
       if (Sender != 0) hash ^= Sender.GetHashCode();
+      if (PacketIdentity != 0) hash ^= PacketIdentity.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -167,12 +201,17 @@ namespace General {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
       if (Type.Length != 0) {
         output.WriteRawTag(10);
         output.WriteString(Type);
@@ -193,12 +232,52 @@ namespace General {
         output.WriteRawTag(40);
         output.WriteInt32(Sender);
       }
+      if (PacketIdentity != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(PacketIdentity);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
+    #endif
     }
 
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Type.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Type);
+      }
+      if (Handler.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Handler);
+      }
+      if (content_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Content);
+      }
+      if (Identity != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Identity);
+      }
+      if (Sender != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Sender);
+      }
+      if (PacketIdentity != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(PacketIdentity);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
       if (Type.Length != 0) {
@@ -216,6 +295,9 @@ namespace General {
       if (Sender != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Sender);
       }
+      if (PacketIdentity != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PacketIdentity);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -223,6 +305,7 @@ namespace General {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(Packet other) {
       if (other == null) {
         return;
@@ -245,11 +328,18 @@ namespace General {
       if (other.Sender != 0) {
         Sender = other.Sender;
       }
+      if (other.PacketIdentity != 0) {
+        PacketIdentity = other.PacketIdentity;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -279,9 +369,56 @@ namespace General {
             Sender = input.ReadInt32();
             break;
           }
+          case 48: {
+            PacketIdentity = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Type = input.ReadString();
+            break;
+          }
+          case 18: {
+            Handler = input.ReadString();
+            break;
+          }
+          case 26: {
+            if (content_ == null) {
+              Content = new global::Google.Protobuf.WellKnownTypes.Any();
+            }
+            input.ReadMessage(Content);
+            break;
+          }
+          case 32: {
+            Identity = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            Sender = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            PacketIdentity = input.ReadInt32();
+            break;
+          }
         }
       }
     }
+    #endif
 
   }
 

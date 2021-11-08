@@ -25,12 +25,12 @@ namespace General {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChNQYWNrZXRDYXJyaWVyLnByb3RvEgdHZW5lcmFsGgxQYWNrZXQucHJvdG8i",
-            "MQoNUGFja2V0Q2FycmllchIgCgdwYWNrZXRzGAEgAygLMg8uR2VuZXJhbC5Q",
-            "YWNrZXRiBnByb3RvMw=="));
+            "SAoNUGFja2V0Q2FycmllchIgCgdwYWNrZXRzGAEgAygLMg8uR2VuZXJhbC5Q",
+            "YWNrZXQSFQoNcGFja2V0Q2FycmllchgCIAEoBWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::General.PacketReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::General.PacketCarrier), global::General.PacketCarrier.Parser, new[]{ "Packets" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::General.PacketCarrier), global::General.PacketCarrier.Parser, new[]{ "Packets", "PacketCarrier_" }, null, null, null, null)
           }));
     }
     #endregion
@@ -45,19 +45,23 @@ namespace General {
     private static readonly pb::MessageParser<PacketCarrier> _parser = new pb::MessageParser<PacketCarrier>(() => new PacketCarrier());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<PacketCarrier> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::General.PacketCarrierReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public PacketCarrier() {
       OnConstruction();
     }
@@ -65,12 +69,15 @@ namespace General {
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public PacketCarrier(PacketCarrier other) : this() {
       packets_ = other.packets_.Clone();
+      packetCarrier_ = other.packetCarrier_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public PacketCarrier Clone() {
       return new PacketCarrier(this);
     }
@@ -81,16 +88,31 @@ namespace General {
         = pb::FieldCodec.ForMessage(10, global::General.Packet.Parser);
     private readonly pbc::RepeatedField<global::General.Packet> packets_ = new pbc::RepeatedField<global::General.Packet>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::General.Packet> Packets {
       get { return packets_; }
     }
 
+    /// <summary>Field number for the "packetCarrier" field.</summary>
+    public const int PacketCarrier_FieldNumber = 2;
+    private int packetCarrier_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PacketCarrier_ {
+      get { return packetCarrier_; }
+      set {
+        packetCarrier_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
       return Equals(other as PacketCarrier);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Equals(PacketCarrier other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -99,13 +121,16 @@ namespace General {
         return true;
       }
       if(!packets_.Equals(other.packets_)) return false;
+      if (PacketCarrier_ != other.PacketCarrier_) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
       hash ^= packets_.GetHashCode();
+      if (PacketCarrier_ != 0) hash ^= PacketCarrier_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -113,16 +138,22 @@ namespace General {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void WriteTo(pb::CodedOutputStream output) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
       packets_.WriteTo(output, _repeated_packets_codec);
+      if (PacketCarrier_ != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(PacketCarrier_);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -131,8 +162,13 @@ namespace General {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       packets_.WriteTo(ref output, _repeated_packets_codec);
+      if (PacketCarrier_ != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(PacketCarrier_);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -140,9 +176,13 @@ namespace General {
     #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
       size += packets_.CalculateSize(_repeated_packets_codec);
+      if (PacketCarrier_ != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PacketCarrier_);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -150,15 +190,20 @@ namespace General {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(PacketCarrier other) {
       if (other == null) {
         return;
       }
       packets_.Add(other.packets_);
+      if (other.PacketCarrier_ != 0) {
+        PacketCarrier_ = other.PacketCarrier_;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(pb::CodedInputStream input) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       input.ReadRawMessage(this);
@@ -173,6 +218,10 @@ namespace General {
             packets_.AddEntriesFrom(input, _repeated_packets_codec);
             break;
           }
+          case 16: {
+            PacketCarrier_ = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -180,6 +229,7 @@ namespace General {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -189,6 +239,10 @@ namespace General {
             break;
           case 10: {
             packets_.AddEntriesFrom(ref input, _repeated_packets_codec);
+            break;
+          }
+          case 16: {
+            PacketCarrier_ = input.ReadInt32();
             break;
           }
         }

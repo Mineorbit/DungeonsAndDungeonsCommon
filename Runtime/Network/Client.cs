@@ -36,6 +36,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static int receivedPacketCarriers;
         public static int handledPackets;
 
+        public int lastSentPacketCarrier = 0;
+        public int lastReceivedPacketCarrier = 0;
+
         // THIS DOES NOT YET WORK WHEN INCREASING
         private readonly int maxSendCount = 1;
 
