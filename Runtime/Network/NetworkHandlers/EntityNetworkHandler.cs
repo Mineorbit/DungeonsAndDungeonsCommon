@@ -76,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 RequestRemoval();
         }
 
-        private int locomotionBlocks = 0;
+        public int locomotionBlocks = 0;
         
         void ResolveLocomotionBlock()
         {
