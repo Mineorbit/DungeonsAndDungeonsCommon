@@ -244,6 +244,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Kickback(dir,2f);
         }
         
+        public bool ApplyMovement = true;
+        
         public Quaternion aimRotation;
 
         

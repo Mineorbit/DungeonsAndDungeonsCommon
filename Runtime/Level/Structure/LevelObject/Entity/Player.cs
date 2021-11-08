@@ -98,7 +98,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (PlayerController) controller;
         }
 
-        public bool ApplyMovement = true;
         
         public void MoveFixed()
         {
