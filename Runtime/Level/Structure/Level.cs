@@ -188,17 +188,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void ResetIdentitifiedObjects()
+        public void ResetIdentitifiedObjects(bool exceptPlayers = true)
         {
             // NetworkLevelObject.identifiedLevelObjects.Clear();
             // foreach ()
             // THIS IS STOLEN FROM STACKOVERFLOW AN SHOULD BE REPLACED
-            var goneValues = NetworkLevelObject.identifiedLevelObjects.Where(pair => pair.Value == null)
-                .Select(pair => pair.Key)
-                .ToList();
-            foreach (var goneValue in goneValues)
+            if(exceptPlayers)
             {
-                NetworkLevelObject.identifiedLevelObjects.Remove(goneValue);
+                var toRemove = LevelManager.currentLevel.GetComponentsInChildren<NetworkLevelObject>()
+                    .Select((x) =>  x.Identity);
+                foreach (int r in toRemove)
+                    NetworkLevelObject.identifiedLevelObjects.Remove(r);
+            }else
+            {
+                NetworkLevelObject.identifiedLevelObjects.Clear();
             }
         }
         
@@ -222,7 +225,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                 	foreach(int identity in levelObjectInstance.Receivers)
                 	{
-                		GameConsole.Log("Adding Receiver "+identity);
+                		GameConsole.Log("Adding Receiver "+identity+" from LevelObjectInstance");
                 		interactiveLevelObject.AddReceiver(identity);
                 	}
                 }

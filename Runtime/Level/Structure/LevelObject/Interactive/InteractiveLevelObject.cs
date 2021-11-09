@@ -15,6 +15,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Dictionary<int, InteractiveLevelObject>
             receivers = new Dictionary<int, InteractiveLevelObject>();
 
+        
+        
+        Queue<int> receiversToAdd = new Queue<int>();
+        
         public virtual void OnDestroy()
         {
             foreach (var w in inBoundWires) LevelManager.currentLevel.RemoveDynamic(w);
@@ -55,13 +59,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             outBoundWires.Remove(wireToO);
         }
-	
-	Queue<int> receiversToAdd = new Queue<int>();
+
+        public void AddToQueue(int identity)
+        {
+            if (!(receivers.ContainsKey(identity)))
+            {
+                receiversToAdd.Enqueue(identity);
+                GameConsole.Log($"Added {identity} to Receiver Adding Queue");
+            }
+            else
+            {
+                GameConsole.Log($"{identity} is allready a receiver");
+            }
+        }
+        
         public void AddReceiver(int identity)
         {
             GameConsole.Log("Adding Receiver " + identity);
-            if (!(receivers.ContainsKey(identity)))
-                receiversToAdd.Enqueue(identity);
+            AddToQueue(identity);
             FindReceivers();
         }
 
@@ -104,16 +119,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
             	int receiverIdentity = receiversToAdd.Dequeue();
             	
-            	GameConsole.Log("Trying to add Receiver for real");
                 NetworkLevelObject receiver = NetworkLevelObject.FindByIdentity(receiverIdentity);
                 	
                 	if(receiver != null)
                 	{
+                        GameConsole.Log($"Found receiver {receiver} for {receiverIdentity}");
                         var r = (InteractiveLevelObject) receiver;
                         AddReceiverDynamic(receiverIdentity, r);
                     }else
                     {
-                        receiversToAdd.Enqueue(receiverIdentity);
+                        AddToQueue(receiverIdentity);
                     }
             }
         }
