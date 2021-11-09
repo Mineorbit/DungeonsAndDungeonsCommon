@@ -81,6 +81,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void ResolveLocomotionBlock()
         {
             targetPosition = transform.position;
+            receivedPosition = transform.position;
             GetObservedEntity().ApplyMovement = IsOwner();
             GetObservedEntity().controller.enabled = !isOnServer;
             GetObservedEntity().setMovementStatus(true);
@@ -96,6 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             locomotionBlocks++;
             blockPosition = bPosition;
             targetPosition = bPosition;
+            receivedPosition = bPosition;
             GetObservedEntity().ApplyMovement = false;
             GetObservedEntity().controller.enabled = false;
             GetObservedEntity().setMovementStatus(false);
