@@ -133,13 +133,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		        a.DynamicInvoke();
 	        }
 
-	        if (levelObjectNetworkHandler.CallActionOnOther(doLocal, doServer))
+	        if(levelObjectNetworkHandler != null)
 	        {
-		        if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
-			        if (identified)
-				        levelObjectNetworkHandler.SendAction(a.Method.Name);
-			        else
-				        todo.Enqueue(() => { Invoke(a); });
+				if (levelObjectNetworkHandler.CallActionOnOther(doLocal, doServer))
+				{
+					if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
+						if (identified)
+							levelObjectNetworkHandler.SendAction(a.Method.Name);
+						else
+							todo.Enqueue(() => { Invoke(a); });
+				}
+	        }
+	        else
+	        {
+		        GameConsole.Log($"{this} has no Networkhandler to Call from");
 	        }
         }
         /*
