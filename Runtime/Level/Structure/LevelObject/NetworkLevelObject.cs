@@ -103,7 +103,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		// but in real multiplayer only depending on the conditionals
         public bool CallOnThisSide(bool doLocal, bool doServer)
         {
-	        return Level.instantiateType == Level.InstantiateType.Test ||
+	        return Level.instantiateType == Level.InstantiateType.Edit ||
+	               Level.instantiateType == Level.InstantiateType.Test ||
 	               doLocal && (Level.instantiateType == Level.InstantiateType.Online)
 	               || doServer && Level.instantiateType == Level.InstantiateType.Play;
         }
