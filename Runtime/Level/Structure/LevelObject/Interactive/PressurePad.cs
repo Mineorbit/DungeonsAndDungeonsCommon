@@ -69,6 +69,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void ResetState()
         {
             base.ResetState();
+            GameConsole.Log("Button Reset");
             bool retToUnp = returnToUnpress;
             returnToUnpress = true;
             Deactivate();

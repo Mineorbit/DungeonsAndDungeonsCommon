@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void ResetState()
         {
-            
+            GameConsole.Log($"Resetting State of {this}");
         }
 
 
@@ -108,7 +108,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Resetting "+this);
             base.OnEndRound();
-            Invoke(HandleReset, doLocal:true, doServer: false);
+            Invoke(HandleReset, doLocal:true, doServer: true);
         }
         
         // Will try to find receiver at that location, if not found, will drop that receiver
