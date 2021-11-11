@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public bool CallActionOnOther(bool localCond, bool serverCond)
+        public virtual bool CallActionOnOther(bool localCond, bool serverCond)
         {
             if (NetworkManager.instance.localId == -1)
             {
@@ -46,6 +46,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             
         }
+
+        public virtual bool AcceptAction(Packet p)
+        {
+            return true;
+        }
         
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
         [PacketBinding.Binding]
@@ -55,6 +60,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (p.Content.TryUnpack(out levelObjectAction))
             {
                 GameConsole.Log($"{p.Sender} asked {this} to do {levelObjectAction} ");
+
+                if (!AcceptAction(p)) return;
+                
                 var methodInfo = observed.GetType().GetMethod(levelObjectAction.ActionName);
 
                 var parameters = new List<object>();
