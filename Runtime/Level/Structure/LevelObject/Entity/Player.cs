@@ -254,6 +254,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AttachRightItem(Item item)
         {
+            GameConsole.Log($"Player {localId} calling AttachRight {GetLeftHandHandle().Empty()}");
             if(GetRightHandHandle().Empty())
             {
                 GetRightHandHandle().Attach(item);
