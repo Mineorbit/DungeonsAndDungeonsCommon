@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3063199850307290339, guid: e404337701eeb804c814afaa1c50636b, type: 3}
   uniqueLevelObjectId: 470026041
-  granularity: 2
+  granularity: 1
   levelObjectName: Pillar
   dynamicInstantiable: 0
   levelInstantiable: 1
