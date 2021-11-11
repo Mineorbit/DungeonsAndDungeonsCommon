@@ -412,6 +412,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return sendDist > sendDistance || sendRotAngle > sendAngle || needMinimalSend;
         }
 
+        public override bool CallActionOnOther(bool localCond, bool serverCond)
+        {
+            return CallActionOnOther(localCond, serverCond) && (isOnServer || IsOwner());
+        }
+        
+        public override bool AcceptAction(Packet p)
+        {
+            if (NetworkManager.instance.localId == -1 && p.Sender != owner) return false;
+            else
+            {
+                return true;
+            }
+        }
+        
         public Quaternion lastSentAimRotation;
         private ulong locomotionID;
         private void UpdateLocomotion()
