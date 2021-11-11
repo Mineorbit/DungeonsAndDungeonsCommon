@@ -414,7 +414,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override bool CallActionOnOther(bool localCond, bool serverCond)
         {
-            return CallActionOnOther(localCond, serverCond) && (isOnServer || IsOwner());
+            return base.CallActionOnOther(localCond, serverCond) && (isOnServer || IsOwner());
         }
         
         public override bool AcceptAction(Packet p)
