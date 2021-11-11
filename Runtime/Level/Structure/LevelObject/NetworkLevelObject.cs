@@ -117,6 +117,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        }
 	        if(levelObjectNetworkHandler.CallActionOnOther(doLocal,doServer))
 	        {
+		        GameConsole.Log($"Asking other to do {a.Method.Name}");
 				if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
 					if (identified)
 						levelObjectNetworkHandler.SendAction(a.Method.Name,
