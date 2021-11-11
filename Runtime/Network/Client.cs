@@ -272,7 +272,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (Connected)
             {
                 p.Sender = NetworkManager.instance.localId;
-                GameConsole.Log($"Sending {p}");
+                GameConsole.Log($"Sending {localid} {p}");
                 if (TCP)
                 {
                     if (overrideSame)
