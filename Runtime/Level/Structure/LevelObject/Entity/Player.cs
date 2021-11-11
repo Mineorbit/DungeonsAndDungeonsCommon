@@ -211,7 +211,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Invoke(DettachLeftHandItem,true,true);
                 Invoke(DettachRightHandItem,true,true);
                 Invoke(DettachLeftBackItem,true,true);
-                Invoke(DettachRightBackItem,false,true);
+                Invoke(DettachRightBackItem,true,true);
             }
         }
 
