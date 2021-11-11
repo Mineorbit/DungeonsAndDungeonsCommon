@@ -64,9 +64,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public override void ProcessAction(Packet p)
         {
-            if (isOnServer) Server.instance.WriteToAllExcept(p, GetObservedPlayer().localId);
-
+            // THIS NEEDS TO HAPPEN BEFORE, BEACUSE p CHANGES THE SENDER NUMBER
             base.ProcessAction(p);
+            
+            if (isOnServer) Server.instance.WriteToAllExcept(p, GetObservedPlayer().localId);
         }
 
         public override void RequestRemoval()
