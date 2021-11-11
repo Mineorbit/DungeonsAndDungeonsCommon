@@ -188,6 +188,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             baseAnimator.speed = speed / 3;
         }
 
+        public void Interact()
+        {
+            UpdateEquipItem();
+        }
+        
         public void UpdateEquipItem()
         {
             var toAttach = itemsInProximity.Find(x => !x.isEquipped);

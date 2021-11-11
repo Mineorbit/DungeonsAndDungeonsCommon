@@ -189,7 +189,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
-                player.Invoke(player.UpdateEquipItem, false, true);
+                player.Invoke(player.Interact, true, true);
             }
         }
 
