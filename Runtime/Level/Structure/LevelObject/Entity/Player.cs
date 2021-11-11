@@ -191,7 +191,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void UpdateEquipItem()
         {
             var toAttach = itemsInProximity.Find(x => !x.isEquipped);
-            if (toAttach != null)
+            if (toAttach != null && !toAttach.isEquipped)
             {
                 if (toAttach.equipSide == Item.Side.Left)
                 {
@@ -211,7 +211,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Invoke(DettachLeftHandItem,true,true);
                 Invoke(DettachRightHandItem,true,true);
                 Invoke(DettachLeftBackItem,true,true);
-                Invoke(DettachRightBackItem,true,true);
+                Invoke(DettachRightBackItem,false,true);
             }
         }
 
@@ -236,6 +236,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AttachLeftItem(Item item)
         {
+            GameConsole.Log($"Player {localId} calling AttachLeft {GetLeftHandHandle().Empty()}");
             if(GetLeftHandHandle().Empty())
             {
                 GetLeftHandHandle().Attach(item);
