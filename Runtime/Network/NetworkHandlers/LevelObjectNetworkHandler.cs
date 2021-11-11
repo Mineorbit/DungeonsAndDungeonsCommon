@@ -54,7 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelObjectAction levelObjectAction;
             if (p.Content.TryUnpack(out levelObjectAction))
             {
-            	GameConsole.Log(this+" processing "+levelObjectAction);
+                GameConsole.Log($"{p.Sender} asked {this} to do {levelObjectAction} ");
                 var methodInfo = observed.GetType().GetMethod(levelObjectAction.ActionName);
 
                 var parameters = new List<object>();
