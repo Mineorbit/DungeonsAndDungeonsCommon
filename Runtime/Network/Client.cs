@@ -271,7 +271,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (Connected)
             {
-                p.Sender = localid;
+                p.Sender = NetworkManager.instance.localId;
                 if (TCP)
                 {
                     if (overrideSame)
