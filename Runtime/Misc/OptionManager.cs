@@ -88,7 +88,6 @@ public class OptionManager : MonoBehaviour
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
         }
     }
     
