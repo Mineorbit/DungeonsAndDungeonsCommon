@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using com.mineorbit.dungeonsanddungeonscommon;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -16,9 +17,14 @@ public class OptionManager : MonoBehaviour
     public static Dictionary<string, Option> options;
 
     private static string optionFilePath;
+    
 
     public FileStructureProfile settingsFolder;
 
+    public static OptionManager instance;
+
+    public PlayerInput[] playerInputs;
+    
     public void Awake()
     {
         optionFilePath = settingsFolder.GetPath() + "settings.txt";
@@ -27,6 +33,13 @@ public class OptionManager : MonoBehaviour
             Load();
         else
             SetupOptionsFile();
+
+        if (instance != null)
+        {
+            instance = this;
+        }
+        
+        LoadKeyBindings();
     }
 
     private async void SetupOptionsFile()
@@ -35,7 +48,50 @@ public class OptionManager : MonoBehaviour
         Save();
     }
 
+    public string[] bindingNames;
+    
+    public void LoadKeyBindings()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            LoadKeyBinding(i);
+        }
+    }
 
+    public void LoadKeyBinding(int i)
+    {
+
+        string path = settingsFolder.GetPath() + bindingNames[i];
+        if (File.Exists(path))
+        {
+            string data = File.ReadAllText(path);
+            playerInputs[i].actions.LoadBindingOverridesFromJson(data);
+        }
+    }
+    
+    public static void SaveKeyBindings()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            instance.SaveKeyBinding(i);
+        }
+    }
+
+    public void SaveKeyBinding(int i)
+    {
+        string path = settingsFolder.GetPath() + bindingNames[i];
+        File.Delete(path);
+        try
+        {
+            File.WriteAllText(path,playerInputs[i].actions.SaveBindingOverridesAsJson());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
     private void SetupOptions()
     {
         optionHandlers = new Dictionary<string, OptionHandler>();
