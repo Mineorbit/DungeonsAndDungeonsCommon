@@ -54,7 +54,7 @@ public class OptionManager : MonoBehaviour
     
     public void LoadKeyBindings()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < playerInputs.Length; i++)
         {
             LoadKeyBinding(i);
         }
@@ -73,7 +73,7 @@ public class OptionManager : MonoBehaviour
     
     public static void SaveKeyBindings()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < instance.playerInputs.Length; i++)
         {
             instance.SaveKeyBinding(i);
         }
