@@ -5,3 +5,7 @@ Projects using this package need to add layers:
 
 10 - floor
 
+# Dependencies
+
+InputSystem 1.1.1
+
