@@ -27,6 +27,11 @@ public class OptionManager : MonoBehaviour
     
     public void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        
         optionFilePath = settingsFolder.GetPath() + "settings.txt";
         SetupOptions();
         if (File.Exists(optionFilePath))
@@ -34,10 +39,7 @@ public class OptionManager : MonoBehaviour
         else
             SetupOptionsFile();
 
-        if (instance != null)
-        {
-            instance = this;
-        }
+       
         
         LoadKeyBindings();
     }
