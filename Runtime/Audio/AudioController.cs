@@ -9,18 +9,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private AudioSource[][] audioSources;
         private int[] currentPlay;
 
-        private void Awake()
+        public void Awake()
         {
             audioSources = new AudioSource[audioProfiles.Length][];
             SetupAudioProfiles();
         }
 
-        private void SetupAudioProfiles()
+        public void SetupAudioProfiles()
         {
+            GameConsole.Log($"Setting up Audio Sources for {this}");
             var j = 0;
             currentPlay = new int[audioProfiles.Length];
             foreach (var ap in audioProfiles)
             {
+                GameConsole.Log(ap.ToString());
                 audioSources[j] = new AudioSource[ap.audioClip.Length];
                 var i = 0;
                 foreach (var c in ap.audioClip)

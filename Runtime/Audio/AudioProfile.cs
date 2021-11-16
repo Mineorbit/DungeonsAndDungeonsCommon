@@ -32,6 +32,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool loop;
         public AudioClip[] audioClip;
 
+        public string ToString()
+        {
+            return audioType.ToString() + " " + audioClip.ToString();
+        }
+        
         public float VolumeCoefficient()
         {
             if (audioType == AudioType.SFX) return SFXVolume;
