@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1309726771771662545}
   - component: {fileID: 2637835724840263655}
+  - component: {fileID: 3974996178351959387}
   m_Layer: 0
   m_Name: ButtonModel
   m_TagString: Untagged
@@ -46,6 +47,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonHead: {fileID: 4543437977899375144}
+  buttonPressEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3974996178351959387}
+        m_TargetAssemblyTypeName: com.mineorbit.dungeonsanddungeonscommon.ButtonAudioController,
+          com.mineorbit.dungeonsanddungeonscommon
+        m_MethodName: OnPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  buttonUnpressEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3974996178351959387}
+        m_TargetAssemblyTypeName: com.mineorbit.dungeonsanddungeonscommon.ButtonAudioController,
+          com.mineorbit.dungeonsanddungeonscommon
+        m_MethodName: OnUnpress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3974996178351959387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392880295502151190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9325fd03f1b3b1342acd6c242f118adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioProfiles:
+  - {fileID: 11400000, guid: 34cd436a9b1f4bf47bae6e889d0e602c, type: 2}
 --- !u!1 &539012106732983490
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,6 +145,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -195,6 +243,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
