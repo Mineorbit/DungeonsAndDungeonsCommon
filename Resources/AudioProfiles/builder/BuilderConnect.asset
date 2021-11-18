@@ -16,8 +16,8 @@ MonoBehaviour:
   overloading: 0
   onAwake: 0
   relativePosition: {x: 0, y: 0, z: 0}
-  minVolume: 0.125
-  maxVolume: 0.25
+  minVolume: 0.0625
+  maxVolume: 0.0625
   spatialFactor: 0
   loop: 1
   audioClip:
