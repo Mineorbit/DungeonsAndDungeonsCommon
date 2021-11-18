@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -8,8 +9,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Transform buttonHead;
 
 
+        public UnityEvent buttonPressEvent = new UnityEvent();
+        public UnityEvent buttonUnpressEvent = new UnityEvent();
+        
         private IEnumerator PressAnimation()
         {
+            buttonPressEvent.Invoke();
             var time = 0.25f;
             float elapsedTime = 0;
 
@@ -27,6 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private IEnumerator UnpressAnimation()
         {
+            buttonUnpressEvent.Invoke();
             var time = 0.25f;
             float elapsedTime = 0;
 
