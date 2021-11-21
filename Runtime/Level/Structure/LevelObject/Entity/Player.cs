@@ -93,6 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     forwardDir.y = 0;
                     forwardDir.Normalize();
                     float angle = Vector3.Angle(forwardDir, dir);
+                    GameConsole.Log($"WE GOT ANGLE {angle}");
                     if (angle < shield.blockAngle)
                     {
                         return true;
