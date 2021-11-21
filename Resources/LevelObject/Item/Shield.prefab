@@ -95,7 +95,10 @@ MonoBehaviour:
   hitCooldownTime: 1
   movementOverride: 0
   lastSpeeds: []
+  lastSpeedDirections: []
   speed: 0
+  speedDirection: {x: 0, y: 0, z: 0}
+  ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   rigidBody: {fileID: 2367929392713539500}
   useTime: 0.25
@@ -113,7 +116,10 @@ MonoBehaviour:
   onDettachEvent:
     m_PersistentCalls:
       m_Calls: []
+  itemHandle: {fileID: 0}
   equipSide: 1
+  raised: 0
+  blockAngle: 50
 --- !u!54 &2367929392713539500
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -145,14 +151,19 @@ MonoBehaviour:
   observed: {fileID: 0}
   disabled_observed: 1
   isSetup: 0
-  isOwner: 0
   owner: -1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0}
+  lastSentPosition: {x: 0, y: 0, z: 0}
+  lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
   teleportPosition: {x: 0, y: 0, z: 0}
-  blockExists: 0
+  transmitPosition: 1
+  interpolatePosition: 1
+  locomotionBlocks: 0
   blockPosition: {x: 0, y: 0, z: 0}
   receivedPosition: {x: 0, y: 0, z: 0}
+  sendAngle: 0.05
+  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &1180454918657549767
 PrefabInstance:
   m_ObjectHideFlags: 0
