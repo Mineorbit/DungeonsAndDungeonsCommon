@@ -283,7 +283,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     if (HitBlocked( ( hitter.transform.position - transform.position)))
                     {
-                        Invoke(BlockHit);
+                        BlockHit();
                         return;
                     }
                     
