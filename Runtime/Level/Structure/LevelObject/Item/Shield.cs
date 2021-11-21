@@ -37,7 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool raised = false;
 
-        public float blockAngle = 10;
+        public float blockAngle = 25;
 
         
         public void BlockAttackEffect()

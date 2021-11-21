@@ -89,7 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     dir.y = 0;
                     dir.Normalize();
 
-                    Vector3 forwardDir = transform.forward;
+                    Vector3 forwardDir = -transform.forward;
                     forwardDir.y = 0;
                     forwardDir.Normalize();
                     float angle = Vector3.Angle(forwardDir, dir);
