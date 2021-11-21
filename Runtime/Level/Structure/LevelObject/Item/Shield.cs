@@ -34,10 +34,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             ((PlayerBaseAnimator)owner.baseAnimator).LowerShield();
         }
+
+        public bool raised = false;
+
+        public float blockAngle = 10;
+        
         public override void Use()
         {
             base.Use();
-            owner.invincible = true;
+            raised = true;
             Invoke(RaiseShieldEffect,true);
             owner.Invoke(owner.setMovementStatus, false);
         }
@@ -45,7 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void StopUse()
         {
             base.StopUse();
-            owner.invincible = false;
+            raised = false;
             Invoke(LowerShieldEffect,true);
             owner.Invoke(owner.setMovementStatus, true);
         }

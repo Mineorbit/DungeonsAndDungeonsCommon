@@ -61,6 +61,52 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public bool HasShieldInHand()
+        {
+            if (GetRightHandHandle().slot != null)
+            {
+
+                if (GetRightHandHandle().slot.GetType() == typeof(Shield))
+                {
+                    return true;
+                }
+                
+            }
+
+            return false;
+        }
+
+        
+        
+        public override bool HitBlocked(Vector3 hitDirection)
+        {
+            if (HasShieldInHand())
+            {
+                Shield shield = (Shield) GetRightHandHandle().slot;
+                if (shield.raised)
+                {
+                    Vector3 dir = hitDirection;
+                    dir.y = 0;
+                    dir.Normalize();
+
+                    Vector3 forwardDir = transform.forward;
+                    forwardDir.y = 0;
+                    forwardDir.Normalize();
+                    float angle = Vector3.Angle(forwardDir, dir);
+                    if (angle < shield.blockAngle)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public override void BlockHit()
+        {
+            
+        }
+        
         private bool lastGrounded = false;
 
         public void UpdateGround()

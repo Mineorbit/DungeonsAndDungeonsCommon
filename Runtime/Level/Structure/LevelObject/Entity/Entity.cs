@@ -261,7 +261,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return aimRotation;
         }
         
+        
+        public virtual bool HitBlocked(Vector3 hitDirection)
+        {
+            return false;
+        }
 
+        public virtual void BlockHit()
+        {
+            
+        }
 
         private int pointsForKill = 100;
 
@@ -272,6 +281,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Level.instantiateType == Level.InstantiateType.Test)
                 if (!invincible && !hitCooldown)
                 {
+                    if (HitBlocked( ( hitter.transform.position - transform.position)))
+                    {
+                        Invoke(BlockHit);
+                        return;
+                    }
+                    
                     Invoke(setMovementStatus, false);
                     Invoke(HitEffect,hitter.transform.position);
 
