@@ -104,7 +104,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void BlockHit()
         {
-            
+            if (HasShieldInHand())
+            {
+                Shield shield = (Shield) GetRightHandHandle().slot;
+                shield.Invoke(shield.BlockAttackEffect);
+            }
         }
         
         private bool lastGrounded = false;
