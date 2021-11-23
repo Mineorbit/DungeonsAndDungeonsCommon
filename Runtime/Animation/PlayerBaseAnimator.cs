@@ -34,6 +34,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             animator.SetBool("RaiseShield",false);
         }
 
+        public void BlockShield()
+        {
+            animator.SetTrigger("BlockShield");
+        }
+
 
         private bool playingDust = false;
         
