@@ -35,6 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((PlayerBaseAnimator)owner.baseAnimator).LowerShield();
         }
 
+        
         public bool raised = false;
 
         public float blockAngle = 50;
@@ -42,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void BlockAttackEffect()
         {
-            
+            ((PlayerBaseAnimator)owner.baseAnimator).BlockShield();
         }
         
         public override void Use()
