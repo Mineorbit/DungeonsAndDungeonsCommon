@@ -604,7 +604,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.16666667
-        value: {x: 0, y: 0, z: 0.33}
+        value: {x: 0, y: 0, z: 0.56}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -2765,7 +2765,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: 0.33
+        value: 0.56
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2955,7 +2955,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: character/abdomen/pelvis.L
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2965,7 +2965,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: character/abdomen/pelvis.L
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2975,7 +2975,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: character/abdomen/pelvis.L
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2985,7 +2985,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: character/torso/shoulder.R
+    path: character/torso/shoulder.L/upperarm.L
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2995,7 +2995,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: character/torso/shoulder.R
+    path: character/torso/shoulder.L/upperarm.L
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3005,7 +3005,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: character/torso/shoulder.R
+    path: character/torso/shoulder.L/upperarm.L
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3015,7 +3015,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: 
+    path: character/torso/shoulder.R/upperarm.R/lowerarm.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3025,7 +3025,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: 
+    path: character/torso/shoulder.R/upperarm.R/lowerarm.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3035,7 +3035,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: 
+    path: character/torso/shoulder.R/upperarm.R/lowerarm.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3075,7 +3075,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: character/torso/shoulder.L
+    path: character/torso/neck/head
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3085,7 +3085,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: character/torso/shoulder.L
+    path: character/torso/neck/head
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3095,7 +3095,37 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: character/torso/shoulder.L
+    path: character/torso/neck/head
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: character/abdomen/pelvis.L
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: character/abdomen/pelvis.L
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: character/abdomen/pelvis.L
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3195,7 +3225,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: character/torso/neck/head
+    path: character/torso/shoulder.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3205,7 +3235,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: character/torso/neck/head
+    path: character/torso/shoulder.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3215,7 +3245,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: character/torso/neck/head
+    path: character/torso/shoulder.R
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3225,6 +3255,36 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
+    path: character/torso/shoulder.L
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: character/torso/shoulder.L
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: character/torso/shoulder.L
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
     path: character/torso/shoulder.R/upperarm.R
     classID: 4
     script: {fileID: 0}
@@ -3244,68 +3304,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
+    attribute: m_LocalEulerAngles.z
     path: character/torso/shoulder.R/upperarm.R
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: character/torso/shoulder.L/upperarm.L
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: character/torso/shoulder.L/upperarm.L
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: character/torso/shoulder.L/upperarm.L
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: character/torso/shoulder.R/upperarm.R/lowerarm.R
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: character/torso/shoulder.R/upperarm.R/lowerarm.R
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: character/torso/shoulder.R/upperarm.R/lowerarm.R
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 1
