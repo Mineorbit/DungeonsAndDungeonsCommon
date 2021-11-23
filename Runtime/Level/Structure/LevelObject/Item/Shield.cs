@@ -40,10 +40,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float blockAngle = 50;
 
-        
+        private bool doBlockEffect = false;
+        private float blockEffectTime = 1f;
         public void BlockAttackEffect()
         {
-            ((PlayerBaseAnimator)owner.baseAnimator).BlockShield();
+            if (!doBlockEffect)
+            {
+                doBlockEffect = true;
+                ((PlayerBaseAnimator)owner.baseAnimator).BlockShield();
+                Invoke("resetBlockEffect",blockEffectTime);
+            }
+        }
+
+        public void resetBlockEffect()
+        {
+            doBlockEffect = false;
         }
         
         public override void Use()
