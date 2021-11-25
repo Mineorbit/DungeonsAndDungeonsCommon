@@ -9,14 +9,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnAttach()
         {
             base.OnAttach();
-            transform.localPosition = new Vector3(0, 0.002f, 0);
-            transform.localEulerAngles = new Vector3(0, 0, 0);
         }
         // Update is called once per frame
         public override void Use()
         {
             base.Use();
-            transform.localEulerAngles = new Vector3(0, 110, 85);
             ((PlayerBaseAnimator)owner.baseAnimator).StartAim();
             ((Player)owner).aiming = true;
             owner.Invoke(owner.setMovementStatus, false);
@@ -26,7 +23,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void ResetHolding()
         {
             
-            transform.localEulerAngles = new Vector3(0, 0, 0);
         }
         public override void StopUse()
         {
