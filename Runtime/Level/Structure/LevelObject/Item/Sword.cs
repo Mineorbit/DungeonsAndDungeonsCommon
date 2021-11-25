@@ -18,21 +18,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private Hitbox hitBox;
 
 
-        private Vector3 lastPosition = new Vector3(0, 0, 0);
 
         private readonly float whipeTime = 0.02f;
 
         private void Start()
         {
-            lastPosition = transform.position;
         }
 
 
-        Vector3 holdOffset = new Vector3(0, 0.00181f, 0);
-        Vector3 backOffset = new Vector3(0,0, 0.0075f);
-        //private Vector3 holdOffset = new Vector3(0, 0, 0);
-        Vector3 holdRotation = new Vector3(0, -75, 90f);
-        Vector3 hitboxRotation = new Vector3(0, 135, 90);
         public void OnDestroy()
         {
             if (hitBox != null)
@@ -42,11 +35,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnAttach()
         {
             base.OnAttach();
-            transform.localEulerAngles = holdRotation;
             SetAttachmentPosition();
             hitBox = (Instantiate(hitboxPrefab) as GameObject).GetComponent<Hitbox>();
             hitBox.Attach(owner.transform.Find("Model").gameObject, "Entity", new Vector3(0, 0, -2));
-            hitBox.transform.localEulerAngles = hitboxRotation;
+            
 
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
             hitBox.Deactivate();
@@ -54,7 +46,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void SetAttachmentPosition()
         {
-                transform.localPosition = itemHandle.Back ? backOffset : holdOffset;
         }
     
         public override void Use()
@@ -65,7 +56,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 base.Use();
 
                 owner.baseAnimator.Strike();
-                hitBox.transform.localEulerAngles = hitboxRotation;
                 hitBox.Activate();
 
                 // factor out just like audio component
