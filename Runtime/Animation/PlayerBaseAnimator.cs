@@ -102,24 +102,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (leftSide == 0)
             {
                 oldAngles = ((Player) me).GetLeftHandHandle().slot.transform.localEulerAngles;
-
-                ((Player) me).GetLeftHandHandle().slot.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
             else
             {
                 oldAngles = ((Player) me).GetRightHandHandle().transform.localEulerAngles;
-
-
-                ((Player) me).GetRightHandHandle().slot.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
         }
 
         public void ChangeItemSettingBack(int leftSide)
         {
-            if (leftSide == 0)
-                ((Player) me).GetLeftHandHandle().slot.transform.localEulerAngles = oldAngles;
-            else
-                ((Player) me).GetRightHandHandle().slot.transform.localEulerAngles = oldAngles;
+            GameConsole.Log("Changing Item Animation Back");
         }
     }
 }

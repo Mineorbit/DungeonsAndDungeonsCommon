@@ -79,7 +79,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.StopUse();
             effectSystem.Stop();
-            //transform.localEulerAngles = new Vector3(0, -75, 90f);
             hitBox.Deactivate();
             block = false;
         }
