@@ -34,6 +34,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidBody.useGravity = false;
             rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
+            transform.localPosition = new Vector3(0, 0, 0);
+            transform.localRotation = Quaternion.Euler(0,0,0);
             onAttachEvent.Invoke();
         }
 
