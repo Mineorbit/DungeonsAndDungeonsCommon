@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8300353135756219044
+--- !u!1 &8183281499421693511
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8681558681537267742}
-  - component: {fileID: 5752446971603568571}
-  - component: {fileID: 7507565738071372657}
-  - component: {fileID: 5107289802724265130}
-  - component: {fileID: 6375996486498693413}
-  - component: {fileID: 128150989028664885}
-  - component: {fileID: 4815865649453678383}
+  - component: {fileID: 6742518625365539743}
+  - component: {fileID: 7030228382159120810}
+  - component: {fileID: 4470472263769023664}
   m_Layer: 0
-  m_Name: Bow
-  m_TagString: Item
+  m_Name: Model
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8681558681537267742
+--- !u!4 &6742518625365539743
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300353135756219044}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 8183281499421693511}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 8681558681537267742}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5752446971603568571
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!33 &7030228382159120810
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300353135756219044}
-  m_Mesh: {fileID: -462981019419857548, guid: af6e55b638ff9394fafebc912e5dd832, type: 3}
---- !u!23 &7507565738071372657
+  m_GameObject: {fileID: 8183281499421693511}
+  m_Mesh: {fileID: -462981019419857548, guid: 9cf2559e5e5dd8149958d8aba37b038e, type: 3}
+--- !u!23 &4470472263769023664
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300353135756219044}
+  m_GameObject: {fileID: 8183281499421693511}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,6 +82,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8300353135756219044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8681558681537267742}
+  - component: {fileID: 5107289802724265130}
+  - component: {fileID: 128150989028664885}
+  - component: {fileID: 4815865649453678383}
+  - component: {fileID: 6978427866537898088}
+  m_Layer: 0
+  m_Name: Bow
+  m_TagString: Item
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8681558681537267742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8300353135756219044}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6742518625365539743}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5107289802724265130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +164,10 @@ MonoBehaviour:
   hitCooldownTime: 1
   movementOverride: 0
   lastSpeeds: []
+  lastSpeedDirections: []
   speed: 0
+  speedDirection: {x: 0, y: 0, z: 0}
+  ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   rigidBody: {fileID: 128150989028664885}
   useTime: 0.25
@@ -151,22 +185,10 @@ MonoBehaviour:
   onDettachEvent:
     m_PersistentCalls:
       m_Calls: []
+  itemHandle: {fileID: 0}
   equipSide: 0
   currentArrow: {fileID: 0}
   arrow: {fileID: 11400000, guid: 2608f4aea7469b6408c88f29807ce9f5, type: 2}
---- !u!65 &6375996486498693413
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300353135756219044}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1353931, y: 0.27004284, z: 1.2485833}
-  m_Center: {x: 0, y: -0.06732487, z: 0}
 --- !u!54 &128150989028664885
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -198,11 +220,29 @@ MonoBehaviour:
   observed: {fileID: 0}
   disabled_observed: 1
   isSetup: 0
-  isOwner: 0
   owner: -1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0}
+  lastSentPosition: {x: 0, y: 0, z: 0}
+  lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
   teleportPosition: {x: 0, y: 0, z: 0}
-  blockExists: 0
+  transmitPosition: 1
+  interpolatePosition: 1
+  locomotionBlocks: 0
   blockPosition: {x: 0, y: 0, z: 0}
   receivedPosition: {x: 0, y: 0, z: 0}
+  sendAngle: 0.05
+  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!65 &6978427866537898088
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8300353135756219044}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 1.2, z: 0.1}
+  m_Center: {x: 0.1, y: 0, z: 0}
