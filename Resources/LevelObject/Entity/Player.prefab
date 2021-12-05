@@ -4853,6 +4853,7 @@ MonoBehaviour:
   Back: 1
   slot: {fileID: 0}
   handleType: 1
+  itemOffsets: []
 --- !u!1 &3989559548552196293
 GameObject:
   m_ObjectHideFlags: 0
@@ -9706,6 +9707,11 @@ MonoBehaviour:
   Back: 1
   slot: {fileID: 0}
   handleType: 0
+  itemOffsets:
+  - itemType: Sword
+    offset: {x: 0, y: 0.5, z: 0}
+  - itemType: Bow
+    offset: {x: 0, y: 0.25, z: 0}
 --- !u!95 &7589352983227760250
 Animator:
   serializedVersion: 3
@@ -9807,6 +9813,9 @@ MonoBehaviour:
   Back: 0
   slot: {fileID: 0}
   handleType: 0
+  itemOffsets:
+  - itemType: 
+    offset: {x: 0, y: 0, z: 0}
 --- !u!1 &7709308443060799710
 GameObject:
   m_ObjectHideFlags: 0
@@ -10134,6 +10143,9 @@ MonoBehaviour:
   Back: 0
   slot: {fileID: 0}
   handleType: 1
+  itemOffsets:
+  - itemType: 
+    offset: {x: 0, y: 0, z: 0}
 --- !u!1 &8889448766549451165
 GameObject:
   m_ObjectHideFlags: 0

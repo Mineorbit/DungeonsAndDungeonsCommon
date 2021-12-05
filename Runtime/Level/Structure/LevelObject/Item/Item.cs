@@ -24,8 +24,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Left,
             Right
         }
-        
 
+        public Transform attachmentPoint;
+
+        public void SetupAttachmentPoint()
+        {
+            if (attachmentPoint == null)
+            {
+                GameObject attPoint = new GameObject("AttachmentPoint");
+                attPoint.transform.SetParent(this.transform);
+                attPoint.transform.localPosition = Vector3.zero;
+                attachmentPoint = attPoint.transform;
+            }
+        }
+
+        public Vector3 GetAttachmentPoint()
+        {
+            return Vector3.zero - attachmentPoint.localPosition;
+        }
+        
         public Side equipSide;
         public virtual void OnAttach()
         {
@@ -34,8 +51,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidBody.useGravity = false;
             rigidBody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
-            transform.localPosition = new Vector3(0, 0, 0);
-            transform.localRotation = Quaternion.Euler(0,0,0);
+            transform.localRotation = Quaternion.identity;
             onAttachEvent.Invoke();
         }
 
