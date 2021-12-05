@@ -9709,7 +9709,7 @@ MonoBehaviour:
   handleType: 0
   itemOffsets:
   - itemType: Sword
-    offset: {x: 0, y: -0.00422, z: 0}
+    offset: {x: 0, y: -0.00211, z: 0}
   - itemType: Bow
     offset: {x: 0, y: 0, z: 0}
 --- !u!95 &7589352983227760250
@@ -9814,8 +9814,8 @@ MonoBehaviour:
   slot: {fileID: 0}
   handleType: 0
   itemOffsets:
-  - itemType: 
-    offset: {x: 0, y: 0, z: 0}
+  - itemType: Sword
+    offset: {x: 0, y: -0.00211, z: 0}
 --- !u!1 &7709308443060799710
 GameObject:
   m_ObjectHideFlags: 0
