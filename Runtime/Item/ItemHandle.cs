@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -19,7 +20,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private PlayerController p;
         private Entity player;
 
+
+
+        [Serializable]
+        public struct ItemOffset
+        {
+            public string itemType;
+            public Vector3 offset;
+        }
+
+        public ItemOffset[] itemOffsets;
         
+        public Vector3 GetLocalOffset()
+        {
+            foreach (ItemOffset itemOffset in itemOffsets)
+            {
+                if (itemOffset.itemType == slot.GetType().Name)
+                {
+                    return itemOffset.offset;
+                }
+            }
+            return itemOffsets[0].offset;
+        }
         private void Start()
         {
             p = GetComponentInParent<PlayerController>();
@@ -30,12 +52,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Attach(Item item)
         {
             item.transform.position = transform.position;
-            item.transform.localRotation = new Quaternion(0, 0, 0, 0);
+            item.transform.localRotation = Quaternion.identity;
             item.transform.parent = transform;
             slot = item;
             if (!player.items.Contains(item)) player.items.Add(item);
             item.itemHandle = this;
             slot.OnAttach();
+            slot.transform.localPosition = slot.GetAttachmentPoint() + GetLocalOffset();
         }
 
 
