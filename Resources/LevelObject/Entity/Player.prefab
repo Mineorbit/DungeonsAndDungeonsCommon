@@ -9709,9 +9709,9 @@ MonoBehaviour:
   handleType: 0
   itemOffsets:
   - itemType: Sword
-    offset: {x: 0, y: 0.5, z: 0}
+    offset: {x: 0, y: -0.00422, z: 0}
   - itemType: Bow
-    offset: {x: 0, y: 0.25, z: 0}
+    offset: {x: 0, y: 0, z: 0}
 --- !u!95 &7589352983227760250
 Animator:
   serializedVersion: 3
