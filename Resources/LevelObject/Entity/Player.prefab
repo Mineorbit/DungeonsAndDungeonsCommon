@@ -9815,7 +9815,7 @@ MonoBehaviour:
   handleType: 0
   itemOffsets:
   - itemType: Sword
-    offset: {x: 0, y: 0.007, z: 0}
+    offset: {x: 0, y: 0.014, z: 0.002}
 --- !u!1 &7709308443060799710
 GameObject:
   m_ObjectHideFlags: 0
