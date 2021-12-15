@@ -29,5 +29,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             animator.SetTrigger("Strike");
         }
+
+        public void Daze()
+        {
+            animator.SetBool("Dazed",true);
+        }
+        
+        public void Undaze()
+        {
+            animator.SetBool("Dazed",false);
+        }
     }
 }
