@@ -66,6 +66,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public override void DazeEffect(Vector3 hitPosition)
+        {
+            base.DazeEffect(hitPosition);
+            ((BlogBaseAnimator) baseAnimator).Daze();
+        }
+        
+        public override void UndazeEffect()
+        {
+            base.UndazeEffect();
+            ((BlogBaseAnimator) baseAnimator).Undaze();
+        }
+
         public override void OnDestroy()
         {
             TimerManager.StopTimer(strikeTimer);

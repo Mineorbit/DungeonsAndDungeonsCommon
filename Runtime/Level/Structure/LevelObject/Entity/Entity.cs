@@ -241,13 +241,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void HitEffect(Vector3 hitPosition)
         {
             baseAnimator.Hit();
+            
             Vector3 dir = transform.position - hitPosition;
+            CreateKickback(dir,2f);
+            EffectCaster.HitFX(transform.position+0.5f*dir);
+            
+        }
+
+        public void CreateKickback(Vector3 dir,float strength)
+        {
             dir.Normalize();
             // FOR NOW ONLY MANIPULATE ON PLANE
             dir.y = 0;
-            EffectCaster.HitFX(transform.position+0.5f*dir);
-            Kickback(dir,2f);
+            Kickback(dir,strength);
         }
+        
         
         // ApplyMovement controls whether entity should have local simulation movement appliance or not
         public bool ApplyMovement = true;
@@ -272,6 +280,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
+        public virtual void DazeEffect(Vector3 hitPosition)
+        {
+            Vector3 dir = transform.position - hitPosition;
+            CreateKickback(dir,0.5f);
+        }
+
+        public virtual void UndazeEffect()
+        {
+            
+        }
+        
+        private float dazeTime = 2.5f;
+        public void Daze(Entity dazer)
+        {
+            setMovementStatus(false);
+            DazeEffect(dazer.transform.position);
+            Invoke("Undaze",dazeTime);
+        }
+
+        public void Undaze()
+        {
+            UndazeEffect();
+            setMovementStatus(true);
+        }
+
         private int pointsForKill = 100;
 
         public virtual void Hit(LevelObject hitter, int damage)
@@ -284,6 +317,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (HitBlocked( ( hitter.transform.position - transform.position)))
                     {
                         BlockHit();
+                        if(hitter.GetType() == typeof(Entity))
+                        {
+                            ( (Entity) hitter).Daze(this);
+                        }
                         return;
                     }
                     
