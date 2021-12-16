@@ -317,7 +317,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (HitBlocked( ( hitter.transform.position - transform.position)))
                     {
                         BlockHit();
-                        if(hitter.GetType() == typeof(Entity))
+                        if(hitter.GetType().IsSubclassOf(typeof(Entity)))
                         {
                             ( (Entity) hitter).Daze(this);
                         }
