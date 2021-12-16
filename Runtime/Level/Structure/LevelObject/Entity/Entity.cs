@@ -291,7 +291,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
         
-        private float dazeTime = 2.5f;
+        private float dazeTime = 4f;
         public void Daze(Entity dazer)
         {
             setMovementStatus(false);

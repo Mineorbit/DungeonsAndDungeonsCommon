@@ -68,8 +68,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void DazeEffect(Vector3 hitPosition)
         {
-            base.DazeEffect(hitPosition);
             ((BlogBaseAnimator) baseAnimator).Daze();
+            base.DazeEffect(hitPosition);
         }
         
         public override void UndazeEffect()
