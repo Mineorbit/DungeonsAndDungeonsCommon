@@ -216,13 +216,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private float kickbackDist = 0.5f;
         private float kickbackSpeed = 1f;
         IEnumerator KickbackRoutine(Vector3 dir, float dist)
         {
             float t = 0;
             Vector3 start = transform.position;
-            float kickbackTime =  kickbackDist / kickbackSpeed;
+            float kickbackTime =  dist / kickbackSpeed;
             while (t<kickbackTime)
             {
                 t += Time.deltaTime;
@@ -291,7 +290,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
         
-        private float dazeTime = 4f;
+        private float dazeTime = 1f;
         public void Daze(Entity dazer)
         {
             setMovementStatus(false);
