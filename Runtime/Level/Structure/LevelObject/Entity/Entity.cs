@@ -243,12 +243,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Kickback(dir, kickbackDistance, kickbackSpeed);
         }
         
-        public void HitEffect(Vector3 hitPosition)
+        public virtual void HitEffect(Vector3 hitPosition)
         {
             baseAnimator.Hit();
-            
             Vector3 dir = transform.position - hitPosition;
-            CreateKickback(dir,1f, 2f);
             EffectCaster.HitFX(transform.position+0.5f*dir);
             
         }
@@ -324,6 +322,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                     
                     Invoke(setMovementStatus, false);
+                    
+                    Vector3 dir = transform.position - hitter.transform.position;
+                    CreateKickback(dir,0.5f, 2f);
+                    
                     Invoke(HitEffect,hitter.transform.position);
 
                     if (hitter.GetType().IsInstanceOfType(typeof(Entity)))

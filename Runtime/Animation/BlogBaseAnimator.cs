@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -45,6 +46,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var angle = 180 / Mathf.PI * Mathf.Atan2(targetInterpolation.x, targetInterpolation.z);
 
             transform.eulerAngles = new Vector3(0, angle, 0);
+        }
+
+        private IEnumerator _strikeArch;
+        IEnumerator StrikeArch()
+        {
+            Vector3 startPosition = transform.localPosition;
+            Vector3 dir = new Vector3(1,1,0);
+            float t = 0;
+            while (t < 1f)
+            {
+                transform.localPosition = ((1 - t) * (1 - t) + 1f) * dir;
+                t += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
+        public override void Strike()
+        {
+            base.Strike();
+            _strikeArch = StrikeArch();
+            StartCoroutine(_strikeArch);
+        }
+
+        public override void Daze()
+        {
+            base.Daze();
+            StopCoroutine(_strikeArch);
         }
 
         /*

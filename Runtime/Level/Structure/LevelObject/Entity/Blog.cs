@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = System.Random;
@@ -65,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnDisable();
         }
 
-
+        
         public override void DazeEffect(Vector3 hitPosition)
         {
             ((BlogBaseAnimator) baseAnimator).Daze();
@@ -88,6 +89,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnDestroy();
         }
 
+
+        
+        
+        public override void HitEffect(Vector3 hitPosition)
+        {
+            base.HitEffect(hitPosition);
+        }
+        
         private void RandomWalk()
         {
             GetController().SetTrackingAbility(true);

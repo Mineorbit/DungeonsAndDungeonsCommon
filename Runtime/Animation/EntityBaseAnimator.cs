@@ -25,12 +25,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void Strike()
+        public virtual void Strike()
         {
             animator.SetTrigger("Strike");
         }
 
-        public void Daze()
+        public virtual void Daze()
         {
             animator.SetBool("Dazed",true);
         }
