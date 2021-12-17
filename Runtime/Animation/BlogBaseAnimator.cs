@@ -60,6 +60,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 t += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
+
+            transform.localPosition = startPosition;
         }
 
         public override void Strike()
@@ -72,7 +74,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Daze()
         {
             base.Daze();
-            StopCoroutine(_strikeArch);
         }
 
         /*
