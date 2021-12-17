@@ -216,8 +216,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private float kickbackSpeed = 1f;
-        IEnumerator KickbackRoutine(Vector3 dir, float dist)
+        IEnumerator KickbackRoutine(Vector3 dir, float dist, float kickbackSpeed)
         {
             float t = 0;
             Vector3 start = transform.position;
@@ -230,11 +229,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
         
-        public void Kickback(Vector3 dir, float distance)
+        public void Kickback(Vector3 dir, float kickbackDistance, float kickbackSpeed)
         {
             Vector3 direction = dir;
             direction.Normalize();
-            StartCoroutine(KickbackRoutine(direction,distance));
+            StartCoroutine(KickbackRoutine(direction,kickbackDistance, kickbackSpeed));
+        }
+        
+        public void CreateKickback(Vector3 dir,float kickbackDistance, float kickbackSpeed)
+        {
+            // FOR NOW ONLY MANIPULATE ON PLANE
+            dir.y = 0;
+            Kickback(dir, kickbackDistance, kickbackSpeed);
         }
         
         public void HitEffect(Vector3 hitPosition)
@@ -242,18 +248,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             baseAnimator.Hit();
             
             Vector3 dir = transform.position - hitPosition;
-            CreateKickback(dir,2f);
+            CreateKickback(dir,1f, 2f);
             EffectCaster.HitFX(transform.position+0.5f*dir);
             
         }
 
-        public void CreateKickback(Vector3 dir,float strength)
-        {
-            dir.Normalize();
-            // FOR NOW ONLY MANIPULATE ON PLANE
-            dir.y = 0;
-            Kickback(dir,strength);
-        }
+        
         
         
         // ApplyMovement controls whether entity should have local simulation movement appliance or not
@@ -282,7 +282,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void DazeEffect(Vector3 hitPosition)
         {
             Vector3 dir = transform.position - hitPosition;
-            CreateKickback(dir,0.5f);
+            CreateKickback(dir,0.5f,2f);
         }
 
         public virtual void UndazeEffect()
