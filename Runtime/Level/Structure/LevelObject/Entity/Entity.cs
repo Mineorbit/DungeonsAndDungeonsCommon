@@ -282,7 +282,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void DazeEffect(Vector3 hitPosition)
         {
             Vector3 dir = transform.position - hitPosition;
-            CreateKickback(dir,0.5f,2f);
+            CreateKickback(dir,0.125f,1f);
         }
 
         public virtual void UndazeEffect()
