@@ -52,11 +52,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         IEnumerator StrikeArch()
         {
             Vector3 startPosition = transform.localPosition;
-            Vector3 dir = new Vector3(1,1,0);
+            Vector3 dir = transform.forward + transform.up;
             float t = 0;
             while (t < 1f)
             {
-                transform.localPosition = ((1 - t) * (1 - t) + 1f) * dir;
+                transform.localPosition = transform.localPosition + ((1 - t) * (1 - t) + 1f) * dir;
                 t += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
