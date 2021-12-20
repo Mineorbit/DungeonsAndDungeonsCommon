@@ -53,10 +53,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Vector3 startPosition = transform.localPosition;
             Vector3 dir = transform.forward + transform.up;
+            dir.Normalize();
             float t = 0;
             while (t < 1f)
             {
-                transform.localPosition = transform.localPosition + ((1 - t) * (1 - t) + 1f) * dir;
+                transform.localPosition = startPosition + ((1 - t) * (1 - t) + 1f) * dir;
                 t += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
