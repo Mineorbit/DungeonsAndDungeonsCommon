@@ -54,10 +54,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 startPosition = transform.localPosition;
             Vector3 dir = transform.up;
 
-            float strikeSpeed = 0.2f;
+            float strikeSpeed = 0.5f;
             dir.Normalize();
             float t = 0;
-            while (t < 1f)
+            while (t < 2f)
             {
                 transform.localPosition = startPosition + (-(1 - t) * (1 - t) + 1f) * dir;
                 t += Time.deltaTime*strikeSpeed;
