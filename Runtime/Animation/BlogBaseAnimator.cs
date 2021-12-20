@@ -53,23 +53,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Vector3 startPosition = transform.localPosition;
             Vector3 dir = transform.up;
+
+            float strikeSpeed = 0.2f;
             dir.Normalize();
             float t = 0;
             while (t < 1f)
             {
                 transform.localPosition = startPosition + (-(1 - t) * (1 - t) + 1f) * dir;
-                t += Time.deltaTime / 20;
+                t += Time.deltaTime*strikeSpeed;
                 yield return new WaitForEndOfFrame();
             }
 
             transform.localPosition = startPosition;
+            _strikeArch = null;
         }
 
         public override void Strike()
         {
             base.Strike();
-            _strikeArch = StrikeArch();
-            StartCoroutine(_strikeArch);
+            if(_strikeArch == null)
+            {
+                _strikeArch = StrikeArch();
+                StartCoroutine(_strikeArch);
+            }
         }
 
         public override void Daze()
