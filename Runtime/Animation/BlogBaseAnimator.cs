@@ -49,12 +49,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private IEnumerator _strikeArch;
+        public float strikeSpeed = 1f;
         IEnumerator StrikeArch()
         {
             Vector3 startPosition = transform.localPosition;
             Vector3 dir = transform.up;
-
-            float strikeSpeed = 0.5f;
             dir.Normalize();
             float t = 0;
             while (t < 2f)
