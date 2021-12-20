@@ -58,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             while (t < 1f)
             {
                 transform.localPosition = startPosition + ((1 - t) * (1 - t) + 1f) * dir;
-                t += Time.deltaTime;
+                t += Time.deltaTime / 20;
                 yield return new WaitForEndOfFrame();
             }
 
