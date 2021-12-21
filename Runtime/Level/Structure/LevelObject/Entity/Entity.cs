@@ -201,8 +201,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             alive = false;
             gameObject.SetActive(false);
             GameConsole.Log($"Despawning { this}");
-            transform.position = new Vector3(0, 0, 0);
-            transform.rotation = new Quaternion(0, 0, 0, 0);
+            transform.position = Vector3.zero;
+            transform.rotation = Quaternion.identity;
             onDespawnEvent.Invoke();
         }
 
@@ -279,10 +279,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
+        public float dazeKickbackDistance = 0.125f;
+        
         public virtual void DazeEffect(Vector3 hitPosition)
         {
             Vector3 dir = transform.position - hitPosition;
-            CreateKickback(dir,0.125f,1f);
+            CreateKickback(dir,dazeKickbackDistance,1f);
         }
 
         public virtual void UndazeEffect()
