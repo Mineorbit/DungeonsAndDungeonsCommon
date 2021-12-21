@@ -52,6 +52,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool movementOverride;
 
         int _points = 0;
+        
+        public float dazeTime = 1f;
 
         public int points
         {
@@ -288,7 +290,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
         
-        private float dazeTime = 1f;
         public void Daze(Entity dazer)
         {
             setMovementStatus(false);
