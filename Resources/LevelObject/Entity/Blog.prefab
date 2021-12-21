@@ -107,7 +107,10 @@ MonoBehaviour:
   hitCooldownTime: 1
   movementOverride: 0
   lastSpeeds: []
+  lastSpeedDirections: []
   speed: 0
+  speedDirection: {x: 0, y: 0, z: 0}
+  ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   viewDistance: 15
   attackDistance: 4
@@ -188,13 +191,19 @@ MonoBehaviour:
   observed: {fileID: 987221561569911037}
   disabled_observed: 1
   isSetup: 0
-  isOwner: 0
   owner: -1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0}
+  lastSentPosition: {x: 0, y: 0, z: 0}
+  lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
   teleportPosition: {x: 0, y: 0, z: 0}
-  blockExists: 0
+  transmitPosition: 1
+  interpolatePosition: 1
+  locomotionBlocks: 0
   blockPosition: {x: 0, y: 0, z: 0}
+  receivedPosition: {x: 0, y: 0, z: 0}
+  sendAngle: 0.05
+  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!143 &7117316245056143757
 CharacterController:
   m_ObjectHideFlags: 0
@@ -321,6 +330,10 @@ PrefabInstance:
       propertyPath: me
       value: 
       objectReference: {fileID: 736877002971563754}
+    - target: {fileID: 1713471800857632868, guid: c34aee4582e18d324816915fac402ce6, type: 3}
+      propertyPath: strikeSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1713471800857632868, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: entityController
       value: 
