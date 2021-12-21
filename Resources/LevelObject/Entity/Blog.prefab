@@ -106,6 +106,7 @@ MonoBehaviour:
   maxHealth: 100
   hitCooldownTime: 1
   movementOverride: 0
+  dazeTime: 4
   lastSpeeds: []
   lastSpeedDirections: []
   speed: 0
