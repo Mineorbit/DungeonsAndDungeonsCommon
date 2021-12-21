@@ -207,8 +207,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Vector3 lookDir = -GetController().cam.forward;
                     lookDir.y = 0;
                     transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
-                }
-                if (GetController().doInput && GetController().takeInput && GetController().movementInputOnFrame)
+                }else if (GetController().doInput && GetController().takeInput && GetController().movementInputOnFrame)
                 {
                     var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(GetController().forwardDirection.x, GetController().forwardDirection.z);
                     transform.eulerAngles = new Vector3(0, angleY, 0);
