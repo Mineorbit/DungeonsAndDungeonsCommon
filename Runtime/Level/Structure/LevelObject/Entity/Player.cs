@@ -80,11 +80,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public override bool HitBlocked(Vector3 hitDirection)
         {
-            if (HasShieldInHand())
+            if (IsUsingShield())
             {
-                Shield shield = (Shield) GetRightHandHandle().slot;
-                if (shield.raised)
-                {
+                    Shield shield = (Shield) GetRightHandHandle().slot;
+                
                     Vector3 dir = hitDirection;
                     dir.y = 0;
                     dir.Normalize();
@@ -98,7 +97,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         return true;
                     }
-                }
             }
             return false;
         }
@@ -204,7 +202,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Vector3 lookDir = -GetController().cam.forward;
                     lookDir.y = 0;
                     transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
-                }else
+                }else if (IsUsingShield())
+                {
+                    Vector3 lookDir = -GetController().cam.forward;
+                    lookDir.y = 0;
+                    transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
+                }
                 if (GetController().doInput && GetController().takeInput && GetController().movementInputOnFrame)
                 {
                     var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(GetController().forwardDirection.x, GetController().forwardDirection.z);
@@ -212,7 +215,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
         }
-        
+
+        public bool IsUsingShield()
+        {
+            if (HasShieldInHand())
+            {
+                Shield shield = (Shield) GetRightHandHandle().slot;
+                return shield.raised;
+            }
+
+            return false;
+        }
 
         public override void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
         {
