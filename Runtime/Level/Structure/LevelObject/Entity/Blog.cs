@@ -81,7 +81,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void Counter(Entity attacker)
         {
             targetEntity = attacker;
-            FSM.Move(EnemyAction.Attack);
         }
 
 
@@ -129,8 +128,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             base.OnStartRound();
+            
             health = maxHealth;
-
 
             attackHitbox.Attach("Entity");
 
