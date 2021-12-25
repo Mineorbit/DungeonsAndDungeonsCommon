@@ -451,7 +451,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         LocomotionId = locomotionID
                     };
                     locomotionID++;
-                    if (GetObservedEntity().movementOverride)
+                    if (GetObservedEntity().allowedToMove)
                     {
                         Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
                     }else
