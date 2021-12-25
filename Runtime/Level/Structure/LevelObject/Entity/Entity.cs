@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -49,7 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float hitCooldownTime = 1f;
 
-        public bool movementOverride;
+        [FormerlySerializedAs("movementOverride")] public bool allowedToMove;
 
         int _points = 0;
         
@@ -155,7 +156,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void setMovementStatus(bool allowedToMove)
         {
-            movementOverride = allowedToMove;
+            this.allowedToMove = allowedToMove;
         }
 
         public virtual void OnDestroy()

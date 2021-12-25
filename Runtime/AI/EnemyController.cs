@@ -17,7 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         //Queue<Vector3> targetPoints = new Queue<Vector3>();
 
-        private Vector3 currentTarget = new Vector3(0, 0, 0);
+        private Transform currentWalkTarget;
 
 
         private float distToTarget = float.MaxValue;
@@ -39,14 +39,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             navMeshAgent = GetComponent<NavMeshAgent>();
 
-            currentTarget = transform.position;
+            Stop();
 
-            SetTrackingAbility(true);
+            //SetTrackingAbility(true);
         }
 
         public override void Update()
         {
-            UpdateLocomotion();
+            
 
             currentSpeed = navMeshAgent.velocity.magnitude;
 
@@ -57,11 +57,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            UpdateLocomotion();
             UpdateVariables();
             UpdateState();
         }
 
-
+/*
         public void SetTrackingAbility(bool ability, bool reset = false)
         {
             if (navMeshAgent != null)
@@ -70,17 +71,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (reset) navMeshAgent.ResetPath();
             }
         }
-
+*/
 
         public Vector3 GetDirection()
         {
             return navMeshAgent.velocity;
         }
 
-        public void GoTo(Vector3 target)
+        public void GoTo(Transform target)
         {
-            currentTarget = target;
+            currentWalkTarget = target;
         }
+
+        public void Stop()
+        {
+            currentWalkTarget = transform;
+        }
+
         /*
         public void GoTo(Vector3 target)
         {
@@ -106,8 +113,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateLocomotion()
         {
-            if(navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh)
-                navMeshAgent.SetDestination(currentTarget);
+            if(navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh && me.allowedToMove)
+                navMeshAgent.SetDestination(currentWalkTarget.position);
+            if (!me.allowedToMove)
+            {
+                navMeshAgent.ResetPath();
+            }
         }
 
 
@@ -166,7 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // start timer for 2 seconds then drop player
                 if (lastSeenPlayer != null)
                     if (me.forgetPlayer)
-                        visibilityTimer = TimerManager.StartTimer(forgetTime, () => { ForgetPlayer(); });
+                        Invoke("ForgetPlayer", forgetTime);
             }
             else
             {

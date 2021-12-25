@@ -75,7 +75,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void setMovementStatus(bool allowedToMove)
         {
             base.setMovementStatus(allowedToMove);
-            GetController().SetTrackingAbility(allowedToMove);
         }
 
         private void Counter(Entity attacker)
@@ -119,11 +118,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
 
-        private void StopTrackTarget(bool disableTracking = true)
-        {
-            GetController().SetTrackingAbility(!disableTracking);
-            targetEntity = null;
-        }
 
         public override void OnStartRound()
         {
@@ -139,11 +133,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        // This Needs Telegraphing before attack instead
         public void TryStrike()
         {
-                StopTrackTarget(false);
-                GetController().GoTo(attackTarget.transform.position);
-                Invoke("Strike",1 + 5 * (float) rand.NextDouble());
+                GetController().Stop();
+               //GetController().GoTo(attackTarget.transform);
+                Invoke("Strike",1 + 2 * (float) rand.NextDouble());
             
         }
 
@@ -156,10 +151,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void Strike()
         {
             Invoke(StrikeEffect);
+            
             currentDamage = baseDamage * (1 + damageMultiplier * (float) rand.NextDouble());
 
             attackHitbox.Activate();
-
 
             Invoke("FinishStrike" ,strikeDuration);
         }
