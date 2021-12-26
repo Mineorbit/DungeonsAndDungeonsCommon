@@ -59,19 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.FixedUpdate();
             UpdateLocomotion();
             UpdateVariables();
-            UpdateState();
         }
-
-/*
-        public void SetTrackingAbility(bool ability, bool reset = false)
-        {
-            if (navMeshAgent != null)
-            {
-                navMeshAgent.isStopped = !ability;
-                if (reset) navMeshAgent.ResetPath();
-            }
-        }
-*/
 
         public Vector3 GetDirection()
         {
@@ -87,29 +75,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             currentWalkTarget = transform;
         }
-
-        /*
-        public void GoTo(Vector3 target)
-        {
-            targetPoints.Enqueue(target);
-        }
-
-        TimerManager.Timer walkTimer;
-
-
-        public void UpdateLocomotion()
-        {
-            if ((currentTarget - transform.position).magnitude < 0.05f || !TimerManager.isRunning(walkTimer))
-            {
-                if (targetPoints.Count > 0)
-                {
-                    currentTarget = targetPoints.Dequeue();
-                    navMeshAgent.SetDestination(currentTarget);
-                    walkTimer = TimerManager.StartTimer(5f,()=> { });
-                }
-
-            }
-        }*/
 
         public void UpdateLocomotion()
         {
@@ -216,33 +181,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private void UpdateState()
-        {
-            me.FSM.ExecuteState();
-        }
-
-
         private Enemy CheckClosestAlley()
         {
             Enemy minEnemy = null;
-            /*
-            foreach (GameObject g in Level.GetAllEnemies())
-            {
-                Enemy e = g.GetComponent<Enemy>();
-                if (e != null && e != me && e.GetState() != Enemy.EnemyState.Dead)
-                {
-
-                    Vector3 dir = e.transform.position - transform.position;
-                    float dist = dir.magnitude;
-
-                    if (dist <= attackDistance && dist < minDist)
-                    {
-                        minEnemy = e;
-                        minDist = dist;
-                    }
-                }
-            }
-            */
             return minEnemy;
         }
     }

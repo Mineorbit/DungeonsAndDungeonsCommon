@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BehaviorTree : MonoBehaviour
+public class BehaviorTree
 {
     public enum Response
     {
@@ -58,5 +58,12 @@ public class BehaviorTree : MonoBehaviour
 
             return Response.Success;
         }
+    }
+
+    private Node root;
+
+    public Response Tick()
+    {
+        return root.Tick();
     }
 }
