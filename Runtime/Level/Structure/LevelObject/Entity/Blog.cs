@@ -33,16 +33,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Random rand = new Random();
 
-        public override void OnEnable()
-        {
-            base.OnEnable();
-        }
-
-        public override void OnDisable()
-        {
-            base.OnDisable();
-        }
-
         public override void DazeEffect(Vector3 hitPosition)
         {
             ((BlogBaseAnimator) baseAnimator).Daze();
@@ -55,26 +45,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ((BlogBaseAnimator) baseAnimator).Undaze();
         }
         
-        /*
-        public override void HitEffect(Vector3 hitPosition)
-        {
-            base.HitEffect(hitPosition);
-        }
-        */
-        
-        
-
-
-        
         public override void OnInit()
         {
             base.OnInit();
             onHitEvent.AddListener(x => { if(x.GetType().IsInstanceOfType(typeof(Entity)))  Counter((Entity)x); }); 
-        }
-
-        public override void setMovementStatus(bool allowedToMove)
-        {
-            base.setMovementStatus(allowedToMove);
         }
 
         private void Counter(Entity attacker)
