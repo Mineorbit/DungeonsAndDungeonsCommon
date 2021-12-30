@@ -22,13 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // FSM is shared between all components of any enemy but is  defined in the enemy monobehaviour
 
         private readonly float randomWalkTime;
-
-        private Entity targetEntity;
         
-        public float damageMultiplier;
-        
-        public float baseDamage;
-
         public float strikeDuration;
 
         public Random rand = new Random();
@@ -51,10 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             onHitEvent.AddListener(x => { if(x.GetType().IsInstanceOfType(typeof(Entity)))  Counter((Entity)x); }); 
         }
 
-        private void Counter(Entity attacker)
-        {
-            targetEntity = attacker;
-        }
+        
 
 
         private Entity lastVisualTrack = null;
@@ -96,8 +87,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             base.OnStartRound();
-            
-            health = maxHealth;
 
             attackHitbox.Attach("Entity");
 

@@ -103,9 +103,9 @@ MonoBehaviour:
   loadTarget: {fileID: 0}
   itemHitbox: {fileID: 777858699230990378}
   itemsInProximity: []
-  maxHealth: 100
+  maxHealth: 125
   hitCooldownTime: 1
-  movementOverride: 0
+  allowedToMove: 0
   dazeTime: 4
   lastSpeeds: []
   lastSpeedDirections: []
