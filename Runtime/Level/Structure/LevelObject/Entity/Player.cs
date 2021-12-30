@@ -138,7 +138,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             base.OnStartRound();
-            health = 100;
         }
 
 

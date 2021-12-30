@@ -16,11 +16,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool seeThroughWalls;
         
-        public int damage = 5;
-        
         public float currentDamage;
 
         private BehaviorTree _behaviorTree;
+        
+        public float damageMultiplier;
+        
+        public float baseDamage;
+        
+        public Entity targetEntity;
         
         public EnemyController GetController()
         {
@@ -35,6 +39,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             controller.enabled = true;
         }
 
+        public override void OnStartRound()
+        {
+            
+            base.OnStartRound();
+            health = maxHealth;
+        }
+
         public virtual void OnDisable()
         {
             controller = GetComponent<EnemyController>();
@@ -43,7 +54,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             controller.enabled = false;
         }
 
-
+        public void Counter(Entity attacker)
+        {
+            targetEntity = attacker;
+        }
+        
+        
         public void TryDamage(GameObject g, float damage)
         {
             var c = g.GetComponentInParent<Entity>(true);
