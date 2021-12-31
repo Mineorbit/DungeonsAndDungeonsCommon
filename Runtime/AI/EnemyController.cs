@@ -66,9 +66,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return navMeshAgent.velocity;
         }
 
+        private bool targetIsTransform;
+
+        public Vector3 currentWalkTargetPosition;
         public void GoTo(Transform target)
         {
+            targetIsTransform = true;
             currentWalkTarget = target;
+        }
+
+        public void GoTo(Vector3 t)
+        {
+            targetIsTransform = false;
+            currentWalkTargetPosition = t;
         }
 
         public void Stop()
@@ -78,8 +88,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateLocomotion()
         {
-            if(navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh && me.allowedToMove)
-                navMeshAgent.SetDestination(currentWalkTarget.position);
+            if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh && me.allowedToMove)
+            {
+                if(targetIsTransform)
+                    currentWalkTargetPosition = currentWalkTarget.position;
+                
+                navMeshAgent.SetDestination(currentWalkTargetPosition);
+                
+            }
             if (!me.allowedToMove)
             {
                 navMeshAgent.ResetPath();
@@ -87,7 +103,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private Player CheckVisiblePlayer()
+        public Player CheckVisiblePlayer()
         {
             var minDist = float.MaxValue;
             Player minPlayer = null;

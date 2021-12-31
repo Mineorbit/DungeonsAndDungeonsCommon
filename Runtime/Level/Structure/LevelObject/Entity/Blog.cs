@@ -38,13 +38,80 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.UndazeEffect();
             ((BlogBaseAnimator) baseAnimator).Undaze();
         }
-        
+
+        public bool randomWalking = false;
+        public Vector3 lastRandomTarget;
+        void StartRandomWalk()
+        {
+            randomWalking = true;
+            float angle =(float) rand.NextDouble()*360;
+            Vector3 randomPoint = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * dist;
+            lastRandomTarget = transform.position + randomPoint;
+            GetController().GoTo(lastRandomTarget);
+        }
+
         public override void OnInit()
         {
             base.OnInit();
+            // override behavior tree
+            // create default behavior  tree
+            BehaviorTree baseBehaviorTree = new BehaviorTree();
+            BehaviorTree.Node root = new BehaviorTree.SequenceNode();
+            BehaviorTree.Node playerSeenNode = new BehaviorTree.SelectorNode();
+            BehaviorTree.Node playerSeenCheckNode = new BehaviorTree.ActionNode(() =>
+            {
+                return  (GetController().seenPlayer == null) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
+            });
+
+            BehaviorTree.Node playerSearchNode = new BehaviorTree.ActionNode(() =>
+            {
+                // this should be a subtree
+                if (!randomWalking)
+                {
+                    StartRandomWalk();
+                    return BehaviorTree.Response.Failure;
+                }
+                else
+                {
+                    if ((transform.position - lastRandomTarget).magnitude < Double.Epsilon)
+                        return BehaviorTree.Response.Failure;
+                        
+                    return BehaviorTree.Response.Running;
+                }
+
+            });
+
+            
+            
+
+            playerSeenNode.children = new[] {playerSeenCheckNode, playerSearchNode};
+            BehaviorTree.Node playerStopNode = new BehaviorTree.ActionNode(() =>
+            {
+                GetController().Stop();
+                return BehaviorTree.Response.Success;
+            });
+            
+            BehaviorTree.Node closeInNode = new BehaviorTree.SelectorNode();
+
+            
+            BehaviorTree.Node playerAttackNode = new BehaviorTree.ActionNode(() =>
+            {
+                TryStrike();
+                return BehaviorTree.Response.Success;
+            });
+            
+            root.children = new[] {playerSeenNode,playerStopNode, /* closeInNode,*/ playerAttackNode};
+            baseBehaviorTree.root = root;
+            //BehaviorTree.Node Node = new BehaviorTree.SelectorNode();    
+
+            behaviorTree = baseBehaviorTree;
+
+            
             onHitEvent.AddListener(x => { if(x.GetType().IsInstanceOfType(typeof(Entity)))  Counter((Entity)x); }); 
         }
 
+        
+        
         
 
 

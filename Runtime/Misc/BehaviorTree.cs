@@ -60,7 +60,34 @@ public class BehaviorTree
         }
     }
 
-    private Node root;
+    public class ActionNode : Node
+    {
+        
+        public delegate Response ActionNodeDelegate(); 
+        
+        private ActionNodeDelegate m_action; 
+        
+        public ActionNode(ActionNodeDelegate action) { 
+            m_action = action; 
+        } 
+        
+        public override Response Tick()
+        {
+            switch (m_action()) { 
+                case Response.Success: 
+                    return Response.Success; 
+                case Response.Failure: 
+                    return Response.Failure; 
+                case Response.Running: 
+                    return Response.Running;
+                default: 
+                    return Response.Failure;
+            } 
+        }
+    }
+    
+    
+    public Node root;
 
     public Response Tick()
     {
