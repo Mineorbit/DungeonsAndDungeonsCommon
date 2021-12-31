@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public float currentDamage;
 
-        private BehaviorTree _behaviorTree;
+        public BehaviorTree behaviorTree;
         
         public float damageMultiplier;
         
@@ -76,12 +76,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetController().seenPlayer = null;
             GetController().seenAlly = null;
             GetController().lastSeenPlayer = null;
+           
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            _behaviorTree.Tick();
+            behaviorTree.Tick();
         }
     }
 }
