@@ -173,7 +173,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 striking = true;
                 GetController().Stop();
                //GetController().GoTo(attackTarget.transform);
-                Invoke("Strike",1 + 2 * (float) rand.NextDouble());
+               // Invoke("Strike",1 + 2 * (float) rand.NextDouble());
+               Strike();
             }
             
         }
