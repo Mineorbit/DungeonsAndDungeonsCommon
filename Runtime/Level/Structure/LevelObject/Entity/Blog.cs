@@ -97,7 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             BehaviorTree.Node playerAttackNode = new BehaviorTree.ActionNode(() =>
             {
                 TryStrike();
-                return BehaviorTree.Response.Success;
+                return BehaviorTree.Response.Running;
             });
             
             root.children = new[] {playerSeenNode,playerStopNode, /* closeInNode,*/ playerAttackNode};
@@ -164,11 +164,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         // This Needs Telegraphing before attack instead
+        private bool striking = false;
+        
         public void TryStrike()
         {
+            if (!striking)
+            {
+                striking = true;
                 GetController().Stop();
                //GetController().GoTo(attackTarget.transform);
                 Invoke("Strike",1 + 2 * (float) rand.NextDouble());
+            }
             
         }
 
@@ -192,7 +198,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void FinishStrike()
         {
             attackHitbox.Deactivate();
-            targetEntity = attackTarget;
+            striking = false;
         }
         
     }
