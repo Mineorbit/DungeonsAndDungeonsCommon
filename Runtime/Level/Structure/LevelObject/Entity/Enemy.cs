@@ -44,6 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             base.OnStartRound();
             health = maxHealth;
+            setMovementStatus(true);
         }
 
         public virtual void OnDisable()
