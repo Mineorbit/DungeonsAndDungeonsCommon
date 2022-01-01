@@ -79,11 +79,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             targetIsTransform = false;
             currentWalkTargetPosition = t;
+            GameConsole.Log($"Going to {t}");
         }
 
         public void Stop()
         {
             currentWalkTarget = transform;
+            GameConsole.Log("Stopping");
         }
 
         public void UpdateLocomotion()
