@@ -84,8 +84,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Stop()
         {
-            currentWalkTarget = transform;
             GameConsole.Log("Stopping");
+            currentWalkTarget = transform;
+            navMeshAgent.ResetPath();
         }
 
         public void UpdateLocomotion()

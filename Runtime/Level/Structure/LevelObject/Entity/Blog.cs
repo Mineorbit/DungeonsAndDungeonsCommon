@@ -195,6 +195,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 striking = true;
                 GetController().Stop();
                 Invoke(StrikeEffect);
+                // Movement status?
                 currentDamage = baseDamage* (1 + damageMultiplier* (float) rand.NextDouble());
                 attackHitbox.Activate();
                 Invoke("FinishStrike",strikeDuration);
