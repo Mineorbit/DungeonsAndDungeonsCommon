@@ -60,6 +60,7 @@ MonoBehaviour:
   seenPlayer: {fileID: 0}
   lastSeenPlayer: {fileID: 0}
   seenAlly: {fileID: 0}
+  currentWalkTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &736877002971563754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,15 +119,17 @@ MonoBehaviour:
   attackDistance: 4
   forgetPlayer: 0
   seeThroughWalls: 0
-  damage: 5
   currentDamage: 0
+  damageMultiplier: 2
+  baseDamage: 10
+  targetEntity: {fileID: 0}
   circlePlayer: 1
   baseAnimator: {fileID: 3567311548899328984}
   attackHitbox: {fileID: 5945292434564437852}
   attackTarget: {fileID: 0}
-  damageMultiplier: 2
-  baseDamage: 10
-  strikeDuration: 0.025
+  strikeDuration: 2
+  randomWalking: 0
+  lastRandomTarget: {x: 0, y: 0, z: 0}
 --- !u!195 &736877002971563753
 NavMeshAgent:
   m_ObjectHideFlags: 0
