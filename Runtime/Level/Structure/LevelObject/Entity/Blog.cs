@@ -45,7 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             randomWalking = true;
             float angle =(float) rand.NextDouble()*360;
-            Vector3 randomPoint = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * 5f;
+            Vector3 randomPoint = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * 15f;
             lastRandomTarget = transform.position + randomPoint;
             GetController().GoTo(lastRandomTarget);
         }
@@ -73,10 +73,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GameConsole.Log("Starting Random Walking",false,"AI");
                     StartRandomWalk();
                     return BehaviorTree.Response.Failure;
-                }
-                else
+                } else
                 {
-                    if ((transform.position - lastRandomTarget).magnitude < Double.Epsilon)
+                    if ((transform.position - lastRandomTarget).magnitude < 0.05f)
                     {
                         randomWalking = false;
                         return BehaviorTree.Response.Failure;
