@@ -77,8 +77,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                 {
                     if ((transform.position - lastRandomTarget).magnitude < Double.Epsilon)
+                    {
+                        randomWalking = false;
                         return BehaviorTree.Response.Failure;
-                        
+                    }
                     return BehaviorTree.Response.Running;
                 }
 
