@@ -45,7 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             randomWalking = true;
             float angle =(float) rand.NextDouble()*360;
-            Vector3 randomPoint = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * 1f;
+            Vector3 randomPoint = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * 5f;
             lastRandomTarget = transform.position + randomPoint;
             GetController().GoTo(lastRandomTarget);
         }
@@ -60,6 +60,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             BehaviorTree.Node playerSeenNode = new BehaviorTree.SelectorNode();
             BehaviorTree.Node playerSeenCheckNode = new BehaviorTree.ActionNode(() =>
             {
+                
+                GameConsole.Log("Checking if seeing Player",false,"AI");
                 return  (GetController().seenPlayer == null) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
             });
 
@@ -68,6 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // this should be a subtree
                 if (!randomWalking)
                 {
+                    GameConsole.Log("Starting Random Walking",false,"AI");
                     StartRandomWalk();
                     return BehaviorTree.Response.Failure;
                 }
@@ -87,6 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playerSeenNode.children = new[] {playerSeenCheckNode, playerSearchNode};
             BehaviorTree.Node playerStopNode = new BehaviorTree.ActionNode(() =>
             {
+                GameConsole.Log("Stop",false,"AI");
                 GetController().Stop();
                 return BehaviorTree.Response.Success;
             });
@@ -96,6 +100,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             BehaviorTree.Node playerAttackNode = new BehaviorTree.ActionNode(() =>
             {
+                
+                GameConsole.Log("Calling for Strike",false,"AI");
                 TryStrike();
                 return BehaviorTree.Response.Running;
             });
