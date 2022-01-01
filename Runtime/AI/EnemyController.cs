@@ -66,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return navMeshAgent.velocity;
         }
 
-        private bool targetIsTransform;
+        public bool targetIsTransform;
 
         public Vector3 currentWalkTargetPosition;
         public void GoTo(Transform target)
@@ -95,6 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(targetIsTransform)
                     currentWalkTargetPosition = currentWalkTarget.position;
                 
+                GameConsole.Log("Nav Mesh target set");
                 navMeshAgent.SetDestination(currentWalkTargetPosition);
                 
             }
