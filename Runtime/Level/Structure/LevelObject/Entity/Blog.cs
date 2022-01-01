@@ -45,7 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             randomWalking = true;
             float angle =(float) rand.NextDouble()*360;
-            Vector3 randomPoint = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * dist;
+            Vector3 randomPoint = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * 1f;
             lastRandomTarget = transform.position + randomPoint;
             GetController().GoTo(lastRandomTarget);
         }
