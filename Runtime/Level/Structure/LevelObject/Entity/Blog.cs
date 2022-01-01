@@ -174,14 +174,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void TryStrike()
         {
-            if (!striking)
-            {
-                striking = true;
-                GetController().Stop();
-               //GetController().GoTo(attackTarget.transform);
+            
+               // GetController().GoTo(attackTarget.transform);
                // Invoke("Strike",1 + 2 * (float) rand.NextDouble());
                Strike();
-            }
             
         }
 
@@ -193,13 +189,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private void Strike()
         {
-            Invoke(StrikeEffect);
-            
-            currentDamage = baseDamage * (1 + damageMultiplier * (float) rand.NextDouble());
-
-            attackHitbox.Activate();
-
-            Invoke("FinishStrike" ,strikeDuration);
+            if (!striking)
+            {
+                striking = true;
+                GetController().Stop();
+                Invoke(StrikeEffect);
+                currentDamage = baseDamage* (1 + damageMultiplier* (float) rand.NextDouble());
+                attackHitbox.Activate();
+                Invoke("FinishStrike",strikeDuration);
+            }
         }
 
         public void FinishStrike()
