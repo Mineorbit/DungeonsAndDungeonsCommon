@@ -105,7 +105,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             BehaviorTree.Node playerAttackRangeNode = new BehaviorTree.ActionNode(() =>
             {
                 
-                return  ( ( GetController().seenPlayer.transform.position - transform.position).magnitude > attackDistance) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
+                return  ( ( GetController().seenPlayer.transform.position - transform.position).magnitude < attackDistance) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
             });
             
             BehaviorTree.Node playerStrikeNode = new BehaviorTree.ActionNode(() =>
