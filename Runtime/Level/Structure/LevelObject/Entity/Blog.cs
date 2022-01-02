@@ -96,10 +96,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return BehaviorTree.Response.Success;
             });
             
-            BehaviorTree.Node closeInNode = new BehaviorTree.SelectorNode();
+            BehaviorTree.Node closeInNode = new BehaviorTree.ActionNode(() =>
+            {
+                GetController().GoTo(GetController().seenPlayer.transform);
+                return BehaviorTree.Response.Success;
+            });
 
+            BehaviorTree.Node playerAttackRangeNode = new BehaviorTree.ActionNode(() =>
+            {
+                
+                return  ( ( GetController().seenPlayer.transform.position - transform.position).magnitude > attackDistance) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
+            });
             
-            BehaviorTree.Node playerAttackNode = new BehaviorTree.ActionNode(() =>
+            BehaviorTree.Node playerStrikeNode = new BehaviorTree.ActionNode(() =>
             {
                 
                 GameConsole.Log("Calling for Strike",false,"AI");
@@ -107,9 +116,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return BehaviorTree.Response.Running;
             });
             
-            root.children = new[] {playerSeenNode,playerStopNode, /* closeInNode,*/ playerAttackNode};
+            
+            BehaviorTree.Node playerAttackNode = new BehaviorTree.SelectorNode();
+            
+            playerAttackNode.children = new[] {playerAttackRangeNode, playerStrikeNode};
+            
+            root.children = new[] {playerSeenNode,playerStopNode,  closeInNode, playerAttackNode};
             baseBehaviorTree.root = root;
-            //BehaviorTree.Node Node = new BehaviorTree.SelectorNode();    
 
             behaviorTree = baseBehaviorTree;
 
