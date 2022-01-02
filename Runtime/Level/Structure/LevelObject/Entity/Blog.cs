@@ -200,6 +200,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             baseAnimator.Strike();
         }
+
+        private float hittingDuration = 0.5f;
         
         private void Strike()
         {
@@ -211,13 +213,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // Movement status?
                 currentDamage = baseDamage* (1 + damageMultiplier* (float) rand.NextDouble());
                 attackHitbox.Activate();
+                Invoke("FinishHitting",hittingDuration);
                 Invoke("FinishStrike",strikeDuration);
             }
         }
 
-        public void FinishStrike()
+        public void FinishHitting()
         {
             attackHitbox.Deactivate();
+        }
+        
+        public void FinishStrike()
+        {
             striking = false;
         }
         
