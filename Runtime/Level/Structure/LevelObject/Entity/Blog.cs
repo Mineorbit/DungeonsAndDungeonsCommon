@@ -79,6 +79,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             BehaviorTree.Node playerLastSeenNode = new BehaviorTree.SelectorNode();
             playerLastSeenNode.children = new[] {atLastSeenNode, playerGotoLastSeenNode};
+            
+            BehaviorTree.Node playerEverSeenNode = new BehaviorTree.ActionNode(() =>
+            {
+                return (GetController().lastSeenPlayer == null)
+                    ? BehaviorTree.Response.Success
+                    : BehaviorTree.Response.Failure;
+            });
+            
+            BehaviorTree.Node gotoToLastNode = new BehaviorTree.SelectorNode();
+            gotoToLastNode.children = new[] {playerEverSeenNode,playerLastSeenNode};
 
             BehaviorTree.Node playerRandomWalkNode = new BehaviorTree.ActionNode(() =>
             {
@@ -104,7 +114,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             BehaviorTree.Node playerSearchNode = new BehaviorTree.SequenceNode();
             
-            playerSearchNode.children = new[] {playerLastSeenNode,playerRandomWalkNode};
+            playerSearchNode.children = new[] {gotoToLastNode,playerRandomWalkNode};
 
             playerSeenNode.children = new[] {playerSeenCheckNode, playerSearchNode};
             BehaviorTree.Node playerStopNode = new BehaviorTree.ActionNode(() =>
