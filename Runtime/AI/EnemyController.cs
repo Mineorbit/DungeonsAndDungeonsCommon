@@ -13,6 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Player seenPlayer;
         public Player lastSeenPlayer;
         public Enemy seenAlly;
+        public Vector3 lastPositionOfPlayer;
         
 
         //Queue<Vector3> targetPoints = new Queue<Vector3>();
@@ -23,7 +24,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private float distToTarget = float.MaxValue;
 
 
-        private Vector3 lastPositionOfPlayer;
 
 
         private NavMeshAgent navMeshAgent;
@@ -169,6 +169,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 TimerManager.StopTimer(visibilityTimer);
 
                 lastSeenPlayer = currentViewedPlayer;
+                lastPositionOfPlayer = currentViewedPlayer.transform.position;
                 seenPlayer = currentViewedPlayer;
             }
         }

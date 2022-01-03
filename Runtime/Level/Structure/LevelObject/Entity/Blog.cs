@@ -65,7 +65,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return  (GetController().seenPlayer == null) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
             });
 
-            BehaviorTree.Node playerSearchNode = new BehaviorTree.ActionNode(() =>
+
+            BehaviorTree.Node atLastSeenNode = new BehaviorTree.ActionNode(() =>
+            {
+                return ((GetController().lastPositionOfPlayer - transform.position).magnitude < 0.05f) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
+            });
+
+            BehaviorTree.Node playerGotoLastSeenNode = new BehaviorTree.ActionNode(() =>
+            {
+                GetController().GoTo(GetController().lastPositionOfPlayer);
+                return BehaviorTree.Response.Success;
+            });
+
+            BehaviorTree.Node playerLastSeenNode = new BehaviorTree.SelectorNode();
+            playerLastSeenNode.children = new[] {atLastSeenNode, playerGotoLastSeenNode};
+
+            BehaviorTree.Node playerRandomWalkNode = new BehaviorTree.ActionNode(() =>
             {
                 // this should be a subtree
                 if (!randomWalking)
@@ -85,8 +100,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             });
 
+
+
+            BehaviorTree.Node playerSearchNode = new BehaviorTree.SequenceNode();
             
-            
+            playerSearchNode.children = new[] {playerLastSeenNode,playerRandomWalkNode};
 
             playerSeenNode.children = new[] {playerSeenCheckNode, playerSearchNode};
             BehaviorTree.Node playerStopNode = new BehaviorTree.ActionNode(() =>
@@ -95,6 +113,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GetController().Stop();
                 return BehaviorTree.Response.Success;
             });
+            
+            
+            
             
             BehaviorTree.Node closeInNode = new BehaviorTree.ActionNode(() =>
             {
@@ -112,7 +133,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 
                 GameConsole.Log("Calling for Strike",false,"AI");
-                TryStrike();
+                Strike();
                 return BehaviorTree.Response.Running;
             });
             
@@ -121,7 +142,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             playerAttackNode.children = new[] {playerAttackRangeNode, playerStrikeNode};
             
-            root.children = new[] {playerSeenNode,playerStopNode,  closeInNode, playerAttackNode};
+            root.children = new[] {playerSeenNode,playerStopNode, playerAttackNode};
             baseBehaviorTree.root = root;
 
             behaviorTree = baseBehaviorTree;
@@ -186,6 +207,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // This Needs Telegraphing before attack instead
         private bool striking = false;
         
+        /*
         public void TryStrike()
         {
             
@@ -194,7 +216,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                Strike();
             
         }
-
+        */
 
         public void StrikeEffect()
         {
