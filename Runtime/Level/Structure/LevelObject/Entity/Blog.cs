@@ -117,12 +117,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playerSearchNode.children = new[] {gotoToLastNode,playerRandomWalkNode};
 
             playerSeenNode.children = new[] {playerSeenCheckNode, playerSearchNode};
-            BehaviorTree.Node playerStopNode = new BehaviorTree.ActionNode(() =>
-            {
-                GameConsole.Log("Stop",false,"AI");
-                GetController().Stop();
-                return BehaviorTree.Response.Success;
-            });
             
             
             
@@ -152,7 +146,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             playerAttackNode.children = new[] {playerAttackRangeNode, playerStrikeNode};
             
-            root.children = new[] {playerSeenNode,playerStopNode, playerAttackNode};
+            root.children = new[] {playerSeenNode,closeInNode, playerAttackNode};
             baseBehaviorTree.root = root;
 
             behaviorTree = baseBehaviorTree;
