@@ -60,6 +60,8 @@ MonoBehaviour:
   seenPlayer: {fileID: 0}
   lastSeenPlayer: {fileID: 0}
   seenAlly: {fileID: 0}
+  lastPositionOfPlayer: {x: 0, y: 0, z: 0}
+  targetIsTransform: 0
   currentWalkTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &736877002971563754
 MonoBehaviour:
@@ -336,8 +338,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 736877002971563754}
     - target: {fileID: 1713471800857632868, guid: c34aee4582e18d324816915fac402ce6, type: 3}
+      propertyPath: jumpHeight
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713471800857632868, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: strikeSpeed
-      value: 4
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1713471800857632868, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: entityController

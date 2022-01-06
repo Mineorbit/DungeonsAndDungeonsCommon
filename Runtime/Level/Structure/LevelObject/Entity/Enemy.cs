@@ -83,6 +83,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if(behaviorTree != null)
             behaviorTree.Tick();
         }
     }

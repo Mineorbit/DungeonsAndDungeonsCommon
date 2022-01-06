@@ -229,7 +229,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private float hittingDuration = 0.5f;
         
-        private void Strike()
+        public void Strike()
         {
             if (!striking)
             {
