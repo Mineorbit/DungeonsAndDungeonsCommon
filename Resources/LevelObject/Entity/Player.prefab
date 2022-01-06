@@ -9792,7 +9792,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4672334940009596865}
   m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -0, y: 0.00186, z: 0}
+  m_LocalPosition: {x: -0.001, y: 0.00186, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6069705978547740538}
@@ -9952,13 +9952,15 @@ MonoBehaviour:
   itemsInProximity: []
   maxHealth: 100
   hitCooldownTime: 1
-  movementOverride: 0
+  allowedToMove: 0
+  dazeTime: 1
   lastSpeeds: []
   lastSpeedDirections: []
   speed: 0
   speedDirection: {x: 0, y: 0, z: 0}
   ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
+  dazeKickbackDistance: 0.125
   usingLeftItem: 0
   usingRightItem: 0
   colorChanger: {fileID: 0}
@@ -9997,6 +9999,7 @@ MonoBehaviour:
   doInput: 0
   isMe: 0
   allowedToMove: 1
+  aimDistance: 20
   jumpingSpeed: 1.75
   forwardDirection: {x: 0, y: 0, z: 0}
   climbableHitbox: {fileID: 1725967590211030794}
@@ -10122,7 +10125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8648893236877926864}
   m_LocalRotation: {x: -0.47731927, y: 0.85845006, z: -0.10180837, w: 0.15768583}
-  m_LocalPosition: {x: 0.0023, y: 0.0018, z: -0.0018}
+  m_LocalPosition: {x: 0.0026, y: 0.0016, z: -0.00168}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4854174765246303874}
