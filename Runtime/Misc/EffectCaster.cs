@@ -24,12 +24,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             	Create();
             }
         }
-        
+
+        private static float hitFXTime = 2f;
         public void Create()
         {
-        HitFX effect = (Instantiate(instance.hitFX ,Vector3.zero,Quaternion.identity) as GameObject).GetComponent<HitFX>();
-        effect.Setup();
-        effect.Despawn();
+        HitFX effect = (Instantiate(instance.hitFX ,new Vector3(0,-8,0),Quaternion.identity) as GameObject).GetComponent<HitFX>();
+        TimerManager.StartTimer(hitFXTime, () => { effect.Despawn(); });
         hitEffects.Enqueue(effect);
         }
 	
@@ -37,7 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
         	HitFX effect = instance.hitEffects.Dequeue();
         	effect.Spawn(position);
-            	TimerManager.StartTimer(2f, () => { effect.Despawn(); instance.hitEffects.Enqueue(effect);});
+            	TimerManager.StartTimer(hitFXTime, () => { effect.Despawn(); instance.hitEffects.Enqueue(effect);});
         }
     }
 }

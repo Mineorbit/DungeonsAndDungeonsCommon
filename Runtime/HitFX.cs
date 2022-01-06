@@ -10,12 +10,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 		public void Setup()
 		{
+			gameObject.SetActive(true);
 			particleSystem.Play();
 		}
             public void Spawn(Vector3 position)
     		{
     			gameObject.SetActive(true);
     			gameObject.transform.position = position;
+                //PLAY SOUND OF HIT
     			particleSystem.Play();
     		}
     		public void  Despawn()
