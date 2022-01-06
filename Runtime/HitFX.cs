@@ -8,10 +8,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	{
 		public ParticleSystem particleSystem;
 		public HitFXAudioController hitFXAudioController;
-		public void Setup()
+		private static float lastTime = 1f;
+		private Queue<HitFX> queue;
+		public void Setup(Queue<HitFX> q)
 		{
-			gameObject.SetActive(true);
-			particleSystem.Play();
+			gameObject.SetActive(false);
+			//particleSystem.Play();
+			queue = q;
+			Invoke("Despawn",lastTime);
 		}
             public void Spawn(Vector3 position)
     		{
@@ -20,10 +24,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 //PLAY SOUND OF HIT
                 hitFXAudioController.Cast();
     			particleSystem.Play();
+                Invoke("Despawn",lastTime);
     		}
     		public void  Despawn()
     		{
     			gameObject.SetActive(false);
+                queue.Enqueue(this);
     		}
 	}
 }
