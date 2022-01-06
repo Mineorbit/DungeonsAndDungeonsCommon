@@ -50,6 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private IEnumerator _strikeArch;
         public float strikeSpeed = 1f;
+        public float jumpHeight;
         IEnumerator StrikeArch()
         {
             Vector3 startPosition = transform.localPosition;
@@ -58,7 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             float t = 0;
             while (t < 2f)
             {
-                transform.localPosition = startPosition + (-(1 - t) * (1 - t) + 1f) * dir;
+                transform.localPosition = startPosition + (-(1 - t) * (1 - t) + 1f) * dir*jumpHeight;
                 t += Time.deltaTime*strikeSpeed;
                 yield return new WaitForEndOfFrame();
             }

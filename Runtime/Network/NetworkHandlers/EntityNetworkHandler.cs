@@ -118,8 +118,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Update()
         {
-            if (LocomotionIsBlocked())
+            if(NetworkManager.instance != null)
             {
+                if (LocomotionIsBlocked())
+                {
                 targetPosition = blockPosition;
                 transform.position = blockPosition;
                 
@@ -129,23 +131,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     ResolveLocomotionBlock();
                 }
                 */
-            }
-            else
-            {
-                targetPosition = receivedPosition;
-                if (owner != NetworkManager.instance.localId && interpolatePosition)
-                {
-                    transform.position = (transform.position + targetPosition) / 2;
-                    transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
                 }
                 else
                 {
-                    receivedPosition = transform.position;
-                    targetPosition = transform.position;
-                    targetRotation = transform.rotation.eulerAngles;
+                    targetPosition = receivedPosition;
+                    if (owner != NetworkManager.instance.localId && interpolatePosition)
+                    {
+                        transform.position = (transform.position + targetPosition) / 2;
+                        transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
+                    }
+                    else
+                    {
+                        receivedPosition = transform.position;
+                        targetPosition = transform.position;
+                        targetRotation = transform.rotation.eulerAngles;
+                    }
                 }
             }
-
             
         }
 

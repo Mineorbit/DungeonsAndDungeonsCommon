@@ -109,8 +109,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Player CheckVisiblePlayer()
         {
-            var minDist = float.MaxValue;
             Player minPlayer = null;
+            if(PlayerManager.playerManager != null)
+            {
+            var minDist = float.MaxValue;
             for (var i = 0; i < 4; i++)
             {
                 var p = PlayerManager.playerManager.players[i];
@@ -127,7 +129,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         }
                     }
             }
-
+            }
             var walls = me.seeThroughWalls;
             if (walls ? true : CheckLineOfSight(minPlayer))
                 return minPlayer;
