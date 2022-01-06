@@ -22,8 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool allowedToMove = true;
 
 
-        public static float distance = 5;
-        public static float aimDistance = 20;
+        public float aimDistance = 20;
 
 
 
@@ -54,14 +53,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                target = start+ray.direction*distance;
+                target = start+ray.direction*aimDistance;
             }
 
             return target;
         }
 
         public Hitbox climbableHitbox;
-
 
         public bool inClimbing;
         
