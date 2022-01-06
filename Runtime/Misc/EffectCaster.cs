@@ -28,6 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Create()
         {
         HitFX effect = (Instantiate(instance.hitFX ,Vector3.zero,Quaternion.identity) as GameObject).GetComponent<HitFX>();
+        effect.Setup();
         effect.Despawn();
         hitEffects.Enqueue(effect);
         }
