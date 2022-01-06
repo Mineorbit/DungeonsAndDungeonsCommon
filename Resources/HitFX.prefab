@@ -4917,6 +4917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 3143064075671898930}
+  hitFXAudioController: {fileID: 6352610497663496610}
 --- !u!1 &3143064076258321132
 GameObject:
   m_ObjectHideFlags: 0
