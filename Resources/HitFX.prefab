@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 5
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1052,8 +1052,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.47401142
         - serializedVersion: 3
-          time: 0.107498266
-          value: 0.8513514
+          time: 0.07922904
+          value: 0.43384567
           inSlope: 1.7596793
           outSlope: 1.7596793
           tangentMode: 0
@@ -1061,13 +1061,13 @@ ParticleSystem:
           inWeight: 1
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.22002172
-          value: 0.660789
-          inSlope: -4.401273
-          outSlope: -4.401273
+          time: 0.4779722
+          value: 0.29041862
+          inSlope: -1.300139
+          outSlope: -1.300139
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.16656397
+          inWeight: 0.23071359
           outWeight: 0.09407541
         - serializedVersion: 3
           time: 1
@@ -5201,7 +5201,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5957,16 +5957,25 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 11.0061
-          outSlope: 11.0061
+          time: 0.0035335687
+          value: 0.9885939
+          inSlope: 0.007880508
+          outSlope: 0.007880508
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.039844718
+          outWeight: 0.21925473
         - serializedVersion: 3
-          time: 0.986084
+          time: 0.78969735
+          value: 0.7530476
+          inSlope: -1.815531
+          outSlope: -1.815531
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.091658995
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
           value: 0
           inSlope: -2.4224734
           outSlope: -2.4224734
