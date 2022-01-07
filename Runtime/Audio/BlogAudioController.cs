@@ -13,7 +13,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     		}
 		public void Footstep()
 		{
-		Play(0);
+		Play(5);
+		}
+
+		public void Hit()
+		{
+			Play(2);
+		}
+
+		public void Strike()
+		{
+			Play(4);
 		}
     // Update is called once per frame
     		void Update()
