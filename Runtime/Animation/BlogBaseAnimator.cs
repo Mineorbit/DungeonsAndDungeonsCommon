@@ -13,6 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent attackEvent;
         public UnityEvent endAttackEvent;
         private Vector3 targetInterpolation;
+        public BlogAudioController blogAudioController;
 
         [FormerlySerializedAs("enemyController")] public new EnemyController entityController;
         
@@ -71,6 +72,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Strike()
         {
             base.Strike();
+            blogAudioController.Strike();
             if(_strikeArch == null)
             {
                 _strikeArch = StrikeArch();
@@ -81,6 +83,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Daze()
         {
             base.Daze();
+            blogAudioController.Daze();
+        }
+
+
+        public override void Death()
+        {
+            base.Death();
+            blogAudioController.Death();
         }
 
         /*
