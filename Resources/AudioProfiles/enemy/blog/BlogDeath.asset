@@ -18,7 +18,7 @@ MonoBehaviour:
   relativePosition: {x: 0, y: 0, z: 0}
   minVolume: 0.5
   maxVolume: 1
-  spatialFactor: 0
+  spatialFactor: 0.75
   loop: 0
   audioClip:
-  - {fileID: 8300000, guid: 907c4b8aed5442c4088ca4c54555d6e6, type: 3}
+  - {fileID: 8300000, guid: df271aee83a8d2d4ab572a689df5c205, type: 3}
