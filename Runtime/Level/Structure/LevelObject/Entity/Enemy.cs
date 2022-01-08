@@ -59,7 +59,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             targetEntity = attacker;
         }
-        
+
+
+        public override void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
+        {
+            base.Spawn(location, rotation, allowedToMove);
+            responsive = true;
+        }
         
         public void TryDamage(GameObject g, float damage)
         {
@@ -80,11 +86,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
            
         }
 
+
+        private bool responsive = true;
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if(behaviorTree != null)
-            behaviorTree.Tick();
+            if(behaviorTree != null && alive && responsive)
+                behaviorTree.Tick();
+        }
+
+        public override void Kill()
+        {
+            base.Kill();
+            responsive = false;
         }
     }
 }

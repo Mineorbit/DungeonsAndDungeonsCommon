@@ -242,12 +242,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioProfiles:
+  - {fileID: 11400000, guid: 393761308d1e4ac42973d8a4aed747b7, type: 2}
   - {fileID: 11400000, guid: 9c182d1dc2f0f7c40af161e701f6b651, type: 2}
   - {fileID: 11400000, guid: 848a61be38ead29428500ed58d55aedc, type: 2}
   - {fileID: 11400000, guid: c8954caa87ef5bf42b8425592a2f1e5a, type: 2}
   - {fileID: 11400000, guid: d40f8ff1ed6d1b140a094b219725463c, type: 2}
   - {fileID: 11400000, guid: a3179f7be35736843b8fd8165fc73541, type: 2}
-  - {fileID: 11400000, guid: 393761308d1e4ac42973d8a4aed747b7, type: 2}
   controller: {fileID: 736877002971563755}
 --- !u!135 &2529766176675911796
 SphereCollider:
@@ -354,6 +354,10 @@ PrefabInstance:
       propertyPath: entityController
       value: 
       objectReference: {fileID: 736877002971563755}
+    - target: {fileID: 1713471800857632868, guid: c34aee4582e18d324816915fac402ce6, type: 3}
+      propertyPath: blogAudioController
+      value: 
+      objectReference: {fileID: 4964758866301512201}
     - target: {fileID: 2185143167612652259, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: m_Name
       value: Model

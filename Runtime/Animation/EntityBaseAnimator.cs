@@ -34,6 +34,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             animator.SetBool("Dazed",true);
         }
+
+        public virtual void Death()
+        {
+            
+        }
         
         public void Undaze()
         {

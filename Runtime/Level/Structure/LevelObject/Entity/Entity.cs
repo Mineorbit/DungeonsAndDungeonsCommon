@@ -354,11 +354,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
         }
 
+        private float timeForDeath = 1f;
         public virtual void Kill()
         {
             // SetState(Enemy.EnemyState.Dead);
             //eventually call
-            Despawn();
+            setMovementStatus(false);
+            invincible = true;
+            baseAnimator.Death();
+            Invoke("Despawn", timeForDeath);
         }
     }
 }
