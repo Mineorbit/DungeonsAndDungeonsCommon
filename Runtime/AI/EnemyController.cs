@@ -107,7 +107,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 navMeshAgent.SetDestination(currentWalkTargetPosition);
                 
             }
-            if (!me.allowedToMove)
+            if (!me.allowedToMove && navMeshAgent.enabled)
             {
                 navMeshAgent.ResetPath();
             }
