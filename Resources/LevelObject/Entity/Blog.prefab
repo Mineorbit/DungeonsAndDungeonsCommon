@@ -61,6 +61,7 @@ MonoBehaviour:
   lastSeenPlayer: {fileID: 0}
   seenAlly: {fileID: 0}
   lastPositionOfPlayer: {x: 0, y: 0, z: 0}
+  navMeshAgent: {fileID: 736877002971563753}
   targetIsTransform: 0
   currentWalkTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &736877002971563754

@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-        private NavMeshAgent navMeshAgent;
+        public NavMeshAgent navMeshAgent;
 
         private TimerManager.Timer visibilityTimer;
 
@@ -77,7 +77,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SetAgent(bool available)
         {
-            navMeshAgent.enabled = available;
+            if(navMeshAgent != null)
+                navMeshAgent.enabled = available;
         }
         
         
