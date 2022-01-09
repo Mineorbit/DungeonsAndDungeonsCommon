@@ -9951,7 +9951,7 @@ MonoBehaviour:
   itemHitbox: {fileID: 1289797724913908694}
   itemsInProximity: []
   maxHealth: 100
-  hitCooldownTime: 1
+  hitCooldownTime: 0.5
   allowedToMove: 0
   dazeTime: 1
   lastSpeeds: []
