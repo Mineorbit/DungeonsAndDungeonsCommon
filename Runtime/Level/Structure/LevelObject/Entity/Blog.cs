@@ -155,10 +155,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             onHitEvent.AddListener(x => { if(x.GetType().IsInstanceOfType(typeof(Entity)))  Counter((Entity)x); }); 
         }
 
-        
-        
-        
 
+        public override void setMovementStatus(bool allowedToMove)
+        {
+            base.setMovementStatus(allowedToMove);
+            GetController().SetAgent(allowedToMove);
+        }
 
         private Entity lastVisualTrack = null;
 

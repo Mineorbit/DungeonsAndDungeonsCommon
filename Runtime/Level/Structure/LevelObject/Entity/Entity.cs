@@ -230,13 +230,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 controller.controller.Move(0.05f*kickbackSpeed*dir);
                 yield return new WaitForEndOfFrame();
             }
+            FinishKickback();
         }
         
-        public void Kickback(Vector3 dir, float kickbackDistance, float kickbackSpeed)
+        public virtual void Kickback(Vector3 dir, float kickbackDistance, float kickbackSpeed)
         {
             Vector3 direction = dir;
             direction.Normalize();
+            setMovementStatus(false);
             StartCoroutine(KickbackRoutine(direction,kickbackDistance, kickbackSpeed));
+        }
+
+        public virtual void FinishKickback()
+        {
+            setMovementStatus(true);
         }
         
         public void CreateKickback(Vector3 dir,float kickbackDistance, float kickbackSpeed)
