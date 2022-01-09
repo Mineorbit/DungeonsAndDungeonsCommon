@@ -75,6 +75,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             currentWalkTarget = target;
         }
 
+        public void SetAgent(bool available)
+        {
+            navMeshAgent.enabled = available;
+        }
+        
+        
         public void GoTo(Vector3 t)
         {
             targetIsTransform = false;
