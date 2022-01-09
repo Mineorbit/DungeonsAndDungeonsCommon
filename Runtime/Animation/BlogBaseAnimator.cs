@@ -87,6 +87,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blogAudioController.Daze();
         }
 
+        public override void Undaze()
+        {
+            base.Undaze();
+            blogAudioController.Undaze();
+        }
 
         public override void Death()
         {
