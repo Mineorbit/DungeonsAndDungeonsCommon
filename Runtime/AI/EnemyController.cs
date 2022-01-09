@@ -73,6 +73,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 speedY = 0;
             }
+
+            navMeshAgent.enabled = isGrounded() && navAllowed;
         }
 
         public Vector3 GetDirection()
@@ -89,13 +91,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             currentWalkTarget = target;
         }
 
+        private bool navAllowed = true;
+
         public void SetAgent(bool available)
         {
-            if(navMeshAgent != null)
-                navMeshAgent.enabled = available;
-
-            if (!isGrounded())
-                navMeshAgent.enabled = false;
+            navAllowed = available;
         }
         
         
