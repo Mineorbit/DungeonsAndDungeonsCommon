@@ -159,7 +159,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void setMovementStatus(bool allowedToMove)
         {
             base.setMovementStatus(allowedToMove);
-            GetController().SetAgent(allowedToMove);
+            if(GetController() != null)
+                GetController().SetAgent(allowedToMove);
         }
 
         private Entity lastVisualTrack = null;
