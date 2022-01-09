@@ -37,6 +37,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			Play(1);
 		}
 
+		public void Undaze()
+		{
+			Stop(1);
+		}
+
 		// Update is called once per frame
     		void Update()
    		{
