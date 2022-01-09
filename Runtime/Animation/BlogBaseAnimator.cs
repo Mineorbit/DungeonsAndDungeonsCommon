@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -93,6 +94,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             blogAudioController.Death();
         }
 
+        public override void Hit()
+        {
+            base.Hit();
+            blogAudioController.Hit();
+        }
         /*
         public void Attack()
         {
