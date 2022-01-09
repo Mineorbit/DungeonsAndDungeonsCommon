@@ -61,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             BehaviorTree.Node playerSeenCheckNode = new BehaviorTree.ActionNode(() =>
             {
                 
-                GameConsole.Log("Checking if seeing Player",false,"AI");
+                //GameConsole.Log("Checking if seeing Player",false,"AI");
                 return  (GetController().seenPlayer == null) ? BehaviorTree.Response.Failure : BehaviorTree.Response.Success;
             });
 
@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // this should be a subtree
                 if (!randomWalking)
                 {
-                    GameConsole.Log("Starting Random Walking",false,"AI");
+                    //GameConsole.Log("Starting Random Walking",false,"AI");
                     StartRandomWalk();
                     return BehaviorTree.Response.Failure;
                 } else
@@ -136,7 +136,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             BehaviorTree.Node playerStrikeNode = new BehaviorTree.ActionNode(() =>
             {
                 
-                GameConsole.Log("Calling for Strike",false,"AI");
+                //GameConsole.Log("Calling for Strike",false,"AI");
                 Strike();
                 return BehaviorTree.Response.Running;
             });
