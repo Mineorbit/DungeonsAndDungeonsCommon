@@ -253,6 +253,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             striking = false;
         }
-        
+
+        public override void Kill()
+        {
+            base.Kill();
+            GetController().Stop();
+        }
     }
 }
