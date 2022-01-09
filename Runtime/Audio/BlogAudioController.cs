@@ -17,6 +17,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			Play(3);
 		}
 
+		public void Footstep()
+		{
+			Play(0);
+		}
+		
 		public void Death()
 		{
 			Play(2);
