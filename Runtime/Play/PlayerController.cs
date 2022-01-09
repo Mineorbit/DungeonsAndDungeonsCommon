@@ -33,7 +33,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //Needs to be refined
 
         public Vector3 forwardDirection;
-        public readonly float gravity = 4f;
 
 
         public Vector3 GetTargetPoint()

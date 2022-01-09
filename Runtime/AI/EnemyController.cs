@@ -53,12 +53,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
         }
 
+        public bool isGrounded()
+        {
+            return (navMeshAgent.enabled && !navMeshAgent.isOnNavMesh) || controller.isGrounded;
+        }
 
+        private float speedY = 0;
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             UpdateLocomotion();
             UpdateVariables();
+            if (!isGrounded())
+            {
+                speedY += gravity * Time.deltaTime;
+                controller.Move(Vector3.down*speedY);
+            }
+            else
+            {
+                speedY = 0;
+            }
         }
 
         public Vector3 GetDirection()
@@ -79,6 +93,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(navMeshAgent != null)
                 navMeshAgent.enabled = available;
+
+            if (!isGrounded())
+                navMeshAgent.enabled = false;
         }
         
         
