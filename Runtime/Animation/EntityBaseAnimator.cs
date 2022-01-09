@@ -21,6 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Hit()
         {
+            GameConsole.Log("Hit called");
             animator.SetTrigger("Hit");
         }
 

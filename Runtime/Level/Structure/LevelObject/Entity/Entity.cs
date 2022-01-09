@@ -330,7 +330,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Vector3 dir = transform.position - hitter.transform.position;
                     CreateKickback(dir,0.5f, 2f);
                     
-                    Invoke(HitEffect,hitter.transform.position);
+                    Invoke(HitEffect,hitter.transform.position,true,true);
 
                     if (hitter.GetType().IsInstanceOfType(typeof(Entity)))
                     {
