@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -86,7 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
         }
 
-    public virtual  void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         if(Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) PerformSim();
         ComputeCurrentSpeed();
@@ -94,7 +95,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     public void PerformSim()
     {
-        if (transform.position.y < killHeight) Kill();
+        
+        GameConsole.Log("Test "+transform.position.y);
+        GameConsole.Log("Test2 "+killHeight);
+        if (transform.position.y < killHeight)
+        {
+            Kill();
+        }
     }
 
     private Vector3 lastPosition;
@@ -219,26 +226,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        IEnumerator KickbackRoutine(Vector3 dir, float dist, float kickbackSpeed)
-        {
-            float t = 0;
-            Vector3 start = transform.position;
-            float kickbackTime =  dist / kickbackSpeed;
-            while (t<kickbackTime)
-            {
-                t += Time.deltaTime;
-                controller.controller.Move(0.05f*kickbackSpeed*dir);
-                yield return new WaitForEndOfFrame();
-            }
-            FinishKickback();
-        }
+        
         
         public virtual void Kickback(Vector3 dir, float kickbackDistance, float kickbackSpeed)
         {
             Vector3 direction = dir;
             direction.Normalize();
             setMovementStatus(false);
-            StartCoroutine(KickbackRoutine(direction,kickbackDistance, kickbackSpeed));
+            IEnumerator kickback = controller.KickbackRoutine(direction, kickbackDistance, kickbackSpeed);
+            StartCoroutine(kickback);
         }
 
         public virtual void FinishKickback()

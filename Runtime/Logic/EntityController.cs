@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         private readonly int k = 10;
         
+        
+        public readonly float gravity = 4f;
+        
         public List<float> lastSpeeds = new List<float>();
 
         public virtual void Start()
@@ -33,6 +37,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public IEnumerator KickbackRoutine(Vector3 dir, float dist, float kickbackSpeed)
+        {
+            float t = 0;
+            Vector3 start = transform.position;
+            float kickbackTime =  dist / kickbackSpeed;
+            float speedY = 0;
+            while (t<kickbackTime)
+            {
+                t += Time.deltaTime;
+                if (!controller.isGrounded)
+                {
+                    speedY += Time.deltaTime * gravity;
+                }
+                controller.Move(0.05f*kickbackSpeed*dir+speedY*Vector3.down);
+                yield return new WaitForEndOfFrame();
+            }
+            entity.FinishKickback();
+        }
+        
         public void OnSpawn(Vector3 location)
         {
         }
