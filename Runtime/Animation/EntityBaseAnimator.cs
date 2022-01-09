@@ -19,7 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 animator.SetFloat("Speed", speed);
         }
 
-        public void Hit()
+        public virtual void Hit()
         {
             animator.SetTrigger("Hit");
         }
