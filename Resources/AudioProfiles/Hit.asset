@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f0448393b204c14c9680b03c1e457bf, type: 3}
-  m_Name: sword_hit
+  m_Name: Hit
   m_EditorClassIdentifier: 
   audioType: 0
   overloading: 0
@@ -18,7 +18,10 @@ MonoBehaviour:
   relativePosition: {x: 0, y: 0, z: 0}
   minVolume: 0.5
   maxVolume: 1
-  spatialFactor: 1
+  spatialFactor: 0
   loop: 0
   audioClip:
-  - {fileID: 8300000, guid: 5435af08505c9264fbbbd74c489d7744, type: 3}
+  - {fileID: 8300000, guid: eccb453c911a50942b63ecc9a937af95, type: 3}
+  - {fileID: 8300000, guid: d17f2f678d190324ea332d1148315f94, type: 3}
+  - {fileID: 8300000, guid: 5225e15b9fe2a194bba8d3134e2a6f5f, type: 3}
+  - {fileID: 8300000, guid: 86fd64338fec71543a716698753e0ac1, type: 3}
