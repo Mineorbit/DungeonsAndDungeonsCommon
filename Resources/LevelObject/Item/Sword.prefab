@@ -5003,13 +5003,15 @@ MonoBehaviour:
   itemsInProximity: []
   maxHealth: 100
   hitCooldownTime: 1
-  movementOverride: 0
+  allowedToMove: 0
+  dazeTime: 1
   lastSpeeds: []
   lastSpeedDirections: []
   speed: 0
   speedDirection: {x: 0, y: 0, z: 0}
   ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
+  dazeKickbackDistance: 0.125
   rigidBody: {fileID: 8138660057824271279}
   useTime: 0.6
   owner: {fileID: 0}
@@ -5078,6 +5080,7 @@ MonoBehaviour:
   audioProfiles:
   - {fileID: 11400000, guid: 57d116ef23492a54c823326e379650af, type: 2}
   - {fileID: 11400000, guid: b9543d08193c4fc4a983663f7945e423, type: 2}
+  - {fileID: 11400000, guid: 364ff481982adb34db285b24a70c4e51, type: 2}
   sword: {fileID: 8138660057824271276}
 --- !u!114 &-4605350201169392513
 MonoBehaviour:
