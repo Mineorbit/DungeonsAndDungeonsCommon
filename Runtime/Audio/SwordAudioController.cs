@@ -1,14 +1,14 @@
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class SwordAudioController : AudioController
+    public class SwordAudioController : ItemAudioController
     {
-        public Sword sword;
+        public Sword item;
 
-        private void Start()
+        public override void Start()
         {
-            sword.onUseEvent.AddListener(Swoosh);
-            sword.onHitEvent.AddListener(Hit);
-            sword.onCollideEvent.AddListener(Collide);
+            base.Start();
+            item.onUseEvent.AddListener(Swoosh);
+            item.onHitEvent.AddListener(Hit);
         }
 
         
@@ -22,9 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Play(1);
         }
         
-        public void Collide()
-        {
-            Play(2);
-        }
+        
     }
 }

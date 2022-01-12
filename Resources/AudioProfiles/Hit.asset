@@ -21,8 +21,8 @@ MonoBehaviour:
   spatialFactor: 0
   loop: 0
   audioClip:
-  - {fileID: 8300000, guid: 146a20625ab9e744ca87da31c6b664f3, type: 3}
   - {fileID: 8300000, guid: eccb453c911a50942b63ecc9a937af95, type: 3}
   - {fileID: 8300000, guid: d17f2f678d190324ea332d1148315f94, type: 3}
   - {fileID: 8300000, guid: 5225e15b9fe2a194bba8d3134e2a6f5f, type: 3}
   - {fileID: 8300000, guid: 86fd64338fec71543a716698753e0ac1, type: 3}
+  - {fileID: 8300000, guid: 146a20625ab9e744ca87da31c6b664f3, type: 3}

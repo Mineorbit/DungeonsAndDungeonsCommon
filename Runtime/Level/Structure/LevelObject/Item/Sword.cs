@@ -90,7 +90,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Destroy(hitBox.gameObject);
         }
 
-        public UnityEvent onCollideEvent = new UnityEvent();
         
         void OnCollisionEnter(Collision collision)
         {
