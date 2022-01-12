@@ -8,16 +8,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             sword.onUseEvent.AddListener(Swoosh);
             sword.onHitEvent.AddListener(Hit);
+            sword.onCollideEvent.AddListener(Collide);
         }
 
-        private void Swoosh()
+        
+        public void Swoosh()
         {
             Play(0);
         }
 
-        private void Hit()
+        public void Hit()
         {
             Play(1);
+        }
+        
+        public void Collide()
+        {
+            Play(2);
         }
     }
 }
