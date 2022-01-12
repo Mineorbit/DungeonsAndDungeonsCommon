@@ -16,7 +16,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent onStopUseEvent = new UnityEvent();
         public UnityEvent onAttachEvent = new UnityEvent();
         public UnityEvent onDettachEvent = new UnityEvent();
+        public UnityEvent onCollideEvent = new UnityEvent();
 
+        
+        
         public ItemHandle itemHandle;
         
         public enum Side
