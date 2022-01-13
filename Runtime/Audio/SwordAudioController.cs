@@ -2,13 +2,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class SwordAudioController : ItemAudioController
     {
-        public Sword item;
+    
+    public Sword GetItem()
+    {
+        return (Sword) item;
+    }
 
         public override void Start()
         {
             base.Start();
-            item.onUseEvent.AddListener(Swoosh);
-            item.onHitEvent.AddListener(Hit);
+            GetItem().onUseEvent.AddListener(Swoosh);
+            GetItem().onHitEvent.AddListener(Hit);
         }
 
         
