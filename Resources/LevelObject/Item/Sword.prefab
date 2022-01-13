@@ -5028,6 +5028,9 @@ MonoBehaviour:
   onDettachEvent:
     m_PersistentCalls:
       m_Calls: []
+  onCollideEvent:
+    m_PersistentCalls:
+      m_Calls: []
   itemHandle: {fileID: 0}
   attachmentPoint: {fileID: 1400601724109994890}
   equipSide: 0
@@ -5081,7 +5084,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 57d116ef23492a54c823326e379650af, type: 2}
   - {fileID: 11400000, guid: b9543d08193c4fc4a983663f7945e423, type: 2}
   - {fileID: 11400000, guid: 364ff481982adb34db285b24a70c4e51, type: 2}
-  sword: {fileID: 8138660057824271276}
+  item: {fileID: 8138660057824271276}
 --- !u!114 &-4605350201169392513
 MonoBehaviour:
   m_ObjectHideFlags: 0
