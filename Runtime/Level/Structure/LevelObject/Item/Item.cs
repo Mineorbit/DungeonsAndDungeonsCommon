@@ -43,7 +43,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Vector3 GetAttachmentPoint()
         {
-            return Vector3.zero - attachmentPoint.localPosition;
+            
+            if(attachmentPoint == null)
+            {
+                return Vector3.zero - attachmentPoint.localPosition;
+            }
+            else
+            {
+                GameConsole.Log("No attachment point");
+                return Vector3.zero;
+            }
         }
         
         public Side equipSide;
@@ -79,6 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
             this.gameObject.tag = "Item";
+            SetupAttachmentPoint();
         }
 
         public override void OnDestroy()
