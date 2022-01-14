@@ -40,7 +40,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     return itemOffset.offset;
                 }
             }
-            return itemOffsets[0].offset;
+            return itemOffsets.Length > 0 ? itemOffsets[0].offset : Vector3.zero;
+            
         }
         private void Start()
         {
