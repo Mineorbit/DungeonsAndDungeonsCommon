@@ -95,9 +95,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
     public void PerformSim()
     {
-        
-        GameConsole.Log("Test "+transform.position.y);
-        GameConsole.Log("Test2 "+killHeight);
         if (transform.position.y < killHeight)
         {
             Kill();
