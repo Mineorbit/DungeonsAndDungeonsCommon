@@ -88,7 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
             this.gameObject.tag = "Item";
-            SetupAttachmentPoint();
+            //SetupAttachmentPoint();
         }
 
         public override void OnDestroy()
