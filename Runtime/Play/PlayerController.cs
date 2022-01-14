@@ -170,6 +170,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
+                GameConsole.Log("Swap Left");
                 player.Invoke(player.SwapLeft,true);
             }
         }
@@ -178,6 +179,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
+                GameConsole.Log("Swap Right");
                 player.Invoke(player.SwapRight,true);
             }
         }
