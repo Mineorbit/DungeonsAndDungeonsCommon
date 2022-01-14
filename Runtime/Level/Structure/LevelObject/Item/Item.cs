@@ -44,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 GetAttachmentPoint()
         {
             
-            if(attachmentPoint == null)
+            if(attachmentPoint != null)
             {
                 return Vector3.zero - attachmentPoint.localPosition;
             }
