@@ -10149,8 +10149,8 @@ MonoBehaviour:
   slot: {fileID: 0}
   handleType: 1
   itemOffsets:
-  - itemType: 
-    offset: {x: 0, y: 0, z: 0}
+  - itemType: Shield
+    offset: {x: -0.0005, y: 0, z: 0}
 --- !u!1 &8889448766549451165
 GameObject:
   m_ObjectHideFlags: 0
