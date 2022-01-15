@@ -8,6 +8,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Entity me;
         public Animator animator;
 
+        public EntityAudioController entityAudioController;
         public EntityController entityController;
         
         public float speed;
@@ -21,7 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Hit()
         {
-            GameConsole.Log("Hit called");
             animator.SetTrigger("Hit");
         }
 

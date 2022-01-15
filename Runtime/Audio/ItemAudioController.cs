@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class ItemAudioController : AudioController
+    public class ItemAudioController : EntityAudioController
     {
         // Start is called before the first frame update
         public Item item;

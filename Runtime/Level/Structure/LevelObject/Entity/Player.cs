@@ -336,35 +336,55 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GetRightBackHandle().Attach(item);
             }
         }
-
+        
+        public void SwapEffect()
+        {
+            ((PlayerBaseAnimator)baseAnimator).SwapItem();
+        }
         
 
         public void SwapLeft()
         {
-            
+
+            bool c = false;
                 Item a = GetLeftBackHandle().slot;
                 Item b = GetLeftHandHandle().slot;
                 GetLeftBackHandle().Dettach();
                 GetLeftHandHandle().Dettach();
                 if(a != null)
+                {
                     GetLeftHandHandle().Attach(a);
-                
+                    c = true;
+                }
                 if(b != null)
+                {
                     GetLeftBackHandle().Attach(b);
+                    c = true;
+                }
+                if(c) Invoke(SwapEffect);
         }
 
+        
+        
         public void SwapRight()
         {
             
+            bool c = false;
                 Item a = GetRightBackHandle().slot;
                 Item b = GetRightHandHandle().slot;
                 GetRightBackHandle().Dettach();
                 GetRightHandHandle().Dettach();
                 if(a != null)
+                {
                     GetRightHandHandle().Attach(a);
-                
+                    c = true;
+                }
                 if(b != null)
+                {
                     GetRightBackHandle().Attach(b);
+                    c = true;
+                }
+                if(c) Invoke(SwapEffect);
         }
         
         public ItemHandle GetLeftHandHandle()

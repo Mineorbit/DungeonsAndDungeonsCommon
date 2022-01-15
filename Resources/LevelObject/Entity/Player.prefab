@@ -9745,6 +9745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: 2633396581524973113}
   animator: {fileID: 7589352983227760250}
+  entityAudioController: {fileID: 8472775196247414597}
   entityController: {fileID: -4485675669329379349}
   speed: 0
   characterController: {fileID: 6344021777004394327}
@@ -9766,6 +9767,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec7965c5338dbb548b982bf9033bf5bb, type: 2}
   - {fileID: 11400000, guid: e4a9dee20181c964ab50261eca70a24e, type: 2}
   - {fileID: 11400000, guid: 5db9e6e4a036c3848820bcfef31b2c41, type: 2}
+  - {fileID: 11400000, guid: 7f3a5a44c52d80240a3c917c12cbb5f2, type: 2}
   player: {fileID: 2633396581524973113}
 --- !u!1 &4672334940009596865
 GameObject:
