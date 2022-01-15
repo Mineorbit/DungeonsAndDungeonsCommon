@@ -26,10 +26,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+
+        public int activeIn = 0;
         public virtual void Activate()
         {
             GameConsole.Log( $"{this} activated");
-            if (!activated)
+            activeIn++;
+            if (!activated && activeIn > 0)
             {
                 activated = true;
                 foreach (var receiver in receivers.Values) receiver.Invoke(receiver.Activate);
@@ -38,7 +41,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Deactivate()
         {
-            if (activated)
+            activeIn--;
+            if (activated && activeIn == 0)
             {
                 activated = false;
                 foreach (var receiver in receivers.Values) receiver.Invoke(receiver.Deactivate);
