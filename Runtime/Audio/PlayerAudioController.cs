@@ -1,6 +1,8 @@
-﻿namespace com.mineorbit.dungeonsanddungeonscommon
+﻿using System;
+
+namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class PlayerAudioController : AudioController
+    public class PlayerAudioController : EntityAudioController
     {
         public Player player;
 
@@ -8,11 +10,19 @@
         private float walkSoundStrength;
 
 
+
         public void Footstep()
         {
             Play(2);
+            
+            
         }
 
+        public void SwapItem()
+        {
+            Play(3);
+        }
+        
         private void Update()
         {
             walkSoundStrength = (walkSoundStrength + player.speed) / 2;

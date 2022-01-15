@@ -24,6 +24,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (PlayerController) entityController;
         }
 
+        public void SwapItem()
+        {
+         ( (PlayerAudioController) entityAudioController).SwapItem();   
+        }
+        
         public void RaiseShield()
         {
             animator.SetBool("RaiseShield",true);
@@ -65,14 +70,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	    }
         if(((Player) me).isGrounded )
         {
-	    if(((Player) me).speedDirection.y > 0)
-	    {
-	    	animator.SetTrigger("Jump");
-	    }
-        else
-        {
-            animator.ResetTrigger("Jump");
-        }
+	        if(((Player) me).speedDirection.y > 0)
+	        {
+	    	    animator.SetTrigger("Jump");
+	        }
+            else
+            {
+                animator.ResetTrigger("Jump");
+            }
         }
 
         if (speed > 0 && ((Player) me).isGrounded)

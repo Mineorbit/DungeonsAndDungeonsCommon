@@ -1,6 +1,6 @@
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class EnemyAudioController : AudioController
+    public class EnemyAudioController : EntityAudioController
     {
         public EnemyController controller;
         private float walkSoundStrength;
