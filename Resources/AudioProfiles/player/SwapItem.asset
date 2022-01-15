@@ -17,8 +17,8 @@ MonoBehaviour:
   onAwake: 0
   relativePosition: {x: 0, y: 0, z: 0}
   minVolume: 0.125
-  maxVolume: 0.25
+  maxVolume: 0.125
   spatialFactor: 1
   loop: 0
   audioClip:
-  - {fileID: 8300000, guid: 934945a7eaef36f4e9ecb8ef0635a61d, type: 3}
+  - {fileID: 8300000, guid: 5935be522dfc7d648a9760dd5c9a467e, type: 3}
