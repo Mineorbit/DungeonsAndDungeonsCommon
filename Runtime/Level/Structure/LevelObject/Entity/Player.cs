@@ -341,28 +341,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SwapLeft()
         {
-            if (!GetLeftHandHandle().Empty() && !GetLeftBackHandle().Empty())
-            {
+            
                 Item a = GetLeftBackHandle().slot;
                 Item b = GetLeftHandHandle().slot;
                 GetLeftBackHandle().Dettach();
                 GetLeftHandHandle().Dettach();
-                GetLeftHandHandle().Attach(a);
-                GetLeftBackHandle().Attach(b);
-            }
+                if(a != null)
+                    GetLeftHandHandle().Attach(a);
+                
+                if(b != null)
+                    GetLeftBackHandle().Attach(b);
         }
 
         public void SwapRight()
         {
-            if (!GetRightHandHandle().Empty() && !GetRightBackHandle().Empty())
-            {
+            
                 Item a = GetRightBackHandle().slot;
                 Item b = GetRightHandHandle().slot;
                 GetRightBackHandle().Dettach();
                 GetRightHandHandle().Dettach();
-                GetRightHandHandle().Attach(a);
-                GetRightBackHandle().Attach(b);
-            }
+                if(a != null)
+                    GetRightHandHandle().Attach(a);
+                
+                if(b != null)
+                    GetRightBackHandle().Attach(b);
         }
         
         public ItemHandle GetLeftHandHandle()
