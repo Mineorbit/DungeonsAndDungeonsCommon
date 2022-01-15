@@ -29,6 +29,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             model.SetActive(false);
         }
 
+        public override void ResetState()
+        {
+            base.ResetState();
+            
+            buildCollider.enabled = true;
+            model.SetActive(true);
+        }
+
         public int activeInOr = 0;
 
         public override void Activate()
