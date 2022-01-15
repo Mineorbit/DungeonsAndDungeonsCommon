@@ -22,6 +22,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             model.SetActive(b);
         }
 
+        public override void OnStartRound()
+        {
+            base.OnStartRound();
+            bool b = Level.instantiateType == Level.InstantiateType.Edit;
+            buildCollider.enabled = b;
+            model.SetActive(b);
+        }
+
         public int activeInOr = 0;
 
         public override void Activate()
