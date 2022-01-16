@@ -35,7 +35,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void ResetState()
         {
             base.ResetState();
-            
             buildCollider.enabled = true;
             activeInOr = 0;
             model.SetActive(true);

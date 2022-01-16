@@ -31,7 +31,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Activate()
         {
             GameConsole.Log( $"{this} activated");
-            activeIn = Math.Min(inBoundWires.Count,activeIn+1);
+            if (inBoundWires.Count > 0)
+                activeIn = Math.Min(inBoundWires.Count, activeIn + 1);
+            else
+                activeIn = activeIn + 1;
             if (!activated && activeIn > 0)
             {
                 activated = true;
@@ -113,6 +116,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Resetting "+this);
             base.OnEndRound();
+            activeIn = 0;
             Invoke(HandleReset, doLocal:true, doServer: true);
         }
         
