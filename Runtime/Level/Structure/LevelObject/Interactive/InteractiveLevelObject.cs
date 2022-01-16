@@ -31,7 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Activate()
         {
             GameConsole.Log( $"{this} activated");
-            activeIn++;
+            activeIn = Math.Min(inBoundWires.Count,activeIn+1);
             if (!activated && activeIn > 0)
             {
                 activated = true;
@@ -41,7 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Deactivate()
         {
-            activeIn--;
+            activeIn = Math.Max(0,activeIn-1);
             if (activated && activeIn == 0)
             {
                 activated = false;

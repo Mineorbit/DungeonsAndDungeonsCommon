@@ -103,12 +103,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             targetIsTransform = false;
             currentWalkTargetPosition = t;
-            GameConsole.Log($"Going to {t}");
         }
 
         public void Stop()
         {
-            GameConsole.Log("Stopping");
             currentWalkTarget = transform;
             navMeshAgent.ResetPath();
         }
@@ -119,8 +117,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if(targetIsTransform)
                     currentWalkTargetPosition = currentWalkTarget.position;
-                
-                GameConsole.Log("Nav Mesh target set");
                 navMeshAgent.SetDestination(currentWalkTargetPosition);
                 
             }
