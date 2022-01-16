@@ -100,6 +100,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void ResetState()
         {
             GameConsole.Log($"Resetting State of {this}");
+            activeIn = 0;
         }
 
 
@@ -142,6 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
             ChunkManager.onChunkLoaded.AddListener(FindReceivers);
+            activeIn = 0;
             FindReceivers();
         }
     }

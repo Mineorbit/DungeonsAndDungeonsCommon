@@ -13,12 +13,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
         }
+        public int activeInOr = 0;
         // WHAT ABOUT NAV MESH BUILD?
         public override void OnInit()
         {
             base.OnInit();
             bool b = Level.instantiateType == Level.InstantiateType.Edit;
             buildCollider.enabled = b;
+            activeInOr = 0;
             model.SetActive(b);
         }
 
@@ -26,6 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnStartRound();
             buildCollider.enabled = false;
+            activeInOr = 0;
             model.SetActive(false);
         }
 
@@ -34,10 +37,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.ResetState();
             
             buildCollider.enabled = true;
+            activeInOr = 0;
             model.SetActive(true);
         }
 
-        public int activeInOr = 0;
 
         public override void Activate()
         {
