@@ -64,5 +64,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 g.SetActive(true);
             }
         }
+        
+        public override void ResetState()
+        {
+            base.ResetState();
+            buildCollider.enabled = true;
+        }
     }
 }
