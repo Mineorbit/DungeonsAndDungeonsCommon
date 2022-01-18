@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void StopHit()
         {
-            
+            animator.SetTrigger("StopHit");
         }
 
         public virtual void Strike()
