@@ -43,8 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public List<Item> itemsInProximity = new List<Item>();
 
         private ItemHandle handle;
-
-
+        
         public int maxHealth = 100;
 
         internal bool cooldown;
@@ -93,6 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         ComputeCurrentSpeed();
     }
 
+    // ONLY FOR MONSTERS AND PLAYERS?
     public void PerformSim()
     {
         if (transform.position.y < killHeight)
