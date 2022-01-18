@@ -47,7 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public int maxHealth = 100;
 
-        internal bool hitCooldown;
+        internal bool cooldown;
 
         public float hitCooldownTime = 1f;
 
@@ -151,10 +151,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        private IEnumerator HitTimer(float time)
+        private void CoolTimer(float time)
         {
-            yield return new WaitForSeconds(time);
-            hitCooldown = false;
+            cooldown = false;
             Invoke(setMovementStatus, true);
         }
 
@@ -181,10 +180,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private void StartHitCooldown()
+        private void StartCooldown(float CooldownTime)
         {
-            hitCooldown = true;
-            StartCoroutine(HitTimer(hitCooldownTime));
+            cooldown = true;
+            Invoke("CoolTimer",CooldownTime);
         }
 
         //EVENTS ALWAYS LAST
@@ -254,6 +253,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
+        public virtual void StopHitEffect()
+        {
+            
+        }
+
         
         
         
@@ -308,12 +312,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private int pointsForKill = 100;
 
+        public virtual void EndHit()
+        {
+            
+        }
+        
         public virtual void Hit(LevelObject hitter, int damage)
         {
 
             if (Level.instantiateType == Level.InstantiateType.Play ||
                 Level.instantiateType == Level.InstantiateType.Test)
-                if (!invincible && !hitCooldown)
+                if (!invincible && !cooldown)
                 {
                     if (HitBlocked( ( hitter.transform.position - transform.position)))
                     {
@@ -328,16 +337,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Invoke(setMovementStatus, false);
                     
                     Vector3 dir = transform.position - hitter.transform.position;
-                    CreateKickback(dir,0.5f, 2f);
+                    float kickbackDistance = 0.5f + ((float) damage / 10);
+                    float kickbackSpeed = 1.5f;
+                    CreateKickback(dir,kickbackDistance, kickbackSpeed);
+                    float time = kickbackDistance / kickbackSpeed;
                     
-                    Invoke(HitEffect,hitter.transform.position,true,true);
 
                     if (hitter.GetType().IsInstanceOfType(typeof(Entity)))
                     {
                         ((Entity)hitter).points += damage;
                     }
                     
-                    StartHitCooldown();
+                    StartCooldown(Mathf.Min(time,hitCooldownTime));
                     GameConsole.Log($"{hitter.gameObject.name}  HIT  {gameObject.name} AND CAUSED {damage} HP DAMAGE");
                     health = health - damage;
 
@@ -349,6 +360,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             ((Entity)hitter).points += pointsForKill;
                         }
                         Invoke(Kill);
+                    }
+                    else
+                    {
+                        Invoke(HitEffect,hitter.transform.position,true,true);
+                        Invoke("EndHit",time);
                     }
                     //FreezeFramer.freeze(0.0075f);
                 }
