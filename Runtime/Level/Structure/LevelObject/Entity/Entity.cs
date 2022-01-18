@@ -46,7 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public int maxHealth = 100;
 
-        internal bool cooldown;
+        public bool cooldown;
 
 
         [FormerlySerializedAs("movementOverride")] public bool allowedToMove;
@@ -150,7 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        private void CoolTimer(float time)
+        public void FinishCooldown()
         {
             cooldown = false;
             setMovementStatus(true);
@@ -182,7 +182,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StartCooldown(float cooldownTime)
         {
             cooldown = true;
-            Invoke("CoolTimer",cooldownTime);
+            Invoke("FinishCooldown",cooldownTime);
         }
 
         //EVENTS ALWAYS LAST
