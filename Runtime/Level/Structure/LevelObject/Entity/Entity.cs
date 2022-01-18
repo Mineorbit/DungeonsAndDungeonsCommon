@@ -345,6 +345,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                     
                     StartCooldown(time);
+                    Invoke("StopHitEffect", time);
                     GameConsole.Log($"{hitter.gameObject.name}  HIT  {gameObject.name} AND CAUSED {damage} HP DAMAGE");
                     health = health - damage;
 
