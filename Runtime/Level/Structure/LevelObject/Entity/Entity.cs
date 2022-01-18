@@ -48,7 +48,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         internal bool cooldown;
 
-        public float hitCooldownTime = 1f;
 
         [FormerlySerializedAs("movementOverride")] public bool allowedToMove;
 
@@ -154,7 +153,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void CoolTimer(float time)
         {
             cooldown = false;
-            Invoke(setMovementStatus, true);
+            setMovementStatus(true);
         }
 
         public virtual void setMovementStatus(bool allowedToMove)
@@ -180,10 +179,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private void StartCooldown(float CooldownTime)
+        private void StartCooldown(float cooldownTime)
         {
             cooldown = true;
-            Invoke("CoolTimer",CooldownTime);
+            Invoke("CoolTimer",cooldownTime);
         }
 
         //EVENTS ALWAYS LAST
@@ -255,7 +254,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void StopHitEffect()
         {
-            
+            baseAnimator.StopHit();
         }
 
         
@@ -330,11 +329,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         return;
                     }
                     
-                    Invoke(setMovementStatus, false);
+                    setMovementStatus(false);
                     
                     Vector3 dir = transform.position - hitter.transform.position;
                     float kickbackDistance = 0.5f + ((float) damage / 10);
-                    float kickbackSpeed = 1.5f;
+                    float kickbackSpeed = 2f;
                     CreateKickback(dir,kickbackDistance, kickbackSpeed);
                     float time = kickbackDistance / kickbackSpeed;
                     
@@ -345,7 +344,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         ((Entity)hitter).points += damage;
                     }
                     
-                    StartCooldown(Mathf.Min(time,hitCooldownTime));
+                    StartCooldown(time);
                     GameConsole.Log($"{hitter.gameObject.name}  HIT  {gameObject.name} AND CAUSED {damage} HP DAMAGE");
                     health = health - damage;
 
