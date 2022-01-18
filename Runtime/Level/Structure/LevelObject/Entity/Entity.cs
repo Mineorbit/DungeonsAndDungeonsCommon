@@ -332,7 +332,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     setMovementStatus(false);
                     
                     Vector3 dir = transform.position - hitter.transform.position;
-                    float kickbackDistance = 0.5f + ((float) damage / 10);
+                    float kickbackDistance = 0.5f + Mathf.Log((float) damage / 10);
                     float kickbackSpeed = 2f;
                     CreateKickback(dir,kickbackDistance, kickbackSpeed);
                     float time = kickbackDistance / kickbackSpeed;
