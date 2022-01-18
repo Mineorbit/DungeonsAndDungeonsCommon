@@ -312,10 +312,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private int pointsForKill = 100;
 
-        public virtual void EndHit()
-        {
-            
-        }
         
         public virtual void Hit(LevelObject hitter, int damage)
         {
@@ -342,6 +338,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     CreateKickback(dir,kickbackDistance, kickbackSpeed);
                     float time = kickbackDistance / kickbackSpeed;
                     
+                    Invoke(HitEffect,hitter.transform.position,true,true);
 
                     if (hitter.GetType().IsInstanceOfType(typeof(Entity)))
                     {
@@ -359,12 +356,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         {
                             ((Entity)hitter).points += pointsForKill;
                         }
-                        Invoke(Kill);
-                    }
-                    else
-                    {
-                        Invoke(HitEffect,hitter.transform.position,true,true);
-                        Invoke("EndHit",time);
+                        Kill();
                     }
                     //FreezeFramer.freeze(0.0075f);
                 }
@@ -377,6 +369,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //eventually call
             setMovementStatus(false);
             invincible = true;
+            Invoke(KillEffect);
+        }
+
+        public virtual void KillEffect()
+        {
             baseAnimator.Death();
             Invoke("Despawn", timeForDeath);
         }
