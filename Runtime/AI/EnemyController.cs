@@ -67,7 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateLocomotion();
             UpdateVariables();
             isGrounded = IsGrounded();
-            if (isGrounded)
+            if (!isGrounded)
             {
                 speedY += gravity * Time.deltaTime;
                 controller.Move(Vector3.down*speedY);
