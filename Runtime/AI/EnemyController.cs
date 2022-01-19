@@ -55,7 +55,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool IsGrounded()
         {
-            return (navMeshAgent.enabled && navMeshAgent.isOnNavMesh) || controller.isGrounded;
+            return controller.isGrounded;
         }
         
 
