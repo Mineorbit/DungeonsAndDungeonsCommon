@@ -53,10 +53,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
         }
 
-        public bool IsGrounded()
-        {
-            return controller.isGrounded;
-        }
+        
         
 
         
@@ -66,7 +63,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.FixedUpdate();
             UpdateLocomotion();
             UpdateVariables();
-            isGrounded = IsGrounded();
+            isGrounded = me.isGrounded;
             if (!isGrounded)
             {
                 speedY += gravity * Time.deltaTime;

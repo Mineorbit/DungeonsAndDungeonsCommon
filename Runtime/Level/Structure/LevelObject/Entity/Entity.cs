@@ -88,6 +88,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public virtual void FixedUpdate()
     {
         if(Level.instantiateType == Level.InstantiateType.Play || Level.instantiateType == Level.InstantiateType.Test) PerformSim();
+       
+        
+        UpdateGround();
         ComputeCurrentSpeed();
     }
 
@@ -266,6 +269,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Quaternion aimRotation;
 
         
+        public bool lastGrounded = false;
+
+        public bool isGrounded;
+        
+        public float heightRay;
+        
+        public void UpdateGround()
+        {
+            lastGrounded = isGrounded;
+            var mask = 1 << 10 | 1 << 11;
+            var hit = new RaycastHit();
+            bool raycast =  Physics.Raycast(transform.position, Vector3.down, out hit, heightRay,
+                mask, QueryTriggerInteraction.Ignore);
+            GameConsole.Log("T "+raycast);
+            bool controllerResult = controller.controller.isGrounded;
+            isGrounded =  raycast;
+        }
+        
+        public bool IsGrounded()
+        {
+            return isGrounded;
+        }
+
         
         public Quaternion GetAimRotation()
         {
