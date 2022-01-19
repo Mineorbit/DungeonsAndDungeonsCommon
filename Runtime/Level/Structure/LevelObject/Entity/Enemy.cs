@@ -30,7 +30,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return (EnemyController) controller;
         }
-        
+
+        public override void UpdateGround()
+        {
+            base.UpdateGround();
+            isGrounded = isGrounded ||
+                         (GetController().navMeshAgent.enabled && GetController().navMeshAgent.isOnNavMesh);
+        }
+
         public virtual void OnEnable()
         {
             controller = GetComponent<EnemyController>();
