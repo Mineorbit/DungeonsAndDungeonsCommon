@@ -118,6 +118,9 @@ MonoBehaviour:
   speedDirection: {x: 0, y: 0, z: 0}
   ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
+  lastGrounded: 0
+  isGrounded: 0
+  heightRay: 0.25
   dazeKickbackDistance: 0.125
   viewDistance: 15
   attackDistance: 4

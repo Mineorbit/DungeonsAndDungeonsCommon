@@ -38,10 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
        
         }
-
-        public bool isGrounded;
         
-        public float heightRay;
         
 
 
@@ -110,23 +107,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
         
-        private bool lastGrounded = false;
 
-        public void UpdateGround()
-        {
-            lastGrounded = isGrounded;
-            var mask = 1 << 10 | 1 << 11;
-            var hit = new RaycastHit();
-            bool raycast =  Physics.Raycast(transform.position, -Vector3.up, out hit, heightRay,
-                mask, QueryTriggerInteraction.Ignore);
-            bool controllerResult = ((PlayerController) controller).controller.isGrounded;
-            isGrounded = controllerResult || raycast;
-        }
         
-        public bool IsGrounded()
-        {
-            return isGrounded;
-        }
+        
         
         public override void OnDestroy()
         {
@@ -241,7 +224,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void FixedUpdate()
         {
             base.FixedUpdate();
-            UpdateGround();
             MoveFixed();
         }
 
