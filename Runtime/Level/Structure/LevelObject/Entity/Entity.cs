@@ -275,7 +275,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public float heightRay;
         
-        public void UpdateGround()
+        public virtual void UpdateGround()
         {
             lastGrounded = isGrounded;
             var mask = 1 << 10 | 1 << 11;
@@ -284,8 +284,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 mask, QueryTriggerInteraction.Ignore);
             
             // This variable is only updated on move
-            //bool controllerResult = controller.controller.isGrounded;
-            isGrounded =  raycast;
+            controller.controller.Move(Vector3.zero);
+            bool controllerResult = controller.controller.isGrounded;
+            isGrounded = raycast || controllerResult;
         }
         
         public bool IsGrounded()
