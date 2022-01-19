@@ -282,7 +282,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var hit = new RaycastHit();
             bool raycast =  Physics.Raycast(transform.position, Vector3.down, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
-            bool controllerResult = controller.controller.isGrounded;
+            
+            // This variable is only updated on move
+            //bool controllerResult = controller.controller.isGrounded;
             isGrounded =  raycast;
         }
         
