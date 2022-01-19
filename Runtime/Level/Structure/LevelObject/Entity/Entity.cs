@@ -282,7 +282,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var hit = new RaycastHit();
             bool raycast =  Physics.Raycast(transform.position, Vector3.down, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
-            GameConsole.Log("T "+raycast);
             bool controllerResult = controller.controller.isGrounded;
             isGrounded =  raycast;
         }
@@ -292,6 +291,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return isGrounded;
         }
 
+        
+        
         
         public Quaternion GetAimRotation()
         {

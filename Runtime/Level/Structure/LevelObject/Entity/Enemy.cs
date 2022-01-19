@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             controller = GetComponent<EnemyController>();
             var n = GetComponent<NavMeshAgent>();
-            if (n != null) n.enabled = true;
+            if (n != null) n.enabled = false;
             controller.enabled = true;
         }
 
