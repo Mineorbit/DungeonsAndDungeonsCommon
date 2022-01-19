@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 987221561569911037}
   - component: {fileID: 736877002971563755}
   - component: {fileID: 736877002971563754}
-  - component: {fileID: 736877002971563753}
   - component: {fileID: 736877002971563752}
   - component: {fileID: 8825476872383111481}
   - component: {fileID: 8870155796596675472}
   - component: {fileID: 7117316245056143757}
+  - component: {fileID: 8315207874501495306}
   m_Layer: 0
   m_Name: Blog
   m_TagString: Entity
@@ -56,12 +56,13 @@ MonoBehaviour:
   currentSpeed: 0
   entity: {fileID: 0}
   lastSpeeds: []
+  isGrounded: 0
   me: {fileID: 736877002971563754}
   seenPlayer: {fileID: 0}
   lastSeenPlayer: {fileID: 0}
   seenAlly: {fileID: 0}
   lastPositionOfPlayer: {x: 0, y: 0, z: 0}
-  navMeshAgent: {fileID: 736877002971563753}
+  navMeshAgent: {fileID: 8315207874501495306}
   targetIsTransform: 0
   currentWalkTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &736877002971563754
@@ -133,28 +134,6 @@ MonoBehaviour:
   strikeDuration: 2
   randomWalking: 0
   lastRandomTarget: {x: 0, y: 0, z: 0}
---- !u!195 &736877002971563753
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502292555523390023}
-  m_Enabled: 1
-  m_AgentTypeID: -1372625422
-  m_Radius: 0.5
-  m_Speed: 2
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.8
-  m_BaseOffset: 0.65
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!135 &736877002971563752
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -167,7 +146,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!54 &8825476872383111481
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -229,7 +208,29 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.3, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!195 &8315207874501495306
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502292555523390023}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &4964758866301512201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1520211777585729625, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1520211777585729625, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -414,8 +415,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5207118323614420857, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207118323614420857, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.148
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5539105604195314118, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
       propertyPath: m_Name
@@ -507,6 +512,10 @@ PrefabInstance:
     - target: {fileID: 5207118323614420857, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207118323614420857, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5207118323614420857, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
       propertyPath: m_LocalPosition.z
