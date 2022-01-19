@@ -116,12 +116,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateLocomotion()
         {
-            if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh && me.allowedToMove)
+            if (me.allowedToMove)
             {
                 if(targetIsTransform)
                     currentWalkTargetPosition = currentWalkTarget.position;
-                navMeshAgent.SetDestination(currentWalkTargetPosition);
-                
+                if(navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh)
+                {
+                    navMeshAgent.SetDestination(currentWalkTargetPosition);
+                }
+                else
+                {
+                    Vector3 dir = currentWalkTargetPosition - transform.position;
+                    dir.Normalize();
+                    float speed = 2f;
+                    controller.Move(dir*speed*Time.deltaTime);
+                }
             }
             if (!me.allowedToMove && navMeshAgent.enabled)
             {
