@@ -284,9 +284,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 mask, QueryTriggerInteraction.Ignore);
             
             // This variable is only updated on move
-            controller.controller.Move(Vector3.zero);
-            bool controllerResult = controller.controller.isGrounded;
-            isGrounded = raycast || controllerResult;
+            //controller.controller.Move(Vector3.zero);
+            //bool controllerResult = controller.controller.isGrounded;
+            isGrounded = raycast;
         }
         
         public bool IsGrounded()
