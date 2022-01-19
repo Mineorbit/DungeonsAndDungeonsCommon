@@ -347,7 +347,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (Level.instantiateType == Level.InstantiateType.Play ||
                 Level.instantiateType == Level.InstantiateType.Test)
-                if (!invincible && !cooldown)
+                if (!invincible && !cooldown && hitter != this)
                 {
                     if (HitBlocked( ( hitter.transform.position - transform.position)))
                     {
