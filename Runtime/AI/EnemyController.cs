@@ -74,7 +74,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 speedY = 0;
             }
 
-            navMeshAgent.enabled = isGrounded && navMeshAgent.isOnNavMesh && navAllowed;
+            navMeshAgent.enabled = isGrounded && navAllowed;
         }
 
         public Vector3 GetDirection()
