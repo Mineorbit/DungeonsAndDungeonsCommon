@@ -53,9 +53,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
         }
 
-        
-        
+        // STOLEN
+        //https://stackoverflow.com/questions/45416515/check-if-disabled-navmesh-agent-player-is-on-navmesh
 
+        float onMeshThreshold = 3;
+
+        public bool IsAgentOnNavMesh(GameObject agentObject)
+        {
+            Vector3 agentPosition = agentObject.transform.position;
+            NavMeshHit hit;
+
+            // Check for nearest point on navmesh to agent, within onMeshThreshold
+            if (NavMesh.SamplePosition(agentPosition, out hit, onMeshThreshold, NavMesh.AllAreas))
+            {
+                // Check if the positions are vertically aligned
+                if (Mathf.Approximately(agentPosition.x, hit.position.x)
+                    && Mathf.Approximately(agentPosition.z, hit.position.z))
+                {
+                    // Lastly, check if object is below navmesh
+                    return agentPosition.y >= hit.position.y;
+                }
+            }
+
+            return false;
+        }
         
         private float speedY = 0;
         public override void FixedUpdate()
@@ -74,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 speedY = 0;
             }
 
-            navMeshAgent.enabled = isGrounded && navAllowed;
+            navMeshAgent.enabled = isGrounded && IsAgentOnNavMesh(this.gameObject) && navAllowed;
         }
 
         public Vector3 GetDirection()
