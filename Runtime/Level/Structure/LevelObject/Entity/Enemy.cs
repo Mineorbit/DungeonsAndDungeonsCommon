@@ -34,8 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void UpdateGround()
         {
             base.UpdateGround();
-            isGrounded = isGrounded ||
-                         (GetController().navMeshAgent.enabled && GetController().navMeshAgent.isOnNavMesh);
+            isGrounded = isGrounded || (GetController().navMeshAgent.enabled && GetController().navMeshAgent.isOnNavMesh);
         }
 
         public virtual void OnEnable()
