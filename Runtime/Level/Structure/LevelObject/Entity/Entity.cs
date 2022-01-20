@@ -350,7 +350,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private int pointsForKill = 100;
 
-        
+        public float minCooldownTime = 1f;
         public virtual void Hit(LevelObject hitter, int damage)
         {
 
@@ -383,7 +383,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         ((Entity)hitter).points += damage;
                     }
                     
-                    StartCooldown(time);
+                    StartCooldown(time+minCooldownTime);
                     Invoke("StopHitEffect", time);
                     GameConsole.Log($"{hitter.gameObject.name}  HIT  {gameObject.name} AND CAUSED {damage} HP DAMAGE");
                     health = health - damage;
