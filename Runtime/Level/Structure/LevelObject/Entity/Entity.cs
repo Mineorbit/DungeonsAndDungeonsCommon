@@ -232,10 +232,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void FinishKickback()
         {
-            controller.Activate();
             rigidbody.isKinematic = true;
             rigidbody.useGravity = false;
-            setMovementStatus(true);
             transform.rotation = Quaternion.identity;
             bool raycast;
             RaycastHit hit;
@@ -243,6 +241,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log($"Height Increase: {(heightRay - hit.distance) }");
             // HOT FIX
             transform.position = transform.position + (Vector3.up * 4 * (heightRay - hit.distance));
+            setMovementStatus(true);
+            controller.Activate();
         }
         
         public void CreateKickback(Vector3 dir,float force, float time)
