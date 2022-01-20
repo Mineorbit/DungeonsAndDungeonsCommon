@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7134509470959203652}
   - component: {fileID: 7134509470959203659}
+  - component: {fileID: 85063383139997572}
+  - component: {fileID: 1284767472479403912}
   m_Layer: 0
   m_Name: BombGlove
   m_TagString: Untagged
@@ -44,6 +46,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33613260fee396141935ba33bff2ea6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelObjectDataType: 0
+  isDynamic: 0
+  ActivateWhenInactive: 0
+  levelObjectNetworkHandler: {fileID: 0}
+  _Identity: 0
+  identified: 0
+  health: 0
+  alive: 0
+  items: []
+  itemHandles: []
+  baseAnimator: {fileID: 0}
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onPointsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onSpawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDespawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onTeleportEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  controller: {fileID: 0}
+  rigidbody: {fileID: 85063383139997572}
+  invincible: 0
+  loadTarget: {fileID: 0}
+  itemHitbox: {fileID: 0}
+  itemsInProximity: []
+  maxHealth: 100
+  cooldown: 0
+  allowedToMove: 0
+  dazeTime: 1
+  lastSpeeds: []
+  lastSpeedDirections: []
+  speed: 0
+  speedDirection: {x: 0, y: 0, z: 0}
+  ApplyMovement: 1
+  aimRotation: {x: 0, y: 0, z: 0, w: 0}
+  lastGrounded: 0
+  isGrounded: 0
+  heightRay: 0
+  dazeKickbackDistance: 0.125
+  rigidBody: {fileID: 0}
+  useTime: 0.25
+  owner: {fileID: 0}
+  isEquipped: 0
+  onUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopUseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAttachEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDettachEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollideEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  itemHandle: {fileID: 0}
+  attachmentPoint: {fileID: 0}
+  equipSide: 0
+--- !u!54 &85063383139997572
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7134509470959203658}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1284767472479403912
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7134509470959203658}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7134509471200932719
 PrefabInstance:
   m_ObjectHideFlags: 0

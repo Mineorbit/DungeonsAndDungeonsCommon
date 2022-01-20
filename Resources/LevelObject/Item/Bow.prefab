@@ -187,12 +187,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   controller: {fileID: 0}
+  rigidbody: {fileID: 128150989028664885}
   invincible: 0
   loadTarget: {fileID: 0}
   itemHitbox: {fileID: 0}
   itemsInProximity: []
   maxHealth: 100
-  hitCooldownTime: 1
+  cooldown: 0
   allowedToMove: 0
   dazeTime: 1
   lastSpeeds: []
@@ -201,6 +202,9 @@ MonoBehaviour:
   speedDirection: {x: 0, y: 0, z: 0}
   ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
+  lastGrounded: 0
+  isGrounded: 0
+  heightRay: 0
   dazeKickbackDistance: 0.125
   rigidBody: {fileID: 128150989028664885}
   useTime: 0.25

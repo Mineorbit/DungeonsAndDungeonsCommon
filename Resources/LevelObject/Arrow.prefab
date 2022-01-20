@@ -103,16 +103,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   controller: {fileID: 0}
+  rigidbody: {fileID: 3970649384900687767}
   invincible: 0
   loadTarget: {fileID: 0}
   itemHitbox: {fileID: 0}
   itemsInProximity: []
   maxHealth: 100
-  hitCooldownTime: 1
-  movementOverride: 0
+  cooldown: 0
+  allowedToMove: 0
+  dazeTime: 1
   lastSpeeds: []
+  lastSpeedDirections: []
   speed: 0
+  speedDirection: {x: 0, y: 0, z: 0}
+  ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
+  lastGrounded: 0
+  isGrounded: 0
+  heightRay: 0
+  dazeKickbackDistance: 0.125
   shootingBow: {fileID: 0}
   hitBox: {fileID: 5254828240742234081}
   shotArrow: 0
@@ -132,14 +141,19 @@ MonoBehaviour:
   observed: {fileID: 0}
   disabled_observed: 1
   isSetup: 0
-  isOwner: 0
   owner: -1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0}
+  lastSentPosition: {x: 0, y: 0, z: 0}
+  lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
   teleportPosition: {x: 0, y: 0, z: 0}
-  blockExists: 0
+  transmitPosition: 1
+  interpolatePosition: 1
+  locomotionBlocks: 0
   blockPosition: {x: 0, y: 0, z: 0}
   receivedPosition: {x: 0, y: 0, z: 0}
+  sendAngle: 0.05
+  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4365948571353269756
 GameObject:
   m_ObjectHideFlags: 0
