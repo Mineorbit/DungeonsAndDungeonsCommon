@@ -24,7 +24,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public List<float> lastSpeeds = new List<float>();
 
-        public bool isGrounded;
 
         public virtual void Start()
         {

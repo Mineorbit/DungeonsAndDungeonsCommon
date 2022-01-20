@@ -292,8 +292,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             // This variable is only updated on move
             //controller.controller.Move(Vector3.zero);
-            //bool controllerResult = controller.controller.isGrounded;
-            isGrounded = raycast;
+            bool controllerResult = false;
+            if(controller.controller != null) controllerResult = controller.controller.isGrounded;
+            isGrounded = raycast || controllerResult;
             
             GameConsole.Log($"{this} Distance {hit.distance}");
             if (isGrounded && (hit.distance <  (heightRay - clip)))
