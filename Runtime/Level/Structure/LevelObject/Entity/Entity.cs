@@ -394,7 +394,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     
                     Vector3 dir = transform.position - hitter.transform.position;
                     float kickbackDistance = 0.5f + (float) damage / 10;
-                    float kickbackSpeed = 2f;
+                    float kickbackSpeed = 4f;
                     
                     float time = kickbackDistance / kickbackSpeed;
                     float kickbackForce = damage / kickbackSpeed;
