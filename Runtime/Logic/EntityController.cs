@@ -40,26 +40,44 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        /*
-        public IEnumerator KickbackRoutine(Vector3 dir, float dist, float kickbackSpeed)
+        public virtual void Deactivate()
         {
-            float t = 0;
-            Vector3 start = transform.position;
-            float kickbackTime =  dist / kickbackSpeed;
-            float speedY = 0;
-            while (t<kickbackTime)
+            enabled = false;
+            if (controller != null)
             {
-                t += Time.deltaTime;
-                if (!controller.isGrounded)
-                {
-                    speedY += Time.deltaTime * gravity;
-                }
-                controller.Move(0.05f*kickbackSpeed*dir+speedY*Vector3.down);
-                yield return new WaitForEndOfFrame();
+                controller.enabled = false;
             }
-            entity.FinishKickback();
         }
-        */
+
+        public virtual void Activate()
+        {
+            enabled = true;
+            if (controller != null)
+            {
+                controller.enabled = true;
+            }
+        }
+
+            /*
+            public IEnumerator KickbackRoutine(Vector3 dir, float dist, float kickbackSpeed)
+            {
+                float t = 0;
+                Vector3 start = transform.position;
+                float kickbackTime =  dist / kickbackSpeed;
+                float speedY = 0;
+                while (t<kickbackTime)
+                {
+                    t += Time.deltaTime;
+                    if (!controller.isGrounded)
+                    {
+                        speedY += Time.deltaTime * gravity;
+                    }
+                    controller.Move(0.05f*kickbackSpeed*dir+speedY*Vector3.down);
+                    yield return new WaitForEndOfFrame();
+                }
+                entity.FinishKickback();
+            }
+            */
         
         public void OnSpawn(Vector3 location)
         {
