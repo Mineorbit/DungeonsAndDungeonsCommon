@@ -109,6 +109,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.FixedUpdate();
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            speedY = 0;
+        }
 
         public Quaternion GetAimDirection()
         {
