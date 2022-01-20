@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Game;
 using General;
@@ -36,6 +37,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Entity GetObservedEntity()
         {
+            if (observed == null)
+            {
+                GameConsole.Log($"{gameObject.name} has no observed Entity in EntityNetworkHandler");
+            }
             return (Entity) observed;
         }
 
@@ -416,7 +421,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override bool CallActionOnOther(bool localCond, bool serverCond)
         {
-            return base.CallActionOnOther(localCond, serverCond) && (isOnServer || IsOwner());
+            try
+            {
+                return base.CallActionOnOther(localCond, serverCond) && (isOnServer || IsOwner());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
         
         public override bool AcceptAction(Packet p)
