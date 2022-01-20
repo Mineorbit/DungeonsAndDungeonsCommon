@@ -242,6 +242,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void CreateKickback(Vector3 dir,float force, float time)
         {
             Vector3 direction = dir;
+            // THIS IS A HOT FIX
+            direction.y = Mathf.Max(0, direction.y);
             direction.Normalize();
             setMovementStatus(false);
             controller.Deactivate();
