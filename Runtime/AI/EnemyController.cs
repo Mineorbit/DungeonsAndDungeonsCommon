@@ -44,6 +44,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //SetTrackingAbility(true);
         }
 
+        public override void Activate()
+        {
+            base.Activate();
+            navMeshAgent.enabled = true;
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            navMeshAgent.enabled = false;
+        }
+
         public override void Update()
         {
             
