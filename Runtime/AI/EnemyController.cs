@@ -96,7 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.FixedUpdate();
             UpdateLocomotion();
             UpdateVariables();
-            isGrounded = me.isGrounded;
+            bool isGrounded = me.isGrounded;
             if (!isGrounded)
             {
                 speedY += gravity * Time.deltaTime;
