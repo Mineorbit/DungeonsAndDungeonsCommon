@@ -9,6 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private bool dirty;
         
         public CharacterController controller;
+
         
         public float currentSpeed;
 
@@ -39,6 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        /*
         public IEnumerator KickbackRoutine(Vector3 dir, float dist, float kickbackSpeed)
         {
             float t = 0;
@@ -57,6 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             entity.FinishKickback();
         }
+        */
         
         public void OnSpawn(Vector3 location)
         {

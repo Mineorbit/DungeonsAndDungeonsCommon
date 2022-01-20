@@ -5,7 +5,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Item : Entity
     {
-        public Rigidbody rigidBody;
 
         public float useTime = 0.25f;
         public Entity owner;
@@ -60,8 +59,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             isEquipped = true;
             owner = transform.parent.GetComponentInParent<Entity>();
-            rigidBody.useGravity = false;
-            rigidBody.isKinematic = true;
+            rigidbody.useGravity = false;
+            rigidbody.isKinematic = true;
             GetComponent<Collider>().enabled = false;
             transform.localRotation = Quaternion.identity;
             onAttachEvent.Invoke();
@@ -78,8 +77,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevel.AddToDynamic(gameObject);
     
 
-            rigidBody.useGravity = true;
-            rigidBody.isKinematic = false;
+            rigidbody.useGravity = true;
+            rigidbody.isKinematic = false;
             GetComponent<Collider>().enabled = true;
             onDettachEvent.Invoke();
         }

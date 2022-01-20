@@ -13,8 +13,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             interpolatePosition = true;
 
             bool server = NetworkManager.instance.localId == -1;
-            GetObservedItem().rigidBody.isKinematic = !server;
-            GetObservedItem().rigidBody.useGravity = server;
+            GetObservedItem().rigidbody.isKinematic = !server;
+            GetObservedItem().rigidbody.useGravity = server;
             
             GetObservedItem().onAttachEvent.AddListener(() => { owner = ((Player) GetObservedItem().owner).localId; 
                 transmitPosition = false;
@@ -24,8 +24,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetObservedItem().onDettachEvent.AddListener(() => { owner = -1; 
                 transmitPosition = true;
                 interpolatePosition = true;
-                GetObservedItem().rigidBody.isKinematic = !server;
-                GetObservedItem().rigidBody.useGravity = server;
+                GetObservedItem().rigidbody.isKinematic = !server;
+                GetObservedItem().rigidbody.useGravity = server;
             });
 
         }

@@ -33,6 +33,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public EntityController controller;
+        
+        public Rigidbody rigidbody;
 
         public bool invincible;
 
@@ -231,19 +233,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 direction = dir;
             direction.Normalize();
             setMovementStatus(false);
-            IEnumerator kickback = controller.KickbackRoutine(direction, kickbackDistance, kickbackSpeed);
-            StartCoroutine(kickback);
+            controller.enabled = false;
+            rigidbody.isKinematic = false;
+            rigidbody.useGravity = true;
+            rigidbody.AddForce(dir*kickbackDistance/kickbackSpeed,ForceMode.Impulse);
+            Invoke("FinishKickback",kickbackDistance/kickbackSpeed);
         }
 
         public virtual void FinishKickback()
         {
+            controller.enabled = true;
+            rigidbody.isKinematic = true;
+            rigidbody.useGravity = false;
             setMovementStatus(true);
+            transform.rotation = Quaternion.identity;
         }
         
         public void CreateKickback(Vector3 dir,float kickbackDistance, float kickbackSpeed)
         {
             // FOR NOW ONLY MANIPULATE ON PLANE
-            dir.y = 0;
+            //dir.y = 0;
             Kickback(dir, kickbackDistance, kickbackSpeed);
         }
         

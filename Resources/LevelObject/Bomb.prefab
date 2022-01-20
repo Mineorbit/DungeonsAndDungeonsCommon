@@ -103,6 +103,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   controller: {fileID: 0}
+  rigidbody: {fileID: 5969479401966608355}
   invincible: 0
   loadTarget: {fileID: 0}
   itemHitbox: {fileID: 0}
