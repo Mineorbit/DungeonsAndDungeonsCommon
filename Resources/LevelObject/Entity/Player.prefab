@@ -9967,8 +9967,9 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   lastGrounded: 0
   isGrounded: 0
-  heightRay: 1.15
+  heightRay: 1.08
   dazeKickbackDistance: 0.125
+  minCooldownTime: 1
   usingLeftItem: 0
   usingRightItem: 0
   colorChanger: {fileID: 0}
