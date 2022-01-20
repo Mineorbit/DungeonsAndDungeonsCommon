@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5969479401966608352}
   - component: {fileID: 5969479401966608355}
   - component: {fileID: 5969479401966608354}
+  - component: {fileID: 4209166765484593617}
+  - component: {fileID: 9028736413675504572}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -60,8 +62,95 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4209166765484593617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969479401966608353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abddc13647473834f92e4e9e28812b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelObjectDataType: 0
+  isDynamic: 0
+  ActivateWhenInactive: 0
+  levelObjectNetworkHandler: {fileID: 9028736413675504572}
+  _Identity: 0
+  identified: 0
+  health: 0
+  alive: 0
+  items: []
+  itemHandles: []
+  baseAnimator: {fileID: 0}
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onPointsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onSpawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDespawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onTeleportEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  controller: {fileID: 0}
+  invincible: 0
+  loadTarget: {fileID: 0}
+  itemHitbox: {fileID: 0}
+  itemsInProximity: []
+  maxHealth: 100
+  cooldown: 0
+  allowedToMove: 0
+  dazeTime: 1
+  lastSpeeds: []
+  lastSpeedDirections: []
+  speed: 0
+  speedDirection: {x: 0, y: 0, z: 0}
+  ApplyMovement: 1
+  aimRotation: {x: 0, y: 0, z: 0, w: 0}
+  lastGrounded: 0
+  isGrounded: 0
+  heightRay: 0
+  dazeKickbackDistance: 0.125
+  explosionTime: 3
+  explosionRadius: 5
+--- !u!114 &9028736413675504572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969479401966608353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1644516826c57a845913389ce4c73968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  observed: {fileID: 4209166765484593617}
+  disabled_observed: 1
+  isSetup: 0
+  owner: -1
+  targetPosition: {x: 0, y: 0, z: 0}
+  targetRotation: {x: 0, y: 0, z: 0}
+  lastSentPosition: {x: 0, y: 0, z: 0}
+  lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
+  teleportPosition: {x: 0, y: 0, z: 0}
+  transmitPosition: 1
+  interpolatePosition: 1
+  locomotionBlocks: 0
+  blockPosition: {x: 0, y: 0, z: 0}
+  receivedPosition: {x: 0, y: 0, z: 0}
+  sendAngle: 0.05
+  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &5969479400105641584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75,15 +164,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0edaf8f5e2404104ebee21a0c43afc00, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0edaf8f5e2404104ebee21a0c43afc00, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0edaf8f5e2404104ebee21a0c43afc00, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0edaf8f5e2404104ebee21a0c43afc00, type: 3}
       propertyPath: m_LocalPosition.x

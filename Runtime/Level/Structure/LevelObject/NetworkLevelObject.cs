@@ -148,7 +148,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        }
 	        else
 	        {
-		        GameConsole.Log($"{this} has no Networkhandler to Call from");
+		        GameConsole.Log($"{this} has no Networkhandler to Call {a.Method.Name} from");
 	        }
         }
         /*
