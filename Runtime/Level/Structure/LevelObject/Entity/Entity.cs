@@ -397,7 +397,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     float kickbackSpeed = 2f;
                     
                     float time = kickbackDistance / kickbackSpeed;
-                    float kickbackForce = damage / 5;
+                    float kickbackForce = damage / kickbackSpeed;
                     CreateKickback(dir,kickbackForce, time);
                     
                     Invoke(HitEffect,hitter.transform.position,true,true);
