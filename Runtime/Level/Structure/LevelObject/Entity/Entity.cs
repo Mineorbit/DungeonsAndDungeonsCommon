@@ -393,8 +393,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         ((Entity)hitter).points += damage;
                     }
-                    
-                    StartCooldown(time+minCooldownTime);
+
+                    float cooldownTime = time + minCooldownTime;
+                    GameConsole.Log($"CooldownTime {time}");
+                    StartCooldown(cooldownTime);
                     Invoke("StopHitEffect", time);
                     GameConsole.Log($"{hitter.gameObject.name}  HIT  {gameObject.name} AND CAUSED {damage} HP DAMAGE");
                     health = health - damage;
