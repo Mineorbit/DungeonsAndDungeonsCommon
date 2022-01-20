@@ -228,19 +228,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
         
-        public virtual void Kickback(Vector3 dir, float kickbackDistance, float kickbackSpeed)
-        {
-            Vector3 direction = dir;
-            direction.Normalize();
-            setMovementStatus(false);
-            controller.Deactivate();
-            rigidbody.isKinematic = false;
-            rigidbody.useGravity = true;
-            float strength = kickbackDistance / kickbackSpeed / 10;
-            GameConsole.Log($"Kickback Strength: {strength}");
-            rigidbody.AddForce(dir*strength);
-            Invoke("FinishKickback",kickbackDistance/kickbackSpeed);
-        }
+        
 
         public virtual void FinishKickback()
         {
@@ -251,11 +239,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.rotation = Quaternion.identity;
         }
         
-        public void CreateKickback(Vector3 dir,float kickbackDistance, float kickbackSpeed)
+        public void CreateKickback(Vector3 dir,float force, float time)
         {
-            // FOR NOW ONLY MANIPULATE ON PLANE
-            //dir.y = 0;
-            Kickback(dir, kickbackDistance, kickbackSpeed);
+            Vector3 direction = dir;
+            direction.Normalize();
+            setMovementStatus(false);
+            controller.Deactivate();
+            rigidbody.isKinematic = false;
+            rigidbody.useGravity = true;
+            GameConsole.Log($"Kickback Strength: {force}");
+            rigidbody.AddForce(dir*force);
+            Invoke("FinishKickback",time);
         }
         
         public virtual void HitEffect(Vector3 hitPosition)
@@ -384,8 +378,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Vector3 dir = transform.position - hitter.transform.position;
                     float kickbackDistance = 0.5f + (float) damage / 10;
                     float kickbackSpeed = 2f;
-                    CreateKickback(dir,kickbackDistance, kickbackSpeed);
+                    
                     float time = kickbackDistance / kickbackSpeed;
+                    float kickbackForce = damage / 10;
+                    CreateKickback(dir,kickbackForce, time);
                     
                     Invoke(HitEffect,hitter.transform.position,true,true);
 
