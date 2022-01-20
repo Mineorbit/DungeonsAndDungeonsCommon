@@ -291,6 +291,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var hit = new RaycastHit();
             bool raycast =  Physics.Raycast(transform.position, Vector3.down, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
+
+            if (hit.distance < heightRay)
+            {
+                transform.position += Vector3.up * (heightRay - hit.distance);
+            }
             
             // This variable is only updated on move
             //controller.controller.Move(Vector3.zero);
