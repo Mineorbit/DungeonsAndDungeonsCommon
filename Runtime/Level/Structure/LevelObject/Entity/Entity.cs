@@ -240,6 +240,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bool raycast;
             RaycastHit hit;
             (raycast,hit) = GroundCheck();
+            GameConsole.Log($"Height: {hit.distance}");
             transform.position = transform.position + Vector3.up * (heightRay - hit.distance);
 
         }
@@ -309,12 +310,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(controller.controller != null) controllerResult = controller.controller.isGrounded;
             isGrounded = raycast || controllerResult;
             
-            GameConsole.Log($"{this} Distance {hit.distance}");
-            if (isGrounded && (hit.distance <  (heightRay - clip)))
-            {
-                GameConsole.Log("raising up because of ground clip");
+           // GameConsole.Log($"{this} Distance {hit.distance}");
+            //if (isGrounded && (hit.distance <  (heightRay - clip)))
+            //{
+             //   GameConsole.Log("raising up because of ground clip");
                 //transform.position += Vector3.up * (heightRay - hit.distance);
-            }
+            //}
         }
         
         public bool IsGrounded()
