@@ -241,9 +241,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RaycastHit hit;
             (raycast,hit) = GroundCheck();
             GameConsole.Log($"Height Increase: {(heightRay - hit.distance) }");
-            
-            transform.position = transform.position + (Vector3.up * 2 *(heightRay - hit.distance));
-
+            transform.position = transform.position + (Vector3.up * 6 * (heightRay - hit.distance));
         }
         
         public void CreateKickback(Vector3 dir,float force, float time)
