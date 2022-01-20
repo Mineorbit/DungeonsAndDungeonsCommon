@@ -246,7 +246,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             setMovementStatus(false);
             controller.Deactivate();
             rigidbody.isKinematic = false;
-            rigidbody.useGravity = true;
+            //rigidbody.useGravity = true;
             GameConsole.Log($"Kickback Strength: {force} Direction: {direction}");
             rigidbody.AddForce(direction*force*5,ForceMode.VelocityChange);
             Invoke("FinishKickback",time);
