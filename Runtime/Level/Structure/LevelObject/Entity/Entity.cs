@@ -237,6 +237,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.useGravity = false;
             setMovementStatus(true);
             transform.rotation = Quaternion.identity;
+            bool raycast;
+            RaycastHit hit;
+            (raycast,hit) = GroundCheck();
+            transform.position = transform.position + Vector3.up * (heightRay - hit.distance);
+
         }
         
         public void CreateKickback(Vector3 dir,float force, float time)
@@ -282,15 +287,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public float heightRay;
         private float clip = 0.005f;
-        public virtual void UpdateGround()
+
+        public (bool,RaycastHit) GroundCheck()
         {
-            lastGrounded = isGrounded;
             var mask = 1 << 10 | 1 << 11;
             var hit = new RaycastHit();
             bool raycast =  Physics.Raycast(transform.position, Vector3.down, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
-
-            
+            return (raycast,hit);
+        }
+        public virtual void UpdateGround()
+        {
+            lastGrounded = isGrounded;
+            bool raycast;
+            RaycastHit hit;
+            (raycast,hit) = GroundCheck();
             
             // This variable is only updated on move
             //controller.controller.Move(Vector3.zero);
