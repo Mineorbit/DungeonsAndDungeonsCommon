@@ -238,7 +238,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.useGravity = true;
             float strength = kickbackDistance / kickbackSpeed / 10;
             GameConsole.Log($"Kickback Strength: {strength}");
-            rigidbody.AddForce(dir*strength,ForceMode.Impulse);
+            rigidbody.AddForce(dir*strength);
             Invoke("FinishKickback",kickbackDistance/kickbackSpeed);
         }
 
