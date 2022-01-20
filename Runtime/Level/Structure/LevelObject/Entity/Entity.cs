@@ -292,15 +292,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bool raycast =  Physics.Raycast(transform.position, Vector3.down, out hit, heightRay,
                 mask, QueryTriggerInteraction.Ignore);
 
-            if (hit.distance < heightRay)
-            {
-                transform.position += Vector3.up * (heightRay - hit.distance);
-            }
+            
             
             // This variable is only updated on move
             //controller.controller.Move(Vector3.zero);
             //bool controllerResult = controller.controller.isGrounded;
             isGrounded = raycast;
+            
+            if (isGrounded && hit.distance < heightRay)
+            {
+                transform.position += Vector3.up * (heightRay - hit.distance);
+            }
         }
         
         public bool IsGrounded()
