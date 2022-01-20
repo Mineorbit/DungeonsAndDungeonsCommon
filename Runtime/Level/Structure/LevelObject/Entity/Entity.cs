@@ -236,7 +236,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             controller.Deactivate();
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
-            rigidbody.AddForce(dir*kickbackDistance/kickbackSpeed,ForceMode.Impulse);
+            float strength = kickbackDistance / kickbackSpeed / 10;
+            GameConsole.Log($"Kickback Strength: {strength}");
+            rigidbody.AddForce(dir*strength,ForceMode.Impulse);
             Invoke("FinishKickback",kickbackDistance/kickbackSpeed);
         }
 
@@ -300,7 +302,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             isGrounded = raycast;
             
             GameConsole.Log($"{this} Distance {hit.distance}");
-            if (isGrounded && (hit.distance <  (heightRay + clip)))
+            if (isGrounded && (hit.distance <  (heightRay - clip)))
             {
                 GameConsole.Log("raising up because of ground clip");
                 transform.position += Vector3.up * (heightRay - hit.distance);
