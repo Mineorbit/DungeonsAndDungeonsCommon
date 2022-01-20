@@ -240,8 +240,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             (raycast,hit) = GroundCheck();
             GameConsole.Log($"Height Increase: {(heightRay - hit.distance) }");
             // HOT FIX
-            rigidbody.position = transform.position + (Vector3.up * 2 * (heightRay - hit.distance));
-            transform.position = transform.position + (Vector3.up * 2 * (heightRay - hit.distance));
+            Vector3 pos = transform.position + (Vector3.up * (heightRay - hit.distance + 0.125f) );
+            rigidbody.position = pos;
+            transform.position = pos;
             setMovementStatus(true);
             controller.Activate();
         }
