@@ -283,7 +283,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool isGrounded;
         
         public float heightRay;
-        
+        private float clip = 0.005f;
         public virtual void UpdateGround()
         {
             lastGrounded = isGrounded;
@@ -299,8 +299,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //bool controllerResult = controller.controller.isGrounded;
             isGrounded = raycast;
             
-            if (isGrounded && hit.distance < heightRay)
+            GameConsole.Log($"{this} Distance {hit.distance}");
+            if (isGrounded && (hit.distance <  (heightRay + clip)))
             {
+                GameConsole.Log("raising up because of ground clip");
                 transform.position += Vector3.up * (heightRay - hit.distance);
             }
         }
