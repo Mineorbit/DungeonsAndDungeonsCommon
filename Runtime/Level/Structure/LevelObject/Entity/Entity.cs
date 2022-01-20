@@ -233,7 +233,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 direction = dir;
             direction.Normalize();
             setMovementStatus(false);
-            controller.enabled = false;
+            controller.Deactivate();
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
             rigidbody.AddForce(dir*kickbackDistance/kickbackSpeed,ForceMode.Impulse);
@@ -242,7 +242,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void FinishKickback()
         {
-            controller.enabled = true;
+            controller.Activate();
             rigidbody.isKinematic = true;
             rigidbody.useGravity = false;
             setMovementStatus(true);
@@ -371,7 +371,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     setMovementStatus(false);
                     
                     Vector3 dir = transform.position - hitter.transform.position;
-                    float kickbackDistance = 0.5f + Mathf.Log((float) damage / 10);
+                    float kickbackDistance = 0.5f + Mathf.Log((float) damage);
                     float kickbackSpeed = 2f;
                     CreateKickback(dir,kickbackDistance, kickbackSpeed);
                     float time = kickbackDistance / kickbackSpeed;
