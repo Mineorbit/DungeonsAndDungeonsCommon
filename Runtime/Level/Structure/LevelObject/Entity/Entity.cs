@@ -305,7 +305,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (isGrounded && (hit.distance <  (heightRay - clip)))
             {
                 GameConsole.Log("raising up because of ground clip");
-                transform.position += Vector3.up * (heightRay - hit.distance);
+                //transform.position += Vector3.up * (heightRay - hit.distance);
             }
         }
         
