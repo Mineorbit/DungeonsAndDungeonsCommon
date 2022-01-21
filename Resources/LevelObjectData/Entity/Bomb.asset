@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: Bomb
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 5969479401966608353, guid: 2840eb5b54701a4489a9e9fcf0391ab2, type: 3}
   uniqueLevelObjectId: 13
-  granularity: 0
-  name: 
-  dynamicInstantiable: 0
+  granularity: 1
+  levelObjectName: 
+  dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 0
   Buildable: 0
