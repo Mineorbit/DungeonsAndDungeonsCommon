@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             Setup();
-            spawnedItem.GetComponent<Item>().Spawn(SpawnLocation(),SpawnRotation(),true);
+            //spawnedItem.GetComponent<Item>().Spawn(SpawnLocation(),SpawnRotation(),true);
         }
 
         public override void OnEndRound()
@@ -83,7 +83,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (spawnedItem == null)
                     spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation(),null);
                 else
-                    LevelManager.currentLevel.AddToDynamic(spawnedItem, SpawnLocation(), SpawnRotation());
+                    spawnedItem.GetComponent<Item>().Spawn(SpawnLocation(), SpawnRotation(),true);
             }
         }
     }
