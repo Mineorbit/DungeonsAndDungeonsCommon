@@ -26,6 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             Setup();
+            spawnedItem.GetComponent<Item>().Spawn(SpawnLocation(),SpawnRotation(),true);
         }
 
         public override void OnEndRound()
