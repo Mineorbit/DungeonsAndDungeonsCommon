@@ -6,6 +6,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public LevelObjectData itemToSpawn;
 
+        private GameObject model;
+
         public Vector3 spawnOffset;
 
         private readonly int maxSpawnCount = 1;
@@ -24,11 +26,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             Setup();
+            model.SetActive(false);
         }
 
         public override void OnEndRound()
         {
             SetCollider();
+            model.SetActive(true);
         }
 
         
@@ -37,8 +41,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             spawnCount = maxSpawnCount;
             SpawnItem();
-
+            model = transform.Find("Model").gameObject;
             SetCollider();
+            model.SetActive(true);
         }
 
 
