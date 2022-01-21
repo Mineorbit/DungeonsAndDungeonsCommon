@@ -9,9 +9,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Start is called before the first frame update
         public float explosionTime;
         public float explosionRadius;
+        public Vector3 throwDirection;
         void Start()
         {
             Invoke("Explode",explosionTime);
+            rigidbody.AddForce(throwDirection*2,ForceMode.Impulse);
         }
 
         void Explode()

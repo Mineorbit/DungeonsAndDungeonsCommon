@@ -36,8 +36,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Vector3 forward = owner.transform.forward;
                 GameConsole.Log("Creating Arrow");
                 GameObject arrowObject = LevelManager.currentLevel.AddDynamic(bomb,transform.position + 0.5f*forward, Quaternion.LookRotation(Vector3.forward), new Util.Optional<int>());
-                arrowObject.GetComponent<Rigidbody>().AddForce(forward);
-                
+                arrowObject.GetComponent<Bomb>().throwDirection = forward;
+
         }
         // Update is called once per frame
         void Update()
