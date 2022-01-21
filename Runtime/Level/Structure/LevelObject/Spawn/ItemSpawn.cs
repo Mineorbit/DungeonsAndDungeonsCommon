@@ -26,13 +26,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             Setup();
-            model.SetActive(false);
         }
 
         public override void OnEndRound()
         {
             SetCollider();
-            model.SetActive(true);
         }
 
         
@@ -43,7 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             SpawnItem();
             model = transform.Find("Model").gameObject;
             SetCollider();
-            model.SetActive(true);
+            model.SetActive(false);
         }
 
 
