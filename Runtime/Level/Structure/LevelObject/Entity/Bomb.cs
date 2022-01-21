@@ -9,6 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Start is called before the first frame update
         public float explosionTime;
         public float explosionRadius;
+        public int explosionDamage = 50;
         public Vector3 throwDirection;
         public float throwForce = 25;
         void Start()
@@ -29,7 +30,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 if (enemy != null && enemy != this)
                 {
-                    enemy.Hit(this,100);
+                    enemy.Hit(this,explosionDamage);
                 }
             }
             Kill(); 
