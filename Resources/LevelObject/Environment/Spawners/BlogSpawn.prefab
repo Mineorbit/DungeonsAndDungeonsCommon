@@ -1,25 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4526437670629705772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5905053922041675586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2bb02092491f143ab535448a0d163a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioProfiles:
-  - {fileID: 11400000, guid: 393761308d1e4ac42973d8a4aed747b7, type: 2}
-  - {fileID: 11400000, guid: 9c182d1dc2f0f7c40af161e701f6b651, type: 2}
-  - {fileID: 11400000, guid: 848a61be38ead29428500ed58d55aedc, type: 2}
-  - {fileID: 11400000, guid: c8954caa87ef5bf42b8425592a2f1e5a, type: 2}
-  - {fileID: 11400000, guid: d40f8ff1ed6d1b140a094b219725463c, type: 2}
-  - {fileID: 11400000, guid: a3179f7be35736843b8fd8165fc73541, type: 2}
-  controller: {fileID: 0}
 --- !u!1 &8481799529828780976
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +145,7 @@ PrefabInstance:
     - target: {fileID: 1713471800857632868, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: blogAudioController
       value: 
-      objectReference: {fileID: 4526437670629705772}
+      objectReference: {fileID: 0}
     - target: {fileID: 2185143167612652259, guid: c34aee4582e18d324816915fac402ce6, type: 3}
       propertyPath: m_Name
       value: Model
@@ -180,10 +160,5 @@ PrefabInstance:
 --- !u!4 &5289835149886263744 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1520211777585729625, guid: c34aee4582e18d324816915fac402ce6, type: 3}
-  m_PrefabInstance: {fileID: 6661287312074490265}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5905053922041675586 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 973712950870572763, guid: c34aee4582e18d324816915fac402ce6, type: 3}
   m_PrefabInstance: {fileID: 6661287312074490265}
   m_PrefabAsset: {fileID: 0}
