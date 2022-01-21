@@ -244,7 +244,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.position = pos;
             transform.position = pos;
             setMovementStatus(true);
-            controller.Activate();
+            if (controller != null)
+            {
+                controller.Activate();
+            }
         }
         
         public void CreateKickback(Vector3 dir,float force, float time)
@@ -254,7 +257,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             direction.y = Mathf.Max(0, direction.y);
             direction.Normalize();
             setMovementStatus(false);
-            controller.Deactivate();
+            if(controller != null)
+            {
+                controller.Deactivate();
+            }
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
             GameConsole.Log($"Kickback Strength: {force} Direction: {direction}");
