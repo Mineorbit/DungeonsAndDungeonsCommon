@@ -9970,6 +9970,7 @@ MonoBehaviour:
   heightRay: 1.15
   dazeKickbackDistance: 0.125
   minCooldownTime: 1
+  kickbackSpeed: 5
   usingLeftItem: 0
   usingRightItem: 0
   colorChanger: {fileID: 0}
