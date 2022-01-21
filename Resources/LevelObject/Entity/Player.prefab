@@ -9820,6 +9820,8 @@ MonoBehaviour:
     offset: {x: 0, y: 0.014, z: 0.002}
   - itemType: Bow
     offset: {x: 0, y: 0, z: 0.0005}
+  - itemType: BombGlove
+    offset: {x: 0.00056, y: 0, z: 0.00014}
 --- !u!1 &7709308443060799710
 GameObject:
   m_ObjectHideFlags: 0

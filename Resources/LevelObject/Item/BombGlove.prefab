@@ -92,7 +92,8 @@ MonoBehaviour:
   isGrounded: 0
   heightRay: 0
   dazeKickbackDistance: 0.125
-  rigidBody: {fileID: 0}
+  minCooldownTime: 1
+  kickbackSpeed: 4
   useTime: 0.25
   owner: {fileID: 0}
   isEquipped: 0
@@ -156,19 +157,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b053eabbcfe26ab458c48b71622f7135, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.125
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b053eabbcfe26ab458c48b71622f7135, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.125
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b053eabbcfe26ab458c48b71622f7135, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.125
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b053eabbcfe26ab458c48b71622f7135, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.045
+      value: 0.01452
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b053eabbcfe26ab458c48b71622f7135, type: 3}
       propertyPath: m_LocalPosition.y
