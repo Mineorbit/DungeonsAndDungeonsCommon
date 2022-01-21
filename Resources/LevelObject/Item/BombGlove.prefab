@@ -115,6 +115,9 @@ MonoBehaviour:
   itemHandle: {fileID: 0}
   attachmentPoint: {fileID: 0}
   equipSide: 0
+  bomb: {fileID: 11400000, guid: 12c895c2d4973ab4b87e8882c4d39aba, type: 2}
+  bombThrowTime: 4
+  canThrowBomb: 0
 --- !u!54 &85063383139997572
 Rigidbody:
   m_ObjectHideFlags: 0
