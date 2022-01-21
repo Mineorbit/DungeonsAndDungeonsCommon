@@ -234,15 +234,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             rigidbody.isKinematic = true;
             rigidbody.useGravity = false;
-            transform.rotation = Quaternion.identity;
-            bool raycast;
-            RaycastHit hit;
-            (raycast,hit) = GroundCheck();
-            GameConsole.Log($"Height Increase: {(heightRay - hit.distance) }");
-            // HOT FIX
-            Vector3 pos = transform.position + (Vector3.up * (heightRay - hit.distance + 0.125f) );
-            rigidbody.position = pos;
-            transform.position = pos;
             setMovementStatus(true);
             if (controller != null)
             {

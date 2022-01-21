@@ -106,11 +106,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 shield.Invoke(shield.BlockAttackEffect);
             }
         }
-        
 
-        
-        
-        
+
+        public override void FinishKickback()
+        {
+            base.FinishKickback();
+            // HOT FIX
+            bool raycast;
+            RaycastHit hit;
+            (raycast,hit) = GroundCheck();
+            Vector3 pos = transform.position + (Vector3.up * (heightRay - hit.distance + 0.125f) );
+            rigidbody.position = pos;
+            transform.position = pos;
+            transform.rotation = Quaternion.identity;
+            GameConsole.Log($"Height Increase: {(heightRay - hit.distance) }");
+        }
+
+
         public override void OnDestroy()
         {
             base.OnDestroy();
