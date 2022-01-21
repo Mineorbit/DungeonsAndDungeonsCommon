@@ -199,7 +199,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Teleport(location);
             gameObject.SetActive(true);
             transform.rotation = rotation;
-            controller.OnSpawn(location);
+            if(controller != null)
+                controller.OnSpawn(location);
             onSpawnEvent.Invoke(location);
         }
 
