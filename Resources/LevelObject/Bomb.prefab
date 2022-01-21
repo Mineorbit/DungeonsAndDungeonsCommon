@@ -122,8 +122,12 @@ MonoBehaviour:
   isGrounded: 0
   heightRay: 0
   dazeKickbackDistance: 0.125
+  minCooldownTime: 1
+  kickbackSpeed: 4
   explosionTime: 3
   explosionRadius: 5
+  throwDirection: {x: 0, y: 0, z: 0}
+  throwForce: 10
 --- !u!114 &9028736413675504572
 MonoBehaviour:
   m_ObjectHideFlags: 0

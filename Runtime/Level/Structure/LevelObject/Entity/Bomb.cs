@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float explosionTime;
         public float explosionRadius;
         public Vector3 throwDirection;
-        private float throwForce = 25;
+        public float throwForce = 25;
         void Start()
         {
             Invoke("Explode",explosionTime);
