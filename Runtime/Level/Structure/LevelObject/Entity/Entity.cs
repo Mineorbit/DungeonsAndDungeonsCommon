@@ -436,12 +436,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             setMovementStatus(false);
             invincible = true;
             Invoke(KillEffect);
+            Invoke("Despawn", timeForDeath);
         }
 
         public virtual void KillEffect()
         {
-            baseAnimator.Death();
-            Invoke("Despawn", timeForDeath);
+            if(baseAnimator != null)
+                baseAnimator.Death();
         }
     }
 }
