@@ -261,7 +261,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void HitEffect(Vector3 hitPosition)
         {
-            baseAnimator.Hit();
+            if(baseAnimator != null)
+            {
+                baseAnimator.Hit();
+            }
             Vector3 dir = transform.position - hitPosition;
             EffectCaster.HitFX(transform.position+0.5f*dir);
             
