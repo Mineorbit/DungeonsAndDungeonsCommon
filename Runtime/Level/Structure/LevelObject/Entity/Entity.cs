@@ -373,6 +373,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private int pointsForKill = 100;
 
         public float minCooldownTime = 1f;
+        public float kickbackSpeed = 4f;
         public virtual void Hit(LevelObject hitter, int damage)
         {
 
@@ -394,7 +395,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     
                     Vector3 dir = transform.position - hitter.transform.position;
                     float kickbackDistance = 0.5f + (float) damage / 10;
-                    float kickbackSpeed = 4f;
+                    
                     
                     float time = kickbackDistance / kickbackSpeed;
                     float kickbackForce = damage / kickbackSpeed;
