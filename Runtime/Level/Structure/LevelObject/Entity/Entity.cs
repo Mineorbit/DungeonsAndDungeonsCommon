@@ -273,7 +273,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void StopHitEffect()
         {
-            baseAnimator.StopHit();
+            if(baseAnimator != null)
+                baseAnimator.StopHit();
         }
 
         
