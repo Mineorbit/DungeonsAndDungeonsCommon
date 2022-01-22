@@ -14,6 +14,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private GameObject spawnedEnemy;
 
+        private GameObject model;
+
         //Change to on remove
 
         public void OnDestroy()
@@ -35,14 +37,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             spawnCount = maxSpawnCount;
             SetCollider();
+            model = transform.Find("Model").gameObject;
             SpawnEnemy();
+            model.SetActive(false);
         }
 
 
         private void RemoveSpawnedEnemy()
         {
-            Debug.Log("Trying to Remove");
-
             if (spawnedEnemy != null)
                 LevelManager.currentLevel.RemoveDynamic(spawnedEnemy.GetComponent<Enemy>(), false);
         }

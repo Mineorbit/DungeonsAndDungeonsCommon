@@ -48,8 +48,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void RemoveSpawnedItem(bool physics = true)
         {
-            GameConsole.Log("Trying to Remove");
-
             if (spawnedItem != null) LevelManager.currentLevel.RemoveDynamic(spawnedItem.GetComponent<Item>(), physics);
         }
 
