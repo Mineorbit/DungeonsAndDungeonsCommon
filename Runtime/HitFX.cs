@@ -9,15 +9,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public ParticleSystem particleSystem;
 		public HitFXAudioController hitFXAudioController;
 		private static float lastTime = 1f;
-		private Queue<HitFX> queue;
-		public void Setup(Queue<HitFX> q)
+		private Queue<FX> queue;
+		public override void Setup(Queue<FX> q)
 		{
 			gameObject.SetActive(false);
 			//particleSystem.Play();
 			queue = q;
 			Invoke("Despawn",lastTime);
 		}
-            public void Spawn(Vector3 position)
+            public override void Spawn(Vector3 position)
     		{
     			gameObject.SetActive(true);
     			gameObject.transform.position = position;
@@ -26,7 +26,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     			particleSystem.Play();
                 Invoke("Despawn",lastTime);
     		}
-    		public void  Despawn()
+    		public override void  Despawn()
     		{
     			gameObject.SetActive(false);
                 queue.Enqueue(this);
