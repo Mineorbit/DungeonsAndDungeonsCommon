@@ -21,6 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Explode()
         {
             GameConsole.Log("Explode");
+            EffectCaster.dictionary["ExplosionFX"].FX(transform.position);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach (var collider in hitColliders)
             {

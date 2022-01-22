@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7485075675034637175}
   - component: {fileID: 7485075675034637160}
   m_Layer: 0
-  m_Name: EffectCaster
+  m_Name: HitEffectCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e808b71a740b5e4d9315f2ceaeddb00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitFX: {fileID: 3143064075671898928, guid: 1c6941cdc622a62488a14ede4cc784d2, type: 3}
+  effectName: HitFX
+  effectTemplate: {fileID: 3143064075671898928, guid: 1c6941cdc622a62488a14ede4cc784d2, type: 3}
