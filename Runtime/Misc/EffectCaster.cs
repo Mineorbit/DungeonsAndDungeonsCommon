@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public string effectName;
         [FormerlySerializedAs("hitFX")] public UnityEngine.Object effectTemplate;
-	public Queue<FX> effects = new Queue<FX>();
+	    public Queue<FX> effects = new Queue<FX>();
         public void Awake()
         {
             dictionary.Add(effectName,this);

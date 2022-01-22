@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-	public class HitFX : MonoBehaviour
+	public class HitFX : FX
 	{
 		public ParticleSystem particleSystem;
 		public HitFXAudioController hitFXAudioController;
