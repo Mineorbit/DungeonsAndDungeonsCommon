@@ -259,6 +259,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.AddForce(direction*force,ForceMode.VelocityChange);
             Invoke("FinishKickback",time);
         }
+
         
         public virtual void HitEffect(Vector3 hitPosition)
         {
@@ -267,7 +268,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 baseAnimator.Hit();
             }
             Vector3 dir = transform.position - hitPosition;
-            EffectCaster.HitFX(transform.position+0.5f*dir);
+            EffectCaster.dictionary["HitFX"].FX(transform.position+0.5f*dir);
             
         }
 

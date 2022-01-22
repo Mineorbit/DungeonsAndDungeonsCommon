@@ -3,22 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class EffectCaster : MonoBehaviour
     {
-        public static EffectCaster instance;
-        public UnityEngine.Object hitFX;
-	public Queue<HitFX> hitEffects = new Queue<HitFX>();
+        public static Dictionary<string, EffectCaster> dictionary = new Dictionary<string, EffectCaster>();
+
+        public string effectName;
+        [FormerlySerializedAs("hitFX")] public UnityEngine.Object effectTemplate;
+	public Queue<FX> effects = new Queue<FX>();
         public void Awake()
         {
-            if (instance != null)
-            {
-                Destroy(this);
-            }
-
-            instance = this;
+            dictionary.Add(effectName,this);
             for(int i = 0;i<4;i++)
             {
             	Create();
@@ -27,14 +25,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Create()
         {
-        HitFX effect = (Instantiate(instance.hitFX ,new Vector3(0,-8,0),Quaternion.identity) as GameObject).GetComponent<HitFX>();
-        effect.Setup(hitEffects);
-        hitEffects.Enqueue(effect);
+        FX effect = (Instantiate(effectTemplate ,new Vector3(0,-8,0),Quaternion.identity) as GameObject).GetComponent<FX>();
+        effect.Setup(effects);
+        effects.Enqueue(effect);
         }
 	
-        public static void HitFX(Vector3 position)
+        public void FX(Vector3 position)
         {
-        	HitFX effect = instance.hitEffects.Dequeue();
+        	FX effect = effects.Dequeue();
         	effect.Spawn(position);
         }
     }
