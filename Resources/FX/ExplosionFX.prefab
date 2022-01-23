@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioProfiles:
-  - {fileID: 11400000, guid: ec7965c5338dbb548b982bf9033bf5bb, type: 2}
+  - {fileID: 11400000, guid: 987afc5abcdc5f844ba643e5f451ab6d, type: 2}
 --- !u!1 &5714564959813186933
 GameObject:
   m_ObjectHideFlags: 0
