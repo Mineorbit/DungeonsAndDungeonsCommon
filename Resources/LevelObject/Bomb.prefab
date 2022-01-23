@@ -126,6 +126,7 @@ MonoBehaviour:
   kickbackSpeed: 4
   explosionTime: 3
   explosionRadius: 5
+  explosionDamage: 50
   throwDirection: {x: 0, y: 0, z: 0}
   throwForce: 10
 --- !u!114 &9028736413675504572
@@ -219,6 +220,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4527955274735743726, guid: 0edaf8f5e2404104ebee21a0c43afc00, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2ee2bf36632b520429cbf84c89da444d, type: 2}
     - target: {fileID: 919132149155446097, guid: 0edaf8f5e2404104ebee21a0c43afc00, type: 3}
       propertyPath: m_Name
       value: Model
