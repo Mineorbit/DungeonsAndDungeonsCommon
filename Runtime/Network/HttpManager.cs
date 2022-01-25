@@ -25,6 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public FileStructureProfile levelFolders;
 
         private string token;
+        static int port = 8080;
 
         class TokenData
         {
@@ -43,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private IEnumerator LoginRoutine(string username, string password)
         {
-            var url = baseURL + $":8000/auth/token";
+            var url = baseURL + $":{port}/auth/token";
             var form = new WWWForm();
             form.AddField("grant_type", "");
             form.AddField("username", username);
@@ -77,7 +78,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload, string path, UnityAction<string> action)
         {
             var url = baseURL +
-                      $":8000/level/?proto_resp=true&name={levelToUpload.FullName}&description={levelToUpload.Description}";
+                      $":{port}/level/?proto_resp=true&name={levelToUpload.FullName}&description={levelToUpload.Description}";
 
 
 
@@ -104,10 +105,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private IEnumerator FetchLevelList(UnityEvent<string> reportAction, UnityEvent listUpdatedEvent)
         {
-            var uri = baseURL + ":8000/level/all?proto_resp=true";
+            var uri = baseURL + $":{port}/level/all?proto_resp=true";
 
-
-            GameConsole.Log("Fetching level list from " + uri);
 
             reportAction.Invoke("Loading Level List");
             using (var www = UnityWebRequest.Get(uri))
@@ -146,7 +145,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             try
             {
-                Debug.Log($"Creating archive from {targetPath} to {resultPath}");
                 ZipFile.CreateFromDirectory(targetPath, resultPath,
                     CompressionLevel.Optimal, false);
 
@@ -162,7 +160,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private string DisassembleZip(string targetPath, string resultPath)
         {
-            GameConsole.Log($"Opening archive from {targetPath} to {resultPath}");
             try
             {
                 using (FileStream zipToOpen = new FileStream(targetPath, FileMode.Open))
@@ -214,7 +211,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private IEnumerator DownloadLevelRoute(LevelMetaData toDownload)
         {
-            var uri = baseURL + $":8000/level/download?proto_resp=false&ulid={toDownload.UniqueLevelId}";
+            var uri = baseURL + $":{port}/level/download?proto_resp=false&ulid={toDownload.UniqueLevelId}";
 
 
 
@@ -230,9 +227,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     string savePath = instance.compressedLevelFiles.GetPath() + $"{toDownload.LocalLevelId}.zip";
                     string levelPath = instance.levelFolders.GetPath() + $"{toDownload.LocalLevelId}";
-
-
-                    Debug.Log("Saving Data to " + savePath);
                     File.WriteAllText(savePath, www.downloadHandler.text);
                     MainCaller.Do(() => { instance.DisassembleZip(savePath, levelPath); });
                 }
@@ -249,7 +243,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             WebClient client = new WebClient();
             string savePath = instance.compressedLevelFiles.GetPath() + $"{count}.zip";
             string levelPath = LevelDataManager.SetupNewLevelFolder(metaData);
-            var uri = instance.baseURL + $":8000/level/download?proto_resp=false&ulid={metaData.UniqueLevelId}";
+            var uri = instance.baseURL + $":{port}/level/download?proto_resp=false&ulid={metaData.UniqueLevelId}";
             LevelDataManager.SaveLevelMetaData(metaData, levelPath+"/MetaData.json");
             client.DownloadFile(uri, savePath);
             instance.DisassembleZip(savePath, levelPath);
