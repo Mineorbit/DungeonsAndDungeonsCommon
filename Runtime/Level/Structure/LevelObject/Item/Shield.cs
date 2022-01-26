@@ -4,11 +4,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Shield : Item
     {
-        public void Update()
-        {
-            //transform.localEulerAngles = new Vector3(0, 180, 0);
-        }
-        
+
 
         public override void OnAttach()
         {

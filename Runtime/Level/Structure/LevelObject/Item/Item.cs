@@ -21,7 +21,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public ItemHandle itemHandle;
         public bool pickedUpOnce = false;
-        
+
+        public float hoverRotationSpeed = 6;
         public enum Side
         {
             Left,
@@ -36,7 +37,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!pickedUpOnce)
             {
                 GameConsole.Log($"Test {t}");
-                t += Time.deltaTime;
+                t += hoverRotationSpeed*Time.deltaTime;
                 transform.eulerAngles = new Vector3(t, t, t);
             }
             else
