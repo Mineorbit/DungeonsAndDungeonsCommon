@@ -41,10 +41,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 arrowObject.GetComponent<Bomb>().throwDirection = forward;
 
         }
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
