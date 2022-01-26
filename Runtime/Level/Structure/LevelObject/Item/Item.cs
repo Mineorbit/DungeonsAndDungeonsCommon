@@ -36,8 +36,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!pickedUpOnce)
             {
                 t += Time.deltaTime;
-                transform.RotateAround(transform.position,Vector3.up, t);
-                transform.RotateAround(transform.position,Vector3.right, t);
+                transform.eulerAngles = new Vector3(t, t, t);
             }
         }
         
