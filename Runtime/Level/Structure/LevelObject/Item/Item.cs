@@ -20,6 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         public ItemHandle itemHandle;
+        public bool pickedUpOnce = false;
         
         public enum Side
         {
@@ -28,7 +29,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         public Transform attachmentPoint;
-
+        private float t = 0;
+        public void Update()
+        {
+            if (!pickedUpOnce)
+            {
+                t += Time.deltaTime;
+                transform.Rotate(t,t,t);
+            }
+        }
+        
         public void SetupAttachmentPoint()
         {
             if (attachmentPoint == null)
@@ -57,6 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Side equipSide;
         public virtual void OnAttach()
         {
+            pickedUpOnce = true;
             isEquipped = true;
             owner = transform.parent.GetComponentInParent<Entity>();
             rigidbody.useGravity = false;
