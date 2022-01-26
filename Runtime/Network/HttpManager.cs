@@ -118,10 +118,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                 {
                     string data = www.downloadHandler.text;
-                    GameConsole.Log("Received " + data);
+                    GameConsole.Log($"Received {data}");
                     LevelMetaDataList list = LevelMetaDataList.Parser.ParseFrom(ByteString.CopyFromUtf8(data));
                     levelMetaDatas = list.Levels.ToArray();
-                    GameConsole.Log("Got list: " + levelMetaDatas.Length);
+                    GameConsole.Log($"Got list: {levelMetaDatas.Length}");
                     foreach (var x in levelMetaDatas)
                     {
                         GameConsole.Log("MetaData: " + x);
@@ -195,7 +195,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 LevelDataManager.GetLevelPath(levelToUpload));
             
             
-            GameConsole.Log("Uploading "+levelToUpload+" "+LevelDataManager.GetLevelPath(levelToUpload));
+            GameConsole.Log($"Uploading {levelToUpload} {LevelDataManager.GetLevelPath(levelToUpload)}");
             instance.StartCoroutine(instance.UploadLevel(levelToUpload,
                 instance.compressedLevelFiles.GetPath() + "" + count + ".zip",
                 (x) => { GameConsole.Log(x); }));
