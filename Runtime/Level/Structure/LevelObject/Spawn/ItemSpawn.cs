@@ -45,6 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             model.SetActive(false);
         }
 
+        public bool itemPickedUp = false;
 
         private void RemoveSpawnedItem(bool physics = true)
         {
@@ -82,6 +83,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     spawnedItem = LevelManager.currentLevel.AddDynamic(itemToSpawn, SpawnLocation(), SpawnRotation(),null);
                 else
                     spawnedItem.GetComponent<Item>().Spawn(SpawnLocation(), SpawnRotation(),true);
+
+                spawnedItem.GetComponent<Item>().pickedUpOnce = false;
             }
         }
     }
