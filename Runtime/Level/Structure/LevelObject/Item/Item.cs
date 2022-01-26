@@ -35,8 +35,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
             if (!pickedUpOnce)
             {
+                GameConsole.Log($"Test {t}");
                 t += Time.deltaTime;
                 transform.eulerAngles = new Vector3(t, t, t);
+            }
+            else
+            {
             }
         }
         
