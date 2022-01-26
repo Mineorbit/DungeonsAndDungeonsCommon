@@ -30,12 +30,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Transform attachmentPoint;
         private float t = 0;
-        public void Update()
+        public override void Update()
         {
+            base.Update();
             if (!pickedUpOnce)
             {
                 t += Time.deltaTime;
-                transform.Rotate(t,t,t);
+                transform.RotateAround(transform.position,Vector3.up, t);
+                transform.RotateAround(transform.position,Vector3.right, t);
             }
         }
         
