@@ -110,6 +110,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private static float disableTime = 0.1f;
         public static Canvas[] canvases;
         public static bool[] enablings = new bool[32];
+        public GameObject cursorGameObject;
+        private static bool cursorGameObjectEnabled;
         public static void Save(bool metaData = true, bool levelData = true, LevelMetaData extraSaveMetaData = null)
         {
             canvases = Resources.FindObjectsOfTypeAll<Canvas>();
@@ -120,6 +122,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 c.gameObject.SetActive(false);
                 i++;
             }
+
+            cursorGameObjectEnabled = instance.gameObject.activeSelf;
+            instance.cursorGameObject.SetActive(false);
             
             var currentLevelMetaData = LevelManager.currentLevelMetaData;
             
@@ -153,6 +158,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 c.gameObject.SetActive(enablings[i]);
                 i++;
             }
+
+            instance.cursorGameObject.SetActive(cursorGameObjectEnabled);
         }
         
         public static void Delete(NetLevel.LevelMetaData metaData)
