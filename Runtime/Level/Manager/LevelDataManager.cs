@@ -125,7 +125,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 FileManager.createFolder(GetLevelPath(extraSaveMetaData), false);
                 if (metaData) SaveLevelMetaData(extraSaveMetaData,metaDataPath + "/MetaData.json");
             }
-
+            ScreenCapture.CaptureScreenshot(GetLevelPath(extraSaveMetaData)+"/Thumbnail.png");
             UpdateLocalLevelList();
         }
 
