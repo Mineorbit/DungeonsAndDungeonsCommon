@@ -78,7 +78,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload, string path, UnityAction<string> action)
         {
             var url = baseURL +
-                      $":{port}/level/?proto_resp=true&name={levelToUpload.FullName}&description={levelToUpload.Description}";
+                      $":{port}/level/?proto_resp=true&name={levelToUpload.FullName}&description={levelToUpload.Description}" +
+                      $"&r={levelToUpload.AvailRed}&g={levelToUpload.AvailGreen}&b={levelToUpload.AvailBlue}&y={levelToUpload.AvailYellow}";
 
 
 
