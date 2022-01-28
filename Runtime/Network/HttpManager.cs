@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -84,10 +85,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameConsole.Log(request.error);
             else
                 image.texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
-        } 
+        }
 
+        private float disableTime = 0.1f;
+        private Queue<Tuple<Canvas,bool>> cEnabled;
         private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload, string path, UnityAction<string> action)
         {
+
+            Canvas[] canvases = Resources.FindObjectsOfTypeAll<Canvas>();
+            foreach (Canvas c in canvases)
+            {
+                cEnabled.Enqueue(new Tuple<Canvas, bool>(c,c.enabled));
+                c.enabled = false;
+            }
             var url = baseURL +
                       $":{port}/level/?proto_resp=true&name={levelToUpload.FullName}&description={levelToUpload.Description}" +
                       $"&r={levelToUpload.AvailRed}&g={levelToUpload.AvailGreen}&b={levelToUpload.AvailBlue}&y={levelToUpload.AvailYellow}";
@@ -114,8 +124,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 else
                     action.Invoke(www.downloadHandler.text);
             }
+            
+            Invoke("ResetCanvases",disableTime);
         }
 
+        public void ResetCanvases()
+        {
+            while (cEnabled.Count > 0)
+            {
+                Tuple<Canvas,bool> b = cEnabled.Dequeue();
+                b.Item1.enabled = b.Item2;
+            }
+        }
+        
         public LevelMetaData[] levelMetaDatas;
 
         private IEnumerator FetchLevelList(UnityEvent<string> reportAction, UnityEvent listUpdatedEvent)
