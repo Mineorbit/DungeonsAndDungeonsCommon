@@ -116,8 +116,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int i = 0;
             foreach (Canvas c in canvases)
             {
-                enablings[i] = c.enabled;
-                c.enabled = false;
+                enablings[i] = c.gameObject.activeSelf;
+                c.gameObject.SetActive(false);
                 i++;
             }
             
@@ -150,7 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int i = 0;
             foreach (Canvas c in canvases)
             {
-                c.enabled = enablings[i];
+                c.gameObject.SetActive(enablings[i]);
                 i++;
             }
         }
