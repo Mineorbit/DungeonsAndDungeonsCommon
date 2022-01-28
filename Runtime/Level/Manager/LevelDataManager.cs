@@ -116,6 +116,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var metaDataPath = GetLevelPath(currentLevelMetaData);
                 FileManager.createFolder(metaDataPath, false);
                 if (metaData) SaveLevelMetaData(currentLevelMetaData,metaDataPath + "/MetaData.json");
+                
+                ScreenCapture.CaptureScreenshot(metaDataPath+"/Thumbnail.png");
                 if (levelData) SaveLevelData(metaDataPath);
             }
             
@@ -124,8 +126,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 var metaDataPath = GetLevelPath(extraSaveMetaData);
                 FileManager.createFolder(GetLevelPath(extraSaveMetaData), false);
                 if (metaData) SaveLevelMetaData(extraSaveMetaData,metaDataPath + "/MetaData.json");
+                ScreenCapture.CaptureScreenshot(metaDataPath+"/Thumbnail.png");
             }
-            ScreenCapture.CaptureScreenshot(GetLevelPath(extraSaveMetaData)+"/Thumbnail.png");
             UpdateLocalLevelList();
         }
 
