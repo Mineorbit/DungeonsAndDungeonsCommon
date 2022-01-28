@@ -25,7 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public FileStructureProfile levelFolders;
 
         private string token;
-        static int port = 8080;
+        static int port = 8000;
 
         class TokenData
         {
