@@ -92,7 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload, string path, UnityAction<string> action)
         {
 
-            Canvas[] canvases = Resources.FindObjectsOfTypeAll<Canvas>();
+            Canvas[] canvases = GameObject.FindObjectsOfType<Canvas>();
             cEnabled = new Queue<Tuple<Canvas, bool>>();
             foreach (Canvas c in canvases)
             {
