@@ -119,13 +119,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     string data = www.downloadHandler.text;
                     GameConsole.Log($"Received {data}");
-                    LevelMetaData m = new LevelMetaData();
-                    m.FullName = "1";
-                    LevelMetaDataList test = new LevelMetaDataList();
-                    test.Levels.Add(m);
-                    GameConsole.Log(JsonFormatter.ToDiagnosticString(test));
-                    
-                    LevelMetaDataList list = LevelMetaDataList.Parser.ParseJson(data);
+                    LevelMetaDataList list = LevelMetaDataList.Parser.ParseFrom(ByteString.CopyFromUtf8(data));
                     levelMetaDatas = list.Levels.ToArray();
                     GameConsole.Log($"Got list: {levelMetaDatas.Length}");
                     foreach (var x in levelMetaDatas)
