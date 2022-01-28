@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using System.Net;
+using UnityEngine.UI;
 using CompressionLevel = System.IO.Compression.CompressionLevel;
 
 
@@ -73,7 +74,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-
+        
+        public IEnumerator DownloadImage(int ulid,RawImage image)
+        {
+            string url = baseURL + $":{port}/level/pic/?proto_resp=false$ulid={ulid}";
+            UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+            yield return request.SendWebRequest();
+            if(request.isNetworkError || request.isHttpError) 
+                GameConsole.Log(request.error);
+            else
+                image.texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
+        } 
 
         private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload, string path, UnityAction<string> action)
         {
