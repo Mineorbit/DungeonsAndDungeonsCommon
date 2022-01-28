@@ -77,7 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public IEnumerator DownloadImage(int ulid,RawImage image)
         {
-            string url = baseURL + $":{port}/level/pic/?proto_resp=false$ulid={ulid}";
+            string url = baseURL + $":{port}/level/pic/?proto_resp=false&ulid={ulid}";
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             yield return request.SendWebRequest();
             if(request.isNetworkError || request.isHttpError) 
