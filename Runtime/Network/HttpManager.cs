@@ -97,8 +97,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var form = new WWWForm();
             var fileByte = File.ReadAllBytes(path);
-            var tnByte = File.ReadAllBytes();
-            GameConsole.Log("PATH: "+LevelDataManager.GetLevelPath(levelToUpload)+"/Thumbnail.png");
+            string tpath = LevelDataManager.GetLevelPath(levelToUpload) + "/Thumbnail.png";
+            var tnByte = File.ReadAllBytes(tpath);
             form.AddBinaryData("thumbnail",tnByte, "thumbnail.png","image / png");
             form.AddBinaryData("levelFiles", fileByte, levelToUpload.UniqueLevelId + ".zip", "application / zip");
             
