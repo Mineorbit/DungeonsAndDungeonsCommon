@@ -93,6 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             Canvas[] canvases = Resources.FindObjectsOfTypeAll<Canvas>();
+            cEnabled = new Queue<Tuple<Canvas, bool>>();
             foreach (Canvas c in canvases)
             {
                 cEnabled.Enqueue(new Tuple<Canvas, bool>(c,c.enabled));
