@@ -87,18 +87,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 image.texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
         }
 
-        private float disableTime = 0.1f;
-        private Queue<Tuple<Canvas,bool>> cEnabled;
+        
         private IEnumerator UploadLevel(NetLevel.LevelMetaData levelToUpload, string path, UnityAction<string> action)
         {
 
-            Canvas[] canvases = GameObject.FindObjectsOfType<Canvas>();
-            cEnabled = new Queue<Tuple<Canvas, bool>>();
-            foreach (Canvas c in canvases)
-            {
-                cEnabled.Enqueue(new Tuple<Canvas, bool>(c,c.enabled));
-                c.enabled = false;
-            }
+            
             var url = baseURL +
                       $":{port}/level/?proto_resp=true&name={levelToUpload.FullName}&description={levelToUpload.Description}" +
                       $"&r={levelToUpload.AvailRed}&g={levelToUpload.AvailGreen}&b={levelToUpload.AvailBlue}&y={levelToUpload.AvailYellow}";
@@ -126,17 +119,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     action.Invoke(www.downloadHandler.text);
             }
             
-            Invoke("ResetCanvases",disableTime);
         }
 
-        public void ResetCanvases()
-        {
-            while (cEnabled.Count > 0)
-            {
-                Tuple<Canvas,bool> b = cEnabled.Dequeue();
-                b.Item1.enabled = b.Item2;
-            }
-        }
+        
         
         public LevelMetaData[] levelMetaDatas;
 

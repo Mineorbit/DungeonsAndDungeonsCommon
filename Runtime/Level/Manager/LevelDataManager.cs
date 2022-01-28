@@ -107,8 +107,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             c.Save(instance.levelData, pathToLevel + "/Index.json", false);
         }
 
+        private static float disableTime = 0.1f;
+        public static Canvas[] canvases;
+        public static bool[] enablings = new bool[32];
         public static void Save(bool metaData = true, bool levelData = true, LevelMetaData extraSaveMetaData = null)
         {
+            canvases = Resources.FindObjectsOfTypeAll<Canvas>();
+            int i = 0;
+            foreach (Canvas c in canvases)
+            {
+                enablings[i] = c.enabled;
+                c.enabled = false;
+                i++;
+            }
+            
             var currentLevelMetaData = LevelManager.currentLevelMetaData;
             
             if (currentLevelMetaData != null)
@@ -129,9 +141,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 ScreenCapture.CaptureScreenshot(metaDataPath+"/Thumbnail.png");
             }
             UpdateLocalLevelList();
+            instance.Invoke("ResetCanvases", disableTime);
         }
 
 
+        public void ResetCanvases()
+        {
+            int i = 0;
+            foreach (Canvas c in canvases)
+            {
+                c.enabled = enablings[i];
+                i++;
+            }
+        }
+        
         public static void Delete(NetLevel.LevelMetaData metaData)
         {
             if (metaData == null) return;
