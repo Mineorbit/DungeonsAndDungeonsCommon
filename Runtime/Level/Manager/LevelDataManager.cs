@@ -111,7 +111,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static Canvas[] canvases;
         public static bool[] enablings = new bool[32];
         public GameObject cursorGameObject;
-        private static bool cursorGameObjectEnabled;
+        private bool cursorGameObjectEnabled;
         public static void Save(bool metaData = true, bool levelData = true, LevelMetaData extraSaveMetaData = null)
         {
             canvases = Resources.FindObjectsOfTypeAll<Canvas>();
@@ -123,7 +123,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 i++;
             }
 
-            cursorGameObjectEnabled = instance.gameObject.activeSelf;
+            instance.cursorGameObjectEnabled = instance.cursorGameObject.activeSelf;
             instance.cursorGameObject.SetActive(false);
             
             var currentLevelMetaData = LevelManager.currentLevelMetaData;
