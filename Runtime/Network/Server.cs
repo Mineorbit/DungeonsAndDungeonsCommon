@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using General;
 using Google.Protobuf;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -18,6 +19,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly IPAddress localAddr = IPAddress.Any;
 
         private readonly int port = 13565;
+
+
+        public static UnityEvent<int> onConnectEvent = new UnityEvent<int>();
 
 
         public Server()

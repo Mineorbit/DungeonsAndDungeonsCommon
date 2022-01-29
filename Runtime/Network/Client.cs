@@ -418,8 +418,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
                 PlayerManager.playerManager.Add(localid, userName, true,null);
+                Server.onConnectEvent.Invoke(localid);
             });
-
             await StartHandle();
         }
 
