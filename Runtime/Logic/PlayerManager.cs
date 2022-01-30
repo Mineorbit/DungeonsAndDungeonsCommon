@@ -62,9 +62,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public static Vector3 DefaultSpawnPosition(int i)
+        {
+            return new Vector3(i * 8, 8, 0);
+        }
+        
         public Vector3 GetSpawnLocation(int i)
         {
-            var location = new Vector3(i * 8, 6, 0);
+            var location = DefaultSpawnPosition(i);
             if (LevelManager.currentLevel != null)
                 if (LevelManager.currentLevel.spawn[i] != null)
                     location = LevelManager.currentLevel.spawn[i].transform.position + new Vector3(0, 0.25f, 0);
