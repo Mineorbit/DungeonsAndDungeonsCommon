@@ -133,6 +133,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             base.OnStartRound();
+            bool b = (Level.instantiateType == Level.InstantiateType.Online ||
+                      Level.instantiateType == Level.InstantiateType.Test);
+            GetController().enabled = b;
         }
 
 
