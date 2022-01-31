@@ -61,6 +61,32 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Server.instance.WriteAll(p);
         }
 
+        public static Vector3 toVector3(MVector v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
+
+        public static Quaternion toQuaternion(MQuaternion q)
+        {
+            return new Quaternion(q.X, q.Y, q.Z, q.W);
+        }
+        [PacketBinding.Binding]
+        public void PlayerInputProcessing(Packet p)
+        {
+            PlayerInputUpdate playerInputUpdate;
+            if (p.Content.TryUnpack(out playerInputUpdate))
+            {
+                GetObservedPlayer().movingDirection = toVector3(playerInputUpdate.MovingDirection);
+                GetObservedPlayer().targetDirection = toVector3(playerInputUpdate.TargetDirection);
+                GetObservedPlayer().forwardDirection = toVector3(playerInputUpdate.ForwardDirection);
+                GetObservedPlayer().aimRotation = toQuaternion(playerInputUpdate.AimRotation);
+                GetObservedPlayer().cameraForwardDirection = toVector3(playerInputUpdate.CameraForwardDirection);
+                GetObservedPlayer().movementInputOnFrame = playerInputUpdate.MovementInputOnFrame;
+                GetObservedPlayer().doInput = playerInputUpdate.DoInput;
+                GetObservedPlayer().takeInput = playerInputUpdate.TakeInput;
+            }
+        }
+
         [PacketBinding.Binding]
         public override void ProcessAction(Packet p)
         {
