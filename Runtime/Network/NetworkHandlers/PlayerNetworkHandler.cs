@@ -221,6 +221,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerManager.playerManager.Add(localId, name, true, id);
                 GameObject player = PlayerManager.playerManager.GetPlayer(localId);
                 PlayerNetworkHandler h = player.GetComponent<PlayerNetworkHandler>();
+                player.GetComponent<Player>().enabled = ( NetworkManager.instance.localId == -1);
                 h.enabled = true;
                 h.Setup();
 
