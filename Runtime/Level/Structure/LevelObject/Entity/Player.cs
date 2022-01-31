@@ -163,7 +163,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float climbingSpeed = 1f;
 
-        private float Speed = 1;
+        public float Speed = 1;
         
         
         

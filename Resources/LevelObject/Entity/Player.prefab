@@ -9970,6 +9970,8 @@ MonoBehaviour:
   lastGrounded: 0
   isGrounded: 0
   heightRay: 1.15
+  speedY: 0
+  gravity: 1
   dazeKickbackDistance: 0.125
   minCooldownTime: 1
   kickbackSpeed: 5
@@ -9981,6 +9983,15 @@ MonoBehaviour:
   aimMode: 0
   aiming: 0
   jumping: 0
+  climbableHitbox: {fileID: 0}
+  inClimbing: 0
+  climbDampening: 0.5
+  climbingSpeed: 1
+  Speed: 4
+  targetDirection: {x: 0, y: 0, z: 0}
+  movingDirection: {x: 0, y: 0, z: 0}
+  forwardDirection: {x: 0, y: 0, z: 0}
+  cameraForwardDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &-4485675669329379349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10000,8 +10011,6 @@ MonoBehaviour:
   playerBaseAnimator: {fileID: 700370800949042406}
   cam: {fileID: 0}
   Speed: 3
-  targetDirection: {x: 0, y: 0, z: 0}
-  movingDirection: {x: 0, y: 0, z: 0}
   speedY: 0
   locallyControllable: 0
   activated: 0
@@ -10011,13 +10020,13 @@ MonoBehaviour:
   allowedToMove: 1
   aimDistance: 20
   jumpingSpeed: 1.75
-  forwardDirection: {x: 0, y: 0, z: 0}
-  climbableHitbox: {fileID: 1725967590211030794}
-  inClimbing: 0
   movementInputOnFrame: 0
   inputDirection: {x: 0, y: 0}
-  climbDampening: 0.5
-  climbingSpeed: 1
+  cameraForwardDirection: {x: 0, y: 0, z: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  movingDirection: {x: 0, y: 0, z: 0}
+  forwardDirection: {x: 0, y: 0, z: 0}
+  aimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &6975951243435457332
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10073,8 +10082,6 @@ MonoBehaviour:
   teleportPosition: {x: 0, y: 0, z: 0}
   transmitPosition: 1
   interpolatePosition: 1
-  locomotionBlocks: 0
-  blockPosition: {x: 0, y: 0, z: 0}
   receivedPosition: {x: 0, y: 0, z: 0}
   sendAngle: 0.05
   lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -10395,17 +10402,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5207118323614420857, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
   m_PrefabInstance: {fileID: 3923336022330628918}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1725967590211030794 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2414390317603050556, guid: b80dcc02b42b04140a199a6fdca321ca, type: 3}
-  m_PrefabInstance: {fileID: 3923336022330628918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 610df15f0e5ed574b86e5e2f34a18d6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3999718041300386343
 PrefabInstance:
   m_ObjectHideFlags: 0
