@@ -9971,7 +9971,7 @@ MonoBehaviour:
   isGrounded: 0
   heightRay: 1.15
   speedY: 0
-  gravity: 1
+  gravity: 5
   dazeKickbackDistance: 0.125
   minCooldownTime: 1
   kickbackSpeed: 5
@@ -9995,7 +9995,7 @@ MonoBehaviour:
   movementInputOnFrame: 0
   doInput: 0
   takeInput: 0
-  jumpingSpeed: 1
+  jumpingSpeed: 2
 --- !u!114 &-4485675669329379349
 MonoBehaviour:
   m_ObjectHideFlags: 0
