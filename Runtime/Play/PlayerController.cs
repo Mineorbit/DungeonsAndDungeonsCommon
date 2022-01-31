@@ -252,6 +252,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             player.forwardDirection = forwardDirection;
             player.aimRotation = aimRotation;
             player.cameraForwardDirection = cameraForwardDirection;
+            player.movementInputOnFrame = movementInputOnFrame;
+            player.doInput = doInput;
+            player.takeInput = takeInput;
         }
     }
 }

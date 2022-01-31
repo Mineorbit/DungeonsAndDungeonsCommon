@@ -171,6 +171,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 movingDirection;
         public Vector3 forwardDirection;
         public Vector3 cameraForwardDirection;
+        
+        
+        public bool movementInputOnFrame;
+        public bool doInput;
+        public bool takeInput;
+        
         public void MoveFixed()
         {
             if (!isGrounded)
@@ -184,7 +190,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     speedY -= gravity * Time.deltaTime;
                 }
             }
-            
+
+
             
             if (ApplyMovement)
             {
@@ -229,7 +236,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Vector3 lookDir = cameraForwardDirection;
                     lookDir.y = 0;
                     transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
-                }else
+                }else if (doInput && takeInput && movementInputOnFrame)
                 {
                     var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
                     transform.eulerAngles = new Vector3(0, angleY, 0);
