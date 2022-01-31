@@ -18,10 +18,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.AddForce(throwDirection*throwForce,ForceMode.Impulse);
         }
 
+        public void ExplosionEffect()
+        {
+            EffectCaster.dictionary["ExplosionFX"].FX(transform.position);
+        }
+        
         void Explode()
         {
             GameConsole.Log("Explode");
-            EffectCaster.dictionary["ExplosionFX"].FX(transform.position);
+            Invoke(ExplosionEffect,false,true);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach (var collider in hitColliders)
             {
