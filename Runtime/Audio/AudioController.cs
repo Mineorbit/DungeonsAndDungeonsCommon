@@ -88,7 +88,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void prePlay(int index)
         {
             //Prüfen ob schon läuft
-            if(audioSources[index][currentPlay[index]] != null)
+            if(audioSources[index] != null && audioSources[index][currentPlay[index]] != null)
                 audioSources[index][currentPlay[index]].mute = false;
         }
 
