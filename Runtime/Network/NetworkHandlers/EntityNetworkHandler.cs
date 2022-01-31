@@ -213,8 +213,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
                     GameConsole.Log($"Locomotion: {entityLocomotion}");
-                    if(entityLocomotion.LocomotionId>lastReceivedLocomotion)
-                    {
+                    
                         lastReceivedLocomotion = entityLocomotion.LocomotionId;
                         MainCaller.Do(() =>
                         {
@@ -225,7 +224,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
                             entityLocomotion.AimZ, entityLocomotion.AimW);
                         });
-                    }
                 }
         }
 
@@ -304,11 +302,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         public Quaternion lastSentAimRotation;
-        private ulong locomotionID;
         private void UpdateLocomotion()
         {
-            if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && SendNecessary())
+            if (WantsToTransmit() && SendNecessary())
             {
+                GameConsole.Log($"{this} transmitting");
                 var pos = observed.transform.position;
                 var r = observed.transform.rotation;
                 var rot = observed.transform.rotation.eulerAngles;
@@ -324,10 +322,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         AimX = aim.x,
                         AimY = aim.y,
                         AimZ = aim.z,
-                        AimW = aim.w,
-                        LocomotionId = locomotionID
+                        AimW = aim.w
                     };
-                    locomotionID++;
                     if (GetObservedEntity().allowedToMove)
                     {
                         Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
