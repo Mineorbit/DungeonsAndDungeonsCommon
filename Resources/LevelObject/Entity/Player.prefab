@@ -9992,6 +9992,10 @@ MonoBehaviour:
   movingDirection: {x: 0, y: 0, z: 0}
   forwardDirection: {x: 0, y: 0, z: 0}
   cameraForwardDirection: {x: 0, y: 0, z: 0}
+  movementInputOnFrame: 0
+  doInput: 0
+  takeInput: 0
+  jumpingSpeed: 1
 --- !u!114 &-4485675669329379349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10019,7 +10023,6 @@ MonoBehaviour:
   isMe: 0
   allowedToMove: 1
   aimDistance: 20
-  jumpingSpeed: 1.75
   movementInputOnFrame: 0
   inputDirection: {x: 0, y: 0}
   cameraForwardDirection: {x: 0, y: 0, z: 0}
