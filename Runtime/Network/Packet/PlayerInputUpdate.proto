@@ -2,13 +2,13 @@
 
 package Game;
 
-message Vector {
+message MVector {
 float X = 1;
 float Y = 2;
 float Z = 3;
 }
 
-message Quaternion {
+message MQuaternion {
 float X = 1;
 float Y = 2;
 float Z = 3;
@@ -16,11 +16,11 @@ float W = 4;
 }
 
 message PlayerInputUpdate {
-  Vector cameraForwardDirection = 1;
-  Vector targetDirection = 2;
-  Vector movingDirection = 3;
-  Vector forwardDirection = 4;
-  Quaternion aimRotation = 5;
+  MVector cameraForwardDirection = 1;
+  MVector targetDirection = 2;
+  MVector movingDirection = 3;
+  MVector forwardDirection = 4;
+  MQuaternion aimRotation = 5;
   bool movementInputOnFrame = 6;
   bool doInput = 7;
   bool takeInput = 8;

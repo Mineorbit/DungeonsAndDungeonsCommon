@@ -24,21 +24,21 @@ namespace Game {
     static PlayerInputUpdateReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChdQbGF5ZXJJbnB1dFVwZGF0ZS5wcm90bxIER2FtZSIpCgZWZWN0b3ISCQoB",
-            "WBgBIAEoAhIJCgFZGAIgASgCEgkKAVoYAyABKAIiOAoKUXVhdGVybmlvbhIJ",
-            "CgFYGAEgASgCEgkKAVkYAiABKAISCQoBWhgDIAEoAhIJCgFXGAQgASgCIqAC",
-            "ChFQbGF5ZXJJbnB1dFVwZGF0ZRIsChZjYW1lcmFGb3J3YXJkRGlyZWN0aW9u",
-            "GAEgASgLMgwuR2FtZS5WZWN0b3ISJQoPdGFyZ2V0RGlyZWN0aW9uGAIgASgL",
-            "MgwuR2FtZS5WZWN0b3ISJQoPbW92aW5nRGlyZWN0aW9uGAMgASgLMgwuR2Ft",
-            "ZS5WZWN0b3ISJgoQZm9yd2FyZERpcmVjdGlvbhgEIAEoCzIMLkdhbWUuVmVj",
-            "dG9yEiUKC2FpbVJvdGF0aW9uGAUgASgLMhAuR2FtZS5RdWF0ZXJuaW9uEhwK",
-            "FG1vdmVtZW50SW5wdXRPbkZyYW1lGAYgASgIEg8KB2RvSW5wdXQYByABKAgS",
-            "EQoJdGFrZUlucHV0GAggASgIYgZwcm90bzM="));
+            "ChdQbGF5ZXJJbnB1dFVwZGF0ZS5wcm90bxIER2FtZSIqCgdNVmVjdG9yEgkK",
+            "AVgYASABKAISCQoBWRgCIAEoAhIJCgFaGAMgASgCIjkKC01RdWF0ZXJuaW9u",
+            "EgkKAVgYASABKAISCQoBWRgCIAEoAhIJCgFaGAMgASgCEgkKAVcYBCABKAIi",
+            "pQIKEVBsYXllcklucHV0VXBkYXRlEi0KFmNhbWVyYUZvcndhcmREaXJlY3Rp",
+            "b24YASABKAsyDS5HYW1lLk1WZWN0b3ISJgoPdGFyZ2V0RGlyZWN0aW9uGAIg",
+            "ASgLMg0uR2FtZS5NVmVjdG9yEiYKD21vdmluZ0RpcmVjdGlvbhgDIAEoCzIN",
+            "LkdhbWUuTVZlY3RvchInChBmb3J3YXJkRGlyZWN0aW9uGAQgASgLMg0uR2Ft",
+            "ZS5NVmVjdG9yEiYKC2FpbVJvdGF0aW9uGAUgASgLMhEuR2FtZS5NUXVhdGVy",
+            "bmlvbhIcChRtb3ZlbWVudElucHV0T25GcmFtZRgGIAEoCBIPCgdkb0lucHV0",
+            "GAcgASgIEhEKCXRha2VJbnB1dBgIIAEoCGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.Vector), global::Game.Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.Quaternion), global::Game.Quaternion.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.MVector), global::Game.MVector.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.MQuaternion), global::Game.MQuaternion.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.PlayerInputUpdate), global::Game.PlayerInputUpdate.Parser, new[]{ "CameraForwardDirection", "TargetDirection", "MovingDirection", "ForwardDirection", "AimRotation", "MovementInputOnFrame", "DoInput", "TakeInput" }, null, null, null, null)
           }));
     }
@@ -46,16 +46,16 @@ namespace Game {
 
   }
   #region Messages
-  public sealed partial class Vector : pb::IMessage<Vector>
+  public sealed partial class MVector : pb::IMessage<MVector>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Vector> _parser = new pb::MessageParser<Vector>(() => new Vector());
+    private static readonly pb::MessageParser<MVector> _parser = new pb::MessageParser<MVector>(() => new MVector());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Vector> Parser { get { return _parser; } }
+    public static pb::MessageParser<MVector> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -71,7 +71,7 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Vector() {
+    public MVector() {
       OnConstruction();
     }
 
@@ -79,7 +79,7 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Vector(Vector other) : this() {
+    public MVector(MVector other) : this() {
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
@@ -88,8 +88,8 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Vector Clone() {
-      return new Vector(this);
+    public MVector Clone() {
+      return new MVector(this);
     }
 
     /// <summary>Field number for the "X" field.</summary>
@@ -131,12 +131,12 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Vector);
+      return Equals(other as MVector);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Vector other) {
+    public bool Equals(MVector other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -235,7 +235,7 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Vector other) {
+    public void MergeFrom(MVector other) {
       if (other == null) {
         return;
       }
@@ -309,16 +309,16 @@ namespace Game {
 
   }
 
-  public sealed partial class Quaternion : pb::IMessage<Quaternion>
+  public sealed partial class MQuaternion : pb::IMessage<MQuaternion>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Quaternion> _parser = new pb::MessageParser<Quaternion>(() => new Quaternion());
+    private static readonly pb::MessageParser<MQuaternion> _parser = new pb::MessageParser<MQuaternion>(() => new MQuaternion());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Quaternion> Parser { get { return _parser; } }
+    public static pb::MessageParser<MQuaternion> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -334,7 +334,7 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Quaternion() {
+    public MQuaternion() {
       OnConstruction();
     }
 
@@ -342,7 +342,7 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Quaternion(Quaternion other) : this() {
+    public MQuaternion(MQuaternion other) : this() {
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
@@ -352,8 +352,8 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Quaternion Clone() {
-      return new Quaternion(this);
+    public MQuaternion Clone() {
+      return new MQuaternion(this);
     }
 
     /// <summary>Field number for the "X" field.</summary>
@@ -407,12 +407,12 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Quaternion);
+      return Equals(other as MQuaternion);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Quaternion other) {
+    public bool Equals(MQuaternion other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -524,7 +524,7 @@ namespace Game {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Quaternion other) {
+    public void MergeFrom(MQuaternion other) {
       if (other == null) {
         return;
       }
@@ -662,10 +662,10 @@ namespace Game {
 
     /// <summary>Field number for the "cameraForwardDirection" field.</summary>
     public const int CameraForwardDirectionFieldNumber = 1;
-    private global::Game.Vector cameraForwardDirection_;
+    private global::Game.MVector cameraForwardDirection_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Game.Vector CameraForwardDirection {
+    public global::Game.MVector CameraForwardDirection {
       get { return cameraForwardDirection_; }
       set {
         cameraForwardDirection_ = value;
@@ -674,10 +674,10 @@ namespace Game {
 
     /// <summary>Field number for the "targetDirection" field.</summary>
     public const int TargetDirectionFieldNumber = 2;
-    private global::Game.Vector targetDirection_;
+    private global::Game.MVector targetDirection_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Game.Vector TargetDirection {
+    public global::Game.MVector TargetDirection {
       get { return targetDirection_; }
       set {
         targetDirection_ = value;
@@ -686,10 +686,10 @@ namespace Game {
 
     /// <summary>Field number for the "movingDirection" field.</summary>
     public const int MovingDirectionFieldNumber = 3;
-    private global::Game.Vector movingDirection_;
+    private global::Game.MVector movingDirection_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Game.Vector MovingDirection {
+    public global::Game.MVector MovingDirection {
       get { return movingDirection_; }
       set {
         movingDirection_ = value;
@@ -698,10 +698,10 @@ namespace Game {
 
     /// <summary>Field number for the "forwardDirection" field.</summary>
     public const int ForwardDirectionFieldNumber = 4;
-    private global::Game.Vector forwardDirection_;
+    private global::Game.MVector forwardDirection_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Game.Vector ForwardDirection {
+    public global::Game.MVector ForwardDirection {
       get { return forwardDirection_; }
       set {
         forwardDirection_ = value;
@@ -710,10 +710,10 @@ namespace Game {
 
     /// <summary>Field number for the "aimRotation" field.</summary>
     public const int AimRotationFieldNumber = 5;
-    private global::Game.Quaternion aimRotation_;
+    private global::Game.MQuaternion aimRotation_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Game.Quaternion AimRotation {
+    public global::Game.MQuaternion AimRotation {
       get { return aimRotation_; }
       set {
         aimRotation_ = value;
@@ -934,31 +934,31 @@ namespace Game {
       }
       if (other.cameraForwardDirection_ != null) {
         if (cameraForwardDirection_ == null) {
-          CameraForwardDirection = new global::Game.Vector();
+          CameraForwardDirection = new global::Game.MVector();
         }
         CameraForwardDirection.MergeFrom(other.CameraForwardDirection);
       }
       if (other.targetDirection_ != null) {
         if (targetDirection_ == null) {
-          TargetDirection = new global::Game.Vector();
+          TargetDirection = new global::Game.MVector();
         }
         TargetDirection.MergeFrom(other.TargetDirection);
       }
       if (other.movingDirection_ != null) {
         if (movingDirection_ == null) {
-          MovingDirection = new global::Game.Vector();
+          MovingDirection = new global::Game.MVector();
         }
         MovingDirection.MergeFrom(other.MovingDirection);
       }
       if (other.forwardDirection_ != null) {
         if (forwardDirection_ == null) {
-          ForwardDirection = new global::Game.Vector();
+          ForwardDirection = new global::Game.MVector();
         }
         ForwardDirection.MergeFrom(other.ForwardDirection);
       }
       if (other.aimRotation_ != null) {
         if (aimRotation_ == null) {
-          AimRotation = new global::Game.Quaternion();
+          AimRotation = new global::Game.MQuaternion();
         }
         AimRotation.MergeFrom(other.AimRotation);
       }
@@ -988,35 +988,35 @@ namespace Game {
             break;
           case 10: {
             if (cameraForwardDirection_ == null) {
-              CameraForwardDirection = new global::Game.Vector();
+              CameraForwardDirection = new global::Game.MVector();
             }
             input.ReadMessage(CameraForwardDirection);
             break;
           }
           case 18: {
             if (targetDirection_ == null) {
-              TargetDirection = new global::Game.Vector();
+              TargetDirection = new global::Game.MVector();
             }
             input.ReadMessage(TargetDirection);
             break;
           }
           case 26: {
             if (movingDirection_ == null) {
-              MovingDirection = new global::Game.Vector();
+              MovingDirection = new global::Game.MVector();
             }
             input.ReadMessage(MovingDirection);
             break;
           }
           case 34: {
             if (forwardDirection_ == null) {
-              ForwardDirection = new global::Game.Vector();
+              ForwardDirection = new global::Game.MVector();
             }
             input.ReadMessage(ForwardDirection);
             break;
           }
           case 42: {
             if (aimRotation_ == null) {
-              AimRotation = new global::Game.Quaternion();
+              AimRotation = new global::Game.MQuaternion();
             }
             input.ReadMessage(AimRotation);
             break;
@@ -1050,35 +1050,35 @@ namespace Game {
             break;
           case 10: {
             if (cameraForwardDirection_ == null) {
-              CameraForwardDirection = new global::Game.Vector();
+              CameraForwardDirection = new global::Game.MVector();
             }
             input.ReadMessage(CameraForwardDirection);
             break;
           }
           case 18: {
             if (targetDirection_ == null) {
-              TargetDirection = new global::Game.Vector();
+              TargetDirection = new global::Game.MVector();
             }
             input.ReadMessage(TargetDirection);
             break;
           }
           case 26: {
             if (movingDirection_ == null) {
-              MovingDirection = new global::Game.Vector();
+              MovingDirection = new global::Game.MVector();
             }
             input.ReadMessage(MovingDirection);
             break;
           }
           case 34: {
             if (forwardDirection_ == null) {
-              ForwardDirection = new global::Game.Vector();
+              ForwardDirection = new global::Game.MVector();
             }
             input.ReadMessage(ForwardDirection);
             break;
           }
           case 42: {
             if (aimRotation_ == null) {
-              AimRotation = new global::Game.Quaternion();
+              AimRotation = new global::Game.MQuaternion();
             }
             input.ReadMessage(AimRotation);
             break;
