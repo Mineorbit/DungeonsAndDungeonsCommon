@@ -17,11 +17,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SetupAudioProfiles()
         {
+            
             GameConsole.Log($"Setting up Audio Sources for {this}");
             var j = 0;
             currentPlay = new int[audioProfiles.Length];
             foreach (var ap in audioProfiles)
             {
+                if(ap != null)
+                {
                 GameConsole.Log(ap.ToString());
                 audioSources[j] = new AudioSource[ap.audioClip.Length];
                 var i = 0;
@@ -38,6 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
                 j++;
+                }
             }
         }
 
