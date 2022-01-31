@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,7 +27,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-	public float jumpingSpeed = 1.75f;
 
         //Needs to be refined
 
@@ -144,17 +144,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void OnJump(InputAction.CallbackContext context)
-        {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
-            {
-                if (((Player) entity).isGrounded)
-                {
-                        player.jumping = true;
-                        speedY = jumpingSpeed;
-                }
-            }
-        }
 
         public void OnSwapLeft(InputAction.CallbackContext context)
         {
@@ -188,8 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (((Player) entity).isGrounded)
                 {
-                    player.jumping = true;
-                    speedY = jumpingSpeed;
+                    player.Invoke(player.Jump,true,true);
                 }
             }
         }

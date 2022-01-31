@@ -176,6 +176,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool movementInputOnFrame;
         public bool doInput;
         public bool takeInput;
+
+        
+        
+        
+        public float jumpingSpeed = 1.75f;
+        public void Jump()
+        {
+            jumping = true;
+            speedY = jumpingSpeed;
+        }
         
         public void MoveFixed()
         {
