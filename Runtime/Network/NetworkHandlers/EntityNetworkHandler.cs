@@ -212,7 +212,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
-                    GameConsole.Log($"Locomotion: {entityLocomotion}");
+                    GameConsole.Log($"{this} Locomotion: {entityLocomotion}");
                     
                         lastReceivedLocomotion = entityLocomotion.LocomotionId;
                         MainCaller.Do(() =>
