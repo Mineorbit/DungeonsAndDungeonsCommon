@@ -93,7 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(NetworkManager.instance != null)
             {
                     targetPosition = receivedPosition;
-                    if (0 != NetworkManager.instance.localId && interpolatePosition)
+                    if (-1 != NetworkManager.instance.localId && interpolatePosition)
                     {
                         transform.position = (transform.position + targetPosition) / 2;
                         transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
@@ -110,7 +110,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE
         private void FixedUpdate()
         {
-            UpdateLocomotion();
+                UpdateLocomotion();
         }
 
         public virtual void RequestCreation()
