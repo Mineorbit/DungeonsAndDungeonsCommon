@@ -183,10 +183,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float jumpingSpeed = 1.75f;
         public void Jump()
         {
-            GameConsole.Log("TEST");
             if (isGrounded)
             { 
-                GameConsole.Log("JUMP PLAYER");
                 jumping = true;
                 speedY = jumpingSpeed;
             }

@@ -115,6 +115,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             player.playerName = name;
             player.localId = freeLocalId;
             players[freeLocalId] = player;
+            ((PlayerNetworkHandler) player.levelObjectNetworkHandler).owner = freeLocalId;
             playerControllers[freeLocalId] = playerController;
         }
 

@@ -13,8 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            
-            
+            GetObservedPlayer().controller.enabled = NetworkManager.instance.localId != -1;
         }
 
 
@@ -23,8 +22,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (Player) observed;
         }
         
+        
 
-       
+        public override bool SendNecessary()
+        {
+            var pos = observed.transform.position;
+            var rot = observed.transform.rotation;
+            var aim = ((Entity) observed).aimRotation;
+            var sendDist = (pos - lastSentPosition).magnitude;
+            var sendRotAngle = Quaternion.Angle(rot, lastSentRotation);
+            var sendAimRotAngle = Quaternion.Angle(aim, lastSentAimRotation);
+            return sendDist > sendDistance || sendRotAngle > sendAngle || sendAimRotAngle > sendAngle;
+        }
+
         
 
 
