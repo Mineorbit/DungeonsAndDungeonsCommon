@@ -26,11 +26,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void Setup()
         {
-            if(observed != null && ((NetworkLevelObject)observed).identified)
+            if(observed != null)
                 if(!isSetup)
                 {   
-                    // isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
-                    GameConsole.Log($"Setting up PlayerHandler with {((NetworkLevelObject)observed).Identity} and {GetObservedPlayer().localId} Is Owner: {IsOwner()}");
                     owner = GetObservedPlayer().localId;
                     GetObservedPlayer().controller.enabled = NetworkManager.instance.localId != -1;
                     if (NetworkManager.instance.localId == -1 && GetObservedPlayer().controller != null)
