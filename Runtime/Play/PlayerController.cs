@@ -146,10 +146,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
-                if (((Player) entity).isGrounded)
-                { 
+                
+                    GameConsole.Log("JUMP");
                     player.Invoke(player.Jump,false,true);
-                }
+                    
             }
         }
 
