@@ -67,6 +67,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b62a891c3ceae524a96d3debf38beaa8, type: 2}
   - {fileID: 11400000, guid: bfc86f0593ed83d468c0b59296ce86c2, type: 2}
   - {fileID: 11400000, guid: 2e08dd623cd199742a450cf422ec11b6, type: 2}
+  - {fileID: 11400000, guid: ca311825de4cc8a479dd948bf67759fe, type: 2}
   localId: 0
   ready: 0
   useUDP: 0
