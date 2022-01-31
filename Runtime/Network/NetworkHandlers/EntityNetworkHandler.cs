@@ -341,7 +341,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual bool WantsToTransmit()
         {
-            return (isOnServer || owner == NetworkManager.instance.localId);
+            return ( -1 == NetworkManager.instance.localId);
         }
 
         public float sendAngle = 0.05f;
