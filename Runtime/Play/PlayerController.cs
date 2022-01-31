@@ -115,7 +115,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 player.Invoke(player.UseLeft, false,true);
-                ((Player) entity).aimMode = true;
             }
         }
         
@@ -124,7 +123,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 player.Invoke(player.UseRight, false,true);
-                ((Player) entity).aimMode = false;
             }
         }
         
@@ -144,6 +142,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
+            {
+                if (((Player) entity).isGrounded)
+                { 
+                    player.Invoke(player.Jump,false);
+                }
+            }
+        }
 
         public void OnSwapLeft(InputAction.CallbackContext context)
         {
@@ -171,17 +179,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public void OnJump()
-        {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
-            {
-                if (((Player) entity).isGrounded)
-                {
-                    player.Invoke(player.Jump,false,true);
-                }
-            }
-        }
-        
+       
         public Vector2 inputDirection;
         public void OnMovementInput(InputAction.CallbackContext context)
         {
