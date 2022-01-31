@@ -98,12 +98,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         transform.position = (transform.position + targetPosition) / 2;
                         transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
                     }
-                    else
-                    {
-                        receivedPosition = transform.position;
-                        targetPosition = transform.position;
-                        targetRotation = transform.rotation.eulerAngles;
-                    }
             }
         }
 
