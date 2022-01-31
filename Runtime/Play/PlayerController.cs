@@ -114,7 +114,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
-                player.Invoke(player.UseLeft, true,true);
+                player.Invoke(player.UseLeft, false,true);
                 ((Player) entity).aimMode = true;
             }
         }
@@ -123,7 +123,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
-                player.Invoke(player.UseRight, true,true);
+                player.Invoke(player.UseRight, false,true);
                 ((Player) entity).aimMode = false;
             }
         }
@@ -132,7 +132,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && player.usingLeftItem)
             {
-                player.Invoke(player.StopUseLeft, true);
+                player.Invoke(player.StopUseLeft, false);
             }
         }
                 
@@ -140,7 +140,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && player.usingRightItem)
             { 
-                player.Invoke(player.StopUseRight, true);
+                player.Invoke(player.StopUseRight, false);
             }
         }
 
@@ -150,7 +150,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 GameConsole.Log("Swap Left");
-                player.Invoke(player.SwapLeft,true);
+                player.Invoke(player.SwapLeft,false);
             }
         }
         
@@ -159,7 +159,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 GameConsole.Log("Swap Right");
-                player.Invoke(player.SwapRight,true);
+                player.Invoke(player.SwapRight,false);
             }
         }
 
@@ -167,7 +167,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
-                player.Invoke(player.Interact, true, true);
+                player.Invoke(player.Interact, false, true);
             }
         }
 
@@ -177,7 +177,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (((Player) entity).isGrounded)
                 {
-                    player.Invoke(player.Jump,true,true);
+                    player.Invoke(player.Jump,false,true);
                 }
             }
         }
