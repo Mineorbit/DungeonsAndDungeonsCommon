@@ -379,11 +379,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public override bool AcceptAction(Packet p)
         {
-            if (NetworkManager.instance.localId == -1 && p.Sender != owner) return false;
-            else
+            if (NetworkManager.instance.localId == -1 && p.Sender != owner)
             {
-                return true;
+                return false;
             }
+            return true;
         }
         
         public Quaternion lastSentAimRotation;

@@ -294,6 +294,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float heightRay;
         private float clip = 0.005f;
 
+        public float speedY = 0;
+        public float gravity = 1f;
+
         public (bool,RaycastHit) GroundCheck()
         {
             var mask = 1 << 10 | 1 << 11;

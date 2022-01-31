@@ -55,6 +55,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Awake()
         {
             colorChanger = gameObject.GetComponent<ColorChanger>();
+            climbableHitbox.Attach("Climbable");
+            // POSSIBLE PROBLEM WITH INTERSECTIONS
+            climbableHitbox.enterEvent.AddListener((x) =>
+            {
+                inClimbing = true;
+            });
+            climbableHitbox.exitEvent.AddListener((x) =>
+            {
+                if(climbableHitbox.insideCounter == 0)
+                    inClimbing = false;
+            });
         }
 
 
@@ -89,7 +100,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     forwardDir.y = 0;
                     forwardDir.Normalize();
                     float angle = Vector3.Angle(forwardDir, dir);
-                    GameConsole.Log($"WE GOT ANGLE {angle}");
                     if (angle < shield.blockAngle)
                     {
                         return true;
@@ -145,18 +155,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         
+        public Hitbox climbableHitbox;
+
+        public bool inClimbing;
+          
+        public float climbDampening = 0.5f;
+
+        public float climbingSpeed = 1f;
+
+        private float Speed = 1;
+        
+        
+        
+        public Vector3 targetDirection;
+        public Vector3 movingDirection;
+        public Vector3 forwardDirection;
+        public Vector3 cameraForwardDirection;
         public void MoveFixed()
         {
-            
             if (!isGrounded)
             {
-                if(GetController().inClimbing)
+                if(inClimbing)
                 {
-                    GetController().speedY = -GetController().gravity * GetController().climbDampening;
+                    speedY = -gravity * climbDampening;
                 }
                 else
                 {
-                    GetController().speedY -= GetController().gravity * Time.deltaTime;
+                    speedY -= gravity * Time.deltaTime;
                 }
             }
             
@@ -166,47 +191,47 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 
                 // change to angle towards ladder later on
-                if (GetController().targetDirection.sqrMagnitude >= 0.01f && GetController().inClimbing)
+                if (targetDirection.sqrMagnitude >= 0.01f && inClimbing)
                 {
-                    GetController().speedY = GetController().climbingSpeed;
+                    speedY = climbingSpeed;
                 }
                 
                 
-                GetController().targetDirection.y = GetController().speedY;
-                if (GetController().targetDirection.sqrMagnitude >= 0.01f)
-                    GetController().movingDirection = GetController().targetDirection;
+                targetDirection.y = speedY;
+                if (targetDirection.sqrMagnitude >= 0.01f)
+                    movingDirection = targetDirection;
                 else
-                    GetController().movingDirection = new Vector3(0, 0, 0);
+                    movingDirection = new Vector3(0, 0, 0);
                 
                 
                 
-                GetController().controller.Move(GetController().targetDirection * GetController().Speed * Time.deltaTime);
+                GetController().controller.Move(targetDirection * Speed * Time.deltaTime);
 
                 if ((!lastGrounded && isGrounded))
                 {
-                    GetController().speedY = 0;
+                    speedY = 0;
                     jumping = false;
                     //Debug.Break();
                 }
                 
-                if ( speed > 0) GetController().forwardDirection = (GetController().forwardDirection + GetController().movingDirection) / 2;
+                if ( speed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
                 
                 
                 
                 //  ROTATION FOR AIMING BOW MAGIC NUMBER YET TO BE REDISTRIBUTED
                 if (aimMode && aiming)
                 {
-                    Vector3 lookDir = -GetController().cam.forward;
+                    Vector3 lookDir = cameraForwardDirection;
                     lookDir.y = 0;
                     transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
                 }else if (IsUsingShield())
                 {
-                    Vector3 lookDir = -GetController().cam.forward;
+                    Vector3 lookDir = cameraForwardDirection;
                     lookDir.y = 0;
                     transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
-                }else if (GetController().doInput && GetController().takeInput && GetController().movementInputOnFrame)
+                }else
                 {
-                    var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(GetController().forwardDirection.x, GetController().forwardDirection.z);
+                    var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
                     transform.eulerAngles = new Vector3(0, angleY, 0);
                 }
             }

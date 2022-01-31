@@ -9,8 +9,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public PlayerBaseAnimator playerBaseAnimator;
         public Transform cam;
         public float Speed = 3f;
-        public Vector3 targetDirection;
-        public Vector3 movingDirection;
         public float speedY;
 
 
@@ -32,7 +30,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         //Needs to be refined
 
-        public Vector3 forwardDirection;
 
 
         public Vector3 GetTargetPoint()
@@ -58,9 +55,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return target;
         }
 
-        public Hitbox climbableHitbox;
-
-        public bool inClimbing;
         
         //public static PlayerController currentPlayer;
         private Player player;
@@ -77,17 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             controller = transform.GetComponent<CharacterController>();
-            climbableHitbox.Attach("Climbable");
-            // POSSIBLE PROBLEM WITH INTERSECTIONS
-            climbableHitbox.enterEvent.AddListener((x) =>
-            {
-                inClimbing = true;
-            });
-            climbableHitbox.exitEvent.AddListener((x) =>
-            {
-                if(climbableHitbox.insideCounter == 0)
-                    inClimbing = false;
-            });
+            
         }
 
         public override void Start()
@@ -107,6 +91,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            InputUpdate();
         }
 
         public override void Deactivate()
@@ -217,18 +202,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 inputDirection = context.ReadValue<Vector2>();
             }
         }
-        
-        public float climbDampening = 0.5f;
 
-        public float climbingSpeed = 1f;
+        public Vector3 cameraForwardDirection;
+        public Vector3 targetDirection;
+        public Vector3 movingDirection;
+        public Vector3 forwardDirection;
+        public Quaternion aimRotation;
+        
         
         public void Move()
         {   
             if (doInput && takeInput)
             {
                 
+                cameraForwardDirection = -cam.forward;
                 
-                ((Player) entity).aimRotation = GetAimDirection();
+                aimRotation = GetAimDirection();
                 
                 if(!player.usingLeftItem && !player.usingRightItem)
                 {
@@ -242,41 +231,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     targetDirection = Vector3.zero;
                 }
-                /*
-                
-                
-                // Pickup closest item
-                if (Input.GetKeyDown(KeyCode.G)) player.Invoke(player.UpdateEquipItem,false,true);
-
-                if (Input.GetKeyDown(KeyCode.G))
-                {
-                    // INVOKE
-                    // INTERACT WITH ENVIRONMENT (READ TEXT, PRESS BUTTON etc)
-                }
-
-                if (Input.GetKeyDown(KeyCode.Alpha1))
-                {
-                    player.Invoke(player.SwapLeft,true);
-                }
-                
-                if (Input.GetKeyDown(KeyCode.Alpha2))
-                {
-                    player.Invoke(player.SwapRight,true);
-                }
-                
-                if (Input.GetMouseButtonUp(0)) player.Invoke(player.StopUseLeft, true);
-                else
-                if (Input.GetMouseButtonUp(1)) player.Invoke(player.StopUseRight, true);
-                else 
-                if (Input.GetMouseButtonDown(1))
-                    //INVOKE
-                    player.Invoke(player.UseRight, true,true);
-                else
-                if (Input.GetMouseButtonDown(0))
-                    //INVOKE
-                    player.Invoke(player.UseLeft, true,true);
-
-                */
                 
             }
 
@@ -289,6 +243,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                       locallyControllable; //&& !player.lockNetUpdate;
                       
             movementInputOnFrame = (inputDirection.magnitude > eps);
+        }
+
+        private void InputUpdate()
+        {
+            player.movingDirection = movingDirection;
+            player.targetDirection = targetDirection;
+            player.forwardDirection = forwardDirection;
+            player.aimRotation = aimRotation;
+            player.cameraForwardDirection = cameraForwardDirection;
         }
     }
 }
