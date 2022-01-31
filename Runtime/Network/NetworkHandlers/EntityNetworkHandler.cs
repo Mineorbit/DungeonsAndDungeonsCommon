@@ -81,43 +81,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 RequestRemoval();
         }
 
-        public int locomotionBlocks = 0;
-        
-        void ResolveLocomotionBlock()
-        {
-            targetPosition = transform.position;
-            receivedPosition = transform.position;
-            GetObservedEntity().ApplyMovement = IsOwner();
-            if(GetObservedEntity().controller != null)
-                GetObservedEntity().controller.enabled = !isOnServer;
-            GetObservedEntity().setMovementStatus(true);
-            GameConsole.Log("Resolve Locomotion Block");
-            locomotionBlocks--;
-            //Debug.Break();
-        }
+      
 
-        public Vector3 blockPosition;
-        
-        void SetupLocomotionBlock(Vector3 bPosition)
-        {
-            locomotionBlocks++;
-            blockPosition = bPosition;
-            targetPosition = bPosition;
-            receivedPosition = bPosition;
-            GetObservedEntity().ApplyMovement = false;
-            if(GetObservedEntity().controller != null)
-                GetObservedEntity().controller.enabled = false;
-            GetObservedEntity().setMovementStatus(false);
-            GameConsole.Log($"Set Locomotion Block for {this}");
-            //Debug.Break();
-        }
-
-        
-        bool LocomotionIsBlocked()
-        {
-            return (locomotionBlocks>0);
-        }
-        
         
         public readonly float tpDist = 0.075f;
 
@@ -127,20 +92,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(NetworkManager.instance != null)
             {
-                if (LocomotionIsBlocked())
-                {
-                targetPosition = blockPosition;
-                transform.position = blockPosition;
-                
-                /*
-                if ((targetPosition - receivedPosition).magnitude < tpDist)
-                {
-                    ResolveLocomotionBlock();
-                }
-                */
-                }
-                else
-                {
                     targetPosition = receivedPosition;
                     if (owner != NetworkManager.instance.localId && interpolatePosition)
                     {
@@ -153,15 +104,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         targetPosition = transform.position;
                         targetRotation = transform.rotation.eulerAngles;
                     }
-                }
             }
-            
         }
 
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE
         private void FixedUpdate()
         {
-            //isOwner = owner == NetworkManager.instance.localId;
             UpdateLocomotion();
         }
 
@@ -284,7 +232,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (value.Content.TryUnpack(out entityTeleportComplete))
                 {
                     lastTeleportLocomotionID = entityTeleportComplete.LastLocomotionId;
-                    ResolveLocomotionBlock();
                 }
             });
         }
@@ -297,7 +244,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             // THIS IS A TEMP
                 EntityLocomotion entityLocomotion;
-                if (p.Content.TryUnpack(out entityLocomotion) && !LocomotionIsBlocked())
+                if (p.Content.TryUnpack(out entityLocomotion))
                 {
                     if(entityLocomotion.LocomotionId>lastReceivedLocomotion && entityLocomotion.LocomotionId >lastTeleportLocomotionID)
                     {
@@ -354,8 +301,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z
             };
             
-            SetupLocomotionBlock(teleportPosition);
-            
             if (GetObservedEntity().loadTarget != null)
                 if(LevelManager.currentLevel != null)
                 {
@@ -386,11 +331,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (GetObservedEntity().loadTarget != null)
                         teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
 
-                SetupLocomotionBlock(teleportPosition);
                 GetObservedEntity().loadTarget.WaitForChunkLoaded(teleportPosition, () =>
                 {
                     GetObservedEntity().Teleport(teleportPosition);
-                    ResolveLocomotionBlock();
                 });
                 CreateTeleportationCompletion();
             }
@@ -447,7 +390,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private ulong locomotionID;
         private void UpdateLocomotion()
         {
-            if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && !LocomotionIsBlocked() && SendNecessary())
+            if (transmitPosition&&((NetworkLevelObject)observed).identified && WantsToTransmit() && SendNecessary())
             {
                 var pos = observed.transform.position;
                 var r = observed.transform.rotation;
