@@ -70,6 +70,41 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return new Quaternion(q.X, q.Y, q.Z, q.W);
         }
+        
+        public static MVector fromVector3(Vector3 v)
+        {
+            MVector mVector = new MVector();
+            mVector.X = v.x;
+            mVector.Y = v.y;
+            mVector.Z = v.z;
+            return mVector;
+        }
+
+        public static MQuaternion fromQuaternion(Quaternion q)
+        {
+            MQuaternion mQuaternion = new MQuaternion();
+            mQuaternion.X = q.x;
+            mQuaternion.Y = q.y;
+            mQuaternion.Z = q.z;
+            mQuaternion.W = q.w;
+            return mQuaternion;
+        }
+
+        public void UpdateInputData()
+        {
+            PlayerController c = (PlayerController) GetObservedPlayer().controller;
+            PlayerInputUpdate playerInputUpdate = new PlayerInputUpdate();
+            playerInputUpdate.MovingDirection = fromVector3(c.movingDirection);
+            playerInputUpdate.TargetDirection = fromVector3(c.targetDirection);
+            playerInputUpdate.ForwardDirection = fromVector3(c.forwardDirection);
+            playerInputUpdate.AimRotation = fromQuaternion(c.aimRotation);
+            playerInputUpdate.CameraForwardDirection = fromVector3(c.cameraForwardDirection);
+            playerInputUpdate.MovementInputOnFrame = c.movementInputOnFrame;
+            playerInputUpdate.DoInput = c.doInput;
+            playerInputUpdate.TakeInput = c.takeInput;
+            Marshall(((NetworkLevelObject) observed).Identity,playerInputUpdate, TCP: false,true);
+        }
+        
         [PacketBinding.Binding]
         public void PlayerInputProcessing(Packet p)
         {
