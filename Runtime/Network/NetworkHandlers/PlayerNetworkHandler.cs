@@ -215,7 +215,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Update()
         {
             base.Update();
-            Setup();
+            //Setup();
         }
 
         public static void OnCreationRequest(int identity, Vector3 position, Quaternion rotation, int localId,
