@@ -14,6 +14,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Awake();
             observed = GetComponent<Player>();
             Setup();
+            
+            if (NetworkManager.instance.localId == -1)
+                Destroy(GetObservedPlayer().controller);
         }
 
 
@@ -225,8 +228,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 h.enabled = true;
                 h.Setup();
 
-                if (NetworkManager.instance.localId == -1)
-                    Destroy(h.GetObservedPlayer().controller);
             });
         }
     }
