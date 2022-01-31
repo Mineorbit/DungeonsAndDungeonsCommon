@@ -1,0 +1,10 @@
+﻿syntax = "proto3";
+
+package Game;
+
+
+message PlayerInputUpdate {
+  float moveX = 1;
+  float moveY = 2;
+  float
+}
