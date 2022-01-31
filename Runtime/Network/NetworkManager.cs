@@ -67,7 +67,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void FixedUpdate()
         {
-            foreach (var c in allClients) c.FixedUpdate();
+            foreach (var c in allClients)
+            {
+                if(c != null) c.FixedUpdate();
+            }
         }
 
         //Factor this out into GameLogic
