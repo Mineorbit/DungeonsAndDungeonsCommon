@@ -60,7 +60,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             GetObservedEntity().ApplyMovement = IsOwner();
 
-            GetObservedEntity().onTeleportEvent.AddListener(Teleport);
             GetObservedEntity().onSpawnEvent.AddListener(x => {GameConsole.Log("Spawn State Update"); UpdateState(); });
             GetObservedEntity().onHitEvent.AddListener(x => {GameConsole.Log("Hit State Update"); UpdateState(); });
             GetObservedEntity().onDespawnEvent.AddListener(() => {});
@@ -93,7 +92,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(NetworkManager.instance != null)
             {
                     targetPosition = receivedPosition;
-                    if (-1 != NetworkManager.instance.localId && interpolatePosition)
+                    if (-1 != NetworkManager.instance.localId)
                     {
                         transform.position = (transform.position + targetPosition) / 2;
                         transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
@@ -206,29 +205,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        public void CreateTeleportationCompletion()
-        {
-            var teleportationCompletion = new EntityTeleportComplete
-            {
-                LastLocomotionId = locomotionID
-            };
-            Marshall(((NetworkLevelObject) observed).Identity,teleportationCompletion);
-        }
-
-        private ulong lastTeleportLocomotionID;
-        
-        [PacketBinding.Binding]
-        public void EntityTeleportComplete(Packet value)
-        {
-            MainCaller.Do(() =>
-            {
-                EntityTeleportComplete entityTeleportComplete;
-                if (value.Content.TryUnpack(out entityTeleportComplete))
-                {
-                    lastTeleportLocomotionID = entityTeleportComplete.LastLocomotionId;
-                }
-            });
-        }
+       
         
         public Vector3 receivedPosition;
 
@@ -240,7 +217,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
-                    if(entityLocomotion.LocomotionId>lastReceivedLocomotion && entityLocomotion.LocomotionId >lastTeleportLocomotionID)
+                    if(entityLocomotion.LocomotionId>lastReceivedLocomotion)
                     {
                         lastReceivedLocomotion = entityLocomotion.LocomotionId;
                         MainCaller.Do(() =>
@@ -279,57 +256,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GetObservedEntity().points = entityState.Points;
                 if (observed.gameObject.activeSelf != entityState.Active)
                     observed.gameObject.SetActive(entityState.Active);
-            }
-        }
-
-        
-        public void Teleport(Vector3 position)
-        {
-            if(isOnServer)
-            {
-                teleportPosition = position;
-            var entityTeleport = new EntityTeleport
-            {
-                X = position.x,
-                Y = position.y,
-                Z = position.z
-            };
-            
-            if (GetObservedEntity().loadTarget != null)
-                if(LevelManager.currentLevel != null)
-                {
-                    GetObservedEntity().loadTarget.WaitForChunkLoaded(teleportPosition, () =>
-                {
-                    GameConsole.Log($"Sending Teleport: {entityTeleport}");
-                    Marshall(((NetworkLevelObject) observed).Identity,entityTeleport);
-                });
-                }
-                else
-                {
-                    GameConsole.Log($"Sending Teleport: {entityTeleport}");
-                    Marshall(((NetworkLevelObject) observed).Identity,entityTeleport);
-                }
-            }
-        }
-
-
-        
-        [PacketBinding.Binding]
-        public void OnEntityTeleport(Packet p)
-        {
-            if(!isOnServer)
-            { 
-                EntityTeleport entityTeleport;
-
-                if (p.Content.TryUnpack(out entityTeleport))
-                    if (GetObservedEntity().loadTarget != null)
-                        teleportPosition = new Vector3(entityTeleport.X, entityTeleport.Y, entityTeleport.Z);
-
-                GetObservedEntity().loadTarget.WaitForChunkLoaded(teleportPosition, () =>
-                {
-                    GetObservedEntity().Teleport(teleportPosition);
-                });
-                CreateTeleportationCompletion();
             }
         }
 
