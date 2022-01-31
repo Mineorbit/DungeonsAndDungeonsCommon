@@ -233,7 +233,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void InputUpdate()
         {
-            GameConsole.Log($"InstantiateType: {Level.instantiateType}");
             if(Level.instantiateType == Level.InstantiateType.Test)
             {
                 player.movingDirection = movingDirection;

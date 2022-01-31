@@ -185,9 +185,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (isGrounded)
             { 
-            GameConsole.Log("JUMP PLAYER");
-            jumping = true;
-            speedY = jumpingSpeed;
+                GameConsole.Log("JUMP PLAYER");
+                jumping = true;
+                speedY = jumpingSpeed;
             }
         }
         
