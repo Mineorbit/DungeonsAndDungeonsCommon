@@ -13,7 +13,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            Setup();
             
             
         }
@@ -24,39 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (Player) observed;
         }
         
-        public virtual void Setup()
-        {
-            if(observed != null)
-                if(!isSetup)
-                {   
-                    owner = GetObservedPlayer().localId;
-                    GetObservedPlayer().controller.enabled = NetworkManager.instance.localId != -1;
-                    if (NetworkManager.instance.localId == -1 && GetObservedPlayer().controller != null)
-                    {
-                        Destroy(GetObservedPlayer().controller);
-                        
-                    }
 
-                    if (NetworkManager.instance.localId != -1)
-                    {
-                        Destroy(GetComponent<CharacterController>());
-                    }
-                    
-                    isSetup = true;
-                }
-        }
-
-        public override bool SendNecessary()
-        {
-            var pos = observed.transform.position;
-            var rot = observed.transform.rotation;
-            var aim = ((Entity) observed).aimRotation;
-            var sendDist = (pos - lastSentPosition).magnitude;
-            var sendRotAngle = Quaternion.Angle(rot, lastSentRotation);
-            var sendAimRotAngle = Quaternion.Angle(aim, lastSentAimRotation);
-            return sendDist > sendDistance || sendRotAngle > sendAngle || sendAimRotAngle > sendAngle;
-        }
-
+       
         
 
 
@@ -229,7 +197,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerNetworkHandler h = player.GetComponent<PlayerNetworkHandler>();
                 player.GetComponent<Player>().enabled = (NetworkManager.instance.localId == -1);
                 h.enabled = true;
-                h.Setup();
                 h.owner = localId;
 
             });
