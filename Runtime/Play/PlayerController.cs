@@ -148,7 +148,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (((Player) entity).isGrounded)
                 { 
-                    player.Invoke(player.Jump,false);
+                    player.Invoke(player.Jump,false,true);
                 }
             }
         }
