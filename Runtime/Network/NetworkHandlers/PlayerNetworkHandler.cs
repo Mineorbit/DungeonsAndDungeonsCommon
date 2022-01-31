@@ -15,8 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             observed = GetComponent<Player>();
             Setup();
             
-            if (NetworkManager.instance.localId == -1)
-                Destroy(GetObservedPlayer().controller);
+            
         }
 
 
@@ -33,11 +32,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     // isOwner = !isOnServer && GetObservedPlayer().localId == NetworkManager.instance.localId;
                     GameConsole.Log($"Setting up PlayerHandler with {((NetworkLevelObject)observed).Identity} and {GetObservedPlayer().localId} Is Owner: {IsOwner()}");
                     owner = GetObservedPlayer().localId;
-                    GetObservedPlayer().controller.enabled = !isOnServer && IsOwner();
-                    if (isOnServer)
+
+                    if (NetworkManager.instance.localId == -1 && GetObservedPlayer().controller != null)
                     {
-                        GetComponent<CharacterController>().enabled = false;
+                        Destroy(GetObservedPlayer().controller);
+                        Destroy(GetComponent<CharacterController>());
                     }
+                    
                     
                     isSetup = true;
                 }
