@@ -36,9 +36,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (NetworkManager.instance.localId == -1 && GetObservedPlayer().controller != null)
                     {
                         Destroy(GetObservedPlayer().controller);
+                        
+                    }
+
+                    if (NetworkManager.instance.localId != -1)
+                    {
                         Destroy(GetComponent<CharacterController>());
                     }
-                    
                     
                     isSetup = true;
                 }
