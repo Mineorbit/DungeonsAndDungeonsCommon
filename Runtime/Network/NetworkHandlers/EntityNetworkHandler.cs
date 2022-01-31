@@ -10,7 +10,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class EntityNetworkHandler : LevelObjectNetworkHandler
     {
     
-        public bool isSetup = false;
         public int owner = -1;
         
         public Vector3 targetPosition;
@@ -56,10 +55,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 			// Request the creation of this entity on the client side
             if (isOnServer) RequestCreation();
-            
-            
-            GetObservedEntity().ApplyMovement = IsOwner();
-
             GetObservedEntity().onSpawnEvent.AddListener(x => {GameConsole.Log("Spawn State Update"); UpdateState(); });
             GetObservedEntity().onHitEvent.AddListener(x => {GameConsole.Log("Hit State Update"); UpdateState(); });
             GetObservedEntity().onDespawnEvent.AddListener(() => {});
