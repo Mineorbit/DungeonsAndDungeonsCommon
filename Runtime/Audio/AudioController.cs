@@ -95,7 +95,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void Play(int index)
         {
             prePlay(index);
-            if (!audioSources[index][currentPlay[index]].isPlaying) audioSources[index][currentPlay[index]].Play();
+            if(audioSources[index] != null && audioSources[index][currentPlay[index]] != null)
+                if (!audioSources[index][currentPlay[index]].isPlaying) audioSources[index][currentPlay[index]].Play();
         }
 
         public void PlayNext(int index)
