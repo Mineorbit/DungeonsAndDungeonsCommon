@@ -493,6 +493,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseLeft()
         {
+            
+            aimMode = true;
             var h = GetLeftHandHandle();
             if (h != null) UseHandle(h);
             if (h.slot != null) usingLeftItem = true;
@@ -500,6 +502,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseRight()
         {
+            aimMode = false;
             var h = GetRightHandHandle();
             if (h != null) UseHandle(h);
             if (h.slot != null) usingRightItem = true;
