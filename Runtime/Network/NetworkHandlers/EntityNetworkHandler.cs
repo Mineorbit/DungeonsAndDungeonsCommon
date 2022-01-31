@@ -88,7 +88,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             targetPosition = transform.position;
             receivedPosition = transform.position;
             GetObservedEntity().ApplyMovement = IsOwner();
-            GetObservedEntity().controller.enabled = !isOnServer;
+            if(GetObservedEntity().controller != null)
+                GetObservedEntity().controller.enabled = !isOnServer;
             GetObservedEntity().setMovementStatus(true);
             GameConsole.Log("Resolve Locomotion Block");
             locomotionBlocks--;
@@ -104,7 +105,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             targetPosition = bPosition;
             receivedPosition = bPosition;
             GetObservedEntity().ApplyMovement = false;
-            GetObservedEntity().controller.enabled = false;
+            if(GetObservedEntity().controller != null)
+                GetObservedEntity().controller.enabled = false;
             GetObservedEntity().setMovementStatus(false);
             GameConsole.Log($"Set Locomotion Block for {this}");
             //Debug.Break();
