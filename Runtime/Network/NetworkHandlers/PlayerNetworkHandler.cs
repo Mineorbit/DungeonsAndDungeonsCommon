@@ -221,11 +221,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerManager.playerManager.Add(localId, name, true, id);
                 GameObject player = PlayerManager.playerManager.GetPlayer(localId);
                 PlayerNetworkHandler h = player.GetComponent<PlayerNetworkHandler>();
-                player.GetComponent<Player>().enabled = ( NetworkManager.instance.localId == -1);
+                player.GetComponent<Player>().enabled = (NetworkManager.instance.localId == -1);
                 h.enabled = true;
                 h.Setup();
 
-                if (isOnServer)
+                if (NetworkManager.instance.localId == -1)
                     Destroy(h.GetObservedPlayer().controller);
             });
         }
