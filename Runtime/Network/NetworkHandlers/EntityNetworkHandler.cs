@@ -212,6 +212,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
+                    GameConsole.Log($"Locomotion: {entityLocomotion}");
                     if(entityLocomotion.LocomotionId>lastReceivedLocomotion)
                     {
                         lastReceivedLocomotion = entityLocomotion.LocomotionId;
@@ -265,6 +266,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private int minSend = 8;
         public virtual bool SendNecessary()
         {
+            return true;
             var pos = observed.transform.position;
             var rot = observed.transform.rotation;
             var sendDist = (pos - lastSentPosition).magnitude;
