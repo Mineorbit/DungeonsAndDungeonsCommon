@@ -93,7 +93,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(NetworkManager.instance != null)
             {
                     targetPosition = receivedPosition;
-                    if (owner != NetworkManager.instance.localId && interpolatePosition)
+                    if (0 != NetworkManager.instance.localId && interpolatePosition)
                     {
                         transform.position = (transform.position + targetPosition) / 2;
                         transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);

@@ -233,14 +233,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private void InputUpdate()
         {
-            player.movingDirection = movingDirection;
-            player.targetDirection = targetDirection;
-            player.forwardDirection = forwardDirection;
-            player.aimRotation = aimRotation;
-            player.cameraForwardDirection = cameraForwardDirection;
-            player.movementInputOnFrame = movementInputOnFrame;
-            player.doInput = doInput;
-            player.takeInput = takeInput;
+            if(Level.instantiateType == Level.InstantiateType.Test)
+            {
+                player.movingDirection = movingDirection;
+                player.targetDirection = targetDirection;
+                player.forwardDirection = forwardDirection;
+                player.aimRotation = aimRotation;
+                player.cameraForwardDirection = cameraForwardDirection;
+                player.movementInputOnFrame = movementInputOnFrame;
+                player.doInput = doInput;
+                player.takeInput = takeInput;
+            }
+
+            if (Level.instantiateType == Level.InstantiateType.Online)
+            {
+               ( (PlayerNetworkHandler) player.GetNetworkHandler()).UpdateInputData();
+            }
         }
     }
 }
