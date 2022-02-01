@@ -309,7 +309,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (WantsToTransmit() && SendNecessary())
             {
-                GameConsole.Log($"{this} transmitting");
                 var pos = observed.transform.position;
                 var r = observed.transform.rotation;
                 var rot = observed.transform.rotation.eulerAngles;

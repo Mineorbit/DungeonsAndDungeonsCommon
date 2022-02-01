@@ -314,7 +314,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
                 waitingForUdp.WaitOne();
             byte[] data = null;
-            if ( TCP)
+            if (TCP)
             {
                 int tcpBufferLength = maxPackSize*2;
                 byte[] tcpResult = new byte[tcpBufferLength];
