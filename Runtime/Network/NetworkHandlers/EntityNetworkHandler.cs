@@ -273,7 +273,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 needMinimalSend = true;
                 timeStep = 0;
             }
-            return sendDist > sendDistance || sendRotAngle > sendAngle || needMinimalSend;
+            return sendDist > sendDistance || sendRotAngle > sendAngle;
         }
 
         public override bool CallActionOnOther(bool localCond, bool serverCond)
