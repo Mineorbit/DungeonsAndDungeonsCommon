@@ -78,7 +78,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var packetHandlerString = p.Handler;
             var networkHandlerType = Type.GetType(packetHandlerString);
 
-
             var handlerType = networkHandlerType;
             UnityAction<Packet> handle = null;
             while (!(globalMethodBindings.TryGetValue(new Tuple<Type, Type>(packetType, handlerType), out handle) ||
