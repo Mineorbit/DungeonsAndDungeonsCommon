@@ -67,7 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                                $"Sent Packets: {Client.sentPacketCarriers} \n";
             if(NetworkManager.instance.client != null)
             {
-            appendage += "UDP Queue Length: {NetworkManager.instance.client.packetOutUDPBuffer.Count} \n" +
+                appendage += "UDP Queue Length: {NetworkManager.instance.client.packetOutUDPBuffer.Count} \n" +
                             $"TCP Queue Length: {NetworkManager.instance.client.packetOutTCPBuffer.Count}";
             }
             infoText.text = fps + appendage;

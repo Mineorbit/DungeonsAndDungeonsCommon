@@ -149,13 +149,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         out entityLevelObjectData))
                     {
                         var position = new Vector3(entityCreate.X, entityCreate.Y, entityCreate.Z);
-                        var t = new Thread(() =>
-                        {
-                            OnCreationRequest(entityCreate.Identity, entityLevelObjectData, position,
+                        OnCreationRequest(entityCreate.Identity, entityLevelObjectData, position,
                                 new Quaternion(0, 0, 0, 0));
-                        });
-                        t.IsBackground = true;
-                        t.Start();
+                        
                     }
                 }
             });
@@ -311,7 +307,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     };
                     locomotionId++;
                     Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
-                    
+
                     lastSentPosition = pos;
                     lastSentRotation = r;
                     lastSentAimRotation = aim;
