@@ -126,10 +126,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
         public static void Marshall(Type sendingHandler, IMessage message, bool TCP = true, bool overrideSame = false)
         {
+            
+            string[] fs = sendingHandler.FullName.Split('.');
             Packet packet = new Packet
             {
                 Type = message.GetType().FullName,
-                Handler = sendingHandler.FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(message)
             };
 
@@ -153,10 +155,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS IS FOR UNIDENTIFIED CALLS ONLY
         public static void Marshall(Type sendingHandler, int identity, IMessage message, bool TCP = true, bool overrideSame = false)
         {
-            var packet = new Packet
+            string[] fs = sendingHandler.FullName.Split('.');
+            Packet packet = new Packet
             {
                 Type = message.GetType().FullName,
-                Handler = sendingHandler.FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(message),
                 Identity = identity
             };
@@ -170,10 +173,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void Marshall(Type sendingHandler, IMessage message, int target, bool TCP = true, bool overrideSame = false)
         {
-            var packet = new Packet
+            string[] fs = sendingHandler.FullName.Split('.');
+            Packet packet = new Packet
             {
                 Type = message.GetType().FullName,
-                Handler = sendingHandler.FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(message)
             };
 
@@ -191,10 +195,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void Marshall(Type sendingHandler, IMessage message, int target, int identity, bool TCP = true, bool overrideSame = false)
         {
-            var packet = new Packet
+            string[] fs = sendingHandler.FullName.Split('.');
+            Packet packet = new Packet
             {
                 Type = message.GetType().FullName,
-                Handler = sendingHandler.FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(message),
                 Identity = identity
             };
@@ -214,10 +219,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void Marshall(int identity, IMessage message, int target, bool toOrWithout = true, bool TCP = true, bool overrideSame = false)
         {
-            var packet = new Packet
+            string[] fs = GetType().FullName.Split('.');
+            Packet packet = new Packet
             {
-                Type = message.GetType().ToString(),
-                Handler = GetType().ToString(),
+                Type = message.GetType().FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(message),
                 Identity = identity
             };
