@@ -201,7 +201,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var tcpSent = 0;
             var sendCount = maxSendCount;
             var tcpCarrier = new PacketCarrier();
-            while (packetOutTCPBuffer.Count > 0 && (all || sendCount > 0))
+            while (packetOutTCPBuffer.Count > 0 && (all || sendCount > 0 || tcpCarrier.CalculateSize() < maxPackSize))
             {
                 var p = packetOutTCPBuffer.Dequeue();
                 tcpCarrier.Packets.Add(p);
@@ -215,12 +215,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var udpSent = 0;
             sendCount = maxSendCount;
             var udpCarrier = new PacketCarrier();
-            while (packetOutUDPBuffer.Count > 0 && (all || sendCount > 0))
+            while (packetOutUDPBuffer.Count > 0 && (all || sendCount > 0 || udpCarrier.CalculateSize() < maxPackSize))
             {
                 var p = packetOutUDPBuffer.Dequeue();
                 udpCarrier.Packets.Add(p);
                 sendCount--;
                 udpSent++;
+                
             }
             if(udpSent > 0)
                 WriteOut(udpCarrier,TCP: false);
