@@ -224,6 +224,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
                             entityLocomotion.AimZ, entityLocomotion.AimW);
                         Gizmos.DrawSphere(pos,1f);
+                        GameConsole.Log($"PlayerLocomotion: {p}");
                         });
                     }
                 }
