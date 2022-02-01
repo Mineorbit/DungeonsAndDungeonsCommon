@@ -81,7 +81,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         //UPDATE LOCOMOTION COUPLED WITH TICKRATE
-        private void FixedUpdate()
+        public void FixedUpdate()
         {
                 UpdateLocomotion();
         }

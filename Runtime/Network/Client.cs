@@ -9,8 +9,10 @@ using General;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using State;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = System.Random;
 using Type = System.Type;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -19,9 +21,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public Queue<Packet> packetInBuffer = new Queue<Packet>();
 
-        public Queue<Packet> packetOutTCPBuffer = new Queue<Packet>();
+        public List<Packet> packetOutTCPBuffer = new List<Packet>();
 
-        public Queue<Packet> packetOutUDPBuffer = new Queue<Packet>();
+        public List<Packet> packetOutUDPBuffer = new List<Packet>();
 
         public bool Connected;
 
@@ -62,7 +64,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public IPAddress remoteAddress;
 
-
+        private Random r = new Random();
+        
         // SERVER
         public Client(TcpClient tcpC, int lId, int port)
         {
@@ -188,13 +191,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var tcpCarrier = new PacketCarrier();
             while (packetOutTCPBuffer.Count > 0 && ( tcpCarrier.CalculateSize() < maxTcpPackSize))
             {
-                var p = packetOutTCPBuffer.Dequeue();
-                var oldCarrier = tcpCarrier.Clone();
+                int i = r.Next(0, packetOutTCPBuffer.Count - 1);
+                var p = packetOutTCPBuffer[i];
+                packetOutTCPBuffer.RemoveAt(i);
                 tcpCarrier.Packets.Add(p);
                 if (tcpCarrier.CalculateSize() > maxTcpPackSize)
                 {
-                    tcpCarrier = oldCarrier;
-                    packetOutTCPBuffer.Enqueue(p);
+                    tcpCarrier.Packets.Remove(p);
+                    packetOutTCPBuffer.Add(p);
                     break;
                 }
                 tcpSent++;
@@ -207,13 +211,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var udpCarrier = new PacketCarrier();
             while (packetOutUDPBuffer.Count > 0 && ( udpCarrier.CalculateSize() < maxUdpPackSize))
             {
-                var p = packetOutUDPBuffer.Dequeue();
-                var oldCarrier = udpCarrier.Clone();
+                int i = r.Next(0, packetOutUDPBuffer.Count - 1);
+                var p = packetOutUDPBuffer[i];
+                packetOutUDPBuffer.RemoveAt(i);
                 udpCarrier.Packets.Add(p);
                 if (udpCarrier.CalculateSize() > maxUdpPackSize)
                 {
-                    udpCarrier = oldCarrier;
-                    packetOutUDPBuffer.Enqueue(p);
+                    udpCarrier.Packets.Remove(p);
+                    packetOutUDPBuffer.Add(p);
                     break;
                 }
                 udpSent++;
@@ -277,18 +282,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (overrideSame)
                     {
                         packetOutTCPBuffer =
-                            new Queue<Packet>(packetOutTCPBuffer.Where((x) => (x.Identity != p.Identity) && (x.Type != p.Type)));
+                            new List<Packet>(packetOutTCPBuffer.Where((x) => (x.Identity != p.Identity) && (x.Type != p.Type)));
                     }
-                    packetOutTCPBuffer.Enqueue(p);
+                    packetOutTCPBuffer.Add(p);
                 }
                 else
                 {
                     if (overrideSame)
                     {
                         packetOutUDPBuffer =
-                            new Queue<Packet>(packetOutUDPBuffer.Where((x) => (x.Identity != p.Identity) && (x.Type != p.Type)));
+                            new List<Packet>(packetOutUDPBuffer.Where((x) => (x.Identity != p.Identity) && (x.Type != p.Type)));
                     }
-                    packetOutUDPBuffer.Enqueue(p);
+                    packetOutUDPBuffer.Add(p);
                 }
                 
             }

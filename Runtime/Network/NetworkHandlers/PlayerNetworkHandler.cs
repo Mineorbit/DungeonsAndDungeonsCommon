@@ -178,11 +178,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public override void Update()
-        {
-            base.Update();
-            //Setup();
-        }
 
         
 
