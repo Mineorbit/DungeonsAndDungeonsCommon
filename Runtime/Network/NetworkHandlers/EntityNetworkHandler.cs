@@ -327,7 +327,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         AimW = aim.w
                     };
                     
-                    Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
+                    Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,false);
                     
                     lastSentPosition = pos;
                     lastSentRotation = r;
