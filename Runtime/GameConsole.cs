@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.PlayerLoop;
 
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -27,6 +28,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             instance = this;
         }
 
+        private static Queue<string> lines = new Queue<string>();
+        
         public static void Log(string text, bool inView = true, string channel = "default")
         {
             string channelName = $"[{channel}]";
@@ -34,9 +37,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string output = channelName + " " + text;
             
             if(instance != null  && inView)
-                instance.CreateLine("> "+output);
+                lines.Enqueue("> "+output);
             
             Debug.Log(output);
+        }
+
+        private void Update()
+        {
+            while(lines.Count>0)
+            {
+                instance.CreateLine(lines.Dequeue());
+            }
         }
 
         private Queue<GameObject> q = new Queue<GameObject>();
