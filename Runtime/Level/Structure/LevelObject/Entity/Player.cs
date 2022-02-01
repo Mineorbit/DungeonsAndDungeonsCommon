@@ -279,7 +279,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Spawn(location, rotation, allowedToMove);
         }
 
+        public override void Teleport(Vector3 position)
+        {
+            base.Teleport(position);
+            ResetMovement();
+        }
 
+        public void ResetMovement()
+        {
+            movingDirection = Vector3.zero;
+            targetDirection = Vector3.zero;
+            forwardDirection = Vector3.zero;
+            aimRotation = Quaternion.identity;
+            cameraForwardDirection = cameraForwardDirection;
+        }
+        
 
         public void FixedUpdate()
         {
