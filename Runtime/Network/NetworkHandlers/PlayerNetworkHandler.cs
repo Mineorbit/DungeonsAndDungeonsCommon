@@ -188,9 +188,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public virtual void OnEntityLocomotion(Packet p)
         {
-            
-            GameConsole.Log($"PLAYER LOCOMOTION: {p}");
             base.OnEntityLocomotion(p);
+            Debug.Break();
         }
 
         
