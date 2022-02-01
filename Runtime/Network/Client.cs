@@ -40,7 +40,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int lastReceivedPacketCarrier = 0;
 
 
-        private int maxPackSize = 2*8192;
+        private int maxTcpPackSize = 2*8192;
+        private int maxUdpPackSize = 8*8192;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
@@ -198,12 +199,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var tcpSent = 0;
             var tcpCarrier = new PacketCarrier();
-            while (packetOutTCPBuffer.Count > 0 && ( tcpCarrier.CalculateSize() < maxPackSize))
+            while (packetOutTCPBuffer.Count > 0 && ( tcpCarrier.CalculateSize() < maxTcpPackSize))
             {
                 var p = packetOutTCPBuffer.Dequeue();
                 var oldCarrier = tcpCarrier.Clone();
                 tcpCarrier.Packets.Add(p);
-                if (tcpCarrier.CalculateSize() > maxPackSize)
+                if (tcpCarrier.CalculateSize() > maxTcpPackSize)
                 {
                     tcpCarrier = oldCarrier;
                     packetOutTCPBuffer.Enqueue(p);
@@ -217,12 +218,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var udpSent = 0;
             var udpCarrier = new PacketCarrier();
-            while (packetOutUDPBuffer.Count > 0 && ( udpCarrier.CalculateSize() < maxPackSize))
+            while (packetOutUDPBuffer.Count > 0 && ( udpCarrier.CalculateSize() < maxUdpPackSize))
             {
                 var p = packetOutUDPBuffer.Dequeue();
                 var oldCarrier = udpCarrier.Clone();
                 udpCarrier.Packets.Add(p);
-                if (udpCarrier.CalculateSize() > maxPackSize)
+                if (udpCarrier.CalculateSize() > maxUdpPackSize)
                 {
                     udpCarrier = oldCarrier;
                     packetOutUDPBuffer.Enqueue(p);
@@ -316,7 +317,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = null;
             if (TCP)
             {
-                int tcpBufferLength = maxPackSize*2;
+                int tcpBufferLength = maxTcpPackSize*2;
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
                 data = new byte[readLength];
