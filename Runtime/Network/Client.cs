@@ -221,6 +221,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             if(udpSent > 0)
                 WriteOut(udpCarrier,TCP: false);
+            
+            
+            
+            GameConsole.Log($"TCP: {tcpSent} UDP: {udpSent}");
         }
 
 
@@ -289,6 +293,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                     packetOutUDPBuffer.Enqueue(p);
                 }
+                
             }
         }
 
