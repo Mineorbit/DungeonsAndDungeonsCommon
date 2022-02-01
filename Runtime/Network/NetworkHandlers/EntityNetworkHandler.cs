@@ -266,14 +266,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var rot = observed.transform.rotation;
             var sendDist = (pos - lastSentPosition).magnitude;
             var sendRotAngle = Quaternion.Angle(rot, lastSentRotation);
-            timeStep++;
-            bool needMinimalSend = false;
-            if (timeStep > minSend)
-            {
-                needMinimalSend = true;
-                timeStep = 0;
-            }
-            return sendDist > sendDistance || sendRotAngle > sendAngle;
+            return sendDist > 0.01f || sendRotAngle > sendAngle;
         }
 
         public override bool CallActionOnOther(bool localCond, bool serverCond)
