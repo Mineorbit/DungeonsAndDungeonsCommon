@@ -212,10 +212,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
-                    if (entityLocomotion.LocomotionId < lastReceivedLocomotion)
+                    if (entityLocomotion.LocomotionId > lastReceivedLocomotion)
                     {
-                        return;
-                    }
+                       
 
                     lastReceivedLocomotion = entityLocomotion.LocomotionId;
                         MainCaller.Do(() =>
@@ -228,6 +227,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             entityLocomotion.AimZ, entityLocomotion.AimW);
                         Gizmos.DrawSphere(pos,1f);
                         });
+                    }
                 }
         }
 
