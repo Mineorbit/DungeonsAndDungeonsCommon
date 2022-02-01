@@ -205,13 +205,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         receivedRotation = rot;
                         ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
                             entityLocomotion.AimZ, entityLocomotion.AimW);
-                        Gizmos.DrawSphere(pos,1f);
                         GameConsole.Log($"PlayerLocomotion: {p}");
                         });
                     }
                 }
         }
 
+        public void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(receivedPosition,0.25f);
+        }
 
         public void UpdateState()
         {
