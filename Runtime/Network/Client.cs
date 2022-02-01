@@ -247,7 +247,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (debugNetwork)
             {
                 string r = TCP ? "TCP" : "UDP";
-                GameConsole.Log($"Sending to {remote} {data.Length} bytes via {r}");
+                GameConsole.Log($"Sending {p} to {remote} {data.Length} bytes via {r}");
             }
             if (TCP || !NetworkManager.instance.useUDP)
             {
