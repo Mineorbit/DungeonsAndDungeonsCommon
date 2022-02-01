@@ -316,7 +316,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = null;
             if ( TCP)
             {
-                int tcpBufferLength = maxPackSize;
+                int tcpBufferLength = maxPackSize*2;
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
                 data = new byte[readLength];
