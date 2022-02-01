@@ -264,7 +264,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private int minSend = 8;
         public virtual bool SendNecessary()
         {
-            return true;
             var pos = observed.transform.position;
             var rot = observed.transform.rotation;
             var sendDist = (pos - lastSentPosition).magnitude;
@@ -300,6 +299,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             return true;
         }
+        
+        
+        
+        
         
         public Quaternion lastSentAimRotation;
         private void UpdateLocomotion()
