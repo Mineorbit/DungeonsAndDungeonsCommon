@@ -39,8 +39,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int lastSentPacketCarrier = 0;
         public int lastReceivedPacketCarrier = 0;
 
-        // THIS DOES NOT YET WORK WHEN INCREASING
-        private readonly int maxSendCount = 1;
 
         private int maxPackSize = 2*8192;
 
@@ -199,13 +197,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void UpdateOut(bool all = false)
         {
             var tcpSent = 0;
-            var sendCount = maxSendCount;
             var tcpCarrier = new PacketCarrier();
-            while (packetOutTCPBuffer.Count > 0 && (all || sendCount > 0 || tcpCarrier.CalculateSize() < maxPackSize))
+            while (packetOutTCPBuffer.Count > 0 && (all && tcpCarrier.CalculateSize() < maxPackSize))
             {
                 var p = packetOutTCPBuffer.Dequeue();
                 tcpCarrier.Packets.Add(p);
-                sendCount--;
                 tcpSent++;
             }
 
@@ -213,13 +209,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 WriteOut(tcpCarrier);
 
             var udpSent = 0;
-            sendCount = maxSendCount;
             var udpCarrier = new PacketCarrier();
-            while (packetOutUDPBuffer.Count > 0 && (all || sendCount > 0 || udpCarrier.CalculateSize() < maxPackSize))
+            while (packetOutUDPBuffer.Count > 0 && (all  && udpCarrier.CalculateSize() < maxPackSize))
             {
                 var p = packetOutUDPBuffer.Dequeue();
                 udpCarrier.Packets.Add(p);
-                sendCount--;
                 udpSent++;
                 
             }
@@ -308,7 +302,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = null;
             if ( TCP)
             {
-                int tcpBufferLength = maxPackSize * maxSendCount;
+                int tcpBufferLength = maxPackSize;
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
                 data = new byte[readLength];
