@@ -212,7 +212,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
-                    
+                    if (entityLocomotion.LocomotionId < lastReceivedLocomotion)
+                    {
+                        return;
+                    }
+
+                    lastReceivedLocomotion = entityLocomotion.LocomotionId;
                         MainCaller.Do(() =>
                         {
                         var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
@@ -296,6 +301,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         public Quaternion lastSentAimRotation;
+        private ulong locomotionId = 0;
         private void UpdateLocomotion()
         {
             if (WantsToTransmit() && SendNecessary())
@@ -315,9 +321,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         AimX = aim.x,
                         AimY = aim.y,
                         AimZ = aim.z,
-                        AimW = aim.w
+                        AimW = aim.w,
+                        LocomotionId = locomotionId
                     };
-                    
+                    locomotionId++;
                     Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
                     
                     lastSentPosition = pos;
