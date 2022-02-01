@@ -12,26 +12,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     
         public int owner = -1;
         
-        public Vector3 targetPosition;
-        public Vector3 targetRotation;
 
 
         public Vector3 lastSentPosition;
         public Quaternion lastSentRotation;
 
-        public readonly float sendDistance = 0.05f;
+        
+        public readonly float tpDist = 0.075f;
 
-        public Vector3 teleportPosition;
-
-        public bool transmitPosition = true;
-        public bool interpolatePosition = true;
-
+        public Vector3 receivedPosition;
+        public Vector3 receivedRotation;
+        
         public virtual void Awake()
         {
             	base.Awake();
-            
-            	targetPosition = transform.position;
-            	targetRotation = transform.rotation.eulerAngles;
         }
 
         public Entity GetObservedEntity()
@@ -77,21 +71,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
       
 
-        
-        public readonly float tpDist = 0.075f;
-
-
-
         public virtual void Update()
         {
-            if(NetworkManager.instance != null)
+            if(NetworkManager.instance != null && -1 != NetworkManager.instance.localId)
             {
-                    targetPosition = receivedPosition;
-                    if (-1 != NetworkManager.instance.localId)
-                    {
-                        transform.position = (transform.position + targetPosition) / 2;
-                        transform.rotation = Quaternion.Lerp(Quaternion.Euler(targetRotation.x, targetRotation.y, targetRotation.z), transform.rotation, 0.5f*Time.deltaTime);
-                    }
+                transform.position = (transform.position + receivedPosition) / 2;
+                transform.rotation = Quaternion.Lerp(Quaternion.Euler(receivedRotation.x, receivedRotation.y, receivedRotation.z), transform.rotation, 0.5f*Time.deltaTime);
             }
         }
 
@@ -186,8 +171,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameConsole.Log($"Spawning Entity {entityType}:{identity} at {position} on Network Request");
                 var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation, id);
                 e.GetComponent<EntityNetworkHandler>().receivedPosition = position;
-                e.GetComponent<EntityNetworkHandler>().targetPosition = position;
-                e.GetComponent<EntityNetworkHandler>().targetRotation = rotation.eulerAngles;
             });
             if (LevelManager.currentLevel != null)
             {
@@ -202,7 +185,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
        
         
-        public Vector3 receivedPosition;
 
         private ulong lastReceivedLocomotion;
         [PacketBinding.Binding]
@@ -220,7 +202,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
                         receivedPosition = pos;
                         var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
-                        targetRotation = rot;
+                        receivedRotation = rot;
                         ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
                             entityLocomotion.AimZ, entityLocomotion.AimW);
                         Gizmos.DrawSphere(pos,1f);
