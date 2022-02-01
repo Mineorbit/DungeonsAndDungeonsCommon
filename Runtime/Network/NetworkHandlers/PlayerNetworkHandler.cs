@@ -183,8 +183,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
             //Setup();
         }
-        
-        
+
+        public override void OnEntityLocomotion(Packet p)
+        {
+            base.OnEntityLocomotion(p);
+            GameConsole.Log($"PlayerLocomotion: {p}");
+        }
+
         public static void OnCreationRequest(int identity, Vector3 position, Quaternion rotation, int localId,
             string name)
         {
