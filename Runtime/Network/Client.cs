@@ -41,7 +41,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         private int maxTcpPackSize = 2*8192;
-        private int maxUdpPackSize = 8*8192;
+        private int maxUdpPackSize = 4*8192;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
@@ -61,9 +61,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string userName;
 
         public IPAddress remoteAddress;
-
-        private readonly Semaphore waitingForTcp = new Semaphore(1, 1);
-        private readonly Semaphore waitingForUdp = new Semaphore(1, 1);
 
 
         // SERVER
@@ -298,12 +295,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private byte[] ReadData(bool TCP = true)
         {
-            if (TCP)
-            {
-                waitingForTcp.WaitOne();
-            }
-            else
-                waitingForUdp.WaitOne();
             byte[] data = null;
             if (TCP)
             {
@@ -318,13 +309,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 data = receivingUdpClient.Receive(ref remote);
             }
-
-            if (TCP)
-            {
-                waitingForTcp.Release();
-            }
-            else
-                waitingForUdp.Release();
             return data;
         }
 
