@@ -316,8 +316,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                if(debugNetwork)
-                    GameConsole.Log($"Receiving from {remote}");
                 data = receivingUdpClient.Receive(ref remote);
             }
 
@@ -461,6 +459,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                 foreach (var packet in packetCarrier.Packets)
                 {
+                    GameConsole.Log($"Processing: {packet}");
                     HandlePacket(packet);
                 }
             }
