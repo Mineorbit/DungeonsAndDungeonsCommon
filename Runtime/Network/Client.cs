@@ -455,17 +455,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 receivedPacketCarriers++;
             // LENGTH IS 0 DISCONNECT
 
-            if (data.Length == 0)
+            if (data.Length != 0)
             {
-                
-            }
-
-            var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
+                var packetCarrier = PacketCarrier.Parser.ParseFrom(data);
             
-            
-            foreach (var packet in packetCarrier.Packets)
-            {
-                HandlePacket(packet);
+                foreach (var packet in packetCarrier.Packets)
+                {
+                    HandlePacket(packet);
+                }
             }
             //Processing needed
             }
