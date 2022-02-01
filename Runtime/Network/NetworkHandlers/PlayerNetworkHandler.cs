@@ -189,7 +189,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void OnEntityLocomotion(Packet p)
         {
             base.OnEntityLocomotion(p);
-            Debug.Break();
         }
 
         
