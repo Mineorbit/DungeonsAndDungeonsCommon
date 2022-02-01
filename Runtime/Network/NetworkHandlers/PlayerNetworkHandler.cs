@@ -112,11 +112,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 LocalId = p.localId
             };
-
+            
+            string[] fs = typeof(PlayerNetworkHandler).FullName.Split('.');
+            
             var packet = new Packet
             {
-                Type = typeof(PlayerRemove).FullName,
-                Handler = typeof(PlayerNetworkHandler).FullName,
+                Type = typeof(PlayerCreate).FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(playerRemove),
                 Identity = p.Identity
             };
