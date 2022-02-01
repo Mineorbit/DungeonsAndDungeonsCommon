@@ -459,7 +459,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                 foreach (var packet in packetCarrier.Packets)
                 {
-                    GameConsole.Log($"Processing: {packet}");
+                    //GameConsole.Log($"Processing: {packet}");
                     HandlePacket(packet);
                 }
             }
