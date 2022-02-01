@@ -216,7 +216,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public void Teleport(Vector3 position)
+        public virtual void Teleport(Vector3 position)
         {
             GameConsole.Log($"Teleporting {this} to {position}");
             onTeleportEvent.Invoke(position);
