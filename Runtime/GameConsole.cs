@@ -42,13 +42,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Debug.Log(output);
         }
 
-        private void Update()
-        {
-            while(lines.Count>0)
-            {
-                instance.CreateLine(lines.Dequeue());
-            }
-        }
 
         private Queue<GameObject> q = new Queue<GameObject>();
 
@@ -107,6 +100,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         void Update()
         {
+            
+            while(lines.Count>0)
+            {
+                instance.CreateLine(lines.Dequeue());
+            }
             UpdateText();
             
         }
