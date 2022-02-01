@@ -75,7 +75,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var packetTypeString = p.Type;
             var packetType = Type.GetType(packetTypeString);
-            var packetHandlerString = p.Handler;
+            var packetHandlerString = "com.mineorbit.dungeonsanddungeonscommon."+p.Handler;
             var networkHandlerType = Type.GetType(packetHandlerString);
 
             var handlerType = networkHandlerType;
@@ -107,10 +107,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // eventually type strings are not jet correcty matched
         public void Marshall(int identity,IMessage message, bool TCP = true, bool overrideSame = false)
         {
+            string[] fs = GetType().FullName.Split('.');
             var packet = new Packet
             {
                 Type = message.GetType().FullName,
-                Handler = GetType().FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(message),
                 Identity = identity
             };
