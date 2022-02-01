@@ -139,10 +139,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Z = position.z,
                 Identity = p.Identity
             };
+            
+            string[] fs = typeof(PlayerNetworkHandler).FullName.Split('.');
+            
             var packet = new Packet
             {
                 Type = typeof(PlayerCreate).FullName,
-                Handler = typeof(PlayerNetworkHandler).FullName,
+                Handler = fs[fs.Length-1],
                 Content = Any.Pack(playerCreate)
             };
             return packet;
