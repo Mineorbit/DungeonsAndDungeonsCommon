@@ -183,14 +183,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Update();
             //Setup();
         }
-
         
-        [PacketBinding.Binding]
-        public virtual void OnEntityLocomotion(Packet p)
-        {
-            base.OnEntityLocomotion(p);
-        }
-
         
         public static void OnCreationRequest(int identity, Vector3 position, Quaternion rotation, int localId,
             string name)

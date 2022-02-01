@@ -214,9 +214,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     if (entityLocomotion.LocomotionId > lastReceivedLocomotion)
                     {
-                       
-
-                    lastReceivedLocomotion = entityLocomotion.LocomotionId;
+                        lastReceivedLocomotion = entityLocomotion.LocomotionId;
                         MainCaller.Do(() =>
                         {
                         var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
