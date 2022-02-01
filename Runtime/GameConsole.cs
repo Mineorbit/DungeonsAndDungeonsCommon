@@ -59,11 +59,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             string fps = $"FPS: {(1 / Time.deltaTime)}\n";
             string appendage = $"Received Packets: {Client.receivedPacketCarriers}\n" +
-                            $"Handled Packets: {Client.handledPackets}\n" +
-                            $"Sent Packets: {Client.sentPacketCarriers} \n" +
-                            $"UDP Queue Length: {NetworkManager.instance.client.packetOutUDPBuffer.Count} \n" +
+                               $"Handled Packets: {Client.handledPackets}\n" +
+                               $"Sent Packets: {Client.sentPacketCarriers} \n";
+            if(NetworkManager.instance.client != null)
+            {
+            appendage += "UDP Queue Length: {NetworkManager.instance.client.packetOutUDPBuffer.Count} \n" +
                             $"TCP Queue Length: {NetworkManager.instance.client.packetOutTCPBuffer.Count}";
-
+            }
             infoText.text = fps + appendage;
         }
 
