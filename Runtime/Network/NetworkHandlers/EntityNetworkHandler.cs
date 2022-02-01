@@ -206,15 +206,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private ulong lastReceivedLocomotion;
         [PacketBinding.Binding]
-        public void OnEntityLocomotion(Packet p)
+        public virtual void OnEntityLocomotion(Packet p)
         {
             // THIS IS A TEMP
                 EntityLocomotion entityLocomotion;
                 if (p.Content.TryUnpack(out entityLocomotion))
                 {
-                    GameConsole.Log($"{this} Locomotion: {entityLocomotion}");
                     
-                        lastReceivedLocomotion = entityLocomotion.LocomotionId;
                         MainCaller.Do(() =>
                         {
                         var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
