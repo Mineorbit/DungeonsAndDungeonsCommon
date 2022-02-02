@@ -209,6 +209,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var udpSent = 0;
             var udpCarrier = new PacketCarrier();
+            
+            foreach (NetworkHandler handler in NetworkManager.networkHandlers)
+            {
+                if(handler.observed.GetType().IsSubclassOf(typeof(NetworkLevelObject)))
+                { 
+                    NetworkLevelObject levelObject = (NetworkLevelObject) handler.observed;
+                // CREATE ALL VAR SYNC PACKETS AND ADD THEM TO THE SYNCS
+                VarSync varSync = ((LevelObjectNetworkHandler) handler).GetVarSync();
+
+                string[] fs = handler.GetType().FullName.Split('.');
+                Packet packet = new Packet
+                {
+                    Type = varSync.GetType().FullName,
+                    Handler = fs[fs.Length-1],
+                    Content = Any.Pack(varSync),
+                    Identity = ( (NetworkLevelObject) handler.observed).Identity
+                };
+                udpCarrier.Packets.Add(packet);
+                }
+            }
+            
             while (packetOutUDPBuffer.Count > 0 && ( udpCarrier.CalculateSize() < maxUdpPackSize))
             {
                 int i = r.Next(0, packetOutUDPBuffer.Count - 1);
@@ -226,12 +247,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             // ADD ALL VAR SYNCS ALLWAYS
 
-            foreach (NetworkHandler handler in NetworkManager.networkHandlers)
-            {
-                // CREATE ALL VAR SYNC PACKETS AND ADD THEM TO THE SYNCS
-                VarSync varSync = new VarSync();
-                
-            }
+            
             
             
             if(udpSent > 0)
