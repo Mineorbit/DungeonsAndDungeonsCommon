@@ -41,8 +41,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public int lastReceivedPacketCarrier = 0;
 
 
-        private int maxTcpPackSize = 4*8192;
-        private int maxUdpPackSize = 8192;
+        private int maxTcpPackSize = 8192;
+        private int maxUdpPackSize = 8*8192;
 
         public UnityEvent<int> onConnectEvent = new UnityEvent<int>();
         public UnityEvent onDisconnectEvent = new UnityEvent();
