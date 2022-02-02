@@ -227,6 +227,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Identity = ( (NetworkLevelObject) handler.observed).Identity
                 };
                 udpCarrier.Packets.Add(packet);
+                udpSent++;
                 }
             }
             
