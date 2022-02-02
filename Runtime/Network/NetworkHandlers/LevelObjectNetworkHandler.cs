@@ -63,7 +63,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
                 i++;
             }
-            GameConsole.Log("VARSYNC: "+varSync);
             return varSync;
         }
         
