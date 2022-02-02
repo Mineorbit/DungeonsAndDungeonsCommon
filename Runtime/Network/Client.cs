@@ -216,20 +216,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     if(handler.observed.GetType().IsSubclassOf(typeof(NetworkLevelObject)))
                     { 
-                    NetworkLevelObject levelObject = (NetworkLevelObject) handler.observed;
-                    // CREATE ALL VAR SYNC PACKETS AND ADD THEM TO THE SYNCS
-                    VarSync varSync = ((LevelObjectNetworkHandler) handler).GetVarSync();
+                        NetworkLevelObject levelObject = (NetworkLevelObject) handler.observed;
+                        // CREATE ALL VAR SYNC PACKETS AND ADD THEM TO THE SYNCS
+                        VarSync varSync = ((LevelObjectNetworkHandler) handler).GetVarSync();
+                        if(varSync.Content.Count > 0)
+                        {
 
-                    string[] fs = handler.GetType().FullName.Split('.');
-                    Packet packet = new Packet
-                    {
-                    Type = varSync.GetType().FullName,
-                    Handler = fs[fs.Length-1],
-                    Content = Any.Pack(varSync),
-                    Identity = ( (NetworkLevelObject) handler.observed).Identity
-                    };
-                    udpCarrier.Packets.Add(packet);
-                    udpSent++;
+                            string[] fs = handler.GetType().FullName.Split('.');
+                            Packet packet = new Packet
+                            {
+                                Type = varSync.GetType().FullName,
+                                Handler = fs[fs.Length-1],
+                                Content = Any.Pack(varSync),
+                                Identity = ( (NetworkLevelObject) handler.observed).Identity
+                            };
+                            udpCarrier.Packets.Add(packet);
+                            udpSent++;
+                        }
+                    
                     }
                 }
             }
