@@ -73,26 +73,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateSyncVar()
         {
-            Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
-            foreach (var property in properties)
+            if(properties.Length>0)
             {
-                if (property.PropertyType.IsSubclassOf(typeof(bool)))
+                Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
+                foreach (var property in properties)
                 {
-                    actionM.AddBool((bool)property.GetValue(this));
-                }else
-                if (property.PropertyType.IsSubclassOf(typeof(Vector3)))
-                {
-                    actionM.AddVector3((Vector3)property.GetValue(this));
-                }else
-                if (property.PropertyType.IsSubclassOf(typeof(Quaternion)))
-                {
-                    actionM.AddQuaternion((Quaternion)property.GetValue(this));
-                }
-                else
-                {
-                    GameConsole.Log($"Could not add property {property} to package");
-                }
+                    if (property.PropertyType.IsSubclassOf(typeof(bool)))
+                    {
+                        actionM.AddBool((bool)property.GetValue(this));
+                    }else
+                    if (property.PropertyType.IsSubclassOf(typeof(Vector3)))
+                    {
+                        actionM.AddVector3((Vector3)property.GetValue(this));
+                    }else
+                    if (property.PropertyType.IsSubclassOf(typeof(Quaternion)))
+                    {
+                        actionM.AddQuaternion((Quaternion)property.GetValue(this));
+                    }
+                    else
+                    {
+                        GameConsole.Log($"Could not add property {property} to package");
+                    }
                 
+                }
+            
             }
         }
 
