@@ -210,8 +210,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var udpSent = 0;
             var udpCarrier = new PacketCarrier();
             
-            foreach (NetworkHandler handler in NetworkManager.networkHandlers)
+            if(Server.instance != null)
             {
+                foreach (NetworkHandler handler in NetworkManager.networkHandlers)
+                {
                 if(handler.observed.GetType().IsSubclassOf(typeof(NetworkLevelObject)))
                 { 
                     NetworkLevelObject levelObject = (NetworkLevelObject) handler.observed;
@@ -229,8 +231,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 udpCarrier.Packets.Add(packet);
                 udpSent++;
                 }
+                }
             }
-            
             while (packetOutUDPBuffer.Count > 0 && ( udpCarrier.CalculateSize() < maxUdpPackSize))
             {
                 int i = r.Next(0, packetOutUDPBuffer.Count - 1);
