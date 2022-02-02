@@ -47,10 +47,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        
 
-        
-        
+       
 
         public virtual bool AcceptAction(int senderId)
         {
