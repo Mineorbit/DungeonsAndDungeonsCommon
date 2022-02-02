@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
@@ -57,6 +58,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                       Level.instantiateType == Level.InstantiateType.Default ||
                       Level.instantiateType == Level.InstantiateType.Online;
             
+            properties = this.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PacketBinding.SyncVar))).ToArray();
+
             if (!enabled) return;
             NetworkManager.networkHandlers.Add(this);
             
