@@ -244,5 +244,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
         }
+
+        [PacketBinding.Binding]
+        public void SyncVarHandle()
+        {
+            
+        }
     }
 }

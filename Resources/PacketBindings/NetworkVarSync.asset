@@ -10,26 +10,44 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd29e75a1a24aa24e9a5fc00afab5a94, type: 3}
-  m_Name: EntityLocomotion
+  m_Name: NetworkVarSync
   m_EditorClassIdentifier: 
   possiblePacketTypes:
   - General.Packet
+  - General.PacketCarrier
   - State.MeConnect
   - State.MeDisconnect
   - State.PrepareRound
+  - State.ReadyLobby
+  - State.ReadyRound
   - State.StartRound
   - State.Welcome
-  - Game.ConnectLevelObject
-  - Game.ConnectLevelObjectFail
-  - Game.ConnectLevelObjectRequest
+  - State.WelcomeUnstable
+  - State.WinRound
   - Game.EntityCreate
   - Game.EntityLocomotion
+  - Game.EntityRemove
+  - Game.EntityState
+  - Game.EntityTeleport
+  - Game.EntityTeleportComplete
   - Game.Parameter
   - Game.LevelObjectAction
   - Game.PlayerCreate
+  - Game.MVector
+  - Game.MQuaternion
+  - Game.PlayerInputUpdate
   - Game.PlayerRemove
+  - Game.StreamChunk
+  - NetLevel.Location
+  - NetLevel.LevelObjectInstance
+  - NetLevel.LevelObjectInstanceData
+  - NetLevel.HuffmanEntry
   - NetLevel.ChunkData
   - NetLevel.LevelMetaData
+  - NetLevel.LevelMetaDataList
+  - NetLevel.LobbyRequest
+  - NetLevel.CoordinateChunkPair
+  - NetLevel.RegionData
   - Google.Protobuf.IBufferMessage
   - Google.Protobuf.ICustomDiagnosticMessage
   - Google.Protobuf.IExtendableMessage`1
@@ -90,15 +108,16 @@ MonoBehaviour:
   - Google.Protobuf.Reflection.GeneratedCodeInfo+Types+Annotation
   possibleHandlerTypes:
   - com.mineorbit.dungeonsanddungeonscommon.EntityNetworkHandler
+  - com.mineorbit.dungeonsanddungeonscommon.ItemNetworkHandler
+  - com.mineorbit.dungeonsanddungeonscommon.LevelLoadTargetNetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.LevelObjectNetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.NetworkHandler
   - com.mineorbit.dungeonsanddungeonscommon.NetworkManagerHandler
   - com.mineorbit.dungeonsanddungeonscommon.PlayerNetworkHandler
   possibleMethods:
-  - OnEntityLocomotion
-  - ProcessAction
-  PacketType: Game.EntityLocomotion
-  HandlerType: com.mineorbit.dungeonsanddungeonscommon.EntityNetworkHandler
+  - SyncVarHandle
+  PacketType: 
+  HandlerType: com.mineorbit.dungeonsanddungeonscommon.NetworkHandler
   BindedMethods:
-  - OnEntityLocomotion
-  withIdentity: 1
+  - SyncVarHandle
+  withIdentity: 0

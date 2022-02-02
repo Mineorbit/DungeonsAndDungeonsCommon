@@ -80,11 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        //UPDATE LOCOMOTION COUPLED WITH TICKRATE
-        public void FixedUpdate()
-        {
-                UpdateLocomotion();
-        }
+       
 
         public virtual void RequestCreation()
         {
@@ -182,29 +178,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
        
         
 
-        private ulong lastReceivedLocomotion;
-        [PacketBinding.Binding]
-        public virtual void OnEntityLocomotion(Packet p)
-        {
-            // THIS IS A TEMP
-                EntityLocomotion entityLocomotion;
-                if (p.Content.TryUnpack(out entityLocomotion))
-                {
-                    if (entityLocomotion.LocomotionId > lastReceivedLocomotion)
-                    {
-                        lastReceivedLocomotion = entityLocomotion.LocomotionId;
-                        MainCaller.Do(() =>
-                        {
-                        var pos = new Vector3(entityLocomotion.X, entityLocomotion.Y, entityLocomotion.Z);
-                        receivedPosition = pos;
-                        var rot = new Vector3(entityLocomotion.QX, entityLocomotion.QY, entityLocomotion.QZ);
-                        receivedRotation = rot;
-                        ((Entity) observed).aimRotation = new Quaternion(entityLocomotion.AimX, entityLocomotion.AimY,
-                            entityLocomotion.AimZ, entityLocomotion.AimW);
-                        });
-                    }
-                }
-        }
 
         public void OnDrawGizmos()
         {
@@ -279,38 +252,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         
-        
-        public Quaternion lastSentAimRotation;
-        private ulong locomotionId = 0;
-        private void UpdateLocomotion()
-        {
-            if (WantsToTransmit() && SendNecessary())
-            {
-                var pos = observed.transform.position;
-                var r = observed.transform.rotation;
-                var rot = observed.transform.rotation.eulerAngles;
-                var aim = ((Entity) observed).aimRotation;
-                    var entityLocomotion = new EntityLocomotion
-                    {
-                        X = pos.x,
-                        Y = pos.y,
-                        Z = pos.z,
-                        QX = rot.x,
-                        QY = rot.y,
-                        QZ = rot.z,
-                        AimX = aim.x,
-                        AimY = aim.y,
-                        AimZ = aim.z,
-                        AimW = aim.w,
-                        LocomotionId = locomotionId
-                    };
-                    locomotionId++;
-                    Marshall(((NetworkLevelObject) observed).Identity,entityLocomotion, TCP: false,true);
 
-                    lastSentPosition = pos;
-                    lastSentRotation = r;
-                    lastSentAimRotation = aim;
-            }
-        }
     }
 }
