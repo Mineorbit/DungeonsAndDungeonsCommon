@@ -28,7 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Awake()
         {
             observed = GetComponent<NetworkLevelObject>();
-            properties = observed.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PacketBinding.SyncVar))).ToArray();
+            properties = this.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PacketBinding.SyncVar))).ToArray();
             base.Awake();
             // currently not updated
             if (observed != null)

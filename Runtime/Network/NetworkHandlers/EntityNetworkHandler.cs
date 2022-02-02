@@ -20,9 +20,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public readonly float tpDist = 0.075f;
 
+        // THIS IS NEEDED FOR PROPERTIES
         [PacketBinding.SyncVar]
-        public Vector3 receivedPosition;
-        public Vector3 receivedRotation;
+        public Vector3 receivedPosition {get;set;}
+        
+        [PacketBinding.SyncVar]
+        public Vector3 receivedRotation {get;set;}
         
         public virtual void Awake()
         {
