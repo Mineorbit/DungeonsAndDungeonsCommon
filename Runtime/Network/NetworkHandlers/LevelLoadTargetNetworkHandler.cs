@@ -1,5 +1,4 @@
-using Game;
-using General;
+using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
 using UnityEngine;
@@ -17,41 +16,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
-        public static void OnStreamChunk(Packet p)
+        public static void OnStreamChunk(Message m)
         {
-            StreamChunk streamChunk;
-            if (p.Content.TryUnpack(out streamChunk))
+            byte[] chunkData = m.GetBytes();
                 MainCaller.Do(() =>
                 {
-                    ChunkData c = streamChunk.ChunkData;
-                    ChunkManager.LoadChunk(c, streamChunk.Immediate);
+                    ChunkManager.LoadChunk(ChunkData.Parser.ParseFrom(chunkData), false);
                 });
         }
 
-        private void StreamChunk(ActionParam chunkParam, bool immediate = false)
+        private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
-            ChunkData toSend = (ChunkData) chunkParam.data;
-            var streamChunk = new StreamChunk
-            {
-                ChunkData = toSend,
-                Immediate = immediate
-            };
-            Marshall(((NetworkLevelObject)observed).Identity,streamChunk, TCP: true);
+            byte[] chunk = chunkData.ToByteArray();
+            Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
+            message.AddBytes(chunk);
+            NetworkManager.instance.server.Send(message,(ushort) ((LevelLoadTarget)GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>().owner);
         }
 
-        public override void SendAction(string actionName, ActionParam argument)
+        public override void SendAction(string actionName, ChunkData chunkData)
         {
 
             switch (actionName)
             {
                 case "StreamChunkIntoCurrentLevelFrom":
-                    StreamChunk(argument);
+                    StreamChunk(chunkData);
                     break;
                 case "StreamChunkImmediateIntoCurrentLevelFrom":
-                    StreamChunk(argument,immediate: true);
+                    StreamChunk(chunkData,immediate: true);
                     break;
                 default:
-                    base.SendAction(actionName, argument);
+                    base.SendAction(actionName, chunkData);
                     break;
             }
         }

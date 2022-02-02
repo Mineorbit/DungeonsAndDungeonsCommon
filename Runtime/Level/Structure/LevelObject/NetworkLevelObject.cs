@@ -121,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
 					if (identified)
 						levelObjectNetworkHandler.SendAction(a.Method.Name,
-                        LevelObjectNetworkHandler.ActionParam.From(argument));
+                        argument);
 					else
 						todo.Enqueue(() => { Invoke(a, argument); });
 	        }

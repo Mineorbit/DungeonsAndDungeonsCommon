@@ -1,7 +1,5 @@
 using System;
 using System.Threading;
-using Game;
-using General;
 using UnityEngine;
 using Google.Protobuf.WellKnownTypes;
 using RiptideNetworking;
@@ -27,7 +25,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         [PacketBinding.SyncVar]
         public Vector3 receivedRotation {get;set;}
+
+        [PacketBinding.SyncVar]
+        public int Health {get;set;}
         
+        
+        [PacketBinding.SyncVar]
+        public bool Active {get;set;}
+        
+        [PacketBinding.SyncVar]
+        public int Points {get;set;}
+        
+
         public virtual void Awake()
         {
             	base.Awake();
@@ -44,27 +53,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
         
+        
+        
         public bool IsOwner()
         {
             return NetworkManager.instance.localId == owner;
         }
 
         
+        
+        
         public virtual void Start()
         {
 			// Request the creation of this entity on the client side
-            if (isOnServer) RequestCreation();
-            GetObservedEntity().onSpawnEvent.AddListener(x => {GameConsole.Log("Spawn State Update"); UpdateState(); });
-            GetObservedEntity().onHitEvent.AddListener(x => {GameConsole.Log("Hit State Update"); UpdateState(); });
-            GetObservedEntity().onDespawnEvent.AddListener(() => {});
-            GetObservedEntity().onDespawnEvent.AddListener(() => {GameConsole.Log("Despawn State Update"); UpdateState(); });
-            GetObservedEntity().onPointsChangedEvent.AddListener((x) => {
-                if (isOnServer)
-                {
-                    GameConsole.Log("Points changed State Update " + x);
-                    UpdateState();
-                }
-            });
+            if (NetworkManager.instance.isOnServer) RequestCreation();
+            
         }
 
         public override void OnDestroy()
@@ -105,7 +108,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
         
-        public  void RequestRemoval()
+        public virtual  void RequestRemoval()
         {
             Entity e = GetObservedEntity();
             Message remove = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.removeEntity);
@@ -119,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // THIS NEEDS TO HAPPEN BEFORE, BEACUSE p CHANGES THE SENDER NUMBER
             base.ProcessAction(m);
 
-            if (isOnServer)
+            if (NetworkManager.instance.isOnServer)
             {
                 NetworkManager.instance.server.SendToAll(m);
             }
@@ -128,34 +131,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.removeEntity)]
-        public void OnEntityRemove(Packet value)
+        public static void OnEntityRemove(Message value)
         {
-            EntityRemove entityRemove;
-            if (value.Content.TryUnpack(out entityRemove))
-            {
-                MainCaller.Do(() => { LevelManager.currentLevel.RemoveDynamic(GetObservedEntity()); });
-            }
+            int identity = value.GetInt();
+            
+                MainCaller.Do(() => { LevelManager.currentLevel.RemoveDynamic(NetworkHandler.ByIdentity(identity).GetObserved()); });
+        
         }
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.createEntity)]
-        public static void HandleCreatePacket(Packet value)
+        public static void HandleCreatePacket(Message message)
         {
-            MainCaller.Do(() =>
-            {
-                EntityCreate entityCreate;
-                if (value.Content.TryUnpack(out entityCreate))
-                {
+
+            int identity = message.GetInt();
+            Vector3 position = message.GetVector3();
+            int objectType = message.GetInt();
                     LevelObjectData entityLevelObjectData;
-                    if (LevelDataManager.levelObjectDatas.TryGetValue(entityCreate.LevelObjectDataType,
+                    if (LevelDataManager.levelObjectDatas.TryGetValue(objectType,
                         out entityLevelObjectData))
                     {
-                        var position = new Vector3(entityCreate.X, entityCreate.Y, entityCreate.Z);
-                        OnCreationRequest(entityCreate.Identity, entityLevelObjectData, position,
+                        MainCaller.Do(() =>
+                        {
+                        OnCreationRequest(identity, entityLevelObjectData, position,
                                 new Quaternion(0, 0, 0, 0));
-                        
+                        });
                     }
-                }
-            });
+                    else
+                    {
+                        GameConsole.Log($"Could not create Entity of type {objectType}");
+                    }
+            
         }
 
         public static void OnCreationRequest(int identity, LevelObjectData entityType, Vector3 position,
@@ -189,30 +194,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Gizmos.DrawSphere(receivedPosition,0.25f);
         }
 
-        public void UpdateState()
-        {
-            var entityState = new EntityState
-            {
-                Health = GetObservedEntity().health,
-                Active = observed.gameObject.activeSelf,
-                Points = GetObservedEntity().points
-            };
-            GameConsole.Log("Updated State "+entityState);
-            Marshall(((NetworkLevelObject) observed).Identity,entityState);
-        }
 
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.entityState)]
-        public void OnEntityState(Packet p)
-        {
-            EntityState entityState;
-            if (p.Content.TryUnpack(out entityState))
-            {
-                GetObservedEntity().health = entityState.Health;
-                GetObservedEntity().points = entityState.Points;
-                if (observed.gameObject.activeSelf != entityState.Active)
-                    observed.gameObject.SetActive(entityState.Active);
-            }
-        }
+        
 
         public virtual bool WantsToTransmit()
         {
@@ -236,7 +219,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             try
             {
-                return base.CallActionOnOther(localCond, serverCond) && (isOnServer || IsOwner());
+                return base.CallActionOnOther(localCond, serverCond) && (NetworkManager.instance.isOnServer || IsOwner());
             }
             catch (Exception e)
             {
@@ -245,9 +228,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
         
-        public override bool AcceptAction(Packet p)
+        public override bool AcceptAction(int localIdSender)
         {
-            if (NetworkManager.instance.localId == -1 && p.Sender != owner)
+            if (NetworkManager.instance.localId == -1 && localIdSender != owner)
             {
                 return false;
             }

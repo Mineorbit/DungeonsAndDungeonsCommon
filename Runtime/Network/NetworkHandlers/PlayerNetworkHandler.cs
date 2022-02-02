@@ -1,6 +1,4 @@
 using System;
-using Game;
-using General;
 using Google.Protobuf.WellKnownTypes;
 using RiptideNetworking;
 using UnityEngine;
@@ -26,17 +24,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void UpdateInputData()
         {
+            Message input = Message.Create(MessageSendMode.unreliable,(ushort) NetworkManager.ClientToServerId.playerInput);
             PlayerController c = (PlayerController) GetObservedPlayer().controller;
-            PlayerInputUpdate playerInputUpdate = new PlayerInputUpdate();
-            playerInputUpdate.MovingDirection = fromVector3(c.movingDirection);
-            playerInputUpdate.TargetDirection = fromVector3(c.targetDirection);
-            playerInputUpdate.ForwardDirection = fromVector3(c.forwardDirection);
-            playerInputUpdate.AimRotation = fromQuaternion(c.aimRotation);
-            playerInputUpdate.CameraForwardDirection = fromVector3(c.cameraForwardDirection);
-            playerInputUpdate.MovementInputOnFrame = c.movementInputOnFrame;
-            playerInputUpdate.DoInput = c.doInput;
-            playerInputUpdate.TakeInput = c.takeInput;
-            Marshall(((NetworkLevelObject) observed).Identity,playerInputUpdate, TCP: false,true);
+            input.AddVector3(c.movingDirection);
+            input.AddVector3(c.targetDirection);
+            input.AddVector3(c.forwardDirection);
+            input.AddQuaternion(c.aimRotation);
+            input.AddVector3(c.cameraForwardDirection);
+            input.AddBool(c.movementInputOnFrame);
+            input.AddBool(c.doInput);
+            input.AddBool(c.takeInput);
+            NetworkManager.instance.client.Send(input);
+        }
+        
+        
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.playerInput)]
+        public void PlayerInputProcessing(Message message)
+        {
+            GetObservedPlayer().movingDirection = message.GetVector3();
+            GetObservedPlayer().targetDirection = message.GetVector3();
+            GetObservedPlayer().forwardDirection = message.GetVector3();
+            GetObservedPlayer().aimRotation = message.GetQuaternion();
+            GetObservedPlayer().cameraForwardDirection = message.GetVector3();
+            GetObservedPlayer().movementInputOnFrame = message.GetBool();
+            GetObservedPlayer().doInput = message.GetBool();
+            GetObservedPlayer().takeInput = message.GetBool();
         }
         
 
@@ -53,73 +65,34 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         
-       
-        
-        [MessageHandler((ushort)NetworkManager.ClientToServerId.playerInput)]
-        public void PlayerInputProcessing(Packet p)
+        public override void RequestRemoval()
         {
-            PlayerInputUpdate playerInputUpdate;
-            if (p.Content.TryUnpack(out playerInputUpdate))
-            {
-                GetObservedPlayer().movingDirection = toVector3(playerInputUpdate.MovingDirection);
-                GetObservedPlayer().targetDirection = toVector3(playerInputUpdate.TargetDirection);
-                GetObservedPlayer().forwardDirection = toVector3(playerInputUpdate.ForwardDirection);
-                GetObservedPlayer().aimRotation = toQuaternion(playerInputUpdate.AimRotation);
-                GetObservedPlayer().cameraForwardDirection = toVector3(playerInputUpdate.CameraForwardDirection);
-                GetObservedPlayer().movementInputOnFrame = playerInputUpdate.MovementInputOnFrame;
-                GetObservedPlayer().doInput = playerInputUpdate.DoInput;
-                GetObservedPlayer().takeInput = playerInputUpdate.TakeInput;
-            }
+            Player p = GetObservedPlayer();
+            Message remove = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.removeEntity);
+            remove.AddInt(p.localId);
+            NetworkManager.instance.server.SendToAll(remove);
         }
-
-        
-
-        
-
-        public static Packet GenerateRemovalRequest(Player p, PlayerNetworkHandler playerNetworkHandler)
-        {
-            var playerRemove = new PlayerRemove
-            {
-                LocalId = p.localId
-            };
-            
-            string[] fs = typeof(PlayerNetworkHandler).FullName.Split('.');
-            
-            var packet = new Packet
-            {
-                Type = typeof(PlayerCreate).FullName,
-                Handler = fs[fs.Length-1],
-                Content = Any.Pack(playerRemove),
-                Identity = p.Identity
-            };
-            return packet;
-        }
-
       
 
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.removePlayer)]
-        public static void OnPlayerRemove(Packet value)
+        public static void OnPlayerRemove(Message message)
         {
-            PlayerRemove playerRemove;
-            if (value.Content.TryUnpack(out playerRemove))
-            {
-                var localIdToRemove = playerRemove.LocalId;
-
+            int localIdToRemove = message.GetInt();
+            
                 MainCaller.Do(() => { PlayerManager.playerManager.Remove(localIdToRemove); });
-            }
+            
         }
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.createPlayer)]
-        public static void OnPlayerCreate(Packet value)
+        public static void OnPlayerCreate(Message message)
         {
-            PlayerCreate playerCreate;
-            if (value.Content.TryUnpack(out playerCreate))
-            {
-                var position = new Vector3(playerCreate.X, playerCreate.Y, playerCreate.Z);
-                OnCreationRequest(playerCreate.Identity, position, new Quaternion(0, 0, 0, 0), playerCreate.LocalId,
-                    playerCreate.Name);
-            }
+            int localId = message.GetInt();
+            int identity = message.GetInt();
+            string name = message.GetString();
+            Vector3 position = message.GetVector3();
+                OnCreationRequest(identity, position, new Quaternion(0, 0, 0, 0), localId,
+                    name);
         }
 
 

@@ -1,8 +1,7 @@
 using System;
-using General;
+using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
-using State;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -12,83 +11,51 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
 
 
-        public NetworkManager GetObserved()
-        {
-            return (NetworkManager) observed;
-        }
-        
-        
-        public static void RequestPrepareRound()
-        {
-            var prepareRound = new PrepareRound
-            {
-                Message = "READY, STEADY",
-                LevelMetaData = LevelManager.currentLevelMetaData
-            };
-            Marshall(typeof(NetworkManagerHandler), prepareRound);
-        }
-
-        public static void RequestStartRound()
-        {
-            var startRound = new StartRound
-            {
-            };
-            Marshall(typeof(NetworkManagerHandler), startRound,TCP: true);
-        }
-
-        public static void RequestWinRound()
-        {
-            var winRound = new WinRound();
-            Marshall(typeof(NetworkManagerHandler), winRound);
-        }
-
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
         {
-            LobbyRequest updateRequest = new LobbyRequest();
-            updateRequest.SelectedLevel = selectedLevel;
-            Marshall(typeof(NetworkManagerHandler), updateRequest);
+            
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.lobbyRequest);
+
+            m.AddBytes(selectedLevel.ToByteArray());
+            NetworkManager.instance.server.SendToAll(m);
         }
         
         public static void RequestReadyRound()
         {
-            var readyRound = new ReadyRound();
-            readyRound.Ready = NetworkManager.instance.ready;
-            readyRound.LocalId = NetworkManager.instance.localId;
-            Marshall(typeof(NetworkManagerHandler), readyRound);
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.readyRound);
+
+            m.AddBool(NetworkManager.instance.ready);
+            m.AddInt(NetworkManager.instance.localId);
+            NetworkManager.instance.server.SendToAll(m);
         }
 
         public static void RequestReadyLobby()
         {
-            ReadyLobby readyLobby = new ReadyLobby();
-            readyLobby.Message = "Test";
-            Marshall(typeof(NetworkManagerHandler), readyLobby);
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyLobby);
+            m.AddInt(NetworkManager.instance.localId);
+            NetworkManager.instance.client.Send(m);
         }
 
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.readyLobby)]
-        public static void OnReadyLobby(Packet p)
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.readyLobby)]
+        public static void OnReadyLobby(Message m)
         {
             if (NetworkManager.instance.isOnServer)
             {
-                ReadyLobby readyLobby;
-                if (p.Content.TryUnpack(out readyLobby))
-                {
-                    int localId = p.Sender;
+                
+                    int localId = m.GetInt();
                     Vector3 location = new Vector3(localId * 8, 6, 0);
                     GameConsole.Log($"Teleporting {localId} to {location}");
                     PlayerManager.playerManager.SpawnPlayer(localId, location);
-                }
             }
         }
         
 
         [MessageHandler((ushort)NetworkManager.ClientToServerId.prepareRound)]
-        public static void PrepareRound(Packet p)
+        public static void PrepareRound(Message m)
         {
             GameConsole.Log("Preparing Round");
             MainCaller.Do(() => { NetworkManager.prepareRoundEvent.Invoke(); });
-            NetLevel.LevelMetaData netData = null;
-            PrepareRound prepareRound;
-            if (p.Content.TryUnpack(out prepareRound)) netData = prepareRound.LevelMetaData;
+            NetLevel.LevelMetaData netData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
             if (netData != null)
             {
                 var levelMetaData = netData;
@@ -98,21 +65,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.lobbyRequest)]
-        public static void OnLobbyRequest(Packet p)
+        public static void OnLobbyRequest(Message m)
         {
-            LobbyRequest lobbyRequest;
-            if (p.Content.TryUnpack<LobbyRequest>(out lobbyRequest))
-            {
+            
                 if (NetworkManager.instance.isOnServer)
                 {
-                    Marshall(typeof(NetworkManagerHandler),lobbyRequest);
+                    NetworkManager.instance.server.SendToAll(m);
                 }
-                NetworkManager.lobbyRequestEvent.Invoke(lobbyRequest);
-            }
+            
         }
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.startRound)]
-        public static void StartRound(Packet p)
+        public static void StartRound(Message m)
         {
             MainCaller.Do(() =>
             {
@@ -123,7 +87,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.winRound)]
-        public static void WinRound(Packet p)
+        public static void WinRound(Message m)
         {
             MainCaller.Do(() =>
             {
@@ -133,19 +97,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.readyRound)]
-        public static void ReadyRound(Packet p)
+        public static void ReadyRound(Message m)
         {
-            ReadyRound readyRound;
-            if (p.Content.TryUnpack(out readyRound))
-            {
-                if (isOnServer)
+            int localId = m.GetInt();
+            bool ready = m.GetBool();
+            
+                if (NetworkManager.instance.isOnServer)
                 {
-                    Marshall(typeof(NetworkManagerHandler),readyRound);
+                    NetworkManager.instance.server.SendToAll(m);
                 }
                 GameConsole.Log("Received Ready round");
-                NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(readyRound.LocalId, readyRound.Ready));
-                
-            }
+                NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
         }
     }
 }
