@@ -66,7 +66,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
+        public void FixedUpdate()
+        {
+            UpdateSyncVar();
+        }
 
+        public void UpdateSyncVar()
+        {
+            Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
+            foreach (var property in properties)
+            {
+                if (property.PropertyType.IsSubclassOf(typeof(bool)))
+                {
+                    actionM.AddBool((bool)property.GetValue(this));
+                }else
+                if (property.PropertyType.IsSubclassOf(typeof(Vector3)))
+                {
+                    actionM.AddVector3((Vector3)property.GetValue(this));
+                }else
+                if (property.PropertyType.IsSubclassOf(typeof(Quaternion)))
+                {
+                    actionM.AddQuaternion((Quaternion)property.GetValue(this));
+                }
+                else
+                {
+                    GameConsole.Log($"Could not add property {property} to package");
+                }
+                
+            }
+        }
 
 
 
@@ -80,14 +108,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (info.PropertyType.IsSubclassOf(typeof(bool)))
                 {
                     v = value.GetBool();
-                }
+                }else
                 if (info.PropertyType.IsSubclassOf(typeof(Vector3)))
                 {
                     v = value.GetVector3();
-                }
+                }else
                 if (info.PropertyType.IsSubclassOf(typeof(Quaternion)))
                 {
                     v = value.GetQuaternion();
+                }
+                else
+                {
+                    GameConsole.Log($"Could not parse value of {info} from varsync");
                 }
                 
                 info.SetValue(this,v);

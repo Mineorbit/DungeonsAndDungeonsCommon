@@ -14,10 +14,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
         {
             
-            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.lobbyRequest);
-
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.lobbyUpdate);
             m.AddBytes(selectedLevel.ToByteArray());
-            NetworkManager.instance.server.SendToAll(m);
+            NetworkManager.instance.client.Send(m);
+        }
+
+
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.lobbyUpdate)]
+        public static void OnLobbyRequestUpdate(Message m)
+        {
+            if (NetworkManager.instance.isOnServer)
+            {
+                NetworkManager.instance.server.SendToAll(m);
+            }
+            var metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
+            NetworkManager.lobbyRequestEvent.Invoke(metaData);
+
         }
         
         public static void RequestReadyRound()
@@ -48,9 +60,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     PlayerManager.playerManager.SpawnPlayer(localId, location);
             }
         }
-        
 
-        [MessageHandler((ushort)NetworkManager.ClientToServerId.prepareRound)]
+
+        public static void RequestPrepareRound(LevelMetaData metaData)
+        {
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyLobby);
+            m.AddBytes(metaData.ToByteArray());
+            NetworkManager.instance.server.SendToAll(m);
+        }
+        
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.prepareRound)]
         public static void PrepareRound(Message m)
         {
             GameConsole.Log("Preparing Round");
@@ -63,17 +82,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.lobbyRequest)]
-        public static void OnLobbyRequest(Message m)
-        {
-            
-                if (NetworkManager.instance.isOnServer)
-                {
-                    NetworkManager.instance.server.SendToAll(m);
-                }
-            
-        }
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.startRound)]
         public static void StartRound(Message m)

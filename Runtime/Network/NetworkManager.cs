@@ -30,6 +30,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static UnityEvent winEvent = new UnityEvent();
         public static UnityEvent<Tuple<int, bool>> readyEvent = new UnityEvent<Tuple<int, bool>>();
 
+        public static UnityEvent<LevelMetaData> lobbyRequestEvent = new UnityEvent<LevelMetaData>();
+        
         private static Action onConnectAction;
 
         public bool isOnServer = false;
@@ -49,28 +51,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public enum ServerToClientId : ushort
         {
             processAction = 1,
-            playerSpawned = 2,
-            readyLobby = 3,
-            removeEntity,
-            createEntity,
-            entityState,
-            streamChunk,
-            removePlayer,
-            createPlayer,
-            syncVar,
-            lobbyRequest,
-            startRound,
-            winRound,
-            readyRound
+            removeEntity = 2,
+            createEntity = 3,
+            streamChunk = 4,
+            removePlayer = 5,
+            createPlayer = 6,
+            syncVar = 7,
+            startRound = 8,
+            winRound = 9,
+            readyRound = 10,
+            prepareRound = 11
         }
 
         public enum ClientToServerId : ushort
         {
             processAction = 1,
-            name = 2,
-            prepareRound = 3,
-            playerInput,
-            readyLobby
+            playerInput = 2,
+            readyLobby = 3,
+            lobbyUpdate  = 4
         }
         
         
