@@ -11,6 +11,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
 
 
+
+        public static void RequestStartRound()
+        {
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.startRound);
+            NetworkManager.instance.server.SendToAll(m);
+        }
+
+        public static void RequestWinRound()
+        {
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.winRound);
+            NetworkManager.instance.server.SendToAll(m);
+        }
+        
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
         {
             
