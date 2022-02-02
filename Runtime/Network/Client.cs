@@ -308,8 +308,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (Connected)
             {
                 p.Sender = NetworkManager.instance.localId;
-                if(TCP)
-                    GameConsole.Log($"Sending {localid} {p}");
                 if (TCP)
                 {
                     if (overrideSame)
@@ -342,7 +340,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 byte[] tcpResult = new byte[tcpBufferLength];
                 int readLength = tcpStream.Read(tcpResult, 0, tcpBufferLength);
                 data = new byte[readLength];
-                // GameConsole.Log($"Received:  {readLength} bytes");
                 Array.Copy(tcpResult,data,readLength);
             }
             else
@@ -415,8 +412,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             WritePacket(packet);
 
 
-            // WelcomeUnstable  welcomeUnstable = await ReadPacket<WelcomeUnstable>();
-            // GameConsole.Log($"WELCOME: {welcomeUnstable}");
             
             var meConnect = await ReadPacket<MeConnect>();
             userName = meConnect.Name;
@@ -425,9 +420,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             MainCaller.Do(() =>
             {
-                // THIS SHOULD BE REWORKED SUCH THAT EACH ENTITY NETWORKHANDLER ON CONNECTION OF A NEW PLAYER SENDS ITS
-                // OWN CREATION REQUEST
-                //  Send all current players to new connectee
                 for (var id = 0; id < 4 && id != localid; id++)
                 {
                     var player = PlayerManager.playerManager.players[id];
