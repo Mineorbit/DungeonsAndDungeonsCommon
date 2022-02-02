@@ -4,6 +4,7 @@ using Game;
 using General;
 using UnityEngine;
 using Google.Protobuf.WellKnownTypes;
+using RiptideNetworking;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -94,44 +95,39 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void RequestCreation()
         {
             var position = transform.position;
-            var rotation = transform.rotation;
+           
+            Message create = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.createEntity);
 
-            var entityCreate = new EntityCreate
-            {
-                Identity = ((NetworkLevelObject)observed).Identity,
-                X = position.x,
-                Y = position.y,
-                Z = position.z,
-                LevelObjectDataType = GetObservedEntity().levelObjectDataType
-            };
-
-            Marshall(0,entityCreate);
+            create.AddInt(GetObservedEntity().Identity);
+            create.AddVector3(position);
+            create.AddInt(GetObservedEntity().levelObjectDataType);
+            NetworkManager.instance.server.SendToAll(create);
+            
         }
         
-        public virtual void RequestRemoval()
+        public  void RequestRemoval()
         {
-            Packet p = GenerateRemovalRequest();
-            Server.instance.WriteAll(p);
-        }
-
-        public Packet GenerateRemovalRequest()
-        {
-            var entityRemove = new EntityRemove
-            {
-                Identity = GetObservedEntity().Identity
-            };
-
-            var packet = new Packet
-            {
-                Type = typeof(EntityRemove).FullName,
-                Handler = typeof(EntityNetworkHandler).FullName,
-                Content = Any.Pack(entityRemove),
-                Identity = GetObservedEntity().Identity
-            };
-            return packet;
+            Entity e = GetObservedEntity();
+            Message remove = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.removeEntity);
+            remove.AddInt(e.Identity);
+            NetworkManager.instance.server.SendToAll(remove);
         }
         
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
+        public void ProcessAction(Message m)
+        {
+            // THIS NEEDS TO HAPPEN BEFORE, BEACUSE p CHANGES THE SENDER NUMBER
+            base.ProcessAction(m);
+
+            if (isOnServer)
+            {
+                NetworkManager.instance.server.SendToAll(m);
+            }
+        }
+        
+        
+        
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.removeEntity)]
         public void OnEntityRemove(Packet value)
         {
             EntityRemove entityRemove;
@@ -141,7 +137,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
         
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.createEntity)]
         public static void HandleCreatePacket(Packet value)
         {
             MainCaller.Do(() =>
@@ -205,7 +201,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Marshall(((NetworkLevelObject) observed).Identity,entityState);
         }
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.entityState)]
         public void OnEntityState(Packet p)
         {
             EntityState entityState;

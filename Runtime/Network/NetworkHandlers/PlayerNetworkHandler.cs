@@ -2,6 +2,7 @@ using System;
 using Game;
 using General;
 using Google.Protobuf.WellKnownTypes;
+using RiptideNetworking;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -22,14 +23,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (Player) observed;
         }
         
-
-        public override void RequestCreation()
-        {
-            Packet p = GenerateCreationRequest(GetObservedPlayer());
-
-            Server.instance.WriteAll(p);
-        }
-
         
         public void UpdateInputData()
         {
@@ -46,7 +39,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Marshall(((NetworkLevelObject) observed).Identity,playerInputUpdate, TCP: false,true);
         }
         
-        [PacketBinding.Binding]
+
+        public override void RequestCreation()
+        {
+           Player p = GetObservedPlayer();
+           Message create = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.createPlayer);
+            create.AddInt(p.localId);
+            create.AddInt(p.Identity);
+            create.AddString(p.name);
+            create.AddVector3(p.transform.position);
+            
+            NetworkManager.instance.server.SendToAll(create);
+        }
+        
+        
+       
+        
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.playerInput)]
         public void PlayerInputProcessing(Packet p)
         {
             PlayerInputUpdate playerInputUpdate;
@@ -63,20 +72,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        [PacketBinding.Binding]
-        public override void ProcessAction(Packet p)
-        {
-            // THIS NEEDS TO HAPPEN BEFORE, BEACUSE p CHANGES THE SENDER NUMBER
-            base.ProcessAction(p);
-            
-            if (isOnServer) Server.instance.WriteToAllExcept(p, GetObservedPlayer().localId);
-        }
+        
 
-        public override void RequestRemoval()
-        {
-            Packet p = GenerateRemovalRequest(GetObservedPlayer(), this);
-            Server.instance.WriteAll(p);
-        }
+        
 
         public static Packet GenerateRemovalRequest(Player p, PlayerNetworkHandler playerNetworkHandler)
         {
@@ -97,36 +95,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return packet;
         }
 
-        public static Packet GenerateCreationRequest(Player p)
-        {
-            var position = p.transform.position;
-            var rotation = p.transform.rotation;
-
-            var playerNetworkHandler = p.GetComponent<PlayerNetworkHandler>();
-
-            var playerCreate = new PlayerCreate
-            {
-                Name = p.playerName,
-                LocalId = p.localId,
-                X = position.x,
-                Y = position.y,
-                Z = position.z,
-                Identity = p.Identity
-            };
-            
-            string[] fs = typeof(PlayerNetworkHandler).FullName.Split('.');
-            
-            var packet = new Packet
-            {
-                Type = typeof(PlayerCreate).FullName,
-                Handler = fs[fs.Length-1],
-                Content = Any.Pack(playerCreate)
-            };
-            return packet;
-        }
+      
 
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.removePlayer)]
         public static void OnPlayerRemove(Packet value)
         {
             PlayerRemove playerRemove;
@@ -138,7 +110,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.createPlayer)]
         public static void OnPlayerCreate(Packet value)
         {
             PlayerCreate playerCreate;
