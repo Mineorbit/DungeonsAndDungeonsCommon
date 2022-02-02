@@ -85,7 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (var property in properties)
             {
                 i++;
-                if(property.PropertyType == typeof(Vector3))
+                if(property.PropertyType.ToString() == "UnityEngine.Vector3")
                 {
                     MVector vector = fromVector3( (Vector3) property.GetValue(this));
                     varSync.Content.Add(i,Any.Pack(vector));
