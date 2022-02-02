@@ -251,7 +251,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             VarSync varSync;
             if (value.Content.TryUnpack(out varSync))
             {
-                GameConsole.Log(varSync.ToString());
+                GameConsole.Log("TEST: "+varSync.ToString());
             }
         }
     }
