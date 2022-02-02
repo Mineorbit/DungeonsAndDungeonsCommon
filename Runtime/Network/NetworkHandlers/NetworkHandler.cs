@@ -287,7 +287,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     PropertyInfo p = properties[kp.Key];
                     if (p.PropertyType.ToString() == "UnityEngine.Vector3")
                     {
-                        Vector3 v = toVector3(kp.Value.Unpack<MVector>();
+                        Vector3 v = toVector3(kp.Value.Unpack<MVector>());
                         GameConsole.Log($"Setting {p} to {v}");
                         p.SetValue(this,v);
                     }
