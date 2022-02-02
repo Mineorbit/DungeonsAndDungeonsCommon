@@ -20,6 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public readonly float tpDist = 0.075f;
 
+        [PacketBinding.SyncVar]
         public Vector3 receivedPosition;
         public Vector3 receivedRotation;
         

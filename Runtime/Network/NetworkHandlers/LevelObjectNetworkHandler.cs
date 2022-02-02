@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Game;
 using General;
 using Google.Protobuf.WellKnownTypes;
@@ -16,9 +18,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool disabled_observed = true;
 
-	
 
-
+        private PropertyInfo[] properties;
         public virtual LevelObject GetObserved()
         {
             return (LevelObject) observed;
@@ -27,6 +28,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Awake()
         {
             observed = GetComponent<NetworkLevelObject>();
+            properties = (PropertyInfo[]) this.GetType().GetProperties().Where(
+                prop => Attribute.IsDefined(prop, typeof(PacketBinding.SyncVar)));
             base.Awake();
             // currently not updated
             if (observed != null)
@@ -46,6 +49,52 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             
         }
+
+        public static Vector3 toVector3(MVector v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
+
+        public static Quaternion toQuaternion(MQuaternion q)
+        {
+            return new Quaternion(q.X, q.Y, q.Z, q.W);
+        }
+        
+        public static MVector fromVector3(Vector3 v)
+        {
+            MVector mVector = new MVector();
+            mVector.X = v.x;
+            mVector.Y = v.y;
+            mVector.Z = v.z;
+            return mVector;
+        }
+
+        public static MQuaternion fromQuaternion(Quaternion q)
+        {
+            MQuaternion mQuaternion = new MQuaternion();
+            mQuaternion.X = q.x;
+            mQuaternion.Y = q.y;
+            mQuaternion.Z = q.z;
+            mQuaternion.W = q.w;
+            return mQuaternion;
+        }
+
+        public VarSync GetVarSync()
+        {
+            VarSync varSync = new VarSync();
+            int i = 0;
+            foreach (var property in properties)
+            {
+                i++;
+                if(property.PropertyType == typeof(Vector3))
+                {
+                    MVector vector = fromVector3( (Vector3) property.GetValue(this));
+                    varSync.Content.Add(i,Any.Pack(vector));
+                }
+            }
+            return varSync;
+        }
+        
 
         public virtual bool AcceptAction(Packet p)
         {

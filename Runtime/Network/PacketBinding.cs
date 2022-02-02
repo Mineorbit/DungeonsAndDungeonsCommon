@@ -146,5 +146,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public class Binding : Attribute
         {
         }
+        
+        public class SyncVar : Attribute
+        {
+        }
     }
 }

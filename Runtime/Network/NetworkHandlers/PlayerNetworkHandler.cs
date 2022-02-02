@@ -30,35 +30,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Server.instance.WriteAll(p);
         }
 
-        public static Vector3 toVector3(MVector v)
-        {
-            return new Vector3(v.X, v.Y, v.Z);
-        }
-
-        public static Quaternion toQuaternion(MQuaternion q)
-        {
-            return new Quaternion(q.X, q.Y, q.Z, q.W);
-        }
         
-        public static MVector fromVector3(Vector3 v)
-        {
-            MVector mVector = new MVector();
-            mVector.X = v.x;
-            mVector.Y = v.y;
-            mVector.Z = v.z;
-            return mVector;
-        }
-
-        public static MQuaternion fromQuaternion(Quaternion q)
-        {
-            MQuaternion mQuaternion = new MQuaternion();
-            mQuaternion.X = q.x;
-            mQuaternion.Y = q.y;
-            mQuaternion.Z = q.z;
-            mQuaternion.W = q.w;
-            return mQuaternion;
-        }
-
         public void UpdateInputData()
         {
             PlayerController c = (PlayerController) GetObservedPlayer().controller;
