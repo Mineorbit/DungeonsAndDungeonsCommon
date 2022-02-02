@@ -224,6 +224,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 udpSent++;
                 
             }
+            // ADD ALL VAR SYNCS ALLWAYS
+
+            foreach (NetworkHandler handler in NetworkManager.networkHandlers)
+            {
+                // CREATE ALL VAR SYNC PACKETS AND ADD THEM TO THE SYNCS
+                VarSync varSync = new VarSync();
+                
+            }
+            
+            
             if(udpSent > 0)
                 WriteOut(udpCarrier,TCP: false);
             

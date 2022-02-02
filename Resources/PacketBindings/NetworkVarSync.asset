@@ -15,6 +15,7 @@ MonoBehaviour:
   possiblePacketTypes:
   - General.Packet
   - General.PacketCarrier
+  - General.VarSync
   - State.MeConnect
   - State.MeDisconnect
   - State.PrepareRound
@@ -116,8 +117,8 @@ MonoBehaviour:
   - com.mineorbit.dungeonsanddungeonscommon.PlayerNetworkHandler
   possibleMethods:
   - SyncVarHandle
-  PacketType: 
+  PacketType: General.VarSync
   HandlerType: com.mineorbit.dungeonsanddungeonscommon.NetworkHandler
   BindedMethods:
   - SyncVarHandle
-  withIdentity: 0
+  withIdentity: 1
