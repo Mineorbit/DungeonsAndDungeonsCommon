@@ -24,7 +24,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static string userName;
 
         public static UnityEvent connectEvent = new UnityEvent();
-        public static UnityEvent<LobbyRequest> lobbyRequestEvent = new UnityEvent<LobbyRequest>();
         public static UnityEvent disconnectEvent = new UnityEvent();
         public static UnityEvent prepareRoundEvent = new UnityEvent();
         public static UnityEvent startRoundEvent = new UnityEvent();
@@ -70,7 +69,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             processAction = 1,
             name = 2,
             prepareRound = 3,
-            playerInput
+            playerInput,
+            readyLobby
         }
         
         
@@ -97,7 +97,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 client = new Client();
                 client.Connected += OnConnected;
-                client.Connected += (a,b) => { NetworkManager.networkHandlers = new List<NetworkHandler>();};
+                client.Connected += (a,b) => { NetworkManager.networkHandlers = new List<NetworkHandler>();
+                    localId = (ushort) client.Id;
+                };
 
             }
 
