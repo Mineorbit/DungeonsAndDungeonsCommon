@@ -4,6 +4,6 @@ import "any.proto";
 
 package General;
 
-message Packet {
+message VarSync {
   map<int32,google.protobuf.Any> content = 1;
 }
