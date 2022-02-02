@@ -14,5 +14,8 @@
     "name": "Mineorbit",
     "email": "mineorbitbeta@gmail.com"
   },
-  "hideInEditor": false
+  "hideInEditor": false,
+  "dependencies": {
+    "net.tomweiland.riptidenetworking": "1.2.0"
+  }
 }
