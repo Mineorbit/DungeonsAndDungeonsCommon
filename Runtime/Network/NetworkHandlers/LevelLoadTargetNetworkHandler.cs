@@ -1,6 +1,7 @@
 using Game;
 using General;
 using NetLevel;
+using RiptideNetworking;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -15,7 +16,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Packet p)
         {
             StreamChunk streamChunk;

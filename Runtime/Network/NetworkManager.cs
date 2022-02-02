@@ -4,6 +4,8 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using NetLevel;
+using RiptideNetworking;
+using RiptideNetworking.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,7 +21,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Option useUDPOption;
         
-        public static List<Client> allClients = new List<Client>();
         public static string userName;
 
         public static UnityEvent connectEvent = new UnityEvent();
@@ -32,20 +33,46 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private static Action onConnectAction;
 
-        public List<PacketBinding> packetBindings = new List<PacketBinding>();
+        public bool isOnServer = false;
 
         public int localId;
         
         public bool ready;
 
-        public static List<Thread> threadPool = new List<Thread>();
-        
+        public Server server;
         public Client client;
 
         
         // Temporary fix
 
         public bool useUDP;
+        
+        public enum ServerToClientId : ushort
+        {
+            processAction = 1,
+            playerSpawned = 2,
+            readyLobby = 3,
+            removeEntity,
+            createEntity,
+            entityState,
+            streamChunk,
+            removePlayer,
+            createPlayer,
+            syncVar,
+            lobbyRequest,
+            startRound,
+            winRound,
+            readyRound
+        }
+
+        public enum ClientToServerId : ushort
+        {
+            processAction = 1,
+            name = 2,
+            prepareRound = 3,
+            playerInput
+        }
+        
         
         // Start is called before the first frame update
         private void Start()
@@ -58,20 +85,41 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // THIS IS A STUPID PLACE BUT WILL CHANGE LATER
             Time.fixedDeltaTime = 0.03f;
 
-            foreach (var p in packetBindings) p.AddToBinding();
+            
+            RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
+            
+            if (isOnServer)
+            {
+                server = new Server();
+            }
+            else
+            {
+                
+                client = new Client();
+                client.Connected += OnConnected;
+                client.Connected += (a,b) => { NetworkManager.networkHandlers = new List<NetworkHandler>();};
 
-            useUDP = (bool) useUDPOption.Value;
+            }
+
 
         }
 
+        
+        
 
         public void FixedUpdate()
         {
-            foreach (var c in allClients)
+            if (isOnServer)
             {
-                if(c != null) c.FixedUpdate();
+                localId = -1;
+                server.Tick();
+            }
+            else
+            {
+                client.Tick();
             }
         }
+
 
         //Factor this out into GameLogic
 
@@ -79,27 +127,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void OnDestroy()
         {
             Disconnect();
-            KillThreads();
         }
 
         public void Connect(string ip, string playerName, Action onConnect)
         {
-            if (!isConnected)
+            if (!client.IsConnected)
             {
-                onConnectAction = onConnect;
                 userName = playerName;
-                client = Client.Connect(IPAddress.Parse(ip), 13565);
+                client.Connect($"{ip}:13565");
                 GameConsole.Log($"Set new client {client}");
-                client.onConnectEvent.AddListener(OnConnected);
-                client.onConnectEvent.AddListener((x) => { NetworkManager.networkHandlers = new List<NetworkHandler>();});
             }
         }
 
-        public void OnConnected(int id)
+        public void OnConnected(object sender, EventArgs e)
         {
             MainCaller.Do(() =>
             {
-                localId = id;
+                localId = client.Id;
                 isConnected = true;
                 SetNetworkHandlers(isConnected);
                 onConnectAction.Invoke();
@@ -117,18 +161,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Disconnect(bool respond = true)
         {
-            if (!isConnected)
-            {
-                return;
-            }
-
-            isConnected = false;
-                if (client != null)
-                    client.Disconnect(respond);
-                disconnectEvent.Invoke();
-                
-            KillThreads();
-            PlayerManager.playerManager.Remove(localId);
+            client.Disconnect();
         }
 
         public void CallReady(bool r)
@@ -147,26 +180,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManagerHandler.RequestLobbyUpdate(metaData);
         }
 
-        public void KillThreads()
-        {
-            foreach (Thread t in threadPool)
-            {
-                if (t.IsAlive)
-                {
-                    GameConsole.Log($"Killing Subthread {t.Name}");
-                    t.Abort();
-                }
-            }
-        }
+        
 
         public void OnApplicationQuit()
         {
-            KillThreads();
+            Disconnect();
         }
 
-        public void OnDisable()
-        {
-            KillThreads();
-        }
+        
     }
 }

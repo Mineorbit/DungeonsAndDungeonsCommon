@@ -6,6 +6,7 @@ using Game;
 using General;
 using Google.Protobuf.WellKnownTypes;
 using NetLevel;
+using RiptideNetworking;
 using UnityEngine;
 using Type = System.Type;
 
@@ -73,7 +74,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
         public virtual void ProcessAction(Packet p)
         {
             LevelObjectAction levelObjectAction;

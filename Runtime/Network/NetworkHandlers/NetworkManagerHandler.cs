@@ -1,6 +1,7 @@
 using System;
 using General;
 using NetLevel;
+using RiptideNetworking;
 using State;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -63,10 +64,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Marshall(typeof(NetworkManagerHandler), readyLobby);
         }
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.readyLobby)]
         public static void OnReadyLobby(Packet p)
         {
-            if (isOnServer)
+            if (NetworkManager.instance.isOnServer)
             {
                 ReadyLobby readyLobby;
                 if (p.Content.TryUnpack(out readyLobby))
@@ -79,36 +80,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
         
-        [PacketBinding.Binding]
-        public static void OnDisconnect(Packet p)
-        {
-            MeDisconnect meDisconnect;
-            if (p.Content.TryUnpack(out meDisconnect))
-            {
-                var localId = p.Sender;
 
-                if (isOnServer)
-                {
-                    if (Server.instance.clients[localId] != null)
-                    {
-                        Server.instance.clients[localId].Disconnect(false);
-                    }
-                    MainCaller.Do(() => {
-                    if(PlayerManager.playerManager.GetPlayer(localId) != null)
-                    {
-                        PlayerManager.playerManager.Remove(localId);
-                    }
-                    });
-                }
-                else
-                {
-                    NetworkManager.instance.Disconnect(false);
-                }
-            }
-        }
-
-
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.prepareRound)]
         public static void PrepareRound(Packet p)
         {
             GameConsole.Log("Preparing Round");
@@ -124,13 +97,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.lobbyRequest)]
         public static void OnLobbyRequest(Packet p)
         {
             LobbyRequest lobbyRequest;
             if (p.Content.TryUnpack<LobbyRequest>(out lobbyRequest))
             {
-                if (isOnServer)
+                if (NetworkManager.instance.isOnServer)
                 {
                     Marshall(typeof(NetworkManagerHandler),lobbyRequest);
                 }
@@ -138,7 +111,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.startRound)]
         public static void StartRound(Packet p)
         {
             MainCaller.Do(() =>
@@ -149,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.winRound)]
         public static void WinRound(Packet p)
         {
             MainCaller.Do(() =>
@@ -159,7 +132,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.readyRound)]
         public static void ReadyRound(Packet p)
         {
             ReadyRound readyRound;

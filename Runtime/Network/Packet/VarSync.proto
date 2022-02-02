@@ -1,9 +1,0 @@
-﻿syntax = "proto3";
-
-import "any.proto";
-
-package General;
-
-message VarSync {
-  map<int32,google.protobuf.Any> content = 1;
-}

@@ -5,6 +5,7 @@ using Game;
 using General;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
+using RiptideNetworking;
 using UnityEngine;
 using UnityEngine.Events;
 using Type = System.Type;
@@ -14,9 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class NetworkHandler : MonoBehaviour
     {
         public delegate void ParamsAction(Dictionary<string, object> arguments);
-
-        public static bool isOnServer;
-
+        
 
         public PropertyInfo[] properties;
         public static List<Type> loadedTypes = new List<Type>();
@@ -47,7 +46,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                       Level.instantiateType == Level.InstantiateType.Online;
             
             if (!enabled) return;
-            isOnServer = Server.instance != null;
             NetworkManager.networkHandlers.Add(this);
             
             
@@ -276,7 +274,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        [PacketBinding.Binding]
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.syncVar)]
         public void SyncVarHandle(Packet value)
         {
             VarSync varSync;
