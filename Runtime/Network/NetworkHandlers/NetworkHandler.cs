@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Game;
 using General;
 using Google.Protobuf;
@@ -17,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static bool isOnServer;
 
 
+        public PropertyInfo[] properties;
         public static List<Type> loadedTypes = new List<Type>();
 
         // first type in  key (Packet) second (Handler)
@@ -215,6 +217,35 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public static Vector3 toVector3(MVector v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
+
+        public static Quaternion toQuaternion(MQuaternion q)
+        {
+            return new Quaternion(q.X, q.Y, q.Z, q.W);
+        }
+        
+        public static MVector fromVector3(Vector3 v)
+        {
+            MVector mVector = new MVector();
+            mVector.X = v.x;
+            mVector.Y = v.y;
+            mVector.Z = v.z;
+            return mVector;
+        }
+
+        public static MQuaternion fromQuaternion(Quaternion q)
+        {
+            MQuaternion mQuaternion = new MQuaternion();
+            mQuaternion.X = q.x;
+            mQuaternion.Y = q.y;
+            mQuaternion.Z = q.z;
+            mQuaternion.W = q.w;
+            return mQuaternion;
+        }
+        
         
         public void Marshall(int identity, IMessage message, int target, bool toOrWithout = true, bool TCP = true, bool overrideSame = false)
         {
@@ -248,11 +279,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void SyncVarHandle(Packet value)
         {
-            GameConsole.Log("VARSYNC");
             VarSync varSync;
             if (value.Content.TryUnpack(out varSync))
             {
-                GameConsole.Log("TEST: "+varSync.ToString());
+                foreach (KeyValuePair<int,Any> kp in varSync.Content)
+                {
+                    PropertyInfo p = properties[kp.Key];
+                    if (p.PropertyType.ToString() == "UnityEngine.Vector3")
+                    {
+                        p.SetValue(this,toVector3(kp.Value.Unpack<MVector>()));
+                    }
+                }
             }
         }
     }
