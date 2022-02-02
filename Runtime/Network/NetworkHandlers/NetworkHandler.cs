@@ -73,7 +73,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateSyncVar()
         {
-            if(properties.Length>0)
+            if(properties != null && properties.Length>0)
             {
                 Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
                 foreach (var property in properties)
