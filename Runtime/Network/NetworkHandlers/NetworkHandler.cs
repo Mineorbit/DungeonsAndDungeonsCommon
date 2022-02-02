@@ -248,6 +248,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.Binding]
         public void SyncVarHandle(Packet value)
         {
+            GameConsole.Log("VARSYNC");
             VarSync varSync;
             if (value.Content.TryUnpack(out varSync))
             {
