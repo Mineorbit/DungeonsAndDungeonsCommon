@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using Google.Protobuf.WellKnownTypes;
@@ -116,11 +117,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManager.instance.Server.SendToAll(remove);
         }
         
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
-        public void ProcessAction(Message m)
+        public override void Process(int sender, string actionName, List<object> parameters, Message m = null)
         {
             // THIS NEEDS TO HAPPEN BEFORE, BEACUSE p CHANGES THE SENDER NUMBER
-            base.ProcessAction(m);
+            base.Process(sender,actionName,parameters);
 
             if (NetworkManager.instance.isOnServer)
             {

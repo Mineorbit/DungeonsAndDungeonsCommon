@@ -56,8 +56,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
         [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
-        public virtual void ProcessAction(Message m)
+        public static void ProcessAction(Message m)
         {
+            int identity = m.GetInt();
             int sender = m.GetInt();
             string actionName = m.GetString();
             var parameters = new List<object>();
@@ -65,22 +66,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 parameters.Add(m.GetVector3());
             }
-                
-            GameConsole.Log($"{sender} asked {this} to do {actionName} ");
 
-                if (!AcceptAction(sender)) return;
-                
-                var methodInfo = observed.GetType().GetMethod(actionName);
+            ByIdentity(identity).Process(sender,actionName,parameters,m);
 
-                
-                if (methodInfo != null)
-                    MainCaller.Do(() => { methodInfo.Invoke(observed, parameters.ToArray()); });
-                else
-                    GameConsole.Log("The Method with the given name " + actionName +
-                              " could not be found, is it private?");
-            
+
         }
 
+
+        public virtual void Process(int sender, string actionName,List<object> parameters, Message m = null)
+        {
+            GameConsole.Log($"{sender} asked {this} to do {actionName} ");
+
+            if (!AcceptAction(sender)) return;
+                
+            var methodInfo = observed.GetType().GetMethod(actionName);
+
+                
+            if (methodInfo != null)
+                MainCaller.Do(() => { methodInfo.Invoke(observed, parameters.ToArray()); });
+            else
+                GameConsole.Log("The Method with the given name " + actionName +
+                                " could not be found, is it private?");
+            
+        }
 
         // THIS NEEDS A SAFETY LIST LATER
 
