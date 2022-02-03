@@ -85,7 +85,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 actionM.AddInt(((NetworkLevelObject) observed).Identity);
                 foreach (var info in properties)
                 {
-                    GameConsole.Log(info.PropertyType.FullName);
                     if (info.PropertyType.FullName == "System.Boolean")
                     {
                         actionM.AddBool((bool)info.GetValue(this));
@@ -121,10 +120,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkHandler n = NetworkHandler.ByIdentity(identity);
             try
             {
-            if(n != null)
-            {
-                
-                GameConsole.Log($"SyncVar: {n.gameObject} {identity}");
+                if(n != null)
+                {
                 foreach (var info in n.properties)
                 {
                     object v = null;
