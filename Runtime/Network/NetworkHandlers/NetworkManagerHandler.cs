@@ -41,17 +41,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 NetworkManager.instance.Server.SendToAll(m);
             }
             var metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
+            GameConsole.Log($"Selected Level: {metaData}");
             NetworkManager.lobbyRequestEvent.Invoke(metaData);
 
         }
         
         public static void RequestReadyRound()
         {
-            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.readyRound);
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyRound);
 
             m.AddBool(NetworkManager.instance.ready);
             m.AddInt(NetworkManager.instance.localId);
-            NetworkManager.instance.Server.SendToAll(m);
+            NetworkManager.instance.Client.Send(m);
         }
 
         public static void RequestReadyLobby()
@@ -117,7 +118,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
         }
 
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.readyRound)]
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.readyRound)]
         public static void ReadyRound(Message m)
         {
             int localId = m.GetInt();

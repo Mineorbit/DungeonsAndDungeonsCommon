@@ -50,6 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public enum ServerToClientId : ushort
         {
             processAction = 1,
+            readyRound = 2,
             removeEntity = 2,
             createEntity = 3,
             streamChunk = 4,
@@ -58,16 +59,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             syncVar = 7,
             startRound = 8,
             winRound = 9,
-            readyRound = 10,
             prepareRound = 11
         }
 
         public enum ClientToServerId : ushort
         {
             processAction = 1,
+            readyRound = 2,
             playerInput = 13,
             readyLobby = 14,
-            lobbyUpdate  = 15
+            lobbyUpdate  = 15,
         }
         
         
