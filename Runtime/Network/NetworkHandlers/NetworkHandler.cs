@@ -82,7 +82,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 actionM.AddInt(((NetworkLevelObject) observed).Identity);
                 foreach (var info in properties)
                 {
-                    GameConsole.Log(info.PropertyType.FullName);
                     if (info.PropertyType.FullName == "System.Boolean")
                     {
                         actionM.AddBool((bool)info.GetValue(this));
@@ -120,7 +119,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 foreach (var info in n.properties)
                 {
-                    GameConsole.Log(info.PropertyType.FullName);
                     object v = null;
                 if (info.PropertyType.FullName == "System.Boolean")
                 {
