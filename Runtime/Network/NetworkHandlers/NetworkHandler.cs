@@ -79,6 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(NetworkManager.instance.isOnServer && properties != null && properties.Length>0)
             {
                 Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
+                actionM.AddInt(((NetworkLevelObject) observed).Identity);
                 foreach (var property in properties)
                 {
                     if (property.PropertyType.IsSubclassOf(typeof(bool)))
@@ -106,8 +107,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.syncVar)]
-        public void SyncVarHandle(Message value)
+        public static void SyncVarHandle(Message value)
         {
+            int identity = value.GetInt();
 
             foreach (var info in properties)
             {
@@ -129,7 +131,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GameConsole.Log($"Could not parse value of {info} from varsync");
                 }
                 
-                info.SetValue(this,v);
+                info.SetValue(NetworkHandler.ByIdentity(identity),v);
             }
             
             

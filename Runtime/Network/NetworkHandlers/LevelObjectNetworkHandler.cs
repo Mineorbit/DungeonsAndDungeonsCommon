@@ -101,6 +101,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.createEntity);
 
+
+            actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
+            actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
 
             if (argument.GetType().IsSubclassOf(typeof(Vector3)))
