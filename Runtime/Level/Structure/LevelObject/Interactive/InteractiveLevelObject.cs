@@ -117,7 +117,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log("Resetting "+this);
             base.OnEndRound();
             activeIn = 0;
-            Invoke(HandleReset, doLocal:true, doServer: true);
+            Invoke(HandleReset, true, true);
         }
         
         // Will try to find receiver at that location, if not found, will drop that receiver
