@@ -115,6 +115,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             int identity = value.GetInt();
             NetworkHandler n = NetworkHandler.ByIdentity(identity);
+            try
+            {
             if(n != null)
             {
                 foreach (var info in n.properties)
@@ -148,6 +150,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 GameConsole.Log($"Could not find {identity} for syncvar");
+            }
+            }
+            catch (Exception e)
+            {
+                GameConsole.Log($"SyncVar: {n.gameObject} {identity}: {e} ");
+                throw;
             }
         }
     }
