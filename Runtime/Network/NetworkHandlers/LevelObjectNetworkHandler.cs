@@ -102,11 +102,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             if (NetworkManager.instance.isOnServer)
             {
-                NetworkManager.instance.server.SendToAll(actionM);
+                NetworkManager.instance.Server.SendToAll(actionM);
             }
             else
             {
-                NetworkManager.instance.client.Send(actionM);
+                NetworkManager.instance.Client.Send(actionM);
             }
             
 
@@ -126,11 +126,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (NetworkManager.instance.isOnServer)
             {
-                NetworkManager.instance.server.SendToAll(actionM);
+                NetworkManager.instance.Server.SendToAll(actionM);
             }
             else
             {
-                NetworkManager.instance.client.Send(actionM);
+                NetworkManager.instance.Client.Send(actionM);
             }
         }
 

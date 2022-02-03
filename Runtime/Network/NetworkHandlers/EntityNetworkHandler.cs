@@ -104,7 +104,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             create.AddInt(GetObservedEntity().Identity);
             create.AddVector3(position);
             create.AddInt(GetObservedEntity().levelObjectDataType);
-            NetworkManager.instance.server.SendToAll(create);
+            NetworkManager.instance.Server.SendToAll(create);
             
         }
         
@@ -113,7 +113,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Entity e = GetObservedEntity();
             Message remove = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.removeEntity);
             remove.AddInt(e.Identity);
-            NetworkManager.instance.server.SendToAll(remove);
+            NetworkManager.instance.Server.SendToAll(remove);
         }
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
@@ -124,7 +124,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (NetworkManager.instance.isOnServer)
             {
-                NetworkManager.instance.server.SendToAll(m);
+                NetworkManager.instance.Server.SendToAll(m);
             }
         }
         
