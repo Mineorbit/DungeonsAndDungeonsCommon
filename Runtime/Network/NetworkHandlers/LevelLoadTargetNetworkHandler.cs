@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class LevelLoadTargetNetworkHandler : LevelObjectNetworkHandler
+    public class LevelLoadTargetNetworkHandler : EntityNetworkHandler
     {
 
         public override void Awake()
         {
+            base.Awake();
             disabled_observed = true;
             base.Awake();
         }
