@@ -58,9 +58,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (chunkData != null)
                     {
                         if (immediate)
-                            Invoke(StreamChunkImmediateIntoCurrentLevelFrom, chunkData, false, true);
+                            Invoke(StreamChunkImmediateIntoCurrentLevelFrom, chunkData, true, true);
                         else
-                            Invoke(StreamChunkIntoCurrentLevelFrom, chunkData, false , true);
+                            Invoke(StreamChunkIntoCurrentLevelFrom, chunkData, true , true);
 
                         loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                     }
