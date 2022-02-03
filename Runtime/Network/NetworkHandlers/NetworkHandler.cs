@@ -110,8 +110,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void SyncVarHandle(Message value)
         {
             int identity = value.GetInt();
-
-            foreach (var info in properties)
+            NetworkHandler n = NetworkHandler.ByIdentity(identity);
+            foreach (var info in n.properties)
             {
                 object v = null;
                 if (info.PropertyType.IsSubclassOf(typeof(bool)))
@@ -131,7 +131,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     GameConsole.Log($"Could not parse value of {info} from varsync");
                 }
                 
-                info.SetValue(NetworkHandler.ByIdentity(identity),v);
+                info.SetValue(n,v);
             }
             
             
