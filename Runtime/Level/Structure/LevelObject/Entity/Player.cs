@@ -67,19 +67,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(climbableHitbox.insideCounter == 0)
                     inClimbing = false;
             });
-            if(Level.instantiateType == Level.InstantiateType.Test || Level.instantiateType == Level.InstantiateType.Play)
-            {
-                var loadTargetData = Resources.Load("LevelObjectData/LevelLoadTarget") as LevelObjectData;
-
-                var loadTargetGameObject = loadTargetData.Create(transform.position, new Quaternion(0, 0, 0, 0),null,null);
-
-                GameConsole.Log("CREATING LOAD TARGET");
-                loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
-                loadTarget.mover.target = transform;
-            }
+                
         }
 
 
+        public override void Start()
+        {
+            base.Start();
+            var loadTargetData = Resources.Load("LevelObjectData/LevelLoadTarget") as LevelObjectData;
+
+            var loadTargetGameObject = loadTargetData.Create(transform.position, new Quaternion(0, 0, 0, 0),null,null);
+
+            loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
+            loadTarget.mover.target = transform;
+        }
+        
         public bool HasShieldInHand()
         {
             if (GetRightHandHandle().slot != null)
