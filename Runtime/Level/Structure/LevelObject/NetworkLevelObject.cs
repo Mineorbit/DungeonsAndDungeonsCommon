@@ -101,23 +101,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //This marks a message for transport through network
 		// It will allways be called when the level is  in test mode (see  edit mode -> edit mode)
 		// but in real multiplayer only depending on the conditionals
-        public bool CallOnThisSide(bool doLocal, bool doServer)
+        
+        public void Invoke<T>(Action<T> a, T argument, bool doClient = true, bool doServer = true)
         {
-	        return Level.instantiateType == Level.InstantiateType.Edit ||
-	               Level.instantiateType == Level.InstantiateType.Test ||
-	               doLocal && (Level.instantiateType == Level.InstantiateType.Online)
-	               || doServer && Level.instantiateType == Level.InstantiateType.Play;
-        }
-        public void Invoke<T>(Action<T> a, T argument, bool doLocal = true, bool doServer = true)
-        {
-	        if (CallOnThisSide(doLocal,doServer))
+	        if (doServer && NetworkManager.instance.isOnServer || !NetworkManager.instance.isOnServer && doClient)
 	        {
-		        GameConsole.Log($"Calling {a.Method.Name} locally");
 		        a.DynamicInvoke(argument);
 	        }
-	        if(levelObjectNetworkHandler.CallActionOnOther(doLocal,doServer))
+	        if(doServer && !NetworkManager.instance.isOnServer || NetworkManager.instance.isOnServer && doClient)
 	        {
-		        GameConsole.Log($"Asking other to do {a.Method.Name}");
 				if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
 					if (identified)
 						levelObjectNetworkHandler.SendAction(a.Method.Name,
@@ -127,17 +119,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        }
         }
 
-        public void Invoke(Action a, bool doLocal = true, bool doServer = true)
+        public void Invoke(Action a, bool doClient = true, bool doServer = true)
         {
-	        if (CallOnThisSide(doLocal,doServer))
+	        if (doServer && NetworkManager.instance.isOnServer || !NetworkManager.instance.isOnServer && doClient)
 	        {
-		        GameConsole.Log($"Calling {a.Method.Name} locally");
 		        a.DynamicInvoke();
 	        }
 
 	        if(levelObjectNetworkHandler != null)
 	        {
-				if (levelObjectNetworkHandler.CallActionOnOther(doLocal, doServer))
+				if (doServer && !NetworkManager.instance.isOnServer || NetworkManager.instance.isOnServer && doClient)
 				{
 					if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
 						if (identified)
