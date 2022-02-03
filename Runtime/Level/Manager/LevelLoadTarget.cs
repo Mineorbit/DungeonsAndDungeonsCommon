@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class LevelLoadTarget : NetworkLevelObject
+    public class LevelLoadTarget : Entity
     {
         public enum LoadTargetMode
         {
@@ -22,8 +22,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private readonly List<Tuple<int, int, int>> loadedLocalChunks = new List<Tuple<int, int, int>>();
 
 
-        public void Start()
+        public override void Start()
         {
+            base.Start();
             LevelManager.levelClearEvent.AddListener(() => { loadedLocalChunks.Clear();});
         }
 
