@@ -71,6 +71,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var loadTargetGameObject = loadTargetData.Create(transform.position, new Quaternion(0, 0, 0, 0),null,null);
 
+            GameConsole.Log("CREATING LOAD TARGET");
             loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
             loadTarget.mover.target = transform;
         }
