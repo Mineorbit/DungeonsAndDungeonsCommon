@@ -82,25 +82,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 actionM.AddInt(((NetworkLevelObject) observed).Identity);
                 foreach (var property in properties)
                 {
-                    if (property.PropertyType.IsSubclassOf(typeof(bool)))
+                    if (property.PropertyType.Name == "Boolean")
                     {
                         actionM.AddBool((bool)property.GetValue(this));
                     }else
-                    if (property.PropertyType.IsSubclassOf(typeof(Vector3)))
+                    if (property.PropertyType.Name == "UnityEngine.Vector3")
                     {
                         actionM.AddVector3((Vector3)property.GetValue(this));
                     }else
-                    if (property.PropertyType.IsSubclassOf(typeof(Quaternion)))
+                    if (property.PropertyType.Name == "UnityEngine.Quaternion")
                     {
                         actionM.AddQuaternion((Quaternion)property.GetValue(this));
                     }else
-                    if (property.PropertyType.IsSubclassOf(typeof(int)))
+                    if (property.PropertyType.Name == "Int32")
                     {
                         actionM.AddInt((int)property.GetValue(this));
                     }
                     else
                     {
-                        GameConsole.Log($"Could not add property {property} to package");
+                        GameConsole.Log($"Could not add property {property.PropertyType.Name} to package");
                     }
                     NetworkManager.instance.Server.SendToAll(actionM);
                 }
@@ -119,20 +119,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 foreach (var info in n.properties)
                 {
-                object v = null;
-                if (info.PropertyType.IsSubclassOf(typeof(bool)))
+                    object v = null;
+                if (info.PropertyType.Name == "Boolean")
                 {
                     v = value.GetBool();
                 }else
-                if (info.PropertyType.IsSubclassOf(typeof(Vector3)))
+                if (info.PropertyType.Name == "UnityEngine.Vector3")
                 {
                     v = value.GetVector3();
                 }else
-                if (info.PropertyType.IsSubclassOf(typeof(Quaternion)))
+                if (info.PropertyType.Name == "UnityEngine.Quaternion")
                 {
                     v = value.GetQuaternion();
                 }else
-                if (info.PropertyType.IsSubclassOf(typeof(int)))
+                if (info.PropertyType.Name == "Int32")
                 {
                     v = value.GetInt();
                 }
