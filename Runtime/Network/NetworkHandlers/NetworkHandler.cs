@@ -119,6 +119,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
             if(n != null)
             {
+                
+                GameConsole.Log($"SyncVar: {n.gameObject} {identity}");
                 foreach (var info in n.properties)
                 {
                     object v = null;
