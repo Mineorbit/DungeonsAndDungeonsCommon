@@ -47,6 +47,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
         
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.lobbyUpdate)] 
+        public static void OnLobbyRequestUpdate(Message m)
+        {
+
+            LevelMetaData metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
+            GameConsole.Log($"Selected Level: {metaData}");
+            NetworkManager.lobbyRequestEvent.Invoke(metaData);
+
+        }
+        
         public static void RequestReadyRound()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyRound);
@@ -68,14 +78,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (NetworkManager.instance.isOnServer)
             {
-                
-                    int localId = m.GetInt();
-                    Vector3 location = new Vector3(localId * 8, 6, 0);
-                    GameConsole.Log($"Teleporting {localId} to {location}");
-                    PlayerManager.playerManager.SpawnPlayer(localId, location);
+                int localId = m.GetInt(); 
+                Vector3 location = new Vector3(localId * 8, 6, 0);
+                GameConsole.Log($"Teleporting {localId} to {location}");
+                PlayerManager.playerManager.SpawnPlayer(localId, location);
             }
         }
 
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.readyLobby)]
+        public static void OnReadyLobby(Message m)
+        {
+            if (NetworkManager.instance.isOnServer)
+            {
+                int localId = m.GetInt(); 
+                Vector3 location = new Vector3(localId * 8, 6, 0);
+                GameConsole.Log($"Teleporting {localId} to {location}");
+                PlayerManager.playerManager.SpawnPlayer(localId, location);
+            }
+        }
 
         public static void RequestPrepareRound(LevelMetaData metaData)
         {
