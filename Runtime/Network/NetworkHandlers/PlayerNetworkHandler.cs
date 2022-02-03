@@ -39,16 +39,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         [MessageHandler((ushort)NetworkManager.ClientToServerId.playerInput)]
-        public void PlayerInputProcessing(Message message)
+        public static void PlayerInputProcessing(ushort id, Message message)
         {
-            GetObservedPlayer().movingDirection = message.GetVector3();
-            GetObservedPlayer().targetDirection = message.GetVector3();
-            GetObservedPlayer().forwardDirection = message.GetVector3();
-            GetObservedPlayer().aimRotation = message.GetQuaternion();
-            GetObservedPlayer().cameraForwardDirection = message.GetVector3();
-            GetObservedPlayer().movementInputOnFrame = message.GetBool();
-            GetObservedPlayer().doInput = message.GetBool();
-            GetObservedPlayer().takeInput = message.GetBool();
+            Player player = PlayerManager.playerManager.players[id];
+            player.movingDirection = message.GetVector3();
+            player.targetDirection = message.GetVector3();
+            player.forwardDirection = message.GetVector3();
+            player.aimRotation = message.GetQuaternion();
+            player.cameraForwardDirection = message.GetVector3();
+            player.movementInputOnFrame = message.GetBool();
+            player.doInput = message.GetBool();
+            player.takeInput = message.GetBool();
         }
         
 
