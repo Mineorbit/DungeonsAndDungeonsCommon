@@ -102,7 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             var player = playerGameObject.GetComponent<Player>();
             
-            player.enabled = true;
+            //player.enabled = true;
 
             var playerController = playerGameObject.GetComponent<PlayerController>();
 

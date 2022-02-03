@@ -102,7 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		// It will allways be called when the level is  in test mode (see  edit mode -> edit mode)
 		// but in real multiplayer only depending on the conditionals
         
-        public void Invoke<T>(Action<T> a, T argument, bool doClient = true, bool doServer = true)
+        public virtual void Invoke<T>(Action<T> a, T argument, bool doClient = true, bool doServer = true)
         {
 	        if (doServer && NetworkManager.instance.isOnServer || !NetworkManager.instance.isOnServer && doClient)
 	        {
@@ -112,8 +112,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        {
 				if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
 					if (identified)
-						levelObjectNetworkHandler.SendAction(a.Method.Name,
-                        argument);
+						levelObjectNetworkHandler.SendAction(a.Method.Name, argument);
 					else
 						todo.Enqueue(() => { Invoke(a, argument); });
 	        }
