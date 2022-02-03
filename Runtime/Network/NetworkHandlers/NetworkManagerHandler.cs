@@ -99,7 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void RequestPrepareRound(LevelMetaData metaData)
         {
-            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyLobby);
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.prepareRound);
             m.AddBytes(metaData.ToByteArray());
             NetworkManager.instance.Server.SendToAll(m);
         }
