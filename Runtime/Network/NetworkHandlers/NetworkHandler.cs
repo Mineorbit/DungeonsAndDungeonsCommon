@@ -86,11 +86,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         actionM.AddBool((bool)property.GetValue(this));
                     }else
-                    if (property.PropertyType.Name == "UnityEngine.Vector3")
+                    if (property.PropertyType.Name == "Vector3")
                     {
                         actionM.AddVector3((Vector3)property.GetValue(this));
                     }else
-                    if (property.PropertyType.Name == "UnityEngine.Quaternion")
+                    if (property.PropertyType.Name == "Quaternion")
                     {
                         actionM.AddQuaternion((Quaternion)property.GetValue(this));
                     }else
@@ -124,11 +124,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     v = value.GetBool();
                 }else
-                if (info.PropertyType.Name == "UnityEngine.Vector3")
+                if (info.PropertyType.Name == "Vector3")
                 {
                     v = value.GetVector3();
                 }else
-                if (info.PropertyType.Name == "UnityEngine.Quaternion")
+                if (info.PropertyType.Name == "Quaternion")
                 {
                     v = value.GetQuaternion();
                 }else
