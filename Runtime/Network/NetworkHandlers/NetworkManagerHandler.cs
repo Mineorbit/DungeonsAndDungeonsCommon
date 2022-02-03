@@ -52,7 +52,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyRound);
 
             m.AddBool(NetworkManager.instance.ready);
-            m.AddInt(NetworkManager.instance.localId);
             GameConsole.Log($"Sending {m}");
             NetworkManager.instance.Client.Send(m);
         }
@@ -123,7 +122,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ClientToServerId.readyRound)]
         public static void ReadyRound(ushort id,Message m)
         {
-            int localId = m.GetInt();
+            int localId = id - 1;
             bool ready = m.GetBool();
             GameConsole.Log($"Received Ready round {localId} {ready}");
             
