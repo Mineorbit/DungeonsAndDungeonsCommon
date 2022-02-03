@@ -36,12 +36,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ClientToServerId.lobbyUpdate)]
         public static void OnLobbyRequestUpdate(Message m)
         {
+            
+            var metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
+            GameConsole.Log($"Selected Level: {metaData}");
             if (NetworkManager.instance.isOnServer)
             {
                 NetworkManager.instance.Server.SendToAll(m);
             }
-            var metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
-            GameConsole.Log($"Selected Level: {metaData}");
             NetworkManager.lobbyRequestEvent.Invoke(metaData);
 
         }
