@@ -83,19 +83,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 foreach (var info in properties)
                 {
                     GameConsole.Log(info.PropertyType.FullName);
-                    if (info.PropertyType.Name == "Boolean")
+                    if (info.PropertyType.FullName == "System.Boolean")
                     {
                         actionM.AddBool((bool)info.GetValue(this));
                     }else
-                    if (info.PropertyType.Name == "Vector3")
+                    if (info.PropertyType.FullName == "UnityEngine.Vector3")
                     {
                         actionM.AddVector3((Vector3)info.GetValue(this));
                     }else
-                    if (info.PropertyType.Name == "Quaternion")
+                    if (info.PropertyType.FullName == "UnityEngine.Quaternion")
                     {
                         actionM.AddQuaternion((Quaternion)info.GetValue(this));
                     }else
-                    if (info.PropertyType.Name == "Int32")
+                    if (info.PropertyType.FullName == "System.Int32")
                     {
                         actionM.AddInt((int)info.GetValue(this));
                     }
@@ -122,19 +122,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     GameConsole.Log(info.PropertyType.FullName);
                     object v = null;
-                if (info.PropertyType.Name == "Boolean")
+                if (info.PropertyType.FullName == "System.Boolean")
                 {
                     v = value.GetBool();
                 }else
-                if (info.PropertyType.Name == "Vector3")
+                if (info.PropertyType.FullName == "UnityEngine.Vector3")
                 {
                     v = value.GetVector3();
                 }else
-                if (info.PropertyType.Name == "Quaternion")
+                if (info.PropertyType.FullName == "UnityEngine.Quaternion")
                 {
                     v = value.GetQuaternion();
                 }else
-                if (info.PropertyType.Name == "Int32")
+                if (info.PropertyType.FullName == "System.Int32")
                 {
                     v = value.GetInt();
                 }
