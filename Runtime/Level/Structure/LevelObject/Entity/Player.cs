@@ -19,6 +19,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public bool usingLeftItem = false;
 
+        public LevelLoadTarget loadTarget;
         
         public bool usingRightItem = false;
         
@@ -66,6 +67,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(climbableHitbox.insideCounter == 0)
                     inClimbing = false;
             });
+            var loadTargetData = Resources.Load("LevelObjectData/LevelLoadTarget") as LevelObjectData;
+
+            var loadTargetGameObject = loadTargetData.Create(transform.position, new Quaternion(0, 0, 0, 0),null,null);
+
+            var loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
+            loadTarget.mover.target = transform;
+            player.loadTarget = loadTarget;
         }
 
 
@@ -137,6 +145,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnDestroy();
             foreach (var itemHandle in itemHandles) itemHandle.Dettach();
+            
+            if(loadTarget != null)
+                Destroy(loadTarget.gameObject);
         }
 
 
@@ -282,6 +293,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Teleport(Vector3 position)
         {
             base.Teleport(position);
+            if(loadTarget != null)
+                loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); });
             ResetMovement();
         }
 

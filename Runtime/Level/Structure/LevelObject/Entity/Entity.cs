@@ -38,7 +38,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool invincible;
 
-        public LevelLoadTarget loadTarget;
 
         public Hitbox itemHitbox;
 
@@ -168,8 +167,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void OnDestroy()
         {
-            if(loadTarget != null)
-                Destroy(loadTarget.gameObject);
         }
 
         public void UseHandle(ItemHandle h)
@@ -222,8 +219,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             onTeleportEvent.Invoke(position);
             gameObject.SetActive(false);
             transform.position = position;
-            if(loadTarget != null)
-                loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); });
         }
 
 

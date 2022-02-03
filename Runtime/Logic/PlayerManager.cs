@@ -97,15 +97,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var position = GetSpawnLocation(freeLocalId);
 
             var playerLevelObjectData = Resources.Load("LevelObjectData/Entity/Player") as LevelObjectData;
-            var loadTargetData = Resources.Load("LevelObjectData/LevelLoadTarget") as LevelObjectData;
-
+            
             var playerGameObject = playerLevelObjectData.Create(position, new Quaternion(0, 0, 0, 0), transform,identity);
-            var loadTargetGameObject = loadTargetData.Create(position, new Quaternion(0, 0, 0, 0),null,null);
-
-            var loadTarget = loadTargetGameObject.GetComponent<LevelLoadTarget>();
+            
             var player = playerGameObject.GetComponent<Player>();
-            loadTarget.mover.target = player.transform;
-            player.loadTarget = loadTarget;
+            
             player.enabled = true;
 
             var playerController = playerGameObject.GetComponent<PlayerController>();
