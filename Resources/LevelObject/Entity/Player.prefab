@@ -9916,7 +9916,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7709308443060799710}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b0862a346ff38a46998bbfe6129306f, type: 3}
   m_Name: 
@@ -9954,7 +9954,6 @@ MonoBehaviour:
   controller: {fileID: -4485675669329379349}
   rigidbody: {fileID: 6975951243435457332}
   invincible: 0
-  loadTarget: {fileID: 0}
   itemHitbox: {fileID: 1289797724913908694}
   itemsInProximity: []
   maxHealth: 100
@@ -9976,6 +9975,7 @@ MonoBehaviour:
   minCooldownTime: 1
   kickbackSpeed: 5
   usingLeftItem: 0
+  loadTarget: {fileID: 0}
   usingRightItem: 0
   colorChanger: {fileID: 0}
   playerName: 
@@ -10076,18 +10076,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   observed: {fileID: 6264058479458404003}
   disabled_observed: 1
-  isSetup: 0
   owner: -1
-  targetPosition: {x: 0, y: 0, z: 0}
-  targetRotation: {x: 0, y: 0, z: 0}
   lastSentPosition: {x: 0, y: 0, z: 0}
   lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
-  teleportPosition: {x: 0, y: 0, z: 0}
-  transmitPosition: 1
-  interpolatePosition: 1
-  receivedPosition: {x: 0, y: 0, z: 0}
   sendAngle: 0.05
-  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8164085133219797599
 GameObject:
   m_ObjectHideFlags: 0
