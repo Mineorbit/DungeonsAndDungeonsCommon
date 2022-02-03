@@ -50,6 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void SendAction(string actionName, ChunkData chunkData)
         {
+            GameConsole.Log("CALLING REMOTE STREAM CHUNK");
 
             switch (actionName)
             {
