@@ -88,7 +88,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             if (isOnServer)
             {
+                localId = -1;
                 server = new Server();
+                server.Start(13565,4);
             }
             else
             {
@@ -111,7 +113,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (isOnServer)
             {
-                localId = -1;
                 server.Tick();
             }
             else
