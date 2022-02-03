@@ -89,6 +89,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnPlayerCreate(Message message)
         {
             int localId = message.GetInt();
+            if (PlayerManager.playerManager.players[localId] != null)
+                return;
             int identity = message.GetInt();
             string name = message.GetString();
             Vector3 position = message.GetVector3();

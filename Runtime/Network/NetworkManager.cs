@@ -131,8 +131,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             PlayerManager.playerManager.Add(newLocalId,"Test",true,null);
             for(int i = 0; i < 4;i++)
             {
+                if(i != newLocalId)
+                {
                    PlayerNetworkHandler playerNetworkHandler = (PlayerNetworkHandler) PlayerManager.playerManager.players[i].levelObjectNetworkHandler;
                    playerNetworkHandler.RequestCreation();
+                }
             }
         }
 
