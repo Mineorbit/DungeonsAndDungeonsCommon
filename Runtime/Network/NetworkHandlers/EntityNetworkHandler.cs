@@ -147,6 +147,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 position = message.GetVector3();
             int objectType = message.GetInt();
                     LevelObjectData entityLevelObjectData;
+                    GameConsole.Log(LevelDataManager.levelObjectDatas.ToString());
                     if (LevelDataManager.levelObjectDatas.TryGetValue(objectType,
                         out entityLevelObjectData))
                     {
