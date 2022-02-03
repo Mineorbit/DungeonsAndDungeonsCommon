@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 using NetLevel;
 using RiptideNetworking;
 using RiptideNetworking.Utils;
@@ -89,6 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 localId = -1;
                 Server = new Server();
                 Server.Start(13565,4);
+                Server.ClientConnected += OnClientConnect;
             }
             else
             {
@@ -123,6 +125,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //Factor this out into GameLogic
 
 
+        public void OnClientConnect(object sender, ServerClientConnectedEventArgs e)
+        {
+            int newLocalId = e.Client.Id - 1;
+            PlayerManager.playerManager.Add(newLocalId,"Test",true,null);
+            for(int i = 0; i < 4;i++)
+            {
+                   PlayerNetworkHandler playerNetworkHandler = (PlayerNetworkHandler) PlayerManager.playerManager.players[i].levelObjectNetworkHandler;
+                   playerNetworkHandler.RequestCreation();
+            }
+        }
+
         public void OnDestroy()
         {
             Disconnect();
@@ -142,7 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MainCaller.Do(() =>
             {
-                localId = Client.Id;
+                localId = Client.Id - 1;
                 isConnected = true;
                 SetNetworkHandlers(isConnected);
             });
