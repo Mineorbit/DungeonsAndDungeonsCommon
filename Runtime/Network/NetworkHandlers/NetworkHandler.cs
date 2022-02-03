@@ -93,6 +93,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (property.PropertyType.IsSubclassOf(typeof(Quaternion)))
                     {
                         actionM.AddQuaternion((Quaternion)property.GetValue(this));
+                    }else
+                    if (property.PropertyType.IsSubclassOf(typeof(int)))
+                    {
+                        actionM.AddInt((int)property.GetValue(this));
                     }
                     else
                     {
@@ -127,6 +131,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (info.PropertyType.IsSubclassOf(typeof(Quaternion)))
                 {
                     v = value.GetQuaternion();
+                }else
+                if (info.PropertyType.IsSubclassOf(typeof(int)))
+                {
+                    v = value.GetInt();
                 }
                 else
                 {
