@@ -25,13 +25,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 });
         }
 
+
+        private byte[] ChunkToData()
+        {
+            return null;
+        }
+
+        private ChunkData DataToChunk()
+        {
+            return null;
+        }
+        
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
             byte[] chunk = chunkData.ToByteArray();
+            GameConsole.Log($"CHUNK SIZE: {chunk.Length}");
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
             message.AddBytes(chunk);
             NetworkManager.instance.Server.Send(message,(ushort) ((LevelLoadTarget)GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>().owner);
         }
+        
+        
+        
 
         public override void SendAction(string actionName, ChunkData chunkData)
         {
