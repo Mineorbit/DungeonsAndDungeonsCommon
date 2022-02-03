@@ -51,14 +51,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             processAction = 1,
             readyRound = 2,
-            removeEntity = 2,
-            createEntity = 3,
-            streamChunk = 4,
-            removePlayer = 5,
-            createPlayer = 6,
-            syncVar = 7,
-            startRound = 8,
-            winRound = 9,
+            removeEntity = 3,
+            createEntity = 4,
+            streamChunk = 5,
+            removePlayer = 6,
+            createPlayer = 7,
+            syncVar = 8,
+            startRound = 9,
+            winRound = 10,
             prepareRound = 11
         }
 
@@ -66,9 +66,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             processAction = 1,
             readyRound = 2,
-            playerInput = 13,
-            readyLobby = 14,
-            lobbyUpdate  = 15,
+            playerInput = 12,
+            readyLobby = 13,
+            lobbyUpdate  = 14,
         }
         
         
