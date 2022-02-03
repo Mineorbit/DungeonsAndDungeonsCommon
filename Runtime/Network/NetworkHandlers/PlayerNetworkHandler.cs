@@ -34,7 +34,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             input.AddBool(c.movementInputOnFrame);
             input.AddBool(c.doInput);
             input.AddBool(c.takeInput);
-            NetworkManager.instance.client.Send(input);
+            NetworkManager.instance.Client.Send(input);
         }
         
         
@@ -61,7 +61,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             create.AddString(p.name);
             create.AddVector3(p.transform.position);
             
-            NetworkManager.instance.server.SendToAll(create);
+            NetworkManager.instance.Server.SendToAll(create);
         }
         
         
@@ -70,7 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Player p = GetObservedPlayer();
             Message remove = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.removeEntity);
             remove.AddInt(p.localId);
-            NetworkManager.instance.server.SendToAll(remove);
+            NetworkManager.instance.Server.SendToAll(remove);
         }
       
 
