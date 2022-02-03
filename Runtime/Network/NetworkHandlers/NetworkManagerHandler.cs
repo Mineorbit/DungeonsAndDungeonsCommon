@@ -52,6 +52,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             m.AddBool(NetworkManager.instance.ready);
             m.AddInt(NetworkManager.instance.localId);
+            GameConsole.Log($"Sending {m}");
             NetworkManager.instance.Client.Send(m);
         }
 
@@ -123,12 +124,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             int localId = m.GetInt();
             bool ready = m.GetBool();
+            GameConsole.Log($"Received Ready round {localId} {ready}");
             
                 if (NetworkManager.instance.isOnServer)
                 {
                     NetworkManager.instance.Server.SendToAll(m);
                 }
-                GameConsole.Log("Received Ready round");
                 NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
         }
     }
