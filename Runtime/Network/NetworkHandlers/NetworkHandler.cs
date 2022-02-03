@@ -32,7 +32,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static LevelObjectNetworkHandler ByIdentity(int identity)
         {
-            NetworkManager.networkHandlers.Find((x) =>
+            return (LevelObjectNetworkHandler) NetworkManager.networkHandlers.Find((x) =>
             {
                 if (x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)) &&
                     ((NetworkLevelObject) x.observed).Identity == identity)
@@ -42,7 +42,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 return false;
             });
-            return null;
         }
         
         public virtual void OnDestroy()
@@ -61,6 +60,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             properties = this.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PacketBinding.SyncVar))).ToArray();
 
             if (!enabled) return;
+            
             NetworkManager.networkHandlers.Add(this);
             
             
