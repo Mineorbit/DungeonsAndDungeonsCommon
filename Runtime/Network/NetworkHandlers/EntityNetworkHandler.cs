@@ -106,6 +106,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             create.AddInt(GetObservedEntity().Identity);
             create.AddVector3(position);
             create.AddInt(GetObservedEntity().levelObjectDataType);
+            GameConsole.Log($"Asking for creation of {GetObservedEntity().levelObjectDataType}");
             NetworkManager.instance.Server.SendToAll(create);
             
         }
