@@ -30,7 +30,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] chunk = chunkData.ToByteArray();
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
             message.AddBytes(chunk);
-            NetworkManager.instance.server.Send(message,(ushort) ((LevelLoadTarget)GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>().owner);
+            NetworkManager.instance.Server.Send(message,(ushort) ((LevelLoadTarget)GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>().owner);
         }
 
         public override void SendAction(string actionName, ChunkData chunkData)
