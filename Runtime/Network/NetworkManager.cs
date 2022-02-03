@@ -32,7 +32,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static UnityEvent<LevelMetaData> lobbyRequestEvent = new UnityEvent<LevelMetaData>();
         
-        private static Action onConnectAction;
 
         public bool isOnServer = false;
 
@@ -146,7 +145,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 localId = Client.Id;
                 isConnected = true;
                 SetNetworkHandlers(isConnected);
-                onConnectAction.Invoke();
             });
         }
 
