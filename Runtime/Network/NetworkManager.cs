@@ -64,11 +64,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public enum ClientToServerId : ushort
         {
-            processAction = 12,
-            readyRound = 13,
-            playerInput = 14,
-            readyLobby = 15,
-            lobbyUpdate  = 16,
+            readyRound = 12,
+            playerInput = 13,
+            readyLobby = 14,
+            lobbyUpdate  = 15,
         }
         
         

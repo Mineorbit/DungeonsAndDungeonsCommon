@@ -28,17 +28,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.lobbyUpdate);
-            m.AddLong(selectedLevel.UniqueLevelId);
+            m.AddBytes(selectedLevel.ToByteArray());
             NetworkManager.instance.Client.Send(m);
         }
 
 
-        [MessageHandler((ushort)NetworkManager.ClientToServerId.lobbyUpdate)]
-        public static void OnLobbyRequestUpdate(Message m)
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.lobbyUpdate)] 
+        public static void OnLobbyRequestUpdate(ushort id, Message m)
         {
 
-            LevelMetaData metaData = new LevelMetaData();
-            metaData.UniqueLevelId = m.GetLong();
+            LevelMetaData metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
             GameConsole.Log($"Selected Level: {metaData}");
             if (NetworkManager.instance.isOnServer)
             {
@@ -66,7 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         [MessageHandler((ushort)NetworkManager.ClientToServerId.readyLobby)]
-        public static void OnReadyLobby(Message m)
+        public static void OnReadyLobby(ushort id,Message m)
         {
             if (NetworkManager.instance.isOnServer)
             {
@@ -122,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         [MessageHandler((ushort)NetworkManager.ClientToServerId.readyRound)]
-        public static void ReadyRound(Message m)
+        public static void ReadyRound(ushort id,Message m)
         {
             int localId = m.GetInt();
             bool ready = m.GetBool();
@@ -130,9 +129,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                 if (NetworkManager.instance.isOnServer)
                 {
-                    NetworkManager.instance.Server.SendToAll(m);
+                    Message toClient = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.readyRound);
+                    toClient.AddInt(localId);
+                    toClient.AddBool(ready);
+                    NetworkManager.instance.Server.SendToAll(toClient);
                 }
                 NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
+        }
+        
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.readyRound)]
+        public static void ReadyRound(Message m)
+        {
+            int localId = m.GetInt();
+            bool ready = m.GetBool();
+            GameConsole.Log($"Received Ready round {localId} {ready}");
+            NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
         }
     }
 }
