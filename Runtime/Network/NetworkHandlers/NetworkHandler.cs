@@ -76,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateSyncVar()
         {
-            if(properties != null && properties.Length>0)
+            if(NetworkManager.instance.isOnServer && properties != null && properties.Length>0)
             {
                 Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
                 foreach (var property in properties)
@@ -97,7 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         GameConsole.Log($"Could not add property {property} to package");
                     }
-                
+                    NetworkManager.instance.Server.SendToAll(actionM);
                 }
             
             }

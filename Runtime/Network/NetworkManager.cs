@@ -40,9 +40,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public bool ready;
 
-        public Server server;
-        public Client client;
-
+        public Server Server { get; private set; }
+        public Client Client { get; private set; }
         
         // Temporary fix
 
@@ -89,16 +88,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (isOnServer)
             {
                 localId = -1;
-                server = new Server();
-                server.Start(13565,4);
+                Server = new Server();
+                Server.Start(13565,4);
             }
             else
             {
                 
-                client = new Client();
-                client.Connected += OnConnected;
-                client.Connected += (a,b) => { NetworkManager.networkHandlers = new List<NetworkHandler>();
-                    localId = (ushort) client.Id;
+                Client = new Client();
+                Client.Connected += OnConnected;
+                Client.Connected += (a,b) => { NetworkManager.networkHandlers = new List<NetworkHandler>();
+                    localId = (ushort) Client.Id;
                 };
 
             }
@@ -113,11 +112,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (isOnServer)
             {
-                server.Tick();
+                Server.Tick();
             }
             else
             {
-                client.Tick();
+                Client.Tick();
             }
         }
 
@@ -132,11 +131,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Connect(string ip, string playerName, Action onConnect)
         {
-            if (!client.IsConnected)
+            if (!Client.IsConnected)
             {
                 userName = playerName;
-                client.Connect($"{ip}:13565");
-                GameConsole.Log($"Set new client {client}");
+                Client.Connect($"{ip}:13565");
+                GameConsole.Log($"Set new client {Client}");
             }
         }
 
@@ -144,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             MainCaller.Do(() =>
             {
-                localId = client.Id;
+                localId = Client.Id;
                 isConnected = true;
                 SetNetworkHandlers(isConnected);
                 onConnectAction.Invoke();
@@ -162,7 +161,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Disconnect(bool respond = true)
         {
-            client.Disconnect();
+            Client.Disconnect();
         }
 
         public void CallReady(bool r)

@@ -15,13 +15,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void RequestStartRound()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.startRound);
-            NetworkManager.instance.server.SendToAll(m);
+            NetworkManager.instance.Server.SendToAll(m);
         }
 
         public static void RequestWinRound()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.winRound);
-            NetworkManager.instance.server.SendToAll(m);
+            NetworkManager.instance.Server.SendToAll(m);
         }
         
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
@@ -29,7 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.lobbyUpdate);
             m.AddBytes(selectedLevel.ToByteArray());
-            NetworkManager.instance.client.Send(m);
+            NetworkManager.instance.Client.Send(m);
         }
 
 
@@ -38,7 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (NetworkManager.instance.isOnServer)
             {
-                NetworkManager.instance.server.SendToAll(m);
+                NetworkManager.instance.Server.SendToAll(m);
             }
             var metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
             NetworkManager.lobbyRequestEvent.Invoke(metaData);
@@ -51,14 +51,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             m.AddBool(NetworkManager.instance.ready);
             m.AddInt(NetworkManager.instance.localId);
-            NetworkManager.instance.server.SendToAll(m);
+            NetworkManager.instance.Server.SendToAll(m);
         }
 
         public static void RequestReadyLobby()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyLobby);
             m.AddInt(NetworkManager.instance.localId);
-            NetworkManager.instance.client.Send(m);
+            NetworkManager.instance.Client.Send(m);
         }
 
         [MessageHandler((ushort)NetworkManager.ClientToServerId.readyLobby)]
@@ -79,7 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyLobby);
             m.AddBytes(metaData.ToByteArray());
-            NetworkManager.instance.server.SendToAll(m);
+            NetworkManager.instance.Server.SendToAll(m);
         }
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.prepareRound)]
@@ -125,7 +125,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                 if (NetworkManager.instance.isOnServer)
                 {
-                    NetworkManager.instance.server.SendToAll(m);
+                    NetworkManager.instance.Server.SendToAll(m);
                 }
                 GameConsole.Log("Received Ready round");
                 NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
