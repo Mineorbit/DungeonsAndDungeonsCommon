@@ -71,7 +71,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void FixedUpdate()
         {
-            UpdateSyncVar();
+            if(NetworkManager.instance.isOnServer)
+            {
+                UpdateSyncVar();
+            }
         }
 
         public void UpdateSyncVar()
