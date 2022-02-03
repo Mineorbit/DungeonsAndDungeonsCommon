@@ -80,27 +80,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
                 actionM.AddInt(((NetworkLevelObject) observed).Identity);
-                foreach (var property in properties)
+                foreach (var info in properties)
                 {
-                    if (property.PropertyType.Name == "Boolean")
+                    GameConsole.Log(info.PropertyType.FullName);
+                    if (info.PropertyType.Name == "Boolean")
                     {
-                        actionM.AddBool((bool)property.GetValue(this));
+                        actionM.AddBool((bool)info.GetValue(this));
                     }else
-                    if (property.PropertyType.Name == "Vector3")
+                    if (info.PropertyType.Name == "Vector3")
                     {
-                        actionM.AddVector3((Vector3)property.GetValue(this));
+                        actionM.AddVector3((Vector3)info.GetValue(this));
                     }else
-                    if (property.PropertyType.Name == "Quaternion")
+                    if (info.PropertyType.Name == "Quaternion")
                     {
-                        actionM.AddQuaternion((Quaternion)property.GetValue(this));
+                        actionM.AddQuaternion((Quaternion)info.GetValue(this));
                     }else
-                    if (property.PropertyType.Name == "Int32")
+                    if (info.PropertyType.Name == "Int32")
                     {
-                        actionM.AddInt((int)property.GetValue(this));
+                        actionM.AddInt((int)info.GetValue(this));
                     }
                     else
                     {
-                        GameConsole.Log($"Could not add property {property.PropertyType.Name} to package");
+                        GameConsole.Log($"Could not add property {info.PropertyType.Name} to package");
                     }
                     NetworkManager.instance.Server.SendToAll(actionM);
                 }
@@ -119,6 +120,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 foreach (var info in n.properties)
                 {
+                    GameConsole.Log(info.PropertyType.FullName);
                     object v = null;
                 if (info.PropertyType.Name == "Boolean")
                 {
