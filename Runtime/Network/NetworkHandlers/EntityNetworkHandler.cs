@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using Google.Protobuf.WellKnownTypes;
+using NetLevel;
 using RiptideNetworking;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -147,7 +148,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 position = message.GetVector3();
             int objectType = message.GetInt();
                     LevelObjectData entityLevelObjectData;
-                    GameConsole.Log(LevelDataManager.levelObjectDatas.ToString());
+                    foreach(var pair in LevelDataManager.levelObjectDatas)
+                        GameConsole.Log(pair.ToString());
                     if (LevelDataManager.levelObjectDatas.TryGetValue(objectType,
                         out entityLevelObjectData))
                     {
