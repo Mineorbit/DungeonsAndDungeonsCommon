@@ -106,8 +106,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         GameConsole.Log($"Could not add property {info.PropertyType.Name} to package");
                     }
-                    NetworkManager.instance.Server.SendToAll(actionM);
                 }
+                NetworkManager.instance.Server.SendToAll(actionM);
             
             }
         }
