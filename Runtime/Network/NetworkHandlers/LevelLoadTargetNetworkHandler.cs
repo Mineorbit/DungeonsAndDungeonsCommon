@@ -20,17 +20,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
+            String chunkID = m.GetString();
             byte[] chunkData = m.GetBytes(isBigArray:true);
                 MainCaller.Do(() =>
                 {
-                    ChunkManager.LoadChunk(DataToChunk(chunkData), false);
+                    ChunkManager.LoadChunk(DataToChunk(chunkData ,ChunkManager.GetChunkGridByID(chunkID)), false);
                 });
         }
 
 
         private byte[] ChunkToData(ChunkData chunkData)
         {
-            byte[] data = new byte[1024];
+            
+            byte[] data = new byte[1024+3*4];
             foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
                 ushort elementType = (ushort) instanceData.Code;
@@ -54,7 +56,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     elementType = (ushort) (elementType | 0b_1100_0000_0000_0000);
                 }
                 GameConsole.Log($"Encode position {instanceData.X} {instanceData.Y} {instanceData.Z}");
-                int z = 64*((int) instanceData.X) + 8*((int) instanceData.Y) +((int) instanceData.Z);
+                int z = 64*((int) instanceData.X % 8) + 8*((int) instanceData.Y % 8) +((int) instanceData.Z % 8);
                 int i = 2 * z;
                 ushort number = Convert.ToUInt16(elementType);
                 byte upper = (byte) (number >> 8);
@@ -65,7 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return data;
         }
 
-        private static ChunkData DataToChunk(byte[] data)
+        private static ChunkData DataToChunk(byte[] data, Tuple<int, int, int> gridPosition)
         {
             ChunkData chunkData = new ChunkData();
             for(int i = 0;i < 8;i++)
@@ -82,9 +84,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
                         LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                         objectData.Code = elementType;
-                        objectData.X = (uint) i;
-                        objectData.Y = (uint) j;
-                        objectData.Z = (uint) k;
+                        objectData.X = (uint) (i + gridPosition.Item1 * 8);
+                        objectData.Y = (uint) (j + gridPosition.Item2 * 8);
+                        objectData.Z = (uint) (k + gridPosition.Item3 * 8);
                         objectData.Rot = (uint) rot;
                         chunkData.Data.Add(objectData);
                         GameConsole.Log($"Got BlockData {objectData}");
@@ -95,6 +97,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
+            // THIS SHOULD BE A NUMBER
+            message.AddString(chunkData.ChunkId);
             message.Add(ChunkToData(chunkData),isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                 .owner + 1;

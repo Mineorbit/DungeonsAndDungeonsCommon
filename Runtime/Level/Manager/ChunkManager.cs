@@ -187,6 +187,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public static  Tuple<int, int, int> GetChunkGridByID(string id)
+        {
+            string[] coords = id.Split(CIDSEP);
+            return new Tuple<int, int, int>(Int32.Parse(coords[0]),Int32.Parse(coords[1]),Int32.Parse(coords[2]) );
+        }
+        
         public static bool ChunkLoaded(string chunkid)
         {
             if (instance == null)
