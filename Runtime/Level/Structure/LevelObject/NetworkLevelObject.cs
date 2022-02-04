@@ -129,7 +129,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Invoke(Action a, bool doClient = true, bool doServer = true)
         {
-	        if (doServer && NetworkManager.instance.isOnServer || !NetworkManager.instance.isOnServer && doClient)
+	        if (Level.instantiateType == Level.InstantiateType.Test || doServer && NetworkManager.instance.isOnServer || !NetworkManager.instance.isOnServer && doClient)
 	        {
 		        a.DynamicInvoke();
 	        }
