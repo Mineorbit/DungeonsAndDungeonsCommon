@@ -123,7 +123,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             
             
-            Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.createEntity);
+            Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
 
 
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
@@ -155,7 +155,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SendAction(string actionName)
         {
-            Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.createEntity);
+            Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
 
             actionM.AddString(actionName);
 
