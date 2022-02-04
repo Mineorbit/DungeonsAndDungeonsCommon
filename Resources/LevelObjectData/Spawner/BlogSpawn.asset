@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: BlogSpawn
   m_EditorClassIdentifier: 
   prefab: {fileID: 8481799529828780976, guid: 5956cf2b87f14a14580b8173a30d6d56, type: 3}
-  uniqueLevelObjectId: 3
+  uniqueLevelObjectId: 34
   granularity: 1
   levelObjectName: 
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: -5668984478841134232, guid: cc5579b25ea3c864babc074c59895d32, type: 3}
   cursorScale: {x: 100, y: 100, z: 100}
   cursorOffset: {x: 0, y: -0.01, z: 0}

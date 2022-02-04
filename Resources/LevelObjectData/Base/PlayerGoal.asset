@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: PlayerGoal
   m_EditorClassIdentifier: 
   prefab: {fileID: 8390361897316666614, guid: 2cd2f3ae494709a4d8d8fa3ceedab93a, type: 3}
-  uniqueLevelObjectId: -217442996
+  uniqueLevelObjectId: 4
   granularity: 1
   levelObjectName: Goal
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

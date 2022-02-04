@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Missing
   m_EditorClassIdentifier: 
   prefab: {fileID: 6161959680743698998, guid: 02ff1de3fed22fe4bb9cdc4abbcb5369, type: 3}
-  uniqueLevelObjectId: 14
+  uniqueLevelObjectId: 1
   granularity: 1
-  name: HAHAHA
+  levelObjectName: 
   dynamicInstantiable: 1
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 0
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelLoadTarget
   m_EditorClassIdentifier: 
   prefab: {fileID: 1795247442869872954, guid: c2893a9ccabd94a498ab24ba34240b4a, type: 3}
-  uniqueLevelObjectId: 1
+  uniqueLevelObjectId: 2
   granularity: 1
   levelObjectName: 
   dynamicInstantiable: 1

@@ -11,7 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelObjectData : Instantiable
     {
         public static List<LevelObjectData> all = new List<LevelObjectData>();
-        public int uniqueLevelObjectId;
+        public ushort uniqueLevelObjectId;
 
         public float granularity;
 
@@ -35,20 +35,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 cursorRotation;
 
 
-        void AssignUniqueNumbers()
-        {
-            if (uniqueLevelObjectId == 0)
-            {
-#if UNITY_EDITOR
-                uniqueLevelObjectId = GUID.Generate().GetHashCode();
-#endif
-            }
-            
-        }
         private void OnValidate()
         {
 #if UNITY_EDITOR
-            AssignUniqueNumbers();
             if (Buildable) levelInstantiable = true;
 
             if (cursorScale == Vector3.zero) cursorScale = new Vector3(1, 1, 1);

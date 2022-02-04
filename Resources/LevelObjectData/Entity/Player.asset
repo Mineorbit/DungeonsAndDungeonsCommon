@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   prefab: {fileID: 7709308443060799710, guid: d6825c22c98f482448a74582d929f45c, type: 3}
-  uniqueLevelObjectId: 1476697372
+  uniqueLevelObjectId: 12
   granularity: 0
-  name: Player
+  levelObjectName: 
   dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 0
   Buildable: 0
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

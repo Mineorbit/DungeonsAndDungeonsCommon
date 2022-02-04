@@ -27,12 +27,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private byte[] ChunkToData()
+        private byte[] ChunkToData(ChunkData chunkData)
         {
-            return null;
+            byte[] data = new byte[1024];
+            for(int i =  0;i < 8;i++)
+                for(int j = 0; j < 8 ; j++)
+                    for (int k = 0; k < 8; k++)
+                    {
+                    
+                    }
+            return data;
         }
 
-        private ChunkData DataToChunk()
+        private ChunkData DataToChunk(byte[] data)
         {
             return null;
         }

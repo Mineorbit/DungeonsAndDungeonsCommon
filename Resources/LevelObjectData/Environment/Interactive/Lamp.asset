@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Lamp
   m_EditorClassIdentifier: 
   prefab: {fileID: 4050017276492842089, guid: 3f32ac060151a6843be8be56925e45ce, type: 3}
-  uniqueLevelObjectId: 268756754
+  uniqueLevelObjectId: 25
   granularity: 0.5
   levelObjectName: Lamp
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
