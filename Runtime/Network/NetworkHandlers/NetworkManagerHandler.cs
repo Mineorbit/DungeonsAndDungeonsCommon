@@ -124,10 +124,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             MainCaller.Do(() =>
             {
                 GameConsole.Log($"Received Start Round for LocalId {NetworkManager.instance.localId}");
-                NetworkManager.startRoundEvent.Invoke();
-                PlayerManager.acceptInput = true;
                 PlayerManager.SetPlayerActive(NetworkManager.instance.localId,true);
                 PlayerManager.playerManager.SetCurrentPlayer(NetworkManager.instance.localId);
+                NetworkManager.startRoundEvent.Invoke();
+                PlayerManager.acceptInput = true;
             });
         }
 
