@@ -25,7 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             ChunkData chunkData = DataToChunk(m.GetBytes(isBigArray: true),ChunkManager.GetChunkGridByID(chunkID));
             
             chunkData.ChunkId = chunkID;
-            GameConsole.Log($"Received Chunk {chunkID}");
                 MainCaller.Do(() =>
                 {
                     ChunkManager.LoadChunk(chunkData, false);
@@ -35,7 +34,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
         {
-            GameConsole.Log($"Chunk {chunkData.ChunkId} has {chunkData.Data.Count} Blocks");
             byte[] data = new byte[1024];
             foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
@@ -44,7 +42,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int localX = ((int) instanceData.X)/(int)ChunkManager.storageMultiplier - 4;
                 int localY = ((int) instanceData.Y)/(int)ChunkManager.storageMultiplier - 4;
                 int localZ = ((int) instanceData.Z)/(int)ChunkManager.storageMultiplier - 4;
-                GameConsole.Log($"Encode {instanceData} to {localX} {localY} {localZ}");
                 int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
                 int i = 2 * z;
                 byte upper = (byte) (elementType >> 8);
@@ -60,7 +57,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private static ChunkData DataToChunk(byte[] data, Tuple<int, int, int> gridPosition)
         {
-            GameConsole.Log($"Loading Chunk {gridPosition.ToString()}");
             ChunkData chunkData = new ChunkData();
             for(int i = 0;i < 8;i++)
                 for(int j = 0;j<8;j++)
@@ -82,7 +78,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         objectData.Z = (uint) ((k+4) *(int)ChunkManager.storageMultiplier);
                         objectData.Rot = (uint) rot;
                         chunkData.Data.Add(objectData);
-                        GameConsole.Log($"Got BlockData {objectData}");
                         }
                     }
             return chunkData;
@@ -93,7 +88,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
             message.AddString(chunkData.ChunkId);
             byte[] data = ChunkToData(chunkData,ChunkManager.GetChunkGridByID(chunkData.ChunkId));
-            GameConsole.Log($"Chunk. {chunkData.ChunkId} Size: {data.Length}");
             message.Add(data,isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                 .owner + 1;
