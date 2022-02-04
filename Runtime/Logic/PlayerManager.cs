@@ -40,6 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void SetCurrentPlayer(int localId)
         {
+            GameConsole.Log($"Setting current player {localId}");
             if (localId > 3 || localId < 0) return;
             if (playerControllers[localId] == null)
             {
