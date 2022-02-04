@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Floor
   m_EditorClassIdentifier: 
   prefab: {fileID: 6956411842123441528, guid: 13d03627a5644c6488f24a07adeeba93, type: 3}
-  uniqueLevelObjectId: -2047154012
+  uniqueLevelObjectId: 13
   granularity: 1
   levelObjectName: Floor
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}

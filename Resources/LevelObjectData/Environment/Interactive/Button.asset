@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Button
   m_EditorClassIdentifier: 
   prefab: {fileID: 7932103809837258557, guid: 3b0b40ed865f825429204492e2b6ba3c, type: 3}
-  uniqueLevelObjectId: 154008271
+  uniqueLevelObjectId: 22
   granularity: 1
   levelObjectName: Button
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

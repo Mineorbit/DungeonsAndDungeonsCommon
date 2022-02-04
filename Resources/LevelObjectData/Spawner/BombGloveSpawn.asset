@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: BombGloveSpawn
   m_EditorClassIdentifier: 
   prefab: {fileID: 3520916298438553836, guid: 853f6609e39e20b44b57733babbc53be, type: 3}
-  uniqueLevelObjectId: 1434122860
+  uniqueLevelObjectId: 35
   granularity: 1
   levelObjectName: 
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

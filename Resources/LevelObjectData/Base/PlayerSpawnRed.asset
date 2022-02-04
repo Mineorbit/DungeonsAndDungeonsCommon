@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: PlayerSpawnRed
   m_EditorClassIdentifier: 
   prefab: {fileID: 6807480057338879240, guid: 17d473446b8977641a07ba5a9b6e1994, type: 3}
-  uniqueLevelObjectId: 597301950
+  uniqueLevelObjectId: 7
   granularity: 1
   levelObjectName: Red Spawn
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

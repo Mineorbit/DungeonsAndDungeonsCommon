@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Wire
   m_EditorClassIdentifier: 
   prefab: {fileID: 6758271155799333418, guid: 5cbbe904b5e5f594db0368f1cb6e1f51, type: 3}
-  uniqueLevelObjectId: -1298514137
+  uniqueLevelObjectId: 28
   granularity: 1
   levelObjectName: Wire
   dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 1
   Buildable: 0
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

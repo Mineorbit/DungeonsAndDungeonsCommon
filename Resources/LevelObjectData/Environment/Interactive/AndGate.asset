@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: AndGate
   m_EditorClassIdentifier: 
   prefab: {fileID: 7466535229825595164, guid: 3ea6be642cc86d347b9c9d531170fb9a, type: 3}
-  uniqueLevelObjectId: 448708985
+  uniqueLevelObjectId: 21
   granularity: 1
   levelObjectName: And Gate
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
   cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
