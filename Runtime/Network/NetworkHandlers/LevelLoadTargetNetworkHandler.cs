@@ -23,7 +23,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string chunkID = m.GetString();
             
             ChunkData chunkData = DataToChunk(m.GetBytes(isBigArray: true),ChunkManager.GetChunkGridByID(chunkID));
+            
             chunkData.ChunkId = chunkID;
+            GameConsole.Log($"Received Chunk {chunkID}");
                 MainCaller.Do(() =>
                 {
                     ChunkManager.LoadChunk(chunkData, false);
@@ -34,7 +36,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private byte[] ChunkToData(ChunkData chunkData)
         {
             
-            byte[] data = new byte[1024+3*4];
+            byte[] data = new byte[1024];
             foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
                 ushort elementType = (ushort) instanceData.Code;
@@ -101,7 +103,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
             message.AddString(chunkData.ChunkId);
             byte[] data = ChunkToData(chunkData);
-            GameConsole.Log($"Size: {data}");
+            GameConsole.Log($"Chunk. {chunkData.ChunkId} Size: {data.Length}");
             message.Add(data,isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                 .owner + 1;
@@ -113,7 +115,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void SendAction(string actionName, ChunkData chunkData)
         {
-            GameConsole.Log("CALLING REMOTE STREAM CHUNK");
 
             switch (actionName)
             {
