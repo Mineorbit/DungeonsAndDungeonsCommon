@@ -70,7 +70,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         int d = 2 * z;
                         byte upper = data[d];
                         byte lower = data[d+1];
-                        ushort elementType = (ushort) ( ((int) upper) * 256 + (int)lower);
+                        byte upper2 = (byte) ((byte) (upper & 0x3f));
+                        ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
                         if(elementType != 0)
                         { 
                             int rot = upper >> 6;
