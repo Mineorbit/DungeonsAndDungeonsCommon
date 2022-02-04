@@ -111,6 +111,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	        if(doServer && !NetworkManager.instance.isOnServer || NetworkManager.instance.isOnServer && doClient)
 	        {
 				if (levelObjectNetworkHandler != null && levelObjectNetworkHandler.enabled)
+				{
 					if (identified)
 						levelObjectNetworkHandler.SendAction(a.Method.Name, argument);
 					else
@@ -118,6 +119,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 						GameConsole.Log($"Not Identified, enqueueing {a.Method.Name}");
 						todo.Enqueue(() => { Invoke(a, argument, doClient,doServer); });
 					}
+				}
+				else
+				{
+					GameConsole.Log("NetworkHandler for this Entity not available");
+				}
 	        }
         }
 
