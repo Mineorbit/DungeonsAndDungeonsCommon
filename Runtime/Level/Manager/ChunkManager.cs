@@ -24,7 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static ChunkManager instance;
 
-        public static float chunkGranularity = 9;
+        public static float chunkGranularity = 8;
 
         public static int regionGranularity = 2;
 
