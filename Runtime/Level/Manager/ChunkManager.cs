@@ -210,16 +210,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static Tuple<int, int, int> GetChunkGridPosition(Vector3 position)
         {
-            return new Tuple<int, int, int>((int) Mathf.Round(position.x / chunkGranularity),
-            				(int) Mathf.Round(position.y / chunkGranularity),
-                			(int) Mathf.Round(position.z / chunkGranularity));
+            return new Tuple<int, int, int>((int) Mathf.Floor(position.x / chunkGranularity),
+            				(int) Mathf.Floor(position.y / chunkGranularity),
+                			(int) Mathf.Floor(position.z / chunkGranularity));
         }
 
-        private Vector3 GetChunkPosition(Vector3 position)
-        {
-            return chunkGranularity * new Vector3(Mathf.Round(position.x / chunkGranularity), 0,
-                Mathf.Round(position.z / chunkGranularity)) - chunkGranularity / 2 * new Vector3(1, 0, 1);
-        }
 
         public static Chunk GetChunk(Vector3 position, bool createIfNotThere = true)
         {
