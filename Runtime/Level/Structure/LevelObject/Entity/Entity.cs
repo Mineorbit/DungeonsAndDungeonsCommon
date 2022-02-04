@@ -114,7 +114,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public float speed;
 
     public Vector3 speedDirection;
-    private void ComputeCurrentSpeed()
+    public void ComputeCurrentSpeed()
     {
     lastSpeeds.Add((transform.position - lastPosition).magnitude / Time.deltaTime);
     lastSpeedDirections.Add(transform.position-lastPosition);

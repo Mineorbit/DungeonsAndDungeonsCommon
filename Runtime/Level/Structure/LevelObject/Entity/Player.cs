@@ -321,7 +321,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Update()
         {
-            baseAnimator.speed = speed / 3;
         }
 
         public void Interact()
