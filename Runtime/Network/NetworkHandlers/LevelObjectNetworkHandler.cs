@@ -71,6 +71,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         }
+        
+        // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
+        public static void ProcessAction(ushort id,Message m)
+        {
+            
+            int identity = m.GetInt();
+            int sender = m.GetInt();
+            string actionName = m.GetString();
+            var parameters = new List<object>();
+            while(m.UnreadLength > 0)
+            {
+                parameters.Add(m.GetVector3());
+            }
+
+            // HIER EIN CHECK OB DER SENDER WIRKLICH DER EIGENTÜMER IST VOM OBJEKT
+            
+            
+            
+            ByIdentity(identity).Process(sender,actionName,parameters,m);
+
+
+        }
 
 
         public virtual void Process(int sender, string actionName,List<object> parameters, Message m = null)
