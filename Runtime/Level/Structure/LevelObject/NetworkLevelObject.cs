@@ -104,7 +104,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void Invoke<T>(Action<T> a, T argument, bool doClient = true, bool doServer = true)
         {
-	        if (doServer && NetworkManager.instance.isOnServer || !NetworkManager.instance.isOnServer && doClient)
+	        if (Level.instantiateType == Level.InstantiateType.Test || doServer && NetworkManager.instance.isOnServer || !NetworkManager.instance.isOnServer && doClient)
 	        {
 		        a.DynamicInvoke(argument);
 	        }
