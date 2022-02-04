@@ -114,7 +114,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 					if (identified)
 						levelObjectNetworkHandler.SendAction(a.Method.Name, argument);
 					else
-						todo.Enqueue(() => { Invoke(a, argument); });
+					{
+						GameConsole.Log($"Not Identified, enqueueing {a.Method.Name}");
+						todo.Enqueue(() => { Invoke(a, argument, doClient,doServer); });
+					}
 	        }
         }
 
@@ -133,7 +136,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 						if (identified)
 							levelObjectNetworkHandler.SendAction(a.Method.Name);
 						else
-							todo.Enqueue(() => { Invoke(a); });
+							todo.Enqueue(() => { Invoke(a,doClient,doServer); });
 				}
 	        }
 	        else
