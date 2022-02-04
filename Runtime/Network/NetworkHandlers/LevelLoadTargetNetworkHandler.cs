@@ -40,11 +40,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
                 ushort elementType = (ushort) instanceData.Code;
-                GameConsole.Log($"Encode position {instanceData.X} {instanceData.Y} {instanceData.Z}");
 
-                int localX = ((int) instanceData.X) - (int)ChunkManager.storageMultiplier * gridPosition.Item1;
-                int localY = ((int) instanceData.Y) - 2 * gridPosition.Item2;
-                int localZ = ((int) instanceData.Z) - 2 * gridPosition.Item3;
+                int localX = ((int) instanceData.X) - (int)ChunkManager.storageMultiplier * gridPosition.Item1*(int)ChunkManager.chunkGranularity;
+                int localY = ((int) instanceData.Y) - (int)ChunkManager.storageMultiplier * gridPosition.Item2*(int)ChunkManager.chunkGranularity;
+                int localZ = ((int) instanceData.Z) - (int)ChunkManager.storageMultiplier * gridPosition.Item3*(int)ChunkManager.chunkGranularity;
+                GameConsole.Log($"Encode {instanceData} to {localX} {localY} {localZ}");
                 int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
                 int i = 2 * z;
                 byte upper = (byte) (elementType >> 8);
@@ -72,9 +72,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         {
                         LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                         objectData.Code = elementType;
-                        objectData.X = (uint) (i + (int)ChunkManager.storageMultiplier * gridPosition.Item1);
-                        objectData.Y = (uint) (j + (int)ChunkManager.storageMultiplier * gridPosition.Item2);
-                        objectData.Z = (uint) (k + (int)ChunkManager.storageMultiplier * gridPosition.Item3);
+                        objectData.X = (uint) (i + (int)ChunkManager.storageMultiplier * gridPosition.Item1 * 8);
+                        objectData.Y = (uint) (j + (int)ChunkManager.storageMultiplier * gridPosition.Item2 * 8);
+                        objectData.Z = (uint) (k + (int)ChunkManager.storageMultiplier * gridPosition.Item3 * 8);
                         chunkData.Data.Add(objectData);
                         GameConsole.Log($"Got BlockData {objectData}");
                         }
