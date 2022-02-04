@@ -69,14 +69,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             readyLobby = 14,
             lobbyUpdate  = 15,
         }
-        
-        
-        // Start is called before the first frame update
-        private void Start()
+
+        private void Awake()
         {
             if (instance != null)
                 Destroy(this);
             instance = this;
+        }
+        
+        // Start is called before the first frame update
+        private void Start()
+        {
 
 
             // THIS IS A STUPID PLACE BUT WILL CHANGE LATER
