@@ -1,3 +1,4 @@
+using System;
 using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
@@ -22,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] chunkData = m.GetBytes(isBigArray:true);
                 MainCaller.Do(() =>
                 {
-                    ChunkManager.LoadChunk(ChunkData.Parser.ParseFrom(chunkData), false);
+                    ChunkManager.LoadChunk(DataToChunk(chunkData), false);
                 });
         }
 
@@ -30,26 +31,71 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private byte[] ChunkToData(ChunkData chunkData)
         {
             byte[] data = new byte[1024];
-            for(int i =  0;i < 8;i++)
-                for(int j = 0; j < 8 ; j++)
-                    for (int k = 0; k < 8; k++)
-                    {
-                    
-                    }
+            foreach (LevelObjectInstanceData instanceData in chunkData.Data)
+            {
+                ushort elementType = (ushort) instanceData.Code;
+                if (instanceData.Rot == 0)
+                {
+                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
+                }
+                if (instanceData.Rot == 1)
+                {
+                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
+                    elementType = (ushort) (elementType | 0b_0100_0000_0000_0000);
+                }
+                if (instanceData.Rot == 2)
+                {
+                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
+                    elementType = (ushort) (elementType | 0b_1000_0000_0000_0000);
+                }
+                if (instanceData.Rot == 3)
+                {
+                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
+                    elementType = (ushort) (elementType | 0b_1100_0000_0000_0000);
+                }
+
+                int z = 64*((int) instanceData.X) + 8*((int) instanceData.Y) +((int) instanceData.Z);
+                int i = 2 * z;
+                ushort number = Convert.ToUInt16(elementType);
+                byte upper = (byte) (number >> 8);
+                byte lower = (byte) (number & 0xff);
+                data[i] = upper;
+                data[i + 1] = lower;
+            }
             return data;
         }
 
-        private ChunkData DataToChunk(byte[] data)
+        private static ChunkData DataToChunk(byte[] data)
         {
-            return null;
+            ChunkData chunkData = new ChunkData();
+            for(int i = 0;i < 8;i++)
+                for(int j = 0;j<8;j++)
+                    for (int k = 0; k < 8; k++)
+                    {
+                        int z = 64*((int) i) + 8*((int) j) +((int) k);
+                        int d = 2 * z;
+                        byte upper = data[d];
+                        byte lower = data[d+1];
+                        int rot = upper >> 6;
+                        ushort elementType = BitConverter.ToUInt16(new byte[2] { upper, lower }, 0);
+                        
+                        elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
+                        LevelObjectInstanceData objectData = new LevelObjectInstanceData();
+                        objectData.Code = elementType;
+                        objectData.X = (uint) i;
+                        objectData.Y = (uint) j;
+                        objectData.Z = (uint) k;
+                        objectData.Rot = (uint) rot;
+                        chunkData.Data.Add(objectData);
+                        GameConsole.Log($"Got BlockData {objectData}");
+                    }
+            return chunkData;
         }
         
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
-            byte[] chunk = chunkData.ToByteArray();
-            GameConsole.Log($"CHUNK SIZE: {chunk.Length}");
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
-            message.Add(chunk,isBigArray:true);
+            message.Add(ChunkToData(chunkData),isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                 .owner + 1;
             NetworkManager.instance.Server.Send(message,(ushort) id);
