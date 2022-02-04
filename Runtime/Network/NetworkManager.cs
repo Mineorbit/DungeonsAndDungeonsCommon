@@ -80,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             // THIS IS A STUPID PLACE BUT WILL CHANGE LATER
-            Time.fixedDeltaTime = 0.03f;
+            Time.fixedDeltaTime = 0.02f;
 
             
             RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
