@@ -43,7 +43,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log($"CHUNK SIZE: {chunk.Length}");
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
             message.Add(chunk,isBigArray:true);
-            NetworkManager.instance.Server.Send(message,(ushort) ((LevelLoadTarget)GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>().owner);
+            int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
+                .owner + 1;
+            NetworkManager.instance.Server.Send(message,(ushort) id);
         }
         
         
