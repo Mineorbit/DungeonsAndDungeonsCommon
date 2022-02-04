@@ -118,6 +118,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void SetPlayerActive(int id, bool a)
         {
+            GameConsole.Log($"Setting Active Player {id}");
             if (playerManager.playerControllers[id] != null)
             {
                 playerManager.playerControllers[id].activated = a;
