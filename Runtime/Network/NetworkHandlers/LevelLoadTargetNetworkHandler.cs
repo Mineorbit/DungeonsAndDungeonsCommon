@@ -20,11 +20,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
-            String chunkID = m.GetString();
-            byte[] chunkData = m.GetBytes(isBigArray:true);
                 MainCaller.Do(() =>
                 {
-                    ChunkManager.LoadChunk(DataToChunk(chunkData ,ChunkManager.GetChunkGridByID(chunkID)), false);
+                    ChunkManager.LoadChunk(ChunkData.Parser.ParseFrom(m.GetBytes(isBigArray:true)), false);
                 });
         }
 
@@ -97,9 +95,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
-            // THIS SHOULD BE A NUMBER
-            message.AddString(chunkData.ChunkId);
-            message.Add(ChunkToData(chunkData),isBigArray:true);
+            
+            message.Add(chunkData.ToByteArray(),isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                 .owner + 1;
             NetworkManager.instance.Server.Send(message,(ushort) id);
