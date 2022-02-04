@@ -50,7 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 byte upper = (byte) (elementType >> 8);
                 byte lower = (byte) (elementType & 0xff);
 
-                upper = (byte) ((byte) (upper & 0x3f) | (byte)((byte)instanceData.Rot << 2));
+                upper = (byte) ((byte) (upper & 0x3f) | (byte)((byte)instanceData.Rot << 6));
                 
                 data[i] = upper;
                 data[i + 1] = lower;
