@@ -40,25 +40,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
                 ushort elementType = (ushort) instanceData.Code;
-                if (instanceData.Rot == 0)
-                {
-                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
-                }
-                if (instanceData.Rot == 1)
-                {
-                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
-                    elementType = (ushort) (elementType | 0b_0100_0000_0000_0000);
-                }
-                if (instanceData.Rot == 2)
-                {
-                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
-                    elementType = (ushort) (elementType | 0b_1000_0000_0000_0000);
-                }
-                if (instanceData.Rot == 3)
-                {
-                    elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
-                    elementType = (ushort) (elementType | 0b_1100_0000_0000_0000);
-                }
                 GameConsole.Log($"Encode position {instanceData.X} {instanceData.Y} {instanceData.Z}");
                 int z = 64*((int) instanceData.X % 8) + 8*((int) instanceData.Y % 8) +((int) instanceData.Z % 8);
                 int i = 2 * z;
@@ -73,6 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private static ChunkData DataToChunk(byte[] data, Tuple<int, int, int> gridPosition)
         {
+            GameConsole.Log($"Loading Chunk {gridPosition.ToString()}");
             ChunkData chunkData = new ChunkData();
             for(int i = 0;i < 8;i++)
                 for(int j = 0;j<8;j++)
@@ -82,16 +64,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         int d = 2 * z;
                         byte upper = data[d];
                         byte lower = data[d+1];
-                        int rot = upper >> 6;
                         ushort elementType = BitConverter.ToUInt16(new byte[2] { upper, lower }, 0);
                         
-                        elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
                         LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                         objectData.Code = elementType;
                         objectData.X = (uint) (i + gridPosition.Item1 * 8);
                         objectData.Y = (uint) (j + gridPosition.Item2 * 8);
                         objectData.Z = (uint) (k + gridPosition.Item3 * 8);
-                        objectData.Rot = (uint) rot;
                         chunkData.Data.Add(objectData);
                         GameConsole.Log($"Got BlockData {objectData}");
                     }
