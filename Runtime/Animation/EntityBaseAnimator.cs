@@ -16,6 +16,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Update()
         {
+            if (!me.enabled)
+            {
+                me.ComputeCurrentSpeed();
+            }
+            speed = me.speed;
             if(animator != null)
                 animator.SetFloat("Speed", speed);
         }

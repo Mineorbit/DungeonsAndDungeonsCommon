@@ -23,6 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return (LevelObject) observed;
         }
         
+        
+        
         public override void Awake()
         {
             observed = GetComponent<NetworkLevelObject>();
@@ -30,6 +32,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // currently not updated
             if (observed != null)
                 GetObserved().enabled = !disabled_observed || (!NetworkManager.isConnected || NetworkManager.instance.isOnServer);
+            
+            if(!observed.GetType().IsSubclassOf(typeof(Entity)))
+            {
+                SetProperties();
+            }
         }
 
 
@@ -148,6 +155,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
+
+        public virtual void SetProperties()
+        {
+            Message propertyM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
+            propertyM.AddFloat(transform.position.x);
+            propertyM.AddFloat(transform.position.y);
+            propertyM.AddFloat(transform.position.z);
+            propertyM.AddInt(((NetworkLevelObject) GetObserved()).Identity);
+            NetworkManager.instance.Server.SendToAll(propertyM);
+        }
+
+        [MessageHandler((ushort) NetworkManager.ServerToClientId.setProperty)]
+        public static void ReceiveProperties(Message m)
+        {
+            Vector3 position = new Vector3(m.GetFloat(), m.GetFloat(), m.GetFloat());
+            NetworkHandler target = NetworkManager.networkHandlers.Find((x) =>
+            {
+                return (position - x.transform.position).magnitude < 0.125f;
+            });
+            ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved()).Identity = m.GetInt();
+        }
+        
+        
         public virtual void SendAction(string actionName, ChunkData argument)
         {
             
