@@ -15,11 +15,12 @@ MonoBehaviour:
   prefab: {fileID: 1795247442869872954, guid: c2893a9ccabd94a498ab24ba34240b4a, type: 3}
   uniqueLevelObjectId: 1
   granularity: 1
-  name: LevelLoadTarget
+  levelObjectName: 
   dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 0
   Buildable: 0
+  inLevel: 0
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}

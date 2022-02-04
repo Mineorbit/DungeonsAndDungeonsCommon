@@ -25,6 +25,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool Buildable;
 
+        public bool inLevel = true;
+        
         public Mesh cursorMesh;
 
         

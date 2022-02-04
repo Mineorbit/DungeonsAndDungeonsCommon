@@ -152,7 +152,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (LevelDataManager.levelObjectDatas.TryGetValue(objectType,
                         out entityLevelObjectData))
                     {
-                        GameConsole.Log($"Trying to Create {entityLevelObjectData} {identity}");
+                        GameConsole.Log($"Trying to create {entityLevelObjectData} {identity}");
                         MainCaller.Do(() =>
                         {
                         OnCreationRequest(identity, entityLevelObjectData, position,
@@ -174,10 +174,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				Util.Optional<int> id = new Util.Optional<int>();
 				id.Set(identity);
                 GameConsole.Log($"Spawning Entity {entityType}:{identity} at {position} on Network Request");
-                var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation, id);
-                e.GetComponent<EntityNetworkHandler>().receivedPosition = position;
+                if(entityType.inLevel)
+                {
+                    var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation, id);
+                    e.GetComponent<EntityNetworkHandler>().receivedPosition = position;
+                }
+                else
+                {
+                    var e = entityType.Create(position, null);
+                    e.GetComponent<EntityNetworkHandler>().receivedPosition = position;
+                    e.GetComponent<Entity>().Identity = identity;
+                }
             });
-            if (LevelManager.currentLevel != null)
+            if (LevelManager.currentLevel != null || entityType.inLevel)
             {
                 todo.DynamicInvoke();
             }
