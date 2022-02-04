@@ -43,9 +43,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameConsole.Log($"Encode position {instanceData.X} {instanceData.Y} {instanceData.Z}");
                 int z = 64*((int) instanceData.X % 8) + 8*((int) instanceData.Y % 8) +((int) instanceData.Z % 8);
                 int i = 2 * z;
-                ushort number = Convert.ToUInt16(elementType);
-                byte upper = (byte) (number >> 8);
-                byte lower = (byte) (number & 0xff);
+                byte upper = (byte) (elementType >> 8);
+                byte lower = (byte) (elementType & 0xff);
                 data[i] = upper;
                 data[i + 1] = lower;
             }
@@ -64,8 +63,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         int d = 2 * z;
                         byte upper = data[d];
                         byte lower = data[d+1];
-                        ushort elementType = BitConverter.ToUInt16(new byte[2] { upper, lower }, 0);
-                        
+                        ushort elementType = (ushort) ( ((int) upper) * 256 + (int)lower);
+                        if(elementType != 0)
+                        {
                         LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                         objectData.Code = elementType;
                         objectData.X = (uint) (i + gridPosition.Item1 * 8);
@@ -73,6 +73,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         objectData.Z = (uint) (k + gridPosition.Item3 * 8);
                         chunkData.Data.Add(objectData);
                         GameConsole.Log($"Got BlockData {objectData}");
+                        }
                     }
             return chunkData;
         }
