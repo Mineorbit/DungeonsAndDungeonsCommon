@@ -41,9 +41,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ushort elementType = (ushort) instanceData.Code;
 
-                int localX = ((int) instanceData.X) - 4;
-                int localY = ((int) instanceData.Y) - 8;
-                int localZ = ((int) instanceData.Z) - 4;
+                int localX = ((int) instanceData.X)/(int)ChunkManager.storageMultiplier;
+                int localY = ((int) instanceData.Y)/(int)ChunkManager.storageMultiplier;
+                int localZ = ((int) instanceData.Z)/(int)ChunkManager.storageMultiplier;
                 GameConsole.Log($"Encode {instanceData} to {localX} {localY} {localZ}");
                 int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
                 int i = 2 * z;
@@ -72,9 +72,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         {
                         LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                         objectData.Code = elementType;
-                        objectData.X = (uint) (i + 4);
-                        objectData.Y = (uint) (j + 8);
-                        objectData.Z = (uint) (k + 4);
+                        objectData.X = (uint) (i *(int)ChunkManager.storageMultiplier);
+                        objectData.Y = (uint) (j *(int)ChunkManager.storageMultiplier);
+                        objectData.Z = (uint) (k *(int)ChunkManager.storageMultiplier);
                         chunkData.Data.Add(objectData);
                         GameConsole.Log($"Got BlockData {objectData}");
                         }
