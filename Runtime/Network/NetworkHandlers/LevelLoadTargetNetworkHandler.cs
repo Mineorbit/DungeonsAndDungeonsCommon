@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private byte[] ChunkToData(ChunkData chunkData)
         {
-            
+            GameConsole.Log($"Chunk {chunkData.ChunkId} has {chunkData.Data.Count} Blocks");
             byte[] data = new byte[1024];
             foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
