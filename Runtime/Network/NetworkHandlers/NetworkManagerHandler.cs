@@ -164,7 +164,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int localId = m.GetInt();
             bool ready = m.GetBool();
             GameConsole.Log($"Received Ready round {localId} {ready}");
-            NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
+            MainCaller.Do(() =>
+            {
+                NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
+                GameConsole.Log("Ready call called");
+            });
         }
     }
 }
