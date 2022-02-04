@@ -399,7 +399,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
        
-       static float storageMultiplier = 2f;
+       public static float storageMultiplier = 2f;
 	
         public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o, Chunk c)
         {

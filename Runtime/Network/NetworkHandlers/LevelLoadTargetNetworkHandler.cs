@@ -33,7 +33,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private byte[] ChunkToData(ChunkData chunkData)
+        private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
         {
             GameConsole.Log($"Chunk {chunkData.ChunkId} has {chunkData.Data.Count} Blocks");
             byte[] data = new byte[1024];
@@ -41,7 +41,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ushort elementType = (ushort) instanceData.Code;
                 GameConsole.Log($"Encode position {instanceData.X} {instanceData.Y} {instanceData.Z}");
-                int z = 64*((int) instanceData.X % 8) + 8*((int) instanceData.Y % 8) +((int) instanceData.Z % 8);
+
+                int localX = ((int) instanceData.X) - (int)ChunkManager.storageMultiplier * gridPosition.Item1;
+                int localY = ((int) instanceData.Y) - 2 * gridPosition.Item2;
+                int localZ = ((int) instanceData.Z) - 2 * gridPosition.Item3;
+                int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
                 int i = 2 * z;
                 byte upper = (byte) (elementType >> 8);
                 byte lower = (byte) (elementType & 0xff);
@@ -68,9 +72,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         {
                         LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                         objectData.Code = elementType;
-                        objectData.X = (uint) (i + gridPosition.Item1 * 8);
-                        objectData.Y = (uint) (j + gridPosition.Item2 * 8);
-                        objectData.Z = (uint) (k + gridPosition.Item3 * 8);
+                        objectData.X = (uint) (i + (int)ChunkManager.storageMultiplier * gridPosition.Item1);
+                        objectData.Y = (uint) (j + (int)ChunkManager.storageMultiplier * gridPosition.Item2);
+                        objectData.Z = (uint) (k + (int)ChunkManager.storageMultiplier * gridPosition.Item3);
                         chunkData.Data.Add(objectData);
                         GameConsole.Log($"Got BlockData {objectData}");
                         }
