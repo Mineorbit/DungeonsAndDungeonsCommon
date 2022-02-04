@@ -41,7 +41,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ClientToServerId.playerInput)]
         public static void PlayerInputProcessing(ushort id, Message message)
         {
-            Player player = PlayerManager.playerManager.players[id];
+            int localId = id - 1;
+            Player player = PlayerManager.playerManager.players[localId];
             player.movingDirection = message.GetVector3();
             player.targetDirection = message.GetVector3();
             player.forwardDirection = message.GetVector3();
