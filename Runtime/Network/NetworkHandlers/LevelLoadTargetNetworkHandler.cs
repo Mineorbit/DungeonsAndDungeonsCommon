@@ -53,7 +53,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     elementType = (ushort) (elementType & 0b_0011_1111_1111_1111);
                     elementType = (ushort) (elementType | 0b_1100_0000_0000_0000);
                 }
-
+                GameConsole.Log($"Encode position {instanceData.X} {instanceData.Y} {instanceData.Z}");
                 int z = 64*((int) instanceData.X) + 8*((int) instanceData.Y) +((int) instanceData.Z);
                 int i = 2 * z;
                 ushort number = Convert.ToUInt16(elementType);
