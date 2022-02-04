@@ -49,6 +49,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int i = 2 * z;
                 byte upper = (byte) (elementType >> 8);
                 byte lower = (byte) (elementType & 0xff);
+
+                upper = (byte) ((byte) (upper & 0x3f) | (byte)((byte)instanceData.Rot << 2));
+                
                 data[i] = upper;
                 data[i + 1] = lower;
             }
@@ -69,12 +72,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         byte lower = data[d+1];
                         ushort elementType = (ushort) ( ((int) upper) * 256 + (int)lower);
                         if(elementType != 0)
-                        {
+                        { 
+                            int rot = upper >> 6;
                         LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                         objectData.Code = elementType;
                         objectData.X = (uint) ((i+4) *(int)ChunkManager.storageMultiplier);
                         objectData.Y = (uint) ((j+4) *(int)ChunkManager.storageMultiplier);
                         objectData.Z = (uint) ((k+4) *(int)ChunkManager.storageMultiplier);
+                        objectData.Rot = (uint) rot;
                         chunkData.Data.Add(objectData);
                         GameConsole.Log($"Got BlockData {objectData}");
                         }
