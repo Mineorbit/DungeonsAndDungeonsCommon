@@ -24,6 +24,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void UpdateInputData()
         {
+            GameConsole.Log($"Updating Input Data for {GetObservedPlayer().localId}");
             Message input = Message.Create(MessageSendMode.unreliable,(ushort) NetworkManager.ClientToServerId.playerInput);
             PlayerController c = (PlayerController) GetObservedPlayer().controller;
             input.AddVector3(c.movingDirection);
