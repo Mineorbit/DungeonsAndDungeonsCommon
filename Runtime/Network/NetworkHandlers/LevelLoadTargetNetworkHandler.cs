@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
@@ -49,7 +50,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         
-
+        public static string PrintByteArray(byte[] bytes)
+        {
+            var sb = new StringBuilder("new byte[] { ");
+            foreach (var b in bytes)
+            {
+                sb.Append(b + ", ");
+            }
+            sb.Append("}");
+            return sb.ToString();
+        }
         
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
@@ -91,7 +101,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         message.AddShort((byte) j);
                         message.AddShort((byte) k);
                         message.AddBytes(datas[i,j,k],isBigArray:true);
-                        GameConsole.Log($"Bytes: {Convert.ToString(datas[i,j,k])}");
+                        GameConsole.Log($"Bytes: {PrintByteArray(datas[i,j,k])}");
                         messages[i, j, k] = message;
             
                     }
