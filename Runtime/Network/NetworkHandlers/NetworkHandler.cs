@@ -152,7 +152,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             else
             {
-                GameConsole.Log($"Could not find {identity} for syncvar");
+               // GameConsole.Log($"Could not find {identity} for syncvar");
             }
             }
             catch (Exception e)
