@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
@@ -102,25 +103,39 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 .owner + 1;
             NetworkManager.instance.Server.Send(message,(ushort) id);
         }
-        
-        
+
+        private Queue<Action> streamChunks = new Queue<Action>();
+        private int c = 0;
+        private int cap = 16;
+        public void FixedUpdate()
+        {
+            c++;
+            if (c == cap)
+            {
+                c = 0;
+                Action a = streamChunks.Dequeue();
+                a.Invoke();
+            }
+        }
         
 
         public override void SendAction(string actionName, ChunkData chunkData)
         {
 
+            Action a;
             switch (actionName)
             {
                 case "StreamChunkIntoCurrentLevelFrom":
-                    StreamChunk(chunkData);
+                    a = () => StreamChunk(chunkData);
                     break;
                 case "StreamChunkImmediateIntoCurrentLevelFrom":
-                    StreamChunk(chunkData,immediate: true);
+                    a = () => StreamChunk(chunkData);
                     break;
                 default:
-                    base.SendAction(actionName, chunkData);
+                    a = () => base.SendAction(actionName, chunkData);
                     break;
             }
+            streamChunks.Enqueue(a);
         }
     }
 }
