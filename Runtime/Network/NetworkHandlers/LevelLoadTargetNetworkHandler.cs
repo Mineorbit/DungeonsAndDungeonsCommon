@@ -75,6 +75,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     List<Message> n = new List<Message>();
                     List<byte[]> d  = new List<byte[]>();
+                    for (int k = 0; k < 2; k++)
+                    {
+                        d.Add(new byte[1024]);
+                    }
                     b.Add(d);
                     m.Add(n);
 
@@ -111,7 +115,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         message.AddShort((byte) k);
                         message.AddBytes(datas[i][j][k],isBigArray:true);
                         GameConsole.Log($"Bytes: {PrintByteArray(datas[i][j][k])}");
-                        messages[i][j][k] = message;
+                        messages[i][j].Add(message);
             
                     }
 
