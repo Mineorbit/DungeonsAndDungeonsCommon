@@ -501,8 +501,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 for(int j = 0;j<8;j++)
                     for (int k = 0; k < 8; k++)
                     {
-                        int z = 64*((int) i) + 8*((int) j) +((int) k);
-                        int d = 2 * z;
+                        int h = 64*((int) i) + 8*((int) j) +((int) k);
+                        int d = 2 * h;
                         byte upper = data[d];
                         byte lower = data[d+1];
                         byte upper2 = (byte) ((byte) (upper & 0x3f));
