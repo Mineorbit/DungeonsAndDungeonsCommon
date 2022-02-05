@@ -99,7 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             data[h] = datas[i, j, k, h];
                         }
                         message.AddBytes(data,isBigArray:true);
-                        GameConsole.Log($"Bytes: {PrintByteArray(datas[i][j][k])}");
+                        GameConsole.Log($"Bytes: {PrintByteArray(data)}");
                         messages.Add(message);
             
                     }
