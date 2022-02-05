@@ -22,15 +22,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
+            int i = m.GetShort();
+            int j = m.GetShort();
+            int k = m.GetShort();
             int a = m.GetInt();
             int b = m.GetInt();
             int c = m.GetInt();
-            int i = m.GetByte();
-            int j = m.GetByte();
-            int k = m.GetByte();
+            byte[] data = m.GetBytes(isBigArray: true);
             MainCaller.Do(() =>
             {
-                byte[] data = m.GetBytes(isBigArray: true);
                 List<LevelObjectInstanceData> instanceData = ChunkManager.BinaryToData(data,a,b,c,i*4,j*4,k*4);
                 Vector3 offset = new Vector3(a * 8, b * 8, c * 8);
                 foreach(LevelObjectInstanceData d  in instanceData)
@@ -53,12 +53,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     {
                         Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
                         var pos = ChunkManager.GetChunkGridByID(chunkData.ChunkId);
+                        
+                        message.AddShort((byte) i);
+                        message.AddShort((byte) j);
+                        message.AddShort((byte) k);
                         message.AddInt(pos.Item1);
                         message.AddInt(pos.Item2);
                         message.AddInt(pos.Item3);
-                        message.AddByte((byte) i);
-                        message.AddByte((byte) j);
-                        message.AddByte((byte) k);
                         byte[] data = ChunkManager.DataToBinary(chunkData,i*4,j*4,k*4);
                         message.Add(data,isBigArray:true);
                         int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
