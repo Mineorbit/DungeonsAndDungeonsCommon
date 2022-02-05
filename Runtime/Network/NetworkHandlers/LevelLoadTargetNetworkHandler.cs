@@ -76,7 +76,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int a = pos.x >= 4 ? 1 : 0;
                 int b = pos.y >= 4 ? 1 : 0;
                 int c = pos.z >= 4 ? 1 : 0;
-                int t = 64 *  ( (int)(2*pos.x) - 4*a) + 8 *  ( (int)(2*pos.y) - 4*b) + ( (int)(2*pos.z) - 4*c);
+                int t = 64 *  ( (int)(2*(pos.x- 4*a)) ) + 8 *  ( (int)(2*(pos.y- 4*b)) ) + ( (int)(2*(pos.z- 4*c)) );
                 int code =  levelObject.gameObject.GetComponent<LevelObject>().levelObjectDataType;
                 
                 //assigning upper byte
