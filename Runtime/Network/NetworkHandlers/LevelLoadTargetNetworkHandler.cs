@@ -106,15 +106,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private Queue<Action> streamChunks = new Queue<Action>();
         private int c = 0;
-        private int cap = 16;
+        private int cap = 8;
         public void FixedUpdate()
         {
             c++;
             if (c == cap)
             {
                 c = 0;
-                Action a = streamChunks.Dequeue();
-                a.Invoke();
+                if(streamChunks.Count > 0)
+                {
+                    Action a = streamChunks.Dequeue();
+                    a.Invoke();
+                }
             }
         }
         
