@@ -22,9 +22,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
+            string chunkID = m.GetString();
             MainCaller.Do(() =>
             {
-                string chunkID = m.GetString();
                 byte[] data = new byte[1024];
                 //data = m.GetBytes(isBigArray: true);
                 LoadChunk(chunkID, data);
@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             ChunkData chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
             chunkData.ChunkId = chunkID;
-            ChunkManager.LoadChunk(chunkData, false);
+            //ChunkManager.LoadChunk(chunkData, false);
         }
 
         private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
