@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
@@ -90,6 +91,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         message.AddShort((byte) j);
                         message.AddShort((byte) k);
                         message.AddBytes(datas[i,j,k],isBigArray:true);
+                        GameConsole.Log($"Bytes: {Convert.ToString(datas[i,j,k])}");
                         messages[i, j, k] = message;
             
                     }
