@@ -27,7 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 byte[] data = new byte[1024];
                 //data = m.GetBytes(isBigArray: true);
-                LoadChunk(chunkID, data);
+                //LoadChunk(chunkID, data);
             });
         }
 
