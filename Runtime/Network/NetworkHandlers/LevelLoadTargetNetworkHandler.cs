@@ -22,7 +22,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
-            string chunkID = m.GetString();
+            int a = m.GetInt();
+            int b = m.GetInt();
+            int c = m.GetInt();
+            string chunkID = ChunkManager.GetChunkID(new Tuple<int, int, int>(a, b, c));
             MainCaller.Do(() =>
             {
                 byte[] data = new byte[1024];
@@ -94,7 +97,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
-            message.AddString(chunkData.ChunkId);
+            var pos = ChunkManager.GetChunkGridByID(chunkData.ChunkId);
+            message.AddInt(pos.Item1);
+            message.AddInt(pos.Item2);
+            message.AddInt(pos.Item3);
             byte[] data = ChunkToData(chunkData,ChunkManager.GetChunkGridByID(chunkData.ChunkId));
             message.Add(data,isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
