@@ -26,18 +26,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(NetworkManager.instance.localId == GetObservedPlayer().localId)
             {
-                GameConsole.Log($"Updating Input Data for {GetObservedPlayer().localId}");
-            Message input = Message.Create(MessageSendMode.unreliable,(ushort) NetworkManager.ClientToServerId.playerInput);
-            PlayerController c = (PlayerController) GetObservedPlayer().controller;
-            input.AddVector3(c.movingDirection);
-            input.AddVector3(c.targetDirection);
-            input.AddVector3(c.forwardDirection);
-            input.AddQuaternion(c.aimRotation);
-            input.AddVector3(c.cameraForwardDirection);
-            input.AddBool(c.movementInputOnFrame);
-            input.AddBool(c.doInput);
-            input.AddBool(c.takeInput);
-            NetworkManager.instance.Client.Send(input);
+                //GameConsole.Log($"Updating Input Data for {GetObservedPlayer().localId}");
+                Message input = Message.Create(MessageSendMode.unreliable,(ushort) NetworkManager.ClientToServerId.playerInput);
+                PlayerController c = (PlayerController) GetObservedPlayer().controller;
+                input.AddVector3(c.movingDirection);
+                input.AddVector3(c.targetDirection);
+                input.AddVector3(c.forwardDirection);
+                input.AddQuaternion(c.aimRotation);
+                input.AddVector3(c.cameraForwardDirection);
+                input.AddBool(c.movementInputOnFrame);
+                input.AddBool(c.doInput);
+                input.AddBool(c.takeInput);
+                NetworkManager.instance.Client.Send(input);
             }
         }
         
