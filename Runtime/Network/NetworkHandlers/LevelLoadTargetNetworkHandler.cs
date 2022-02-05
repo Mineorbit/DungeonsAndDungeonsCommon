@@ -25,35 +25,47 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int a = m.GetInt();
             int b = m.GetInt();
             int c = m.GetInt();
+            int i = m.GetByte();
+            int j = m.GetByte();
+            int k = m.GetByte();
             string chunkID = ChunkManager.GetChunkID(new Tuple<int, int, int>(a, b, c));
             MainCaller.Do(() =>
             {
                 byte[] data = new byte[1024];
                 data = m.GetBytes(isBigArray: true);
-                LoadChunk(chunkID, data);
+                List<LevelObjectInstanceData> instanceData = ChunkManager.BinaryToData(data,a,b,c,i,j,k);
+                Vector3 offset = new Vector3(a * 8, b * 8, c * 8);
+                foreach(LevelObjectInstanceData d  in instanceData)
+                {
+                    LevelManager.currentLevel.Add(ChunkManager.LevelObjectInstanceDataToLevelObjectInstance(d, offset));
+                }
             });
         }
 
-        static void LoadChunk(string chunkID, byte[] data)
-        {
-            ChunkData chunkData = ChunkManager.BinaryToData(data,ChunkManager.GetChunkGridByID(chunkID));
-            chunkData.ChunkId = chunkID;
-            ChunkManager.LoadChunk(chunkData, false);
-        }
+        
 
         
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
-            Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
-            var pos = ChunkManager.GetChunkGridByID(chunkData.ChunkId);
-            message.AddInt(pos.Item1);
-            message.AddInt(pos.Item2);
-            message.AddInt(pos.Item3);
-            byte[] data = ChunkManager.DataToBinary(chunkData);
-            message.Add(data,isBigArray:true);
-            int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
-                .owner + 1;
-           NetworkManager.instance.Server.Send(message,(ushort) id);
+            
+            for(int i = 0; i < 2;i++)
+                for(int j = 0; j < 2;j++)
+                    for(int k = 0; k < 2;k++)
+                    {
+                        Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
+                        var pos = ChunkManager.GetChunkGridByID(chunkData.ChunkId);
+                        message.AddInt(pos.Item1);
+                        message.AddInt(pos.Item2);
+                        message.AddInt(pos.Item3);
+                        message.AddByte((byte) i);
+                        message.AddByte((byte) j);
+                        message.AddByte((byte) k);
+                        byte[] data = ChunkManager.DataToBinary(chunkData,i*4,j*4,k*4);
+                        message.Add(data,isBigArray:true);
+                        int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
+                            .owner + 1;
+                        NetworkManager.instance.Server.Send(message,(ushort) id);
+                    }
         }
 
         
