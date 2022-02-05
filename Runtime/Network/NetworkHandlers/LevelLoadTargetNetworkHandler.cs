@@ -26,8 +26,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             MainCaller.Do(() =>
             {
                 byte[] data = new byte[1024];
-                //data = m.GetBytes(isBigArray: true);
-                //LoadChunk(chunkID, data);
+                data = m.GetBytes(isBigArray: true);
+                LoadChunk(chunkID, data);
             });
         }
 
@@ -35,7 +35,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             ChunkData chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
             chunkData.ChunkId = chunkID;
-            //ChunkManager.LoadChunk(chunkData, false);
+            ChunkManager.LoadChunk(chunkData, false);
         }
 
         private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
@@ -102,22 +102,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
            // NetworkManager.instance.Server.Send(message,(ushort) id);
         }
 
-        private Queue<Action> streamChunks = new Queue<Action>();
-        private int c = 0;
-        private int cap = 8;
-        public void FixedUpdate()
-        {
-            c++;
-            if (c == cap)
-            {
-                c = 0;
-                if(streamChunks.Count > 0)
-                {
-                    Action a = streamChunks.Dequeue();
-                    a.Invoke();
-                }
-            }
-        }
+        
         
 
         public override void SendAction(string actionName, ChunkData chunkData)
@@ -136,7 +121,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     a = () => base.SendAction(actionName, chunkData);
                     break;
             }
-            streamChunks.Enqueue(a);
+            a.Invoke();
         }
     }
 }
