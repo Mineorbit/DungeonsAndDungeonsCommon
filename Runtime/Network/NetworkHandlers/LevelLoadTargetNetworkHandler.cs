@@ -76,7 +76,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         byte lower = data[d+1];
                         byte upper2 = (byte) ((byte) (upper & 0x3f));
                         ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
-                        /*
                         if(elementType != 0)
                         { 
                             int rot = upper >> 6;
@@ -88,7 +87,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             objectData.Rot = (uint) rot;
                             chunkData.Data.Add(objectData);
                         }
-                        */
                     }
             GameConsole.Log($"{chunkData}");
             return chunkData;
