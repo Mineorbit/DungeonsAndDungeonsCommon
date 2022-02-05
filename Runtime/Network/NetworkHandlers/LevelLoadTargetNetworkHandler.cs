@@ -20,13 +20,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
-            string chunkID = m.GetString();
             
-            ChunkData chunkData = DataToChunk(m.GetBytes(isBigArray: true),ChunkManager.GetChunkGridByID(chunkID));
-            
-            chunkData.ChunkId = chunkID;
                 MainCaller.Do(() =>
                 {
+                    string chunkID = m.GetString();
+            
+                    ChunkData chunkData = DataToChunk(m.GetBytes(isBigArray: true),ChunkManager.GetChunkGridByID(chunkID));
+
+                    chunkData.ChunkId = chunkID;
                     ChunkManager.LoadChunk(chunkData, false);
                 });
         }
