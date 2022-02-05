@@ -65,15 +65,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             Chunk chunk = ChunkManager.GetChunkByID(chunkData.ChunkId);
-            Message[,,] messages = new Message[2,2,2];
-            byte[,,][] datas = new byte[2, 2, 2][];
+            List<List<List<Message>>> messages = new List<List<List<Message>>>();
+            List<List<List<byte[]>>> datas = new List<List<List<byte[]>>>();
             for(int i = 0; i < 2;i++)
-            for(int j = 0; j < 2;j++)
-            for (int k = 0; k < 2; k++)
             {
-                datas[i, j, k] = new byte[1024];
-            }
+                List<List<Message>> m = new List<List<Message>>();
+                List<List<byte[]>> b = new List<List<byte[]>>();
+                for(int j = 0; j < 2;j++)
+                {
+                    List<Message> n = new List<Message>();
+                    List<byte[]> d  = new List<byte[]>();
+                    b.Add(d);
+                    m.Add(n);
 
+                }
+                datas.Add(b);
+                messages.Add(m);
+
+            }
             foreach (Transform levelObject in chunk.transform)
             {
                 Vector3 pos = levelObject.transform.localPosition;
@@ -84,9 +93,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int code =  levelObject.gameObject.GetComponent<LevelObject>().levelObjectDataType;
                 byte[] intBytes = BitConverter.GetBytes(code);
                 //assigning upper byte
-                datas[a, b, c][t] = intBytes[2];
+                datas[a][b][c][t] = intBytes[2];
                 //assigning lower byte
-                datas[a, b, c][t] = intBytes[3];
+                datas[a][b][c][t] = intBytes[3];
             }
             
             for(int i = 0; i < 2;i++)
@@ -100,17 +109,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         message.AddShort((byte) i);
                         message.AddShort((byte) j);
                         message.AddShort((byte) k);
-                        message.AddBytes(datas[i,j,k],isBigArray:true);
-                        GameConsole.Log($"Bytes: {PrintByteArray(datas[i,j,k])}");
-                        messages[i, j, k] = message;
+                        message.AddBytes(datas[i][j][k],isBigArray:true);
+                        GameConsole.Log($"Bytes: {PrintByteArray(datas[i][j][k])}");
+                        messages[i][j][k] = message;
             
                     }
-            
 
-            foreach (Message message in messages)
+            Message[] messageArray = messages.SelectMany(y => y).ToList().SelectMany(y => y).ToArray();
+
+            foreach (Message m in messageArray)
             {
-                GameConsole.Log($"Test: {message.ToString()}");
-                NetworkManager.instance.Server.SendToAll(message);
+                NetworkManager.instance.Server.SendToAll(m);
             }
         }
 
