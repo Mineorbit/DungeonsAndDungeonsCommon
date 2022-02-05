@@ -26,19 +26,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 string chunkID = m.GetString();
                 byte[] data = new byte[1024];
-                    //data = m.GetBytes(isBigArray: true);
+                //data = m.GetBytes(isBigArray: true);
                 LoadChunk(chunkID, data);
             });
         }
 
         static void LoadChunk(string chunkID, byte[] data)
         {
-            ChunkData chunkData = null;
-            chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
-
+            ChunkData chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
             chunkData.ChunkId = chunkID;
             ChunkManager.LoadChunk(chunkData, false);
-
         }
 
         private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
