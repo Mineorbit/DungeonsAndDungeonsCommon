@@ -99,7 +99,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
            // message.Add(data,isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                 .owner + 1;
-            NetworkManager.instance.Server.Send(message,(ushort) id);
+           // NetworkManager.instance.Server.Send(message,(ushort) id);
         }
 
         private Queue<Action> streamChunks = new Queue<Action>();
