@@ -32,10 +32,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         static IEnumerator LoadChunk(string chunkID, byte[] data)
         {
-            ChunkData chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
+            ChunkData chunkData = null;
+            chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
 
             chunkData.ChunkId = chunkID;
-            //ChunkManager.LoadChunk(chunkData, false);
+            ChunkManager.LoadChunk(chunkData, false);
 
             return null;
         }
@@ -77,17 +78,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         byte lower = data[d+1];
                         byte upper2 = (byte) ((byte) (upper & 0x3f));
                         ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
+                        /*
                         if(elementType != 0)
                         { 
                             int rot = upper >> 6;
-                        LevelObjectInstanceData objectData = new LevelObjectInstanceData();
-                        objectData.Code = elementType;
-                        objectData.X = (uint) ((i+4) *(int)ChunkManager.storageMultiplier);
-                        objectData.Y = (uint) ((j+4) *(int)ChunkManager.storageMultiplier);
-                        objectData.Z = (uint) ((k+4) *(int)ChunkManager.storageMultiplier);
-                        objectData.Rot = (uint) rot;
-                        chunkData.Data.Add(objectData);
+                            LevelObjectInstanceData objectData = new LevelObjectInstanceData();
+                            objectData.Code = elementType;
+                            objectData.X = (uint) ((i+4) *(int)ChunkManager.storageMultiplier);
+                            objectData.Y = (uint) ((j+4) *(int)ChunkManager.storageMultiplier);
+                            objectData.Z = (uint) ((k+4) *(int)ChunkManager.storageMultiplier);
+                            objectData.Rot = (uint) rot;
+                            chunkData.Data.Add(objectData);
                         }
+                        */
                     }
             GameConsole.Log($"{chunkData}");
             return chunkData;
