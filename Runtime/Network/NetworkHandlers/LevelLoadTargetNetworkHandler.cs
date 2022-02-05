@@ -28,11 +28,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int i = m.GetByte();
             int j = m.GetByte();
             int k = m.GetByte();
-            string chunkID = ChunkManager.GetChunkID(new Tuple<int, int, int>(a, b, c));
             MainCaller.Do(() =>
             {
-                byte[] data = new byte[1024];
-                data = m.GetBytes(isBigArray: true);
+                byte[] data = m.GetBytes(isBigArray: true);
                 List<LevelObjectInstanceData> instanceData = ChunkManager.BinaryToData(data,a,b,c,i*4,j*4,k*4);
                 Vector3 offset = new Vector3(a * 8, b * 8, c * 8);
                 foreach(LevelObjectInstanceData d  in instanceData)
@@ -65,6 +63,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         message.Add(data,isBigArray:true);
                         int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                             .owner + 1;
+                        GameConsole.Log($"Sending message of length {message.WrittenLength}");
                         NetworkManager.instance.Server.Send(message,(ushort) id);
                     }
         }
