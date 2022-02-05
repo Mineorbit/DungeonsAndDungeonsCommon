@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
@@ -25,14 +26,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = m.GetBytes(isBigArray: true);
                 MainCaller.Do(() =>
                 {
-            
-                    ChunkData chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
-
-                    chunkData.ChunkId = chunkID;
-                    //ChunkManager.LoadChunk(chunkData, false);
+                    LevelDataManager.instance.StartCoroutine(LoadChunk(chunkID, data));
                 });
         }
 
+        static IEnumerator LoadChunk(string chunkID, byte[] data)
+        {
+            ChunkData chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
+
+            chunkData.ChunkId = chunkID;
+            //ChunkManager.LoadChunk(chunkData, false);
+
+            return null;
+        }
 
         private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
         {
