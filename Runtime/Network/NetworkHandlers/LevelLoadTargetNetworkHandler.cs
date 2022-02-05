@@ -77,12 +77,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int b = pos.y >= 4 ? 1 : 0;
                 int c = pos.z >= 4 ? 1 : 0;
 
-                int x = Convert.ToInt32( 2 * pos.x);
-                int y = Convert.ToInt32( 2 * pos.y);
-                int z = Convert.ToInt32( 2 * pos.z);
-
+                int x = Convert.ToInt32( 2f * pos.x);
+                int y = Convert.ToInt32( 2f * pos.y);
+                int z = Convert.ToInt32( 2f * pos.z);
+                
+                
                 int t = 64 * (x - 8 * a) + 8 * (y - 8 * b) + (z - 8 * c);
                 int code =  levelObject.gameObject.GetComponent<LevelObject>().levelObjectDataType;
+                
+                
+                if(code == 18)
+                    GameConsole.Log($"THE COORDINATES ARE {x} {y} {z}");
                 
                 //assigning upper byte
                 datas[a,b,c,t] = 0;
