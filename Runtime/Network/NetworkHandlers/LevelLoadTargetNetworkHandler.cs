@@ -89,7 +89,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         message.AddShort((byte) i);
                         message.AddShort((byte) j);
                         message.AddShort((byte) k);
-                        message.AddBytes(datas[i,j,k]);
+                        message.AddBytes(datas[i,j,k],isBigArray:true);
                         messages[i, j, k] = message;
             
                     }
@@ -97,6 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             foreach (Message message in messages)
             {
+                GameConsole.Log($"Test: {message.ToString()}");
                 NetworkManager.instance.Server.SendToAll(message);
             }
         }
