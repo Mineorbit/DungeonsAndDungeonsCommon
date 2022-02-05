@@ -465,7 +465,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = new byte[1024];
             GameConsole.Log($"{chunkData}");
             Vector3 offset = GetChunkPosition(chunkData.ChunkId);
-
+            GameConsole.Log($"Check {offset}");
             foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
                 ushort elementType = (ushort) instanceData.Code;
