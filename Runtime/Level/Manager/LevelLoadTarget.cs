@@ -50,7 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (loadTargetMode == LoadTargetMode.Near) LoadNearChunk(position);
         }
 
-        public void LoadNearChunk(Vector3 position, bool immediate = false)
+        public void LoadNearChunk(Vector3 position)
         {
             if (LevelManager.currentLevel != null)
                 if (!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
@@ -58,10 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     var chunkData = ChunkManager.ChunkToData(ChunkManager.GetChunk(position, true));
                     if (chunkData != null)
                     {
-                        if (immediate)
-                            Invoke(StreamChunkImmediateIntoCurrentLevelFrom, chunkData, true, true);
-                        else
-                            Invoke(StreamChunkIntoCurrentLevelFrom, chunkData, true , true);
+                        Invoke(StreamChunkIntoCurrentLevelFrom, chunkData, true , true);
 
                         loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
                     }
@@ -69,29 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        IEnumerator WaitRoutine(string cid,Action finishAction)
-        {
-            bool v = false;
-            v = ChunkManager.ChunkLoaded(cid);
-            while (!v)
-            {
-                v = ChunkManager.ChunkLoaded(cid);
-                yield return new WaitForEndOfFrame();
-            }
-            mover.follow = true;
-            MainCaller.Do(finishAction);  
-        }
         
-        public void WaitForChunkLoaded(Vector3 position, Action finishAction)
-        {
-            MainCaller.Do(() =>
-            {
-                mover.follow = false;
-                transform.position = position;
-                string chunkId = ChunkManager.GetChunkID(ChunkManager.GetChunkGridPosition(position));
-                StartCoroutine(WaitRoutine(chunkId,finishAction));
-            });
-        }
 
         public void StreamChunkImmediateIntoCurrentLevelFrom(ChunkData chunkData)
         {
