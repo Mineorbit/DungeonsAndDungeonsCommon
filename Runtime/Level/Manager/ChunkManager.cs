@@ -470,9 +470,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ushort elementType = (ushort) instanceData.Code;
 
-                float localX =  instanceData.X - offset.x;
-                float localY = instanceData.Y - offset.y;
-                float localZ = instanceData.Z - offset.z;
+                float localX =  instanceData.X;
+                float localY = instanceData.Y;
+                float localZ = instanceData.Z;
                 GameConsole.Log($"{instanceData} is local as {localX} {localY} {localZ}");
                 
                 int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
@@ -507,9 +507,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             int rot = upper >> 6;
                             LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                             objectData.Code = elementType;
-                            objectData.X = (uint) (i + offset.x);
-                            objectData.Y = (uint) (j + offset.y);
-                            objectData.Z = (uint) (k + offset.z);
+                            objectData.X = (uint) (i);
+                            objectData.Y = (uint) (j);
+                            objectData.Z = (uint) (k);
                             objectData.Rot = (uint) rot;
                             chunkData.Data.Add(objectData);
                         }
