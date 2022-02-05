@@ -21,16 +21,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
-            
-            string chunkID = m.GetString();
-            byte[] data = m.GetBytes(isBigArray: true);
-                MainCaller.Do(() =>
-                {
-                    LevelDataManager.instance.StartCoroutine(LoadChunk(chunkID, data));
-                });
+            MainCaller.Do(() =>
+            {
+                string chunkID = m.GetString();
+                byte[] data = m.GetBytes(isBigArray: true);
+                LoadChunk(chunkID, data);
+            });
         }
 
-        static IEnumerator LoadChunk(string chunkID, byte[] data)
+        static void LoadChunk(string chunkID, byte[] data)
         {
             ChunkData chunkData = null;
             chunkData = DataToChunk(data,ChunkManager.GetChunkGridByID(chunkID));
@@ -38,7 +37,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             chunkData.ChunkId = chunkID;
             ChunkManager.LoadChunk(chunkData, false);
 
-            return null;
         }
 
         private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
