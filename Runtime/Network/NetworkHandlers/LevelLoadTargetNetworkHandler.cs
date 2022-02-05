@@ -36,7 +36,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private byte[] ChunkToData(ChunkData chunkData, Tuple<int, int, int> gridPosition)
         {
             byte[] data = new byte[1024];
-            foreach (LevelObjectInstanceData instanceData in chunkData.Data)
+            GameConsole.Log($"{chunkData}");
+        foreach (LevelObjectInstanceData instanceData in chunkData.Data)
             {
                 ushort elementType = (ushort) instanceData.Code;
 
@@ -81,6 +82,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         chunkData.Data.Add(objectData);
                         }
                     }
+            GameConsole.Log($"{chunkData}");
             return chunkData;
         }
         
