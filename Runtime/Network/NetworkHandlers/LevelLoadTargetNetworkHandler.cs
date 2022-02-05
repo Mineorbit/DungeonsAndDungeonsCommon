@@ -79,7 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 //assigning upper byte
                 datas[a,b,c,t] = 0;
                 //assigning lower byte
-                datas[a,b,c,t] = (byte) code;
+                datas[a,b,c,t+1] = (byte) code;
             }
             
             for(int i = 0; i < 2;i++)
