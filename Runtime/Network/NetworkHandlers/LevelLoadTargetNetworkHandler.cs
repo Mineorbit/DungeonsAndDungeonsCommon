@@ -77,9 +77,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int code =  levelObject.gameObject.GetComponent<LevelObject>().levelObjectDataType;
                 byte[] intBytes = BitConverter.GetBytes(code);
                 //assigning upper byte
-                datas[a,b,c,t] = intBytes[2];
+                datas[a,b,c,t] = intBytes[0];
                 //assigning lower byte
-                datas[a,b,c,t] = intBytes[3];
+                datas[a,b,c,t] = intBytes[1];
             }
             
             for(int i = 0; i < 2;i++)
