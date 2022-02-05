@@ -89,9 +89,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameConsole.Log($"{code} : {x} {y} {z} : {t}");
                 
                 //assigning upper byte
-                datas[a,b,c,t] = 0;
+                datas[a,b,c,4*t] = 0;
                 //assigning lower byte
-                datas[a,b,c,t+1] = (byte) code;
+                datas[a,b,c,4*t+1] = (byte) code;
             }
             
             for(int i = 0; i < 2;i++)
