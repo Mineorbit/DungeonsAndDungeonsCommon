@@ -298,8 +298,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Teleport(Vector3 position)
         {
             base.Teleport(position);
-            if(loadTarget != null)
-                loadTarget.WaitForChunkLoaded(position, () => { gameObject.SetActive(true); });
+            gameObject.SetActive(true);
             ResetMovement();
         }
 
