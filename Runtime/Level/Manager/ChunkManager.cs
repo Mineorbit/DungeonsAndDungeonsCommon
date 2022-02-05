@@ -163,7 +163,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string[] s = chunkID.Split(CIDSEP);
             Vector3 pos = new Vector3(Int32.Parse(s[0]) * chunkGranularity
                 , Int32.Parse(s[1]) * chunkGranularity, Int32.Parse(s[2]) * chunkGranularity);
-            return pos - new Vector3(1, 1, 1)*chunkGranularity/2;
+            return pos;
         }
 
         private Chunk AddChunk(Tuple<int, int, int> gridPosition)
@@ -212,15 +212,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static Vector3 ChunkPositionFromGridPosition(Tuple<int, int, int> gridPosition)
         {
-            return new Vector3(gridPosition.Item1 * chunkGranularity, gridPosition.Item2 * chunkGranularity, gridPosition.Item3 * chunkGranularity) -
-                   chunkGranularity / 2 * new Vector3(1, 1, 1);
+            return new Vector3(gridPosition.Item1 * chunkGranularity, gridPosition.Item2 * chunkGranularity,
+                gridPosition.Item3 * chunkGranularity);
         }
 
         public static Tuple<int, int, int> GetChunkGridPosition(Vector3 position)
         {
-            return new Tuple<int, int, int>((int) Mathf.Floor(position.x / chunkGranularity),
-            				(int) Mathf.Floor(position.y / chunkGranularity),
-                			(int) Mathf.Floor(position.z / chunkGranularity));
+            return new Tuple<int, int, int>((int) Mathf.Round(position.x / chunkGranularity),
+            				(int) Mathf.Round(position.y / chunkGranularity),
+                			(int) Mathf.Round(position.z / chunkGranularity));
         }
 
 
