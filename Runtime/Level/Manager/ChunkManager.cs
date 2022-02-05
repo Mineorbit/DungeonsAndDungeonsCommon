@@ -460,7 +460,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return chunkData;
         }
         
-        public static byte[] DataToBinary(ChunkData chunkData)
+        public static byte[] DataToBinary(ChunkData chunkData, int a, int b, int c)
         {
             byte[] data = new byte[1024];
             GameConsole.Log($"{chunkData}");
@@ -470,28 +470,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 ushort elementType = (ushort) instanceData.Code;
 
-                float localX =  instanceData.X;
-                float localY = instanceData.Y;
-                float localZ = instanceData.Z;
-                GameConsole.Log($"{instanceData} is local as {localX} {localY} {localZ}");
-                
-                int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
-                int i = 2 * z;
-                byte upper = (byte) (elementType >> 8);
-                byte lower = (byte) (elementType & 0xff);
+                int localX = (int) instanceData.X;
+                int localY = (int) instanceData.Y;
+                int localZ = (int) instanceData.Z;
+                if(a <= localX && localX < a+4 && b <= localY && localY < b+4   && c <= localZ && localZ < c+4 )
+                {
+                    localX = localX - a;
+                    localY = localY - b;
+                    localZ = localZ - c;
+                    
+                    int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
+                    int i = 2 * z;
+                    byte upper = (byte) (elementType >> 8);
+                    byte lower = (byte) (elementType & 0xff);
 
-                upper = (byte) ((byte) (upper & 0x3f) | (byte)((byte)instanceData.Rot << 6));
+                    upper = (byte) ((byte) (upper & 0x3f) | (byte)((byte)instanceData.Rot << 6));
                 
-                data[i] = upper;
-                data[i + 1] = lower;
+                    data[i] = upper;
+                    data[i + 1] = lower;
+                
+                }
             }
             return data;
         }
 
-        public static ChunkData BinaryToData(byte[] data, Tuple<int, int, int> gridPosition)
+        public static List<LevelObjectInstanceData> BinaryToData(byte[] data,int x, int y, int z,int a ,int b,int c)
         {
-            ChunkData chunkData = new ChunkData();
-            Vector3 offset = GetChunkPosition(GetChunkID(gridPosition));
+            List<LevelObjectInstanceData> list = new List<LevelObjectInstanceData>();
             for(int i = 0;i < 8;i++)
                 for(int j = 0;j<8;j++)
                     for (int k = 0; k < 8; k++)
@@ -507,15 +512,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             int rot = upper >> 6;
                             LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                             objectData.Code = elementType;
-                            objectData.X = (uint) (i);
-                            objectData.Y = (uint) (j);
-                            objectData.Z = (uint) (k);
+                            objectData.X = (uint) (i) + (uint) a;
+                            objectData.Y = (uint) (j) + (uint) b;
+                            objectData.Z = (uint) (k) + (uint) c;
                             objectData.Rot = (uint) rot;
-                            chunkData.Data.Add(objectData);
+                            list.Add(objectData);
                         }
                     }
-            GameConsole.Log($"{chunkData}");
-            return chunkData;
+            return list;
         }
         
     }
