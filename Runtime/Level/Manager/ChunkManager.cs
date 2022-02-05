@@ -218,9 +218,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static Tuple<int, int, int> GetChunkGridPosition(Vector3 position)
         {
-            return new Tuple<int, int, int>((int) Mathf.Round(position.x / chunkGranularity),
-            				(int) Mathf.Round(position.y / chunkGranularity),
-                			(int) Mathf.Round(position.z / chunkGranularity));
+            return new Tuple<int, int, int>((int) Mathf.Floor(position.x / chunkGranularity),
+            				(int) Mathf.Floor(position.y / chunkGranularity),
+                			(int) Mathf.Floor(position.z / chunkGranularity));
         }
 
 
