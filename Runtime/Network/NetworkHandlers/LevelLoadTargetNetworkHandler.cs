@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     int code = 256*upper + lower;
                         if(code != 0){
                         LevelObjectData objectData = Level.GetLevelObjectData(code);
-                        Vector3 inChunkOffset = new Vector3(2*inChunkX,2*inChunkY,2*inChunkZ);
+                        Vector3 inChunkOffset = new Vector3(4*inChunkX,4*inChunkY,4*inChunkZ);
                         Vector3 inSubPartOffset = new Vector3(x,y,z);
                         Vector3 pos = offset + inChunkOffset + inSubPartOffset;
                         GameConsole.Log($" {chunkX} {chunkY} {chunkZ} , {inChunkX} {inChunkY} {inChunkZ} , {x} {y} {z} => {offset} {inChunkOffset} {inSubPartOffset}");
