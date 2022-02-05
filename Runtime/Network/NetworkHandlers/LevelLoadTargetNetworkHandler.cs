@@ -86,7 +86,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 int t = 64 * (x - 8 * a) + 8 * (y - 8 * b) + (z - 8 * c);
                 int code =  levelObject.gameObject.GetComponent<LevelObject>().levelObjectDataType;
-                GameConsole.Log($"{code} : {x} {y} {z}");
+                GameConsole.Log($"{code} : {x} {y} {z} : {t}");
                 
                 //assigning upper byte
                 datas[a,b,c,t] = 0;
