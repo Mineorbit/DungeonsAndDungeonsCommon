@@ -99,8 +99,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void RequestPrepareRound(LevelMetaData metaData)
         {
+            GameConsole.Log("Calling for Preparation");
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.prepareRound);
-            m.AddBytes(metaData.ToByteArray());
+            m.AddLong(metaData.UniqueLevelId);
             NetworkManager.instance.Server.SendToAll(m);
         }
         
@@ -109,7 +110,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Preparing Round");
             MainCaller.Do(() => { NetworkManager.prepareRoundEvent.Invoke(); });
-            NetLevel.LevelMetaData netData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
+            NetLevel.LevelMetaData netData = new LevelMetaData();
+            netData.UniqueLevelId = m.GetLong();
             if (netData != null)
             {
                 var levelMetaData = netData;
