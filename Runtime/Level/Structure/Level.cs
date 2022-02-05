@@ -204,6 +204,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 NetworkLevelObject.identifiedLevelObjects.Clear();
             }
         }
+
+        public static LevelObjectData GetLevelObjectData(int code)
+        {
+            LevelObjectData data;
+            if (LevelDataManager.levelObjectDatas.TryGetValue(code, out data))
+            {
+                return data;
+            }
+            return null;
+        }
         
         public GameObject Add(LevelObjectInstance levelObjectInstance)
         {
