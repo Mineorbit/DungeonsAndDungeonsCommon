@@ -52,7 +52,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnLobbyRequestUpdate(Message m)
         {
 
-            LevelMetaData metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
+            LevelMetaData metaData = new LevelMetaData();
+            metaData.UniqueLevelId = m.GetLong();
             GameConsole.Log($"Selected Level: {metaData}");
             NetworkManager.lobbyRequestEvent.Invoke(metaData);
 
