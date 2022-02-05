@@ -284,16 +284,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return false;
         }
 
-        public override void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
-        {
-            /*
-            Thread t = new Thread(new ThreadStart(() => { base.Spawn(location, rotation, allowedToMove); }));
-            t.IsBackground = true;
-            t.Start();
-            */
-            //if (loadTarget != null) { loadTarget.WaitForChunkLoaded(location); }  
-            base.Spawn(location, rotation, allowedToMove);
-        }
+        
 
         public override void Teleport(Vector3 position)
         {
