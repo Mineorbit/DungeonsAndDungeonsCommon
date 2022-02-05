@@ -16,13 +16,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void Update()
         {
+            
+            if(animator != null)
+                animator.SetFloat("Speed", speed);
+        }
+
+        public void FixedUpdate()
+        {
             if (!me.enabled)
             {
                 me.ComputeCurrentSpeed();
+                me.UpdateGround();
             }
             speed = me.speed;
-            if(animator != null)
-                animator.SetFloat("Speed", speed);
+            
         }
 
         public virtual void Hit()
