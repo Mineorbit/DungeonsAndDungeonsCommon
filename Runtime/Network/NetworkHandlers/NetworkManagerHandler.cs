@@ -109,14 +109,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void PrepareRound(Message m)
         {
             GameConsole.Log("Preparing Round");
-            MainCaller.Do(() => { NetworkManager.prepareRoundEvent.Invoke(); });
-            NetLevel.LevelMetaData netData = new LevelMetaData();
             netData.UniqueLevelId = m.GetLong();
+            /*MainCaller.Do(() => { NetworkManager.prepareRoundEvent.Invoke(); });
+            NetLevel.LevelMetaData netData = new LevelMetaData();
             if (netData != null)
             {
                 var levelMetaData = netData;
                 MainCaller.Do(() => { LevelDataManager.New(levelMetaData, saveImmediately: false); });
             }
+            */
         }
 
 
