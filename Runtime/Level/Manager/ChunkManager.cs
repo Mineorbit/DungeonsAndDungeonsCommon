@@ -475,10 +475,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 int localZ = (int) instanceData.Z;
                 if(a <= localX && localX < a+4 && b <= localY && localY < b+4   && c <= localZ && localZ < c+4 )
                 {
-                    localX = localX - a;
-                    localY = localY - b;
-                    localZ = localZ - c;
-                    
+                    localX = (localX - a)*2;
+                    localY = (localY - b)*2;
+                    localZ = (localZ - c)*2;
+
                     int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
                     int i = 2 * z;
                     byte upper = (byte) (elementType >> 8);
@@ -512,9 +512,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             int rot = upper >> 6;
                             LevelObjectInstanceData objectData = new LevelObjectInstanceData();
                             objectData.Code = elementType;
-                            objectData.X = (uint) (i) + (uint) a;
-                            objectData.Y = (uint) (j) + (uint) b;
-                            objectData.Z = (uint) (k) + (uint) c;
+                            objectData.X = (uint) (i/2) + (uint) a;
+                            objectData.Y = (uint) (j/2) + (uint) b;
+                            objectData.Z = (uint) (k/2) + (uint) c;
                             objectData.Rot = (uint) rot;
                             list.Add(objectData);
                         }

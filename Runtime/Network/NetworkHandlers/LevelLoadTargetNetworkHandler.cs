@@ -33,10 +33,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 byte[] data = new byte[1024];
                 data = m.GetBytes(isBigArray: true);
-                List<LevelObjectInstanceData> instanceData = ChunkManager.BinaryToData(data,a,b,c,i,j,k);
+                List<LevelObjectInstanceData> instanceData = ChunkManager.BinaryToData(data,a,b,c,i*4,j*4,k*4);
                 Vector3 offset = new Vector3(a * 8, b * 8, c * 8);
                 foreach(LevelObjectInstanceData d  in instanceData)
                 {
+                    GameConsole.Log($"Resolved {d}");
                     LevelManager.currentLevel.Add(ChunkManager.LevelObjectInstanceDataToLevelObjectInstance(d, offset));
                 }
             });
