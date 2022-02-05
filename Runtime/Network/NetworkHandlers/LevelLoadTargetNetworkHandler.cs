@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     int code = 256*upper + lower;
                         if(code != 0){
                             LevelObjectData objectData = Level.GetLevelObjectData(code);
-                            Vector3 smallOffset = new Vector3(inChunkX*4 + (float)x/2,inChunkY*4+(float)y/2,inChunkZ*4+(float)z/2);
+                            Vector3 smallOffset = new Vector3(inChunkX*4 + (float)x,inChunkY*4+(float)y,inChunkZ*4+(float)z);
                             LevelManager.currentLevel.Add(objectData,offset+smallOffset,Quaternion.identity, null);
                         }
                     }
