@@ -28,7 +28,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.lobbyUpdate);
-            m.AddBytes(selectedLevel.ToByteArray());
+            m.AddLong(selectedLevel.UniqueLevelId);
             NetworkManager.instance.Client.Send(m);
         }
 
@@ -37,7 +37,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnLobbyRequestUpdate(ushort id, Message m)
         {
 
-            LevelMetaData metaData = LevelMetaData.Parser.ParseFrom(m.GetBytes());
+            LevelMetaData metaData = new LevelMetaData();
+            metaData.UniqueLevelId = m.GetLong();
             GameConsole.Log($"Selected Level: {metaData}");
             if (NetworkManager.instance.isOnServer)
             {
