@@ -96,7 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
             message.AddString(chunkData.ChunkId);
             byte[] data = ChunkToData(chunkData,ChunkManager.GetChunkGridByID(chunkData.ChunkId));
-           // message.Add(data,isBigArray:true);
+            message.Add(data,isBigArray:true);
             int id = ((LevelLoadTarget) GetObserved()).mover.target.gameObject.GetComponent<PlayerNetworkHandler>()
                 .owner + 1;
            NetworkManager.instance.Server.Send(message,(ushort) id);
