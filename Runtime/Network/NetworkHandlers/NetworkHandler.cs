@@ -96,7 +96,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void SyncVarHandle(Message value)
         {
             int identity = value.GetInt();
-            NetworkHandler n = NetworkLevelObject.FindByIdentity(identity).levelObjectNetworkHandler;
+            NetworkLevelObject o = NetworkLevelObject.FindByIdentity(identity);
+
+            if (o == null)
+            {
+                GameConsole.Log($"Could not find LevelObject {identity}");
+                return
+            }
+            NetworkHandler n =  o.levelObjectNetworkHandler;
             try
             {
                 if(n != null)
