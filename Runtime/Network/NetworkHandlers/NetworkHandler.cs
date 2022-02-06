@@ -28,13 +28,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return (LevelObjectNetworkHandler) NetworkManager.networkHandlers.Find((x) =>
             {
-                if (x.isActiveAndEnabled  && x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)))
+                try
                 {
-                    if  (((NetworkLevelObject) x.observed).Identity == identity)
+                    if (x.isActiveAndEnabled  && x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)))
                     {
-                        return true;
+                        if  (((NetworkLevelObject) x.observed).Identity == identity)
+                        {
+                            return true;
+                        }
                     }
                 }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                
                 return false;
             });
         }
