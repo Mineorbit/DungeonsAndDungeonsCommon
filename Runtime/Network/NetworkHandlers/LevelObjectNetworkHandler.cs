@@ -218,13 +218,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void ProcessPropertyRequest(RequestTuple tuple)
         {
+            GameConsole.Log($"looking for {tuple.identity} at {tuple.pos}");
             NetworkHandler target = NetworkManager.networkHandlers.Find((x) =>
             {
                 float dist = (tuple.pos - x.transform.position).magnitude;
-                GameConsole.Log($"Dist: {dist}");
                 return  dist < 0.125f;
             });
-            GameConsole.Log($"Position {tuple.pos} {target}");
             if (target != null)
             {           
                 NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
