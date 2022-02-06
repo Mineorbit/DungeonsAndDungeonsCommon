@@ -38,7 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void FixedUpdate()
         {
-            FixedUpdate();
+            base.FixedUpdate();
             if (NetworkManager.instance.isOnServer)
             {
                 Health = GetObservedEntity().health;
