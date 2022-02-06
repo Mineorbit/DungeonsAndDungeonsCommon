@@ -126,10 +126,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                     }
 
-           
+            int target = ((LevelLoadTarget) observed).mover.target.GetComponent<Player>().localId + 1;
             foreach (Message m in messages)
             {
-                NetworkManager.instance.Server.SendToAll(m);
+                NetworkManager.instance.Server.Send(m,(ushort) target);
             }
         }
 
