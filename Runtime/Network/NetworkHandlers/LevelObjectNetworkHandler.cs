@@ -71,11 +71,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string type = m.GetString();
             
             var parameters = new List<object>();
+            /*
             if (type == "UnityEngine.Vector3")
             {
                 parameters.Add(m.GetVector3());
             }
-
+            */
             ByIdentity(identity).Process(sender,actionName,parameters,m);
 
 
@@ -92,10 +93,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string type = m.GetString();
             
             var parameters = new List<object>();
+            /*
             if (type == "UnityEngine.Vector3")
             {
                 parameters.Add(m.GetVector3());
             }
+            */
             /*
             while(m.UnreadLength > 0)
             {
