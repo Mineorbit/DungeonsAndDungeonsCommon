@@ -5,6 +5,7 @@ using UnityEngine;
 using Google.Protobuf.WellKnownTypes;
 using NetLevel;
 using RiptideNetworking;
+using UnityEngine.PlayerLoop;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -31,14 +32,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.SyncVar]
         public int Health {get;set;}
         
-        
-        [PacketBinding.SyncVar]
-        public bool Active {get;set;}
-        
         [PacketBinding.SyncVar]
         public int Points {get;set;}
-        
 
+
+        public override void FixedUpdate()
+        {
+            FixedUpdate();
+            if (NetworkManager.instance.isOnServer)
+            {
+                Health = GetObservedEntity().health;
+                Points = GetObservedEntity().points;
+            }else
+            {
+                GetObservedEntity().health = Health;
+                GetObservedEntity().points = Points;
+            }
+        }
+        
         public virtual void Awake()
         {
             	base.Awake();
