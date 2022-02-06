@@ -172,16 +172,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             
         }
-
-
+        
         public virtual void SetProperties()
         {
-            Message propertyM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
-            propertyM.AddFloat(transform.position.x);
-            propertyM.AddFloat(transform.position.y);
-            propertyM.AddFloat(transform.position.z);
-            propertyM.AddInt(((NetworkLevelObject) GetObserved()).Identity);
-            NetworkManager.instance.Server.SendToAll(propertyM);
+            if(NetworkManager.instance.isOnServer)
+            {
+                Message propertyM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.setProperty);
+                propertyM.AddFloat(transform.position.x);
+                propertyM.AddFloat(transform.position.y);
+                propertyM.AddFloat(transform.position.z);
+                propertyM.AddInt(((NetworkLevelObject) GetObserved()).Identity);
+                NetworkManager.instance.Server.SendToAll(propertyM);
+            }
         }
 
         [MessageHandler((ushort) NetworkManager.ServerToClientId.setProperty)]
