@@ -68,8 +68,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int identity = m.GetInt();
             int sender = m.GetInt();
             string actionName = m.GetString();
-            string type = m.GetString();
-            
+
             var parameters = new List<object>();
             /*
             if (type == "UnityEngine.Vector3")
@@ -77,21 +76,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 parameters.Add(m.GetVector3());
             }
             */
-            ByIdentity(identity).Process(sender,actionName,parameters,m);
+            MainCaller.Do(() =>{ByIdentity(identity).Process(sender,actionName,parameters,m);});
+            
 
 
         }
         
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
-        public static void ProcessAction(ushort id,Message m)
+        [MessageHandler((ushort) NetworkManager.ServerToClientId.processAction)]
+        public static void ProcessAction(ushort id, Message m)
         {
-            GameConsole.Log("Received Action");
             int identity = m.GetInt();
             int sender = m.GetInt();
             string actionName = m.GetString();
-            string type = m.GetString();
-            
+
             var parameters = new List<object>();
             /*
             if (type == "UnityEngine.Vector3")
@@ -105,12 +103,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             */
             // HIER EIN CHECK OB DER SENDER WIRKLICH DER EIGENTÜMER IST VOM OBJEKT
-            
-            
-            
-            ByIdentity(identity).Process(sender,actionName,parameters,m);
 
-
+            MainCaller.Do(() => {ByIdentity(identity).Process(sender, actionName, parameters, m);});
         }
 
 
@@ -137,20 +131,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS NEEDS TO PACK ARGUMENTS INTO ANY
         public virtual void SendAction(string actionName, object argument)
         {
-            
-            
-            
             Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
 
 
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
-            actionM.AddString(argument.GetType().FullName);
-            if (argument.GetType().IsSubclassOf(typeof(Vector3)))
-            {
-                actionM.AddVector3((Vector3) argument);
-            }
+            
             
             if (NetworkManager.instance.isOnServer)
             {
@@ -202,8 +189,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
-            actionM.AddString("None");
-
+            
             if (NetworkManager.instance.isOnServer)
             {
                 NetworkManager.instance.Server.SendToAll(actionM);
