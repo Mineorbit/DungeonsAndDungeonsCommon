@@ -33,6 +33,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (observed != null)
                 GetObserved().enabled = !disabled_observed || (!NetworkManager.isConnected || NetworkManager.instance.isOnServer);
             
+            NetworkManager.networkHandlers.Add(this);
             
         }
 
@@ -87,6 +88,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (o != null)
             {
                 o.Process(sender,actionName,parameters,m);
+            }
+            else
+            {
+                GameConsole.Log($"Could not find {identity} for action call");
             }
 
 
