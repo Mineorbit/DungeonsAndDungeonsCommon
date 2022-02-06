@@ -109,12 +109,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         }
-
         
-        
-
+        private int count = 8;
+       
         public void FixedUpdate()
         {
+            if (LevelObjectNetworkHandler.propertyRequests.Count > 0)
+            {
+                for (int i = 0; i < count;i++)
+                {
+                    LevelObjectNetworkHandler.ProcessPropertyRequest(LevelObjectNetworkHandler.propertyRequests.Dequeue());
+                }
+            }
+            
             if (isOnServer)
             {
                 Server.Tick();

@@ -150,7 +150,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
 
-
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
@@ -168,9 +167,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 NetworkManager.instance.Client.Send(actionM);
             }
-            
-
-            
         }
         
         public virtual void SetProperties()
@@ -184,19 +180,48 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+
+        public struct RequestTuple
+        {
+            public Vector3 pos;
+            public int identity;
+        }
+
+        public static Queue<RequestTuple> propertyRequests = new Queue<RequestTuple>();
+
         [MessageHandler((ushort) NetworkManager.ServerToClientId.setProperty)]
         public static void ReceiveProperties(Message m)
         {
             Vector3 position = m.GetVector3();
+            int id =m.GetInt();
+            RequestTuple request = new RequestTuple();
+            request.pos = position;
+            request.identity = id;
+            ProcessPropertyRequest(request);
             
-            NetworkLevelObject networkLevelObject = (NetworkLevelObject) LevelManager.currentLevel.GetLevelObjectAt(position);
-            GameConsole.Log($"Position {position} {networkLevelObject}");
-            if (networkLevelObject != null)
+        }
+
+        
+
+        public static void ProcessPropertyRequest(RequestTuple tuple)
+        {
+            NetworkHandler target = NetworkManager.networkHandlers.Find((x) =>
             {
-                networkLevelObject.Identity = m.GetInt();
+                float dist = (tuple.pos - x.transform.position).magnitude;
+                GameConsole.Log($"Dist: {dist}");
+                return  dist < 0.125f;
+            });
+            GameConsole.Log($"Position {tuple.pos} {target}");
+            NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
+            if (o != null)
+            {
+                o.Identity = tuple.identity;
+            }
+            else
+            {
+                propertyRequests.Enqueue(tuple); 
             }
         }
-        
         
         public virtual void SendAction(string actionName, ChunkData argument)
         {
