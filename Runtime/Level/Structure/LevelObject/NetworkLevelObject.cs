@@ -35,7 +35,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	public virtual void OverrideIdentity(int newIdentity)
 	{
 		identifiedLevelObjects.Remove(Identity);
+		GameConsole.Log($"Removed {Identity}");
 		_Identity = newIdentity;
+		
 		OnIdentify();
 	}
 	
@@ -46,6 +48,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(!identifiedLevelObjects.ContainsKey(Identity))
             {
         		identifiedLevelObjects.Add(Identity,this);
+                
+                GameConsole.Log($"Added {Identity}");
             }
             else
             {

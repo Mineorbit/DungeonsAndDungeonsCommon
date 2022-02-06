@@ -122,6 +122,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 o.Process(sender,actionName,parameters,m);
             }
+            else
+            {
+                GameConsole.Log($"Could not find {identity}");
+            }
 
         }
 
