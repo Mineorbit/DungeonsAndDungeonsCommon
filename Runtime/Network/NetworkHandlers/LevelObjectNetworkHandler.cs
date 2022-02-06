@@ -33,12 +33,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (observed != null)
                 GetObserved().enabled = !disabled_observed || (!NetworkManager.isConnected || NetworkManager.instance.isOnServer);
             
+            
+        }
+
+        public void Start()
+        {
             if(!observed.GetType().IsSubclassOf(typeof(Entity)))
             {
                 SetProperties();
             }
         }
-
 
         public virtual bool CallActionOnOther(bool localCond, bool serverCond)
         {
@@ -216,7 +220,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {           
                 NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
 
-                o.Identity = tuple.identity;
+                o.OverrideIdentity(tuple.identity);
             }
             else
             {
