@@ -41,17 +41,37 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     byte lower = data[i + 1];
                     int code = 256*upper + lower;
                         if(code != 0){
-                        LevelObjectData objectData = Level.GetLevelObjectData(code);
                         Vector3 inChunkOffset = new Vector3(4*inChunkX,4*inChunkY,4*inChunkZ);
                         Vector3 inSubPartOffset = new Vector3(0.5f*x,0.5f*y,0.5f*z);
                         Vector3 pos = offset + inChunkOffset + inSubPartOffset;
-                        MainCaller.Do(() => { LevelManager.currentLevel.Add(objectData,pos,Quaternion.identity, null); });
+                        Build b = new Build();
+                        b.code = code;
+                        b.position = pos;
+                        toBuild.Enqueue(b);
                         }
                     }
             
         }
 
-        
+        private static Queue<Build> toBuild = new Queue<Build>();
+        struct Build
+        {
+            public Vector3 position;
+            public int code;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            int c = 0;
+            while (c < 8 && toBuild.Count > 0)
+            {
+                Build b = toBuild.Dequeue();
+                LevelObjectData objectData = Level.GetLevelObjectData(b.code);
+                LevelManager.currentLevel.Add(objectData,b.position,Quaternion.identity, null);
+            }
+        }
+
         public static string PrintByteArray(byte[] bytes)
         {
             var sb = new StringBuilder("new byte[] { ");
