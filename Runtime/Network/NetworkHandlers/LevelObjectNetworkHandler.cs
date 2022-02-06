@@ -178,9 +178,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(NetworkManager.instance.isOnServer)
             {
                 Message propertyM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.setProperty);
-                propertyM.AddFloat(transform.position.x);
-                propertyM.AddFloat(transform.position.y);
-                propertyM.AddFloat(transform.position.z);
+                propertyM.AddVector3(transform.position);
                 propertyM.AddInt(((NetworkLevelObject) GetObserved()).Identity);
                 NetworkManager.instance.Server.SendToAll(propertyM);
             }
@@ -189,12 +187,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort) NetworkManager.ServerToClientId.setProperty)]
         public static void ReceiveProperties(Message m)
         {
-            Vector3 position = new Vector3(m.GetFloat(), m.GetFloat(), m.GetFloat());
+            Vector3 position = m.GetVector3();
             NetworkHandler target = NetworkManager.networkHandlers.Find((x) =>
             {
-                return (position - x.transform.position).magnitude < 0.125f;
+                float dist = (position - x.transform.position).magnitude;
+                GameConsole.Log($"Dist: {dist}");
+                return  dist < 0.125f;
             });
-            ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved()).Identity = m.GetInt();
+            GameConsole.Log($"Position {position} {target}");
+            NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
+            if (o != null)
+            {
+                o.Identity = m.GetInt();
+            }
         }
         
         
