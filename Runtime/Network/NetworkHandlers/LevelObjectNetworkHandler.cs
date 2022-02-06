@@ -188,17 +188,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void ReceiveProperties(Message m)
         {
             Vector3 position = m.GetVector3();
-            NetworkHandler target = NetworkManager.networkHandlers.Find((x) =>
+            
+            NetworkLevelObject networkLevelObject = (NetworkLevelObject) LevelManager.currentLevel.GetLevelObjectAt(position);
+            GameConsole.Log($"Position {position} {networkLevelObject}");
+            if (networkLevelObject != null)
             {
-                float dist = (position - x.transform.position).magnitude;
-                GameConsole.Log($"Dist: {dist}");
-                return  dist < 0.125f;
-            });
-            GameConsole.Log($"Position {position} {target}");
-            NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
-            if (o != null)
-            {
-                o.Identity = m.GetInt();
+                networkLevelObject.Identity = m.GetInt();
             }
         }
         
