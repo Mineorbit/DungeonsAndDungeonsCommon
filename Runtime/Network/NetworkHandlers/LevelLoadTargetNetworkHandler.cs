@@ -45,8 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         Vector3 inChunkOffset = new Vector3(4*inChunkX,4*inChunkY,4*inChunkZ);
                         Vector3 inSubPartOffset = new Vector3(0.5f*x,0.5f*y,0.5f*z);
                         Vector3 pos = offset + inChunkOffset + inSubPartOffset;
-                        GameConsole.Log($" {chunkX} {chunkY} {chunkZ} , {inChunkX} {inChunkY} {inChunkZ} , {x} {y} {z} => {offset} {inChunkOffset} {inSubPartOffset}");
-                        LevelManager.currentLevel.Add(objectData,pos,Quaternion.identity, null);
+                        MainCaller.Do(() => { LevelManager.currentLevel.Add(objectData,pos,Quaternion.identity, null); });
                         }
                     }
             
@@ -71,7 +70,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             List<Message> messages = new List<Message>();
             byte[,,,] datas = new byte[2, 2, 2, 1024];
             
-            GameConsole.Log($"Chunk: {chunkData.ChunkId}");
             foreach (Transform levelObject in chunk.transform)
             {
                 Vector3 pos = levelObject.transform.localPosition;
@@ -86,8 +84,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 int t = 64 * (x - 8 * a) + 8 * (y - 8 * b) + (z - 8 * c);
                 int code =  levelObject.gameObject.GetComponent<LevelObject>().levelObjectDataType;
-                GameConsole.Log($"{code} : {x} {y} {z} : {t}");
-                
+
                 //assigning upper byte
                 datas[a,b,c,2*t] = 0;
                 //assigning lower byte
