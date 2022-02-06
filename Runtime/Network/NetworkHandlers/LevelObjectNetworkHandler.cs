@@ -87,11 +87,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int identity = m.GetInt();
             int sender = m.GetInt();
             string actionName = m.GetString();
+            string type = m.GetString();
+            
             var parameters = new List<object>();
+            if (type == "UnityEngine.Vector3")
+            {
+                parameters.Add(m.GetVector3());
+            }
             /*
             while(m.UnreadLength > 0)
             {
-                parameters.Add(m.GetVector3());
             }
             */
             // HIER EIN CHECK OB DER SENDER WIRKLICH DER EIGENTÜMER IST VOM OBJEKT
@@ -111,7 +116,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!AcceptAction(sender)) return;
                 
             var methodInfo = observed.GetType().GetMethod(actionName);
-
                 
             if (methodInfo != null)
                 MainCaller.Do(() => { methodInfo.Invoke(observed, parameters.ToArray()); });
@@ -137,7 +141,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
-
+            actionM.AddString(argument.GetType().FullName);
             if (argument.GetType().IsSubclassOf(typeof(Vector3)))
             {
                 actionM.AddVector3((Vector3) argument);
@@ -193,6 +197,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
+            actionM.AddString("None");
 
             if (NetworkManager.instance.isOnServer)
             {
