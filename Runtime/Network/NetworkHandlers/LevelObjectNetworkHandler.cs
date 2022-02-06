@@ -79,7 +79,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 GameConsole.Log($"Do not know Type {type}");
             }
-            ByIdentity(identity).Process(sender,actionName,parameters,m);
+            LevelObjectNetworkHandler o = ByIdentity(identity);
+            if (o != null)
+            {
+                o.Process(sender,actionName,parameters,m);
+            }
 
 
         }
@@ -109,11 +113,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             */
             // HIER EIN CHECK OB DER SENDER WIRKLICH DER EIGENTÜMER IST VOM OBJEKT
-            
-            
-            
-            ByIdentity(identity).Process(sender,actionName,parameters,m);
-
+            LevelObjectNetworkHandler o = ByIdentity(identity);
+            if (o != null)
+            {
+                o.Process(sender,actionName,parameters,m);
+            }
 
         }
 
