@@ -59,9 +59,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             properties = this.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PacketBinding.SyncVar))).ToArray();
 
+            NetworkManager.networkHandlers.Add(this);
             if (!enabled) return;
             
-            NetworkManager.networkHandlers.Add(this);
             
             
             
