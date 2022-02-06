@@ -212,9 +212,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return  dist < 0.125f;
             });
             GameConsole.Log($"Position {tuple.pos} {target}");
-            NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
-            if (o != null)
-            {
+            if (target != null)
+            {           
+                NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
+
                 o.Identity = tuple.identity;
             }
             else
