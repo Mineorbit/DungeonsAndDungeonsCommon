@@ -41,12 +41,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     byte lower = data[i + 1];
                     int code = 256*upper + lower;
                         if(code != 0){
-                        Vector3 inChunkOffset = new Vector3(4*inChunkX,4*inChunkY,4*inChunkZ);
-                        Vector3 inSubPartOffset = new Vector3(0.5f*x,0.5f*y,0.5f*z);
-                        Vector3 pos = offset + inChunkOffset + inSubPartOffset;
-                        Build b = new Build();
-                        b.code = code;
-                        b.position = pos;
+                        Vector3 inSubPartOffset = new Vector3(4*inChunkX+ 0.5f*x,4*inChunkY+0.5f*y,4*inChunkZ+0.5f*z);
+                        Vector3 pos = offset + inSubPartOffset;
+                        Build b = new Build
+                        {
+                            code = code,
+                            position = pos
+                        };
                         toBuild.Enqueue(b);
                         }
                     }
@@ -69,19 +70,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Build b = toBuild.Dequeue();
                 LevelObjectData objectData = Level.GetLevelObjectData(b.code);
                 LevelManager.currentLevel.Add(objectData,b.position,Quaternion.identity, null);
+                c++;
             }
         }
 
-        public static string PrintByteArray(byte[] bytes)
-        {
-            var sb = new StringBuilder("new byte[] { ");
-            foreach (var b in bytes)
-            {
-                sb.Append(b + ", ");
-            }
-            sb.Append("}");
-            return sb.ToString();
-        }
+        
         
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
@@ -90,7 +83,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             List<Message> messages = new List<Message>();
             byte[,,,] datas = new byte[2, 2, 2, 1024];
             
-            foreach (Transform levelObject in chunk.transform)
+            foreach (LevelObject levelObject in chunk.GetComponentsInChildren<LevelObject>())
             {
                 Vector3 pos = levelObject.transform.localPosition;
                 int a = pos.x >= 4 ? 1 : 0;
@@ -103,7 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 
                 int t = 64 * (x - 8 * a) + 8 * (y - 8 * b) + (z - 8 * c);
-                int code =  levelObject.gameObject.GetComponent<LevelObject>().levelObjectDataType;
+                int code =  levelObject.levelObjectDataType;
 
                 //assigning upper byte
                 datas[a,b,c,2*t] = 0;
