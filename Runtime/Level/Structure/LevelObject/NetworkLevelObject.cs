@@ -34,7 +34,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 	public virtual void OverrideIdentity(int newIdentity)
 	{
+		identifiedLevelObjects.Remove(Identity);
 		_Identity = newIdentity;
+		OnIdentify();
 	}
 	
         public virtual void OnIdentify()
