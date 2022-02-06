@@ -83,7 +83,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
         public static void ProcessAction(ushort id,Message m)
         {
-            
+            GameConsole.Log("Received Action");
             int identity = m.GetInt();
             int sender = m.GetInt();
             string actionName = m.GetString();
