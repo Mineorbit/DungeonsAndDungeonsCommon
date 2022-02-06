@@ -34,12 +34,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return (LevelObjectNetworkHandler) NetworkManager.networkHandlers.Find((x) =>
             {
-                if (x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)) &&
-                    ((NetworkLevelObject) x.observed).Identity == identity)
+                if (x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)))
                 {
-                    return true;
+                    
+                    GameConsole.Log($"Test: {x.gameObject.name} {((NetworkLevelObject) x.observed).Identity}");
+                    if  (((NetworkLevelObject) x.observed).Identity == identity)
+                    {
+                        return true;
+                    }
                 }
-
                 return false;
             });
         }
