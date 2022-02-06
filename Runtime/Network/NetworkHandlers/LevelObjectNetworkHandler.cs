@@ -68,8 +68,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int identity = m.GetInt();
             int sender = m.GetInt();
             string actionName = m.GetString();
+            string type = m.GetString();
+            
             var parameters = new List<object>();
-            while(m.UnreadLength > 0)
+            if (type == "UnityEngine.Vector3")
             {
                 parameters.Add(m.GetVector3());
             }
