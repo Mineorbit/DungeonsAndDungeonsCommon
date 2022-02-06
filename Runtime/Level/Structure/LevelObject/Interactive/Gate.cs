@@ -21,7 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Activate()
         {
             base.Activate();
-            SetOpen();
+            Invoke(SetOpen);
             navMeshObstacle.enabled = false;
         }
 
@@ -42,7 +42,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Deactivate()
         {
             base.Deactivate();
-            SetClosed();
+            Invoke(SetClosed);
             navMeshObstacle.enabled = true;
         }
     }

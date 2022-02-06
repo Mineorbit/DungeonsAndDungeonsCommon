@@ -139,7 +139,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log($"{sender} asked {this} to do {actionName} ");
 
-            if (!AcceptAction(sender)) return;
+            //if (!AcceptAction(sender)) return;
                 
             var methodInfo = observed.GetType().GetMethod(actionName);
                 

@@ -38,7 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!activated && activeIn > 0)
             {
                 activated = true;
-                foreach (var receiver in receivers.Values) receiver.Invoke(receiver.Activate);
+                foreach (var receiver in receivers.Values) receiver.Activate();
             }
         }
 
@@ -48,7 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (activated && activeIn == 0)
             {
                 activated = false;
-                foreach (var receiver in receivers.Values) receiver.Invoke(receiver.Deactivate);
+                foreach (var receiver in receivers.Values) receiver.Deactivate();
             }
         }
 
