@@ -148,7 +148,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             int identity = value.GetInt();
             
-                MainCaller.Do(() => { LevelManager.currentLevel.RemoveDynamic(NetworkHandler.ByIdentity(identity).GetObserved()); });
+                MainCaller.Do(() => { LevelManager.currentLevel.RemoveDynamic(NetworkLevelObject.FindByIdentity(identity)); });
         
         }
         

@@ -23,30 +23,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Component observed;
 
 
-
-        public static LevelObjectNetworkHandler ByIdentity(int identity)
-        {
-            return (LevelObjectNetworkHandler) NetworkManager.networkHandlers.Find((x) =>
-            {
-                try
-                {
-                    if (x.isActiveAndEnabled  && x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)))
-                    {
-                        if  (((NetworkLevelObject) x.observed).Identity == identity)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    return false;
-                }
-                
-                return false;
-            });
-        }
-        
         public virtual void OnDestroy()
         {
             NetworkManager.networkHandlers.Remove(this);
@@ -62,6 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             properties = this.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PacketBinding.SyncVar))).ToArray();
 
+            NetworkManager.networkHandlers.Add(this);
             if (!enabled) return;
             
             
@@ -119,7 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void SyncVarHandle(Message value)
         {
             int identity = value.GetInt();
-            NetworkHandler n = NetworkHandler.ByIdentity(identity);
+            NetworkHandler n = NetworkLevelObject.FindByIdentity(identity).levelObjectNetworkHandler;
             try
             {
                 if(n != null)
