@@ -31,7 +31,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	            OnIdentify();
             }
         }
-        
+
+	public virtual void OverrideIdentity(int newIdentity)
+	{
+		_Identity = newIdentity;
+	}
+	
         public virtual void OnIdentify()
         {
         	GameConsole.Log($"Adding Identity {Identity} to Look Up Table");
