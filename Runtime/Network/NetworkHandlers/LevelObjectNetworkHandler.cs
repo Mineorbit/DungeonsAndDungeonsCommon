@@ -88,11 +88,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int sender = m.GetInt();
             string actionName = m.GetString();
             var parameters = new List<object>();
+            /*
             while(m.UnreadLength > 0)
             {
                 parameters.Add(m.GetVector3());
             }
-
+            */
             // HIER EIN CHECK OB DER SENDER WIRKLICH DER EIGENTÜMER IST VOM OBJEKT
             
             
