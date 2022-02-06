@@ -13,18 +13,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkHandler : MonoBehaviour
     {
-        public delegate void ParamsAction(Dictionary<string, object> arguments);
         
-
         public PropertyInfo[] properties;
-        public static List<Type> loadedTypes = new List<Type>();
-
+        
         // first type in  key (Packet) second (Handler)
-       
-
+        
         private static int count;
-        public static Dictionary<int, NetworkHandler> bindRequests = new Dictionary<int, NetworkHandler>();
-
 
         public Component observed;
 
@@ -34,10 +28,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             return (LevelObjectNetworkHandler) NetworkManager.networkHandlers.Find((x) =>
             {
-                if (x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)))
+                if (x.isActiveAndEnabled  && x.GetType().IsSubclassOf(typeof(LevelObjectNetworkHandler)))
                 {
-                    
-                    GameConsole.Log($"Test: {x.gameObject.name} {((NetworkLevelObject) x.observed).Identity}");
                     if  (((NetworkLevelObject) x.observed).Identity == identity)
                     {
                         return true;
