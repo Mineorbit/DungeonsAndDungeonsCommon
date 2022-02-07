@@ -261,9 +261,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return null;
             }
 
-            if (!GetLevelObjectAt(position))
+            if (GetLevelObjectAt(position) != null)
             {
-                GameConsole.Log($"There allready is an object at {position}");
+                GameConsole.Log($"There already is an object at {position}");
                 return null;
             }
                 
