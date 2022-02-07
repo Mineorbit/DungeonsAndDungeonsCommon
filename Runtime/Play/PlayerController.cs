@@ -187,6 +187,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 inputDirection = context.ReadValue<Vector2>();
             }
+
+            if (!context.performed)
+            {
+                inputDirection = Vector2.zero;
+            }
         }
 
         public Vector3 cameraForwardDirection;
@@ -229,7 +234,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                       locallyControllable; //&& !player.lockNetUpdate;
                       
             movementInputOnFrame = (inputDirection.magnitude > eps);
-            if (!movementInputOnFrame)
+            if (!movementInputOnFrame || ! takeInput)
             {
                 player.movingDirection = Vector3.zero;
                 player.targetDirection = Vector3.zero;
