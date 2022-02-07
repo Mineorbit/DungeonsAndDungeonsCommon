@@ -35,7 +35,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 input.AddQuaternion(c.aimRotation);
                 input.AddVector3(c.cameraForwardDirection);
                 input.AddBool(c.movementInputOnFrame);
-                input.AddBool(c.doInput);
                 input.AddBool(c.takeInput);
                 NetworkManager.instance.Client.Send(input);
             }
@@ -53,7 +52,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             player.aimRotation = message.GetQuaternion();
             player.cameraForwardDirection = message.GetVector3();
             player.movementInputOnFrame = message.GetBool();
-            player.doInput = message.GetBool();
             player.takeInput = message.GetBool();
         }
         
