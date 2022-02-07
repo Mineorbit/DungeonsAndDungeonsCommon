@@ -460,67 +460,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return chunkData;
         }
         
-        public static byte[] DataToBinary(ChunkData chunkData, int a, int b, int c)
-        {
-            byte[] data = new byte[1024];
-            GameConsole.Log($"{chunkData}");
-            Vector3 offset = GetChunkPosition(chunkData.ChunkId);
-            GameConsole.Log($"Check {offset}");
-            foreach (LevelObjectInstanceData instanceData in chunkData.Data)
-            {
-                ushort elementType = (ushort) instanceData.Code;
+       
 
-                int localX = (int) instanceData.X;
-                int localY = (int) instanceData.Y;
-                int localZ = (int) instanceData.Z;
-                if(a <= localX && localX < a+4 && b <= localY && localY < b+4   && c <= localZ && localZ < c+4 )
-                {
-                    localX = (localX - a)*2;
-                    localY = (localY - b)*2;
-                    localZ = (localZ - c)*2;
-
-                    int z = 64*((int) localX) + 8*((int) localY) +((int) localZ);
-                    int i = 2 * z;
-                    byte upper = (byte) (elementType >> 8);
-                    byte lower = (byte) (elementType & 0xff);
-
-                    upper = (byte) ((byte) (upper & 0x3f) | (byte)((byte)instanceData.Rot << 6));
-                
-                    data[i] = upper;
-                    data[i + 1] = lower;
-                
-                }
-            }
-            return data;
-        }
-
-        public static List<LevelObjectInstanceData> BinaryToData(byte[] data,int x, int y, int z,int a ,int b,int c)
-        {
-            List<LevelObjectInstanceData> list = new List<LevelObjectInstanceData>();
-            for(int i = 0;i < 8;i++)
-                for(int j = 0;j<8;j++)
-                    for (int k = 0; k < 8; k++)
-                    {
-                        int h = 64*((int) i) + 8*((int) j) +((int) k);
-                        int d = 2 * h;
-                        byte upper = data[d];
-                        byte lower = data[d+1];
-                        byte upper2 = (byte) ((byte) (upper & 0x3f));
-                        ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
-                        if(elementType != 0)
-                        { 
-                            int rot = upper >> 6;
-                            LevelObjectInstanceData objectData = new LevelObjectInstanceData();
-                            objectData.Code = elementType;
-                            objectData.X = (uint) (i/2) + (uint) a;
-                            objectData.Y = (uint) (j/2) + (uint) b;
-                            objectData.Z = (uint) (k/2) + (uint) c;
-                            objectData.Rot = (uint) rot;
-                            list.Add(objectData);
-                        }
-                    }
-            return list;
-        }
+        
         
     }
 }
