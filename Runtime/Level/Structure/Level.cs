@@ -261,6 +261,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return null;
             }
 
+            if (!GetLevelObjectAt(position))
+            {
+                GameConsole.Log($"There allready is an object at {position}");
+                return null;
+            }
+                
             var chunk = ChunkManager.GetChunk(position);
             if (chunk != null)
             {
@@ -381,14 +387,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach(Chunk targetChunk in neighborhood)
             {
                 
-            if (targetChunk != null)
-            {
-                found = targetChunk.GetLevelObjectAt(position);
-                if (found != null)
+                if (targetChunk != null)
                 {
-                    return found;
+                    found = targetChunk.GetLevelObjectAt(position);
+                    if (found != null)
+                    {
+                        return found;
+                    }
                 }
-            }
             
             }
 
