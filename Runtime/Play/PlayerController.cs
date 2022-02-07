@@ -16,7 +16,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool locallyControllable;
         public bool activated;
         public bool takeInput = true;
-        public bool doInput;
         public bool isMe;
         public bool allowedToMove = true;
 
@@ -112,7 +111,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnLeftUse(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 player.Invoke(player.UseLeft, false,true);
             }
@@ -120,7 +119,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnRightUse(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 player.Invoke(player.UseRight, false,true);
             }
@@ -128,7 +127,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnStopLeftUse(InputAction.CallbackContext context) 
         {
-            if (doInput && takeInput && player.usingLeftItem)
+            if (takeInput && player.usingLeftItem)
             {
                 player.Invoke(player.StopUseLeft, false);
             }
@@ -136,7 +135,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
         public void OnStopRightUse(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && player.usingRightItem)
+            if (takeInput && player.usingRightItem)
             { 
                 player.Invoke(player.StopUseRight, false);
             }
@@ -144,7 +143,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 
                     GameConsole.Log("JUMP");
@@ -155,7 +154,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnSwapLeft(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 GameConsole.Log("Swap Left");
                 player.Invoke(player.SwapLeft,false);
@@ -164,7 +163,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnSwapRight(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 GameConsole.Log("Swap Right");
                 player.Invoke(player.SwapRight,false);
@@ -173,7 +172,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
             {
                 player.Invoke(player.Interact, false, true);
             }
@@ -183,7 +182,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector2 inputDirection;
         public void OnMovementInput(InputAction.CallbackContext context)
         {
-            if (doInput && takeInput)
+            if (takeInput)
             {
                 inputDirection = context.ReadValue<Vector2>();
             }
@@ -228,8 +227,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private float eps = 0.05f;
         private void StateUpdate()
         {
-            doInput = PlayerManager.acceptInput  && activated &&
-                      locallyControllable; //&& !player.lockNetUpdate;
                       
             movementInputOnFrame = (inputDirection.magnitude > eps);
             GameConsole.Log($"Test: {movementInputOnFrame} {takeInput}");
@@ -251,7 +248,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 player.aimRotation = aimRotation;
                 player.cameraForwardDirection = cameraForwardDirection;
                 player.movementInputOnFrame = movementInputOnFrame;
-                player.doInput = doInput;
                 player.takeInput = takeInput;
             }
 
