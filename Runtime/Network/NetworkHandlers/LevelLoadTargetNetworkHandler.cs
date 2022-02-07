@@ -39,14 +39,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     int i = 128*x+16*y+2*z;
                     byte upper = data[i];
                     byte lower = data[i + 1];
-                    int code = 256*upper + lower;
+                    
+                    byte upper2 = (byte) ((byte) (upper & 0x3f));
+                    ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
+                    int rot = upper >> 6;
+                    int code = 256*upper2 + lower;
                         if(code != 0){
                         Vector3 inSubPartOffset = new Vector3(4*inChunkX+ 0.5f*x,4*inChunkY+0.5f*y,4*inChunkZ+0.5f*z);
                         Vector3 pos = offset + inSubPartOffset;
                         Build b = new Build
                         {
                             code = code,
-                            position = pos
+                            position = pos,
+                            rotation = rot
                         };
                         toBuild.Enqueue(b);
                         }
@@ -59,6 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             public Vector3 position;
             public int code;
+            public int rotation;
         }
 
         public override void FixedUpdate()
@@ -69,7 +75,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Build b = toBuild.Dequeue();
                 LevelObjectData objectData = Level.GetLevelObjectData(b.code);
-                LevelManager.currentLevel.Add(objectData,b.position,Quaternion.identity, null);
+                LevelManager.currentLevel.Add(objectData,b.position,Quaternion.Euler(0,90*b.rotation,0), null);
                 c++;
             }
         }
@@ -96,12 +102,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 
                 int t = 64 * (x - 8 * a) + 8 * (y - 8 * b) + (z - 8 * c);
-                int code =  levelObject.levelObjectDataType;
+                ushort code = (ushort) levelObject.levelObjectDataType;
 
+                
+                byte upper = (byte) (code >> 8);
+                byte lower = (byte) (code & 0xff);
+                int rot = (byte) Mathf.Floor(levelObject.transform.eulerAngles.y / 90);
+                
+                upper = (byte) ((byte) (upper & 0x3f) | (byte)((byte)rot << 6));
+
+                
+                
                 //assigning upper byte
-                datas[a,b,c,2*t] = 0;
+                datas[a,b,c,2*t] = upper;
                 //assigning lower byte
-                datas[a,b,c,2*t+1] = (byte) code;
+                datas[a,b,c,2*t+1] = lower;
             }
             
             for(int i = 0; i < 2;i++)
