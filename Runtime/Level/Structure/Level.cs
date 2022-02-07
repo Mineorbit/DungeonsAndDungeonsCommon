@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using NetLevel;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -136,9 +137,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             StartLevelObjects();
         }
 
+        public static UnityEvent deleteLevelEvent = new UnityEvent();
+        
         public void OnDestroy()
         {
             ResetIdentitifiedObjects();
+            deleteLevelEvent.Invoke();
         }
 
         public void OnEndRound(bool resetDynamic = true)
@@ -315,6 +319,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
         }
+        
         
 
 

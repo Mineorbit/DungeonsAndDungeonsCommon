@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.Awake();
             disabled_observed = true;
             base.Awake();
+            Level.deleteLevelEvent.AddListener(ResetHandler);
         }
 
 
