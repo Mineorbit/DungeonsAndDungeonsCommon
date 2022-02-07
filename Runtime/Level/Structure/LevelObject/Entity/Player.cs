@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -71,6 +72,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public override void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
+        {
+            base.Spawn(location, rotation, allowedToMove);
+            ResetMovement();
+        }
+        
         public override void Start()
         {
             base.Start();
@@ -290,7 +297,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Teleport(position);
             gameObject.SetActive(true);
-            ResetMovement();
         }
 
         public void ResetMovement()
