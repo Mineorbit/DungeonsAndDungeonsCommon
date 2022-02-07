@@ -198,8 +198,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void Move()
         {   
-            if (doInput && takeInput)
-            {
                 
                 cameraForwardDirection = -cam.forward;
                 
@@ -218,7 +216,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     targetDirection = Vector3.zero;
                 }
                 
-            }
+            
 
         }
     
