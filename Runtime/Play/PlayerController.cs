@@ -229,6 +229,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                       locallyControllable; //&& !player.lockNetUpdate;
                       
             movementInputOnFrame = (inputDirection.magnitude > eps);
+            if (!movementInputOnFrame)
+            {
+                player.movingDirection = Vector3.zero;
+                player.targetDirection = Vector3.zero;
+                player.forwardDirection = Vector3.zero;
+            }
         }
 
         private void InputUpdate()
