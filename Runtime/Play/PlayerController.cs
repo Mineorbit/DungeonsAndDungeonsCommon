@@ -187,6 +187,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 inputDirection = context.ReadValue<Vector2>();
             }
+
+            if (!context.performed)
+            {
+                inputDirection = Vector2.zero;
+            }
         }
 
         public Vector3 cameraForwardDirection;
