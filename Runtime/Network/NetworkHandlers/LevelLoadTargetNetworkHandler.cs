@@ -19,7 +19,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             disabled_observed = true;
             base.Awake();
         }
+
+
+        public override void ResetHandler()
+        {
+            base.ResetHandler();
+            receivedChunkFragments.Clear();
+        }
         
+        static List<String> receivedChunkFragments = new List<String>();
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
@@ -30,6 +38,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int inChunkX = m.GetShort();
             int inChunkY = m.GetShort();
             int inChunkZ = m.GetShort();
+            string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
+            if (receivedChunkFragments.Contains(fragment))
+            {
+                return;
+            }
+            receivedChunkFragments.Add(fragment);
+            
             byte[] data = m.GetBytes(isBigArray: true);
             Vector3 offset = new Vector3(chunkX * 8, chunkY * 8, chunkZ * 8);
             for(int x = 0;x<8;x++)

@@ -47,6 +47,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public virtual void ResetHandler()
+        {
+            
+        }
+
 
         public virtual void FixedUpdate()
         {

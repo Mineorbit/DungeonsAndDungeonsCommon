@@ -133,8 +133,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public void ResetHandlers()
+        {
+            foreach (var handler in networkHandlers)
+            {
+                if(handler != null)
+                    handler.ResetHandler();
+            }
+        }
+        
+        
         //Factor this out into GameLogic
 
+        
+        
 
         public void OnClientConnect(object sender, ServerClientConnectedEventArgs e)
         {
