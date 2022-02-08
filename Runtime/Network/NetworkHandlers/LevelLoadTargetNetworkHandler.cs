@@ -22,7 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Start()
         {
             base.Start();
-            GameConsole.Log("Test HERE");
             if (!NetworkManager.instance.isOnServer && existsOneLevelLoadTargetInClient)
             {
                 enabled = false;
@@ -36,7 +35,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.ResetHandler();
             receivedChunkFragments.Clear();
-            GameConsole.Log("Fragment List reseted");
         }
         
         static List<String> receivedChunkFragments = new List<String>();
