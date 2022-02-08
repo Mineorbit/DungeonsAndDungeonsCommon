@@ -87,6 +87,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Destroy(players[localId].gameObject);
         }
 
+        public void RemoveAll()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Remove(i);
+            }
+        }
 
         public static Player GetPlayerById(int localId)
         {

@@ -96,6 +96,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Server = new Server();
                 Server.Start(13565,4);
                 Server.ClientConnected += OnClientConnect;
+                Server.ClientDisconnected += OnClientDisconnect;
             }
             else
             {
@@ -105,6 +106,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Client.Connected += (a,b) => { NetworkManager.networkHandlers = new List<NetworkHandler>();
                     localId = (ushort) Client.Id;
                 };
+                Client.ClientDisconnected += OnClientDisconnect;
+                Client.Disconnected += OnDisconnect;
 
             }
 
@@ -165,6 +168,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 }
             }
+        }
+        
+        public void OnClientDisconnect(object sender, ClientDisconnectedEventArgs e)
+        {
+            int newLocalId = e.Id - 1;
+            PlayerManager.playerManager.Remove(newLocalId);
+        }
+        
+        public void OnDisconnect(object sender, EventArgs e)
+        {
+            PlayerManager.playerManager.RemoveAll();
         }
 
         public void OnDestroy()
