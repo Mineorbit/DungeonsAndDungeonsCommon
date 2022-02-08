@@ -17,6 +17,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static bool existsOneLevelLoadTargetInClient;
         public override void Awake()
         {
+            base.Awake();
             disabled_observed = true;
             base.Awake(); 
         }

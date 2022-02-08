@@ -50,10 +50,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
         
-        public virtual void Awake()
-        {
-            	base.Awake();
-        }
 
         public Entity GetObservedEntity()
         {
@@ -106,7 +102,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-       
+        public void UpdateState()
+        {
+            Message state = Message.Create(MessageSendMode.reliable,
+                (ushort) NetworkManager.ServerToClientId.entityState);
+            state.AddInt(GetObservedEntity().Identity);
+            state.AddBool(GetObservedEntity().alive);
+            NetworkManager.instance.Server.SendToAll(state);
+        }
+
+        
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.entityState)]
+        public static void OnState(Message m)
+        {
+            int id = m.GetInt();
+            bool alive = m.GetBool();
+            NetworkLevelObject n = NetworkLevelObject.FindByIdentity(id);
+            n.gameObject.SetActive(alive);
+        }
+        
 
         public virtual void RequestCreation()
         {
