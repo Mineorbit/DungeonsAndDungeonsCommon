@@ -25,6 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Start();
             targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
+            GameConsole.Log("Test HERE");
             if (!NetworkManager.instance.isOnServer && existsOneLevelLoadTargetInClient)
             {
                 enabled = false;
