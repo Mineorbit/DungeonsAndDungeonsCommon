@@ -12,12 +12,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelLoadTargetNetworkHandler : EntityNetworkHandler
     {
+        private int targetLocalId;
 
         public override void Awake()
         {
             base.Awake();
             disabled_observed = true;
+            targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<PlayerNetworkHandler>().owner;
             base.Awake();
+            if (NetworkManager.instance.localId != targetLocalId)
+            {
+                enabled = false;
+                return;
+            }
+            
             Level.deleteLevelEvent.AddListener(ResetHandler);
         }
 
@@ -86,6 +94,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            BuildFromQueue();
+        }
+
+        public void BuildFromQueue()
+        {
             if (toBuild.Count > 0)
             {
                 Build b = toBuild.Dequeue();
@@ -93,8 +106,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 LevelManager.currentLevel.Add(objectData,b.position,Quaternion.Euler(0,90*b.rotation,0), null);
             }
         }
-
-        
         
         private void StreamChunk(ChunkData chunkData, bool immediate = false)
         {
