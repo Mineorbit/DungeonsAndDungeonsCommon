@@ -20,6 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             disabled_observed = true;
             targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
             base.Awake();
+            GameConsole.Log($"LOCAL  ID {NetworkManager.instance.localId} NETWORK {targetLocalId}");
             if (NetworkManager.instance.localId != targetLocalId)
             {
                 enabled = false;
