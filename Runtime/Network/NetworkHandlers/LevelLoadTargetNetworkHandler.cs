@@ -38,6 +38,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.ResetHandler();
             receivedChunkFragments.Clear();
+            GameConsole.Log("Fragment List resetted");
         }
         
         static List<String> receivedChunkFragments = new List<String>();
