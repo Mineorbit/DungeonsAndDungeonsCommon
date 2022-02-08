@@ -75,7 +75,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public virtual void Start()
         {
 			// Request the creation of this entity on the client side
-            if (NetworkManager.instance.isOnServer) RequestCreation();
+            if (NetworkManager.instance.isOnServer)
+            {
+                GetObservedEntity().onDespawnEvent.AddListener(UpdateState);
+                GetObservedEntity().onSpawnEvent.AddListener((x) => { UpdateState();} );
+                RequestCreation();
+            }
             
         }
 
