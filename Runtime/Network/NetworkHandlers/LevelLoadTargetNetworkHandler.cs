@@ -19,13 +19,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             disabled_observed = true;
-            base.Awake(); 
         }
 
-        public void Start()
+        public override void Start()
         {
+            base.Start();
             targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
-            GameConsole.Log($"LOCAL  ID {NetworkManager.instance.localId} NETWORK {targetLocalId}");
             if (!NetworkManager.instance.isOnServer && existsOneLevelLoadTargetInClient)
             {
                 enabled = false;
