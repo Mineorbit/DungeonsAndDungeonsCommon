@@ -201,9 +201,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void DisconnectAllClients()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i <= 4; i++)
             {
-                NetworkManager.instance.Server.DisconnectClient(i);
+                Server.DisconnectClient((ushort) i);
             }
         }
 
