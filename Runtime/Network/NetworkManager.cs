@@ -108,10 +108,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 };
                 Client.ClientDisconnected += OnClientDisconnect;
                 Client.Disconnected += OnDisconnect;
-
+                Client.ConnectionFailed += FailedToConnect;
             }
 
 
+        }
+
+        private void FailedToConnect(object sender, EventArgs e)
+        {
+            GameConsole.Log("Could not connect");
         }
         
         private int count = 8;
