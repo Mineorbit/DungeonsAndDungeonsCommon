@@ -16,10 +16,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void Awake()
         {
-            base.Awake();
             disabled_observed = true;
+            base.Awake(); 
+        }
+
+        public void Start()
+        {
             targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
-            base.Awake();
             GameConsole.Log($"LOCAL  ID {NetworkManager.instance.localId} NETWORK {targetLocalId}");
             if (NetworkManager.instance.localId != targetLocalId)
             {
@@ -28,7 +31,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             Level.deleteLevelEvent.AddListener(ResetHandler);
         }
-
 
         public override void ResetHandler()
         {
