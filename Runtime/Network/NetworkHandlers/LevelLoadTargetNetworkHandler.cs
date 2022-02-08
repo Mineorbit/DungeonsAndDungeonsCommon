@@ -18,14 +18,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             disabled_observed = true;
-            targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<PlayerNetworkHandler>().owner;
+            targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
             base.Awake();
             if (NetworkManager.instance.localId != targetLocalId)
             {
                 enabled = false;
                 return;
             }
-            
             Level.deleteLevelEvent.AddListener(ResetHandler);
         }
 
