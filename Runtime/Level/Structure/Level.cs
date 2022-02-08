@@ -367,7 +367,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void RemoveDynamic(LevelObject o, bool physics = true)
         {
-            if (o.isDynamic)
+            if (o != null && o.isDynamic)
             {
                 if (physics)
                     Destroy(o.gameObject);
