@@ -14,6 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         private int targetLocalId;
 
+        public static bool existsOneLevelLoadTargetInClient;
         public override void Awake()
         {
             disabled_observed = true;
@@ -24,11 +25,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
             GameConsole.Log($"LOCAL  ID {NetworkManager.instance.localId} NETWORK {targetLocalId}");
-            if (NetworkManager.instance.localId != targetLocalId)
+            if (NetworkManager.instance.localId != -1 && existsOneLevelLoadTargetInClient)
             {
                 enabled = false;
                 return;
             }
+            existsOneLevelLoadTargetInClient = true;
             Level.deleteLevelEvent.AddListener(ResetHandler);
         }
 
