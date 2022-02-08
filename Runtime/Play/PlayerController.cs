@@ -229,7 +229,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
                       
             movementInputOnFrame = (inputDirection.magnitude > eps);
-            GameConsole.Log($"Test: {movementInputOnFrame} {takeInput}");
+            //GameConsole.Log($"Test: {movementInputOnFrame} {takeInput}");
             if (!movementInputOnFrame || ! takeInput)
             {
                 player.movingDirection = Vector3.zero;

@@ -54,6 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
             if (receivedChunkFragments.Contains(fragment))
             {
+                    GameConsole.Log($"ChunkFragment {fragment} was allready loaded once");
                 return;
             }
             receivedChunkFragments.Add(fragment);
