@@ -176,14 +176,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnClientDisconnect(object sender, ClientDisconnectedEventArgs e)
         {
-            GameConsole.Log("DISCONNECT test");
             int newLocalId = e.Id - 1;
             PlayerManager.playerManager.Remove(newLocalId);
         }
         
         public void OnDisconnect(object sender, EventArgs e)
         {
-            GameConsole.Log("DISCONNECT TEST");
+            disconnectEvent.Invoke();
             PlayerManager.playerManager.RemoveAll();
         }
 
