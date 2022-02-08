@@ -12,8 +12,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class LevelLoadTargetNetworkHandler : EntityNetworkHandler
     {
-        private int targetLocalId;
-
         public static bool existsOneLevelLoadTargetInClient;
         public override void Awake()
         {
@@ -24,7 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Start()
         {
             base.Start();
-            targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
             GameConsole.Log("Test HERE");
             if (!NetworkManager.instance.isOnServer && existsOneLevelLoadTargetInClient)
             {
@@ -98,9 +95,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             public int rotation;
         }
 
+        private int targetLocalId = 0;
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            //targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
+
             BuildFromQueue();
         }
 
