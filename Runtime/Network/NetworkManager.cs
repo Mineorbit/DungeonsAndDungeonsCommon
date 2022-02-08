@@ -155,7 +155,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         //Factor this out into GameLogic
 
         
-        
 
         public void OnClientConnect(object sender, ServerClientConnectedEventArgs e)
         {
@@ -190,7 +189,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnDestroy()
         {
-            Disconnect();
+            if (isOnServer)
+            {
+                DisconnectAllClients();
+            }
+            else
+            {
+                Disconnect();
+            }
+        }
+
+        public void DisconnectAllClients()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                NetworkManager.instance.Server.DisconnectClient(i);
+            }
         }
 
         public void Connect(string ip, string playerName, Action onConnect)
