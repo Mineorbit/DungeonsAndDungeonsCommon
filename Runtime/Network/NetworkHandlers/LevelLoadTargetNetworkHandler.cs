@@ -86,13 +86,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            int c = 0;
-            while (c < 8 && toBuild.Count > 0)
+            if (toBuild.Count > 0)
             {
                 Build b = toBuild.Dequeue();
                 LevelObjectData objectData = Level.GetLevelObjectData(b.code);
                 LevelManager.currentLevel.Add(objectData,b.position,Quaternion.Euler(0,90*b.rotation,0), null);
-                c++;
             }
         }
 
