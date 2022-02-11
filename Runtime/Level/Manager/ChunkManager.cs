@@ -44,7 +44,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Setup();
         }
-
         
         public void Setup()
         {
@@ -61,9 +60,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 chunkLoaded = new Dictionary<string, bool>();
             }
             chunkLoaded.Clear();
-                chunkPrefab = Resources.Load("Chunk");
-                chunks = new Dictionary<Tuple<int, int, int>, Chunk>();
-                
+            chunkPrefab = Resources.Load("Chunk");
+            chunks = new Dictionary<Tuple<int, int, int>, Chunk>();
         }
         
         public static void LoadRegion(int regionId, LoadType loadType = LoadType.Disk)
@@ -339,10 +337,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     Complete = () =>
                     {
-                        if(chunkData != null)
+                        if (chunkData != null)
                         {
                             Chunk c = GetChunkByID(chunkData.ChunkId);
-                            if(c != null)
+                            if (c != null)
                             {
                                 c.finishedLoading = true;
                             }
@@ -350,10 +348,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             {
                                 GameConsole.Log("Chunk was null");
                             }
-                            
+
                             chunkLoaded[chunkData.ChunkId] = true;
                             onChunkLoaded.Invoke();
-                            
+
                         }
                         else
                         {
@@ -363,8 +361,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
 
                 Vector3 chunkPosition = GetChunkPosition(chunkData.ChunkId);
-                LevelObjectInstance instance = LevelObjectInstanceDataToLevelObjectInstance(instanceData, chunkPosition);  
                 
+                LevelObjectInstance instance = LevelObjectInstanceDataToLevelObjectInstance(instanceData, chunkPosition);
+
                 if (immediate)
                 {
                     LevelManager.currentLevel.Add(instance);
@@ -381,29 +380,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         {
                             LevelManager.currentLevel.Add(instance);
                             Complete.Invoke();
-                        }); 
+                        });
                     }
                     else
                     {
-                        MainCaller.Do(() =>
-                        {
-                            LevelManager.currentLevel.Add(instance);
-                        });  
+                        MainCaller.Do(() => { LevelManager.currentLevel.Add(instance); });
                     }
-                    
-
-                    
-                
                 }
             }
-            
         }
         
-        
-        
-        
-       
-       public static float storageMultiplier = 2f;
+        public static float storageMultiplier = 2f;
 	
         public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o, Chunk c)
         {
@@ -424,6 +411,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstanceData.Z = (byte) pos.z;
             levelObjectInstanceData.Rot = (byte) Mathf.Floor(rot.eulerAngles.y / 90);
             levelObjectInstanceData.Code = o.levelObjectDataType;
+            levelObjectInstanceData.Properties.AddRange(o.properties);
             return levelObjectInstanceData;
         }
 
@@ -444,6 +432,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstance.Identity = instanceData.Identity;
             levelObjectInstance.Receivers.AddRange(instanceData.Receivers);
             levelObjectInstance.Type = instanceData.Code;
+            levelObjectInstance.Properties.AddRange(instanceData.Properties);
             return levelObjectInstance;
         }
 
