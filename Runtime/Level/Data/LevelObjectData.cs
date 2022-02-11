@@ -46,13 +46,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 		public ElementType elementType;
         
         [System.Serializable]
-		public struct Property {
+		public class Property {
             [SerializeField]
-			string name;
-            string Value;
+			public string name;
+
+            string _value;
+            public string Value
+            {
+                get
+                {
+                    return _value;
+                }
+                set
+                {
+                    _value = value;
+                    valueChangedHandler.Invoke(null,null);
+                }
+            }
+
+            public System.EventHandler valueChangedHandler;
             [SerializeField]
 			// T must be encodable as a string
-			string defaultValue;
+			public string defaultValue;
 		}
 		
 		
@@ -165,7 +180,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             return cursorMesh;
         }
-
+        
+        
         public override GameObject Create(Vector3 location, Quaternion rotation, Transform parent,Util.Optional<int> identity)
         {
             var g = base.Create(location, rotation, parent);
@@ -181,10 +197,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     networkLevelObject.Identity = identity.Get();
                 }else
                 {
-                GameConsole.Log($"Tried to pre set identity {identity.Get()} but {g} is not a NetworkLevelObject");
+                    GameConsole.Log($"Tried to pre set identity {identity.Get()} but {g} is not a NetworkLevelObject");
                 }
             }
-            
+
+            lO.properties = properties;
             lO.OnInit();
             return g;
         }
