@@ -13,12 +13,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
-            textMesh = transform.GetComponentInChildren<TextMeshProUGUI>();
-            GetProperty("text").valueChangedHandler += (a, b) =>
+            GetProperty("text").valueChanged.AddListener( () =>
             {
-                GameConsole.Log("TEST");
                 textMesh.SetText(GetProperty("text").Value);
-            };
+            });
+        }
+
+        public void Update()
+        {
+            GetProperty("text").Value = "Test";
         }
     }
 }

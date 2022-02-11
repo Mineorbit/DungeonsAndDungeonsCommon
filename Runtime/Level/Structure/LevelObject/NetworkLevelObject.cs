@@ -31,6 +31,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	            OnIdentify();
             }
         }
+	
+	
+	
+	public LevelObjectData.Property GetProperty(string propertyName)
+	{
+		return levelObjectProperties.Find((x) => x.name == propertyName);
+	}
 
 	public virtual void OverrideIdentity(int newIdentity)
 	{

@@ -419,7 +419,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstanceData.Z = (byte) pos.z;
             levelObjectInstanceData.Rot = (byte) Mathf.Floor(rot.eulerAngles.y / 90);
             levelObjectInstanceData.Code = o.levelObjectDataType;
-            levelObjectInstanceData.Properties.AddRange(o.properties.Select((x) => { return Convert(x); }));
+            levelObjectInstanceData.Properties.AddRange(o.levelObjectProperties.Select((x) => { return Convert(x); }));
             return levelObjectInstanceData;
         }
 
