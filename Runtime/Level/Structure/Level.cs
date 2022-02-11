@@ -237,9 +237,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 result = Add(d, pos, rot, id);
 
                 NetworkLevelObject networkLevelObject = result.GetComponent<NetworkLevelObject>();
+                GameConsole.Log("TESTER");
                 foreach (Property p in levelObjectInstance.Properties)
                 {
                     LevelObjectData.Property prop = networkLevelObject.GetProperty(p.Name);
+                    GameConsole.Log($"CHANGED VALUE {p.Value}");
                     if(prop != null)
                         prop.Value = p.Value;
                 }
