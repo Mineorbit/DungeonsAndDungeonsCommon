@@ -24,7 +24,8 @@ MonoBehaviour:
   cursorMesh: {fileID: 0}
   elementType: 7
   properties:
-  - name: Text
+  - name: text
+    _value: 
     defaultValue: This is a sign
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}
