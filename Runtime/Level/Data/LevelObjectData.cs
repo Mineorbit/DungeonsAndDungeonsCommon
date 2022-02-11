@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using CodiceApp.EventTracking;
 using UnityEditor;
@@ -204,7 +205,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
 
-            lO.levelObjectProperties = properties;
+            List<Property> newProperties = properties.Select((x) =>
+            {
+                var r = new Property
+                {
+                    name = x.name,
+                    Value = x.Value,
+                    defaultValue = x.defaultValue
+                };
+                return r;
+            }).ToList();
+            
+            lO.levelObjectProperties = newProperties;
             lO.OnInit();
             return g;
         }
