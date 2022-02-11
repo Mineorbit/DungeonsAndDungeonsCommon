@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using CodiceApp.EventTracking;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -51,6 +53,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 			public string name;
 
             string _value;
+            
             public string Value
             {
                 get
@@ -60,11 +63,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 set
                 {
                     _value = value;
-                    valueChangedHandler.Invoke(null,null);
+                    valueChanged.Invoke();
                 }
             }
 
-            public System.EventHandler valueChangedHandler;
+            public UnityEvent valueChanged = new UnityEvent();
             [SerializeField]
 			// T must be encodable as a string
 			public string defaultValue;
@@ -201,7 +204,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 }
             }
 
-            lO.properties = properties;
+            lO.levelObjectProperties = properties;
             lO.OnInit();
             return g;
         }

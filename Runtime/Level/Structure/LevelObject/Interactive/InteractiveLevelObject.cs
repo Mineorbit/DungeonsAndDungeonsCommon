@@ -25,10 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (var w in outBoundWires) LevelManager.currentLevel.RemoveDynamic(w);
         }
 
-        public LevelObjectData.Property GetProperty(string name)
-        {
-            return properties.Find((x) => { return x.name == name; });
-        }
 
         public int activeIn = 0;
         public virtual void Activate()
