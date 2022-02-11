@@ -10,8 +10,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Sign : InteractiveLevelObject
     {
         public TextMeshProUGUI textMesh;
-        public void Start()
+        public override void OnInit()
         {
+            base.OnInit();
             textMesh = transform.GetComponentInChildren<TextMeshProUGUI>();
             GetProperty("text").valueChangedHandler += (a, b) =>
             {
