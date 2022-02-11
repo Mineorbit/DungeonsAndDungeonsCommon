@@ -29,6 +29,34 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public Mesh cursorMesh;
 
+		// Properties
+		public enum ElementType {
+		Water,
+		Fire,
+		Electric,
+		Earth,
+		Explosive,
+		Poison,
+        Metal,
+        Wood,
+        Stone,
+        Sand
+		}			
+
+		public ElementType elementType;
+        
+        [System.Serializable]
+		public struct Property {
+            [SerializeField]
+			string name;
+            string Value;
+            [SerializeField]
+			// T must be encodable as a string
+			string defaultValue;
+		}
+		
+		
+		public List<Property> properties;
         
         public Vector3 cursorScale;
         public Vector3 cursorOffset;
