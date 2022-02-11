@@ -219,6 +219,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             return null;
         }
         
+        
+        
         public GameObject Add(LevelObjectInstance levelObjectInstance)
         {
             GameObject result = null;
@@ -234,6 +236,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 	id.Set(levelObjectInstance.Identity);
                 result = Add(d, pos, rot, id);
 
+                NetworkLevelObject networkLevelObject = result.GetComponent<NetworkLevelObject>();
+                foreach (Property p in levelObjectInstance.Properties)
+                {
+                    LevelObjectData.Property prop = networkLevelObject.GetProperty(p.Name);
+                    if(prop != null)
+                        prop.Value = p.Value;
+                }
+                
                 InteractiveLevelObject interactiveLevelObject = result.GetComponent<InteractiveLevelObject>();
                 if(interactiveLevelObject != null)
                 {
