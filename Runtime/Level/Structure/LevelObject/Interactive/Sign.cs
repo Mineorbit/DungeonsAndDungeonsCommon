@@ -12,9 +12,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public TextMeshProUGUI textMesh;
         public void Start()
         {
-            textMesh = transform.GetComponent<TextMeshProUGUI>();
+            textMesh = transform.GetComponentInChildren<TextMeshProUGUI>();
             GetProperty("text").valueChangedHandler += (a, b) =>
             {
+                GameConsole.Log("TEST");
                 textMesh.SetText(GetProperty("text").Value);
             };
         }
