@@ -18,10 +18,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 textMesh.SetText(GetProperty("text").Value);
             });
         }
-
-        public void Update()
-        {
-            GetProperty("text").Value = "Test";
-        }
     }
 }
