@@ -10,24 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
-  m_Name: LevelLoadTarget
+  m_Name: Sign
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1795247442869872954, guid: c2893a9ccabd94a498ab24ba34240b4a, type: 3}
-  uniqueLevelObjectId: 2
+  prefab: {fileID: 6588752901228617255, guid: 0b62ba4054928c5499881a4eea271092, type: 3}
+  uniqueLevelObjectId: 39
   granularity: 1
-  levelObjectName: 
-  dynamicInstantiable: 1
-  levelInstantiable: 0
+  levelObjectName: Wooden Sign
+  dynamicInstantiable: 0
+  levelInstantiable: 1
   ActivateWhenInactive: 0
-  Buildable: 0
-  inLevel: 0
+  Buildable: 1
+  inLevel: 1
   cursorMesh: {fileID: 0}
-  elementType: 0
+  elementType: 7
   properties:
-  - name: 
-    defaultValue: 
-  - name: 
-    defaultValue: 
+  - name: Text
+    defaultValue: This is a sign
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}

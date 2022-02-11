@@ -9,18 +9,24 @@ float y = 2;
 float z = 3;
 }
 
+message Property{
+string name = 1;
+string value = 2;
+}
+
+
 message LevelObjectInstance{
 	sint32 type = 1;
 	float g_w = 2;
 	float g_x = 3;
 	float g_y = 4;
 	float g_z = 5;
-
 	float x = 6;
 	float y = 7;
 	float z = 8;
 	int32 identity = 9;
 	repeated int32 receivers = 10;
+	repeated Property properties = 11;
 	
 }
 
@@ -32,6 +38,7 @@ message LevelObjectInstanceData{
 	uint32 z = 5;
 	int32 identity = 6;
 	repeated int32 receivers = 7;
+    repeated Property properties = 8;
 }
 
 message HuffmanEntry  {
