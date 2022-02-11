@@ -400,6 +400,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstanceData.Receivers.AddRange(o.receivers.Keys);
             return levelObjectInstanceData;
         }
+
+        public static NetLevel.Property Convert(LevelObjectData.Property property)
+        {
+            NetLevel.Property prop = new Property();
+            prop.Name = property.name;
+            prop.Value = property.Value;
+            return prop;
+        }
         
         public static LevelObjectInstanceData InstanceToData(LevelObject o, Chunk c)
         {
@@ -411,7 +419,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             levelObjectInstanceData.Z = (byte) pos.z;
             levelObjectInstanceData.Rot = (byte) Mathf.Floor(rot.eulerAngles.y / 90);
             levelObjectInstanceData.Code = o.levelObjectDataType;
-            levelObjectInstanceData.Properties.AddRange(o.properties);
+            levelObjectInstanceData.Properties.AddRange(o.properties.Select((x) => { return Convert(x); }));
             return levelObjectInstanceData;
         }
 
