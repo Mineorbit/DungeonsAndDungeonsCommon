@@ -119,7 +119,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Stop(int index)
         {
-            audioSources[index][currentPlay[index]].Stop();
+            if(audioSources[index] != null && audioSources[index][currentPlay[index]] != null)
+                audioSources[index][currentPlay[index]].Stop();
             /*
             if (audioProfiles[index].loop)
             {
