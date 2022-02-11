@@ -404,8 +404,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static NetLevel.Property Convert(LevelObjectData.Property property)
         {
             NetLevel.Property prop = new Property();
-            prop.Name = property.name;
-            prop.Value = property.Value;
+            if(property.name != null)
+                prop.Name = property.name;
+            if(property.Value != null)
+                prop.Value = property.Value;
             return prop;
         }
         
