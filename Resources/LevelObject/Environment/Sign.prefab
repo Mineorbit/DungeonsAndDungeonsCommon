@@ -226,8 +226,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6588752901228617433}
-  - component: {fileID: 6588752901228617432}
   - component: {fileID: 6588752901228617434}
+  - component: {fileID: -3807737813582271761}
+  - component: {fileID: 6739817842040852418}
   m_Layer: 0
   m_Name: Sign
   m_TagString: Untagged
@@ -250,24 +251,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6588752901228617432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588752901228617255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a82e4185bfdf8d04b84a849493a236dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelObjectDataType: 0
-  isDynamic: 0
-  ActivateWhenInactive: 0
-  levelObjectNetworkHandler: {fileID: 0}
-  _Identity: 0
-  identified: 0
 --- !u!114 &6588752901228617434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +265,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   observed: {fileID: 0}
   disabled_observed: 1
+--- !u!114 &-3807737813582271761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588752901228617255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7030206da10f871469db7455c86aaf53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelObjectDataType: 0
+  isDynamic: 0
+  ActivateWhenInactive: 0
+  properties: []
+  levelObjectNetworkHandler: {fileID: 6588752901228617434}
+  _Identity: 0
+  identified: 0
+  inBoundWires: []
+  outBoundWires: []
+  activeIn: 0
+  textMesh: {fileID: 0}
+--- !u!65 &6739817842040852418
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588752901228617255}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 2.5, z: 2}
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!1 &6588752901464765051
 GameObject:
   m_ObjectHideFlags: 0
