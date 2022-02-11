@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using NetLevel;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -10,6 +12,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool ActivateWhenInactive;
 
+        public List<Property> properties;
 
         // Initializes a LevelObject to its original state
         // It must be assured that this also resets a LevelObject to its Initial State in the Level (If Static that is  self explanatory, might cause
