@@ -213,7 +213,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort) NetworkManager.ServerToClientId.setProperty)]
         public static void ReceiveProperties(Message m)
         {
-            GameConsole.Log($"MESSAGE LENGTH {m.UnreadLength}");
             Vector3 position = m.GetVector3();
             int id =m.GetInt();
             RequestTuple request = new RequestTuple();
@@ -226,9 +225,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 string value = m.GetString();
                 request.properties.Add(new Tuple<string, string>(name,value));
             }
-            GameConsole.Log($"MESSAGE LENGTH {m.UnreadLength}");
-            
-            
             ProcessPropertyRequest(request);
         }
 
