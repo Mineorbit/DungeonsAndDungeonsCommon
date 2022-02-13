@@ -214,7 +214,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Vector3 position = m.GetVector3();
             int id =m.GetInt();
-            GameConsole.Log($"MESSAGE LENGTH {m.Bytes.Length}");
+            GameConsole.Log($"MESSAGE LENGTH {m.UnreadLength}");
             RequestTuple request = new RequestTuple();
             request.pos = position;
             request.identity = id;
@@ -234,6 +234,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
             if (target != null)
             {           
+                GameConsole.Log($"MESSAGE LENGTH {tuple.remainder.UnreadLength}");
                 NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
                 o.OverrideIdentity(tuple.identity);
                 for (int i = 0; i < o.levelObjectProperties.Count; i++)
