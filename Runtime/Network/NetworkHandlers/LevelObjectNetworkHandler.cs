@@ -189,6 +189,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Message propertyM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.setProperty);
                 propertyM.AddVector3(transform.position);
                 propertyM.AddInt(((NetworkLevelObject) GetObserved()).Identity);
+                foreach (var property in GetObserved().levelObjectProperties)
+                {
+                    propertyM.AddString(property.name);
+                    propertyM.AddString(property.Value);
+                }
                 NetworkManager.instance.Server.SendToAll(propertyM);
             }
         }
@@ -198,6 +203,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             public Vector3 pos;
             public int identity;
+            public Message remainder;
         }
 
         public static Queue<RequestTuple> propertyRequests = new Queue<RequestTuple>();
@@ -210,8 +216,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RequestTuple request = new RequestTuple();
             request.pos = position;
             request.identity = id;
+            request.remainder = m;
             ProcessPropertyRequest(request);
-            
         }
 
         
@@ -227,8 +233,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (target != null)
             {           
                 NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
-
                 o.OverrideIdentity(tuple.identity);
+                for (int i = 0; i < o.levelObjectProperties.Count; i++)
+                {
+                    string name = tuple.remainder.GetString();
+                    string value = tuple.remainder.GetString();
+                    o.GetProperty(name).Value = value;
+                }
             }
             else
             {
