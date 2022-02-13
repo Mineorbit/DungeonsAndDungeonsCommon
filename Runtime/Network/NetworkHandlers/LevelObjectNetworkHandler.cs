@@ -212,9 +212,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort) NetworkManager.ServerToClientId.setProperty)]
         public static void ReceiveProperties(Message m)
         {
+            GameConsole.Log($"MESSAGE LENGTH {m.UnreadLength}");
             Vector3 position = m.GetVector3();
             int id =m.GetInt();
-            GameConsole.Log($"MESSAGE LENGTH {m.UnreadLength}");
+            GameConsole.Log($"MESSAGE LENGTH T {m.UnreadLength}");
             RequestTuple request = new RequestTuple();
             request.pos = position;
             request.identity = id;
