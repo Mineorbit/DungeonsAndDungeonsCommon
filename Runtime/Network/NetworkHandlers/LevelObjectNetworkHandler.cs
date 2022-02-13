@@ -193,6 +193,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     propertyM.AddString(property.name);
                     propertyM.AddString(property.Value);
+                    GameConsole.Log($"Adding Property {property.name} {property.Value} to message");
                 }
                 NetworkManager.instance.Server.SendToAll(propertyM);
             }
@@ -238,6 +239,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     string name = tuple.remainder.GetString();
                     string value = tuple.remainder.GetString();
+                    GameConsole.Log($"Received {name} {value} from message");
                     o.GetProperty(name).Value = value;
                 }
             }
