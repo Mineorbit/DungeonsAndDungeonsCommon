@@ -238,8 +238,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             NetworkHandler target = NetworkManager.networkHandlers.Find((x) =>
             {
-                float dist = (tuple.pos - x.transform.position).magnitude;
-                return  dist < 0.125f;
+                if (x != null)
+                {
+                    float dist = (tuple.pos - x.transform.position).magnitude;
+                    return dist < 0.125f;
+                }
+                return false;
             });
             if (target != null)
             {           
