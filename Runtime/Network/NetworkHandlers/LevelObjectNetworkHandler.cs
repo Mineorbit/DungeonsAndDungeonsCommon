@@ -204,7 +204,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             public Vector3 pos;
             public int identity;
-            public Message remainder;
+            public List<Tuple<string,string>> properties;
         }
 
         public static Queue<RequestTuple> propertyRequests = new Queue<RequestTuple>();
@@ -215,11 +215,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log($"MESSAGE LENGTH {m.UnreadLength}");
             Vector3 position = m.GetVector3();
             int id =m.GetInt();
-            GameConsole.Log($"MESSAGE LENGTH T {m.UnreadLength}");
             RequestTuple request = new RequestTuple();
             request.pos = position;
             request.identity = id;
-            request.remainder = m;
+
+            while (m.UnreadLength > 0)
+            {
+                string name = m.GetString();
+                string value = m.GetString();
+                request.properties.Add(new Tuple<string, string>(name,value));
+            }
+            GameConsole.Log($"MESSAGE LENGTH {m.UnreadLength}");
+            
+            
             ProcessPropertyRequest(request);
         }
 
@@ -227,7 +235,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void ProcessPropertyRequest(RequestTuple tuple)
         {
-            GameConsole.Log($"looking for {tuple.identity} at {tuple.pos}");
             NetworkHandler target = NetworkManager.networkHandlers.Find((x) =>
             {
                 float dist = (tuple.pos - x.transform.position).magnitude;
@@ -235,15 +242,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             });
             if (target != null)
             {           
-                GameConsole.Log($"MESSAGE LENGTH {tuple.remainder.UnreadLength}");
                 NetworkLevelObject o = ((NetworkLevelObject) ((LevelObjectNetworkHandler) target).GetObserved());
                 o.OverrideIdentity(tuple.identity);
-                for (int i = 0; i < o.levelObjectProperties.Count; i++)
+                foreach (Tuple<string,string> t in tuple.properties)
                 {
-                    string name = tuple.remainder.GetString();
-                    string value = tuple.remainder.GetString();
-                    GameConsole.Log($"Received {name} {value} from message");
-                    o.GetProperty(name).Value = value;
+                    o.GetProperty(t.Item1).Value = t.Item2;
                 }
             }
             else
