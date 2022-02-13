@@ -218,7 +218,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             RequestTuple request = new RequestTuple();
             request.pos = position;
             request.identity = id;
-
+            request.properties = new List<Tuple<string, string>>();
             while (m.UnreadLength > 0)
             {
                 string name = m.GetString();
