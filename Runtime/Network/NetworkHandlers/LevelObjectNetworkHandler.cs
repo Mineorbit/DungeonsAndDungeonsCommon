@@ -214,6 +214,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Vector3 position = m.GetVector3();
             int id =m.GetInt();
+            GameConsole.Log($"MESSAGE LENGTH {m.Bytes.Length}");
             RequestTuple request = new RequestTuple();
             request.pos = position;
             request.identity = id;
