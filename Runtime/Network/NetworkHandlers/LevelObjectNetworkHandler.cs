@@ -195,6 +195,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     propertyM.AddString(property.Value);
                     GameConsole.Log($"Adding Property {property.name} {property.Value} to message");
                 }
+                GameConsole.Log($"Sending {propertyM.UnreadLength}");
                 NetworkManager.instance.Server.SendToAll(propertyM);
             }
         }
