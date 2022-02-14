@@ -29,9 +29,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 //GameConsole.Log($"Updating Input Data for {GetObservedPlayer().localId}");
                 Message input = Message.Create(MessageSendMode.unreliable,(ushort) NetworkManager.ClientToServerId.playerInput);
                 PlayerController c = (PlayerController) GetObservedPlayer().controller;
-                input.AddVector3(c.movingDirection);
                 input.AddVector3(c.targetDirection);
-                input.AddVector3(c.forwardDirection);
                 input.AddQuaternion(c.aimRotation);
                 input.AddVector3(c.cameraForwardDirection);
                 input.AddBool(c.movementInputOnFrame);
@@ -46,9 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             int localId = id - 1;
             Player player = PlayerManager.playerManager.players[localId];
-            player.movingDirection = message.GetVector3();
             player.targetDirection = message.GetVector3();
-            player.forwardDirection = message.GetVector3();
             player.aimRotation = message.GetQuaternion();
             player.cameraForwardDirection = message.GetVector3();
             player.movementInputOnFrame = message.GetBool();
