@@ -188,8 +188,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Vector3 cameraForwardDirection;
         public Vector3 targetDirection;
-        public Vector3 movingDirection;
-        public Vector3 forwardDirection;
         public Quaternion aimRotation;
 
 
@@ -227,9 +225,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //GameConsole.Log($"Test: {movementInputOnFrame} {takeInput}");
             if (!movementInputOnFrame || ! takeInput)
             {
-                _player.movingDirection = Vector3.zero;
                 _player.targetDirection = Vector3.zero;
-                _player.forwardDirection = Vector3.zero;
             }
         }
 
@@ -237,9 +233,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(Level.instantiateType == Level.InstantiateType.Test)
             {
-                _player.movingDirection = movingDirection;
                 _player.targetDirection = targetDirection;
-                _player.forwardDirection = forwardDirection;
                 _player.aimRotation = aimRotation;
                 _player.cameraForwardDirection = cameraForwardDirection;
                 _player.movementInputOnFrame = movementInputOnFrame;

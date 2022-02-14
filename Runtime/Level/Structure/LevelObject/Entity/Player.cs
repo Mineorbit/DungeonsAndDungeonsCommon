@@ -191,8 +191,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         public Vector3 targetDirection;
-        public Vector3 movingDirection;
-        public Vector3 forwardDirection;
         public Vector3 cameraForwardDirection;
         
         
@@ -212,6 +210,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 speedY = jumpingSpeed;
             }
         }
+
+        private Vector3 _forwardDirection;
+        
         
         public void MoveFixed()
         {
@@ -231,22 +232,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             if (ApplyMovement)
             {
-                
-                
                 // change to angle towards ladder later on
                 if (targetDirection.sqrMagnitude >= 0.01f && inClimbing)
                 {
                     speedY = climbingSpeed;
                 }
                 
-                
                 targetDirection.y = speedY;
-                if (targetDirection.sqrMagnitude >= 0.01f)
-                    movingDirection = targetDirection;
-                else
-                    movingDirection = new Vector3(0, 0, 0);
-                
-                
                 
                 GetController().controller.Move(targetDirection * Speed * Time.deltaTime);
 
@@ -257,7 +249,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     //Debug.Break();
                 }
                 
-                if (targetDirection.sqrMagnitude >= 0.01f) forwardDirection = (forwardDirection + movingDirection) / 2;
+                
+                if (targetDirection.sqrMagnitude >= 0.5f) _forwardDirection = (_forwardDirection + targetDirection) / 2;
                 
                 
                 
@@ -274,7 +267,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     transform.rotation = Quaternion.AngleAxis(25, Vector3.up)*Quaternion.LookRotation(lookDir);
                 }else if (takeInput && movementInputOnFrame)
                 {
-                    var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(forwardDirection.x, forwardDirection.z);
+                    var angleY = 180 + 180 / Mathf.PI * Mathf.Atan2(_forwardDirection.x, _forwardDirection.z);
                     transform.eulerAngles = new Vector3(0, angleY, 0);
                 }
             }
@@ -301,9 +294,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void ResetMovement()
         {
-            movingDirection = Vector3.zero;
             targetDirection = Vector3.zero;
-            forwardDirection = Vector3.zero;
             aimRotation = Quaternion.identity;
             cameraForwardDirection = cameraForwardDirection;
         }
