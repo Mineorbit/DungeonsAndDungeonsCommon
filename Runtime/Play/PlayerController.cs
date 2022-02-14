@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using Debug = System.Diagnostics.Debug;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -9,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public PlayerBaseAnimator playerBaseAnimator;
         public Transform cam;
-        public float Speed = 3f;
+        [FormerlySerializedAs("Speed")] public float speed = 3f;
         public float speedY;
 
 
@@ -33,9 +33,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public Vector3 GetTargetPoint()
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            Debug.Assert(Camera.main != null, "Camera.main != null");
+            Camera main;
+            Ray ray = (main = Camera.main).ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             
-            Vector3 start = ray.GetPoint((Camera.main.transform.position-transform.position).magnitude); 
+            Vector3 start = ray.GetPoint((main.transform.position-transform.position).magnitude); 
             RaycastHit hit;
             int mask = LayerMask.NameToLayer("HitBox");
             int realmask = ~mask;
@@ -56,27 +58,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         
         //public static PlayerController currentPlayer;
-        private Player player;
+        private Player _player;
 
-        private float turnSmoothVel;
+        private float _turnSmoothVel;
         
-        public bool movementInputOnFrame = false;
+        public bool movementInputOnFrame;
 
         //Setup References for PlayerController and initial values if necessary
         public void Awake()
         {
             if (Camera.main != null)
                 cam = Camera.main.transform;
-
-
             controller = transform.GetComponent<CharacterController>();
-            
         }
 
         public override void Start()
         {
             base.Start();
-            player = transform.GetComponent<Player>();
+            _player = transform.GetComponent<Player>();
         }
 
 
@@ -103,7 +102,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Vector3 target = GetTargetPoint();
             Vector3 dir = target - transform.position;
-            //Debug.DrawLine(transform.position,target,Color.green,200);
             return Quaternion.LookRotation(dir,Vector3.up);
         }
 
@@ -111,70 +109,65 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnLeftUse(InputAction.CallbackContext context)
         {
-            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
             {
-                player.Invoke(player.UseLeft, false,true);
+                _player.Invoke(_player.UseLeft, false);
             }
         }
         
         public void OnRightUse(InputAction.CallbackContext context)
         {
-            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
             {
-                player.Invoke(player.UseRight, false,true);
+                _player.Invoke(_player.UseRight, false);
             }
         }
         
         public void OnStopLeftUse(InputAction.CallbackContext context) 
         {
-            if (takeInput && player.usingLeftItem)
+            if (takeInput && _player.usingLeftItem)
             {
-                player.Invoke(player.StopUseLeft, false);
+                _player.Invoke(_player.StopUseLeft, false);
             }
         }
                 
         public void OnStopRightUse(InputAction.CallbackContext context)
         {
-            if (takeInput && player.usingRightItem)
+            if (takeInput && _player.usingRightItem)
             { 
-                player.Invoke(player.StopUseRight, false);
+                _player.Invoke(_player.StopUseRight, false);
             }
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
             {
-                
-                    GameConsole.Log("JUMP");
-                    player.Invoke(player.Jump,false,true);
-                    
+                _player.Invoke(_player.Jump,false);
             }
         }
 
         public void OnSwapLeft(InputAction.CallbackContext context)
         {
-            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
             {
-                GameConsole.Log("Swap Left");
-                player.Invoke(player.SwapLeft,false);
+                _player.Invoke(_player.SwapLeft,false);
             }
         }
         
         public void OnSwapRight(InputAction.CallbackContext context)
         {
-            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
             {
-                GameConsole.Log("Swap Right");
-                player.Invoke(player.SwapRight,false);
+                _player.Invoke(_player.SwapRight,false);
             }
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (takeInput && !player.usingLeftItem && !player.usingRightItem)
+            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
             {
-                player.Invoke(player.Interact, false, true);
+                _player.Invoke(_player.Interact, false);
             }
         }
 
@@ -198,22 +191,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 movingDirection;
         public Vector3 forwardDirection;
         public Quaternion aimRotation;
-        
-        
-        public void Move()
-        {   
-                
+
+
+        private void Move()
+        {
                 cameraForwardDirection = -cam.forward;
                 
                 aimRotation = GetAimDirection();
                 
-                if(!player.usingLeftItem && !player.usingRightItem)
+                if(!_player.usingLeftItem && !_player.usingRightItem)
                 {
                     if (cam != null && allowedToMove)
+                    {
+                        var up = transform.up;
                         targetDirection =
                             Vector3.Normalize(
-                            Vector3.ProjectOnPlane(cam.right, transform.up) * inputDirection.x +
-                            Vector3.ProjectOnPlane(cam.forward, transform.up) * inputDirection.y);
+                                Vector3.ProjectOnPlane(cam.right, up) * inputDirection.x +
+                                Vector3.ProjectOnPlane(cam.forward, up) * inputDirection.y);
+                    }
                 }
                 else
                 {
@@ -232,9 +227,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //GameConsole.Log($"Test: {movementInputOnFrame} {takeInput}");
             if (!movementInputOnFrame || ! takeInput)
             {
-                player.movingDirection = Vector3.zero;
-                player.targetDirection = Vector3.zero;
-                player.forwardDirection = Vector3.zero;
+                _player.movingDirection = Vector3.zero;
+                _player.targetDirection = Vector3.zero;
+                _player.forwardDirection = Vector3.zero;
             }
         }
 
@@ -242,18 +237,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(Level.instantiateType == Level.InstantiateType.Test)
             {
-                player.movingDirection = movingDirection;
-                player.targetDirection = targetDirection;
-                player.forwardDirection = forwardDirection;
-                player.aimRotation = aimRotation;
-                player.cameraForwardDirection = cameraForwardDirection;
-                player.movementInputOnFrame = movementInputOnFrame;
-                player.takeInput = takeInput;
+                _player.movingDirection = movingDirection;
+                _player.targetDirection = targetDirection;
+                _player.forwardDirection = forwardDirection;
+                _player.aimRotation = aimRotation;
+                _player.cameraForwardDirection = cameraForwardDirection;
+                _player.movementInputOnFrame = movementInputOnFrame;
+                _player.takeInput = takeInput;
             }
 
             if (Level.instantiateType == Level.InstantiateType.Online)
             {
-               ( (PlayerNetworkHandler) player.GetNetworkHandler()).UpdateInputData();
+               ( (PlayerNetworkHandler) _player.GetNetworkHandler()).UpdateInputData();
             }
         }
     }
