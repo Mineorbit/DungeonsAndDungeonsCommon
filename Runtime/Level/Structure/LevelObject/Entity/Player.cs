@@ -257,7 +257,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     //Debug.Break();
                 }
                 
-                if ( speed > 0) forwardDirection = (forwardDirection + movingDirection) / 2;
+                if (targetDirection.sqrMagnitude >= 0.01f) forwardDirection = (forwardDirection + movingDirection) / 2;
                 
                 
                 
