@@ -9,9 +9,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Start()
         {
             base.Start();
-            
-            
-
         }
 
         

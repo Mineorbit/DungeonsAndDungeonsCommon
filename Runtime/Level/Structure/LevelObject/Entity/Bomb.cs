@@ -20,13 +20,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void ExplosionEffect()
         {
-            EffectCaster.dictionary["ExplosionFX"].FX(transform.position);
+            EffectCaster.FX("ExplosionFX",transform.position);
         }
         
         void Explode()
         {
             GameConsole.Log("Explode");
-            Invoke(ExplosionEffect,false,true);
+            Invoke(ExplosionEffect,true,true);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach (var collider in hitColliders)
             {
