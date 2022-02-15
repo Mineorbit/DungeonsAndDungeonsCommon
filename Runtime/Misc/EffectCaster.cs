@@ -30,10 +30,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         effects.Enqueue(effect);
         }
 	
-        public void FX(Vector3 position)
+        public static void FX(string type,Vector3 position)
         {
-        	FX effect = effects.Dequeue();
-        	effect.Spawn(position);
+            EffectCaster caster = dictionary[type];
+            if(caster != null)
+            {
+        	    FX effect = caster.effects.Dequeue();
+        	    effect.Spawn(position);
+            }
+            else
+            {
+                GameConsole.Log($"There is no caster of type {type}");
+            }
         }
     }
 }

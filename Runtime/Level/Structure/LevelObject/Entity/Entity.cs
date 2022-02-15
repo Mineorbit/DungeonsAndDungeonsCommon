@@ -263,7 +263,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 baseAnimator.Hit();
             }
             Vector3 dir = transform.position - hitPosition;
-            EffectCaster.dictionary["HitFX"].FX(transform.position+0.5f*dir);
+            EffectCaster.FX("HitFX",transform.position+0.5f*dir);
             
         }
 
