@@ -32,8 +32,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 	
         public static void FX(string type,Vector3 position)
         {
-            EffectCaster caster = dictionary[type];
-            if(caster != null)
+            EffectCaster caster;
+            if(dictionary.TryGetValue(type, out caster))
             {
         	    FX effect = caster.effects.Dequeue();
         	    effect.Spawn(position);
