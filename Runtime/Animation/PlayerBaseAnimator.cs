@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -9,7 +10,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public GameObject footFX;
         private Vector3 forwardDirection;
         public ParticleSystem[] runDust;
-
+        public UnityEvent bombThrowReleaseEvent = new UnityEvent();
+        
         private Vector3 oldAngles;
 
         public void Start()
@@ -19,6 +21,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        public void ThrowRelease()
+        {
+            bombThrowReleaseEvent.Invoke();
+        }
+        
         public PlayerController GetController()
         {
             return (PlayerController) entityController;
