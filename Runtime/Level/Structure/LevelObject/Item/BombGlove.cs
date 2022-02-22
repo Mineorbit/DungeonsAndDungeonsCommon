@@ -10,13 +10,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public LevelObjectData bomb;
         public float bombThrowTime;
         public bool canThrowBomb;
+        public GameObject sampleBomb;
         void Start()
         {
             canThrowBomb = true;
+            sampleBomb.SetActive(false);
+            ((PlayerBaseAnimator)owner.baseAnimator).bombThrowReleaseEvent.AddListener(ThrowRelease);
         }
 
         public void ThrowEffect()
         {
+            sampleBomb.SetActive(true);
             ((PlayerBaseAnimator)owner.baseAnimator).Throw();
         }
         
@@ -26,10 +30,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if(canThrowBomb)
             {
                 canThrowBomb = false;
-                Invoke(CreateBomb,false,true);
                 Invoke(ThrowEffect);
-                Invoke("AllowThrow",bombThrowTime);
             }
+        }
+
+        public void ThrowRelease()
+        {
+            sampleBomb.SetActive(false);
+            Invoke(CreateBomb,false,true);
+            Invoke("AllowThrow",bombThrowTime);
         }
 
         public void AllowThrow()
