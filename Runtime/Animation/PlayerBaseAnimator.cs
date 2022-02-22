@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -13,6 +14,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent bombThrowReleaseEvent = new UnityEvent();
         
         private Vector3 oldAngles;
+
+        public void Awake()
+        {
+            bombThrowReleaseEvent = new UnityEvent();
+        }
 
         public void Start()
         {
