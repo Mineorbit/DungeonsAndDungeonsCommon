@@ -15,6 +15,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             canThrowBomb = true;
         }
 
+        public void ThrowEffect()
+        {
+            ((PlayerBaseAnimator)owner.baseAnimator).Throw();
+        }
+        
         public override void Use()
         {
             base.Use();
@@ -22,6 +27,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 canThrowBomb = false;
                 Invoke(CreateBomb,false,true);
+                Invoke(ThrowEffect);
                 Invoke("AllowThrow",bombThrowTime);
             }
         }

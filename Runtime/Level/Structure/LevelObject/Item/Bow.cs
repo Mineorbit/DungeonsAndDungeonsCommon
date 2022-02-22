@@ -10,13 +10,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnAttach();
         }
+
+        public void StartAimEffect()
+        {
+            ((PlayerBaseAnimator)owner.baseAnimator).StartAim();
+        }
+
+        public void StopAimEffect()
+        {
+            ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
+        }
+        
         // Update is called once per frame
         public override void Use()
         {
             base.Use();
-            ((PlayerBaseAnimator)owner.baseAnimator).StartAim();
             ((Player)owner).aiming = true;
-            owner.Invoke(owner.setMovementStatus, false);
+            owner.setMovementStatus( false);
+            Invoke(StartAimEffect);
             Invoke(CreateArrow,false,true);
         }
 
@@ -28,9 +39,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.StopUse();
             Invoke("ResetHolding",1f);
-            ((PlayerBaseAnimator)owner.baseAnimator).StopAim();
             ((Player)owner).aiming = false;
-            owner.Invoke(owner.setMovementStatus, true);
+            Invoke(StopAimEffect);
+            owner.setMovementStatus(true);
             
             //GameConsole.Log($"Shooting towards {owner.GetAimRotation().eulerAngles} call");
             Invoke(Shoot,false,true);
