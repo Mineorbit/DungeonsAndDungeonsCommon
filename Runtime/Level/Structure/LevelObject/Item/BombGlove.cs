@@ -11,11 +11,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float bombThrowTime;
         public bool canThrowBomb;
         public GameObject sampleBomb;
+        private bool set = false;
         void Start()
         {
             canThrowBomb = true;
             sampleBomb.SetActive(false);
-            ((PlayerBaseAnimator)owner.baseAnimator).bombThrowReleaseEvent.AddListener(ThrowRelease);
         }
 
         public void ThrowEffect()
@@ -26,6 +26,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public override void Use()
         {
+            if (!set)
+            {
+                set = true;    
+                ((PlayerBaseAnimator)owner.baseAnimator).bombThrowReleaseEvent.AddListener(ThrowRelease);
+            }
             base.Use();
             if(canThrowBomb)
             {
