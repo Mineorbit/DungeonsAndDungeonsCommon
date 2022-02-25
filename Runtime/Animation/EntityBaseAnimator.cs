@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class EntityBaseAnimator : BaseAnimator
+    public class EntityBaseAnimator : LevelObjectBaseAnimator
     {
         public Entity me;
         public Animator animator;

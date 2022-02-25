@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class GateBaseAnimator : BaseAnimator
+    public class GateBaseAnimator : LevelObjectBaseAnimator
     {
         public GameObject model;
         private bool open = false;

@@ -19,8 +19,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [FormerlySerializedAs("enemyController")] public new EnemyController entityController;
         
 
-        private void Start()
+        public override void Start()
         {
+            base.Start();
             targetInterpolation = transform.parent.forward;
             attackEvent = new UnityEvent();
             endAttackEvent = new UnityEvent();

@@ -20,8 +20,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bombThrowReleaseEvent = new UnityEvent();
         }
 
-        public void Start()
+        public override void Start()
         {
+            base.Start();
             forwardDirection = new Vector3(0, 0, 0);
             runDust = transform.Find("FootFX").GetComponentsInChildren<ParticleSystem>();
         }
