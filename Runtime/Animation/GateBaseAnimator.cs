@@ -20,7 +20,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 open = true;
                 AnimationState(false);
-                me.levelObjectNetworkHandler.AnimatorState = 0;
+                me.levelObjectNetworkHandler.AnimatorState = 1;
             }
         }
 
