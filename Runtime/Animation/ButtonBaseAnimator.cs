@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buttonHead.localScale = new Vector3(70 + inert, 70 + inert, Mathf.Pow(1 - t, 3) * 40 + 30);
         }
 
-        public override void AnimationStateUpdate()
+        protected override void AnimationStateUpdate()
         {
             base.AnimationStateUpdate();
             GameConsole.Log($"Test: {me.levelObjectNetworkHandler.AnimatorState}");

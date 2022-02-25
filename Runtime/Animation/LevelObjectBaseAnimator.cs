@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -6,14 +7,44 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelObjectBaseAnimator : BaseAnimator
     {
         public NetworkLevelObject me;
-        public virtual void Start()
+        public static List<LevelObjectBaseAnimator> activeAnimators;
+        
+        
+        public override void Start()
         {
-            me.levelObjectNetworkHandler.valueChangedEvent.AddListener(AnimationStateUpdate);
+            base.Start();
+            activeAnimators.Add(this);
         }
 
-        public virtual void AnimationStateUpdate()
+        public void OnDestroy()
+        {
+            activeAnimators.Remove(this);
+        }
+
+        private int lastState = 0;
+
+        public void UpdateAnimator()
+        {
+            if(lastState != me.levelObjectNetworkHandler.AnimatorState)
+            {
+                GameConsole.Log($"Animator {this} State changing to {me.levelObjectNetworkHandler.AnimatorState}");
+                AnimationStateUpdate();
+                lastState = me.levelObjectNetworkHandler.AnimatorState;
+            }
+        }
+
+
+        protected virtual void AnimationStateUpdate()
         {
             
+        }
+
+        public static void NetTick()
+        {
+            foreach (LevelObjectBaseAnimator o in activeAnimators)
+            {
+                o.UpdateAnimator();
+            }
         }
     }
 }
