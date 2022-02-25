@@ -21,7 +21,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         protected override void AnimationStateUpdate()
         {
             base.AnimationStateUpdate();
-            GameConsole.Log($"Test: {me.levelObjectNetworkHandler.AnimatorState}");
             AnimationState(0, me.levelObjectNetworkHandler.AnimatorState != 0);
         }
 
@@ -40,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 yield return null;
             }
 
-            me.levelObjectNetworkHandler.AnimatorState = 0;
+            me.levelObjectNetworkHandler.AnimatorState = 1;
         }
 
         private IEnumerator UnpressAnimation()
@@ -58,7 +57,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            me.levelObjectNetworkHandler.AnimatorState = 1;
+            me.levelObjectNetworkHandler.AnimatorState = 0;
         }
 
         public void Press()
