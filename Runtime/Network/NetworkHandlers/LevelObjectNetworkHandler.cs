@@ -6,6 +6,7 @@ using Google.Protobuf.WellKnownTypes;
 using NetLevel;
 using RiptideNetworking;
 using UnityEngine;
+using UnityEngine.Events;
 using Type = System.Type;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -17,6 +18,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool disabled_observed = true;
 
+        public UnityEvent valueChangedEvent = new UnityEvent();
+        
+        [PacketBinding.SyncVar]
+        public int AnimatorState {get;set;}
 
         public virtual LevelObject GetObserved()
         {
@@ -249,6 +254,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     o.GetProperty(t.Item1).Value = t.Item2;
                 }
+                ((LevelObjectNetworkHandler) target).valueChangedEvent.Invoke();
             }
             else
             {
