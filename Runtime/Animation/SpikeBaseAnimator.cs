@@ -16,12 +16,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        
         public override void AnimationStateUpdate()
         {
             base.AnimationStateUpdate();
-            AnimationState(me.levelObjectNetworkHandler.AnimatorState != 0);
+            AnimationState( me.levelObjectNetworkHandler.AnimatorState != 0);
         }
+      
 
         public void SetSpikes(bool open)
         {

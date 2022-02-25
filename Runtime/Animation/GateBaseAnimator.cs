@@ -7,14 +7,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public GameObject model;
         private bool open = false;
+
+        public void AnimationState(bool b)
+        {
+            model.SetActive(b);
+        }
+        
         
         public void Open()
         {
             if (!open)
             {
                 open = true;
-                model.SetActive(false);
+                AnimationState(false);
+                me.levelObjectNetworkHandler.AnimatorState = 0;
             }
+        }
+
+        public override void AnimationStateUpdate()
+        {
+            base.AnimationStateUpdate();
+            AnimationState( me.levelObjectNetworkHandler.AnimatorState != 0);
         }
 
         
@@ -24,7 +37,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (open)
             {
                 open = false;
-                model.SetActive(true);
+                AnimationState(true);
+                me.levelObjectNetworkHandler.AnimatorState = 0;
             }
         }
     }
