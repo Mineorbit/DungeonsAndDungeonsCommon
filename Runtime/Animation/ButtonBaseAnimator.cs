@@ -38,6 +38,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+
+            me.levelObjectNetworkHandler.AnimatorState = 0;
         }
 
         private IEnumerator UnpressAnimation()
@@ -55,6 +57,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+            me.levelObjectNetworkHandler.AnimatorState = 1;
         }
 
         public void Press()
