@@ -7,9 +7,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Spike : InteractiveLevelObject
     {
         private int spikeDamage = 50;
-        public GameObject[] spikes;
         // AUTOMATICALLY CONNECT TO ALL NEIGHBORING ON PLAY
 
+        public SpikeBaseAnimator spikeBaseAnimator;
         public Hitbox Hitbox;
         public Collider buildCollider;
         public override void OnStartRound()
@@ -44,25 +44,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnEndRound()
         {
             base.OnEndRound();
-            Invoke(Deactivate);
+            Deactivate();
         }
         
         public override void Activate()
         {
             base.Activate();
-            foreach (GameObject g in spikes)
-            {
-                g.SetActive(false);
-            }
+            spikeBaseAnimator.SetSpikes(true);
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
-            foreach (GameObject g in spikes)
-            {
-                g.SetActive(true);
-            }
+            spikeBaseAnimator.SetSpikes(false);
         }
         
         public override void ResetState()

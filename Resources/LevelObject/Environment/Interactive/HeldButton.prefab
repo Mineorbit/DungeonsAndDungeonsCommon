@@ -50,14 +50,19 @@ MonoBehaviour:
   levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
+  levelObjectProperties: []
   levelObjectNetworkHandler: {fileID: 5518454888437054527}
+  _Identity: 0
+  identified: 0
   inBoundWires: []
   outBoundWires: []
+  activeIn: 0
   playerStandinghitbox: {fileID: 3210988167443433057}
   buildCollider: {fileID: 8523260464767948780}
   returnToUnpress: 0
   unpressTime: 5
   buttonBaseAnimator: {fileID: 5085013479506201337}
+  pressed: 0
 --- !u!65 &8523260464767948780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -83,10 +88,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Identity: 
-  identified: 0
   observed: {fileID: 5770273647337507307}
   disabled_observed: 1
+  valueChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &940719653425877597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -251,6 +257,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2637835724840263655, guid: 0e1f5247c3ca928489134a6873b616ad, type: 3}
+      propertyPath: me
+      value: 
+      objectReference: {fileID: 5770273647337507307}
     - target: {fileID: 2637835724840263655, guid: 0e1f5247c3ca928489134a6873b616ad, type: 3}
       propertyPath: buttonHead
       value: 
