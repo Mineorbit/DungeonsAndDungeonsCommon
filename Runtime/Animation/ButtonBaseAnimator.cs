@@ -21,7 +21,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         protected override void AnimationStateUpdate()
         {
             base.AnimationStateUpdate();
-            AnimationState(0, me.levelObjectNetworkHandler.AnimatorState != 0);
+            AnimationState(0, me.levelObjectNetworkHandler.AnimatorState == 0);
         }
 
 
