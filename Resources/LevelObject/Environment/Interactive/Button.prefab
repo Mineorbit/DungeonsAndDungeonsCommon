@@ -50,11 +50,13 @@ MonoBehaviour:
   levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
+  levelObjectProperties: []
   levelObjectNetworkHandler: {fileID: -4959942066154635380}
   _Identity: 0
   identified: 0
   inBoundWires: []
   outBoundWires: []
+  activeIn: 0
   playerStandinghitbox: {fileID: 6512620288335343218}
   buildCollider: {fileID: 46853627974254591}
   returnToUnpress: 1
@@ -88,6 +90,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   observed: {fileID: 2808803964958646776}
   disabled_observed: 1
+  valueChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &8926374800149297742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,6 +257,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3957613506753853474, guid: ab9a7f65d2bc28e47855ce9aa577f06b, type: 3}
+      propertyPath: me
+      value: 
+      objectReference: {fileID: 2808803964958646776}
     - target: {fileID: 3957613506753853474, guid: ab9a7f65d2bc28e47855ce9aa577f06b, type: 3}
       propertyPath: buttonPressEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1

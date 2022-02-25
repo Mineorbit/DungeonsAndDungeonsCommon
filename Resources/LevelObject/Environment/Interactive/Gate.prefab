@@ -228,6 +228,7 @@ MonoBehaviour:
   levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
+  levelObjectProperties: []
   levelObjectNetworkHandler: {fileID: -3889575931983887138}
   _Identity: 0
   identified: 0
@@ -267,6 +268,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   observed: {fileID: 0}
   disabled_observed: 1
+  valueChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7098715700073503541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a17b3be73da3dd40a7749623b8ef5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  me: {fileID: 6498931593991587624}
   model: {fileID: 8263260763983646358}
 --- !u!1 &6420252443121159005
 GameObject:
