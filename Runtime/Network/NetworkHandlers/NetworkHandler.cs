@@ -97,6 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
+
         [MessageHandler((ushort)NetworkManager.ServerToClientId.syncVar)]
         public static void SyncVarHandle(Message value)
         {
@@ -139,7 +140,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 info.SetValue(n,v);
                 }
-            
+                
             }
             else
             {

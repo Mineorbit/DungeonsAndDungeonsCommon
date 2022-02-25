@@ -124,6 +124,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void FixedUpdate()
         {
             
+                LevelObjectBaseAnimator.NetTick();
+            
+            
                 for (int i = 0; i < count;i++)
                 {
                     if (LevelObjectNetworkHandler.propertyRequests.Count > 0)

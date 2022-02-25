@@ -102,6 +102,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         }
         
+        
+        
+        
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
         [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
         public static void ProcessAction(ushort id,Message m)
@@ -254,7 +257,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     o.GetProperty(t.Item1).Value = t.Item2;
                 }
-                ((LevelObjectNetworkHandler) target).valueChangedEvent.Invoke();
             }
             else
             {
