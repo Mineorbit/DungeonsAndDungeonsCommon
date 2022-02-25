@@ -7,7 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelObjectBaseAnimator : BaseAnimator
     {
         public NetworkLevelObject me;
-        public static List<LevelObjectBaseAnimator> activeAnimators;
+        public static List<LevelObjectBaseAnimator> activeAnimators = new List<LevelObjectBaseAnimator>();
         
         
         public override void Start()
