@@ -14,13 +14,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void AnimationState(float t,bool b)
         {
-            var inert = b? 10 * Mathf.Sin(t * Mathf.PI) :  10 * Mathf.Sin((1 - t) * Mathf.PI);
+            var inert = b ? 10 * Mathf.Sin(t * Mathf.PI) :  10 * Mathf.Sin((1 - t) * Mathf.PI);
             buttonHead.localScale = new Vector3(70 + inert, 70 + inert, Mathf.Pow(1 - t, 3) * 40 + 30);
         }
 
         protected override void AnimationStateUpdate()
         {
             base.AnimationStateUpdate();
+            GameConsole.Log("CHECK");
             AnimationState(0, me.levelObjectNetworkHandler.AnimatorState == 0);
         }
 
