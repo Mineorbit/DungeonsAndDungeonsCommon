@@ -12,10 +12,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public UnityEvent buttonPressEvent = new UnityEvent();
         public UnityEvent buttonUnpressEvent = new UnityEvent();
 
-        public void AnimationState(float t,bool b)
+        public void AnimationState(float t,bool forward)
         {
-            var inert = b ? 10 * Mathf.Sin(t * Mathf.PI) :  10 * Mathf.Sin((1 - t) * Mathf.PI);
-            buttonHead.localScale = new Vector3(70 + inert, 70 + inert, Mathf.Pow(1 - t, 3) * 40 + 30);
+            var inert = forward ? 10 * Mathf.Sin(t * Mathf.PI) :  10 * Mathf.Sin((1 - t) * Mathf.PI);
+            
+            buttonHead.localScale = new Vector3(70 + inert, 70 + inert, Mathf.Pow(1 - (forward?t:(1-t)), 3) * 40 + 30);
         }
 
         protected override void AnimationStateUpdate()
