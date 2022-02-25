@@ -23,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             AnimationState(me.levelObjectNetworkHandler.AnimatorState != 0);
         }
 
-        public bool SetSpikes(bool open)
+        public void SetSpikes(bool open)
         {
             AnimationState(open);
             if (open)
