@@ -22,7 +22,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         protected override void AnimationStateUpdate()
         {
             base.AnimationStateUpdate();
-            GameConsole.Log("CHECK");
             AnimationState(0, me.levelObjectNetworkHandler.AnimatorState == 0);
         }
 
