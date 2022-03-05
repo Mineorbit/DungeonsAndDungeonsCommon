@@ -23,12 +23,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.SyncVar]
         public int AnimatorState {get;set;}
 
+        public bool[] existsOn = new bool[4] {false,false,false,false};
+
         public virtual LevelObject GetObserved()
         {
             return (LevelObject) observed;
         }
-        
-        
+
+        public void SendToExisting(Message m)
+        {
+            for (int i = 0;i < 4;i++)
+            {
+                if (existsOn[i])
+                {
+                    NetworkManager.instance.Server.Send(m,(ushort)(i+1));
+                }
+            }
+
+        }
         
         public override void Awake()
         {
@@ -42,7 +54,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
 
-        public void Start()
+        public virtual void Start()
         {
             if(!observed.GetType().IsSubclassOf(typeof(Entity)))
             {
@@ -194,17 +206,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(NetworkManager.instance.isOnServer)
             {
-                Message propertyM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.setProperty);
-                propertyM.AddVector3(transform.position);
-                propertyM.AddInt(((NetworkLevelObject) GetObserved()).Identity);
+                Message propertyMessage = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.setProperty);
+                propertyMessage.AddVector3(transform.position);
+                propertyMessage.AddInt(((NetworkLevelObject) GetObserved()).Identity);
                 foreach (var property in GetObserved().levelObjectProperties)
                 {
-                    propertyM.AddString(property.name);
-                    propertyM.AddString(property.Value);
+                    propertyMessage.AddString(property.name);
+                    propertyMessage.AddString(property.Value);
                     GameConsole.Log($"Adding Property {property.name} {property.Value} to message");
                 }
-                GameConsole.Log($"Sending {propertyM.UnreadLength}");
-                NetworkManager.instance.Server.SendToAll(propertyM);
+                GameConsole.Log($"Sending {propertyMessage.UnreadLength}");
+                
+                
+                SendToExisting(propertyMessage);
             }
         }
 
