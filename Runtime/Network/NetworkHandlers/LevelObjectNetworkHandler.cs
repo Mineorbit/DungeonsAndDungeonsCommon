@@ -23,24 +23,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [PacketBinding.SyncVar]
         public int AnimatorState {get;set;}
 
-        public bool[] existsOn = new bool[4] {false,false,false,false};
 
         public virtual LevelObject GetObserved()
         {
             return (LevelObject) observed;
         }
 
-        public void SendToExisting(Message m)
-        {
-            for (int i = 0;i < 4;i++)
-            {
-                if (existsOn[i])
-                {
-                    NetworkManager.instance.Server.Send(m,(ushort)(i+1));
-                }
-            }
-
-        }
+        
         
         public override void Awake()
         {

@@ -23,6 +23,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Component observed;
 
 
+        public bool[] existsOn = new bool[4] {false,false,false,false};
+        
         public virtual void OnDestroy()
         {
             NetworkManager.networkHandlers.Remove(this);
@@ -40,7 +42,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             NetworkManager.networkHandlers.Add(this);
             if (!enabled) return;
-            
             
             
             
@@ -65,37 +66,48 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(NetworkManager.instance.isOnServer && properties != null && properties.Length>0)
             {
-                Message actionM = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
-                actionM.AddInt(((NetworkLevelObject) observed).Identity);
+                Message syncVarMessage = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.syncVar);
+                syncVarMessage.AddInt(((NetworkLevelObject) observed).Identity);
                 foreach (var info in properties)
                 {
                     if (info.PropertyType.FullName == "System.Boolean")
                     {
-                        actionM.AddBool((bool)info.GetValue(this));
+                        syncVarMessage.AddBool((bool)info.GetValue(this));
                     }else
                     if (info.PropertyType.FullName == "UnityEngine.Vector3")
                     {
-                        actionM.AddVector3((Vector3)info.GetValue(this));
+                        syncVarMessage.AddVector3((Vector3)info.GetValue(this));
                     }else
                     if (info.PropertyType.FullName == "UnityEngine.Quaternion")
                     {
-                        actionM.AddQuaternion((Quaternion)info.GetValue(this));
+                        syncVarMessage.AddQuaternion((Quaternion)info.GetValue(this));
                     }else
                     if (info.PropertyType.FullName == "System.Int32")
                     {
-                        actionM.AddInt((int)info.GetValue(this));
+                        syncVarMessage.AddInt((int)info.GetValue(this));
                     }
                     else
                     {
                         GameConsole.Log($"Could not add property {info.PropertyType.Name} to package");
                     }
                 }
-                NetworkManager.instance.Server.SendToAll(actionM);
+                
+                SendToExisting(syncVarMessage);
             
             }
         }
 
+        public void SendToExisting(Message m)
+        {
+            for (int i = 0;i < 4;i++)
+            {
+                if (existsOn[i])
+                {
+                    NetworkManager.instance.Server.Send(m,(ushort)(i+1));
+                }
+            }
 
+        }
 
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.syncVar)]
