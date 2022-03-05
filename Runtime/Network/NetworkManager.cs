@@ -104,7 +104,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 Client = new Client();
                 Client.Connected += OnConnected;
                 Client.Connected += (a,b) => { NetworkManager.networkHandlers = new List<NetworkHandler>();
-                    localId = (ushort) Client.Id;
                 };
                 Client.ClientDisconnected += OnClientDisconnect;
                 Client.Disconnected += OnDisconnect;
