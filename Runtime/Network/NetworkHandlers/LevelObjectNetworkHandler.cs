@@ -47,8 +47,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(!observed.GetType().IsSubclassOf(typeof(Entity)))
             {
-                // Interactive LevelObjects and other things always exist
-                existsOn = new[] {true, true, true, true};
 
                 if (NetworkManager.instance.isOnServer)
                 {

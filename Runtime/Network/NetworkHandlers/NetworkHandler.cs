@@ -23,7 +23,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Component observed;
 
 
-        public bool[] existsOn = new bool[4] {false,false,false,false};
+        public bool[] existsOn = new[] {true, true, true, true};
         
         public virtual void OnDestroy()
         {
@@ -43,8 +43,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManager.networkHandlers.Add(this);
             if (!enabled) return;
             
-            
-            
+            if (observed.GetType().IsSubclassOf(typeof(Entity)))
+            {
+                // Interactive LevelObjects and other things always exist
+                existsOn = new[] {false, false, false, false};
+            }
+
         }
 
 
