@@ -166,8 +166,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnEntityRemove(Message value)
         {
             int identity = value.GetInt();
-            
-                MainCaller.Do(() => { LevelManager.currentLevel.RemoveDynamic(NetworkLevelObject.FindByIdentity(identity)); });
+            LevelManager.currentLevel.RemoveDynamic(NetworkLevelObject.FindByIdentity(identity));
         
         }
         
@@ -183,11 +182,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         out entityLevelObjectData))
                     {
                         GameConsole.Log($"Trying to create {entityLevelObjectData} {identity}");
-                        MainCaller.Do(() =>
-                        {
                         OnCreationRequest(identity, entityLevelObjectData, position,
                                 new Quaternion(0, 0, 0, 0));
-                        });
                     }
                     else
                     {
@@ -199,12 +195,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnCreationRequest(int identity, LevelObjectData entityType, Vector3 position,
             Quaternion rotation)
         {
-            System.Action todo = () => MainCaller.Do(() =>
+            System.Action todo = () =>
             {
-				Util.Optional<int> id = new Util.Optional<int>();
-				id.Set(identity);
+                Util.Optional<int> id = new Util.Optional<int>();
+                id.Set(identity);
                 GameConsole.Log($"Spawning Entity {entityType}:{identity} at {position} on Network Request");
-                if(entityType.inLevel)
+                if (entityType.inLevel)
                 {
                     var e = LevelManager.currentLevel.AddDynamic(entityType, position, rotation, id);
                     e.GetComponent<EntityNetworkHandler>().receivedPosition = position;
@@ -215,7 +211,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     e.GetComponent<EntityNetworkHandler>().receivedPosition = position;
                     e.GetComponent<Entity>().Identity = identity;
                 }
-            });
+            };
             if (LevelManager.currentLevel != null || entityType.inLevel)
             {
                 todo.DynamicInvoke();

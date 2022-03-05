@@ -109,6 +109,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameConsole.Log($"Could not find LevelObject {identity}");
                 return;
             }
+            
             NetworkHandler n =  o.levelObjectNetworkHandler;
             try
             {

@@ -162,7 +162,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (players[localId] == null) return;
 
             GameConsole.Log("SPAWNING " + localId + " AT " + location);
-            MainCaller.Do(() => { players[localId].Spawn(location, new Quaternion(0, 0, 0, 0), true); });
+            players[localId].Spawn(location, new Quaternion(0, 0, 0, 0), true);
             //Move to other class Player eventually
             //Noch HUD Aktivieren
         }

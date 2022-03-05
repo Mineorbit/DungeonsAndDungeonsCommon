@@ -152,7 +152,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var methodInfo = observed.GetType().GetMethod(actionName);
                 
             if (methodInfo != null)
-                MainCaller.Do(() => { methodInfo.Invoke(observed, parameters.ToArray()); });
+                methodInfo.Invoke(observed, parameters.ToArray());
             else
                 GameConsole.Log("The Method with the given name " + actionName +
                                 " could not be found, is it private?");
