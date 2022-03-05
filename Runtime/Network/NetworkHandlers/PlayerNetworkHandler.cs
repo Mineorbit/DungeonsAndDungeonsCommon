@@ -79,8 +79,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnPlayerRemove(Message message)
         {
             int localIdToRemove = message.GetInt();
-            
-                MainCaller.Do(() => { PlayerManager.playerManager.Remove(localIdToRemove); });
+            PlayerManager.playerManager.Remove(localIdToRemove);
             
         }
 
@@ -103,9 +102,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnCreationRequest(int identity, Vector3 position, Quaternion rotation, int localId,
             string name)
         {
-
-            MainCaller.Do(() =>
-            {
 				Util.Optional<int> id = new Util.Optional<int>();
 				id.Set(identity);
                 PlayerManager.playerManager.Add(localId, name, true, id);
@@ -114,8 +110,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 player.GetComponent<Player>().enabled = (NetworkManager.instance.localId == -1);
                 h.enabled = true;
                 h.owner = localId;
-
-            });
         }
     }
 }

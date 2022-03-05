@@ -250,7 +250,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     string savePath = instance.compressedLevelFiles.GetPath() + $"{toDownload.LocalLevelId}.zip";
                     string levelPath = instance.levelFolders.GetPath() + $"{toDownload.LocalLevelId}";
                     File.WriteAllText(savePath, www.downloadHandler.text);
-                    MainCaller.Do(() => { instance.DisassembleZip(savePath, levelPath); });
+                    // TODO MAYBE NEEDS MAIN THREAD
+                    instance.DisassembleZip(savePath, levelPath);
                 }
 
 

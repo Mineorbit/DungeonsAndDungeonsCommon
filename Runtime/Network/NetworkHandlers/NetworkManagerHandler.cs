@@ -111,14 +111,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void PrepareRound(Message m)
         {
             GameConsole.Log("Preparing Round");
-            long uniqueLevelId = m.GetLong();
-            MainCaller.Do(() => { NetworkManager.prepareRoundEvent.Invoke(); });
+            long uniqueLevelId = m.GetLong(); 
+            NetworkManager.prepareRoundEvent.Invoke();
             NetLevel.LevelMetaData netData = new LevelMetaData();
             netData.UniqueLevelId = uniqueLevelId;
             if (netData != null)
             {
                 var levelMetaData = netData;
-                MainCaller.Do(() => { LevelDataManager.New(levelMetaData, saveImmediately: false); });
+                LevelDataManager.New(levelMetaData, saveImmediately: false);
             }
             
         }
@@ -127,24 +127,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ServerToClientId.startRound)]
         public static void StartRound(Message m)
         {
-            MainCaller.Do(() =>
-            {
                 GameConsole.Log($"Received Start Round for LocalId {NetworkManager.instance.localId}");
                 PlayerManager.SetPlayerActive(NetworkManager.instance.localId,true);
                 PlayerManager.playerManager.SetCurrentPlayer(NetworkManager.instance.localId);
                 NetworkManager.startRoundEvent.Invoke();
                 PlayerManager.acceptInput = true;
-            });
         }
 
         [MessageHandler((ushort)NetworkManager.ServerToClientId.winRound)]
         public static void WinRound(Message m)
         {
-            MainCaller.Do(() =>
-            {
                 NetworkManager.winEvent.Invoke();
                 PlayerManager.acceptInput = false;
-            });
         }
 
         [MessageHandler((ushort)NetworkManager.ClientToServerId.readyRound)]
@@ -170,11 +164,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int localId = m.GetInt();
             bool ready = m.GetBool();
             GameConsole.Log($"Received Ready round {localId} {ready}");
-            MainCaller.Do(() =>
-            {
-                NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
-                GameConsole.Log("Ready call called");
-            });
+            NetworkManager.readyEvent.Invoke(new Tuple<int, bool>(localId, ready));
+            GameConsole.Log("Ready call called");
         }
     }
 }

@@ -376,15 +376,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     if (Complete != null)
                     {
-                        MainCaller.Do(() =>
-                        {
                             LevelManager.currentLevel.Add(instance);
                             Complete.Invoke();
-                        });
                     }
                     else
                     {
-                        MainCaller.Do(() => { LevelManager.currentLevel.Add(instance); });
+                        LevelManager.currentLevel.Add(instance);
                     }
                 }
             }

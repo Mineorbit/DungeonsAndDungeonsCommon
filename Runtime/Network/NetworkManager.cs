@@ -221,12 +221,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnConnected(object sender, EventArgs e)
         {
-            MainCaller.Do(() =>
-            {
                 localId = Client.Id - 1;
                 isConnected = true;
                 SetNetworkHandlers(isConnected);
-            });
         }
 
         private void SetNetworkHandlers(bool v)
