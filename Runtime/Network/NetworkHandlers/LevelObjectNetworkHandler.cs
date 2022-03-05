@@ -58,7 +58,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(!observed.GetType().IsSubclassOf(typeof(Entity)))
             {
-                SetProperties();
+                // Interactive LevelObjects and other things always exist
+                existsOn = new[] {true, true, true, true};
+
+                if (NetworkManager.instance.isOnServer)
+                {
+                    SetProperties();
+                }
             }
         }
 
@@ -204,8 +210,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public virtual void SetProperties()
         {
-            if(NetworkManager.instance.isOnServer)
-            {
                 Message propertyMessage = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.setProperty);
                 propertyMessage.AddVector3(transform.position);
                 propertyMessage.AddInt(((NetworkLevelObject) GetObserved()).Identity);
@@ -219,7 +223,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
                 
                 SendToExisting(propertyMessage);
-            }
         }
 
 
