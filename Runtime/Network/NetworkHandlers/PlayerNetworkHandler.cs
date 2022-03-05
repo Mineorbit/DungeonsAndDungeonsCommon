@@ -62,6 +62,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             create.AddVector3(p.transform.position);
             
             NetworkManager.instance.Server.SendToAll(create);
+            existsOn = new bool[] { true,true,true,true};
         }
         
         

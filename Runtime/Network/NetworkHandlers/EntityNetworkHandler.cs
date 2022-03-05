@@ -19,6 +19,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Vector3 lastSentPosition;
         public Quaternion lastSentRotation;
 
+
+        public bool[] requestCreationOn = new bool[] { true,true,true,true };
         
         public readonly float tpDist = 0.075f;
 
@@ -72,8 +74,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         
-        public virtual void Start()
+        public override void Start()
         {
+            base.Start();
 			// Request the creation of this entity on the client side
             if (NetworkManager.instance.isOnServer)
             {
@@ -137,8 +140,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             create.AddVector3(position);
             create.AddInt(GetObservedEntity().levelObjectDataType);
             GameConsole.Log($"Asking for creation of {GetObservedEntity().levelObjectDataType}");
-            NetworkManager.instance.Server.SendToAll(create);
-            
+            for(int i = 0;i<4;i++)
+                if (requestCreationOn[i])
+                {
+                    NetworkManager.instance.Server.Send(create,(ushort)(i+1));
+                    existsOn[i] = true;
+                }
+
         }
         
         public virtual  void RequestRemoval()
@@ -146,7 +154,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Entity e = GetObservedEntity();
             Message remove = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.removeEntity);
             remove.AddInt(e.Identity);
-            NetworkManager.instance.Server.SendToAll(remove);
+            SendToExisting(remove);
         }
         
         public override void Process(int sender, string actionName, List<object> parameters, Message m = null)
@@ -156,7 +164,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (NetworkManager.instance.isOnServer)
             {
-                NetworkManager.instance.Server.SendToAll(m);
+                SendToExisting(m);
             }
         }
         

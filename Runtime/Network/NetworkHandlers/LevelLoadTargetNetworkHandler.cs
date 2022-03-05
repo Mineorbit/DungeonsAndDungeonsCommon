@@ -13,6 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelLoadTargetNetworkHandler : EntityNetworkHandler
     {
         public static bool existsOneLevelLoadTargetInClient;
+        private int target;
         public override void Awake()
         {
             disabled_observed = true;
@@ -27,6 +28,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 enabled = false;
                 return;
             }
+            
+            target = ((LevelLoadTarget) observed).mover.target.GetComponent<Player>().localId + 1;
+            for(int i = 0;i<4;i++)
+                existsOn[i] = false;
+            existsOn[target - 1] = true;
+            
             existsOneLevelLoadTargetInClient = true;
             Level.deleteLevelEvent.AddListener(ResetHandler);
         }
