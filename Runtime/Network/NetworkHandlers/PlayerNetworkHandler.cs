@@ -12,7 +12,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            GetObservedPlayer().controller.enabled = NetworkManager.instance.localId != -1;
+            //GetObservedPlayer().controller.enabled = (NetworkManager.instance.localId != -1);
+            GetObservedPlayer().controller.enabled = (NetworkManager.instance.localId == GetObservedPlayer().localId);
         }
 
 
