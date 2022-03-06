@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         GameConsole.Log($"Could not add property {info.PropertyType.Name} to package");
                     }
                 }
-                
+                GameConsole.Log($"Syncing Vars for {this}");
                 SendToExisting(syncVarMessage);
             
             }
@@ -127,42 +127,44 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             
             NetworkHandler n =  o.levelObjectNetworkHandler;
+            
+            GameConsole.Log($"Handling Vars for {n.gameObject}");
             try
             {
                 if(n != null)
                 {
-                foreach (var info in n.properties)
-                {
-                    object v = null;
-                if (info.PropertyType.FullName == "System.Boolean")
-                {
-                    v = value.GetBool();
-                }else
-                if (info.PropertyType.FullName == "UnityEngine.Vector3")
-                {
-                    v = value.GetVector3();
-                }else
-                if (info.PropertyType.FullName == "UnityEngine.Quaternion")
-                {
-                    v = value.GetQuaternion();
-                }else
-                if (info.PropertyType.FullName == "System.Int32")
-                {
-                    v = value.GetInt();
+                    foreach (var info in n.properties)
+                    {
+                        object v = null;
+                    if (info.PropertyType.FullName == "System.Boolean")
+                    {
+                        v = value.GetBool();
+                    }else
+                    if (info.PropertyType.FullName == "UnityEngine.Vector3")
+                    {
+                        v = value.GetVector3();
+                    }else
+                    if (info.PropertyType.FullName == "UnityEngine.Quaternion")
+                    {
+                        v = value.GetQuaternion();
+                    }else
+                    if (info.PropertyType.FullName == "System.Int32")
+                    {
+                        v = value.GetInt();
+                    }
+                    else
+                    {
+                        GameConsole.Log($"Could not parse value of {info} from varsync");
+                    }   
+                
+                    info.SetValue(n,v);
+                    }
+                
                 }
                 else
                 {
-                    GameConsole.Log($"Could not parse value of {info} from varsync");
+                    // GameConsole.Log($"Could not find {identity} for syncvar");
                 }
-                
-                info.SetValue(n,v);
-                }
-                
-            }
-            else
-            {
-               // GameConsole.Log($"Could not find {identity} for syncvar");
-            }
             }
             catch (Exception e)
             {
