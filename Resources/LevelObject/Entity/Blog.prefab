@@ -56,7 +56,6 @@ MonoBehaviour:
   currentSpeed: 0
   entity: {fileID: 0}
   lastSpeeds: []
-  isGrounded: 0
   me: {fileID: 736877002971563754}
   seenPlayer: {fileID: 0}
   lastSeenPlayer: {fileID: 0}
@@ -80,6 +79,7 @@ MonoBehaviour:
   levelObjectDataType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
+  levelObjectProperties: []
   levelObjectNetworkHandler: {fileID: 8870155796596675472}
   _Identity: 0
   identified: 0
@@ -106,7 +106,6 @@ MonoBehaviour:
   controller: {fileID: 736877002971563755}
   rigidbody: {fileID: 8825476872383111481}
   invincible: 0
-  loadTarget: {fileID: 0}
   itemHitbox: {fileID: 777858699230990378}
   itemsInProximity: []
   maxHealth: 125
@@ -122,8 +121,11 @@ MonoBehaviour:
   lastGrounded: 0
   isGrounded: 0
   heightRay: 0.25
+  speedY: 0
+  gravity: 1
   dazeKickbackDistance: 0.125
   minCooldownTime: 1
+  kickbackSpeed: 4
   viewDistance: 15
   attackDistance: 4
   forgetPlayer: 0
@@ -181,21 +183,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observed: {fileID: 987221561569911037}
+  existsOn: 01010101
   disabled_observed: 1
-  isSetup: 0
+  valueChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   owner: -1
-  targetPosition: {x: 0, y: 0, z: 0}
-  targetRotation: {x: 0, y: 0, z: 0}
   lastSentPosition: {x: 0, y: 0, z: 0}
   lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
-  teleportPosition: {x: 0, y: 0, z: 0}
-  transmitPosition: 1
-  interpolatePosition: 1
-  locomotionBlocks: 0
-  blockPosition: {x: 0, y: 0, z: 0}
-  receivedPosition: {x: 0, y: 0, z: 0}
+  requestCreationOn: 01010101
   sendAngle: 0.05
-  lastSentAimRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!143 &7117316245056143757
 CharacterController:
   m_ObjectHideFlags: 0
