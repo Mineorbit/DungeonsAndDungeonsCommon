@@ -33,10 +33,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             bombThrowReleaseEvent.Invoke();
         }
         
-        public PlayerController GetController()
-        {
-            return (PlayerController) entityController;
-        }
 
         public void SwapItem()
         {

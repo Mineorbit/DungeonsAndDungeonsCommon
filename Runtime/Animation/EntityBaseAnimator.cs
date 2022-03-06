@@ -9,7 +9,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Animator animator;
 
         public EntityAudioController entityAudioController;
-        public EntityController entityController;
         
         public float speed;
 
