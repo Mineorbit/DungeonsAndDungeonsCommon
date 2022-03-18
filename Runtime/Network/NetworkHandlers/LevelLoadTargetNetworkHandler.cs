@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
-        {{
+        {
             GameConsole.Log($"Received message of length: {m.UnreadLength}");
             receivedFragmentMessages.Enqueue(m);
         }
