@@ -45,10 +45,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         static List<String> receivedChunkFragments = new List<String>();
-        
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
-        public static void OnStreamChunk(Message m)
+
+        public void HandleChunkFragmentMessage(Message m)
         {
+            
             int chunkX = m.GetInt();
             int chunkY = m.GetInt();
             int chunkZ = m.GetInt();
@@ -58,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
             if (receivedChunkFragments.Contains(fragment))
             {
-                    GameConsole.Log($"ChunkFragment {fragment} was allready loaded once");
+                GameConsole.Log($"ChunkFragment {fragment} was allready loaded once");
                 return;
             }
             receivedChunkFragments.Add(fragment);
@@ -66,32 +66,40 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             byte[] data = m.GetBytes(isBigArray: true);
             Vector3 offset = new Vector3(chunkX * 8, chunkY * 8, chunkZ * 8);
             for(int x = 0;x<8;x++)
-                for(int y = 0;y<8;y++)
-                    for (int z = 0; z < 8; z++)
-                    {
-                    int i = 128*x+16*y+2*z;
-                    byte upper = data[i];
-                    byte lower = data[i + 1];
+            for(int y = 0;y<8;y++)
+            for (int z = 0; z < 8; z++)
+            {
+                int i = 128*x+16*y+2*z;
+                byte upper = data[i];
+                byte lower = data[i + 1];
                     
-                    byte upper2 = (byte) ((byte) (upper & 0x3f));
-                    ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
-                    int rot = upper >> 6;
-                    int code = 256*upper2 + lower;
-                        if(code != 0){
-                        Vector3 inSubPartOffset = new Vector3(4*inChunkX+ 0.5f*x,4*inChunkY+0.5f*y,4*inChunkZ+0.5f*z);
-                        Vector3 pos = offset + inSubPartOffset;
-                        Build b = new Build
-                        {
-                            code = code,
-                            position = pos,
-                            rotation = rot
-                        };
-                        toBuild.Enqueue(b);
-                        }
-                    }
-            
+                byte upper2 = (byte) ((byte) (upper & 0x3f));
+                ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
+                int rot = upper >> 6;
+                int code = 256*upper2 + lower;
+                if(code != 0){
+                    Vector3 inSubPartOffset = new Vector3(4*inChunkX+ 0.5f*x,4*inChunkY+0.5f*y,4*inChunkZ+0.5f*z);
+                    Vector3 pos = offset + inSubPartOffset;
+                    Build b = new Build
+                    {
+                        code = code,
+                        position = pos,
+                        rotation = rot
+                    };
+                    toBuild.Enqueue(b);
+                }
+            }
+
+        }
+        
+        
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
+        public static void OnStreamChunk(Message m)
+        {
+            receivedFragmentMessages.Enqueue(m);
         }
 
+        private static Queue<Message> receivedFragmentMessages = new Queue<Message>();
         private static Queue<Build> toBuild = new Queue<Build>();
         struct Build
         {
@@ -106,7 +114,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.FixedUpdate();
             //targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
 
+            HandleFragments();
             BuildFromQueue();
+        }
+
+        public void HandleFragments()
+        {
+            if (receivedFragmentMessages.Count > 0)
+            {
+                HandleChunkFragmentMessage(receivedFragmentMessages.Dequeue());
+            }
         }
 
         public void BuildFromQueue()
