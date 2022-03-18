@@ -58,7 +58,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
             if (receivedChunkFragments.Contains(fragment))
             {
-                GameConsole.Log($"ChunkFragment {fragment} was allready loaded once");
+                GameConsole.Log($"ChunkFragment {fragment} was already loaded once");
                 return;
             }
             receivedChunkFragments.Add(fragment);
@@ -95,7 +95,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
-        {
+        {{
+            GameConsole.Log($"Received message of length: {m.UnreadLength}");
             receivedFragmentMessages.Enqueue(m);
         }
 
@@ -179,9 +180,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     for(int k = 0; k < 2;k++)
                     {
                         Message message = Message.Create(MessageSendMode.reliable,(ushort)NetworkManager.ServerToClientId.streamChunk);
-                        message.AddInt( (int)chunk.transform.position.x / 8);
-                        message.AddInt( (int)chunk.transform.position.y / 8);
-                        message.AddInt( (int)chunk.transform.position.z / 8);
+                        var position = chunk.transform.position;
+                        message.AddInt( (int)position.x / 8);
+                        message.AddInt( (int)position.y / 8);
+                        message.AddInt( (int)position.z / 8);
                         message.AddShort((byte) i);
                         message.AddShort((byte) j);
                         message.AddShort((byte) k);
@@ -196,11 +198,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
                     }
 
-            int target = ((LevelLoadTarget) observed).mover.target.GetComponent<Player>().localId + 1;
+            int targetLocalId = ((LevelLoadTarget) observed).mover.target.GetComponent<Player>().localId + 1;
             foreach (Message m in messages)
             {
-                NetworkManager.instance.Server.Send(m,(ushort) target);
-            }
+                GameConsole.Log($"Sent message of length: {m.WrittenLength}");
+                NetworkManager.instance.Server.Send(m,(ushort) targetLocalId);
+            };
+            
         }
 
         
