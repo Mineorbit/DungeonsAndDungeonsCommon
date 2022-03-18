@@ -109,12 +109,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private int targetLocalId = 0;
+        private static int amountOfFragments = 4;
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             //targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
-
-            HandleFragments();
+            for(int i = 0; i < amountOfFragments; i++) 
+                HandleFragments();
             BuildFromQueue();
         }
 
