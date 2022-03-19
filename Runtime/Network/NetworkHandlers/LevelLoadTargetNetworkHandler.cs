@@ -52,9 +52,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int chunkX = m.GetInt();
             int chunkY = m.GetInt();
             int chunkZ = m.GetInt();
-            int inChunkX = m.GetShort();
-            int inChunkY = m.GetShort();
-            int inChunkZ = m.GetShort();
+            int inChunkX = m.GetByte();
+            int inChunkY = m.GetByte();
+            int inChunkZ = m.GetByte();
             string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
             if (receivedChunkFragments.Contains(fragment))
             {
@@ -184,9 +184,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         message.AddInt( (int)position.x / 8);
                         message.AddInt( (int)position.y / 8);
                         message.AddInt( (int)position.z / 8);
-                        message.AddShort((byte) i);
-                        message.AddShort((byte) j);
-                        message.AddShort((byte) k);
+                        message.AddByte((byte) i);
+                        message.AddByte((byte) j);
+                        message.AddByte((byte) k);
                         byte[] data = new byte[1024];
                         for (int h = 0; h < 1024; h++)
                         {

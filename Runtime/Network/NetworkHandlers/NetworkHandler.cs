@@ -95,7 +95,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         GameConsole.Log($"Could not add property {info.PropertyType.Name} to package");
                     }
                 }
-                GameConsole.Log($"Syncing Vars for {this}");
+                //GameConsole.Log($"Syncing Vars for {this}");
                 SendToExisting(syncVarMessage);
             
             }
@@ -128,7 +128,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             NetworkHandler n =  o.levelObjectNetworkHandler;
             
-            GameConsole.Log($"Handling Vars for {n.gameObject}");
+            //GameConsole.Log($"Handling Vars for {n.gameObject}");
             try
             {
                 if(n != null)
