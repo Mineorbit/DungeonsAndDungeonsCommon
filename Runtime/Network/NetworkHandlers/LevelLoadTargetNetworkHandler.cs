@@ -43,6 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.ResetHandler();
             receivedChunkFragments.Clear();
+            receivedChunkDataFragments.Clear();
         }
         
         static List<String> receivedChunkFragments = new List<String>();
