@@ -61,7 +61,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             winRound,
             prepareRound,
             setProperty,
-            entityState
+            entityState,
+            lobbyUpdate
         }
 
         public enum ClientToServerId : ushort
