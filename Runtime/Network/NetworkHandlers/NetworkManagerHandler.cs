@@ -52,9 +52,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnLobbyRequestUpdate(Message m)
         {
 
-            LevelMetaData metaData = new LevelMetaData();
-            metaData.UniqueLevelId = m.GetLong();
-            GameConsole.Log($"Selected Level: {metaData}");
+            LevelMetaData metaData = new LevelMetaData
+            {
+                UniqueLevelId = m.GetLong()
+            };
             NetworkManager.lobbyRequestEvent.Invoke(metaData);
 
         }
@@ -62,16 +63,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void RequestReadyRound()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyRound);
-
             m.AddBool(NetworkManager.instance.ready);
-            GameConsole.Log($"Sending {m}");
             NetworkManager.instance.Client.Send(m);
         }
 
         public static void RequestReadyLobby()
         {
-            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ClientToServerId.readyLobby);
-            m.AddInt(NetworkManager.instance.localId);
+            Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.readyLobby);
             NetworkManager.instance.Client.Send(m);
         }
 
@@ -80,12 +78,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (NetworkManager.instance.isOnServer)
             {
-                int localId = m.GetInt(); 
+                int localId = id + 1; 
                 Vector3 location = new Vector3(localId * 8, 6, 0);
                 GameConsole.Log($"Teleporting {localId} to {location}");
                 PlayerManager.playerManager.SpawnPlayer(localId, location);
             }
         }
+        
+        /*
 
         [MessageHandler((ushort)NetworkManager.ClientToServerId.readyLobby)]
         public static void OnReadyLobby(Message m)
@@ -98,6 +98,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 PlayerManager.playerManager.SpawnPlayer(localId, location);
             }
         }
+        */
 
         public static void RequestPrepareRound(LevelMetaData metaData)
         {
