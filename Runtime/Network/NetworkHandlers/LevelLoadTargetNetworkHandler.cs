@@ -121,44 +121,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int inChunkY = m.GetByte();
             int inChunkZ = m.GetByte();
             byte[] data = m.GetBytes(1024);
-            string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
-            GameConsole.Log($"Got Fragment {fragment}");
-            if (receivedChunkFragments.Contains(fragment))
-            {
-                GameConsole.Log($"ChunkFragment {fragment} was already loaded once");
-                return;
-            }
             
-            receivedChunkFragments.Add(fragment);
             
-            Vector3 offset = new Vector3(chunkX * 8, chunkY * 8, chunkZ * 8);
-            for(int x = 0;x<8;x++)
-            for(int y = 0;y<8;y++)
-            for (int z = 0; z < 8; z++)
-            {
-                int i = 128*x+16*y+2*z;
-                byte upper = data[i];
-                byte lower = data[i + 1];
-                    
-                byte upper2 = (byte) ((byte) (upper & 0x3f));
-                ushort elementType = (ushort) ( ((int) upper2) * 256 + (int)lower);
-                int rot = upper >> 6;
-                int code = 256*upper2 + lower;
-                if(code != 0){
-                    Vector3 inSubPartOffset = new Vector3(4*inChunkX+ 0.5f*x,4*inChunkY+0.5f*y,4*inChunkZ+0.5f*z);
-                    Vector3 pos = offset + inSubPartOffset;
-                    Build b = new Build
-                    {
-                        code = code,
-                        position = pos,
-                        rotation = rot
-                    };
-                    toBuild.Enqueue(b);
-                }
-            }
-
             
-            /*
             ChunkFragmentData d = new ChunkFragmentData
             {
                 x = chunkX,
@@ -168,10 +133,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 iny = inChunkY,
                 inz = inChunkZ,
             };
-            d.fragmentData = new byte[1024];
+            d.fragmentData = data;
             GameConsole.Log($"Received Fragment {d}");
-            //receivedChunkDataFragments.Enqueue(d);
-            */
+            receivedChunkDataFragments.Enqueue(d);
+            
         }
 
         private static Queue<Build> toBuild = new Queue<Build>();
