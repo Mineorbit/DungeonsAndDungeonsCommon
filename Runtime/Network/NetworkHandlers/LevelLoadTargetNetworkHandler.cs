@@ -47,7 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         static List<String> receivedChunkFragments = new List<String>();
 
-        public static void HandleChunkFragmentMessage(ChunkFragmentData m)
+        public void HandleChunkFragmentMessage(ChunkFragmentData m)
         {
             int chunkX = m.x;
             int chunkY = m.y;
