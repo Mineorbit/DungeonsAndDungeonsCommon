@@ -37,18 +37,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnLobbyRequestUpdate(ushort id, Message m)
         {
 
+            int localId = id + 1;
             LevelMetaData metaData = new LevelMetaData();
             metaData.UniqueLevelId = m.GetLong();
-            GameConsole.Log($"Selected Level: {metaData}");
+            
+            Message answer = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.lobbyUpdate);
+
+            GameConsole.Log($"{localId} selected Level: {metaData}");
             if (NetworkManager.instance.isOnServer)
             {
-                NetworkManager.instance.Server.SendToAll(m);
+                NetworkManager.instance.Server.SendToAll(answer);
             }
             NetworkManager.lobbyRequestEvent.Invoke(metaData);
 
         }
         
-        [MessageHandler((ushort)NetworkManager.ClientToServerId.lobbyUpdate)] 
+        [MessageHandler((ushort)NetworkManager.ServerToClientId.lobbyUpdate)] 
         public static void OnLobbyRequestUpdate(Message m)
         {
 
