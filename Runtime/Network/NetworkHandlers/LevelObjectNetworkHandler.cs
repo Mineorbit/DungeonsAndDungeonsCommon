@@ -111,7 +111,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         // CALLABLE METHODS MUST BE MARKED PUBLIC TO BE USABLE
-        [MessageHandler((ushort)NetworkManager.ServerToClientId.processAction)]
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.processAction)]
         public static void ProcessAction(ushort id,Message m)
         {
             GameConsole.Log("Received Action");
@@ -174,8 +174,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             
             
-            Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
+            Message actionM;
 
+            if (NetworkManager.instance.isOnServer)
+            { 
+                actionM  = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
+            }
+            else
+            {
+                actionM  = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.processAction);
+            }
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);

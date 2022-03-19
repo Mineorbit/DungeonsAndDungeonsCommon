@@ -70,6 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playerInput,
             readyLobby,
             lobbyUpdate,
+            processAction
         }
 
         private void Awake()
