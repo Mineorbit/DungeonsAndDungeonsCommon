@@ -46,9 +46,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         static List<String> receivedChunkFragments = new List<String>();
 
-        public void HandleChunkFragmentMessage(Message m)
+        public static void HandleChunkFragmentMessage(Message m)
         {
-            
             int chunkX = m.GetInt();
             int chunkY = m.GetInt();
             int chunkZ = m.GetInt();
@@ -56,13 +55,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int inChunkY = m.GetByte();
             int inChunkZ = m.GetByte();
             string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
+            GameConsole.Log($"Got Fragment {fragment}");
             if (receivedChunkFragments.Contains(fragment))
             {
                 GameConsole.Log($"ChunkFragment {fragment} was already loaded once");
                 return;
             }
+            
             receivedChunkFragments.Add(fragment);
-
             
             byte[] data = m.GetBytes(1024);
             Vector3 offset = new Vector3(chunkX * 8, chunkY * 8, chunkZ * 8);
@@ -98,7 +98,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnStreamChunk(Message m)
         {
             GameConsole.Log($"Received message of length: {m.UnreadLength}");
-            receivedFragmentMessages.Enqueue(m);
+            HandleChunkFragmentMessage(m);
         }
 
         private static Queue<Message> receivedFragmentMessages = new Queue<Message>();
