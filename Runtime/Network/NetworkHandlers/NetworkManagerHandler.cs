@@ -20,7 +20,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.winRound);
             NetworkManager.instance.Server.SendToAll(m);
         }
+
+        public static void UpdatePlayerConfig(string playerName)
+        {
+            Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.playerConfig);
+            m.AddString(playerName);
+            NetworkManager.instance.Client.Send(m); 
+        }
+
+        [MessageHandler((ushort) NetworkManager.ClientToServerId.playerConfig)]
+        public static void OnPlayerConfigUpdate(ushort id, Message m)
+        {
+            int localId = id - 1;
+            string name = m.GetString();
+            PlayerManager.playerManager.players[localId].playerName = name;
+        }
         
+
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
         {
 
@@ -34,7 +50,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static void OnLobbyRequestUpdate(ushort id, Message m)
         {
 
-            int localId = id + 1;
+            int localId = id - 1;
             LevelMetaData metaData = new LevelMetaData
             {
                 UniqueLevelId = m.GetLong()
@@ -81,7 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if (NetworkManager.instance.isOnServer)
             {
-                int localId = id + 1; 
+                int localId = id - 1; 
                 Vector3 location = new Vector3(localId * 8, 6, 0);
                 GameConsole.Log($"Teleporting {localId} to {location}");
                 PlayerManager.playerManager.SpawnPlayer(localId, location);
