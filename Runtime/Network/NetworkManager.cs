@@ -49,27 +49,27 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public enum ServerToClientId : ushort
         {
-            processAction = 1,
-            readyRound = 2,
-            removeEntity = 3,
-            createEntity = 4,
-            streamChunk = 5,
-            removePlayer = 6,
-            createPlayer = 7,
-            syncVar = 8,
-            startRound = 9,
-            winRound = 10,
-            prepareRound = 11,
-            setProperty = 12,
-            entityState = 13
+            processAction,
+            readyRound,
+            removeEntity,
+            createEntity,
+            streamChunk,
+            removePlayer,
+            createPlayer,
+            syncVar,
+            startRound,
+            winRound,
+            prepareRound,
+            setProperty,
+            entityState
         }
 
         public enum ClientToServerId : ushort
         {
-            readyRound = 12,
-            playerInput = 13,
-            readyLobby = 14,
-            lobbyUpdate  = 15,
+            readyRound,
+            playerInput,
+            readyLobby,
+            lobbyUpdate,
         }
 
         private void Awake()
