@@ -21,10 +21,38 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GetObservedPlayer().controller.enabled = (NetworkManager.instance.localId == GetObservedPlayer().localId);
             
             if(!NetworkManager.instance.isOnServer && NetworkManager.instance.localId == ((Player)observed).localId)
-                NetworkManagerHandler.UpdatePlayerConfig(NetworkManager.userName);
+                UpdatePlayerConfig(NetworkManager.userName);
         }
 
 
+        
+        public static void UpdatePlayerConfig(string playerName)
+        {
+            Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.playerConfig);
+            m.AddString(playerName);
+            NetworkManager.instance.Client.Send(m); 
+        }
+
+        [MessageHandler((ushort) NetworkManager.ClientToServerId.playerConfig)]
+        public static void OnPlayerConfigUpdate(ushort id, Message m)
+        {
+            int localId = id - 1;
+            string name = m.GetString();
+            PlayerManager.playerManager.players[localId].playerName = name;
+            Message answer = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.playerConfig);
+            answer.AddByte((byte)localId);
+            answer.AddString(name);
+            NetworkManager.instance.Server.SendToAll(answer);
+        }
+        
+        [MessageHandler((ushort) NetworkManager.ServerToClientId.playerConfig)]
+        public static void OnPlayerConfigUpdate(Message m)
+        {
+            int localId = m.GetByte();
+            string name = m.GetString();
+            PlayerManager.playerManager.players[localId].playerName = name;
+        }
+        
         public Player GetObservedPlayer()
         {
             return (Player) observed;
