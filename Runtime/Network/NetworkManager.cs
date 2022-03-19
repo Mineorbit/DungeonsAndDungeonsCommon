@@ -218,7 +218,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 userName = playerName;
                 Client.Connect($"{ip}:13565");
                 GameConsole.Log($"Set new client {Client}");
-                NetworkManagerHandler.UpdatePlayerConfig(userName);
             }
         }
 

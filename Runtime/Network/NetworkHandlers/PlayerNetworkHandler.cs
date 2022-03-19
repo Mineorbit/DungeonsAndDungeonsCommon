@@ -19,6 +19,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Start(); 
             GetObservedPlayer().controller.enabled = (NetworkManager.instance.localId == GetObservedPlayer().localId);
+            
+            if(!NetworkManager.instance.isOnServer && NetworkManager.instance.localId == ((Player)observed).localId)
+                NetworkManagerHandler.UpdatePlayerConfig(NetworkManager.userName);
         }
 
 
