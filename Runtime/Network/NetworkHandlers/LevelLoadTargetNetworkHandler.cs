@@ -129,8 +129,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 inx = inChunkX,
                 iny = inChunkY,
                 inz = inChunkZ,
-                data = dat
             };
+            dat.CopyTo(d.data,0);
             GameConsole.Log($"Received Fragment {d}");
             receivedChunkDataFragments.Enqueue(d);
         }
