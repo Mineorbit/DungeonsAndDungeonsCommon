@@ -176,14 +176,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             Message actionM;
 
-            if (NetworkManager.instance.isOnServer)
-            { 
-                actionM  = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
-            }
-            else
-            {
-                actionM  = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.processAction);
-            }
+            actionM = NetworkManager.instance.isOnServer ? Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction) : Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.processAction);
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
