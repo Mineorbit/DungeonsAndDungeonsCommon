@@ -68,6 +68,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public enum ClientToServerId : ushort
         {
             readyRound,
+            playerConfig,
             playerInput,
             readyLobby,
             lobbyUpdate,
@@ -217,6 +218,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 userName = playerName;
                 Client.Connect($"{ip}:13565");
                 GameConsole.Log($"Set new client {Client}");
+                NetworkManagerHandler.UpdatePlayerConfig(userName);
             }
         }
 
