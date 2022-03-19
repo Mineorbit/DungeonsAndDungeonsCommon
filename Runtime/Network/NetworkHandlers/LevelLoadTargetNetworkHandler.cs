@@ -201,7 +201,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int targetLocalId = ((LevelLoadTarget) observed).mover.target.GetComponent<Player>().localId + 1;
             foreach (Message m in messages)
             {
-                GameConsole.Log($"Sent message of length: {m.WrittenLength}");
+                GameConsole.Log($"Sent message of length: {m.UnreadLength}");
                 NetworkManager.instance.Server.Send(m,(ushort) targetLocalId);
             };
             
