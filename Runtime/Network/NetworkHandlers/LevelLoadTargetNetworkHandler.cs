@@ -120,7 +120,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int inChunkX = m.GetByte();
             int inChunkY = m.GetByte();
             int inChunkZ = m.GetByte();
-            byte[] data = m.GetBytes(1024);
+            byte[] dat = m.GetBytes(1024);
             ChunkFragmentData d = new ChunkFragmentData
             {
                 x = chunkX,
@@ -128,7 +128,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 z = chunkZ,
                 inx = inChunkX,
                 iny = inChunkY,
-                inz = inChunkZ
+                inz = inChunkZ,
+                data = dat
             };
             receivedChunkDataFragments.Enqueue(d);
         }
