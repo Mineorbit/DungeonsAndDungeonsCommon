@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Google.Protobuf;
 using NetLevel;
+using PlasticPipe.Server;
 using RiptideNetworking;
 using UnityEngine;
 
@@ -46,14 +47,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         static List<String> receivedChunkFragments = new List<String>();
 
-        public static void HandleChunkFragmentMessage(Message m)
+        public static void HandleChunkFragmentMessage(ChunkFragmentData m)
         {
-            int chunkX = m.GetInt();
-            int chunkY = m.GetInt();
-            int chunkZ = m.GetInt();
-            int inChunkX = m.GetByte();
-            int inChunkY = m.GetByte();
-            int inChunkZ = m.GetByte();
+            int chunkX = m.x;
+            int chunkY = m.y;
+            int chunkZ = m.z;
+            int inChunkX = m.inx;
+            int inChunkY = m.iny;
+            int inChunkZ = m.inz;
+            byte[] data = m.data;
             string fragment = $"{chunkX}|{chunkY}|{chunkZ}|{inChunkX}|{inChunkY}|{inChunkZ}";
             GameConsole.Log($"Got Fragment {fragment}");
             if (receivedChunkFragments.Contains(fragment))
@@ -64,7 +66,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             receivedChunkFragments.Add(fragment);
             
-            byte[] data = m.GetBytes(1024);
             Vector3 offset = new Vector3(chunkX * 8, chunkY * 8, chunkZ * 8);
             for(int x = 0;x<8;x++)
             for(int y = 0;y<8;y++)
@@ -92,16 +93,46 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
         }
+
+
+        public struct ChunkFragmentData
+        {
+            public int x;
+            public int y;
+            public int z;
+            public int inx;
+            public int iny;
+            public int inz;
+
+            public byte[] data;
+        }
         
-        
+        private static Queue<ChunkFragmentData> receivedChunkDataFragments = new Queue<ChunkFragmentData>();
+
         [MessageHandler((ushort)NetworkManager.ServerToClientId.streamChunk)]
         public static void OnStreamChunk(Message m)
         {
-            GameConsole.Log($"Received message of length: {m.UnreadLength}");
-            HandleChunkFragmentMessage(m);
+            
+            
+            int chunkX = m.GetInt();
+            int chunkY = m.GetInt();
+            int chunkZ = m.GetInt();
+            int inChunkX = m.GetByte();
+            int inChunkY = m.GetByte();
+            int inChunkZ = m.GetByte();
+            byte[] data = m.GetBytes(1024);
+            ChunkFragmentData d = new ChunkFragmentData
+            {
+                x = chunkX,
+                y = chunkY,
+                z = chunkZ,
+                inx = inChunkX,
+                iny = inChunkY,
+                inz = inChunkZ
+            };
+            receivedChunkDataFragments.Enqueue(d);
         }
 
-        private static Queue<Message> receivedFragmentMessages = new Queue<Message>();
         private static Queue<Build> toBuild = new Queue<Build>();
         struct Build
         {
@@ -123,9 +154,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void HandleFragments()
         {
-            if (receivedFragmentMessages.Count > 0)
+            if (receivedChunkFragments.Count > 0)
             {
-                HandleChunkFragmentMessage(receivedFragmentMessages.Dequeue());
+                HandleChunkFragmentMessage(receivedChunkDataFragments.Dequeue());
             }
         }
 
