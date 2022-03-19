@@ -44,6 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.ResetHandler();
             receivedChunkFragments.Clear();
             receivedChunkDataFragments.Clear();
+            toBuild.Clear();
         }
         
         static List<String> receivedChunkFragments = new List<String>();
@@ -154,9 +155,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.FixedUpdate();
             //targetLocalId = ((LevelLoadTarget) GetObserved()).mover.target.GetComponent<Player>().localId;
-            for(int i = 0; i < amountOfFragments; i++) 
-                HandleFragments();
-            BuildFromQueue();
+            if (Level.instantiateType == Level.InstantiateType.Online || Level.instantiateType == Level.InstantiateType.Play)
+            {
+                for(int i = 0; i < amountOfFragments; i++) 
+                    HandleFragments();
+                BuildFromQueue();
+            }
+            else
+            {
+                receivedChunkFragments.Clear();
+                receivedChunkDataFragments.Clear();
+                toBuild.Clear();
+            }
         }
 
         public void HandleFragments()
