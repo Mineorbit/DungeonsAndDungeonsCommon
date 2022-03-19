@@ -38,11 +38,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
 
             int localId = id + 1;
-            LevelMetaData metaData = new LevelMetaData();
-            metaData.UniqueLevelId = m.GetLong();
-            
-            Message answer = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.lobbyUpdate);
+            LevelMetaData metaData = new LevelMetaData
+            {
+                UniqueLevelId = m.GetLong()
+            };
 
+            Message answer = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.lobbyUpdate);
+            answer.AddLong(metaData.UniqueLevelId);
             GameConsole.Log($"{localId} selected Level: {metaData}");
             if (NetworkManager.instance.isOnServer)
             {
