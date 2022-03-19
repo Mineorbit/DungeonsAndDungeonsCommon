@@ -171,12 +171,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // THIS NEEDS TO PACK ARGUMENTS INTO ANY
         public virtual void SendAction(string actionName, object argument)
         {
-            
-            
-            
-            Message actionM;
-
-            actionM = NetworkManager.instance.isOnServer ? Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction) : Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.processAction);
+            GameConsole.Log($"Sending Action {NetworkManager.instance.isOnServer}");
+            var actionM = NetworkManager.instance.isOnServer ? Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction) : Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.processAction);
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
@@ -277,9 +273,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void SendAction(string actionName)
         {
-            Message actionM = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction);
-
-            
+            Message actionM = NetworkManager.instance.isOnServer ? Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.processAction) : Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.processAction);
             actionM.AddInt(((NetworkLevelObject)GetObserved()).Identity);
             actionM.AddInt(NetworkManager.instance.localId);
             actionM.AddString(actionName);
