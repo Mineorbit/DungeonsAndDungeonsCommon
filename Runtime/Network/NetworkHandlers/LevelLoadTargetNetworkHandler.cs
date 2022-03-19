@@ -195,7 +195,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void HandleFragments()
         {
-            if (receivedChunkFragments.Count > 0)
+            if (receivedChunkDataFragments.Count > 0)
             {
                 HandleChunkFragmentMessage(receivedChunkDataFragments.Dequeue());
             }
