@@ -64,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             receivedChunkFragments.Add(fragment);
 
             
-            byte[] data = m.GetBytes(isBigArray: true);
+            byte[] data = m.GetBytes(1024);
             Vector3 offset = new Vector3(chunkX * 8, chunkY * 8, chunkZ * 8);
             for(int x = 0;x<8;x++)
             for(int y = 0;y<8;y++)
@@ -194,7 +194,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             data[h] = datas[i, j, k, h];
                            //message.AddByte(datas[i, j, k, h]);
                         }
-                        message.AddBytes(data,isBigArray:true);
+                        message.AddBytes(data,false);
                         //GameConsole.Log($"Bytes: {PrintByteArray(data)}");
                         messages.Add(message);
             
