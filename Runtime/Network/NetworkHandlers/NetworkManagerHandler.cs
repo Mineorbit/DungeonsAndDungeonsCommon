@@ -21,20 +21,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManager.instance.Server.SendToAll(m);
         }
 
-        public static void UpdatePlayerConfig(string playerName)
-        {
-            Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.playerConfig);
-            m.AddString(playerName);
-            NetworkManager.instance.Client.Send(m); 
-        }
-
-        [MessageHandler((ushort) NetworkManager.ClientToServerId.playerConfig)]
-        public static void OnPlayerConfigUpdate(ushort id, Message m)
-        {
-            int localId = id - 1;
-            string name = m.GetString();
-            PlayerManager.playerManager.players[localId].playerName = name;
-        }
         
 
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
