@@ -9,9 +9,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkManagerHandler : NetworkHandler
     {
-
-
-
         public static void RequestStartRound()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.startRound);
