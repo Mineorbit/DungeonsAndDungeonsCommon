@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: Lever
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 337420626772665352, guid: 9c8bd4cf871eb0b4bbc599ad5ba60f0c, type: 3}
   uniqueLevelObjectId: 26
-  granularity: 0
+  granularity: 1
   levelObjectName: Lever
   dynamicInstantiable: 0
   levelInstantiable: 1
@@ -22,6 +22,8 @@ MonoBehaviour:
   Buildable: 1
   inLevel: 1
   cursorMesh: {fileID: 0}
+  elementType: 7
+  properties: []
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
