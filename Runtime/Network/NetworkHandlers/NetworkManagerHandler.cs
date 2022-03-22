@@ -9,6 +9,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkManagerHandler : NetworkHandler
     {
+        
+        
+        [PacketBinding.SyncVar]
+        public float time {get;set;}
+        
         public static void RequestStartRound()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.startRound);
@@ -21,6 +26,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManager.instance.Server.SendToAll(m);
         }
 
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if (NetworkManager.instance.isOnServer)
+            {
+                time = Logic.time;
+            }
+        }
         
 
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)

@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool running;
         public int sceneIndex;
 
-        public float time;
+        public static float time;
 
         public void FixedUpdate()
         {
