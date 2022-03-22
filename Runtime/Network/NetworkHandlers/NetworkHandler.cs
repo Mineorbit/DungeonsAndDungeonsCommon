@@ -89,6 +89,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (info.PropertyType.FullName == "System.Int32")
                     {
                         syncVarMessage.AddInt((int)info.GetValue(this));
+                    }else
+                    if (info.PropertyType.FullName == "System.Single")
+                    {
+                        syncVarMessage.AddFloat((float)info.GetValue(this));
                     }
                     else
                     {
@@ -151,6 +155,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     if (info.PropertyType.FullName == "System.Int32")
                     {
                         v = value.GetInt();
+                    }else
+                    if (info.PropertyType.FullName == "System.Single")
+                    {
+                        v = value.GetFloat();
                     }
                     else
                     {
