@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using Google.Protobuf;
 using NetLevel;
 using RiptideNetworking;
@@ -13,7 +14,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         [PacketBinding.SyncVar]
         public float time {get;set;}
-        
+
+        public static NetworkManagerHandler instance;
+
+        public override void Awake()
+        {
+            base.Awake();
+            if (instance != null)
+            {
+                Destroy(this);
+            }
+            instance = this;
+        }
+
         public static void RequestStartRound()
         {
             Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.startRound);
