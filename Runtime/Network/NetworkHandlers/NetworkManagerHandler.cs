@@ -10,10 +10,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class NetworkManagerHandler : NetworkHandler
     {
-        
-        
-        [PacketBinding.SyncVar]
-        public float time {get;set;}
+
+
 
         public static NetworkManagerHandler instance;
 
@@ -24,18 +22,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 Destroy(this);
             }
+
             instance = this;
         }
 
         public static void RequestStartRound()
         {
-            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.startRound);
+            Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.startRound);
             NetworkManager.instance.Server.SendToAll(m);
         }
 
         public static void RequestWinRound()
         {
-            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.winRound);
+            Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ServerToClientId.winRound);
             NetworkManager.instance.Server.SendToAll(m);
         }
 
@@ -45,10 +44,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.FixedUpdate();
             if (NetworkManager.instance.isOnServer)
             {
-                time = Logic.time;
+                SendTime();
             }
         }
-        
+
+        public static float time;
+
+        [MessageHandler((ushort) NetworkManager.ServerToClientId.updateTime)]
+        public static void OnTime(Message m)
+        {
+            time = m.GetFloat();
+        }
+
+
+        public static void SendTime()
+        {
+            Message m = Message.Create(MessageSendMode.unreliable, (ushort) NetworkManager.ServerToClientId.updateTime);
+            m.AddFloat(Logic.time);
+            NetworkManager.instance.Server.SendToAll(m);
+        }
 
         public static void RequestLobbyUpdate(LevelMetaData selectedLevel)
         {
