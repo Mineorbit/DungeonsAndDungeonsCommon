@@ -7,7 +7,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class DestructibleLevelObject : NetworkLevelObject
     {
 
-        public virtual void Destroy(Vector3 origin, float realDamage)
+        public virtual void Destroy()
         {
             
         }

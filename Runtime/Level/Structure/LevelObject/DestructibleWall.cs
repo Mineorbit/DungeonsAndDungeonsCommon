@@ -17,6 +17,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             wallCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
             for(int i = 0; i < wallSegments.Length; i++ )
             {
+                wallSegments[i].isKinematic = true;
+                wallSegments[i].useGravity = false;
                 wallSegments[i].transform.localPosition = positions[i];
                 wallSegments[i].transform.localRotation = Quaternion.Euler(-90,0,0);
             }
@@ -38,13 +40,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             wallCollider.enabled = false;
         }
         
-        public override void Destroy(Vector3 origin, float realDamage)
+        public override void Destroy()
         {
             wallCollider.enabled = false;
-            foreach (Rigidbody rigidbody in wallSegments)
-            {
-                rigidbody.AddExplosionForce(realDamage,origin,realDamage);
-            }
+            
         }
     }
 
