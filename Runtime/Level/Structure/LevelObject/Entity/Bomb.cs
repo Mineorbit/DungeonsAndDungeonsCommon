@@ -33,10 +33,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 GameConsole.Log($"R {collider}");
                 
                 Entity enemy = collider.GetComponent<Entity>();
+                float t = ((collider.transform.position - transform.position).magnitude / explosionRadius);
+                
+                float realDamage = explosionDamage*(1-t);
+                
                 
                 if (enemy != null && enemy != this)
                 {
-                    enemy.Hit(this,explosionDamage);
+                    enemy.Hit(this,(int)realDamage);
+                }
+
+                DestructibleLevelObject levelObject = collider.GetComponentInParent<DestructibleLevelObject>();
+                if (levelObject != null && levelObject != this)
+                {
+                    levelObject.Destroy(transform.position,realDamage);
                 }
             }
             Kill(); 

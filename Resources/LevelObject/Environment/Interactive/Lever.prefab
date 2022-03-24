@@ -93,6 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 337420626772665353}
   - component: {fileID: 6066296649637101033}
+  - component: {fileID: 5386119008437345124}
+  - component: {fileID: 8622685313139621277}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -128,6 +130,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 4, z: 2}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &5386119008437345124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337420626772665352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7d98bdc29d0a349aa1733bf9f77ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelObjectDataType: 0
+  isDynamic: 0
+  ActivateWhenInactive: 0
+  levelObjectProperties: []
+  levelObjectNetworkHandler: {fileID: 8622685313139621277}
+  _Identity: 0
+  identified: 0
+  inBoundWires: []
+  outBoundWires: []
+  activeIn: 0
+--- !u!114 &8622685313139621277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337420626772665352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  observed: {fileID: 5386119008437345124}
+  existsOn: 01010101
+  disabled_observed: 1
+  valueChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &337420626995292047
 GameObject:
   m_ObjectHideFlags: 0
