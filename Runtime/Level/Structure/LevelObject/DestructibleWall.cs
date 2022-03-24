@@ -14,9 +14,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
+            destroyed = false;
             wallCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
             for(int i = 0; i < wallSegments.Length; i++ )
             {
+                wallSegments[i].gameObject.SetActive(true);
                 wallSegments[i].isKinematic = true;
                 wallSegments[i].useGravity = false;
                 wallSegments[i].transform.localPosition = positions[i];
@@ -39,11 +41,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.OnStartRound();
             wallCollider.enabled = false;
         }
+
+        public void ClearSegments()
+        {
+            foreach (var segment in wallSegments)
+            {
+             segment.gameObject.SetActive(false);
+            }
+        }
+
+        public float clearTime = 10;
         
         public override void Destroy()
         {
-            wallCollider.enabled = false;
-            
+            if(!destroyed)
+            {
+                destroyed = true;
+                base.Destroy();
+                wallCollider.enabled = false;
+                Invoke("ClearSegments",clearTime);
+            }
         }
     }
 

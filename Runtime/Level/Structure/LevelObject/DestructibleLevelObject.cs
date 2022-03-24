@@ -6,7 +6,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class DestructibleLevelObject : NetworkLevelObject
     {
-
+        public bool destroyed = false;
         public virtual void Destroy()
         {
             

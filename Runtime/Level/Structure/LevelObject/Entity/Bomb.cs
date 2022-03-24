@@ -47,7 +47,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (levelObject != null && levelObject != this)
                 {
                     levelObject.Destroy();
-                    GameConsole.Log("Move");
                     rigidbody = collider.GetComponent<Rigidbody>();
                     rigidbody.isKinematic = false;
                     rigidbody.useGravity = true;
