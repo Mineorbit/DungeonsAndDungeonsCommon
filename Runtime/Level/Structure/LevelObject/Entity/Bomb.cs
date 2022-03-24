@@ -48,7 +48,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     levelObject.Destroy();
                     GameConsole.Log("Move");
-                    rigidbody = levelObject.GetComponent<Rigidbody>();
+                    rigidbody = collider.GetComponent<Rigidbody>();
                     rigidbody.isKinematic = false;
                     rigidbody.useGravity = true;
                     rigidbody.AddExplosionForce(realDamage,transform.position,realDamage);
