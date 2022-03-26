@@ -118,7 +118,7 @@ MonoBehaviour:
   alive: 0
   items: []
   itemHandles: []
-  baseAnimator: {fileID: 0}
+  baseAnimator: {fileID: 8345762564440683984}
   onHitEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -166,7 +166,7 @@ MonoBehaviour:
   baseDamage: 10
   targetEntity: {fileID: 0}
   circlePlayer: 1
-  baseAnimator: {fileID: 0}
+  baseAnimator: {fileID: 8345762564440683984}
   attackHitbox: {fileID: 5945292434564437852}
   attackTarget: {fileID: 0}
   strikeDuration: 2
