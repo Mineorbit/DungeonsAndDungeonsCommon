@@ -14,19 +14,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnInit()
         {
             base.OnInit();
-            destroyed = false;
             wallCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
-            for(int i = 0; i < wallSegments.Length; i++ )
-            {
-                wallSegments[i].gameObject.SetActive(true);
-                wallSegments[i].isKinematic = true;
-                wallSegments[i].useGravity = false;
-                wallSegments[i].transform.localPosition = positions[i];
-                wallSegments[i].transform.localRotation = Quaternion.Euler(-90,0,0);
-            }
+            
             
         }
 
+        public override void DestroyState(bool d)
+        {
+            for(int i = 0; i < wallSegments.Length; i++ )
+            {
+                wallSegments[i].gameObject.SetActive(!d);
+                wallSegments[i].isKinematic = !d;
+                wallSegments[i].useGravity = d;
+                if(!d)
+                {
+                    wallSegments[i].transform.localPosition = positions[i];
+                    wallSegments[i].transform.localRotation = Quaternion.Euler(-90,0,0);
+                }
+            } 
+        }
+        
         public void OnValidate()
         {
             positions = new Vector3[wallSegments.Length];
@@ -45,22 +52,26 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void ClearSegments()
         {
             foreach (var segment in wallSegments)
-            {
-             segment.gameObject.SetActive(false);
+            { 
+                segment.gameObject.SetActive(false);
             }
         }
 
         public float clearTime = 10;
         
-        public override void Destroy()
+        
+
+        public override void DestroyEffect(Vector3 origin)
         {
-            if(!destroyed)
+            wallCollider.enabled = false;
+            foreach (Rigidbody rigidbody in wallSegments)
             {
-                destroyed = true;
-                base.Destroy();
-                wallCollider.enabled = false;
-                Invoke("ClearSegments",clearTime);
+                rigidbody.isKinematic = false;
+                rigidbody.useGravity = true;
+                rigidbody.AddExplosionForce(25,origin,25);
+                
             }
+            Invoke("ClearSegments",clearTime);
         }
     }
 

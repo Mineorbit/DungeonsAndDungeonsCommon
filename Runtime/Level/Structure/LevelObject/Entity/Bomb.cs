@@ -46,11 +46,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 DestructibleLevelObject levelObject = collider.GetComponentInParent<DestructibleLevelObject>();
                 if (levelObject != null && levelObject != this)
                 {
-                    levelObject.Destroy();
-                    rigidbody = collider.GetComponent<Rigidbody>();
-                    rigidbody.isKinematic = false;
-                    rigidbody.useGravity = true;
-                    rigidbody.AddExplosionForce(realDamage,transform.position,realDamage);
+                    levelObject.Destroy(transform.position);
                 }
             }
             Kill(); 

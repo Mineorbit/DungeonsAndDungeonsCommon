@@ -33,16 +33,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 		// Properties
 		public enum ElementType {
-		Water,
-		Fire,
-		Electric,
-		Earth,
-		Explosive,
-		Poison,
-        Metal,
-        Wood,
-        Stone,
-        Sand
+            Default,
+		    Water,
+		    Fire,
+		    Electric,
+		    Earth,
+		    Explosive,
+		    Poison,
+            Metal,
+            Wood,
+            Stone,
+            Sand
 		}			
 
 		public ElementType elementType;
@@ -190,7 +191,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var g = base.Create(location, rotation, parent);
             var lO = g.GetComponent<LevelObject>();
             lO.levelObjectDataType = uniqueLevelObjectId;
-            
+            lO.elementType = elementType;
             if (identity != null && identity.IsSet())
             {
                     
