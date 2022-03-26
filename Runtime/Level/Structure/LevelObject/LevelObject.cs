@@ -8,6 +8,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public int levelObjectDataType;
 
+        // This defines the behaviour of a LevelObject and the damage effects
+        public LevelObjectData.ElementType elementType = LevelObjectData.ElementType.Default;
+        
         public bool isDynamic;
 
         public bool ActivateWhenInactive;
