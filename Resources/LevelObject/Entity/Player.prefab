@@ -9744,13 +9744,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   me: {fileID: 2633396581524973113}
+  me: {fileID: 2633396581524973113}
   animator: {fileID: 7589352983227760250}
   entityAudioController: {fileID: 8472775196247414597}
-  entityController: {fileID: -4485675669329379349}
   speed: 0
   characterController: {fileID: 6344021777004394327}
   footFX: {fileID: 8164085133219797599}
   runDust: []
+  bombThrowReleaseEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8472775196247414597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9922,6 +9925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 0
+  elementType: 0
   isDynamic: 0
   ActivateWhenInactive: 0
   levelObjectProperties: []
@@ -9995,6 +9999,9 @@ MonoBehaviour:
   doInput: 0
   takeInput: 0
   jumpingSpeed: 2
+  onPlayerDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-4485675669329379349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10052,7 +10059,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.5, y: 0.85, z: 0.5}
+  m_Extents: {x: 1, y: 0.85, z: 1}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
@@ -10071,10 +10078,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observed: {fileID: 6264058479458404003}
+  existsOn: 01010101
   disabled_observed: 1
+  valueChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   owner: -1
   lastSentPosition: {x: 0, y: 0, z: 0}
   lastSentRotation: {x: 0, y: 0, z: 0, w: 0}
+  requestCreationOn: 01010101
   sendAngle: 0.05
 --- !u!1 &8164085133219797599
 GameObject:
