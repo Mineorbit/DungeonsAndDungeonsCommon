@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
@@ -341,6 +342,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 DettachRightBackItem();
             }
         }
+
+
+        public UnityEvent onPlayerDeathEvent;
+        
+        public override void Kill()
+        {
+            base.Kill();
+            onPlayerDeathEvent.Invoke();
+        }
+
 
         public void DettachLeftHandItem()
         {
