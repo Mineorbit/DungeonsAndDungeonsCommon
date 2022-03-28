@@ -435,7 +435,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // SetState(Enemy.EnemyState.Dead);
             //eventually call
             setMovementStatus(false);
-            invincible = true;
             Invoke(KillEffect);
             Invoke("Despawn", timeForDeath);
         }
