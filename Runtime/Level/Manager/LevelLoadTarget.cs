@@ -55,12 +55,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (LevelManager.currentLevel != null)
                 if (!loadedLocalChunks.Contains(ChunkManager.GetChunkGridPosition(position)))
                 {
-                    var chunkData = ChunkManager.ChunkToData(ChunkManager.GetChunk(position, false));
-                    if (chunkData != null)
+                    Chunk chunk = ChunkManager.GetChunk(position, false);
+                    if (chunk != null)
                     {
-                        Invoke(StreamChunkIntoCurrentLevelFrom, chunkData, true , true);
-
-                        loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
+                        
+                        var chunkData = ChunkManager.ChunkToData(chunk);
+                        if (chunkData != null)
+                        {
+                            Invoke(StreamChunkIntoCurrentLevelFrom, chunkData, true , true);
+                            loadedLocalChunks.Add(ChunkManager.GetChunkGridPosition(position));
+                        }
+                    
                     }
                 }
         }
