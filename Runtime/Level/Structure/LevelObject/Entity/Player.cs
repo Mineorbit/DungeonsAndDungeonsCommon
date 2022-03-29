@@ -344,7 +344,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        public UnityEvent onPlayerDeathEvent;
+        public UnityEvent onPlayerDeathEvent = new UnityEvent();
         
         public override void Kill()
         {
