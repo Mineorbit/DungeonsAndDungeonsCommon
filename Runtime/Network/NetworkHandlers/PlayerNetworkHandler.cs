@@ -149,12 +149,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int identity = message.GetInt();
             string name = message.GetString();
             Vector3 position = message.GetVector3();
-                OnCreationRequest(identity, position, new Quaternion(0, 0, 0, 0), localId,
-                    name);
-                if (localId == NetworkManager.instance.localId)
-                {
-                    PlayerManager.playerManager.players[localId].onPlayerDeathEvent.AddListener(() => { Logic.current.PlayerDeath(); });
-                }
+            OnCreationRequest(identity, position, new Quaternion(0, 0, 0, 0), localId, name);
+            if (localId == NetworkManager.instance.localId)
+            {
+                PlayerManager.playerManager.players[localId].onPlayerDeathEvent.AddListener(() => { Logic.current.PlayerDeath(); });
+            }
         }
 
 
