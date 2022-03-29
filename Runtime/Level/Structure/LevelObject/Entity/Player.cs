@@ -525,38 +525,49 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UseLeft()
         {
-            
-            aimMode = true;
+            if(!usingLeftItem && !usingRightItem)
+            {
+                aimMode = true;
             var h = GetLeftHandHandle();
             if (h != null) UseHandle(h);
             if (h.slot != null) usingLeftItem = true;
+            }
         }
 
         public void UseRight()
         {
-            aimMode = false;
+            if(!usingLeftItem && !usingRightItem)
+            {
+                aimMode = false;
             var h = GetRightHandHandle();
             if (h != null) UseHandle(h);
             if (h.slot != null) usingRightItem = true;
+            }
         }
 
         public void StopUseLeft()
         {
-            var h = GetLeftHandHandle();
+            if(usingLeftItem)
+            {
+                var h = GetLeftHandHandle();
             if (h != null)
             {
                 StopUseHandle(h);
                 if (h.slot != null) usingLeftItem = false;
             }
+            }
         }
         
         public void StopUseRight()
         {
-            var h = GetRightHandHandle();
+            if (usingRightItem)
+            {    
+                var h = GetRightHandHandle();
             if (h != null)
             {
                 StopUseHandle(h);
                 if (h.slot != null) usingRightItem = false;
+            }
             }
         }
         
