@@ -109,7 +109,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnLeftUse(InputAction.CallbackContext context)
         {
-            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
+            if (takeInput)
             {
                 _player.Invoke(_player.UseLeft, false);
             }
@@ -117,7 +117,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnRightUse(InputAction.CallbackContext context)
         {
-            if (takeInput && !_player.usingLeftItem && !_player.usingRightItem)
+            if (takeInput)
             {
                 _player.Invoke(_player.UseRight, false);
             }
@@ -125,7 +125,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void OnStopLeftUse(InputAction.CallbackContext context) 
         {
-            if (takeInput && _player.usingLeftItem)
+            if (takeInput)
             {
                 _player.Invoke(_player.StopUseLeft, false);
             }
@@ -133,7 +133,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 
         public void OnStopRightUse(InputAction.CallbackContext context)
         {
-            if (takeInput && _player.usingRightItem)
+            if (takeInput)
             { 
                 _player.Invoke(_player.StopUseRight, false);
             }
