@@ -48,6 +48,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        
+        public static void RequestRespawn()
+        {
+            Message m = Message.Create(MessageSendMode.reliable, (ushort) NetworkManager.ClientToServerId.respawnPlayer);
+            NetworkManager.instance.Client.Send(m);
+        }
+
+        [MessageHandler((ushort)NetworkManager.ClientToServerId.respawnPlayer)] 
+        public static void OnRespawn(ushort id, Message m)
+        {
+            PlayerManager.playerManager.SpawnPlayer(id+1,PlayerManager.playerManager.GetSpawnLocation(id+1));
+        }
+        
+        
         public static float time;
 
         [MessageHandler((ushort) NetworkManager.ServerToClientId.updateTime)]

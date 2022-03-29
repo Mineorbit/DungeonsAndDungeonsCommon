@@ -74,7 +74,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playerInput,
             readyLobby,
             lobbyUpdate,
-            processAction
+            processAction,
+            respawnPlayer
         }
 
         private void Awake()

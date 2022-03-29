@@ -2,6 +2,7 @@ using System;
 using Google.Protobuf.WellKnownTypes;
 using RiptideNetworking;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -132,6 +133,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 position = message.GetVector3();
                 OnCreationRequest(identity, position, new Quaternion(0, 0, 0, 0), localId,
                     name);
+                if (localId == NetworkManager.instance.localId)
+                {
+                    UnityEvent deathEvent = new UnityEvent();
+                    deathEvent.AddListener(() => { Logic.current.PlayerDeath(); });
+                    PlayerManager.playerManager.players[localId].onPlayerDeathEvent = deathEvent;
+                }
         }
 
 
