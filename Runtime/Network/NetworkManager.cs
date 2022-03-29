@@ -64,7 +64,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             entityState,
             lobbyUpdate,
             playerConfig,
-            updateTime
+            updateTime,
+            deathPlayer
         }
 
         public enum ClientToServerId : ushort

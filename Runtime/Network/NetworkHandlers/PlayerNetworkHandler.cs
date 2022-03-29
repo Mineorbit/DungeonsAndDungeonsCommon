@@ -53,7 +53,25 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             string name = m.GetString();
             PlayerManager.playerManager.players[localId].playerName = name;
         }
-        
+
+
+        public void PlayerDeathUpdate()
+        {
+            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.deathPlayer);
+            m.AddInt(((Player) observed).localId);
+            NetworkManager.instance.Server.SendToAll(m);
+        }
+
+        [MessageHandler((ushort) NetworkManager.ServerToClientId.playerConfig)]
+        public static void OnPlayerDeath(Message m)
+        {
+            int localId = m.GetInt();
+            if (localId == NetworkManager.instance.localId)
+            {
+                Logic.current.PlayerDeath();
+            }
+        }
+
         public Player GetObservedPlayer()
         {
             return (Player) observed;
