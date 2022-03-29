@@ -13,7 +13,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Awake();
             observed = GetComponent<Player>();
-            //GetObservedPlayer().controller.enabled = (NetworkManager.instance.localId != -1);
+            ((Player) observed).onPlayerDeathEvent.AddListener(PlayerDeathUpdate);
         }
 
         public override void Start()
@@ -62,7 +62,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             NetworkManager.instance.Server.SendToAll(m);
         }
 
-        [MessageHandler((ushort) NetworkManager.ServerToClientId.playerConfig)]
+        [MessageHandler((ushort) NetworkManager.ServerToClientId.deathPlayer)]
         public static void OnPlayerDeath(Message m)
         {
             int localId = m.GetInt();
