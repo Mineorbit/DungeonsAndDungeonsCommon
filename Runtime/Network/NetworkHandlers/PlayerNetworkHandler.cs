@@ -153,9 +153,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     name);
                 if (localId == NetworkManager.instance.localId)
                 {
-                    UnityEvent deathEvent = new UnityEvent();
-                    deathEvent.AddListener(() => { Logic.current.PlayerDeath(); });
-                    PlayerManager.playerManager.players[localId].onPlayerDeathEvent = deathEvent;
+                    PlayerManager.playerManager.players[localId].onPlayerDeathEvent.AddListener(() => { Logic.current.PlayerDeath(); });
                 }
         }
 
