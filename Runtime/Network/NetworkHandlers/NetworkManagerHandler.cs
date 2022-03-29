@@ -58,7 +58,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [MessageHandler((ushort)NetworkManager.ClientToServerId.respawnPlayer)] 
         public static void OnRespawn(ushort id, Message m)
         {
-            Logic.current.RespawnPlayer(id + 1);
+            GameConsole.Log($"Respawning Player {id-1}");
+            Logic.current.RespawnPlayer(id - 1);
         }
         
         
