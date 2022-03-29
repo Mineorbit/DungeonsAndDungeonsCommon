@@ -10,6 +10,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool running;
         public int sceneIndex;
 
+        public static Logic current;
+        
         public static float time;
 
         public void FixedUpdate()
@@ -42,6 +44,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (var g in created) g.SetActive(false);
         }
 
+        public void PlayerDeath()
+        {
+            
+        }
+        
         public virtual void Init()
         {
         }
