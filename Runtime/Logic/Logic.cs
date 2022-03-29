@@ -44,9 +44,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             foreach (var g in created) g.SetActive(false);
         }
 
-        public void PlayerDeath()
+        public virtual void PlayerDeath()
         {
             
+        }
+
+        public virtual void RespawnPlayer(int localId)
+        {
+            PlayerManager.playerManager.SpawnPlayer(localId,PlayerManager.playerManager.GetSpawnLocation(localId));
         }
         
         public virtual void Init()
