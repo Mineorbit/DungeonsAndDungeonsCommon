@@ -203,9 +203,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
         public float jumpingSpeed = 1.75f;
+
+        public float airTimeJump = 0.125f;
+        public bool CanJump()
+        {
+            return isGrounded || (airTime < airTimeJump);
+        }
         public void Jump()
         {
-            if (isGrounded)
+            if (CanJump())
             { 
                 jumping = true;
                 speedY = jumpingSpeed;
@@ -213,12 +219,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private Vector3 _forwardDirection;
-        
-        
+
+        private float airTime = 0;
         public void MoveFixed()
         {
             if (!isGrounded)
             {
+                airTime += Time.fixedDeltaTime;
                 if(inClimbing)
                 {
                     speedY = -gravity * climbDampening;
@@ -227,6 +234,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     speedY -= gravity * Time.deltaTime;
                 }
+            }
+            else
+            {
+                airTime = 0;
             }
 
 
