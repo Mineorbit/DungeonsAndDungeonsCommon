@@ -9999,6 +9999,7 @@ MonoBehaviour:
   doInput: 0
   takeInput: 0
   jumpingSpeed: 2
+  airTimeJump: 0.2
   onPlayerDeathEvent:
     m_PersistentCalls:
       m_Calls: []

@@ -207,7 +207,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public float airTimeJump = 0.125f;
         public bool CanJump()
         {
-            return isGrounded || (airTime < airTimeJump);
+            return !jumping && (isGrounded || (airTime < airTimeJump));
         }
         public void Jump()
         {
