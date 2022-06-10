@@ -11,7 +11,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float unpressTime = 5f;
 
-        public ButtonBaseAnimator buttonBaseAnimator;
+        public LeverBaseAnimator leverBaseAnimator;
 
         public bool pressed;
         public TimerManager.Timer unpressTimer;
@@ -45,19 +45,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 pressed = true;
                 base.Activate();
-                Invoke(AnimPress);
+                Invoke(AnimSwitch);
             }
         }
 
-        public void AnimPress()
+        public void AnimSwitch()
         {
-            buttonBaseAnimator.Press();
+            leverBaseAnimator.Switch();
         }
 
-        public void AnimUnpress()
-        {
-            buttonBaseAnimator.Unpress();
-        }
 
         private void StartUnpress()
         {
@@ -84,7 +80,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     pressed = false;
                     base.Deactivate();
-                    Invoke(AnimUnpress);
+                    Invoke(AnimSwitch);
                 }
         }
     }
