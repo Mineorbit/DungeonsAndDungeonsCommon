@@ -74,8 +74,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     inClimbing = false;
             });
 
-            interactableHitbox.StoreObjects<InteractableLevelObject>();
             interactableHitbox.Attach("Interactable");
+            interactableHitbox.StoreObjects<InteractableLevelObject>();
             // POSSIBLE PROBLEM WITH INTERSECTIONS
                 
         }
