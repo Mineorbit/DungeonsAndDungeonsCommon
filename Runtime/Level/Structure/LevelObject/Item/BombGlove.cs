@@ -57,7 +57,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 forward.Normalize();
                 forward.y = 1;
                 forward.Normalize();
-                GameObject arrowObject = LevelManager.currentLevel.AddDynamic(bomb,transform.position + 0.5f*forward, Quaternion.LookRotation(Vector3.forward), new Util.Optional<int>());
+                GameObject arrowObject = LevelManager.currentLevel.AddDynamic(bomb, owner.transform.position + 0.25f*forward, Quaternion.LookRotation(Vector3.forward), new Util.Optional<int>());
                 arrowObject.GetComponent<Bomb>().throwDirection = forward;
 
         }
