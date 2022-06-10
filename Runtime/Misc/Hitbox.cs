@@ -21,13 +21,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public int insideCounter = 0;
 
-        public List<object> storedObjects;
+        public List<MonoBehaviour> storedObjects;
         public void Start()
         {
         
         }
 
-        public void StoreObjects<T>()
+        public void StoreObjects<T>() where T: MonoBehaviour
         {
             enterEvent.AddListener(x =>
             {
