@@ -327,12 +327,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
+        
         public void Interact()
         {
+            bool interacted = false;
             foreach (InteractableLevelObject interactableObject in interactableHitbox.storedObjects)
             {
                 interactableObject.Interact();
+                interacted = true;
             }
+            if(!interacted)
             UpdateEquipItem();
         }
         
