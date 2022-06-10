@@ -57,9 +57,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void PlayerDeathUpdate()
         {
-            Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.deathPlayer);
-            m.AddInt(((Player) observed).localId);
-            NetworkManager.instance.Server.SendToAll(m);
+            if (Level.instantiateType == Level.InstantiateType.Online || Level.instantiateType == Level.InstantiateType.Play)
+            {
+                Message m = Message.Create(MessageSendMode.reliable,(ushort) NetworkManager.ServerToClientId.deathPlayer);
+                m.AddInt(((Player) observed).localId);
+                NetworkManager.instance.Server.SendToAll(m);
+            }
         }
 
         [MessageHandler((ushort) NetworkManager.ServerToClientId.deathPlayer)]
