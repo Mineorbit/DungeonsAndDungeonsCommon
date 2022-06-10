@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Object = System.Object;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -18,10 +20,23 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public int insideCounter = 0;
-        
+
+        public List<object> storedObjects;
         public void Start()
         {
         
+        }
+
+        public void StoreObjects<T>()
+        {
+            enterEvent.AddListener(x =>
+            {
+                if (!storedObjects.Contains(x.GetComponent<T>())) storedObjects.Add(x.GetComponent<T>());
+            });
+            exitEvent.AddListener(x =>
+            {
+                storedObjects.RemoveAll(p => ((T)p).Equals(x.GetComponent<T>()));
+            });
         }
         
         public void OnTriggerEnter(Collider other)

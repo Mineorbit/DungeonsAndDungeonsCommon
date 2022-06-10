@@ -54,7 +54,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool aiming;
 
         public bool jumping;
+        public Hitbox climbableHitbox;
+        public Hitbox interactableHitbox;
 
+        
+        
         public virtual void Awake()
         {
             colorChanger = gameObject.GetComponent<ColorChanger>();
@@ -69,6 +73,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(climbableHitbox.insideCounter == 0)
                     inClimbing = false;
             });
+
+            interactableHitbox.StoreObjects<InteractableLevelObject>();
+            interactableHitbox.Attach("Interactable");
+            // POSSIBLE PROBLEM WITH INTERSECTIONS
                 
         }
 
@@ -179,7 +187,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         
-        public Hitbox climbableHitbox;
 
         public bool inClimbing;
           
@@ -217,6 +224,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 speedY = jumpingSpeed;
             }
         }
+
 
         private Vector3 _forwardDirection;
 
@@ -318,12 +326,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             MoveFixed();
         }
 
-        public void Update()
-        {
-        }
 
         public void Interact()
         {
+            foreach (InteractableLevelObject interactableObject in interactableHitbox.storedObjects)
+            {
+                interactableObject.Interact();
+            }
             UpdateEquipItem();
         }
         

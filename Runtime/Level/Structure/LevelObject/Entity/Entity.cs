@@ -130,7 +130,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     
     lastPosition = transform.position;
     }
-        
+        // TODO Eventually replace itemsInProximity with Hitbox collection feature
         private void SetupItems()
         {
 
