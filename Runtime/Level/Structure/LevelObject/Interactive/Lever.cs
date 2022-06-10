@@ -2,9 +2,8 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class Lever : InteractiveLevelObject
+    public class Lever : InteractableLevelObject
     {
-        public Hitbox playerStandinghitbox;
         public Collider buildCollider;
 
         public bool returnToUnpress;
@@ -13,7 +12,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LeverBaseAnimator leverBaseAnimator;
 
-        public bool pressed;
         public TimerManager.Timer unpressTimer;
 
 
@@ -27,26 +25,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnStartRound();
             buildCollider.enabled = false;
-            playerStandinghitbox.Attach("Entity");
-
-            playerStandinghitbox.enterEvent.AddListener(x =>
-            {
-                TimerManager.StopTimer(unpressTimer);
-                if (!pressed) Activate();
-            });
-            playerStandinghitbox.exitEvent.AddListener(x => { StartUnpress(); });
         }
 
-        
+        private bool switched = false;
 
+        public override void Interact()
+        {
+            base.Interact();
+            if (!switched)
+            {
+                Activate();
+                switched = true;
+            }
+            else
+            {
+                Deactivate();
+                switched = false;
+            }
+            
+        }
+        
         public override void Activate()
         {
-            if (!pressed)
-            {
-                pressed = true;
                 base.Activate();
                 Invoke(AnimSwitch);
-            }
+        }
+        
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            Invoke(AnimSwitch);
         }
 
         public void AnimSwitch()
@@ -55,11 +63,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        private void StartUnpress()
-        {
-            if (returnToUnpress && !TimerManager.isRunning(unpressTimer))
-                unpressTimer = TimerManager.StartTimer(unpressTime, () => { Deactivate(); });
-        }
 
 
         public override void ResetState()
@@ -73,15 +76,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buildCollider.enabled = true;
         }
 
-        public override void Deactivate()
-        {
-            if (returnToUnpress)
-                if (pressed)
-                {
-                    pressed = false;
-                    base.Deactivate();
-                    Invoke(AnimSwitch);
-                }
-        }
     }
 }
