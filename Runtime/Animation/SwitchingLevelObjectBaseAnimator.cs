@@ -9,9 +9,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public Animator animator;
         private bool state = false;
+        public bool defaultState = false;
         public void AnimationState(bool b)
         {
-            animator.SetBool("on",b);
+            animator.SetBool("on",defaultState ^ b);
         }
 
         protected override void AnimationStateUpdate()
