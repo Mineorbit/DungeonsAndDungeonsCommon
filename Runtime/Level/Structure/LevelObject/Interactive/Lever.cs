@@ -19,7 +19,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
             buildCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
-            Deactivate();
         }
 
         public override void OnStartRound()

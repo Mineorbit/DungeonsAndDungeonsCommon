@@ -12,6 +12,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public SwitchingLevelObjectBaseAnimator spikeBaseAnimator;
         public Hitbox Hitbox;
         public Collider buildCollider;
+        
+        
+        public override void OnInit()
+        {
+            base.OnInit();
+            buildCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
+        }
+        
         public override void OnStartRound()
         {
             base.OnStartRound();
@@ -36,12 +44,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        public override void OnInit()
-        {
-            base.OnInit();
-            buildCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
-            Activate();
-        }
 
         public override void OnEndRound()
         {
