@@ -19,12 +19,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
             buildCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
+            Deactivate();
         }
 
         public override void OnStartRound()
         {
             base.OnStartRound();
             buildCollider.enabled = false;
+            Deactivate();
         }
 
         private bool switched = false;
@@ -48,21 +50,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Activate()
         {
                 base.Activate();
-                Invoke(AnimSwitch);
+                leverBaseAnimator.Set(true);
         }
         
         public override void Deactivate()
         {
             base.Deactivate();
-            Invoke(AnimSwitch);
+            leverBaseAnimator.Set(false);
         }
-
-        public void AnimSwitch()
-        {
-            leverBaseAnimator.Switch();
-        }
-
-
 
 
         public override void ResetState()
