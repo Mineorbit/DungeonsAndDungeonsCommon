@@ -8,10 +8,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class SwitchingLevelObjectBaseAnimator : LevelObjectBaseAnimator
     {
         public Animator animator;
-        private bool state = false;
         public bool defaultState = false;
         public void AnimationState(bool b)
         {
+            GameConsole.Log("Changing state to "+b);
             animator.SetBool("on",defaultState ^ b);
         }
 
@@ -21,14 +21,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             AnimationState( me.levelObjectNetworkHandler.AnimatorState == 0);
         }
 
-        public void Switch()
-        {
-            Set(!state);
-        }
         
         public void Set(bool open)
         {
-            state = open;
             AnimationState(open);
             if (open)
             {
