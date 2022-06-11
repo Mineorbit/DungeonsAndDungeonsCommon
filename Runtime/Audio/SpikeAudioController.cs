@@ -4,16 +4,12 @@ using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class LeverAudioController : AudioController
+    public class SpikeAudioController : AudioController
     {
+
         public void PlaySwitch()
         {
             Play(0);
-        }
-
-        public void PlayerLock()
-        {
-            Play(1);
         }
     }
 }

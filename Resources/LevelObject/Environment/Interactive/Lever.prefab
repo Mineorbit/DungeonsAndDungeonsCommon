@@ -578,8 +578,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fc5c45906ff224ea1884bbc72b729a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSource: {fileID: 1242372277422905852}
-  switchSource: {fileID: 8768568456456091174}
+  audioProfiles:
+  - {fileID: 11400000, guid: c080f08c95278fc4186cc36b4b122729, type: 2}
+  - {fileID: 11400000, guid: adf03f8e172539e41a2701a8f6f1e859, type: 2}
 --- !u!1001 &5306432570636312005
 PrefabInstance:
   m_ObjectHideFlags: 0

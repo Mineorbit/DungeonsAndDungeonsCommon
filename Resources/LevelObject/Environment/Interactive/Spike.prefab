@@ -34,6 +34,20 @@ MonoBehaviour:
   me: {fileID: -3830335604905395397}
   animator: {fileID: 8292585161249621777}
   defaultState: 0
+--- !u!114 &5258769636843513190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3642454127023078784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db728f00c7f49e4c91ff771aff653e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioProfiles:
+  - {fileID: 11400000, guid: df83ed0603977444896d26f527357fcf, type: 2}
 --- !u!1 &4489509847177546233
 GameObject:
   m_ObjectHideFlags: 0
