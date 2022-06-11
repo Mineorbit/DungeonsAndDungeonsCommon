@@ -33,7 +33,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: -3830335604905395397}
   animator: {fileID: 8292585161249621777}
-  defaultState: 1
+  defaultState: 0
 --- !u!1 &4489509847177546233
 GameObject:
   m_ObjectHideFlags: 0

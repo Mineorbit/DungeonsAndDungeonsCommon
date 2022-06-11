@@ -565,7 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: 7066247301859856145}
   animator: {fileID: 1990658916780808860}
-  defaultState: 1
+  defaultState: 0
 --- !u!114 &7510319008284371081
 MonoBehaviour:
   m_ObjectHideFlags: 0
