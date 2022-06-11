@@ -48,9 +48,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
         
         public override void Activate()
-        {
-                base.Activate();
-                leverBaseAnimator.Set(true);
+        { 
+            base.Activate();
+            leverBaseAnimator.Set(true);
         }
         
         public override void Deactivate()
