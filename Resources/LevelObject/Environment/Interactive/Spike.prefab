@@ -33,7 +33,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: -3830335604905395397}
   animator: {fileID: 8292585161249621777}
-  defaultState: 0
+  defaultState: 1
 --- !u!114 &5258769636843513190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   identified: 0
   inBoundWires: []
   outBoundWires: []
+  activated: 0
   activeIn: 0
   spikeBaseAnimator: {fileID: 2449179662134841578}
   Hitbox: {fileID: 444537956601716513}
