@@ -7,13 +7,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class Gate : InteractiveLevelObject
     {
         public Collider gateCollider;
-        public GateBaseAnimator gateBaseAnimator;
+        public SwitchingLevelObjectBaseAnimator gateBaseAnimator;
         public NavMeshObstacle navMeshObstacle;
 
         public override void OnInit()
         {
             base.OnInit();
-            gateBaseAnimator.Close();
+            gateBaseAnimator.Set(false);
             gateCollider.enabled = true;
             navMeshObstacle.enabled = true;
         }
@@ -28,14 +28,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void SetOpen()
         {
             Debug.Log("Opening Gate");
-            gateBaseAnimator.Open();
+            gateBaseAnimator.Set(true);
             gateCollider.enabled = false;
         }
 
         public void SetClosed()
         {
             Debug.Log("Closing Gate");
-            gateBaseAnimator.Close();
+            gateBaseAnimator.Set(false);
             gateCollider.enabled = true;
         }
 

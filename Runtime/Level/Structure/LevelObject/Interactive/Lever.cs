@@ -10,7 +10,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float unpressTime = 5f;
 
-        public LeverBaseAnimator leverBaseAnimator;
+        public SwitchingLevelObjectBaseAnimator leverBaseAnimator;
 
         public TimerManager.Timer unpressTimer;
 

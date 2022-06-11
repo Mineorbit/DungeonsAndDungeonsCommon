@@ -1,19 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Codice.CM.Common.Merge;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
-    public class SpikeBaseAnimator : LevelObjectBaseAnimator
+    public class SwitchingLevelObjectBaseAnimator : LevelObjectBaseAnimator
     {
-        
-        public GameObject[] spikes;
+        public Animator animator;
+        private bool state = false;
         public void AnimationState(bool b)
         {
-            foreach (GameObject g in spikes)
-            {
-                g.SetActive(b);
-            }
+            animator.SetBool("on",b);
         }
 
         protected override void AnimationStateUpdate()
@@ -21,10 +19,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             base.AnimationStateUpdate();
             AnimationState( me.levelObjectNetworkHandler.AnimatorState == 0);
         }
-      
 
-        public void SetSpikes(bool open)
+        public void Switch()
         {
+            Set(!state);
+        }
+        
+        public void Set(bool open)
+        {
+            state = open;
             AnimationState(open);
             if (open)
             {

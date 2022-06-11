@@ -9,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private int spikeDamage = 50;
         // AUTOMATICALLY CONNECT TO ALL NEIGHBORING ON PLAY
 
-        public SpikeBaseAnimator spikeBaseAnimator;
+        public SwitchingLevelObjectBaseAnimator spikeBaseAnimator;
         public Hitbox Hitbox;
         public Collider buildCollider;
         public override void OnStartRound()
@@ -50,13 +50,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Activate()
         {
             base.Activate();
-            spikeBaseAnimator.SetSpikes(true);
+            spikeBaseAnimator.Set(true);
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
-            spikeBaseAnimator.SetSpikes(false);
+            spikeBaseAnimator.Set(false);
         }
         
         public override void ResetState()
