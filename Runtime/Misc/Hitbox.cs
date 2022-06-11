@@ -89,14 +89,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void Activate()
         {
-            if (isAttached)
-                hitboxCollider.enabled = true;
-            else GameConsole.Log("Hitbox " + gameObject.name + " was not attached");
+            if (!isAttached) GameConsole.Log("Hitbox " + gameObject.name + " was not attached, but still activating");
+            hitboxCollider.enabled = true;
         }
 
         public void Deactivate()
         {
-            if (isAttached) hitboxCollider.enabled = false;
+            if (!isAttached) GameConsole.Log("Hitbox " + gameObject.name + " was not attached, but still deactivating");
+            hitboxCollider.enabled = false;
         }
     }
 }

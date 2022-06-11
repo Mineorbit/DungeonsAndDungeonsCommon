@@ -18,6 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buildCollider.enabled = false;
             Hitbox.Attach("Entity");
             Hitbox.enterEvent.AddListener((x)=>TryDamage(x));
+            Hitbox.Activate();
         }
 
         private void TryDamage(GameObject g)
@@ -39,6 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnInit();
             buildCollider.enabled = Level.instantiateType == Level.InstantiateType.Edit;
+            Hitbox.Activate();
         }
 
         public override void OnEndRound()
@@ -51,18 +53,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.Activate();
             spikeBaseAnimator.Set(true);
+            Hitbox.Activate();
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
             spikeBaseAnimator.Set(false);
+            Hitbox.Deactivate();
         }
         
         public override void ResetState()
         {
             base.ResetState();
             buildCollider.enabled = true;
+            Hitbox.Deactivate();
         }
     }
 }
