@@ -9,7 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public List<Wire> inBoundWires = new List<Wire>();
         public List<Wire> outBoundWires = new List<Wire>();
 
-        private bool activated;
+        public bool activated;
 
 
         public Dictionary<int, InteractiveLevelObject>

@@ -28,20 +28,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Deactivate();
         }
 
-        private bool switched = false;
-
         public override void Interact()
         {
             base.Interact();
-            if (!switched)
+            if (!activated)
             {
                 Activate();
-                switched = true;
             }
             else
             {
                 Deactivate();
-                switched = false;
             }
             
         }
