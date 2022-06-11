@@ -47,15 +47,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Activate()
         {
             base.Activate();
-            spikeBaseAnimator.Set(true);
-            Hitbox.Activate();
+            spikeBaseAnimator.Set(false);
+            Hitbox.Deactivate();
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
-            spikeBaseAnimator.Set(false);
-            Hitbox.Deactivate();
+            spikeBaseAnimator.Set(true);
+            Hitbox.Activate();
         }
         
         public override void ResetState()
