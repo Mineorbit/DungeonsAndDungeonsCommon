@@ -41,9 +41,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static void NetTick()
         {
-            foreach (LevelObjectBaseAnimator o in activeAnimators)
+            if (Level.instantiateType == Level.InstantiateType.Online)
             {
-                o.UpdateAnimator();
+                foreach (LevelObjectBaseAnimator o in activeAnimators)
+                {
+                    o.UpdateAnimator();
+                }
             }
         }
     }
