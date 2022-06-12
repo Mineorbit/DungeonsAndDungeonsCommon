@@ -177,7 +177,6 @@ GameObject:
   - component: {fileID: 6498931593991587624}
   - component: {fileID: -6315356682183278751}
   - component: {fileID: -3889575931983887138}
-  - component: {fileID: 7098715700073503541}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -226,6 +225,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 0
+  color: 0
+  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
   isDynamic: 0
   ActivateWhenInactive: 0
   levelObjectProperties: []
@@ -234,9 +235,10 @@ MonoBehaviour:
   identified: 0
   inBoundWires: []
   outBoundWires: []
+  activated: 0
   activeIn: 0
   gateCollider: {fileID: 5230568351884737477}
-  gateBaseAnimator: {fileID: 7098715700073503541}
+  gateBaseAnimator: {fileID: 8077971089801630135}
   navMeshObstacle: {fileID: -6315356682183278751}
 --- !u!208 &-6315356682183278751
 NavMeshObstacle:
@@ -266,25 +268,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b12cae55699ff4a850fab0baa1059f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  observed: {fileID: 0}
+  observed: {fileID: 6498931593991587624}
+  existsOn: 01010101
   disabled_observed: 1
   valueChangedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7098715700073503541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4924650896210544278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a17b3be73da3dd40a7749623b8ef5d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  me: {fileID: 6498931593991587624}
-  model: {fileID: 8263260763983646358}
 --- !u!1 &6420252443121159005
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,6 +365,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856738501880088313}
+  - component: {fileID: 8077971089801630135}
+  - component: {fileID: 4644661685733404415}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -400,3 +391,37 @@ Transform:
   m_Father: {fileID: 5700448036526758956}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8077971089801630135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263260763983646358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eebd7abf92779ae4fa95e3d34661ff8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  me: {fileID: 6498931593991587624}
+  animator: {fileID: 4644661685733404415}
+  defaultState: 0
+--- !u!95 &4644661685733404415
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263260763983646358}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 401be5a36ecc3204382456e8b73d8eb2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
