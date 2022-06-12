@@ -93,6 +93,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 animator.ResetTrigger("Jump");
             }
         }
+        else
+        {
+            animator.SetFloat("GroundImpact", Mathf.Abs(((Player) me).speedDirection.y));
+        }
 
         if (speed > 0 && ((Player) me).isGrounded)
             StartDust();
