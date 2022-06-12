@@ -2,8 +2,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class PlayerSpawn : Spawn
     {
-
-        public Constants.Color color;
         public ColorChanger colorChanger;
 
 

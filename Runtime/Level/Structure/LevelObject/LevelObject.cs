@@ -10,6 +10,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         // This defines the behaviour of a LevelObject and the damage effects
 
+        public Constants.Color color;
+        
         public ElementType elementType;
         
         public bool isDynamic;

@@ -13,11 +13,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelObjectData : Instantiable
     {
         public static List<LevelObjectData> all = new List<LevelObjectData>();
+        
         public ushort uniqueLevelObjectId;
 
+        public string levelObjectName;
+        
+        [Header("Attributes")]
+
+        public Constants.Color color;
+        
+
+        public ElementType elementType = ElementType.defaultElementType;
+        
+        [Header("Level Placement Settings")]
+        
         public float granularity;
 
-        public string levelObjectName;
 
         public bool dynamicInstantiable;
 
@@ -29,17 +40,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool inLevel = true;
         
+        public int maximumNumber;
+        [Header("Preview Settings")]
         public Mesh cursorMesh;
 
-        public int maximumNumber;
+       
+        
+        public Vector3 cursorScale;
+        public Vector3 cursorOffset;
+        public Vector3 cursorRotation;
 
-
-		public ElementType elementType = ElementType.defaultElementType;
         
         [System.Serializable]
-		public class Property {
+        public class Property {
             [SerializeField]
-			public string name;
+            public string name;
 
             string _value;
             
@@ -58,18 +73,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             public UnityEvent valueChanged = new UnityEvent();
             [SerializeField]
-			// T must be encodable as a string
-			public string defaultValue;
-		}
+            // T must be encodable as a string
+            public string defaultValue;
+        }
 		
 		
-		public List<Property> properties;
-        
-        public Vector3 cursorScale;
-        public Vector3 cursorOffset;
-        public Vector3 cursorRotation;
-
-
+        public List<Property> properties;
         private void OnValidate()
         {
 #if UNITY_EDITOR
@@ -177,8 +186,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var g = base.Create(location, rotation, parent);
             var lO = g.GetComponent<LevelObject>();
+            
+            
             lO.levelObjectDataType = uniqueLevelObjectId;
             lO.elementType = elementType;
+            lO.color = color;
+            
+            
             if (identity != null && identity.IsSet())
             {
                     

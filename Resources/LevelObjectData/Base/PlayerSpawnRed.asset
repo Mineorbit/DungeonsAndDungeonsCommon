@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833097d1a1d5dc40a40ec0499abc3d0, type: 3}
   m_Name: PlayerSpawnRed
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6807480057338879240, guid: 17d473446b8977641a07ba5a9b6e1994, type: 3}
+  prefab: {fileID: 837793679921949131, guid: 4952964a048be6c4ba255e9a6aadceb5, type: 3}
   uniqueLevelObjectId: 7
   granularity: 1
   levelObjectName: Red Spawn
@@ -22,6 +22,10 @@ MonoBehaviour:
   Buildable: 1
   inLevel: 1
   cursorMesh: {fileID: 0}
+  maximumNumber: 0
+  color: 1
+  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
+  properties: []
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
