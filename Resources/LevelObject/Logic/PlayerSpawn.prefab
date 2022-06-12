@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &382386651948371245
+--- !u!1 &837793679921949131
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 382386651948371243}
-  - component: {fileID: 382386651948371242}
-  - component: {fileID: 382386651948371241}
-  - component: {fileID: 382386651948371240}
-  - component: {fileID: 382386651948371247}
-  - component: {fileID: 382386651948371246}
+  - component: {fileID: 7154323360674366008}
+  - component: {fileID: 8172136398938977238}
+  - component: {fileID: 7184852723440382128}
+  - component: {fileID: 1435874492174074646}
+  - component: {fileID: 8513108626853589429}
+  - component: {fileID: 7853907792127495484}
   m_Layer: 0
-  m_Name: SpawnBlue
+  m_Name: PlayerSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &382386651948371243
+--- !u!4 &7154323360674366008
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382386651948371245}
+  m_GameObject: {fileID: 837793679921949131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,25 +35,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &382386651948371242
+--- !u!33 &8172136398938977238
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382386651948371245}
+  m_GameObject: {fileID: 837793679921949131}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &382386651948371241
+--- !u!23 &7184852723440382128
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382386651948371245}
+  m_GameObject: {fileID: 837793679921949131}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -84,41 +85,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &382386651948371240
+--- !u!114 &1435874492174074646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382386651948371245}
+  m_GameObject: {fileID: 837793679921949131}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7572e35a28da2f4297e733547f54318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 
+  levelObjectDataType: 0
+  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
+  isDynamic: 0
+  ActivateWhenInactive: 0
+  levelObjectProperties: []
   color: 0
-  colorChanger: {fileID: 382386651948371247}
---- !u!114 &382386651948371247
+  colorChanger: {fileID: 8513108626853589429}
+--- !u!114 &8513108626853589429
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382386651948371245}
+  m_GameObject: {fileID: 837793679921949131}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c946c56129e9c6f4cbcc17baaed5928e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m: []
---- !u!65 &382386651948371246
+--- !u!65 &7853907792127495484
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382386651948371245}
+  m_GameObject: {fileID: 837793679921949131}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1

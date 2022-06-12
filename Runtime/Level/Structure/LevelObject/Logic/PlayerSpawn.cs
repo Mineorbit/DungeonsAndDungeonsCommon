@@ -2,34 +2,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class PlayerSpawn : Spawn
     {
-        public enum Color
-        {
-            Blue = 0,
-            Red,
-            Green,
-            Yellow
-        }
 
-        public Color color;
+        public Constants.Color color;
         public ColorChanger colorChanger;
 
-
-        private UnityEngine.Color GetColor(Color c)
-        {
-            switch (c)
-            {
-                case Color.Blue:
-                    return UnityEngine.Color.blue;
-                case Color.Green:
-                    return UnityEngine.Color.green;
-                case Color.Red:
-                    return UnityEngine.Color.red;
-                case Color.Yellow:
-                    return UnityEngine.Color.yellow;
-            }
-
-            return UnityEngine.Color.white;
-        }
 
         public override void OnInit()
         {
@@ -42,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             else
             {
                 LevelManager.currentLevel.spawn[(int) color] = this;
-                colorChanger.SetColor(0, GetColor(color));
+                colorChanger.SetColor(0, Constants.ToColor(color));
             }
         }
     }

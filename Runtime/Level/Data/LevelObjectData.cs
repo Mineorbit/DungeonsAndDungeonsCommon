@@ -31,22 +31,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public Mesh cursorMesh;
 
-		// Properties
-		public enum ElementType {
-            Default,
-		    Water,
-		    Fire,
-		    Electric,
-		    Earth,
-		    Explosive,
-		    Poison,
-            Metal,
-            Wood,
-            Stone,
-            Sand
-		}			
+        public int maximumNumber;
 
-		public ElementType elementType;
+
+		public ElementType elementType = ElementType.defaultElementType;
         
         [System.Serializable]
 		public class Property {
@@ -124,30 +112,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(cursorMesh == null)
             {
-            if(prefab != null)
-            {
-                GameObject g = null;
-            try
-            {
-                GameConsole.Log($"Instantiating {levelObjectName}",false);
-                g = Instantiate(prefab) as GameObject;
-                Destroy(g.GetComponent<LevelObject>());
-                g.SetActive(false);
-            MeshFilter[] meshFilters = g.GetComponentsInChildren<MeshFilter>(includeInactive: true);
-            CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+                if(prefab != null)
+                {
+                    GameObject g = null;
+                    try
+                    {
+                        GameConsole.Log($"Instantiating {levelObjectName}",false);
+                        g = Instantiate(prefab) as GameObject;
+                        Destroy(g.GetComponent<LevelObject>());
+                        g.SetActive(false);
+                        MeshFilter[] meshFilters = g.GetComponentsInChildren<MeshFilter>(includeInactive: true);
+                        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
-            int i = 0;
-            while (i < meshFilters.Length)
-            {
-                combine[i].mesh = meshFilters[i].sharedMesh;
-                combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-                meshFilters[i].gameObject.SetActive(false);
-
-                i++;
-            }
-            cursorMesh = new Mesh();
-            cursorMesh.CombineMeshes(combine);
-            }
+                        int i = 0;
+                        while (i < meshFilters.Length)
+                        {
+                            combine[i].mesh = meshFilters[i].sharedMesh;
+                            combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+                            meshFilters[i].gameObject.SetActive(false);
+                            i++;
+                        }
+                        cursorMesh = new Mesh();
+                    cursorMesh.CombineMeshes(combine);
+                    }
             catch (Exception e)
             {
                 if (Application.isPlaying)

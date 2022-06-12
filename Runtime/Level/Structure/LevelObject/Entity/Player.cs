@@ -10,13 +10,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Player : Entity
     {
-        public enum Color
-        {
-            Blue,
-            Red,
-            Green,
-            Yellow
-        }
 
         
         public bool usingLeftItem = false;
@@ -46,7 +39,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
         public string playerName;
-        public Color playerColor;
+        public Constants.Color playerColor;
 
         
         public bool aimMode = false;
@@ -511,28 +504,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public void changeColor(int id)
         {
-            switch (id)
-            {
-                case 0:
-                    playerColor = Color.Blue;
-                    setColor(UnityEngine.Color.blue);
-                    break;
-                case 1:
-                    playerColor = Color.Red;
-                    setColor(UnityEngine.Color.red);
-                    break;
-                case 2:
-                    playerColor = Color.Green;
-                    setColor(UnityEngine.Color.green);
-                    break;
-                case 3:
-                    playerColor = Color.Yellow;
-                    setColor(UnityEngine.Color.yellow);
-                    break;
-            }
+            playerColor = (Constants.Color) id;
+            setColors(Constants.ToColor(playerColor));
         }
 
-        private void setColor(UnityEngine.Color baseC)
+        private void setColors(UnityEngine.Color baseC)
         {
             colorChanger.SetColor(5, baseC);
             colorChanger.SetColor(0, colorChanger.comp(baseC));

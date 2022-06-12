@@ -375,7 +375,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public float minCooldownTime = 1f;
         public float kickbackSpeed = 4f;
-        public virtual void Hit(LevelObject hitter, int damage)
+
+        public float DamageMultiplier(LevelObject hitter)
+        {
+            float elementTypeMultiplier = elementType.GetMultiplier(hitter.elementType);
+            return 1*elementTypeMultiplier;
+        }
+        
+        public virtual void Hit(LevelObject hitter, int outputDamage)
         {
 
             if (Level.instantiateType == Level.InstantiateType.Play ||
@@ -391,6 +398,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         }
                         return;
                     }
+
+                    int damage = (int)( DamageMultiplier(hitter) * outputDamage);
+                    
                     
                     setMovementStatus(false);
                     
