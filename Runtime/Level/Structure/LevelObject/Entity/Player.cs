@@ -77,6 +77,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void Spawn(Vector3 location, Quaternion rotation, bool allowedToMove)
         {
             base.Spawn(location, rotation, allowedToMove);
+            setMovementStatus(true);
             ResetMovement();
         }
         
