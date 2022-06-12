@@ -51,7 +51,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public virtual void RespawnPlayer(int localId)
         {
-            PlayerManager.playerManager.SpawnPlayer(localId,PlayerManager.playerManager.GetSpawnLocation(localId));
+            PlayerManager.playerManager.SpawnPlayer(localId,PlayerManager.playerManager.GetSpawnLocation(localId)+Vector3.up*0.125f);
         }
         
         public virtual void Init()
