@@ -11,6 +11,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Hitbox hitbox;
 
         public Collider collider;
+
+        public GoalAudioController goalAudioController;
+        
         // Update is called once per frame
         private void Update()
         {
@@ -55,6 +58,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitbox.enterEvent.AddListener(x => { Enter(x); });
             hitbox.exitEvent.AddListener(x => { Exit(x); });
             playersInside = new bool[4];
+            goalAudioController.PlayAmbient();
+            
         }
 
 
