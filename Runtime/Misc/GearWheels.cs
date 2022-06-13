@@ -29,7 +29,7 @@ public class GearWheels : MonoBehaviour
         t += Time.deltaTime;
         for (int i = 0; i < 4; i++)
         {
-            gearwheels[i].transform.Rotate(Vector3.up, Time.deltaTime * speeds[i]);
+            gearwheels[i].transform.Rotate(Vector3.up+Vector3.forward+Vector3.right, Time.deltaTime * speeds[i]);
             gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetFloat(Shader.PropertyToID("Rotation"),t*speeds[i]);
         }
     }
