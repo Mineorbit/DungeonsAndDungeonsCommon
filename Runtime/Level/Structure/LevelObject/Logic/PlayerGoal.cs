@@ -73,7 +73,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 CheckWinCondition();
         }
 
-        public float winTime = 5f;
+        public float winTime = 32f;
         private void CheckWinCondition()
         {
             if (Level.instantiateType == Level.InstantiateType.Test ||
