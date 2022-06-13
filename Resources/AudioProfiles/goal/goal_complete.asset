@@ -20,4 +20,5 @@ MonoBehaviour:
   maxVolume: 1
   spatialFactor: 0.5
   loop: 0
-  audioClip: []
+  audioClip:
+  - {fileID: 8300000, guid: 92203035484b3284ca99bef9d06b9e76, type: 3}
