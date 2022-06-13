@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -72,6 +73,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 CheckWinCondition();
         }
 
+        public float winTime = 5f;
         private void CheckWinCondition()
         {
             if (Level.instantiateType == Level.InstantiateType.Test ||
@@ -80,8 +82,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 for (var i = 0; i < 4; i++)
                     if (PlayerManager.GetPlayerById(i) && !playersInside[i])
                         return;
-                GameWinEvent.Invoke();
+
+                float timeToAudio = goalAudioController.PlayComplete();
+
+                float _winTime = Mathf.Min(timeToAudio, winTime);
+                StartCoroutine(GameWin(_winTime));
             }
+        }
+
+        public IEnumerator GameWin(float _winTime)
+        {
+            yield return new WaitForSeconds(_winTime);
+            GameWinEvent.Invoke();
+            
         }
 
         private void Exit(GameObject other)

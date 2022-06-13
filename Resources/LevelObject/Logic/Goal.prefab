@@ -5194,6 +5194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioProfiles:
   - {fileID: 11400000, guid: bc25b7bf7d033a24ab78d064dd910336, type: 2}
+  - {fileID: 11400000, guid: 6a4b7f195b7085d4494d4adc11b5d64f, type: 2}
 --- !u!1001 &238624925728860305
 PrefabInstance:
   m_ObjectHideFlags: 0

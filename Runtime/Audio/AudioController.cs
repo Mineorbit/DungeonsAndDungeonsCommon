@@ -92,6 +92,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 audioSources[index][currentPlay[index]].mute = false;
         }
 
+        public AudioSource GetAudioSource(int index, int second_index)
+        {
+            return audioSources[index][second_index];
+        }
+        
         public void Play(int index)
         {
             prePlay(index);
