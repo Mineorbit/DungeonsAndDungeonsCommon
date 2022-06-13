@@ -17,7 +17,8 @@ public class GearWheels : MonoBehaviour
         {
             speeds[i] = Random.Range(0f,maxSpeed);
            // gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetColor("_color",Constants.ToColor((Constants.Color) i));
-            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetColor("_BaseColor",Constants.ToColor((Constants.Color) i));
+            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].color = Constants.ToColor((Constants.Color) i);
+            
         }
     }
 
@@ -26,7 +27,10 @@ public class GearWheels : MonoBehaviour
     {
         
         t += Time.deltaTime;
-        for(int i = 0;i<4;i++)
+        for (int i = 0; i < 4; i++)
+        {
             gearwheels[i].transform.Rotate(Vector3.up, Time.deltaTime * speeds[i]);
+            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetFloat(Shader.PropertyToID("Rotation"),t*speeds[i]);
+        }
     }
 }
