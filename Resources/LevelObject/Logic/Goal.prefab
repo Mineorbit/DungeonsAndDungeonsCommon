@@ -167,7 +167,7 @@ MonoBehaviour:
   - {fileID: 6330059959967330263}
   - {fileID: 3538520860913232370}
   - {fileID: 5985584130846816640}
-  maxSpeed: 8
+  maxSpeed: 10
 --- !u!1 &1532369123100809358
 GameObject:
   m_ObjectHideFlags: 0
