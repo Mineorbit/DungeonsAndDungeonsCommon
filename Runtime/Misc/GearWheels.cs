@@ -16,7 +16,8 @@ public class GearWheels : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             speeds[i] = Random.Range(0f,maxSpeed);
-            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetColor("color",Constants.ToColor((Constants.Color) i));
+           // gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetColor("_color",Constants.ToColor((Constants.Color) i));
+            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetColor("_BaseColor",Constants.ToColor((Constants.Color) i));
         }
     }
 
