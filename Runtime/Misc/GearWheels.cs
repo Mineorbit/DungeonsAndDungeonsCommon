@@ -12,7 +12,7 @@ public class GearWheels : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            speeds[i] = Random.Range(0, 1);
+            speeds[i] = Random.Range(0f,1f);
         }
     }
 
