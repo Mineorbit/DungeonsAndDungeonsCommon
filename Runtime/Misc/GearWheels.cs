@@ -9,7 +9,7 @@ public class GearWheels : MonoBehaviour
     private float[] speeds = new float[4];
     private float t = 0;
 
-    public float maxSpeed = 8f;
+    public float maxSpeed = 10f;
     // Start is called before the first frame update
     void Start()
     {
