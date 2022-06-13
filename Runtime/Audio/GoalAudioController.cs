@@ -11,16 +11,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Play(0);
         }
 
-        private float returnTime = 8f;
         public float PlayComplete()
         {
             AudioSource ambientSource = GetAudioSource(0,0);
+            AudioSource goalSource = GetAudioSource(1, 0);
             float queueNewSoundTime = ambientSource.clip.length - ambientSource.time;
-            StartCoroutine(returnToRegular(queueNewSoundTime));
-            return queueNewSoundTime+returnTime;
+            StartCoroutine(returnToRegular(queueNewSoundTime,goalSource.clip.length));
+            return queueNewSoundTime+goalSource.clip.length;
         }
 
-        IEnumerator returnToRegular(float transferTime)
+        IEnumerator returnToRegular(float transferTime,float returnTime)
         {;
             yield return new WaitForSeconds(transferTime);
             CrossFade(0,1,0.5f);
