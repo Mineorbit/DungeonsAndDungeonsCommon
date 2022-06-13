@@ -14,15 +14,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             AudioSource ambientSource = GetAudioSource(0,0);
             float queueNewSoundTime = ambientSource.clip.length - ambientSource.time;
-            ambientSource.SetScheduledEndTime(ambientSource.clip.length);
-            StartCoroutine(WaitForSound(queueNewSoundTime));
+            CrossFade(0,1,queueNewSoundTime);
             return queueNewSoundTime;
         }
         
-        IEnumerator WaitForSound(float t)
-        {
-            yield return new WaitForSeconds(t);
-            Play(1);
-        }
     }
 }
