@@ -122,7 +122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 737079225047138206}
-  - component: {fileID: 2761242345778366590}
+  - component: {fileID: 8688308455436499295}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -150,7 +150,7 @@ Transform:
   m_Father: {fileID: 3868432431943306793}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2761242345778366590
+--- !u!114 &8688308455436499295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,17 +159,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 831138589984339559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07f3fb3209cd92144bd8db06a206128a, type: 3}
+  m_Script: {fileID: 11500000, guid: 64ccbba9b8a83f2439781ad5b19da2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
   gearwheels:
   - {fileID: 149903736438201233}
   - {fileID: 6330059959967330263}
   - {fileID: 3538520860913232370}
   - {fileID: 5985584130846816640}
-  rotationHeight: 0.03
-  rotationSpeed: 8
 --- !u!1 &1532369123100809358
 GameObject:
   m_ObjectHideFlags: 0
@@ -4990,9 +4987,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  gearwheels: []
-  rotationHeight: 0.03
-  rotationSpeed: 8
 --- !u!1 &3538520860913232370
 GameObject:
   m_ObjectHideFlags: 0

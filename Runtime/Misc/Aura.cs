@@ -8,32 +8,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         // Start is called before the first frame update
         public Mesh mesh;
-        public GameObject[] gearwheels;
-        private float[] speeds = new float[4];
 
         void Start()
         {
             mesh = GetComponentInChildren<MeshFilter>().mesh;
-            for (int i = 0; i < 4; i++)
-            {
-                speeds[i] = Random.Range(0, 1);
-            }
+            
         }
 
         private float speed = 0.125f;
 
-        public float rotationHeight = 0.03f;
-
-        public float rotationSpeed = 8;
 
         // Update is called once per frame
-        private float t = 0;
 
         void Update()
         {
-            t += Time.deltaTime;
-            for(int i = 0;i<4;i++)
-                gearwheels[i].transform.Rotate(Vector3.up, Time.deltaTime * speeds[i]);
             Vector2[] uvs = mesh.uv;
             Vector2[] newuvs = (Vector2[]) uvs.Clone();
             for (int i = 0; i < uvs.Length; i++)
