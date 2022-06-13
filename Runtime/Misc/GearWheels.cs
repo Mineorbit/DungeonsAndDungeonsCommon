@@ -7,12 +7,14 @@ public class GearWheels : MonoBehaviour
     public GameObject[] gearwheels;
     private float[] speeds = new float[4];
     private float t = 0;
+
+    public float maxSpeed = 4f;
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < 4; i++)
         {
-            speeds[i] = Random.Range(0f,1f);
+            speeds[i] = Random.Range(0f,maxSpeed);
         }
     }
 
