@@ -100,7 +100,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 r = u - 2 * Vector3.Dot(n, u)*n;
             transform.position += r * 0.5f;
             r.Normalize();
-            rigidbody.AddForce(r*backMoveSpeed*0.0005f,ForceMode.Impulse);
+            rigidbody.AddForce(r*backMoveSpeed*0.5f);
             }
         }
 
