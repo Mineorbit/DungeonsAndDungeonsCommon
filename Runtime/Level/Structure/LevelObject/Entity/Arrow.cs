@@ -66,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
             transform.position += transform.forward*0.5f;
-            rigidbody.AddForce(transform.forward*shootingSpeed,ForceMode.Impulse);
+            rigidbody.AddForce(transform.forward*shootingSpeed,ForceMode.VelocityChange);
             shotArrow = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
@@ -96,11 +96,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             n.Normalize();
             Vector3 u = rigidbody.velocity;
-            float backMoveSpeed = rigidbody.velocity.magnitude;
-            Vector3 r = u - 2 * Vector3.Dot(n, u)*n;
-            transform.position += r * 0.5f;
-            r.Normalize();
-            rigidbody.AddForce(r*backMoveSpeed*0.5f);
+            Vector3 velocity = Vector3.Reflect(u, n);
+            rigidbody.velocity = velocity;
             }
         }
 
