@@ -96,11 +96,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
             n.Normalize();
             Vector3 u = rigidbody.velocity;
-            float speed = rigidbody.velocity.magnitude;
+            float backMoveSpeed = rigidbody.velocity.magnitude;
             Vector3 r = u - 2 * Vector3.Dot(n, u)*n;
             transform.position += r * 0.5f;
             r.Normalize();
-            rigidbody.AddForce(r*speed,ForceMode.Impulse);
+            rigidbody.AddForce(r*backMoveSpeed*0.05f,ForceMode.Impulse);
             }
         }
 
