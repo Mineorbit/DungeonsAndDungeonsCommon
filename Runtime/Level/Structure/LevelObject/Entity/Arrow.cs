@@ -87,6 +87,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnCollisionEnter(Collision other)
         {
+            if(flying)
+            {
             Vector3 n = Vector3.zero;
             for (int i = 0; i < other.contactCount; i++)
             {
@@ -98,6 +100,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.position += r * 0.5f;
             r.Normalize();
             rigidbody.AddForce(r*shootingSpeed,ForceMode.Impulse);
+            }
         }
 
         private void Update()
