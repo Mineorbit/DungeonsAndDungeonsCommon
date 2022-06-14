@@ -70,9 +70,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             shotArrow = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
+            Invoke(ArrowShot);
             Invoke("Drop",maxFlyingTime);
         }
 
+        public GameObject trails;
+        public void ArrowShot()
+        {
+            trails.SetActive(true);
+        }
+        
         public void Drop()
         {
             LevelManager.currentLevel.RemoveDynamic(this, true);

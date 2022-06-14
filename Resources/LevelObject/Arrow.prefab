@@ -132,6 +132,7 @@ MonoBehaviour:
   hitBox: {fileID: 5254828240742234081}
   shotArrow: 0
   test: {fileID: 0}
+  trails: {fileID: 7475696029844518168}
 --- !u!114 &-5779304019911664527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1644516826c57a845913389ce4c73968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  observed: {fileID: 0}
+  observed: {fileID: 3970649384900687766}
   existsOn: 01010101
   disabled_observed: 1
   valueChangedEvent:
@@ -537,7 +538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1486565174704645775
 Transform:
   m_ObjectHideFlags: 0
