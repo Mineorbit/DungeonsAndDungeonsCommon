@@ -29,8 +29,8 @@ public class GearWheels : MonoBehaviour
         t += Time.deltaTime;
         for (int i = 0; i < 4; i++)
         {
-            gearwheels[i].transform.Rotate(Vector3.up+Vector3.forward+Vector3.right, Time.deltaTime * speeds[i]);
-            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetFloat(Shader.PropertyToID("Rotation"),t*speeds[i]);
+            gearwheels[i].transform.GetChild(0).localRotation = Quaternion.Euler((Vector3.up+Vector3.forward+Vector3.right)* t * speeds[i]*2);
+            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetFloat(Shader.PropertyToID("Rotation"),t*speeds[i]*0.5f);
         }
     }
 }
