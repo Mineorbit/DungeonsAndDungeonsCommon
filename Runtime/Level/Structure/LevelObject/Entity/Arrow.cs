@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool shotArrow = false;
         private bool flying = false;
         
-        public float shootingSpeed = 0.5f;
+        public float shootingSpeed = 4f;
         private float maxFlyingTime = 10f;
 
         private Vector3 lastTarget;
