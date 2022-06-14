@@ -5312,6 +5312,7 @@ MonoBehaviour:
   hitbox: {fileID: 0}
   collider: {fileID: 9193898230414839886}
   goalAudioController: {fileID: 1047891406028894829}
+  gearWheels: {fileID: 8688308455436499295}
   winTime: 5
 --- !u!65 &9193898230414839886
 BoxCollider:
