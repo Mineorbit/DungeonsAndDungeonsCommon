@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool shotArrow = false;
         private bool flying = false;
         
-        private float speed = 2f;
+        public float shootingSpeed = 0.5f;
         private float maxFlyingTime = 10f;
 
         private Vector3 lastTarget;
@@ -66,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
             transform.position += transform.forward*0.5f;
-            rigidbody.AddForce(transform.forward*speed,ForceMode.Impulse);
+            rigidbody.AddForce(transform.forward*shootingSpeed,ForceMode.Impulse);
             shotArrow = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
@@ -87,12 +87,17 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void OnCollisionEnter(Collision other)
         {
-            Vector3 n= other.contacts[0].normal;
+            Vector3 n = Vector3.zero;
+            for (int i = 0; i < other.contactCount; i++)
+            {
+                n += other.GetContact(i).normal;
+            }
+            n.Normalize();
             Vector3 u = rigidbody.velocity;
             Vector3 r = u - 2 * Vector3.Dot(n, u)*n;
             transform.position += r * 0.5f;
             r.Normalize();
-            rigidbody.AddForce(r*speed,ForceMode.Impulse);
+            rigidbody.AddForce(r*shootingSpeed,ForceMode.Impulse);
         }
 
         private void Update()
