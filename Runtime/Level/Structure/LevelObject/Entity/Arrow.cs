@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool shotArrow = false;
         private bool flying = false;
         
-        private float speed = 20f;
+        private float speed = 15f;
         private float maxFlyingTime = 10f;
 
         private Vector3 lastTarget;
@@ -90,6 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 n= other.contacts[0].normal;
             Vector3 u = rigidbody.velocity;
             Vector3 r = u - 2 * Vector3.Dot(n, u)*n;
+            r.Normalize();
             rigidbody.AddForce(r*speed,ForceMode.Impulse);
         }
 
