@@ -35,6 +35,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void OnStartRound()
         {
             SetCollider();
+            for (int i = 0; i < 4 ;i++)
+            {
+                gearWheels.SetEffect(i,false);
+            }
         }
 
         public override void OnEndRound()
@@ -63,7 +67,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playersInside = new bool[4];
             for (int i = 0; i < 4 ;i++)
             {
-                gearWheels.SetEffect(i,true);
+                gearWheels.SetEffect(i,false);
             }
             goalAudioController.PlayAmbient();
             numberOfPlayersInside = 0;
