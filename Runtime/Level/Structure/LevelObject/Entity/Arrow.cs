@@ -63,6 +63,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             transform.rotation = aimDirection;
             flying = true;
+            rigidbody.isKinematic = false;
+            rigidbody.useGravity = true;
             rigidbody.AddForce(Vector3.forward*speed);
             shotArrow = true;
             hitBox.Attach("Entity");
