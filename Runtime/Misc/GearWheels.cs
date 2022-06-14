@@ -17,11 +17,18 @@ public class GearWheels : MonoBehaviour
         {
             speeds[i] = Random.Range(0f,maxSpeed);
            // gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetColor("_color",Constants.ToColor((Constants.Color) i));
-            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].color = Constants.ToColor((Constants.Color) i);
+            gearwheels[i].GetComponentsInChildren<MeshRenderer>()[0].materials[0].color = Constants.ToColor((Constants.Color) i);
+            gearwheels[i].GetComponentsInChildren<MeshRenderer>()[1].materials[0].color = Constants.ToColor((Constants.Color) i);
+            gearwheels[i].SetActive(false);
             
         }
     }
 
+    public void SetEffect(int i,bool a)
+    {
+        gearwheels[i].SetActive(a);
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -29,8 +36,9 @@ public class GearWheels : MonoBehaviour
         t += Time.deltaTime;
         for (int i = 0; i < 4; i++)
         {
-            gearwheels[i].transform.GetChild(0).localRotation = Quaternion.Euler((Vector3.up+Vector3.forward+Vector3.right)* t * speeds[i]*2);
-            gearwheels[i].GetComponentInChildren<MeshRenderer>().materials[0].SetFloat(Shader.PropertyToID("Rotation"),t*speeds[i]*0.5f);
+            gearwheels[i].transform.localRotation = Quaternion.Euler((Vector3.up+Vector3.forward+Vector3.right)* t * speeds[i]*2);
+            gearwheels[i].GetComponentsInChildren<MeshRenderer>()[0].materials[0].SetFloat(Shader.PropertyToID("Rotation"),t*speeds[i]*0.5f);
+            gearwheels[i].GetComponentsInChildren<MeshRenderer>()[1].materials[0].SetFloat(Shader.PropertyToID("Rotation"),t*speeds[i]*0.5f);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Collider collider;
 
         public GoalAudioController goalAudioController;
+        public GearWheels gearWheels;
         
         // Update is called once per frame
         private void Update()
@@ -69,6 +70,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
                 var p = PlayerManager.GetPlayerId(other);
                 if (p >= 0) playersInside[p] = true;
+                gearWheels.SetEffect(p,true);
                 PlayerManager.GetPlayerById(p).points += pointsForGoalReached;
                 CheckWinCondition();
         }
@@ -101,6 +103,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             var p = PlayerManager.GetPlayerId(other);
             if (p >= 0) playersInside[p] = false;
+            gearWheels.SetEffect(p,false);
         }
     }
 }
