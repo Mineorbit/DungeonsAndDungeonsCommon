@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
 	public class HitFX : FX
 	{
-		public ParticleSystem particleSystem;
+		public VisualEffect effect;
 		public HitFXAudioController hitFXAudioController;
 		private static float lastTime = 1f;
 		private Queue<FX> queue;
 		public override void Setup(Queue<FX> q)
 		{
 			gameObject.SetActive(false);
+			effect.Stop();
 			//particleSystem.Play();
 			queue = q;
 			Invoke("Despawn",lastTime);
@@ -23,7 +25,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     			gameObject.transform.position = position;
                 //PLAY SOUND OF HIT
                 hitFXAudioController.Cast();
-    			particleSystem.Play();
+    			effect.Play();
                 Invoke("Despawn",lastTime);
     		}
     		public override void  Despawn()

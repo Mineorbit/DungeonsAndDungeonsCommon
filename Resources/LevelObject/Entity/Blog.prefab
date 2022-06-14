@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 0
-  color: 0
-  elementType: {fileID: 0}
+  color: 1
+  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
   isDynamic: 0
   ActivateWhenInactive: 0
   levelObjectProperties: []
