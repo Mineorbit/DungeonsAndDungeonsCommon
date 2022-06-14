@@ -9772,6 +9772,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5db9e6e4a036c3848820bcfef31b2c41, type: 2}
   - {fileID: 11400000, guid: 7f3a5a44c52d80240a3c917c12cbb5f2, type: 2}
   - {fileID: 11400000, guid: 7f3a5a44c52d80240a3c917c12cbb5f2, type: 2}
+  currentBlend: []
   player: {fileID: 2633396581524973113}
 --- !u!1 &4672334940009596865
 GameObject:
@@ -9927,7 +9928,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 0
-  elementType: 0
+  color: 0
+  elementType: {fileID: 0}
   isDynamic: 0
   ActivateWhenInactive: 0
   levelObjectProperties: []
@@ -10051,7 +10053,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!208 &3276505641273256894
 NavMeshObstacle:
