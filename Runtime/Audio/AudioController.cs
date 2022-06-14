@@ -9,9 +9,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private AudioSource[][] audioSources;
         private int[] currentPlay;
 
+        public float[] currentBlend;
         public void Awake()
         {
             audioSources = new AudioSource[audioProfiles.Length][];
+            currentBlend = new float[audioProfiles.Length];
             SetupAudioProfiles();
         }
 
@@ -45,6 +47,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
+        public float GetCurrentBlend(int index)
+        {
+            return currentBlend[index];
+        }
+
 
         public void Blend(int index, float t)
         {
@@ -52,6 +59,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 audioSources[index][currentPlay[index]].volume = audioProfiles[index].VolumeCoefficient() *
                                                              ((1 - t) * audioProfiles[index].minVolume +
                                                               t * audioProfiles[index].maxVolume);
+            currentBlend[index] = t;
         }
 
         private IEnumerator CrossFader(int indexA, int indexB, float time)
@@ -77,7 +85,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (indexA != indexB)
                 Stop(indexA);
         }
+        
+        private IEnumerator Fader(int indexA, float time,float targetBlend)
+        {
+            float t = 0;
+            float a = GetCurrentBlend(indexA);
+            float b = targetBlend;
+            Blend(indexA, a);
+            while (t < time)
+            {
+                t += Time.deltaTime;
+                var fraction = t / time;
 
+                Blend(indexA, fraction*b + (1 - fraction)*a);
+
+                yield return 0;
+            }
+
+            Blend(indexA, b);
+        }
+
+        
+        public void Fade(int indexA, float timeForFade,float targetBlend)
+        {
+            var fader = Fader(indexA, timeForFade, targetBlend);
+            StartCoroutine(fader);
+        }
+        
         public void CrossFade(int indexA, int indexB, float timeForFade)
         {
             var fader = CrossFader(indexA, indexB, timeForFade);

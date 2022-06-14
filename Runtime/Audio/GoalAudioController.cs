@@ -11,6 +11,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Play(0);
         }
 
+        public void Level(int numberOfPlayers)
+        {
+            Fade(0,2f,((float) numberOfPlayers)/4f);
+            // ALSO CHANGE SPATIAL PART IN FUTURE TO LOWER VALUE
+        }
         public float PlayComplete()
         {
             AudioSource ambientSource = GetAudioSource(0,0);

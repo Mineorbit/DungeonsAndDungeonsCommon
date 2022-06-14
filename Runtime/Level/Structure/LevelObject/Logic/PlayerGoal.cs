@@ -9,6 +9,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public static UnityEvent GameWinEvent = new UnityEvent();
 
         public bool[] playersInside;
+        private int numberOfPlayersInside = 0;
         public Hitbox hitbox;
 
         public Collider collider;
@@ -76,6 +77,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (p >= 0) playersInside[p] = true;
                 gearWheels.SetEffect(p,true);
                 PlayerManager.GetPlayerById(p).points += pointsForGoalReached;
+                numberOfPlayersInside++;
+                goalAudioController.Level(numberOfPlayersInside);
                 CheckWinCondition();
         }
 
@@ -108,6 +111,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             var p = PlayerManager.GetPlayerId(other);
             if (p >= 0) playersInside[p] = false;
             gearWheels.SetEffect(p,false);
+            numberOfPlayersInside--;
+            goalAudioController.Level(numberOfPlayersInside);
         }
     }
 }
