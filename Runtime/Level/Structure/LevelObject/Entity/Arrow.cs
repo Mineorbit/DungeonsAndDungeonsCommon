@@ -66,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
             transform.position += transform.forward*0.5f;
-            rigidbody.AddForce(Vector3.forward*speed*8);
+            rigidbody.AddForce(transform.forward*speed*12);
             shotArrow = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
