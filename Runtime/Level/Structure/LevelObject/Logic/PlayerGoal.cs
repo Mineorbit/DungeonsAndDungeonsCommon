@@ -60,6 +60,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             hitbox.enterEvent.AddListener(x => { Enter(x); });
             hitbox.exitEvent.AddListener(x => { Exit(x); });
             playersInside = new bool[4];
+            for (int i = 0; i < 4 ;i++)
+            {
+                gearWheels.SetEffect(i,true);
+            }
             goalAudioController.PlayAmbient();
             
         }

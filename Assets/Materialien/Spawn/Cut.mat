@@ -169,6 +169,7 @@ Material:
     - DiffusionProfile_261f48f1fbc94ccbafc421414859c159: 0
     - DiffusionProfile_bfbe0deb8ec4428a9cfcdb968651903c: 0
     - Rotation: 0
+    - Strength: 5
     - Vector1_2D21A623: 0.05
     - Vector1_49C490F5: 0.8
     - Vector1_6C2C412D: 0
