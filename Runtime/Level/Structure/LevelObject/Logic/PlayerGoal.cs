@@ -66,7 +66,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 gearWheels.SetEffect(i,true);
             }
             goalAudioController.PlayAmbient();
-            
+            numberOfPlayersInside = 0;
+            goalAudioController.Level(numberOfPlayersInside);
         }
 
 
