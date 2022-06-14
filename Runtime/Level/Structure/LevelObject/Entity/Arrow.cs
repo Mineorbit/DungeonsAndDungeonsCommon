@@ -43,7 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool shotArrow = false;
         private bool flying = false;
         
-        private float speed = 0.5f;
+        private float speed = 1.5f;
         private float maxFlyingTime = 10f;
 
         private Vector3 lastTarget;
@@ -63,6 +63,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             transform.rotation = aimDirection;
             flying = true;
+            rigidbody.AddForce(Vector3.forward*speed);
             shotArrow = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
@@ -85,12 +86,5 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        void FixedUpdate()
-        {
-            if(flying)
-            {
-                transform.position += speed*transform.forward;
-            }
-        }
     }
 }
