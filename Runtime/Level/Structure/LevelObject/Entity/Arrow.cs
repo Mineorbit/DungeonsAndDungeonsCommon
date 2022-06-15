@@ -127,11 +127,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     
                     for (int i = -1; i < 1; i+=2)
                     {
-                        for (int i = -1; i < 1; i+=2)
+                        for (int j = -1; i < 1; i+=2)
                         {
                             Vector3 offset = Vector3.zero;
                             offset += i * transform.up;
-                            offset += i * transform.right;
+                            offset += j * transform.right;
 
                             if (Physics.Raycast(transform.position + offset, transform.TransformDirection(Vector3.forward), out hit, 0.5f))
                             {
