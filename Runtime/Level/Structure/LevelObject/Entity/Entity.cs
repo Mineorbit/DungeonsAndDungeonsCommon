@@ -197,9 +197,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             for (int i = 0; i < numberOfBlinks*2; i++)
             {
-                yield return new WaitForSeconds(cooldownTime / numberOfBlinks);
+                yield return new WaitForSeconds(cooldownTime / (numberOfBlinks*2));
                 model.SetActive(false);
-                yield return new WaitForSeconds(cooldownTime / numberOfBlinks);
+                yield return new WaitForSeconds(cooldownTime / (numberOfBlinks*2));
                 model.SetActive(true);
             }
         }
