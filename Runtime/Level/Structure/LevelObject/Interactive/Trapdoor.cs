@@ -27,19 +27,20 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             buildCollider.enabled = false;
         }
 
-        
+       
 
-        public override void Activate()
+        public override void OnActivated()
         {
-            if (!pressed)
-            {
-                pressed = true;
-                base.Activate();
-                blockingCollider.enabled = false;
-                AnimOpen();
-            }
+            blockingCollider.enabled = false;
+            AnimOpen();
         }
 
+        public override void OnDeactivated()
+        {
+            blockingCollider.enabled = true;
+            AnimClose();
+        }
+        
         public void AnimOpen()
         {
             switchingBaseAnimator.Set(true);
@@ -56,24 +57,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void ResetState()
         {
             base.ResetState();
-            bool retToUnp = returnToUnpress;
-            returnToUnpress = true;
             Deactivate();
-            returnToUnpress = retToUnp;
             // Factor out into parent eventually
             buildCollider.enabled = true;
         }
 
-        public override void Deactivate()
-        {
-            if (returnToUnpress)
-                if (pressed)
-                {
-                    pressed = false;
-                    base.Deactivate();
-                    blockingCollider.enabled = true;
-                    AnimClose();
-                }
-        }
     }
 }

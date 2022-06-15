@@ -37,21 +37,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (!activated && activeIn > 0)
             {
                 activated = true;
+                OnActivated();
                 foreach (var receiver in receivers.Values) receiver.Activate();
             }
         }
 
+        public virtual void OnActivated()
+        {
+            
+        }
+        
+        
         public virtual void Deactivate()
         {
             activeIn = Math.Max(0,activeIn-1);
             if (activated && activeIn == 0)
             {
                 activated = false;
+                OnDeactivated();
                 foreach (var receiver in receivers.Values) receiver.Deactivate();
             }
         }
 
-
+        public virtual void OnDeactivated()
+        {
+            
+        }
+        
         public void RemoveReceiver(InteractiveLevelObject o, Wire wireToO)
         {
             if (receivers.ContainsValue(o))
