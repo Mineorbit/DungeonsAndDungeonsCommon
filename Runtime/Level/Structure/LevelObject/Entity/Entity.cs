@@ -195,11 +195,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public GameObject model;
         IEnumerator HitCoolDownEffect(float cooldownTime)
         {
-            for (int i = 0; i < numberOfBlinks; i++)
+            for (int i = 0; i < numberOfBlinks*2; i++)
             {
                 yield return new WaitForSeconds(cooldownTime / numberOfBlinks);
                 model.SetActive(false);
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(cooldownTime / numberOfBlinks);
                 model.SetActive(true);
             }
         }
