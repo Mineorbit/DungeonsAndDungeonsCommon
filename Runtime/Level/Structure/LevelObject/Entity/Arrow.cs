@@ -85,6 +85,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevel.RemoveDynamic(this, true);
         }
 
+        private int bounces = 3;
         public void OnCollisionEnter(Collision other)
         {
             if(flying)
@@ -93,10 +94,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 n.Normalize();
                 
             Vector3 u = rigidbody.velocity;
-            transform.position += n;
+            transform.position += n*0.125f;
             Vector3 velocity = Vector3.Reflect(u, n);
             GameConsole.Log($"Velocity changed to: {velocity}");
             rigidbody.velocity = velocity;
+            bounces--;
+            if (bounces == 0)
+            {
+                Drop();
+            }
             }
         }
 
