@@ -89,13 +89,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(flying)
             {
-            Vector3 n = Vector3.zero;
-            for (int i = 0; i < other.contactCount; i++)
-            {
-                n += other.GetContact(i).normal;
-            }
-            n.Normalize();
+                Vector3 n = other.GetContact(0).normal;
+                n.Normalize();
+                
             Vector3 u = rigidbody.velocity;
+            transform.position += n;
             Vector3 velocity = Vector3.Reflect(u, n);
             GameConsole.Log($"Velocity changed to: {velocity}");
             rigidbody.velocity = velocity;
