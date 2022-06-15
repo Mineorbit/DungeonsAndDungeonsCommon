@@ -122,6 +122,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // Does the ray intersect any objects excluding the player layer
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f))
                 {
+                    if (hit.collider.gameObject.CompareTag("Entity"))
+                    {
+                        return;
+                    }
                     int hits = 1;
                     Vector3 normal = hit.normal;
                     
@@ -142,12 +146,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
 
                     normal = normal * (1 / hits);
+                    normal.Normalize();
                     Debug.DrawRay(transform.position,normal,Color.blue);
                     Debug.DrawRay(transform.position,transform.TransformDirection(Vector3.forward),Color.red);
-                    if (hit.collider.gameObject.CompareTag("Entity"))
-                    {
-                        return;
-                    }
+                    
                     Bounce(hit.normal);
                 }
                 
