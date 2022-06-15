@@ -97,7 +97,7 @@ MonoBehaviour:
   invincible: 0
   itemHitbox: {fileID: 0}
   itemsInProximity: []
-  maxHealth: 100
+  maxHealth: 50
   cooldown: 0
   allowedToMove: 0
   dazeTime: 1

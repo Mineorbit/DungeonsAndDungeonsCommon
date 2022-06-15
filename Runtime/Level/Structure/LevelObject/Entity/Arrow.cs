@@ -97,7 +97,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             n.Normalize();
             Vector3 u = rigidbody.velocity;
             Vector3 velocity = Vector3.Reflect(u, n);
-            GameConsole.Log($"Velocity chagned to: {velocity}");
+            GameConsole.Log($"Velocity changed to: {velocity}");
             rigidbody.velocity = velocity;
             }
         }
