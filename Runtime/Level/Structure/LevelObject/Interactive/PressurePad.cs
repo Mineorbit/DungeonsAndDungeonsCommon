@@ -8,13 +8,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Hitbox playerStandinghitbox;
         public Collider buildCollider;
 
-        public bool returnToUnpress;
 
         public float unpressTime = 5f;
 
         public ButtonBaseAnimator buttonBaseAnimator;
 
-        public bool pressed;
         public TimerManager.Timer unpressTimer;
 
 
@@ -35,11 +33,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 TimerManager.StopTimer(unpressTimer);
                 Activate();
             });
-            playerStandinghitbox.exitEvent.AddListener(x => { StartCoroutine(Unpress()); });
+            playerStandinghitbox.exitEvent.AddListener(x => { StartCoroutine(UnpressAfterTime()); });
         }
 
-        IEnumerator Unpress()
+        private IEnumerator UnpressAfterTime()
         {
+            GameConsole.Log("Starting Unpressing");
             yield return new WaitForSeconds(unpressTime);
             if (playerStandinghitbox.insideCounter == 0)
             {
@@ -50,10 +49,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public override void ResetState()
         {
             base.ResetState();
-            bool retToUnp = returnToUnpress;
-            returnToUnpress = true;
             Deactivate();
-            returnToUnpress = retToUnp;
             // Factor out into parent eventually
             buildCollider.enabled = true;
         }
