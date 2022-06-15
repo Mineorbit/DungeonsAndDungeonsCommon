@@ -149,6 +149,7 @@ MonoBehaviour:
   lastSpeedDirections: []
   speed: 0
   speedDirection: {x: 0, y: 0, z: 0}
+  model: {fileID: 6999214114318426713}
   ApplyMovement: 1
   aimRotation: {x: 0, y: 0, z: 0, w: 0}
   lastGrounded: 0
