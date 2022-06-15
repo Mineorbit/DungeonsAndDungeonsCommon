@@ -128,7 +128,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                     int hits = 1;
                     Vector3 normal = hit.normal;
-                    
+                    /*
                     for (int i = -1; i < 1; i+=2)
                     {
                         for (int j = -1; i < 1; i+=2)
@@ -144,7 +144,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                             }
                         }
                     }
-
+                    */
                     normal = normal * (1 / hits);
                     normal.Normalize();
                     Debug.DrawRay(transform.position,normal,Color.blue);
