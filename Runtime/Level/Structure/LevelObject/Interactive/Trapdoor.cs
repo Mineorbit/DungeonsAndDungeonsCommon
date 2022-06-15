@@ -4,18 +4,16 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 {
     public class Trapdoor : InteractiveLevelObject
     {
-        public Hitbox playerStandinghitbox;
         public Collider buildCollider;
 
         public bool returnToUnpress;
 
-        public float unpressTime = 5f;
 
-        public ButtonBaseAnimator buttonBaseAnimator;
+        public SwitchingLevelObjectBaseAnimator switchingBaseAnimator;
 
         public bool pressed;
-        public TimerManager.Timer unpressTimer;
 
+        public Collider blockingCollider;
 
         public override void OnInit()
         {
@@ -27,14 +25,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             base.OnStartRound();
             buildCollider.enabled = false;
-            playerStandinghitbox.Attach("Entity");
-
-            playerStandinghitbox.enterEvent.AddListener(x =>
-            {
-                TimerManager.StopTimer(unpressTimer);
-                if (!pressed) Activate();
-            });
-            playerStandinghitbox.exitEvent.AddListener(x => { StartUnpress(); });
         }
 
         
@@ -45,25 +35,22 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 pressed = true;
                 base.Activate();
-                Invoke(AnimPress);
+                blockingCollider.enabled = false;
+                AnimOpen();
             }
         }
 
-        public void AnimPress()
+        public void AnimOpen()
         {
-            buttonBaseAnimator.Press();
+            switchingBaseAnimator.Set(true);
         }
 
-        public void AnimUnpress()
+        public void AnimClose()
         {
-            buttonBaseAnimator.Unpress();
+            switchingBaseAnimator.Set(false);
         }
 
-        private void StartUnpress()
-        {
-            if (returnToUnpress && !TimerManager.isRunning(unpressTimer))
-                unpressTimer = TimerManager.StartTimer(unpressTime, () => { Deactivate(); });
-        }
+        
 
 
         public override void ResetState()
@@ -84,7 +71,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 {
                     pressed = false;
                     base.Deactivate();
-                    Invoke(AnimUnpress);
+                    blockingCollider.enabled = true;
+                    AnimClose();
                 }
         }
     }
