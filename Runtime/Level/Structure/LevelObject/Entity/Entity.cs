@@ -157,6 +157,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public void FinishCooldown()
         {
             cooldown = false;
+            StopCoroutine(flicker);
+            model.SetActive(true);
             setMovementStatus(true);
         }
 
@@ -180,13 +182,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             h.StopUse();
         }
 
-
+        public IEnumerator flicker;
         private void StartCooldown(float cooldownTime)
         {
             cooldown = true;
             if (model != null)
             {
-                StartCoroutine(HitCoolDownEffect(cooldownTime));
+                flicker = HitCoolDownEffect(cooldownTime);
+                StartCoroutine(flicker);
             }
             Invoke("FinishCooldown",cooldownTime);
         }
