@@ -40,6 +40,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameConsole.Log("Starting Unpressing");
             yield return new WaitForSeconds(unpressTime);
+            GameConsole.Log("Check: "+playerStandinghitbox.insideCounter);
             if (playerStandinghitbox.insideCounter == 0)
             {
                 Deactivate();

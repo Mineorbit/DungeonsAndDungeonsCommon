@@ -19,9 +19,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public string targetTag;
 
 
+        public List<GameObject> insideObjects;
         public int insideCounter = 0;
 
         public List<MonoBehaviour> storedObjects;
+        
+        
         public void Start()
         {
         
@@ -46,7 +49,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(!String.IsNullOrEmpty(targetTag))
                     if (other.gameObject.CompareTag(targetTag))
                     {
-                        insideCounter++;
+                        insideObjects.Add(other.gameObject);
+                        insideCounter = insideObjects.Count;
                         enterEvent.Invoke(other.gameObject);
                     }
             }catch (Exception e)
@@ -62,7 +66,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if(!String.IsNullOrEmpty(targetTag))
                     if (other.gameObject.CompareTag(targetTag))
                     {
-                        insideCounter--;
+                        insideObjects.RemoveAll((x) => x == other.gameObject);
+                        insideCounter = Math.Max(insideObjects.Count,0);
                         exitEvent.Invoke(other.gameObject);
                     }
             }
