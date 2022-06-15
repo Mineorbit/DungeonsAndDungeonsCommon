@@ -66,7 +66,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
             transform.position += transform.forward*0.5f;
-            rigidbody.AddForce(transform.forward*shootingSpeed,ForceMode.VelocityChange);
+            rigidbody.AddForce(transform.forward*shootingSpeed);
             shotArrow = true;
             hitBox.Attach("Entity");
             hitBox.enterEvent.AddListener(x => { TryDamage(x); });
@@ -90,7 +90,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             if(flying)
             {
-                Vector3 n = other.GetContact(0).normal;
+                Vector3 n = -other.GetContact(0).normal;
                 Vector3 u = rigidbody.velocity;
                 transform.position += n*0.25f;
                 Vector3 velocity = Vector3.Reflect(u, n);
