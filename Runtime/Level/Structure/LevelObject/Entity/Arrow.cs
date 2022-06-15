@@ -10,8 +10,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Bow shootingBow;
         // Start is called before the first frame update
         public Hitbox hitBox;
+        private int bounces = 32;
         void Start()
         {
+            shootingSpeed = 28f;
             transform.parent = shootingBow.transform;
             transform.localPosition = new Vector3(0, 0, 0);
             transform.localRotation = Quaternion.identity;
@@ -86,7 +88,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevel.RemoveDynamic(this, true);
         }
 
-        private int bounces = 3;
         public void OnCollisionEnter(Collision info)
         {
             if(flying)
