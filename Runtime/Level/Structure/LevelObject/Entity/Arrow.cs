@@ -15,6 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.parent = shootingBow.transform;
             transform.localPosition = new Vector3(0, 0, 0);
             transform.localRotation = Quaternion.identity;
+            rigidbody.centerOfMass = Vector3.forward * 0.45f;
         }
         private void TryDamage(GameObject g)
         {
@@ -43,7 +44,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool shotArrow = false;
         private bool flying = false;
         
-        public float shootingSpeed = 4f;
+        public float shootingSpeed = 24f;
         private float maxFlyingTime = 10f;
 
         private Vector3 lastTarget;
@@ -86,21 +87,31 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
         private int bounces = 3;
-        public void OnCollisionEnter(Collision other)
+        public void OnCollisionEnter(Collision info)
         {
             if(flying)
             {
-                Vector3 n = -other.GetContact(0).normal;
-                Vector3 u = rigidbody.velocity;
-                transform.position += n*0.25f;
-                Vector3 velocity = Vector3.Reflect(u, n);
-                GameConsole.Log($"Velocity changed to: {velocity}");
-                rigidbody.velocity = velocity;
-                bounces--;
-                if (bounces == 0)
-                { 
-                    Drop();
+                // THIS CODE WAS IN PART COPIED FROM https://answers.unity.com/questions/279634/collisions-getting-the-normal-of-the-collision-sur.html
+                var point = info.contacts[0].point;
+                var dir = -info.contacts[0].normal;
+                point -= dir;
+                RaycastHit hitInfo;
+                if(info.collider.Raycast( new Ray( point, dir ), out hitInfo, 2 ) )
+                {
+                    // this is the collider surface normal
+                    var n = hitInfo.normal;
+                    Vector3 u = rigidbody.velocity;
+                    transform.position += n*0.125f;
+                    Vector3 velocity = Vector3.Reflect(u, n);
+                    GameConsole.Log($"Velocity changed from: {u} to: {velocity}");
+                    rigidbody.velocity = velocity;
+                    bounces--;
+                    if (bounces == 0)
+                    { 
+                        Drop();
+                    }
                 }
+                
             }
         }
 
