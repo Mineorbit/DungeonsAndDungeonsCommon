@@ -191,7 +191,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Invoke("FinishCooldown",cooldownTime);
         }
 
-        private int numberOfBlinks = 16;
+        private int numberOfBlinks = 8;
         public GameObject model;
         IEnumerator HitCoolDownEffect(float cooldownTime)
         {
