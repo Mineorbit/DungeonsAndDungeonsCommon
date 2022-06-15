@@ -18,32 +18,28 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             navMeshObstacle.enabled = true;
         }
 
-        public override void Activate()
+        public override void OnActivated()
         {
-            base.Activate();
-            Invoke(SetOpen);
+            SetOpen();
             navMeshObstacle.enabled = false;
         }
-
+        public override void OnDeactivated()
+        {
+            SetClosed();
+            navMeshObstacle.enabled = true;
+        }
         public void SetOpen()
         {
-            Debug.Log("Opening Gate");
             gateBaseAnimator.Set(true);
             gateCollider.enabled = false;
         }
 
         public void SetClosed()
         {
-            Debug.Log("Closing Gate");
             gateBaseAnimator.Set(false);
             gateCollider.enabled = true;
         }
 
-        public override void Deactivate()
-        {
-            base.Deactivate();
-            Invoke(SetClosed);
-            navMeshObstacle.enabled = true;
-        }
+        
     }
 }

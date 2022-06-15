@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
@@ -32,39 +33,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             playerStandinghitbox.enterEvent.AddListener(x =>
             {
                 TimerManager.StopTimer(unpressTimer);
-                if (!pressed) Activate();
+                Activate();
             });
-            playerStandinghitbox.exitEvent.AddListener(x => { StartUnpress(); });
+            playerStandinghitbox.exitEvent.AddListener(x => { StartCoroutine(Unpress()); });
         }
 
-        
-
-        public override void Activate()
+        IEnumerator Unpress()
         {
-            if (!pressed)
+            yield return new WaitForSeconds(unpressTime);
+            if (playerStandinghitbox.insideCounter == 0)
             {
-                pressed = true;
-                base.Activate();
-                Invoke(AnimPress);
+                Deactivate();
             }
         }
-
-        public void AnimPress()
-        {
-            buttonBaseAnimator.Press();
-        }
-
-        public void AnimUnpress()
-        {
-            buttonBaseAnimator.Unpress();
-        }
-
-        private void StartUnpress()
-        {
-            if (returnToUnpress && !TimerManager.isRunning(unpressTimer))
-                unpressTimer = TimerManager.StartTimer(unpressTime, () => { Deactivate(); });
-        }
-
 
         public override void ResetState()
         {
@@ -76,16 +57,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // Factor out into parent eventually
             buildCollider.enabled = true;
         }
-
-        public override void Deactivate()
+        
+        public override void OnActivated()
         {
-            if (returnToUnpress)
-                if (pressed)
-                {
-                    pressed = false;
-                    base.Deactivate();
-                    Invoke(AnimUnpress);
-                }
+            buttonBaseAnimator.Press();
+        }
+        
+        public override void OnDeactivated()
+        {
+            buttonBaseAnimator.Unpress();
         }
     }
 }

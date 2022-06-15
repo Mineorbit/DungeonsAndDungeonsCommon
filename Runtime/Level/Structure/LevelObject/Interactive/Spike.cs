@@ -47,7 +47,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public override void OnActivated()
         {
-            
             spikeBaseAnimator.Set(false);
             Hitbox.Deactivate();
         }
