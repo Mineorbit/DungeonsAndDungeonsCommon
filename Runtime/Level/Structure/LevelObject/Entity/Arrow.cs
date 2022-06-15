@@ -114,18 +114,36 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 } 
             }
         }
-        
         private void FixedUpdate()
         {
             if(flying)
             {
                 RaycastHit hit;
                 // Does the ray intersect any objects excluding the player layer
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.47f))
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f))
                 {
-                    GameConsole.Log("TAG: '"+hit.collider.gameObject.tag+"' "+hit.collider.gameObject.name);
-                    Debug.DrawRay(transform.position,hit.normal);
-                    Debug.DrawRay(transform.position,transform.TransformDirection(Vector3.forward));
+                    int hits = 1;
+                    Vector3 normal = hit.normal;
+                    
+                    for (int i = -1; i < 1; i+=2)
+                    {
+                        for (int i = -1; i < 1; i+=2)
+                        {
+                            Vector3 offset = Vector3.zero;
+                            offset += i * transform.up;
+                            offset += i * transform.right;
+
+                            if (Physics.Raycast(transform.position + offset, transform.TransformDirection(Vector3.forward), out hit, 0.5f))
+                            {
+                                normal += hit.normal;
+                                hits++;
+                            }
+                        }
+                    }
+
+                    normal = normal * (1 / hits);
+                    Debug.DrawRay(transform.position,normal,Color.blue);
+                    Debug.DrawRay(transform.position,transform.TransformDirection(Vector3.forward),Color.red);
                     if (hit.collider.gameObject.CompareTag("Entity"))
                     {
                         return;
