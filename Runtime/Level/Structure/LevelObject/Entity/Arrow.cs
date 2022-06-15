@@ -94,7 +94,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             // THIS CODE WAS IN PART COPIED FROM https://answers.unity.com/questions/279634/collisions-getting-the-normal-of-the-collision-sur.html
             Vector3 u = rigidbody.velocity;
             transform.position += normal*0.125f;
-            Vector3 velocity = Vector3.Reflect(u, n);
+            Vector3 velocity = Vector3.Reflect(u, normal);
             GameConsole.Log($"Velocity changed from: {u} to: {velocity}");
             rigidbody.velocity = velocity;
             bounces--;
