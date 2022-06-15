@@ -184,7 +184,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private void StartCooldown(float cooldownTime)
         {
             cooldown = true;
+            if (model != null)
+            {
+                StartCoroutine(HitCoolDownEffect(cooldownTime));
+            }
             Invoke("FinishCooldown",cooldownTime);
+        }
+
+        private int numberOfBlinks = 16;
+        public GameObject model;
+        IEnumerator HitCoolDownEffect(float cooldownTime)
+        {
+            for (int i = 0; i < numberOfBlinks; i++)
+            {
+                yield return new WaitForSeconds(cooldownTime / numberOfBlinks);
+                model.SetActive(false);
+                yield return new WaitForEndOfFrame();
+                model.SetActive(true);
+            }
         }
 
         //EVENTS ALWAYS LAST

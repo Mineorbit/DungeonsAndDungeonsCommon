@@ -89,19 +89,30 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             LevelManager.currentLevel.RemoveDynamic(this, true);
         }
 
+        private bool canBounce = true;
+
+        IEnumerator Wait()
+        {
+            yield return new WaitForSeconds(0.125f);
+            canBounce = true;
+        }
         private void Bounce(Vector3 normal)
         {
-            // THIS CODE WAS IN PART COPIED FROM https://answers.unity.com/questions/279634/collisions-getting-the-normal-of-the-collision-sur.html
-            Vector3 u = rigidbody.velocity;
-            transform.position += normal*0.125f;
-            Vector3 velocity = Vector3.Reflect(u, normal);
-            GameConsole.Log($"Velocity changed from: {u} to: {velocity}");
-            rigidbody.velocity = velocity;
-            bounces--;
-            if (bounces == 0)
-            { 
-                Drop();
-            } 
+            if(canBounce)
+            {
+                canBounce = false;
+                StartCoroutine(Wait());
+                Vector3 u = rigidbody.velocity;
+                transform.position += normal*0.025f;
+                Vector3 velocity = Vector3.Reflect(u, normal);
+                //GameConsole.Log($"Velocity changed from: {u} to: {velocity}");
+                rigidbody.velocity = velocity;
+                bounces--;
+                if (bounces == 0)
+                { 
+                    Drop();
+                } 
+            }
         }
         
         private void FixedUpdate()
@@ -112,7 +123,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 // Does the ray intersect any objects excluding the player layer
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.47f))
                 {
-                    if (hit.collider.gameObject.tag == "Entity")
+                    GameConsole.Log("TAG: '"+hit.collider.gameObject.tag+"' "+hit.collider.gameObject.name);
+                    if (hit.collider.gameObject.CompareTag("Entity"))
                     {
                         return;
                     }
