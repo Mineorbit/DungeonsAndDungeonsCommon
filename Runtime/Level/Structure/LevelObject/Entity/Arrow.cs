@@ -110,8 +110,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 RaycastHit hit;
                 // Does the ray intersect any objects excluding the player layer
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.45f))
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.47f))
                 {
+                    if (hit.collider.gameObject.tag == "Entity")
+                    {
+                        return;
+                    }
                     Bounce(hit.normal);
                 }
                 
