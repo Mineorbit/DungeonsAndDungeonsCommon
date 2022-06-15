@@ -18,7 +18,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             transform.parent = shootingBow.transform;
             transform.localPosition = new Vector3(0, 0, 0);
             transform.localRotation = Quaternion.identity;
-            rigidbody.centerOfMass = Vector3.forward * 0.45f;
+            rigidbody.centerOfMass = Vector3.forward * 0.125f;
         }
         private void TryDamage(GameObject g)
         {
@@ -93,40 +93,56 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         IEnumerator Wait()
         {
-            yield return new WaitForSeconds(0.125f);
+            yield return new WaitForSeconds(0.0125f);
             canBounce = true;
         }
-        private void Bounce(Vector3 normal)
+
+        public float minSpeed = 5;        
+        public float minBounceSpeed = 5;
+
+        private void Bounce(Vector3 normal,Vector3 hitPoint)
         {
+            if (rigidbody.velocity.magnitude < minBounceSpeed)
+            {
+                return;
+            }
+
             if(canBounce)
             {
                 canBounce = false;
                 StartCoroutine(Wait());
                 Vector3 u = rigidbody.velocity;
-                transform.position += normal*0.025f;
+                Debug.DrawRay(transform.position,u,Color.green);
                 Vector3 velocity = Vector3.Reflect(u, normal);
                 //GameConsole.Log($"Velocity changed from: {u} to: {velocity}");
-                rigidbody.velocity = velocity;
+               // transform.position += velocity*0.025f;
+                transform.rotation = Quaternion.LookRotation(velocity);
+                transform.position = hitPoint;
+                rigidbody.velocity = velocity/2;
                 bounces--;
-                if (bounces == 0)
+                if (bounces == 0 || velocity.magnitude < minSpeed )
                 { 
                     Drop();
                 } 
+                
+                Debug.DrawRay(transform.position,normal,Color.blue);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward), Color.red);
+                Debug.Break();
             }
         }
         private void FixedUpdate()
         {
             if(flying)
             {
+                GameConsole.Log(rigidbody.velocity.magnitude.ToString());
                 RaycastHit hit;
                 // Does the ray intersect any objects excluding the player layer
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f))
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.4f))
                 {
                     if (hit.collider.gameObject.CompareTag("Entity"))
                     {
                         return;
                     }
-                    int hits = 1;
                     Vector3 normal = hit.normal;
                     /*
                     for (int i = -1; i < 1; i+=2)
@@ -145,17 +161,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         }
                     }
                     */
-                    normal = normal * (1 / hits);
-                    normal.Normalize();
-                    Debug.DrawRay(transform.position,normal,Color.blue);
-                    Debug.DrawRay(transform.position,transform.TransformDirection(Vector3.forward),Color.red);
-                    
-                    Bounce(hit.normal);
+                    Bounce(hit.normal,hit.point);
                 }
                 
             }
         }
 
+        /*
+        void OnCollisionEnter(Collision collision)
+        {
+            Bounce(collision.contacts[0].normal);
+        }
+        */
         private void Update()
         {
             if (!shotArrow)
