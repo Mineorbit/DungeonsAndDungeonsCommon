@@ -124,6 +124,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 0.47f))
                 {
                     GameConsole.Log("TAG: '"+hit.collider.gameObject.tag+"' "+hit.collider.gameObject.name);
+                    Debug.DrawRay(transform.position,hit.normal);
+                    Debug.DrawRay(transform.position,transform.TransformDirection(Vector3.forward));
                     if (hit.collider.gameObject.CompareTag("Entity"))
                     {
                         return;
