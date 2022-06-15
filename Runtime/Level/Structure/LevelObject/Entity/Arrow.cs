@@ -112,7 +112,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 canBounce = false;
                 StartCoroutine(Wait());
                 Vector3 u = rigidbody.velocity;
-                Debug.DrawRay(transform.position,u,Color.green);
                 Vector3 velocity = Vector3.Reflect(u, normal);
                 //GameConsole.Log($"Velocity changed from: {u} to: {velocity}");
                // transform.position += velocity*0.025f;
@@ -125,9 +124,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     Drop();
                 } 
                 
+                /*
+                Debug.DrawRay(transform.position,u,Color.green);
                 Debug.DrawRay(transform.position,normal,Color.blue);
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward), Color.red);
                 Debug.Break();
+                */
             }
         }
         private void FixedUpdate()
