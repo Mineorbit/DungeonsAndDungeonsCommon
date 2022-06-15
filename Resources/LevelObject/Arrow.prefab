@@ -131,7 +131,7 @@ MonoBehaviour:
   shootingBow: {fileID: 0}
   hitBox: {fileID: 5254828240742234081}
   shotArrow: 0
-  shootingSpeed: 10
+  shootingSpeed: 100
   test: {fileID: 0}
   trails: {fileID: 7475696029844518168}
 --- !u!114 &-5779304019911664527
