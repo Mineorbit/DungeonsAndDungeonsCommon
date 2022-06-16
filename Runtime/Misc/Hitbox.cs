@@ -47,7 +47,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             try
             {
                 if(!String.IsNullOrEmpty(targetTag))
-                    if (other.gameObject.CompareTag(targetTag))
+                    if (other.gameObject.CompareTag(targetTag) && !insideObjects.Contains(other.gameObject))
                     {
                         insideObjects.Add(other.gameObject);
                         insideCounter = insideObjects.Count;
@@ -64,7 +64,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             try
             {
                 if(!String.IsNullOrEmpty(targetTag))
-                    if (other.gameObject.CompareTag(targetTag))
+                    if (other.gameObject.CompareTag(targetTag) && insideObjects.Contains(other.gameObject))
                     {
                         insideObjects.RemoveAll((x) => x == other.gameObject);
                         insideCounter = Math.Max(insideObjects.Count,0);

@@ -43,6 +43,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log("Check: "+playerStandinghitbox.insideCounter);
             if (playerStandinghitbox.insideCounter == 0)
             {
+                GameConsole.Log("Deactivating");
                 Deactivate();
             }
         }
