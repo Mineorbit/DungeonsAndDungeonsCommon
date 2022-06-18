@@ -22,13 +22,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void FixedUpdate()
         {
-            if (!me.enabled)
+            if(me != null)
             {
-                me.ComputeCurrentSpeed();
-                me.UpdateGround();
+                if (!me.enabled)
+                {
+                    me.ComputeCurrentSpeed();
+                    me.UpdateGround();
+                }
+                speed = me.speed;
             }
-            speed = me.speed;
-            
         }
 
         public virtual void Hit()
