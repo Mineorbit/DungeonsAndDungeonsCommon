@@ -14,7 +14,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         private GameObject spawnedEnemy;
 
-        private GameObject model;
+        public GameObject model;
 
         //Change to on remove
 
@@ -37,7 +37,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             spawnCount = maxSpawnCount;
             SetCollider();
-            model = transform.Find("Model").gameObject;
             SpawnEnemy();
             model.SetActive(false);
         }

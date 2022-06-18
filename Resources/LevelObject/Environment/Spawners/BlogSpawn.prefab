@@ -86,6 +86,7 @@ MonoBehaviour:
   levelObjectProperties: []
   EnemyToSpawn: {fileID: 11400000, guid: 004b72feca8fde54d827e864e3a7f547, type: 2}
   spawnOffset: {x: 0, y: -0.25, z: 0}
+  model: {fileID: 8481799529828780976}
 --- !u!65 &-5099622664477059230
 BoxCollider:
   m_ObjectHideFlags: 0
