@@ -2,7 +2,31 @@ fileFormatVersion: 2
 guid: afd7e014ab16b1e4eb74f234e31575c0
 ModelImporter:
   serializedVersion: 22103
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -9181611325785216782
+    second: ribo_rig|ribo_rigAction
+  - first:
+      74: -3594883561298463437
+    second: cs_c_eye_offset|ribo_rigAction
+  - first:
+      74: 5439630277687669910
+    second: cs_c_eyelid_micro|ribo_rigAction
+  - first:
+      74: -3249073535757733856
+    second: cs_plane_5|ribo_rigAction
+  - first:
+      74: -3222666277917482582
+    second: cs_c_eye|ribo_rigAction
+  - first:
+      74: -8168049401032846743
+    second: cs_plane_4_fill|ribo_rigAction
+  - first:
+      74: -1470160997819145957
+    second: cs_solid_plane_5_blue|ribo_rigAction
+  - first:
+      74: -7205972642273277161
+    second: cs_solid_plane_5_red|ribo_rigAction
   externalObjects:
   - first:
       type: UnityEngine:Material
