@@ -14,16 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 337420626772665352, guid: 9c8bd4cf871eb0b4bbc599ad5ba60f0c, type: 3}
   uniqueLevelObjectId: 26
-  granularity: 1
   levelObjectName: Lever
+  color: 0
+  elementType: {fileID: 0}
+  granularity: 1
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   inLevel: 1
+  maximumNumber: 0
   cursorMesh: {fileID: 0}
-  elementType: 7
-  properties: []
-  cursorScale: {x: 1, y: 1, z: 1}
+  cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
+  properties: []

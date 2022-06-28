@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 837793679921949131, guid: 4952964a048be6c4ba255e9a6aadceb5, type: 3}
   uniqueLevelObjectId: 7
-  granularity: 1
   levelObjectName: Red Spawn
+  color: 1
+  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
+  granularity: 1
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   inLevel: 1
-  cursorMesh: {fileID: 0}
   maximumNumber: 0
-  color: 1
-  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
-  properties: []
-  cursorScale: {x: 1, y: 1, z: 1}
+  cursorMesh: {fileID: 0}
+  cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
+  properties: []

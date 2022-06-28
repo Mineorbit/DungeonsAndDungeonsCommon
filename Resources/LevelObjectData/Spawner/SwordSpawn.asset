@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8532608643960838078, guid: 65a0a8cf0308cb2449f7702a08f147e1, type: 3}
   uniqueLevelObjectId: 38
-  granularity: 1
   levelObjectName: 
+  color: 0
+  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
+  granularity: 1
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   inLevel: 1
+  maximumNumber: 0
   cursorMesh: {fileID: 0}
-  cursorScale: {x: 30, y: 30, z: 30}
+  cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: -90, y: 0, z: 0}
+  properties: []

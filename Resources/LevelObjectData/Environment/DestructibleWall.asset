@@ -14,16 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2514303551500228265, guid: eef22e695ba7fd047a19e97f479b73e0, type: 3}
   uniqueLevelObjectId: 40
-  granularity: 1
   levelObjectName: Destructible Wall
+  color: 0
+  elementType: {fileID: 0}
+  granularity: 1
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   inLevel: 1
+  maximumNumber: 0
   cursorMesh: {fileID: 0}
-  elementType: 8
-  properties: []
-  cursorScale: {x: 1, y: 1, z: 1}
+  cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
+  properties: []

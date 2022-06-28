@@ -14,19 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6588752901228617255, guid: 0b62ba4054928c5499881a4eea271092, type: 3}
   uniqueLevelObjectId: 39
-  granularity: 1
   levelObjectName: Wooden Sign
+  color: 0
+  elementType: {fileID: 0}
+  granularity: 1
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
   Buildable: 1
   inLevel: 1
+  maximumNumber: 0
   cursorMesh: {fileID: 0}
-  elementType: 7
-  properties:
-  - name: text
-    _value: 
-    defaultValue: This is a sign
-  cursorScale: {x: 1, y: 1, z: 1}
+  cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
+  properties:
+  - name: text
+    valueChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    defaultValue: This is a sign
