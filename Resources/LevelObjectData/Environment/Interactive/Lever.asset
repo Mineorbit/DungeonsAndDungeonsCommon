@@ -24,7 +24,7 @@ MonoBehaviour:
   Buildable: 1
   inLevel: 1
   maximumNumber: 0
-  cursorMesh: {fileID: 0}
+  cursorMesh: {fileID: 5951740857127971673, guid: 547f2aaa0e7f6a94fae9402c2a315b92, type: 3}
   cursorScale: {x: 2, y: 2, z: 2}
   cursorOffset: {x: 0, y: 0, z: 0}
   cursorRotation: {x: 0, y: 0, z: 0}
