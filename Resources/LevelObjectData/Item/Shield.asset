@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6116505687544139644, guid: a887bd9f1820cd348a87c90473bd0add, type: 3}
   uniqueLevelObjectId: 32
-  granularity: 1
   levelObjectName: Shield
+  color: 0
+  elementType: {fileID: 11400000, guid: 3703400835f26d544966f14b5c509f06, type: 2}
+  granularity: 1
   dynamicInstantiable: 1
   levelInstantiable: 0
   ActivateWhenInactive: 0
   Buildable: 0
   inLevel: 1
+  maximumNumber: 0
   cursorMesh: {fileID: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   cursorOffset: {x: 0, y: 0, z: 0}
-  cursorRotation: {x: -90, y: 0, z: 0}
+  cursorRotation: {x: 0, y: 0, z: 0}
+  properties: []
