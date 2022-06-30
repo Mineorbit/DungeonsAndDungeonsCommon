@@ -242,19 +242,21 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         }
 
 
-        
-        
-        
+        private float eps = 0.001f;
 
         public IEnumerator FinishKickback()
         {
-            while (rigidbody.velocity.sqrMagnitude > 0 && !isGrounded)
+            while (rigidbody.velocity.sqrMagnitude  < eps)
             {
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForFixedUpdate();
             }
-            
+            while (!isGrounded)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+                        
             float ySpeed = rigidbody.velocity.y;
-            
+                        
             rigidbody.isKinematic = true;
             rigidbody.useGravity = false;
             setMovementStatus(true);
