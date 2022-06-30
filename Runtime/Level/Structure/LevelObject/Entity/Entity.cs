@@ -246,8 +246,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         
 
-        public virtual void FinishKickback()
+        public IEnumerator FinishKickback()
         {
+            while (rigidbody.velocity.sqrMagnitude > 0 && !isGrounded)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            
+            float ySpeed = rigidbody.velocity.y;
+            
             rigidbody.isKinematic = true;
             rigidbody.useGravity = false;
             setMovementStatus(true);
@@ -272,7 +279,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             rigidbody.useGravity = true;
             GameConsole.Log($"Kickback Strength: {force} Direction: {direction}");
             rigidbody.AddForce(direction*force,ForceMode.VelocityChange);
-            Invoke("FinishKickback",time);
+            //Invoke("FinishKickback",time);
+            StartCoroutine(FinishKickback());
         }
 
         

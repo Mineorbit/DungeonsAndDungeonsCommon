@@ -139,6 +139,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 shield.Invoke(shield.BlockAttackEffect);
             }
         }
+        
+        /*
 
 
         public override void FinishKickback()
@@ -155,6 +157,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             GameConsole.Log($"Height Increase: {(heightRay - hit.distance) }");
         }
 
+*/
 
         public override void OnDestroy()
         {
