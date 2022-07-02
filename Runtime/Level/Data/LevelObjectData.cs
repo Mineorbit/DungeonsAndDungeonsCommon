@@ -36,6 +36,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public bool ActivateWhenInactive;
 
+        public bool Tiled;
+        
         public bool Buildable;
 
         public bool inLevel = true;

@@ -12,6 +12,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     {
         public MeshFilter _meshFilter;
 
+
+        public LevelObjectData levelObjectType;
+        
         private int gridSize = 8;
         public Mesh mesh;
 
