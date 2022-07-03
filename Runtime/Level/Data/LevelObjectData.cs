@@ -13,6 +13,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
     public class LevelObjectData : Instantiable
     {
         public static List<LevelObjectData> all = new List<LevelObjectData>();
+
+        public TileLevelObjectData tileLevelObjectData;
         
         public ushort uniqueLevelObjectId;
 
@@ -21,14 +23,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         [Header("Attributes")]
 
         public Constants.Color color;
-        
 
         public ElementType elementType = ElementType.defaultElementType;
         
         [Header("Level Placement Settings")]
         
         public float granularity;
-
 
         public bool dynamicInstantiable;
 
@@ -43,11 +43,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool inLevel = true;
         
         public int maximumNumber;
-        [Header("Preview Settings")]
-        public Mesh cursorMesh;
-
-       
         
+        [Header("Preview Settings")]
+       
+        public Mesh cursorMesh;
         public Vector3 cursorScale;
         public Vector3 cursorOffset;
         public Vector3 cursorRotation;
