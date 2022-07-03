@@ -185,6 +185,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public override GameObject Create(Vector3 location, Quaternion rotation, Transform parent,Util.Optional<int> identity)
         {
+            
             var g = base.Create(location, rotation, parent);
             var lO = g.GetComponent<LevelObject>();
             

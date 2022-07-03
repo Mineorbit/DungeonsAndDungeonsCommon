@@ -272,6 +272,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 return null;
             }
 
+           
+            
             if (GetLevelObjectAt(position) != null)
             {
                 GameConsole.Log($"There already is an object at {position}");
@@ -279,8 +281,14 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
                 
             var chunk = ChunkManager.GetChunk(position);
+            
             if (chunk != null)
             {
+                if (levelObjectData.Tiled)
+                {
+                    chunk.AddTiledLevelObject(levelObjectData,position);
+                    return null;
+                }
                 var g = levelObjectData.Create(position, rotation, chunk.transform,identity);
                 LevelObject levelObject = g.GetComponent<LevelObject>();
                 levelObject.enabled = activated || levelObjectData.ActivateWhenInactive;

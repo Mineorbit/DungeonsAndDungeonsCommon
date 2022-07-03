@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffaa5ea4408ba54c9ed531ac2c9586d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chunkId: 
+  finishedLoading: 0
+  chunkSystemPrefab: {fileID: 6320108142847688066, guid: 111f9f1ff7548084dafe55e3f4879fed, type: 3}

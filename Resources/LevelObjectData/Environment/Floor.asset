@@ -22,7 +22,7 @@ MonoBehaviour:
   dynamicInstantiable: 0
   levelInstantiable: 1
   ActivateWhenInactive: 0
-  Tiled: 0
+  Tiled: 1
   Buildable: 1
   inLevel: 1
   maximumNumber: 0
