@@ -233,6 +233,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 				if(levelObjectInstance.Identity != 0)
                 	id.Set(levelObjectInstance.Identity);
                 result = Add(d, pos, rot, id);
+                if(result != null)
+                {
+                    // HERE WE SHOULD PROBABLY CHECK IF THE ADDED GAMEOBJECT WAS OF TYPE WHERE IT IS NETWORKED OR INTERACTIVE
                 NetworkLevelObject networkLevelObject = result.GetComponent<NetworkLevelObject>();
                 foreach (Property p in levelObjectInstance.Properties)
                 {
@@ -249,6 +252,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 		GameConsole.Log("Adding Receiver "+identity+" from LevelObjectInstance");
                 		interactiveLevelObject.AddReceiver(identity);
                 	}
+                }
                 }
             }
             else
