@@ -31,6 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameObject tileSystem = Instantiate(chunkSystemPrefab,transform) as GameObject;
             CubeTileGrid s = tileSystem.GetComponent<CubeTileGrid>();
+            s.Init();
             tileSystems.Add(d.uniqueLevelObjectId, s);
             return s;
         }
