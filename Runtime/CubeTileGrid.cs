@@ -22,6 +22,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public MeshCollider meshCollider;
 
+        private bool initialized = false;
         // Start is called before the first frame update
         void Start()
         {
@@ -32,24 +33,29 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             //_meshFilter.sharedMesh = mesh;
         }
 
-        public void Init()
+        public void Init(int size = 2)
         {
-            existingCubes = new bool[gridSize * gridSize * gridSize];
-            mesh = new Mesh();
-            mesh.name = "Grid";
-            Vector3[] vertices = new Vector3[gridSize * gridSize * gridSize];
-            for (int i = 0; i < gridSize; i++)
+            if (!initialized)
             {
-                for (int j = 0; j < gridSize; j++)
+                initialized = true;
+                
+                existingCubes = new bool[gridSize * gridSize * gridSize];
+                mesh = new Mesh();
+                mesh.name = "Grid";
+                Vector3[] vertices = new Vector3[gridSize * gridSize * gridSize];
+                for (int i = 0; i < gridSize; i++)
                 {
-                    for (int k = 0; k < gridSize; k++)
+                    for (int j = 0; j < gridSize; j++)
                     {
-                        vertices[ConvertCoordinates(i, j, k)] = new Vector3(i, j, k);
+                        for (int k = 0; k < gridSize; k++)
+                        {
+                            vertices[ConvertCoordinates(i, j, k)] = new Vector3(size*i, size*j, size*k);
+                        }
                     }
                 }
-            }
 
-            mesh.vertices = vertices;
+                mesh.vertices = vertices;
+            }
         }
 
         int ConvertCoordinates(int i, int j, int k)
