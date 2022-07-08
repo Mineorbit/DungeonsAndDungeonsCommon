@@ -27,10 +27,15 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         void Start()
         {
             Init();
+            //_meshFilter.sharedMesh = mesh;
+        }
+
+        public void UpdateData()
+        {
+            
             _meshFilter.mesh = mesh;
             meshCollider.sharedMesh = mesh;
             meshCollider.convex = true;
-            //_meshFilter.sharedMesh = mesh;
         }
 
         public void Init(int size = 2)
@@ -178,6 +183,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             mesh.RecalculateNormals();
 
+            UpdateData();
         }
 
         public void RemoveCube(int x, int y, int z)
@@ -260,6 +266,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
             mesh.RecalculateNormals();
+            UpdateData();
         }
 
 
