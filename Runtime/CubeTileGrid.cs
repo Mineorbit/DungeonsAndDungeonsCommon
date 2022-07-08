@@ -35,7 +35,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
             _meshFilter.mesh = mesh;
             meshCollider.sharedMesh = mesh;
-            meshCollider.convex = true;
         }
 
         public void Init(int size = 2)
@@ -100,8 +99,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool Exists(int x, int y, int z) => existingCubes[ConvertCoordinates(x, y, z)];
 
 
-        public void AddCube(int x, int y, int z)
+        public void AddCube(int x1, int y1, int z1)
         {
+            int x = x1 / 2;
+            int y = y1 / 2;
+            int z = z1 / 2;
             if (Exists(x, y, z))
             {
                 return;
@@ -186,8 +188,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             UpdateData();
         }
 
-        public void RemoveCube(int x, int y, int z)
+        public void RemoveCube(int x1, int y1, int z1)
         {
+            int x = x1 / 2;
+            int y = y1 / 2;
+            int z = z1 / 2;
             if (!Exists(x, y, z))
             {
                 return;
