@@ -44,11 +44,12 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         // Simultaneous Updates
 
         public static int allowedEntries = 4;
-        
+        public bool changeImplemented = true;
         public void FixedUpdate()
         {
-            if (allowedEntries > 0)
+            if (!changeImplemented && allowedEntries > 0)
             {
+                changeImplemented = true;
                 allowedEntries--;
                 UpdateData();
                 allowedEntries++;
@@ -258,10 +259,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 AddFace(ind, Face.Right);
             }
 
-
-
-
-            UpdateData();
+            changeImplemented = false;
         }
 
         public void RemoveCube(int x1, int y1, int z1)
@@ -344,7 +342,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 RemoveFace(ind, Face.Right);
             }
 
-
+            changeImplemented = false;
         }
 
 
