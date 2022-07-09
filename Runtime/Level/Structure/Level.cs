@@ -290,7 +290,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 if (levelObjectData.Tiled)
                 {
-                    chunk.AddTiledLevelObject(levelObjectData,position);
+                    TiledLevelObject tileLevelObject = chunk.AddTiledLevelObject(levelObjectData,position);
+                    
+                    
                     return null;
                 }
                 var g = levelObjectData.Create(position, rotation, chunk.transform,identity);

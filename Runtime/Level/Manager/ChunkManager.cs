@@ -389,6 +389,24 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         
         public static float storageMultiplier = 2f;
 	
+        public static LevelObjectInstanceData[] InstanceToData(TiledLevelObject o, Chunk c)
+        {
+            TiledLevelObject.TileLevelObject[] tiles = o.GetTiles();
+            LevelObjectInstanceData[] instanceData = new LevelObjectInstanceData[tiles.Length];
+            for(int i = 0;i<tiles.Length;i++)
+            {
+                LevelObjectInstanceData levelObjectInstanceData = new LevelObjectInstanceData();
+                levelObjectInstanceData.X = (uint) tiles[i].x;
+                levelObjectInstanceData.Y = (uint) tiles[i].y;
+                levelObjectInstanceData.Z = (uint) tiles[i].z;
+                
+                levelObjectInstanceData.Code = o.levelObjectDataType;
+                instanceData[i] = levelObjectInstanceData;
+            }
+            // THIS IS NOT GOOD AND MUST BE REPLACED LATER ON
+            return instanceData;
+        }
+        
         public static LevelObjectInstanceData InstanceToData(InteractiveLevelObject o, Chunk c)
         {
             LevelObjectInstanceData levelObjectInstanceData = InstanceToData((LevelObject) o, c);
@@ -450,7 +468,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             chunkData.ChunkId = chunk.chunkId;
             foreach (LevelObject l in instances)
             {
-                chunkData.Data.Add(InstanceToData(l as dynamic, chunk));
+                chunkData.Data.AddRange(InstanceToData(l as dynamic, chunk));
             }
 
             return chunkData;

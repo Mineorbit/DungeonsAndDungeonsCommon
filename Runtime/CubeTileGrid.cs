@@ -15,7 +15,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public LevelObjectData levelObjectType;
         
-        private int gridSize = 8;
+        public int gridSize = 8;
         public Mesh mesh;
 
         private bool[] existingCubes;

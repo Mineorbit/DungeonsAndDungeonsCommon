@@ -31,6 +31,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             GameObject tileSystem = Instantiate(chunkSystemPrefab,transform) as GameObject;
             CubeTileGrid s = tileSystem.GetComponent<CubeTileGrid>();
+            tileSystem.GetComponent<TiledLevelObject>().levelObjectDataType = d.uniqueLevelObjectId;
             s.Init();
             tileSystems.Add(d.uniqueLevelObjectId, s);
             return s;
@@ -54,7 +55,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Vector3 diff = position - transform.position;
             return ((int) diff.x, (int) diff.y, (int) diff.z);
         }
-        public void AddTiledLevelObject(LevelObjectData levelObjectData,Vector3 position)
+        public TiledLevelObject AddTiledLevelObject(LevelObjectData levelObjectData,Vector3 position)
         {
             CubeTileGrid tileSystem;
             if (!tileSystems.TryGetValue(levelObjectData.uniqueLevelObjectId, out tileSystem))
@@ -64,6 +65,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             var (a, b, c) = GetLocalCoordinates(position);
             tileSystem.AddCube(a,b,c);
+            return tileSystem.GetComponent<TiledLevelObject>();
         }
     }
 
