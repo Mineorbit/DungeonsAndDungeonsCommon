@@ -34,9 +34,66 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateData()
         {
+
+            Mesh renderedMesh = Split(mesh);
             
-            _meshFilter.mesh = mesh;
-            meshCollider.sharedMesh = mesh;
+            _meshFilter.mesh = renderedMesh;
+            meshCollider.sharedMesh = renderedMesh;
+        }
+
+
+        struct FaceData
+        {
+            public Vector3 x0; //lb
+            public Vector3 x1; //rb
+            public Vector3 x2; //lh
+            public Vector3 x3; //rh
+            
+        }
+        
+        public Mesh Split(Mesh m)
+        {
+            Mesh renderedMesh = new Mesh();
+            List<FaceData> faces = new List<FaceData>();
+            for (int i = 0;i<m.vertices.Length;i+=6)
+            {
+                FaceData faceData = new FaceData();
+                faceData.x0 = m.vertices[m.triangles[i]];
+                faceData.x1 = m.vertices[m.triangles[i + 1]];
+                faceData.x2 = m.vertices[m.triangles[i + 2]];
+                faceData.x3 = m.vertices[m.triangles[i + 3]];
+                /*
+                tris[start] = cube_ind[lb];
+                tris[start + 3] = tris[start + 2] = cube_ind[lh];
+                tris[start + 4] = tris[start + 1] = cube_ind[rb];
+                tris[start + 5] = cube_ind[rh];
+                */
+                faces.Add(faceData);
+            }
+
+            renderedMesh.vertices = new Vector3[4*faces.Count];
+            renderedMesh.triangles = new int[6*faces.Count];
+            int count = 0;
+            foreach (var face in faces)
+            {
+                int tri_start = count *6;
+                int vert_start = count * 4;
+
+                renderedMesh.vertices[vert_start] = face.x0; //lb
+                renderedMesh.vertices[vert_start + 1] = face.x1; //rb
+                renderedMesh.vertices[vert_start + 2] = face.x2; // lh
+                renderedMesh.vertices[vert_start + 3] = face.x3; // rh
+                
+                
+                renderedMesh.triangles[tri_start] = vert_start;
+                renderedMesh.triangles[tri_start + 3] = renderedMesh.triangles[tri_start + 2] = vert_start + 2;
+                renderedMesh.triangles[tri_start + 4] = renderedMesh.triangles[tri_start + 1] = vert_start + 1;
+                renderedMesh.triangles[tri_start + 5] = vert_start + 3;
+
+                count += 1;
+            }
+            renderedMesh.RecalculateNormals();
+            return renderedMesh;
         }
 
         public void Init(int cSize = 2)
