@@ -17,7 +17,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public LevelObjectData levelObjectType;
         
         public int gridSize = 8;
-        public Mesh mesh;
 
         private bool[] existingCubes;
 
@@ -26,6 +25,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         private bool initialized = false;
 
         public int cubeSize = 2;
+
+        public Vector3[] vertices;
         // Start is called before the first frame update
         void Start()
         {
@@ -35,7 +36,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateData()
         {
-            Mesh renderedMesh = Split(mesh);
+            Mesh renderedMesh = Split();
             
             _meshFilter.mesh = renderedMesh;
             meshCollider.sharedMesh = renderedMesh;
@@ -69,8 +70,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
         }
 
-        struct FaceData
+        public struct FaceData
         {
+            public int x, y, z;
+            public Face face;
             public Vector3 x0; //lb
             public Vector3 x1; //rb
             public Vector3 x2; //lh
@@ -78,11 +81,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             
         }
         
-        public Mesh Split(Mesh m)
+        public Mesh Split()
         {
             Mesh renderedMesh = new Mesh();
-            renderedMesh.name = m.name;
-            List<FaceData> faces = new List<FaceData>();
+            renderedMesh.name = "grid";
+            /*
             for (int i = 0;i<m.triangles.Length;i+=6)
             {
                 GameConsole.Log("Adding Face");
@@ -96,9 +99,10 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 tris[start + 3] = tris[start + 2] = cube_ind[lh];
                 tris[start + 4] = tris[start + 1] = cube_ind[rb];
                 tris[start + 5] = cube_ind[rh];
-                */
+                
                 faces.Add(faceData);
             }
+             */
 
             Vector3[] new_verts = new Vector3[4*faces.Count];
             int[] new_tris = new int[6*faces.Count];
@@ -133,11 +137,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             {
                 cubeSize = cSize;
                 initialized = true;
-                
                 existingCubes = new bool[gridSize * gridSize * gridSize];
-                mesh = new Mesh();
-                mesh.name = "Grid";
-                Vector3[] vertices = new Vector3[gridSize * gridSize * gridSize];
+                vertices = new Vector3[gridSize * gridSize * gridSize];
                 for (int i = 0; i < gridSize; i++)
                 {
                     for (int j = 0; j < gridSize; j++)
@@ -149,7 +150,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                     }
                 }
 
-                mesh.vertices = vertices;
             }
         }
 
@@ -235,11 +235,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((x + 1) < gridSize && Exists(x + 1, y, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x + 1, y, z);
-                RemoveFace(ind2, Face.Front);
+                RemoveFace(Face.Front,x,y,z);
             }
             else
             {
-                AddFace(ind, Face.Back);
+                AddFace(ind, Face.Back,x,y,z);
             }
 
 
@@ -247,43 +247,43 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((y + 1) < gridSize && Exists(x, y + 1, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y + 1, z);
-                RemoveFace(ind2, Face.Bottom);
+                RemoveFace(Face.Bottom,x,y,z);
             }
             else
             {
-                AddFace(ind, Face.Top);
+                AddFace(ind, Face.Top,x,y,z);
             }
 
             if ((z + 1) < gridSize && Exists(x, y, z + 1))
             {
                 int[] ind2 = GetVerticesOfBlock(1, y, z + 1);
-                RemoveFace(ind2, Face.Right);
+                RemoveFace( Face.Right,x,y,z);
             }
             else
             {
-                AddFace(ind, Face.Left);
+                AddFace(ind, Face.Left,x,y,z);
             }
 
 
             if (0 <= (x - 1) && Exists(x - 1, y, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x - 1, y, z);
-                RemoveFace(ind2, Face.Back);
+                RemoveFace(Face.Back,x,y,z);
             }
             else
             {
-                AddFace(ind, Face.Front);
+                AddFace(ind, Face.Front,x,y,z);
             }
 
 
             if (0 <= (y - 1) && Exists(x, y - 1, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y - 1, z);
-                RemoveFace(ind2, Face.Top);
+                RemoveFace(Face.Top,x,y,z);
             }
             else
             {
-                AddFace(ind, Face.Bottom);
+                AddFace(ind, Face.Bottom,x,y,z);
             }
 
 
@@ -291,11 +291,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (0 <= (z - 1) && Exists(x, y, z - 1))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y, z - 1);
-                RemoveFace(ind2, Face.Left);
+                RemoveFace(Face.Left,x,y,z);
             }
             else
             {
-                AddFace(ind, Face.Right);
+                AddFace(ind, Face.Right,x,y,z);
             }
 
             changeImplemented = false;
@@ -318,11 +318,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((x + 1) < gridSize && Exists(x + 1, y, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x + 1, y, z);
-                AddFace(ind2, Face.Front);
+                AddFace(ind2, Face.Front,x,y,z);
             }
             else
             {
-                RemoveFace(ind, Face.Back);
+                RemoveFace( Face.Back,x,y,z);
             }
 
 
@@ -330,43 +330,43 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((y + 1) < gridSize && Exists(x, y + 1, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y + 1, z);
-                AddFace(ind2, Face.Bottom);
+                AddFace(ind2, Face.Bottom,x,y,z);
             }
             else
             {
-                RemoveFace(ind, Face.Top);
+                RemoveFace(Face.Top,x,y,z);
             }
 
             if ((z + 1) < gridSize && Exists(x, y, z + 1))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y, z + 1);
-                AddFace(ind2, Face.Right);
+                AddFace(ind2, Face.Right,x,y,z);
             }
             else
             {
-                RemoveFace(ind, Face.Left);
+                RemoveFace(Face.Left,x,y,z);
             }
 
 
             if (0 <= (x - 1) && Exists(x - 1, y, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x - 1, y, z);
-                AddFace(ind2, Face.Back);
+                AddFace(ind2, Face.Back,x,y,z);
             }
             else
             {
-                RemoveFace(ind, Face.Front);
+                RemoveFace(Face.Front,x,y,z);
             }
 
 
             if (0 <= (y - 1) && Exists(x, y - 1, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y - 1, z);
-                AddFace(ind2, Face.Top);
+                AddFace(ind2, Face.Top,x,y,z);
             }
             else
             {
-                RemoveFace(ind, Face.Bottom);
+                RemoveFace(Face.Bottom,x,y,z);
             }
 
 
@@ -374,11 +374,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (0 <= (z - 1) && Exists(x, y, z - 1))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y, z - 1);
-                AddFace(ind2, Face.Left);
+                AddFace(ind2, Face.Left,x,y,z);
             }
             else
             {
-                RemoveFace(ind, Face.Right);
+                RemoveFace(Face.Right,x,y,z);
             }
 
             changeImplemented = false;
@@ -395,6 +395,81 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             Bottom
         }
 
+
+        public List<FaceData> faces = new List<FaceData>();
+        public void AddFace(int[] cube_ind, Face face,int x,int y,int z)
+        {
+
+            int lb = 2;
+            int rb = 0;
+            int lh = 3;
+            int rh = 1;
+
+            switch (face)
+            {
+                case Face.Front:
+                    break;
+                case Face.Left:
+                    lb = 1;
+                    rb = 5;
+                    lh = 3;
+                    rh = 7;
+                    break;
+                case Face.Back:
+
+                    lb = 4;
+                    rb = 6;
+                    lh = 5;
+                    rh = 7;
+                    break;
+                case Face.Right:
+                    lb = 2;
+                    rb = 6;
+                    lh = 0;
+                    rh = 4;
+                    break;
+
+                case Face.Top:
+                    lb = 2;
+                    rb = 3;
+                    lh = 6;
+                    rh = 7;
+                    break;
+
+
+                case Face.Bottom:
+                    lb = 0;
+                    rb = 4;
+                    lh = 1;
+                    rh = 5;
+                    break;
+
+            }
+
+            FaceData faceData = new FaceData();
+            faceData.x = x;
+            faceData.y = y;
+            faceData.z = z;
+            faceData.face = face;
+       
+            faceData.x0 = vertices[cube_ind[lb]];
+            faceData.x1 = vertices[cube_ind[rb]];
+            faceData.x2 = vertices[cube_ind[lh]];
+            faceData.x3 = vertices[cube_ind[rh]];
+                 
+            //lb
+            //rb
+            //lh
+            //rh
+            faces.Add(faceData);
+        }
+
+
+        public void RemoveFace(Face face, int x, int y, int z)
+        {
+            faces.RemoveAll((f) => (f.face == face && f.x == x && f.y == y && f.z ==z));
+        }
+        /*
         public void RemoveFace(int[] cube_ind, Face face)
         {
             int[] tris = (int[]) mesh.triangles.Clone();
@@ -484,64 +559,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             mesh.triangles = tris;
         }
-
-        public void AddFace(int[] cube_ind, Face face)
-        {
-            int[] tris = (int[]) mesh.triangles.Clone();
-            int start = tris.Length;
-            Array.Resize(ref tris, tris.Length + 6);
-
-            int lb = 2;
-            int rb = 0;
-            int lh = 3;
-            int rh = 1;
-
-            switch (face)
-            {
-                case Face.Front:
-                    break;
-                case Face.Left:
-                    lb = 1;
-                    rb = 5;
-                    lh = 3;
-                    rh = 7;
-                    break;
-                case Face.Back:
-
-                    lb = 4;
-                    rb = 6;
-                    lh = 5;
-                    rh = 7;
-                    break;
-                case Face.Right:
-                    lb = 2;
-                    rb = 6;
-                    lh = 0;
-                    rh = 4;
-                    break;
-
-                case Face.Top:
-                    lb = 2;
-                    rb = 3;
-                    lh = 6;
-                    rh = 7;
-                    break;
-
-
-                case Face.Bottom:
-                    lb = 0;
-                    rb = 4;
-                    lh = 1;
-                    rh = 5;
-                    break;
-
-            }
-
-            tris[start] = cube_ind[lb];
-            tris[start + 3] = tris[start + 2] = cube_ind[lh];
-            tris[start + 4] = tris[start + 1] = cube_ind[rb];
-            tris[start + 5] = cube_ind[rh];
-            mesh.triangles = tris;
-        }
+        */
+        
     }
 }
