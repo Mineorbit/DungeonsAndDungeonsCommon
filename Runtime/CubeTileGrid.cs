@@ -34,7 +34,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public void UpdateData()
         {
-
             Mesh renderedMesh = Split(mesh);
             
             _meshFilter.mesh = renderedMesh;
@@ -54,9 +53,11 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public Mesh Split(Mesh m)
         {
             Mesh renderedMesh = new Mesh();
+            renderedMesh.name = m.name;
             List<FaceData> faces = new List<FaceData>();
             for (int i = 0;i<m.triangles.Length;i+=6)
             {
+                GameConsole.Log("Adding Face");
                 FaceData faceData = new FaceData();
                 faceData.x0 = m.vertices[m.triangles[i]]; //lb
                 faceData.x1 = m.vertices[m.triangles[i + 1]]; //rb
@@ -71,8 +72,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 faces.Add(faceData);
             }
 
-            renderedMesh.vertices = new Vector3[4*faces.Count];
-            renderedMesh.triangles = new int[6*faces.Count];
+            Vector3[] new_verts = new Vector3[4*faces.Count];
+            int[] new_tris = new int[6*faces.Count];
             int count = 0;
             foreach (var face in faces)
             {
@@ -92,6 +93,8 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
                 count += 1;
             }
+            renderedMesh.vertices = new_verts;
+            renderedMesh.triangles =  new_tris;
             renderedMesh.RecalculateNormals();
             return renderedMesh;
         }
