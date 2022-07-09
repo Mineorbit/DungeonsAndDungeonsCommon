@@ -234,8 +234,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if ((x + 1) < gridSize && Exists(x + 1, y, z))
             {
-                int[] ind2 = GetVerticesOfBlock(x + 1, y, z);
-                RemoveFace(Face.Front,x,y,z);
+                RemoveFace(Face.Front,x+1,y,z);
             }
             else
             {
@@ -246,8 +245,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if ((y + 1) < gridSize && Exists(x, y + 1, z))
             {
-                int[] ind2 = GetVerticesOfBlock(x, y + 1, z);
-                RemoveFace(Face.Bottom,x,y,z);
+                RemoveFace(Face.Bottom,x,y+1,z);
             }
             else
             {
@@ -256,8 +254,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if ((z + 1) < gridSize && Exists(x, y, z + 1))
             {
-                int[] ind2 = GetVerticesOfBlock(1, y, z + 1);
-                RemoveFace( Face.Right,x,y,z);
+                RemoveFace( Face.Right,x,y,z+1);
             }
             else
             {
@@ -267,8 +264,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (0 <= (x - 1) && Exists(x - 1, y, z))
             {
-                int[] ind2 = GetVerticesOfBlock(x - 1, y, z);
-                RemoveFace(Face.Back,x,y,z);
+                RemoveFace(Face.Back,x-1,y,z);
             }
             else
             {
@@ -278,8 +274,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (0 <= (y - 1) && Exists(x, y - 1, z))
             {
-                int[] ind2 = GetVerticesOfBlock(x, y - 1, z);
-                RemoveFace(Face.Top,x,y,z);
+                RemoveFace(Face.Top,x,y-1,z);
             }
             else
             {
@@ -290,8 +285,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
             if (0 <= (z - 1) && Exists(x, y, z - 1))
             {
-                int[] ind2 = GetVerticesOfBlock(x, y, z - 1);
-                RemoveFace(Face.Left,x,y,z);
+                RemoveFace(Face.Left,x,y,z-1);
             }
             else
             {
@@ -318,7 +312,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((x + 1) < gridSize && Exists(x + 1, y, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x + 1, y, z);
-                AddFace(ind2, Face.Front,x,y,z);
+                AddFace(ind2, Face.Front,x+1,y,z);
             }
             else
             {
@@ -330,7 +324,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((y + 1) < gridSize && Exists(x, y + 1, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y + 1, z);
-                AddFace(ind2, Face.Bottom,x,y,z);
+                AddFace(ind2, Face.Bottom,x,y+1,z);
             }
             else
             {
@@ -340,7 +334,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((z + 1) < gridSize && Exists(x, y, z + 1))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y, z + 1);
-                AddFace(ind2, Face.Right,x,y,z);
+                AddFace(ind2, Face.Right,x,y,z+1);
             }
             else
             {
@@ -351,7 +345,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (0 <= (x - 1) && Exists(x - 1, y, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x - 1, y, z);
-                AddFace(ind2, Face.Back,x,y,z);
+                AddFace(ind2, Face.Back,x-1,y,z);
             }
             else
             {
@@ -362,7 +356,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (0 <= (y - 1) && Exists(x, y - 1, z))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y - 1, z);
-                AddFace(ind2, Face.Top,x,y,z);
+                AddFace(ind2, Face.Top,x,y-1,z);
             }
             else
             {
@@ -374,7 +368,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if (0 <= (z - 1) && Exists(x, y, z - 1))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y, z - 1);
-                AddFace(ind2, Face.Left,x,y,z);
+                AddFace(ind2, Face.Left,x,y,z-1);
             }
             else
             {
