@@ -5,6 +5,7 @@ using System.Linq;
 using com.mineorbit.dungeonsanddungeonscommon;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace com.mineorbit.dungeonsanddungeonscommon
 {
@@ -40,6 +41,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             meshCollider.sharedMesh = renderedMesh;
         }
 
+        // Simultaneous Updates
+
+        public static int allowedEntries = 4;
+        
+        public FixedUpdate()
+        {
+            if (allowedEntries > 0)
+            {
+                allowedEntries--;
+                UpdateData();
+                allowedEntries++;
+            }
+        }
 
         struct FaceData
         {
@@ -77,7 +91,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             int count = 0;
             foreach (var face in faces)
             {
-                int tri_start = count *6;
+                int tri_start = count * 6;
                 int vert_start = count * 4;
 
                 new_verts[vert_start] = face.x0; //lb
@@ -246,7 +260,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
 
 
-            mesh.RecalculateNormals();
 
             UpdateData();
         }
@@ -290,7 +303,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             if ((z + 1) < gridSize && Exists(x, y, z + 1))
             {
                 int[] ind2 = GetVerticesOfBlock(x, y, z + 1);
-                GameConsole.Log("TEST");
                 AddFace(ind2, Face.Right);
             }
             else
@@ -333,8 +345,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             }
 
 
-            mesh.RecalculateNormals();
-            UpdateData();
         }
 
 
