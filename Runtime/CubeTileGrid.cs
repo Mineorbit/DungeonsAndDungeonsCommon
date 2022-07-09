@@ -47,6 +47,18 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool changeImplemented = true;
         public void FixedUpdate()
         {
+            // Currently add atmost one cube per frame
+            if (addCubes.Count > 0)
+            {
+                var ce = addCubes.Dequeue();
+                _AddCube(ce.x,ce.y,ce.z);
+            }
+            if (removeCubes.Count > 0)
+            {
+                var ce = addCubes.Dequeue();
+                _RemoveCube(ce.x,ce.y,ce.z);
+            }
+            
             if (!changeImplemented && allowedEntries > 0)
             {
                 GameConsole.Log("Entered");
@@ -55,7 +67,6 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                 UpdateData();
                 allowedEntries++;
             }
-            Debug.Break();
         }
 
         struct FaceData
@@ -179,7 +190,33 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         public bool Exists(int x, int y, int z) => existingCubes[ConvertCoordinates(x, y, z)];
 
 
+        struct CubeEntry
+        {
+            public int x;
+            public int y;
+            public int z;
+        }
+        Queue<CubeEntry> addCubes = new Queue<CubeEntry>();
+        Queue<CubeEntry> removeCubes = new Queue<CubeEntry>();
+
         public void AddCube(int x1, int y1, int z1)
+        {
+            CubeEntry ce = new CubeEntry();
+            ce.x = x1;
+            ce.y = y1;
+            ce.z = z1;
+            addCubes.Enqueue(ce);
+        }
+
+        public void RemoveCube(int x1, int y1, int z1)
+        {
+            CubeEntry ce = new CubeEntry();
+            ce.x = x1;
+            ce.y = y1;
+            ce.z = z1;
+            removeCubes.Enqueue(ce);
+        }
+        public void _AddCube(int x1, int y1, int z1)
         {
             int x = x1 / 2;
             int y = y1 / 2;
@@ -264,7 +301,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             changeImplemented = false;
         }
 
-        public void RemoveCube(int x1, int y1, int z1)
+        public void _RemoveCube(int x1, int y1, int z1)
         {
             int x = x1 / 2;
             int y = y1 / 2;
