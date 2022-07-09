@@ -45,7 +45,7 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         public static int allowedEntries = 4;
         
-        public FixedUpdate()
+        public void FixedUpdate()
         {
             if (allowedEntries > 0)
             {
