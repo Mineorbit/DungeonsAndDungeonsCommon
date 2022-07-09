@@ -43,17 +43,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
 
         // Simultaneous Updates
 
-        public static int allowedEntries = 4;
+        public static int allowedEntries = 1;
         public bool changeImplemented = true;
         public void FixedUpdate()
         {
             if (!changeImplemented && allowedEntries > 0)
             {
+                GameConsole.Log("Entered");
                 changeImplemented = true;
                 allowedEntries--;
                 UpdateData();
                 allowedEntries++;
             }
+            Debug.Break();
         }
 
         struct FaceData
