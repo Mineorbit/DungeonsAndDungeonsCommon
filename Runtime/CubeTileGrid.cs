@@ -55,13 +55,13 @@ namespace com.mineorbit.dungeonsanddungeonscommon
         {
             Mesh renderedMesh = new Mesh();
             List<FaceData> faces = new List<FaceData>();
-            for (int i = 0;i<m.vertices.Length;i+=6)
+            for (int i = 0;i<m.triangles.Length;i+=6)
             {
                 FaceData faceData = new FaceData();
-                faceData.x0 = m.vertices[m.triangles[i]];
-                faceData.x1 = m.vertices[m.triangles[i + 1]];
-                faceData.x2 = m.vertices[m.triangles[i + 2]];
-                faceData.x3 = m.vertices[m.triangles[i + 3]];
+                faceData.x0 = m.vertices[m.triangles[i]]; //lb
+                faceData.x1 = m.vertices[m.triangles[i + 1]]; //rb
+                faceData.x2 = m.vertices[m.triangles[i + 2]]; //lh
+                faceData.x3 = m.vertices[m.triangles[i + 5]]; //rh
                 /*
                 tris[start] = cube_ind[lb];
                 tris[start + 3] = tris[start + 2] = cube_ind[lh];
