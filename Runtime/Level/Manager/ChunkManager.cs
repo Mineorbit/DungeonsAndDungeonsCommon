@@ -396,9 +396,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             for(int i = 0;i<tiles.Length;i++)
             {
                 LevelObjectInstanceData levelObjectInstanceData = new LevelObjectInstanceData();
-                levelObjectInstanceData.X = (uint) tiles[i].x;
-                levelObjectInstanceData.Y = (uint) tiles[i].y;
-                levelObjectInstanceData.Z = (uint) tiles[i].z;
+                levelObjectInstanceData.X = (uint) (tiles[i].x * storageMultiplier);
+                levelObjectInstanceData.Y = (uint) (tiles[i].y * storageMultiplier);
+                levelObjectInstanceData.Z = (uint) (tiles[i].z * storageMultiplier);
                 
                 levelObjectInstanceData.Code = o.levelObjectDataType;
                 instanceData[i] = levelObjectInstanceData;
@@ -468,7 +468,19 @@ namespace com.mineorbit.dungeonsanddungeonscommon
             chunkData.ChunkId = chunk.chunkId;
             foreach (LevelObject l in instances)
             {
-                chunkData.Data.AddRange(InstanceToData(l as dynamic, chunk));
+                var data = InstanceToData(l as dynamic, chunk);
+                if (data.GetType() == typeof(LevelObjectInstanceData))
+                {
+                    
+                    chunkData.Data.Add(data);
+                }
+                else
+                {
+                    foreach (var instancedata in data)
+                    {
+                        chunkData.Data.Add(instancedata);
+                    }
+                }
             }
 
             return chunkData;
