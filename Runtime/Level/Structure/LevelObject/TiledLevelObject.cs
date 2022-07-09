@@ -28,9 +28,9 @@ namespace com.mineorbit.dungeonsanddungeonscommon
                         if (cubeTileGrid.Exists(x, y, z))
                         {
                             TileLevelObject tl = new TileLevelObject();
-                            tl.x = x * cubeTileGrid.gridSize;
-                            tl.y = y * cubeTileGrid.gridSize;
-                            tl.z = z * cubeTileGrid.gridSize;
+                            tl.x = x;
+                            tl.y = y;
+                            tl.z = z;
                             tiles.Add(tl);
                         }
                     }
