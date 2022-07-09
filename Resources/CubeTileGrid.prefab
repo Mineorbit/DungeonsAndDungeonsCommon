@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6320108142847688079}
   - component: {fileID: 6320108142847688064}
   - component: {fileID: 6320108142847688065}
-  - component: {fileID: 134850318260232614}
+  - component: {fileID: 4654602099292333752}
   m_Layer: 10
   m_Name: CubeTileGrid
   m_TagString: Untagged
@@ -114,9 +114,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshFilter: {fileID: 6320108142847688079}
   levelObjectType: {fileID: 0}
+  gridSize: 8
   mesh: {fileID: 0}
   meshCollider: {fileID: 6320108142847688078}
---- !u!114 &134850318260232614
+--- !u!114 &4654602099292333752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6320108142847688066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f4226a43bb9c544690b6b0e409d8dc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a4d9f90772a421db3c56b296e8c2980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelObjectDataType: 0
@@ -134,3 +135,4 @@ MonoBehaviour:
   isDynamic: 0
   ActivateWhenInactive: 0
   levelObjectProperties: []
+  cubeTileGrid: {fileID: 6320108142847688065}
